@@ -2,7 +2,15 @@
     Notes
 ==========================================================================================
 
-It begins
+Game Mechanics
+    Unclaimed land is free to claim
+    Users start off with cash?
+    Cash is taken from existing players?
+    Land can be sold for cash
+    Land can be traded?
+    Game Theory
+        Will new players be able to get into the market?
+        How to encourage selling of land?
 
 ==========================================================================================
     Goals
@@ -18,6 +26,12 @@ Low Priority
 
 No Priority
     Marketing
+
+==========================================================================================
+    Issues
+==========================================================================================
+
+Starred places
 
 ==========================================================================================
     Documentation
