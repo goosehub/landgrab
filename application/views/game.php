@@ -37,7 +37,7 @@ function initMap()
 	{
 		$.ajax(
 		{
-			url: "ajax.php",
+			url: "ajax",
 			type: "GET",
 			data: { request: 'all' },
 			cache: false,
@@ -55,7 +55,7 @@ function initMap()
 	{
 		$.ajax(
 		{
-			url: "ajax.php",
+			url: "ajax",
 			type: "GET",
 			data: { request: grid_coord },
 			cache: false,
@@ -148,8 +148,8 @@ function initMap()
 					var grid_coord = lat + '|' + lng;
 					grid = get_single_grid(grid_coord, function(grid){
 						console.log(grid_coord);
-						var content = grid[0];
-						var owner = grid[1];
+						var owner = grid[0];
+						var content = grid[1];
 						// View
 						var contentString = '<strong>' + owner + '</strong><br>' + content + '<br>';
 						// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';

@@ -37,16 +37,16 @@ class Game extends CI_Controller {
 		    // echo data to client
 		    if ( isset($grid_square['content']) )
 		    {
-		        echo $grid_square['content'];
-		        echo '|';
 		        echo $grid_square['owner'];
+		        echo '|';
+		        echo $grid_square['content'];
 		    }
 		    // If unfound, default to this
 		    else
 		    {
-		        echo 'This land is unclaimed';
-		        echo '|';
 		        echo 'Unowned';
+		        echo '|';
+		        echo 'This land is unclaimed';
 		    }
 		}
 	}
