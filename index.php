@@ -19,8 +19,27 @@
 	<div id="map"></div>
 	<script src="resources/jquery-1.11.1.min.js"></script>
 	<script>
+
 function initMap() 
 {
+	// Get ajax grid
+	function get_grid_ajax(grid_coord, callback)
+	{
+		$.ajax(
+		{
+			url: "ajax.php",
+			type: "GET",
+			data: { grid_coord: grid_coord },
+			cache: false,
+			success: function(html)
+			{
+				var ajax_array = html.split('|');
+				callback(ajax_array);
+				return true;
+			}
+		});
+	}
+
 	// Map options
 	var map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 3,
@@ -67,6 +86,7 @@ function initMap()
 			  geodesic: true
 			});
 
+			// For rounding grid coords
 			function round_down(n) {
 				if(n > 0)
 				{
@@ -82,45 +102,31 @@ function initMap()
 			    }
 			}
 
-			// Set content of InfoWindow
-			function content(event) {
+			// Set InfoWindow
+			function set_window(event) {
 				lat = event.latLng.lat();
 				lng = event.latLng.lng();
 				lat = round_down(lat);
 				lng = round_down(lng);
 				var grid_coord = lat + '|' + lng;
-				console.log(grid_coord);
-				var returned_content = false;
-					$.ajax(
-					{
-						url: "ajax.php",
-						type: "GET",
-						data: { grid_coord: grid_coord },
-						cache: false,
-						success: function(html)
-						{
-							returned_content = html;
-
-							// Since this polygon has only one path, we can call getPath() to return the
-							// MVCArray of LatLngs.
-							// var vertices = this.getPath();
-
-							var contentString = '<b>Box Number ' + returned_content + '</b><br>' +
-							'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-							'<br>';
-
-							// Set InfoWindow Interaction
-							infoWindow.setContent(contentString);
-							infoWindow.setPosition(event.latLng);
-							console.log(event);
-							infoWindow.open(map);
-						}
-					});
+				ajax_array = get_grid_ajax(grid_coord, function(ajax_array){
+					console.log(grid_coord);
+					var content = ajax_array[0];
+					var stroke = ajax_array[1];
+					var fill = ajax_array[2];
+					// View
+					var contentString = '<b>' + content + '</b><br>';
+					// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+					// Set InfoWindow Interaction
+					infoWindow.setContent(contentString);
+					infoWindow.setPosition(event.latLng);
+					infoWindow.open(map);
+				});
 			}
 
 			// Set box on map with listeners and info window
 			box.setMap(map);
-			box.addListener('click', content);
+			box.addListener('click', set_window);
 			infoWindow = new google.maps.InfoWindow;
 
 			box_number++;
