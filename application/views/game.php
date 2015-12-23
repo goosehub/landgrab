@@ -13,6 +13,20 @@
 	  #map {
 		height: 100%;
 	  }
+	  /* Overlay */
+	  #overlay {
+	      position: absolute;
+	      left: 0;
+	      top: 0;
+	      bottom: 0;
+	      right: 0;
+	      background: #000;
+	      opacity: 0.8;
+	      filter: alpha(opacity=80);
+	  }
+	  #loading {
+	      width: 50px;
+	  }
 	</style>
   </head>
   <body>
@@ -25,6 +39,14 @@
 
 	<!-- Master Script -->
 	<script>
+
+// Loading Overlay
+loading = function() {
+    // add the overlay with loading image to the page
+    var over = '<div id="overlay"></div>';
+    $(over).appendTo('body');
+};
+loading();
 
 function initMap() 
 {
@@ -71,24 +93,31 @@ function initMap()
 	// 
 
 	var map = new google.maps.Map(document.getElementById('map'), {
+		// Starting center
+		center: {lat: 20, lng: 0},
+
+		// Default zoom and limits
 		zoom: 3,
 		minZoom: 3,
-		maxZoom: 3,
-		draggable: false,
-		scrollwheel: false,
-		panControl: false,
-		center: {lat: 20, lng: 0},
+		maxZoom: 10,
+
+		// Prevent panning and zooming
+		// draggable: false,
+		// scrollwheel: false,
+		// panControl: false,
+
+		// Map type
 		mapTypeId: google.maps.MapTypeId.TERRAIN 
 		// mapTypeId: google.maps.MapTypeId.HYBRID 
 	});
 
 	// Size of grid box squares
-	// Box size 3 creates 6480 grid squares
-	var box_size = 3;
+	// Box size 2 creates 57600 grid squares
+	var box_size = 2;
 	// Area covered defined with these limits
 	// Must be evenly divisible by box_size
 	var x_limit = 180;
-	var y_limit = 81;
+	var y_limit = 80;
 
 	// 
 	// Grid loop
@@ -182,6 +211,11 @@ function initMap()
 	// map.setMapTypeId('map_style');
 
 }
+
+// Remove loading overlay
+setTimeout(function(){
+	$('#overlay').fadeOut();
+}, 3000);
 
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_lT8RkN6KffGEfJ3xBcBgn2VZga-a05I&callback=initMap&signed_in=true" async defer>

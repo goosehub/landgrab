@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2015 at 05:49 PM
+-- Generation Time: Dec 23, 2015 at 10:30 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `grid` (
 --
 
 INSERT INTO `grid` (`id`, `coord_key`, `owner`, `content`) VALUES
-(1, '27|-81', 'Alex', 'This is my land!');
+(1, '26|-80', 'Alex', 'This is my land!');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
