@@ -1,27 +1,33 @@
 <?php
 // Set coord input
-$grid_coord = $_GET['grid_coord'];
+$request = $_GET['request'];
 
 // Get data
 $json = json_decode(file_get_contents("data.json"), true);
 
-// Get land data from data
-$grid_square = isset($json[$grid_coord]) ? $json[$grid_coord] : false;
-
-// echo data to client
-if ( isset($grid_square['content']) )
+// Request for some data on all grids
+if ($request === 'all')
 {
-    echo $grid_square['content'];
-    echo '|';
-    echo $grid_square['stroke'];
-    echo '|';
-    echo $grid_square['fill'];
+    return;
 }
+// Request for all data on one grid
 else
 {
-    echo 'This land is unclaimed';
-    echo '|';
-    echo '#222222';
-    echo '|';
-    echo '#FF00FF';
+    // Find grid
+    $grid_square = isset($json[$request]) ? $json[$request] : false;
+
+    // echo data to client
+    if ( isset($grid_square['content']) )
+    {
+        echo $grid_square['content'];
+        echo '|';
+        echo $grid_square['owner'];
+    }
+    // If unfound, default to this
+    else
+    {
+        echo 'This land is unclaimed';
+        echo '|';
+        echo 'Unowned';
+    }
 }

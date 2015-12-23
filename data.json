@@ -1,7 +1,6 @@
 {
     "27|-81": {
         "content": "This is My land!",
-        "stroke": "#880000",
-        "fill": "#000088"
+        "owner": "Alex"
     }
 }
