@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2015 at 03:44 PM
+-- Generation Time: Dec 23, 2015 at 05:49 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -27,15 +27,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `grid` (
-  `id` int(10) unsigned NOT NULL,
-  `coord_key` varchar(10) COLLATE utf8_bin NOT NULL,
-  `owner_key` int(10) unsigned NOT NULL,
-  `owner_name` varchar(256) COLLATE utf8_bin NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `coord_key` varchar(8) COLLATE utf8_bin NOT NULL,
+  `owner` varchar(64) COLLATE utf8_bin NOT NULL,
   `content` varchar(1024) COLLATE utf8_bin NOT NULL,
-  `stroke` varchar(8) COLLATE utf8_bin NOT NULL,
-  `fill` varchar(8) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `grid`
+--
+
+INSERT INTO `grid` (`id`, `coord_key`, `owner`, `content`) VALUES
+(1, '27|-81', 'Alex', 'This is my land!');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

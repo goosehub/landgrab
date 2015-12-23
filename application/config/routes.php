@@ -1,4 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $route['default_controller'] = "game";
-$route['404_override'] = '';
+$route['404_override'] = 'game';
+
+$route['ajax'] = "game/ajax";
