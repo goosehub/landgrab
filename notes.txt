@@ -18,14 +18,15 @@ Game Mechanics
 
 High Priority
     Global data call
-    Data into Database
-    Wrap with a framework
+    Users
+    Claim Land
+    Gameplay Mechanics
 
 Low Priority
     Security
+    Social Media
 
 No Priority
-    Marketing
 
 ==========================================================================================
     Issues

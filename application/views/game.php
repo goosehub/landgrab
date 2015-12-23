@@ -5,14 +5,17 @@
 	<meta charset="utf-8">
 	<title>Land</title>
 	<style>
+	  /* Global */
 	  html, body {
 		height: 100%;
 		margin: 0;
 		padding: 0;
 	  }
+	  /* Map */
 	  #map {
 		height: 100%;
 	  }
+
 	  /* Overlay */
 	  #overlay {
 	      position: absolute;
@@ -33,6 +36,12 @@
 
   	<!-- Map Element -->
 	<div id="map"></div>
+
+	<div id="account"><?php if (isset($_SESSION['username'])) { ?>
+    <?php } else { ?>
+    	Login
+    <?php } ?>
+    </div>
 
 	<!-- jQuery -->
 	<script src="resources/jquery-1.11.1.min.js"></script>
