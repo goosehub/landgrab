@@ -20,34 +20,27 @@ class Game extends CI_Controller {
 		// Set coord input
 		$request = $_GET['request'];
 
-		// Get data
-		$json = json_decode(file_get_contents("data.json"), true);
+	    // Get Grid Square
+        $query_result = $this->game_model->get_single_grid($request);
+        $grid_square = isset($query_result[0]) ? $query_result[0] : false;
 
-		// Request for some data on all grids
-		if ($request === 'all')
-		{
-		    return;
-		}
-		// Request for all data on one grid
-		else
-		{
-		    // Find grid
-		    $grid_square = isset($json[$request]) ? $json[$request] : false;
-
-		    // echo data to client
-		    if ( isset($grid_square['content']) )
-		    {
-		        echo $grid_square['owner'];
-		        echo '|';
-		        echo $grid_square['content'];
-		    }
-		    // If unfound, default to this
-		    else
-		    {
-		        echo 'Unowned';
-		        echo '|';
-		        echo 'This land is unclaimed';
-		    }
-		}
+	    // echo data to client
+	    if ($grid_square)
+	    {
+	        echo $grid_square['owner'];
+	        echo '|';
+	        echo $grid_square['content'];
+	    }
+	    // If unfound, default to this
+	    else
+	    {
+	        echo 'Unowned';
+	        echo '|';
+	        echo 'This land is unclaimed';
+	    }
+	}
+	public function not_found()
+	{
+		$this->load->view('not_found');
 	}
 }

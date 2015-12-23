@@ -32,24 +32,6 @@ function initMap()
 	// Functions
 	// 
 
-	// Get all grids ajax
-	function get_all_grids(callback)
-	{
-		$.ajax(
-		{
-			url: "ajax",
-			type: "GET",
-			data: { request: 'all' },
-			cache: false,
-			success: function(html)
-			{
-				var grid = html.split('|');
-				callback(grid);
-				return true;
-			}
-		});
-	}
-
 	// Get single grid ajax
 	function get_single_grid(grid_coord, callback)
 	{
@@ -112,61 +94,58 @@ function initMap()
 	// Grid loop
 	// 
 
-	grids = get_all_grids(function(grids)
+	// Loop lng
+	for (x = -x_limit; x < x_limit; x = x + box_size)
 	{
-		// Loop lng
-		for (x = -x_limit; x < x_limit; x = x + box_size)
+		// Loop lat for each lng
+		for (y = -y_limit; y < y_limit; y = y + box_size)
 		{
-			// Loop lat for each lng
-			for (y = -y_limit; y < y_limit; y = y + box_size)
-			{
-				// Define shape of grid polygon
-				var shape = [
-					{lat: y, lng: x},
-					{lat: y + box_size, lng: x},
-					{lat: y + box_size, lng: x + box_size},
-					{lat: y, lng: x + box_size}
-				];
-				// Style grid
-				box = new google.maps.Polygon({
-				  map: map,
-				  paths: shape,
-				  strokeColor: '#222222',
-				  strokeOpacity: 0.2,
-				  strokeWeight: 2,
-				  fillColor: '#FF00FF',
-				  fillOpacity: 0.1,
-				  geodesic: true
+			// Define shape of grid polygon
+			var shape = [
+				{lat: y, lng: x},
+				{lat: y + box_size, lng: x},
+				{lat: y + box_size, lng: x + box_size},
+				{lat: y, lng: x + box_size}
+			];
+			// Style grid
+			box = new google.maps.Polygon({
+			  map: map,
+			  paths: shape,
+			  strokeColor: '#222222',
+			  strokeOpacity: 0.2,
+			  strokeWeight: 2,
+			  fillColor: '#FF00FF',
+			  fillOpacity: 0.1,
+			  geodesic: true
+			});
+
+			// Set grid window
+			function set_window(event) {
+				lat = event.latLng.lat();
+				lng = event.latLng.lng();
+				lat = round_down(lat);
+				lng = round_down(lng);
+				var grid_coord = lat + '|' + lng;
+				grid = get_single_grid(grid_coord, function(grid){
+					console.log(grid_coord);
+					var owner = grid[0];
+					var content = grid[1];
+					// View
+					var contentString = '<strong>' + owner + '</strong><br>' + content + '<br>';
+					// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+					// Set InfoWindow Interaction
+					infoWindow.setContent(contentString);
+					infoWindow.setPosition(event.latLng);
+					infoWindow.open(map);
 				});
-
-				// Set grid window
-				function set_window(event) {
-					lat = event.latLng.lat();
-					lng = event.latLng.lng();
-					lat = round_down(lat);
-					lng = round_down(lng);
-					var grid_coord = lat + '|' + lng;
-					grid = get_single_grid(grid_coord, function(grid){
-						console.log(grid_coord);
-						var owner = grid[0];
-						var content = grid[1];
-						// View
-						var contentString = '<strong>' + owner + '</strong><br>' + content + '<br>';
-						// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
-						// Set InfoWindow Interaction
-						infoWindow.setContent(contentString);
-						infoWindow.setPosition(event.latLng);
-						infoWindow.open(map);
-					});
-				}
-
-				// Attach grid window
-				box.setMap(map);
-				box.addListener('click', set_window);
-				infoWindow = new google.maps.InfoWindow;
 			}
+
+			// Attach grid window
+			box.setMap(map);
+			box.addListener('click', set_window);
+			infoWindow = new google.maps.InfoWindow;
 		}
-	});
+	}
 
 	// 
 	// Map Styling

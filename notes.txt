@@ -4,13 +4,13 @@
 
 Game Mechanics
     Unclaimed land is free to claim
-    Users start off with cash?
-    Cash is taken from existing players?
+    Users start off with cash
+    Users get cash over time
+    Cost to hold land
     Land can be sold for cash
-    Land can be traded?
     Game Theory
         Will new players be able to get into the market?
-        How to encourage selling of land?
+        How to encourage selling of land, high volume trading
 
 ==========================================================================================
     Goals

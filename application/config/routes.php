@@ -5,4 +5,4 @@ $route['default_controller'] = "game";
 $route['ajax'] = "game/ajax";
 $route['ajax/(:any)'] = "game/ajax";
 
-$route['404_override'] = 'game';
+$route['404_override'] = 'game/not_found';
