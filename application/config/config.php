@@ -1,4 +1,5 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,27 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+
+$allowed_domains = array('localhost/land');
+$default_domain  = 'localhost/land';
+
+if (in_array($_SERVER['HTTP_HOST'], $allowed_domains, TRUE))
+{
+    $domain = $_SERVER['HTTP_HOST'];
+}
+else
+{
+	$domain = $default_domain;
+}
+
+if ( ! empty($_SERVER['HTTPS']))
+{
+        $config['base_url'] = 'https://'.$domain;
+}
+else
+{
+        $config['base_url'] = 'http://'.$domain;
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -1,4 +1,5 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('UTC');
 
 class User extends CI_Controller {
@@ -18,8 +19,8 @@ class User extends CI_Controller {
 	{
 		// Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_login_validation');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_login_validation');
         
 		// Fail
         if ($this->form_validation->run() == FALSE) {
@@ -62,9 +63,9 @@ class User extends CI_Controller {
 	public function register()
 	{
 		// Validation
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_register_validation|min_length[6]|matches[confirm]');
-        $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_register_validation|min_length[6]|matches[confirm]');
+        $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
         // Fail
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');

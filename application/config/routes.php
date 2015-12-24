@@ -1,4 +1,5 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Default to game map
 $route['default_controller'] = "game";
@@ -15,3 +16,6 @@ $route['user/logout'] = "user/logout";
 
 // Not found
 $route['404_override'] = 'user/page_not_found';
+
+// Setting
+$route['translate_uri_dashes'] = FALSE;

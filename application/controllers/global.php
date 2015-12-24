@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 // Global PHP, to be included with on every function with authentication
 
 // Defaults for unauthenticated users

@@ -178,7 +178,7 @@ function initMap()
 	// Get single grid ajax
 	function get_single_grid(coord_key, callback) {
 		$.ajax({
-			url: "get_single_grid",
+			url: "<?=base_url()?>get_single_grid",
 			type: "GET",
 			data: { coord_key: coord_key },
 			cache: false,
@@ -194,7 +194,7 @@ function initMap()
 	// Claim land
 	function claim_land(coord_key, user_key) {
 		$.ajax({
-			url: "claim_land",
+			url: "<?=base_url()?>claim_land",
 			type: "GET",
 			data: { 
 				coord_key: coord_key,
