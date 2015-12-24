@@ -7,7 +7,7 @@
 	<title>Land</title>
 
 	<!-- Bootstrap -->
-	<style type="text/css" href="<?=base_url()?>resouces/bootstrap/css/bootstrap.min.css"></style>
+	<link href="<?=base_url()?>resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
 	<!-- Custom Fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
@@ -20,6 +20,23 @@
 		padding: 0;
 		font-family: "Lato";
 	  }
+	  .btn-action {  
+	  	background-color: hsl(41, 100%, 49%) !important;
+	  	background-repeat: repeat-x;
+	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcc60", endColorstr="#f9aa00");
+	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffcc60), to(#f9aa00));
+	  	background-image: -moz-linear-gradient(top, #ffcc60, #f9aa00);
+	  	background-image: -ms-linear-gradient(top, #ffcc60, #f9aa00);
+	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffcc60), color-stop(100%, #f9aa00));
+	  	background-image: -webkit-linear-gradient(top, #ffcc60, #f9aa00);
+	  	background-image: -o-linear-gradient(top, #ffcc60, #f9aa00);
+	  	background-image: linear-gradient(#ffcc60, #f9aa00);
+	  	border-color: #f9aa00 #f9aa00 hsl(41, 100%, 44%);
+	  	color: #333 !important;
+	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
+	  	-webkit-font-smoothing: antialiased;
+	  }
+
 	  /* Map */
 	  #map {
 		height: 100%;
@@ -30,21 +47,24 @@
 	  	position: absolute;
 		top: 0.5em;
 		right: 3.5em;
-		width: 10em;
-		height: 3em;
-		background: #fff;
 		opacity: 0.8;
 	  }
 
-	  #login_block, #register_block {
+	  .center_block {
 	  	display: none;
 	  	position: absolute;
 		top: 40vh;
 		left: 30%;
 		width: 40%;
-		height: 20vh;
 		background: #fff;
-		opacity: 0.8;
+		padding: 1em;
+		border-radius: 1em;
+	  }
+	  .center_block strong {
+	  	font-size: 1.4em;
+	  }
+	  .exit_block {
+	  	float: right;
 	  }
 
 	  /* Overlay */
@@ -55,8 +75,6 @@
 	      bottom: 0;
 	      right: 0;
 	      background: #000;
-	      opacity: 0.8;
-	      filter: alpha(opacity=80);
 	  }
 	  #loading {
 	      width: 50px;
@@ -71,17 +89,54 @@
 	<!-- Top right element -->
 	<div id="top_right_block"><?php if (isset($_SESSION['username'])) { ?>
     <?php } else { ?>
-    	<button class="login_button form-control">Login</button>
-    	<button class="register_button">Register</button>
+    	<button class="login_button btn btn-info">Login</button>
+    	<button class="register_button btn btn-action">Register</button>
     <?php } ?>
     </div>
 
-    <div id="login_block">
-    	Login
+    <div id="login_block" class="center_block">
+    	<strong>Login</strong>
+
+    	<button type="button" class="exit_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
+
+    	<form>
+    	  <div class="form-group">
+    	    <label for="input_username">Username</label>
+    	    <input type="username" class="form-control" id="input_username" placeholder="Username">
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="input_password">Password</label>
+    	    <input type="password" class="form-control" id="input_password" placeholder="Password">
+    	  </div>
+    	  <button type="submit" class="btn btn-action form-control">Login</button>
+    	</form>
+    </div>
     </div>
 
-    <div id="register_block">
-    	Register
+    <div id="register_block" class="center_block">
+    	<strong>Register</strong>
+
+    	<button type="button" class="exit_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
+
+    	<form>
+    	  <div class="form-group">
+    	    <label for="input_username">Username</label>
+    	    <input type="username" class="form-control" id="input_username" placeholder="Username">
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="input_password">Password</label>
+    	    <input type="password" class="form-control" id="input_password" placeholder="Password">
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="input_confirm">Confirm</label>
+    	    <input type="confirm" class="form-control" id="input_confirm" placeholder="Confirm">
+    	  </div>
+    	  <button type="submit" class="btn btn-action form-control">Register</button>
+    	</form>
     </div>
 
 	<!-- jQuery -->
@@ -277,6 +332,11 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
 	$('#login_block').hide();
 	$('#register_block').show();
+});
+
+$('.exit_block').click(function(){
+	$('#login_block').hide();
+	$('#register_block').hide();
 });
 
 	</script>
