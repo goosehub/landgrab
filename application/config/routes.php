@@ -4,7 +4,8 @@
 $route['default_controller'] = "game";
 
 // Game functions
-$route['ajax'] = "game/ajax";
+$route['get_single_grid'] = "game/get_single_grid";
+$route['claim_land'] = "game/claim_land";
 
 // User functions
 $route['user/login'] = "user/login";

@@ -26,13 +26,27 @@ High Priority
     Gameplay Mechanics
 
 Low Priority
-    Name
     Password Resets
     User Profiles
     General Security
-    Social Media
 
 No Priority
+    Social Media Share
+    Facebook login
+    International Language Support
+
+==========================================================================================
+    Requirements
+==========================================================================================
+
+Undefined-Life-Span
+2D graphics
+Timing Requirement - seconds
+Multiplayer
+Chrome support
+Profiles
+Facebook login
+International Language Support
 
 ==========================================================================================
     Documentation

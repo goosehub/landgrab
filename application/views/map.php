@@ -176,18 +176,33 @@ function initMap()
 	// 
 
 	// Get single grid ajax
-	function get_single_grid(grid_coord, callback)
-	{
-		$.ajax(
-		{
-			url: "ajax",
+	function get_single_grid(coord_key, callback) {
+		$.ajax({
+			url: "get_single_grid",
 			type: "GET",
-			data: { request: grid_coord },
+			data: { coord_key: coord_key },
 			cache: false,
 			success: function(html)
 			{
 				var grids = html.split('|');
 				callback(grids);
+				return true;
+			}
+		});
+	}
+
+	// Claim land
+	function claim_land(coord_key, user_key) {
+		$.ajax({
+			url: "claim_land",
+			type: "GET",
+			data: { 
+				coord_key: coord_key,
+				user_key: <?php echo $user_id; ?>
+			},
+			cache: false,
+			success: function(html)
+			{
 				return true;
 			}
 		});
@@ -269,14 +284,18 @@ function initMap()
 				lng = event.latLng.lng();
 				lat = round_down(lat);
 				lng = round_down(lng);
-				var grid_coord = lat + '|' + lng;
-				grid = get_single_grid(grid_coord, function(grid){
-					console.log(grid_coord);
+				var coord_key = lat + '|' + lng;
+				grid = get_single_grid(coord_key, function(grid){
 					var owner = grid[0];
 					var content = grid[1];
 					var status = grid[2];
 					// View
 					var content_string = '<strong>' + owner + '</strong><br>' + content + '<br>';
+					<?php if ($log_check) { ?>
+					if (status === '0') {
+						content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
+					}
+					<?php } ?>
 					// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 					// Set InfoWindow Interaction
 					infoWindow.setContent(content_string);
@@ -324,6 +343,16 @@ function initMap()
 
 	map.mapTypes.set('map_style', styledMap);
 	map.setMapTypeId('map_style');
+
+	// 
+	// Game Controls
+	// 
+
+	$('body').delegate('.claim_land', 'click', function(){
+		var coord_key = $(this).attr('coord_key');
+		var user_key = <?php echo $user_id; ?>;
+		claim_land(coord_key, user_key);
+	});
 }
 
 // Remove loading overlay

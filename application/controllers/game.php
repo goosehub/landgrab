@@ -8,7 +8,7 @@ class Game extends CI_Controller {
 	    $this->load->model('game_model', '', TRUE);
 	}
 
-	public function index($param = false)
+	public function index()
 	{
 		require 'global.php';
 		// Get grids
@@ -20,10 +20,10 @@ class Game extends CI_Controller {
 		$this->load->view('map', $data);
 	}
 
-	public function ajax($param = false)
+	public function get_single_grid()
 	{
 		// Set coord input
-		$coord_key = $_GET['request'];
+		$coord_key = $_GET['coord_key'];
 
 	    // Get Grid Square
         $query_result = $this->game_model->get_single_grid($coord_key);
@@ -40,9 +40,14 @@ class Game extends CI_Controller {
 	    } else {
 	        echo 'Unowned';
 	        echo '|';
-	        echo 'This land is unclaimed';
+	        echo '';
 	        echo '|';
 	        echo 0;
 	    }
+	}
+
+	public function claim_land()
+	{
+		return true;
 	}
 }
