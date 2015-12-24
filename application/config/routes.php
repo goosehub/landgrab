@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = "game";
 
 // Game functions
-$route['get_single_grid'] = "game/get_single_grid";
+$route['get_single_land'] = "game/get_single_land";
 $route['claim_land'] = "game/claim_land";
 
 // User functions

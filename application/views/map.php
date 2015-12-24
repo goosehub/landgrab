@@ -175,17 +175,17 @@ function initMap()
 	// Functions
 	// 
 
-	// Get single grid ajax
-	function get_single_grid(coord_key, callback) {
+	// Get single land ajax
+	function get_single_land(coord_key, callback) {
 		$.ajax({
-			url: "<?=base_url()?>get_single_grid",
+			url: "<?=base_url()?>get_single_land",
 			type: "GET",
 			data: { coord_key: coord_key },
 			cache: false,
 			success: function(html)
 			{
-				var grids = html.split('|');
-				callback(grids);
+				var lands = html.split('|');
+				callback(lands);
 				return true;
 			}
 		});
@@ -208,7 +208,7 @@ function initMap()
 		});
 	}
 
-	// For rounding grid coords
+	// For rounding land coords
 	function round_down(n) {
 		if (n > 0) {
 	        return Math.floor(n/box_size) * box_size;
@@ -243,54 +243,54 @@ function initMap()
 		// mapTypeId: google.maps.MapTypeId.HYBRID 
 	});
 
-	// Size of grid box squares
-	// Box size 2 creates 50400 grid squares
+	// Size of land box squares
 	var box_size = 2;
 	// Area covered defined with these limits
 	// Must be evenly divisible by box_size
 	var x_limit = 180;
-	var y_limit = 70;
+	var y_limit = 84;
+	// Box size 2 with x limit of 180 and y limit of 84 creates 60480 land squares and covers the globe
 
 	// 
-	// Grid loop
+	// Land loop
 	// 
 
 	// Loop lng
 	for (x = -x_limit; x < x_limit; x = x + box_size) {
 		// Loop lat for each lng
 		for (y = -y_limit; y < y_limit; y = y + box_size) {
-			// Define shape of grid polygon
+			// Define shape of land polygon
 			var shape = [
 				{lat: y, lng: x},
 				{lat: y + box_size, lng: x},
 				{lat: y + box_size, lng: x + box_size},
 				{lat: y, lng: x + box_size}
 			];
-			// Style grid
+			// Style land
 			box = new google.maps.Polygon({
 			  map: map,
 			  paths: shape,
-			  strokeColor: '#222222',
 			  strokeOpacity: 0.2,
 			  strokeWeight: 2,
-			  fillColor: '#FF00FF',
 			  fillOpacity: 0.1,
-			  geodesic: true
+			  geodesic: true,
+			  strokeColor: '#222222',
+			  fillColor: '#FF00FF'
 			});
 
-			// Set grid window
+			// Set land window
 			function set_window(event) {
 				lat = event.latLng.lat();
 				lng = event.latLng.lng();
 				lat = round_down(lat);
 				lng = round_down(lng);
 				var coord_key = lat + '|' + lng;
-				grid = get_single_grid(coord_key, function(grid){
-					var owner = grid[0];
-					var content = grid[1];
-					var status = grid[2];
+				land = get_single_land(coord_key, function(land){
+					var land_name = land[0];
+					var content = land[1];
+					var status = land[2];
 					// View
-					var content_string = '<strong>' + owner + '</strong><br>' + content + '<br>';
+					var content_string = '<strong>' + land_name + '</strong><br>' + content + '<br>';
 					<?php if ($log_check) { ?>
 					if (status === '0') {
 						content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
@@ -304,7 +304,7 @@ function initMap()
 				});
 			}
 
-			// Attach grid window
+			// Attach land window
 			box.setMap(map);
 			box.addListener('click', set_window);
 			infoWindow = new google.maps.InfoWindow;

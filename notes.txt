@@ -7,10 +7,12 @@ Game Mechanics
     Users start off with cash taken from thier pick of land
     Users get cash over time taken from their pick of land
     Cost to hold land by paying those who ask for it
+    When user is broke, land is put up as unclaimed
     Land can be sold for cash
     Game Theory
         Will new players be able to get into the market?
         How to encourage selling of land, high volume trading
+        How do stale players lose land
 
 Name
     Land Grab

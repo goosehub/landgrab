@@ -12,8 +12,8 @@ class Game extends CI_Controller {
 	public function index()
 	{
 		require 'global.php';
-		// Get grids
-        $data['grids'] = $this->game_model->get_all_grids();
+		// Get lands
+        $data['lands'] = $this->game_model->get_all_lands();
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
@@ -21,20 +21,20 @@ class Game extends CI_Controller {
 		$this->load->view('map', $data);
 	}
 
-	public function get_single_grid()
+	public function get_single_land()
 	{
 		// Set coord input
 		$coord_key = $_GET['coord_key'];
 
-	    // Get Grid Square
-        $query_result = $this->game_model->get_single_grid($coord_key);
-        $grid_square = isset($query_result[0]) ? $query_result[0] : false;
+	    // Get Land Square
+        $query_result = $this->game_model->get_single_land($coord_key);
+        $land_square = isset($query_result[0]) ? $query_result[0] : false;
 
 	    // Echo data to client to be parsed
-	    if ($grid_square) {
-	        echo $grid_square['owner'];
+	    if ($land_square) {
+	        echo $land_square['land_name'];
 	        echo '|';
-	        echo $grid_square['content'];
+	        echo $land_square['content'];
 	        echo '|';
 	        echo 1;
 	    // If none found, default to this
