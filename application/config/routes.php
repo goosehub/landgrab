@@ -2,7 +2,13 @@
 
 $route['default_controller'] = "game";
 
+// Game functions
 $route['ajax'] = "game/ajax";
-$route['ajax/(:any)'] = "game/ajax";
 
-$route['404_override'] = 'game/not_found';
+// User functions
+$route['user/login'] = "user/login";
+$route['user/register'] = "user/register";
+$route['user/login'] = "user/login";
+$route['user/logout'] = "user/logout";
+
+$route['404_override'] = 'user/page_not_found';

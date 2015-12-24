@@ -1,6 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 date_default_timezone_set('UTC');
-session_start();
 
 class Game extends CI_Controller {
 
@@ -11,36 +10,30 @@ class Game extends CI_Controller {
 
 	public function index($param = false)
 	{
+		require 'global.php';
         $data['grids'] = $this->game_model->get_all_grids();
-		$this->load->view('game');
+		$this->load->view('map', $data);
 	}
 
 	public function ajax($param = false)
 	{
 		// Set coord input
-		$request = $_GET['request'];
+		$coord_key = $_GET['request'];
 
 	    // Get Grid Square
-        $query_result = $this->game_model->get_single_grid($request);
+        $query_result = $this->game_model->get_single_grid($coord_key);
         $grid_square = isset($query_result[0]) ? $query_result[0] : false;
 
-	    // echo data to client
-	    if ($grid_square)
-	    {
+	    // Echo data to client to be parsed
+	    if ($grid_square) {
 	        echo $grid_square['owner'];
 	        echo '|';
 	        echo $grid_square['content'];
-	    }
-	    // If unfound, default to this
-	    else
-	    {
+	    // If none found, default to this
+	    } else {
 	        echo 'Unowned';
 	        echo '|';
 	        echo 'This land is unclaimed';
 	    }
-	}
-	public function not_found()
-	{
-		$this->load->view('not_found');
 	}
 }

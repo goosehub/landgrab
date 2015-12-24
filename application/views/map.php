@@ -20,6 +20,7 @@
 		padding: 0;
 		font-family: "Lato";
 	  }
+	  /* Orange Action Bootstrap-Styled Button */
 	  .btn-action {  
 	  	background-color: hsl(41, 100%, 49%) !important;
 	  	background-repeat: repeat-x;
@@ -42,14 +43,16 @@
 		height: 100%;
 	  }
 
+	  /* Top right block*/
 	  #top_right_block {
 	  	display: none;
 	  	position: absolute;
 		top: 0.5em;
-		right: 3.5em;
+		right: 6em;
 		opacity: 0.8;
 	  }
 
+	  /* Center Block */
 	  .center_block {
 	  	display: none;
 	  	position: absolute;
@@ -63,7 +66,7 @@
 	  .center_block strong {
 	  	font-size: 1.4em;
 	  }
-	  .exit_block {
+	  .exit_center_block {
 	  	float: right;
 	  }
 
@@ -86,65 +89,72 @@
   	<!-- Map Element -->
 	<div id="map"></div>
 
-	<!-- Top right element -->
-	<div id="top_right_block"><?php if (isset($_SESSION['username'])) { ?>
-    <?php } else { ?>
+	<!-- Top Right Block -->
+	<div id="top_right_block">
+		<?php if ($log_check) { ?>
+		<button class="user_button btn btn-primary"><?php echo $username; ?></button>
+    	<a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a>
+	    <?php } else { ?>
     	<button class="login_button btn btn-info">Login</button>
     	<button class="register_button btn btn-action">Register</button>
-    <?php } ?>
+	    <?php } ?>
     </div>
 
+    <!-- Center Blocks -->
+
+    <!-- Login Block -->
     <div id="login_block" class="center_block">
     	<strong>Login</strong>
 
-    	<button type="button" class="exit_block btn btn-default btn-sm">
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
-    	<form>
+		<?php echo validation_errors(); ?>
+		<?php echo form_open('user/login'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
-    	    <input type="username" class="form-control" id="input_username" placeholder="Username">
+    	    <input type="username" class="form-control" id="input_username" name="username" placeholder="Username">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_password">Password</label>
-    	    <input type="password" class="form-control" id="input_password" placeholder="Password">
+    	    <input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Login</button>
-    	</form>
-    </div>
+	    </form>
     </div>
 
+    <!-- Register Block -->
     <div id="register_block" class="center_block">
     	<strong>Register</strong>
 
-    	<button type="button" class="exit_block btn btn-default btn-sm">
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
-    	<form>
+		<?php echo validation_errors(); ?>
+		<?php echo form_open('user/register'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
-    	    <input type="username" class="form-control" id="input_username" placeholder="Username">
+    	    <input type="username" class="form-control" id="input_username" name="username" placeholder="Username">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_password">Password</label>
-    	    <input type="password" class="form-control" id="input_password" placeholder="Password">
+    	    <input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_confirm">Confirm</label>
-    	    <input type="confirm" class="form-control" id="input_confirm" placeholder="Confirm">
+    	    <input type="password" class="form-control" id="input_confirm" name="confirm" placeholder="Confirm">
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Register</button>
-    	</form>
+	    </form>
     </div>
 
 	<!-- jQuery -->
-	<script src="resources/jquery-1.11.1.min.js"></script>
+	<script src="resources/jquery/jquery-1.11.1.min.js"></script>
 
 	<!-- Master Script -->
 	<script>
-
 // Loading Overlay
 loading = function() {
     // add the overlay with loading image to the page
@@ -179,16 +189,12 @@ function initMap()
 
 	// For rounding grid coords
 	function round_down(n) {
-		if(n > 0)
-		{
+		if (n > 0) {
 	        return Math.floor(n/box_size) * box_size;
 		}
-	    else if( n < 0)
-	    {
-	        return Math.ceil(n/box_size) * box_size;
+	    else if ( n < 0) {return Math.ceil(n/box_size) * box_size;
 	    }
-	    else
-	    {
+	    else {
 	        return box_size;
 	    }
 	}
@@ -223,17 +229,17 @@ function initMap()
 	// Must be evenly divisible by box_size
 	var x_limit = 180;
 	var y_limit = 80;
+	// var x_limit = 1;
+	// var y_limit = 1;
 
 	// 
 	// Grid loop
 	// 
 
 	// Loop lng
-	for (x = -x_limit; x < x_limit; x = x + box_size)
-	{
+	for (x = -x_limit; x < x_limit; x = x + box_size) {
 		// Loop lat for each lng
-		for (y = -y_limit; y < y_limit; y = y + box_size)
-		{
+		for (y = -y_limit; y < y_limit; y = y + box_size) {
 			// Define shape of grid polygon
 			var shape = [
 				{lat: y, lng: x},
@@ -321,9 +327,12 @@ function initMap()
 setTimeout(function(){
 	$('#overlay').fadeOut();
 	$('#top_right_block').fadeIn();
-}, 3000);
+}, 500);
 
-// Non Game Controls
+// 
+// User Controls
+// 
+
 $('.login_button').click(function(){
 	$('#register_block').hide();
 	$('#login_block').show();
@@ -334,7 +343,7 @@ $('.register_button').click(function(){
 	$('#register_block').show();
 });
 
-$('.exit_block').click(function(){
+$('.exit_center_block').click(function(){
 	$('#login_block').hide();
 	$('#register_block').hide();
 });

@@ -23,7 +23,8 @@ High Priority
     Gameplay Mechanics
 
 Low Priority
-    Security
+    Password Salting
+    General Security
     Social Media
 
 No Priority

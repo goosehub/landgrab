@@ -2,6 +2,7 @@
 
 Class game_model extends CI_Model
 {
+ // Get all grids
  function get_all_grids()
  {
     $this->db->select('*');
@@ -9,6 +10,7 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
+ // Get single grid
  function get_single_grid($coord_key)
  {
     $this->db->select('*');

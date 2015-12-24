@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2015 at 10:30 PM
+-- Generation Time: Dec 24, 2015 at 03:03 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -28,18 +28,49 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `grid` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `coord_key` varchar(8) COLLATE utf8_general_ci NOT NULL,
-  `owner` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `content` varchar(1024) COLLATE utf8_general_ci NOT NULL,
+  `coord_key` varchar(8) NOT NULL,
+  `owner` varchar(64) NOT NULL,
+  `content` varchar(1024) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `grid`
 --
 
-INSERT INTO `grid` (`id`, `coord_key`, `owner`, `content`) VALUES
-(1, '26|-80', 'Alex', 'This is my land!');
+INSERT INTO `grid` (`id`, `coord_key`, `owner`, `content`, `created`, `modified`) VALUES
+(1, '26|-80', 'Alex', 'This is my land!', '2015-12-24 02:02:15', '2015-12-24 02:02:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `email` varchar(256) NOT NULL,
+  `bio` text NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `website` varchar(1024) NOT NULL,
+  `profile_picture` varchar(128) NOT NULL,
+  `facebook_id` int(16) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `bio`, `location`, `website`, `profile_picture`, `facebook_id`, `created`, `modified`) VALUES
+(1, 'goose', '101a6ec9f938885df0a44f20458d2eb4', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 02:05:14', '2015-12-24 02:05:14'),
+(5, 'bob', '8b0dc2e34844337434b8475108a490ab', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 02:50:39', '2015-12-24 02:50:39');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
