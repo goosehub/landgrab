@@ -4,15 +4,19 @@
 
 Game Mechanics
     Unclaimed land is free to claim
-    Users start off with cash taken from thier pick of land
-    Users get cash over time taken from their pick of land
-    Cost to hold land by paying those who ask for it
+    Users start off with cash taken (from their pick of land)
+    Users get cash over time taken (from their pick of land)
+    Cost to hold land by paying land tax (which go to the above two cases)
     When user is broke, land is put up as unclaimed
     Land can be sold for cash
-    Game Theory
-        Will new players be able to get into the market?
-        How to encourage selling of land, high volume trading
-        How do stale players lose land
+Game Actions
+    Claim Land
+    Buy land
+    Trade Land
+Game Theory
+    Will new players be able to get into the market?
+    How to encourage selling of land, high volume trading
+    How do stale players lose land
 
 Name
     Land Grab
@@ -22,8 +26,7 @@ Name
 ==========================================================================================
 
 High Priority
-    Update to CodeIgniter3
-    Global data call
+    Global land call by replacing/complementing JS loop with php loop
     Claim Land
     Gameplay Mechanics
 

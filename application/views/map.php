@@ -171,9 +171,36 @@ loading();
 
 function initMap() 
 {
+
 	// 
 	// Functions
 	// 
+
+	// Set land window
+	function set_window(event) {
+		lat = event.latLng.lat();
+		lng = event.latLng.lng();
+		lat = round_down(lat);
+		lng = round_down(lng);
+		var coord_key = lat + '|' + lng;
+		land = get_single_land(coord_key, function(land){
+			var land_name = land[0];
+			var content = land[1];
+			var status = land[2];
+			// View
+			var content_string = '<strong>' + land_name + '</strong><br>' + content + '<br>';
+			<?php if ($log_check) { ?>
+			if (status === '0') {
+				content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
+			}
+			<?php } ?>
+			// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			// Set InfoWindow Interaction
+			infoWindow.setContent(content_string);
+			infoWindow.setPosition(event.latLng);
+			infoWindow.open(map);
+		});
+	}
 
 	// Get single land ajax
 	function get_single_land(coord_key, callback) {
@@ -221,6 +248,16 @@ function initMap()
 	}
 
 	// 
+	// Get Lands
+	// 
+
+	<?php
+	$js_lands = json_encode($lands);
+	echo "var lands = ". $js_lands . ";\n";
+	?>
+	console.log(lands);
+
+	// 
 	// Map options
 	// 
 
@@ -259,6 +296,10 @@ function initMap()
 	for (x = -x_limit; x < x_limit; x = x + box_size) {
 		// Loop lat for each lng
 		for (y = -y_limit; y < y_limit; y = y + box_size) {
+			// Get coord_key
+			var coord_key = round_down(y) + '|' + round_down(x);
+			console.log(coord_key);
+
 			// Define shape of land polygon
 			var shape = [
 				{lat: y, lng: x},
@@ -277,32 +318,6 @@ function initMap()
 			  strokeColor: '#222222',
 			  fillColor: '#FF00FF'
 			});
-
-			// Set land window
-			function set_window(event) {
-				lat = event.latLng.lat();
-				lng = event.latLng.lng();
-				lat = round_down(lat);
-				lng = round_down(lng);
-				var coord_key = lat + '|' + lng;
-				land = get_single_land(coord_key, function(land){
-					var land_name = land[0];
-					var content = land[1];
-					var status = land[2];
-					// View
-					var content_string = '<strong>' + land_name + '</strong><br>' + content + '<br>';
-					<?php if ($log_check) { ?>
-					if (status === '0') {
-						content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
-					}
-					<?php } ?>
-					// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
-					// Set InfoWindow Interaction
-					infoWindow.setContent(content_string);
-					infoWindow.setPosition(event.latLng);
-					infoWindow.open(map);
-				});
-			}
 
 			// Attach land window
 			box.setMap(map);
