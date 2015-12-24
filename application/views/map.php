@@ -274,11 +274,12 @@ function initMap()
 					console.log(grid_coord);
 					var owner = grid[0];
 					var content = grid[1];
+					var status = grid[2];
 					// View
-					var contentString = '<strong>' + owner + '</strong><br>' + content + '<br>';
+					var content_string = '<strong>' + owner + '</strong><br>' + content + '<br>';
 					// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 					// Set InfoWindow Interaction
-					infoWindow.setContent(contentString);
+					infoWindow.setContent(content_string);
 					infoWindow.setPosition(event.latLng);
 					infoWindow.open(map);
 				});
@@ -300,14 +301,14 @@ function initMap()
 	  {
 		featureType: "all",
 		stylers: [
-		  { saturation: -80 }
+		  // { saturation: -80 }
 		]
 	  },{
 		featureType: "road.arterial",
 		elementType: "geometry",
 		stylers: [
 		  { hue: "#00ffee" },
-		  { saturation: 50 }
+		  // { saturation: 50 }
 		]
 	  },{
 		featureType: "poi.business",
@@ -321,9 +322,8 @@ function initMap()
 	var styledMap = new google.maps.StyledMapType(styles,
 	  {name: "Styled Map"});
 
-	// Uncomment below to turn on map styles
-	// map.mapTypes.set('map_style', styledMap);
-	// map.setMapTypeId('map_style');
+	map.mapTypes.set('map_style', styledMap);
+	map.setMapTypeId('map_style');
 }
 
 // Remove loading overlay

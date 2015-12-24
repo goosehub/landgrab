@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2015 at 03:03 AM
+-- Generation Time: Dec 24, 2015 at 06:34 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `bio`, `location`, `website`, `profile_picture`, `facebook_id`, `created`, `modified`) VALUES
-(1, 'goose', 'BzLQ/GQTOHWm2', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 04:22:38', '2015-12-24 04:22:38');
+(1, 'goose', '$2y$10$VvLWbplOf4RQIL4mMMIiNuwsSajn6tvXhCdfdBizvmgi3c4hsLQXC', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 05:24:37', '2015-12-24 05:24:37');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

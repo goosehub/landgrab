@@ -12,6 +12,9 @@ Game Mechanics
         Will new players be able to get into the market?
         How to encourage selling of land, high volume trading
 
+Name
+    Land Grab
+
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -23,18 +26,13 @@ High Priority
     Gameplay Mechanics
 
 Low Priority
-    Password Rainbow Salting
+    Name
+    Password Resets
+    User Profiles
     General Security
     Social Media
-    User Profiles
 
 No Priority
-
-==========================================================================================
-    Issues
-==========================================================================================
-
-Starred places
 
 ==========================================================================================
     Documentation
