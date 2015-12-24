@@ -3,17 +3,48 @@
   <head>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
+
 	<title>Land</title>
+
+	<!-- Bootstrap -->
+	<style type="text/css" href="<?=base_url()?>resouces/bootstrap/css/bootstrap.min.css"></style>
+
+	<!-- Custom Fonts -->
+	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
 	<style>
 	  /* Global */
 	  html, body {
 		height: 100%;
 		margin: 0;
 		padding: 0;
+		font-family: "Lato";
 	  }
 	  /* Map */
 	  #map {
 		height: 100%;
+	  }
+
+	  #top_right_block {
+	  	display: none;
+	  	position: absolute;
+		top: 0.5em;
+		right: 3.5em;
+		width: 10em;
+		height: 3em;
+		background: #fff;
+		opacity: 0.8;
+	  }
+
+	  #login_block, #register_block {
+	  	display: none;
+	  	position: absolute;
+		top: 40vh;
+		left: 30%;
+		width: 40%;
+		height: 20vh;
+		background: #fff;
+		opacity: 0.8;
 	  }
 
 	  /* Overlay */
@@ -37,10 +68,20 @@
   	<!-- Map Element -->
 	<div id="map"></div>
 
-	<div id="account"><?php if (isset($_SESSION['username'])) { ?>
+	<!-- Top right element -->
+	<div id="top_right_block"><?php if (isset($_SESSION['username'])) { ?>
     <?php } else { ?>
-    	Login
+    	<button class="login_button form-control">Login</button>
+    	<button class="register_button">Register</button>
     <?php } ?>
+    </div>
+
+    <div id="login_block">
+    	Login
+    </div>
+
+    <div id="register_block">
+    	Register
     </div>
 
 	<!-- jQuery -->
@@ -224,7 +265,19 @@ function initMap()
 // Remove loading overlay
 setTimeout(function(){
 	$('#overlay').fadeOut();
+	$('#top_right_block').fadeIn();
 }, 3000);
+
+// Non Game Controls
+$('.login_button').click(function(){
+	$('#register_block').hide();
+	$('#login_block').show();
+});
+
+$('.register_button').click(function(){
+	$('#login_block').hide();
+	$('#register_block').show();
+});
 
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_lT8RkN6KffGEfJ3xBcBgn2VZga-a05I&callback=initMap&signed_in=true" async defer>

@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `grid` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `coord_key` varchar(8) COLLATE utf8_bin NOT NULL,
-  `owner` varchar(64) COLLATE utf8_bin NOT NULL,
-  `content` varchar(1024) COLLATE utf8_bin NOT NULL,
+  `coord_key` varchar(8) COLLATE utf8_general_ci NOT NULL,
+  `owner` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `content` varchar(1024) COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `grid`
