@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `grid` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `coord_key` varchar(8) NOT NULL,
   `owner` varchar(64) NOT NULL,
+  `user_key` int(10) unsigned NOT NULL,
   `content` varchar(1024) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -40,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `grid` (
 -- Dumping data for table `grid`
 --
 
-INSERT INTO `grid` (`id`, `coord_key`, `owner`, `content`, `created`, `modified`) VALUES
-(1, '26|-80', 'Alex', 'This is my land!', '2015-12-24 02:02:15', '2015-12-24 02:02:15');
+INSERT INTO `grid` (`id`, `coord_key`, `owner`, `user_key`, `content`, `created`, `modified`) VALUES
+(1, '26|-80', 'Alex', 0, 'This is my land!', '2015-12-24 02:02:15', '2015-12-24 02:02:15');
 
 -- --------------------------------------------------------
 
