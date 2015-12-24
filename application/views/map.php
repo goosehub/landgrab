@@ -56,7 +56,7 @@
 	  .center_block {
 	  	display: none;
 	  	position: absolute;
-		top: 40vh;
+		top: 30vh;
 		left: 30%;
 		width: 40%;
 		background: #fff;
@@ -110,7 +110,7 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
-		<?php echo validation_errors(); ?>
+    	<?php if ($failed_form === 'login') { echo $validation_errors; } ?>
 		<?php echo form_open('user/login'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
@@ -132,7 +132,7 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
-		<?php echo validation_errors(); ?>
+    	<?php if ($failed_form === 'register') { echo $validation_errors; } ?>
 		<?php echo form_open('user/register'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
@@ -229,8 +229,6 @@ function initMap()
 	// Must be evenly divisible by box_size
 	var x_limit = 180;
 	var y_limit = 80;
-	// var x_limit = 1;
-	// var y_limit = 1;
 
 	// 
 	// Grid loop
@@ -321,13 +319,13 @@ function initMap()
 	// map.mapTypes.set('map_style', styledMap);
 	// map.setMapTypeId('map_style');
 
-}
+	// Remove loading overlay
+	setTimeout(function(){
+		$('#overlay').fadeOut();
+		$('#top_right_block').fadeIn();
+	}, 100);
 
-// Remove loading overlay
-setTimeout(function(){
-	$('#overlay').fadeOut();
-	$('#top_right_block').fadeIn();
-}, 500);
+}
 
 // 
 // User Controls
@@ -347,6 +345,13 @@ $('.exit_center_block').click(function(){
 	$('#login_block').hide();
 	$('#register_block').hide();
 });
+
+// Validation errors shown on page load if exist
+<?php if ($failed_form === 'login') { ?>
+$('#login_block').show();
+<?php } else if ($failed_form === 'register') { ?> 
+$('#register_block').show();
+<?php } ?>
 
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_lT8RkN6KffGEfJ3xBcBgn2VZga-a05I&callback=initMap&signed_in=true" async defer>

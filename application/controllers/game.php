@@ -11,7 +11,12 @@ class Game extends CI_Controller {
 	public function index($param = false)
 	{
 		require 'global.php';
+		// Get grids
         $data['grids'] = $this->game_model->get_all_grids();
+        // Validation erros
+        $data['validation_errors'] = $this->session->flashdata('validation_errors');
+        $data['failed_form'] = $this->session->flashdata('failed_form');
+
 		$this->load->view('map', $data);
 	}
 

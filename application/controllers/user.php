@@ -23,6 +23,8 @@ class User extends CI_Controller {
         
 		// Fail
         if ($this->form_validation->run() == FALSE) {
+        	$this->session->set_flashdata('failed_form', 'login');
+        	$this->session->set_flashdata('validation_errors', validation_errors());
             redirect('', 'refresh');
 		// Success
         } else {
@@ -65,6 +67,8 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required|xss_clean');
         // Fail
         if ($this->form_validation->run() == FALSE) {
+        	$this->session->set_flashdata('failed_form', 'register');
+        	$this->session->set_flashdata('validation_errors', validation_errors());
             redirect('', 'refresh');
         // Success
         } else {
