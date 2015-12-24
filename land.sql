@@ -62,15 +62,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `bio`, `location`, `website`, `profile_picture`, `facebook_id`, `created`, `modified`) VALUES
-(1, 'goose', '101a6ec9f938885df0a44f20458d2eb4', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 02:05:14', '2015-12-24 02:05:14'),
-(5, 'bob', '8b0dc2e34844337434b8475108a490ab', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 02:50:39', '2015-12-24 02:50:39');
+(1, 'goose', 'BzLQ/GQTOHWm2', 'placeholder@gmail.com', '', '', '', 'default.png', 0, '2015-12-24 04:22:38', '2015-12-24 04:22:38');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

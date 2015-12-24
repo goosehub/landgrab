@@ -17,15 +17,16 @@ Game Mechanics
 ==========================================================================================
 
 High Priority
+    Update to CodeIgniter3
     Global data call
-    Users
     Claim Land
     Gameplay Mechanics
 
 Low Priority
-    Password Salting
+    Password Rainbow Salting
     General Security
     Social Media
+    User Profiles
 
 No Priority
 

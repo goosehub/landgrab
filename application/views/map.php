@@ -110,15 +110,18 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
+    	<!-- Validation Errors -->
     	<?php if ($failed_form === 'login') { echo $validation_errors; } ?>
+
+    	<!-- Form -->
 		<?php echo form_open('user/login'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
-    	    <input type="username" class="form-control" id="input_username" name="username" placeholder="Username">
+    	    <input type="username" class="form-control" id="login_input_username" name="username" placeholder="Username">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_password">Password</label>
-    	    <input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
+    	    <input type="password" class="form-control" id="login_input_password" name="password" placeholder="Password">
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Login</button>
 	    </form>
@@ -132,19 +135,22 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
 
+    	<!-- Validation Errors -->
     	<?php if ($failed_form === 'register') { echo $validation_errors; } ?>
+
+    	<!-- Form -->
 		<?php echo form_open('user/register'); ?>
     	  <div class="form-group">
     	    <label for="input_username">Username</label>
-    	    <input type="username" class="form-control" id="input_username" name="username" placeholder="Username">
+    	    <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_password">Password</label>
-    	    <input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
+    	    <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
     	  </div>
     	  <div class="form-group">
     	    <label for="input_confirm">Confirm</label>
-    	    <input type="password" class="form-control" id="input_confirm" name="confirm" placeholder="Confirm">
+    	    <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Register</button>
 	    </form>
@@ -223,12 +229,12 @@ function initMap()
 	});
 
 	// Size of grid box squares
-	// Box size 2 creates 57600 grid squares
+	// Box size 2 creates 50400 grid squares
 	var box_size = 2;
 	// Area covered defined with these limits
 	// Must be evenly divisible by box_size
 	var x_limit = 180;
-	var y_limit = 80;
+	var y_limit = 70;
 
 	// 
 	// Grid loop
@@ -318,14 +324,13 @@ function initMap()
 	// Uncomment below to turn on map styles
 	// map.mapTypes.set('map_style', styledMap);
 	// map.setMapTypeId('map_style');
-
-	// Remove loading overlay
-	setTimeout(function(){
-		$('#overlay').fadeOut();
-		$('#top_right_block').fadeIn();
-	}, 100);
-
 }
+
+// Remove loading overlay
+setTimeout(function(){
+	$('#overlay').fadeOut();
+	$('#top_right_block').fadeIn();
+}, 100);
 
 // 
 // User Controls
@@ -344,6 +349,14 @@ $('.register_button').click(function(){
 $('.exit_center_block').click(function(){
 	$('#login_block').hide();
 	$('#register_block').hide();
+});
+
+$('.login_button').click(function(){
+	$('#login_input_username').focus();
+});
+
+$('.register_button').click(function(){
+	$('#register_input_username').focus();
 });
 
 // Validation errors shown on page load if exist

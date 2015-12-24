@@ -78,9 +78,9 @@ class User extends CI_Controller {
 
 	// Validate Register Callback
     public function register_validation($password) {
+        // Get other parameters
         $email = "placeholder@gmail.com";
         $username = $this->input->post('username');
-        $password = md5($password);
 		// Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {

@@ -2,13 +2,18 @@
 
 Class user_model extends CI_Model
 {
+
+    // 
+    // PASSWORD_SALT defined in constants
+    // 
+
  // Login
  function login($username, $password)
  {
     $this->db->select('id, username, password');
     $this->db->from('user');
     $this->db->where('username', $username);
-    $this->db->where('password', MD5($password));
+    $this->db->where('password', crypt($password, PASSWORD_SALT));
     $this->db->limit(1);
     $query = $this->db->get();
     if ($query->num_rows() == 1) {
@@ -34,7 +39,7 @@ Class user_model extends CI_Model
         $user_default = '';
         $data = array(
         'username' => $username,
-        'password' => $password,
+        'password' => crypt($password, PASSWORD_SALT),
         'email' => $email,
         'facebook_id' => $facebook_id,
         'profile_picture' => 'default.png'
