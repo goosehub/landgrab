@@ -287,22 +287,22 @@ function initMap()
 	// Must be evenly divisible by box_size
 	// var x_limit = 180;
 	// var y_limit = 84;
-	// Box size 2 with x limit of 180 and y limit of 84 and box size of 2 creates 15120 land squares and covers the globe
+	// Box size 2 with lng limit of 180 and lat limit of 84 and box size of 2 creates 15120 land squares and covers the globe
 
 	// 
 	// Land loop
 	// 
 
 	<?php foreach ($lands as $land) { ?> 
-	var y = <?php echo $land['lat']; ?>;
-	var x = <?php echo $land['lng']; ?>;
+	var primary_lat = <?php echo $land['lat']; ?>;
+	var primary_lng = <?php echo $land['lng']; ?>;
 
 	<?php // Define shape of land polygon ?>
 	var shape = [
-		{lat: y, lng: x},
-		{lat: y + box_size, lng: x},
-		{lat: y + box_size, lng: x + box_size},
-		{lat: y, lng: x + box_size}
+		{lat: primary_lat, lng: primary_lng},
+		{lat: primary_lat + box_size, lng: primary_lng},
+		{lat: primary_lat + box_size, lng: primary_lng + box_size},
+		{lat: primary_lat, lng: primary_lng + box_size}
 	];
 	<?php // Style land ?>
 	box = new google.maps.Polygon({
@@ -312,7 +312,7 @@ function initMap()
 	  strokeWeight: 2,
 	  fillOpacity: 0.1,
 	  geodesic: true,
-	  fillColor: "#<?php echo $land['primary_color']; ?>",
+	  fillColor: "#<?php echo prev($land['primary_color']); ?>",
 	  strokeColor: "#<?php echo $land['secondary_color']; ?>"
 	});
 
