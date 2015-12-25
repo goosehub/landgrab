@@ -184,18 +184,24 @@ function initMap()
 		lng = round_down(lng);
 		var coord_key = lat + '|' + lng;
 		land = get_single_land(coord_key, function(land){
-			var land_name = land[0];
-			var content = land[1];
-			var status = land[2];
+			var claimed = land[0];
+			var user_key = land[1];
+			var land_name = land[2];
+			var price = land[3];
+			var content = land[4];
 			// View
 			var content_string = '<strong>' + land_name + '</strong><br>' + content + '<br>';
-			<?php if ($log_check) { ?>
-			if (status === '0') {
-				content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
+			if (log_check) {
+				if (claimed === '0') {
+					content_string += '<button class="claim_land btn btn-action" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
+				} else if (user_key == user_id) {
+					content_string += 'This is your land<br>';
+				} else {
+					content_string += '<button class="buy_land btn btn-success" coord_key="' + coord_key + '" href="">'
+					+ 'Buy this land for $' + money_format(price) + '</button><br>';
+				}
 			}
-			<?php } ?>
 			content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
-			// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
 			infoWindow.setPosition(event.latLng);
@@ -226,7 +232,7 @@ function initMap()
 			type: "GET",
 			data: { 
 				coord_key: coord_key,
-				user_key: <?php echo $user_id; ?>
+				user_key: user_id
 			},
 			cache: false,
 			success: function(html)
@@ -234,6 +240,19 @@ function initMap()
 				return true;
 			}
 		});
+	}
+
+	// For money formatting
+	function money_format(nStr) {
+	    nStr += '';
+	    x = nStr.split('.');
+	    x1 = x[0];
+	    x2 = x.length > 1 ? '.' + x[1] : '';
+	    var rgx = /(\d+)(\d{3})/;
+	    while (rgx.test(x1)) {
+	            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	    }
+	    return x1 + x2;
 	}
 
 	// For rounding land coords
@@ -256,7 +275,14 @@ function initMap()
 	$js_lands = json_encode($lands);
 	echo "var lands = ". $js_lands . ";\n";
 	?>
-	console.log(lands);
+
+	// 
+	// Pass Session Variables
+	// 
+
+	var username = '<?php echo $username; ?>';
+	var user_id = <?php echo $user_id; ?>;
+	var log_check = <?php echo $log_check; ?>;
 
 	// 
 	// Map options
@@ -293,34 +319,39 @@ function initMap()
 	// Land loop
 	// 
 
+	var primary_lat = false;
+	var primary_lng = false;
+	var shape = false;
+
+	<?php // No comments below because of performance ?>
 	<?php foreach ($lands as $land) { ?> 
-	var primary_lat = <?php echo $land['lat']; ?>;
-	var primary_lng = <?php echo $land['lng']; ?>;
+	    primary_lat = <?php echo $land['lat']; ?>;
+	    primary_lng = <?php echo $land['lng']; ?>;
 
-	<?php // Define shape of land polygon ?>
-	var shape = [
-		{lat: primary_lat, lng: primary_lng},
-		{lat: primary_lat + box_size, lng: primary_lng},
-		{lat: primary_lat + box_size, lng: primary_lng - box_size},
-		{lat: primary_lat, lng: primary_lng - box_size}
-	];
-	<?php // Style land ?>
-	box = new google.maps.Polygon({
-	  map: map,
-	  paths: shape,
-	  strokeOpacity: 0.2,
-	  strokeWeight: 2,
-	  fillOpacity: 0.1,
-	  geodesic: true,
-	  fillColor: "#<?php echo $land['primary_color']; ?>",
-	  strokeColor: "#<?php echo $land['secondary_color']; ?>"
-	});
+	    shape = [
+	        {lat: primary_lat, lng: primary_lng},
+	        {lat: primary_lat + box_size, lng: primary_lng},
+	        {lat: primary_lat + box_size, lng: primary_lng - box_size},
+	        {lat: primary_lat, lng: primary_lng - box_size}
+	    ];
 
-	<?php // Attach land window ?>
-	box.setMap(map);
-	box.addListener('click', set_window);
-	infoWindow = new google.maps.InfoWindow;
+	    box = new google.maps.Polygon({
+	      map: map,
+	      paths: shape,
+	      strokeWeight: 1,
+	      strokeOpacity: 0.2,
+	      <?php if ($land['claimed']) { ?>
+	      fillOpacity: 0.3,
+	      <?php } else { ?>
+	      fillOpacity: 0,
+	      <?php } ?>
+	      fillColor: "#<?php echo $land['primary_color']; ?>",
+	      strokeColor: "#<?php echo $land['secondary_color']; ?>"
+	    });
 
+	    box.setMap(map);
+	    box.addListener('click', set_window);
+	    infoWindow = new google.maps.InfoWindow;
 	<?php } ?>
 
 	// 
@@ -362,7 +393,7 @@ function initMap()
 
 	$('body').delegate('.claim_land', 'click', function(){
 		var coord_key = $(this).attr('coord_key');
-		var user_key = <?php echo $user_id; ?>;
+		var user_key = user_id;
 		claim_land(coord_key, user_key);
 	});
 }

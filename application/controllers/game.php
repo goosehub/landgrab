@@ -9,6 +9,7 @@ class Game extends CI_Controller {
 	    $this->load->model('game_model', '', TRUE);
 	}
 
+	// Map view
 	public function index()
 	{
 		require 'global.php';
@@ -21,6 +22,7 @@ class Game extends CI_Controller {
 		$this->load->view('map', $data);
 	}
 
+	// Get infomation on single land
 	public function get_single_land()
 	{
 		// Set coord input
@@ -32,21 +34,30 @@ class Game extends CI_Controller {
 
 	    // Echo data to client to be parsed
 	    if ($land_square) {
+	        echo $land_square['claimed'];
+	        echo '|';
+	        echo $land_square['user_key'];
+	        echo '|';
 	        echo $land_square['land_name'];
 	        echo '|';
-	        echo $land_square['content'];
+	        echo $land_square['price'];
 	        echo '|';
-	        echo 1;
+	        echo $land_square['content'];
 	    // If none found, default to this
 	    } else {
-	        echo 'Unowned';
-	        echo '|';
-	        echo '';
+	        echo 0;
 	        echo '|';
 	        echo 0;
+	        echo '|';
+	        echo 'Not Found';
+	        echo '|';
+	        echo 0;
+	        echo '|';
+	        echo '';
 	    }
 	}
 
+	// Claim unclaimed land
 	public function claim_land()
 	{
 		return true;
