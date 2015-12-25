@@ -194,6 +194,7 @@ function initMap()
 				content_string += '<button class="claim_land btn btn-success" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
 			}
 			<?php } ?>
+			content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			// 'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
@@ -284,47 +285,43 @@ function initMap()
 	var box_size = 2;
 	// Area covered defined with these limits
 	// Must be evenly divisible by box_size
-	var x_limit = 180;
-	var y_limit = 84;
-	// Box size 2 with x limit of 180 and y limit of 84 creates 60480 land squares and covers the globe
+	// var x_limit = 180;
+	// var y_limit = 84;
+	// Box size 2 with x limit of 180 and y limit of 84 and box size of 2 creates 15120 land squares and covers the globe
 
 	// 
 	// Land loop
 	// 
 
-	// Loop lng
-	for (x = -x_limit; x < x_limit; x = x + box_size) {
-		// Loop lat for each lng
-		for (y = -y_limit; y < y_limit; y = y + box_size) {
-			// Get coord_key
-			var coord_key = round_down(y) + '|' + round_down(x);
-			console.log(coord_key);
+	<?php foreach ($lands as $land) { ?> 
+	var y = <?php echo $land['lat']; ?>;
+	var x = <?php echo $land['lng']; ?>;
 
-			// Define shape of land polygon
-			var shape = [
-				{lat: y, lng: x},
-				{lat: y + box_size, lng: x},
-				{lat: y + box_size, lng: x + box_size},
-				{lat: y, lng: x + box_size}
-			];
-			// Style land
-			box = new google.maps.Polygon({
-			  map: map,
-			  paths: shape,
-			  strokeOpacity: 0.2,
-			  strokeWeight: 2,
-			  fillOpacity: 0.1,
-			  geodesic: true,
-			  strokeColor: '#222222',
-			  fillColor: '#FF00FF'
-			});
+	<?php // Define shape of land polygon ?>
+	var shape = [
+		{lat: y, lng: x},
+		{lat: y + box_size, lng: x},
+		{lat: y + box_size, lng: x + box_size},
+		{lat: y, lng: x + box_size}
+	];
+	<?php // Style land ?>
+	box = new google.maps.Polygon({
+	  map: map,
+	  paths: shape,
+	  strokeOpacity: 0.2,
+	  strokeWeight: 2,
+	  fillOpacity: 0.1,
+	  geodesic: true,
+	  fillColor: "#<?php echo $land['primary_color']; ?>",
+	  strokeColor: "#<?php echo $land['secondary_color']; ?>"
+	});
 
-			// Attach land window
-			box.setMap(map);
-			box.addListener('click', set_window);
-			infoWindow = new google.maps.InfoWindow;
-		}
-	}
+	<?php // Attach land window ?>
+	box.setMap(map);
+	box.addListener('click', set_window);
+	infoWindow = new google.maps.InfoWindow;
+
+	<?php } ?>
 
 	// 
 	// Map Styling

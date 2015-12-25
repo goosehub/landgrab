@@ -4,19 +4,26 @@
 
 Game Mechanics
     Unclaimed land is free to claim
-    Users start off with cash taken (from their pick of land)
-    Users get cash over time taken (from their pick of land)
-    Cost to hold land by paying land tax (which go to the above two cases)
-    When user is broke, land is put up as unclaimed
-    Land can be sold for cash
+    All land must have a price
+    Players must pay land tax of 1% of selling price every hour
+    Players receive an equal chunk of tax money for each land they own
+    New Players get X amount/percent, to be deducted from new tax season
+    When player has no cash, land is marked as unclaimed
+Leaderboards
+    Cash Leaderboard
+    Land Value Leaderboard
+    Net Worth Leaderboard
+    Highest Land Value Leaderboard
+    Lowest Land Value Leaderboard
 Game Actions
     Claim Land
     Buy land
-    Trade Land
+    Trade Land ???
 Game Theory
     Will new players be able to get into the market?
     How to encourage selling of land, high volume trading
     How do stale players lose land
+    How to discourage mass dupe user registration manipulation
 
 Name
     Land Grab
