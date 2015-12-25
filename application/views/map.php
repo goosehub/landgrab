@@ -197,41 +197,11 @@ function initMap()
 				// Abstract to be shorter
 				// 
 				if (claimed === '0') {
-					content_string += '<button class="claim_land btn btn-action" coord_key="' + coord_key + '" type="button" '
-					+ 'data-toggle="collapse" data-target="#claim_collapse" aria-expanded="false" aria-controls="claim_collapse">'
-					  + 'Claim This Land'
-					+ '</button><br>'
-					+ '<div class="collapse" id="claim_collapse">'
-			          + '<div class="form-group">'
-			            + '<label for="input_land_name">Land Name</label>'
-			            + '<input type="land_name" class="form-control" id="claim_input_land_name" name="land_name" placeholder="Land Name">'
-			          + '</div>'
-			          + '<button type="submit" class="btn btn-primary form-control">Claim</button>'
-					+ '</div>';
+					content_string += land_update_form('claim', 'btn-action', coord_key);
 				} else if (user_key == user_id) {
-					content_string += '<button class="update_land btn btn-success" coord_key="' + coord_key + '" type="button" '
-					+ 'data-toggle="collapse" data-target="#update_collapse" aria-expanded="false" aria-controls="update_collapse">'
-					  + 'Update This Land'
-					+ '</button><br>'
-					+ '<div class="collapse" id="update_collapse">'
-			          + '<div class="form-group">'
-			            + '<label for="input_land_name">Land Name</label>'
-			            + '<input type="land_name" class="form-control" id="update_input_land_name" name="land_name" placeholder="Land Name">'
-			          + '</div>'
-			          + '<button type="submit" class="btn btn-primary form-control">Update</button>'
-					+ '</div>';
+					content_string += land_update_form('update', 'btn-info', coord_key);
 				} else {
-					content_string += '<button class="buy_land btn btn-success" coord_key="' + coord_key + '" type="button" '
-					+ 'data-toggle="collapse" data-target="#buy_collapse" aria-expanded="false" aria-controls="buy_collapse">'
-					  + 'Buy This Land'
-					+ '</button><br>'
-					+ '<div class="collapse" id="buy_collapse">'
-			          + '<div class="form-group">'
-			            + '<label for="input_land_name">Land Name</label>'
-			            + '<input type="land_name" class="form-control" id="buy_input_land_name" name="land_name" placeholder="Land Name">'
-			          + '</div>'
-			          + '<button type="submit" class="btn btn-primary form-control">Buy</button>'
-					+ '</div>';
+					content_string += land_update_form('buy', 'btn-success', coord_key);
 				}
 			}
 			// content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
@@ -241,6 +211,28 @@ function initMap()
 			infoWindow.setPosition(event.latLng);
 			infoWindow.open(map);
 		});
+	}
+
+	// For claiming, updating, and buying land forms
+	function land_update_form(form_type, button_class, coord_key) {
+		return '<button class="' + form_type + '_land btn ' + button_class + '" coord_key="' + coord_key + '" type="button" '
+		+ 'data-toggle="collapse" data-target="#' + form_type + '_collapse" aria-expanded="false" aria-controls="' + form_type + '_collapse">'
+		  + '' + ucwords(form_type) + ' This Land'
+		+ '</button><br>'
+		+ '<div class="collapse" id="' + form_type + '_collapse">'
+          + '<div class="form-group">'
+            + '<label for="input_land_name">Land Name</label>'
+            + '<input type="land_name" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name">'
+          + '</div>'
+          + '<button type="submit" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+		+ '</div>';
+	}
+
+	// Uppercase words
+	function ucwords (str) {
+	    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+	        return $1.toUpperCase();
+	    });
 	}
 
 	// Get single land ajax
