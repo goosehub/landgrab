@@ -301,8 +301,8 @@ function initMap()
 	var shape = [
 		{lat: primary_lat, lng: primary_lng},
 		{lat: primary_lat + box_size, lng: primary_lng},
-		{lat: primary_lat + box_size, lng: primary_lng + box_size},
-		{lat: primary_lat, lng: primary_lng + box_size}
+		{lat: primary_lat + box_size, lng: primary_lng - box_size},
+		{lat: primary_lat, lng: primary_lng - box_size}
 	];
 	<?php // Style land ?>
 	box = new google.maps.Polygon({
@@ -312,7 +312,7 @@ function initMap()
 	  strokeWeight: 2,
 	  fillOpacity: 0.1,
 	  geodesic: true,
-	  fillColor: "#<?php echo prev($land['primary_color']); ?>",
+	  fillColor: "#<?php echo $land['primary_color']; ?>",
 	  strokeColor: "#<?php echo $land['secondary_color']; ?>"
 	});
 
