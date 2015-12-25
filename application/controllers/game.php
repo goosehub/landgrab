@@ -58,7 +58,7 @@ class Game extends CI_Controller {
 	}
 
 	// Claim unclaimed land
-	public function claim_land()
+	public function claim()
 	{
 		return true;
 	}

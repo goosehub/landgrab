@@ -158,6 +158,7 @@
 
 	<!-- jQuery -->
 	<script src="resources/jquery/jquery-1.11.1.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Master Script -->
 	<script>
@@ -190,18 +191,51 @@ function initMap()
 			var price = land[3];
 			var content = land[4];
 			// View
-			var content_string = '<strong>' + land_name + '</strong><br>' + content + '<br>';
+			var content_string = '<div class="land_window"><strong>' + land_name + '</strong><br>' + content + '<br>';
 			if (log_check) {
+				// 
+				// Abstract to be shorter
+				// 
 				if (claimed === '0') {
-					content_string += '<button class="claim_land btn btn-action" coord_key="' + coord_key + '" href="">Claim this land</button><br>';
+					content_string += '<button class="claim_land btn btn-action" coord_key="' + coord_key + '" type="button" '
+					+ 'data-toggle="collapse" data-target="#claim_collapse" aria-expanded="false" aria-controls="claim_collapse">'
+					  + 'Claim This Land'
+					+ '</button><br>'
+					+ '<div class="collapse" id="claim_collapse">'
+			          + '<div class="form-group">'
+			            + '<label for="input_land_name">Land Name</label>'
+			            + '<input type="land_name" class="form-control" id="claim_input_land_name" name="land_name" placeholder="Land Name">'
+			          + '</div>'
+			          + '<button type="submit" class="btn btn-primary form-control">Claim</button>'
+					+ '</div>';
 				} else if (user_key == user_id) {
-					content_string += 'This is your land<br>';
+					content_string += '<button class="update_land btn btn-success" coord_key="' + coord_key + '" type="button" '
+					+ 'data-toggle="collapse" data-target="#update_collapse" aria-expanded="false" aria-controls="update_collapse">'
+					  + 'Update This Land'
+					+ '</button><br>'
+					+ '<div class="collapse" id="update_collapse">'
+			          + '<div class="form-group">'
+			            + '<label for="input_land_name">Land Name</label>'
+			            + '<input type="land_name" class="form-control" id="update_input_land_name" name="land_name" placeholder="Land Name">'
+			          + '</div>'
+			          + '<button type="submit" class="btn btn-primary form-control">Update</button>'
+					+ '</div>';
 				} else {
-					content_string += '<button class="buy_land btn btn-success" coord_key="' + coord_key + '" href="">'
-					+ 'Buy this land for $' + money_format(price) + '</button><br>';
+					content_string += '<button class="buy_land btn btn-success" coord_key="' + coord_key + '" type="button" '
+					+ 'data-toggle="collapse" data-target="#buy_collapse" aria-expanded="false" aria-controls="buy_collapse">'
+					  + 'Buy This Land'
+					+ '</button><br>'
+					+ '<div class="collapse" id="buy_collapse">'
+			          + '<div class="form-group">'
+			            + '<label for="input_land_name">Land Name</label>'
+			            + '<input type="land_name" class="form-control" id="buy_input_land_name" name="land_name" placeholder="Land Name">'
+			          + '</div>'
+			          + '<button type="submit" class="btn btn-primary form-control">Buy</button>'
+					+ '</div>';
 				}
 			}
-			content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			// content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
 			infoWindow.setPosition(event.latLng);
@@ -391,11 +425,11 @@ function initMap()
 	// Game Controls
 	// 
 
-	$('body').delegate('.claim_land', 'click', function(){
-		var coord_key = $(this).attr('coord_key');
-		var user_key = user_id;
-		claim_land(coord_key, user_key);
-	});
+	// Claim Land
+	// $('body').delegate('.claim_land_submit', 'click', function(){
+		// var coord_key = $(this).attr('coord_key');
+		// claim_land(coord_key, user_id);
+	// });
 }
 
 // Remove loading overlay
@@ -409,18 +443,17 @@ setTimeout(function(){
 // 
 
 $('.login_button').click(function(){
-	$('#register_block').hide();
+	$('.center_block').hide();
 	$('#login_block').show();
 });
 
 $('.register_button').click(function(){
-	$('#login_block').hide();
+	$('.center_block').hide();
 	$('#register_block').show();
 });
 
 $('.exit_center_block').click(function(){
-	$('#login_block').hide();
-	$('#register_block').hide();
+	$('.center_block').hide();
 });
 
 $('.login_button').click(function(){
