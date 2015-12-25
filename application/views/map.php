@@ -179,32 +179,31 @@ function initMap()
 
 	// Set land window
 	function set_window(event) {
+		// Set Parameters
 		lat = event.latLng.lat();
 		lng = event.latLng.lng();
 		lat = round_down(lat);
 		lng = round_down(lng);
 		var coord_key = lat + '|' + lng;
+		// Get land_data
 		land = get_single_land(coord_key, function(land){
-			var claimed = land[0];
-			var user_key = land[1];
-			var land_name = land[2];
-			var price = land[3];
-			var content = land[4];
+			land_data = JSON.parse(land);
 			// View
-			var content_string = '<div class="land_window"><strong>' + land_name + '</strong><br>' + content + '<br>';
+			// Create string
+			var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>' + land_data['content'] + '<br>';
 			if (log_check) {
 				// 
 				// Abstract to be shorter
 				// 
-				if (claimed === '0') {
-					content_string += land_update_form('claim', 'btn-action', coord_key);
-				} else if (user_key == user_id) {
-					content_string += land_update_form('update', 'btn-info', coord_key);
+				if (land_data['claimed'] === '0') {
+					content_string += land_update_form('claim', 'btn-action', land_data);
+				} else if (land_data['user_key'] == user_id) {
+					content_string += land_update_form('update', 'btn-info', land_data);
 				} else {
-					content_string += land_update_form('buy', 'btn-success', coord_key);
+					content_string += land_update_form('buy', 'btn-success', land_data);
 				}
 			}
-			// content_string += 'Coord Key: ' + coord_key + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			// content_string += 'Coord Key: ' + land_data['coord_key'] + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
@@ -214,8 +213,8 @@ function initMap()
 	}
 
 	// For claiming, updating, and buying land forms
-	function land_update_form(form_type, button_class, coord_key) {
-		return '<button class="' + form_type + '_land btn ' + button_class + '" coord_key="' + coord_key + '" type="button" '
+	function land_update_form(form_type, button_class, land_data) {
+		return '<button class="' + form_type + '_land btn ' + button_class + '" coord_key="' + land_data['coord_key'] + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#' + form_type + '_collapse" aria-expanded="false" aria-controls="' + form_type + '_collapse">'
 		  + '' + ucwords(form_type) + ' This Land'
 		+ '</button><br>'

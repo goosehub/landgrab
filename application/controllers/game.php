@@ -34,26 +34,19 @@ class Game extends CI_Controller {
 
 	    // Echo data to client to be parsed
 	    if ($land_square) {
-	        echo $land_square['claimed'];
-	        echo '|';
-	        echo $land_square['user_key'];
-	        echo '|';
-	        echo $land_square['land_name'];
-	        echo '|';
-	        echo $land_square['price'];
-	        echo '|';
-	        echo $land_square['content'];
+	    	echo json_encode($land_square);
+	        // echo $land_square['claimed'];
+	        // echo '|';
+	        // echo $land_square['user_key'];
+	        // echo '|';
+	        // echo $land_square['land_name'];
+	        // echo '|';
+	        // echo $land_square['price'];
+	        // echo '|';
+	        // echo $land_square['content'];
 	    // If none found, default to this
 	    } else {
-	        echo 0;
-	        echo '|';
-	        echo 0;
-	        echo '|';
-	        echo 'Not Found';
-	        echo '|';
-	        echo 0;
-	        echo '|';
-	        echo '';
+	        echo 'Error: Land not found';
 	    }
 	}
 

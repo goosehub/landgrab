@@ -33,7 +33,7 @@ Name
 ==========================================================================================
 
 High Priority
-    Claim Land
+    Claim, Update, Buy Land
     Gameplay Mechanics
 
 Low Priority
