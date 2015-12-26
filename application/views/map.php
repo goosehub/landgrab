@@ -258,7 +258,7 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		return '<form action="land_form"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
+		return '<form action="land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land'
 		+ '</button><br><br>'
@@ -449,61 +449,6 @@ function initMap()
 	// 
 	// Game Controls
 	// 
-
-	// 
-	// Attempts to run javascript from iframe click
-	// 
-
-	// Striaghtforward | Failed
-	$('#submit_land_form').on('click', function(){
-		$.ajax({
-		    type: 'POST',
-			url: '<?=base_url()?>land_form',
-		    data: $('#land_form').serialize(), 
-			cache: false,
-		    success: function(response) {
-		        alert('Submitted comment'); 
-		    },
-		    error: function() {
-		        alert('There was an error submitting comment');
-		    }
-		 });
-	});
-
-	// Permmission denied
-	var iframe = $('iframe').contents();
-	iframe.find("#submit_land_form").on('click', function(){
-       alert();
-    });
-
-    // Permission denied
-	$('#google_maps_iframe').load(function(){
-	        var iframe = $('#google_maps_iframe').contents();
-	        iframe.find('#submit_land_form').on('click', function(){
-	               alert();
-	        });
-	});
-
-	// Failed | With onclick=""
-	function submit_land_form()
-	{
-		$.ajax({
-		    type: 'POST',
-			url: '<?=base_url()?>land_form',
-		    data: $('#land_form').serialize(), 
-			cache: false,
-		    success: function(response) {
-		        alert('Submitted comment'); 
-		    },
-		    error: function() {
-		        alert('There was an error submitting comment');
-		    }
-		 });
-	}
-
-	// adding javascript to infowindow causes unterminated string
-
-	// Form with action works
 
 }
 

@@ -26,10 +26,10 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            // redirect('', 'refresh');
+            redirect('', 'refresh');
 		// Success
         } else {
-            // redirect('', 'refresh');
+            redirect('', 'refresh');
         }
 	}
 
@@ -71,10 +71,10 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            // redirect('', 'refresh');
+            redirect('', 'refresh');
         // Success
         } else {
-            // redirect('', 'refresh');
+            redirect('', 'refresh');
         }
 	}
 
@@ -115,7 +115,7 @@ class User extends CI_Controller {
 	// Logout
     public function logout() {
         $this->session->unset_userdata('logged_in');
-        // redirect('', 'refresh');
+        redirect('', 'refresh');
     }
 
     // Page Not Found
