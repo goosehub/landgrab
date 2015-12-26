@@ -21,20 +21,36 @@
 		font-family: "Lato";
 	  }
 	  /* Orange Action Bootstrap-Styled Button */
-	  .btn-action {  
-	  	background-color: hsl(41, 100%, 49%) !important;
-	  	background-repeat: repeat-x;
-	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcc60", endColorstr="#f9aa00");
-	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffcc60), to(#f9aa00));
-	  	background-image: -moz-linear-gradient(top, #ffcc60, #f9aa00);
-	  	background-image: -ms-linear-gradient(top, #ffcc60, #f9aa00);
-	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffcc60), color-stop(100%, #f9aa00));
-	  	background-image: -webkit-linear-gradient(top, #ffcc60, #f9aa00);
-	  	background-image: -o-linear-gradient(top, #ffcc60, #f9aa00);
-	  	background-image: linear-gradient(#ffcc60, #f9aa00);
-	  	border-color: #f9aa00 #f9aa00 hsl(41, 100%, 44%);
-	  	color: #333 !important;
-	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
+	  .btn-action {   
+	  	background-color: hsl(44, 100%, 56%) !important; 
+	  	background-repeat: repeat-x; 
+	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc31e", endColorstr="#ffc31e"); 
+	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffc31e), to(#ffc31e)); 
+	  	background-image: -moz-linear-gradient(top, #ffc31e, #ffc31e); 
+	  	background-image: -ms-linear-gradient(top, #ffc31e, #ffc31e); 
+	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffc31e), color-stop(100%, #ffc31e)); 
+	  	background-image: -webkit-linear-gradient(top, #ffc31e, #ffc31e); 
+	  	background-image: -o-linear-gradient(top, #ffc31e, #ffc31e); 
+	  	background-image: linear-gradient(#ffc31e, #ffc31e); 
+	  	border-color: #ffc31e #ffc31e hsl(44, 100%, 56%); 
+	  	color: #333 !important; 
+	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
+	  	-webkit-font-smoothing: antialiased;
+	  }
+	  .btn-action:hover {
+	  	background-color: hsl(38, 100%, 54%) !important; 
+	  	background-repeat: repeat-x; 
+	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffa814", endColorstr="#ffa814"); 
+	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffa814), to(#ffa814)); 
+	  	background-image: -moz-linear-gradient(top, #ffa814, #ffa814); 
+	  	background-image: -ms-linear-gradient(top, #ffa814, #ffa814); 
+	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffa814), color-stop(100%, #ffa814)); 
+	  	background-image: -webkit-linear-gradient(top, #ffa814, #ffa814); 
+	  	background-image: -o-linear-gradient(top, #ffa814, #ffa814); 
+	  	background-image: linear-gradient(#ffa814, #ffa814); 
+	  	border-color: #ffa814 #ffa814 hsl(38, 100%, 54%); 
+	  	color: #333 !important; 
+	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
 	  	-webkit-font-smoothing: antialiased;
 	  }
 
@@ -68,6 +84,11 @@
 	  }
 	  .exit_center_block {
 	  	float: right;
+	  }
+
+	  /* Land Form */
+	  .land_form textarea {
+	  	height: 3em;
 	  }
 
 	  /* Overlay */
@@ -190,7 +211,12 @@ function initMap()
 			land_data = JSON.parse(land);
 			// View
 			// Create string
-			var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>' + land_data['content'] + '<br>';
+
+			if (land_data['claimed'] === '0') {
+				content_string = '<div class="land_window"><strong>Unclaimed</strong><br>';
+			} else  {
+				var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>' + land_data['content'] + '<br>';
+			}
 			if (log_check) {
 				// 
 				// Abstract to be shorter
@@ -200,7 +226,12 @@ function initMap()
 				} else if (land_data['user_key'] == user_id) {
 					content_string += land_update_form('update', 'btn-info', land_data);
 				} else {
-					content_string += land_update_form('buy', 'btn-success', land_data);
+					if (land_data['price'] < cash)
+					{
+						content_string += land_update_form('buy', 'btn-success', land_data);
+					} else {
+						content_string += '<button class="btn btn-default" disabled="disabled">Not enough cash to buy</button>';
+					}
 				}
 			}
 			// content_string += 'Coord Key: ' + land_data['coord_key'] + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
@@ -213,15 +244,21 @@ function initMap()
 	}
 
 	// For claiming, updating, and buying land forms
-	function land_update_form(form_type, button_class, land_data) {
-		return '<button class="' + form_type + '_land btn ' + button_class + '" coord_key="' + land_data['coord_key'] + '" type="button" '
+	function land_update_form(form_type, button_class, d) {
+		return '<button class="' + form_type + '_land btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#' + form_type + '_collapse" aria-expanded="false" aria-controls="' + form_type + '_collapse">'
 		  + '' + ucwords(form_type) + ' This Land'
-		+ '</button><br>'
-		+ '<div class="collapse" id="' + form_type + '_collapse">'
+		+ '</button><br><br>'
+		+ '<div class="land_form collapse" id="' + form_type + '_collapse">'
           + '<div class="form-group">'
-            + '<label for="input_land_name">Land Name</label>'
-            + '<input type="land_name" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name">'
+            + '<input type="hidden" id="' + form_type + '_input_form_type" name="form_type_input" value="' + form_type + '">'
+            + '<input type="hidden" id="' + form_type + '_input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
+            + '<input type="hidden" id="' + form_type + '_input_lng" name="lng_input" value="' + d['lng'] + '">'
+            + '<input type="hidden" id="' + form_type + '_input_lat" name="lat_input" value="' + d['lat'] + '">'
+            + '<input type="text" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
+            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="$' + d['price'] + '">'
+            + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Content">' + d['content'] + '</textarea>'
+            + '<strong>Color:</strong> <input type="color" class="" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
           + '</div>'
           + '<button type="submit" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
 		+ '</div>';
@@ -305,9 +342,10 @@ function initMap()
 	// Pass Session Variables
 	// 
 
-	var username = '<?php echo $username; ?>';
-	var user_id = <?php echo $user_id; ?>;
 	var log_check = <?php echo $log_check; ?>;
+	var user_id = <?php echo $user_id; ?>;
+	var username = '<?php echo $username; ?>';
+	var cash = <?php echo $cash; ?>;
 
 	// 
 	// Map options
