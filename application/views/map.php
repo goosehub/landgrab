@@ -87,7 +87,7 @@
 	  }
 
 	  /* Land Form */
-	  .land_form textarea {
+	  #land_form textarea {
 	  	height: 3em;
 	  }
 
@@ -113,7 +113,7 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-    	<button class="cash_display btn btn-default">$<?php echo number_format($cash); ?>.00</button>
+    	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($cash); ?>.00</button>
 		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			<?php echo $username; ?>
 		  <span class="caret"></span>
@@ -254,13 +254,15 @@ function initMap()
 		});
 	}
 
+	$('iframe').attr('id', 'google_maps_iframe');
+
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		return '<button class="' + form_type + '_land btn ' + button_class + '" type="button" '
-		+ 'data-toggle="collapse" data-target="#' + form_type + '_collapse" aria-expanded="false" aria-controls="' + form_type + '_collapse">'
+		return '<form action="land_form"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
+		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land'
 		+ '</button><br><br>'
-		+ '<div class="land_form collapse" id="' + form_type + '_collapse">'
+		+ '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="' + form_type + '_input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="' + form_type + '_input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
@@ -271,8 +273,8 @@ function initMap()
             + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '<strong>Color:</strong> <input type="color" class="" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
           + '</div>'
-          + '<button type="submit" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
-		+ '</div>';
+          + '<button type="submit" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+		+ '</div></form>';
 	}
 
 	// Uppercase words
@@ -293,23 +295,6 @@ function initMap()
 			{
 				var lands = html.split('|');
 				callback(lands);
-				return true;
-			}
-		});
-	}
-
-	// Claim land
-	function claim_land(coord_key, user_key) {
-		$.ajax({
-			url: "<?=base_url()?>claim_land",
-			type: "GET",
-			data: { 
-				coord_key: coord_key,
-				user_key: user_id
-			},
-			cache: false,
-			success: function(html)
-			{
 				return true;
 			}
 		});
@@ -465,11 +450,61 @@ function initMap()
 	// Game Controls
 	// 
 
-	// Claim Land
-	// $('body').delegate('.claim_land_submit', 'click', function(){
-		// var coord_key = $(this).attr('coord_key');
-		// claim_land(coord_key, user_id);
-	// });
+	// 
+	// Attempts to run javascript from iframe click
+	// 
+
+	// Striaghtforward | Failed
+	$('#submit_land_form').on('click', function(){
+		$.ajax({
+		    type: 'POST',
+			url: '<?=base_url()?>land_form',
+		    data: $('#land_form').serialize(), 
+			cache: false,
+		    success: function(response) {
+		        alert('Submitted comment'); 
+		    },
+		    error: function() {
+		        alert('There was an error submitting comment');
+		    }
+		 });
+	});
+
+	// Permmission denied
+	var iframe = $('iframe').contents();
+	iframe.find("#submit_land_form").on('click', function(){
+       alert();
+    });
+
+    // Permission denied
+	$('#google_maps_iframe').load(function(){
+	        var iframe = $('#google_maps_iframe').contents();
+	        iframe.find('#submit_land_form').on('click', function(){
+	               alert();
+	        });
+	});
+
+	// Failed | With onclick=""
+	function submit_land_form()
+	{
+		$.ajax({
+		    type: 'POST',
+			url: '<?=base_url()?>land_form',
+		    data: $('#land_form').serialize(), 
+			cache: false,
+		    success: function(response) {
+		        alert('Submitted comment'); 
+		    },
+		    error: function() {
+		        alert('There was an error submitting comment');
+		    }
+		 });
+	}
+
+	// adding javascript to infowindow causes unterminated string
+
+	// Form with action works
+
 }
 
 // Remove loading overlay

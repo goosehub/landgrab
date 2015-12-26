@@ -6,7 +6,7 @@ $route['default_controller'] = "game";
 
 // Game functions
 $route['get_single_land'] = "game/get_single_land";
-$route['claim_land'] = "game/claim_land";
+$route['land_form'] = "game/land_form";
 
 // User functions
 $route['user/login'] = "user/login";
