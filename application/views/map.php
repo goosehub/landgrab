@@ -65,7 +65,7 @@
 	  	position: absolute;
 		top: 0.5em;
 		right: 6em;
-		opacity: 0.8;
+		opacity: 0.9;
 	  }
 
 	  /* Center Block */
@@ -113,8 +113,19 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-		<button class="user_button btn btn-primary"><?php echo $username; ?> | $<?php echo number_format($cash); ?>.00</button>
-    	<a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a>
+    	<button class="cash_display btn btn-default">$<?php echo number_format($cash); ?>.00</button>
+		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			<?php echo $username; ?>
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
+		  <!-- <li><a href="#">Profile</a></li> -->
+		  <li><a href="#">How To Play</a></li>
+		  <li><a href="#">About The Site</a></li>
+		  <li><a href="#">Report Bugs</a></li>
+		  <li role="separator" class="divider"></li>
+		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
+		</ul>
 	    <?php } else { ?>
     	<button class="login_button btn btn-info">Login</button>
     	<button class="register_button btn btn-action">Register</button>
@@ -256,8 +267,8 @@ function initMap()
             + '<input type="hidden" id="' + form_type + '_input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="' + form_type + '_input_lat" name="lat_input" value="' + d['lat'] + '">'
             + '<input type="text" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
-            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="$' + d['price'] + '">'
-            + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Content">' + d['content'] + '</textarea>'
+            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="Price: $' + d['price'] + '">'
+            + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '<strong>Color:</strong> <input type="color" class="" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
           + '</div>'
           + '<button type="submit" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
