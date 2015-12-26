@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2015 at 09:20 AM
+-- Generation Time: Dec 26, 2015 at 03:39 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -15205,6 +15205,39 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `claimed`, `user_key`, `lan
 (15118, '78|178', '78', '178', 0, 0, 'Unclaimed', 0, '', 'FF00FF', '222222', '2015-12-25 06:06:59', '2015-12-25 06:06:59'),
 (15119, '80|178', '80', '178', 0, 0, 'Unclaimed', 0, '', 'FF00FF', '222222', '2015-12-25 06:06:59', '2015-12-25 06:06:59'),
 (15120, '82|178', '82', '178', 0, 0, 'Unclaimed', 0, '', 'FF00FF', '222222', '2015-12-25 06:06:59', '2015-12-25 06:06:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `facebook_id` int(16) NOT NULL,
+  `email` varchar(256) NOT NULL,
+  `cash` bigint(20) NOT NULL,
+  `desc` text NOT NULL,
+  `location` varchar(256) NOT NULL,
+  `primary_color` varchar(10) NOT NULL,
+  `secondary_color` varchar(10) NOT NULL,
+  `flag_image` varchar(512) NOT NULL,
+  `profile_image` varchar(512) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `facebook_id`, `email`, `cash`, `desc`, `location`, `primary_color`, `secondary_color`, `flag_image`, `profile_image`, `created`, `modified`) VALUES
+(1, 'goose', '$2y$10$VvLWbplOf4RQIL4mMMIiNuwsSajn6tvXhCdfdBizvmgi3c4hsLQXC', 0, 'placeholder@gmail.com', 1000, '', '', '', '', '', '', '2015-12-24 05:24:37', '2015-12-26 02:35:29'),
+(2, 'alex', '$2y$10$5iI.wsEemKnWJmWW0nQdku2GYC3fbHid/f0LgB5FP7Y34ap.opl/C', 0, 'placeholder@gmail.com', 0, '', '', '', '', '', '', '2015-12-24 15:09:09', '2015-12-24 15:09:09'),
+(3, 'bob', '$2y$10$44SV3dQEtd4/Qu2.3cOCdewAUYPDYhzr1JEIhHJZbltvYadm03Ld.', 0, 'placeholder@gmail.com', 0, '', '', '', '', '', '', '2015-12-24 15:13:02', '2015-12-24 15:13:02');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

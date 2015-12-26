@@ -26,10 +26,10 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('', 'refresh');
+            // redirect('', 'refresh');
 		// Success
         } else {
-            redirect('', 'refresh');
+            // redirect('', 'refresh');
         }
 	}
 
@@ -51,7 +51,8 @@ class User extends CI_Controller {
             foreach ($result as $row) {
                 $sess_array = array(
                     'id' => $row['id'],
-                    'username' => $row['username']
+                    'username' => $row['username'],
+                    'cash' => $row['cash']
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
             }
@@ -70,18 +71,19 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('', 'refresh');
+            // redirect('', 'refresh');
         // Success
         } else {
-            redirect('', 'refresh');
+            // redirect('', 'refresh');
         }
 	}
 
 	// Validate Register Callback
     public function register_validation($password) {
-        // Get other parameters
+        // Set parameters
         $email = "placeholder@gmail.com";
         $username = $this->input->post('username');
+        $cash = 0;
 		// Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {
@@ -101,7 +103,8 @@ class User extends CI_Controller {
                 $sess_array = array();
                 $sess_array = array(
                     'id' => $result,
-                    'username' => $username
+                    'username' => $username,
+                    'cash' => $cash
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
                 return TRUE;
@@ -112,7 +115,7 @@ class User extends CI_Controller {
 	// Logout
     public function logout() {
         $this->session->unset_userdata('logged_in');
-        redirect('', 'refresh');
+        // redirect('', 'refresh');
     }
 
     // Page Not Found

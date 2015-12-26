@@ -92,7 +92,7 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-		<button class="user_button btn btn-primary"><?php echo $username; ?></button>
+		<button class="user_button btn btn-primary"><?php echo $username; ?> | $<?php echo number_format($cash); ?>.00</button>
     	<a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a>
 	    <?php } else { ?>
     	<button class="login_button btn btn-info">Login</button>
