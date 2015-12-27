@@ -37,8 +37,7 @@ Class user_model extends CI_Model
         'username' => $username,
         'password' => password_hash($password, PASSWORD_BCRYPT),
         'email' => $email,
-        'facebook_id' => $facebook_id,
-        'profile_picture' => 'default.png'
+        'facebook_id' => $facebook_id
         );
         $this->db->insert('user', $data);
 

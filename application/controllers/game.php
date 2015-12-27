@@ -18,6 +18,7 @@ class Game extends CI_Controller {
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
+        $data['just_registered'] = $this->session->flashdata('just_registered');
 
 		$this->load->view('map', $data);
 	}

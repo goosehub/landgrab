@@ -508,6 +508,10 @@ $('.how_to_play_button').click(function(){
 	$('#how_to_play_block').show();
 });
 
+<?php if ($just_registered) { ?>
+$('#how_to_play_block').show();
+<?php } ?>
+
 $('.about_button').click(function(){
 	$('.center_block').hide();
 	$('#about_block').show();

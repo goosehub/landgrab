@@ -74,6 +74,7 @@ class User extends CI_Controller {
             redirect('', 'refresh');
         // Success
         } else {
+            $this->session->set_flashdata('just_registered', true);
             redirect('', 'refresh');
         }
 	}
