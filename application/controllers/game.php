@@ -48,7 +48,6 @@ class Game extends CI_Controller {
     {
         require 'global.php';
 		$_POST['price'] = str_replace(',', '', $_POST['price']);
-		$_POST['coord_key_input'] = str_replace(',', '|', $_POST['coord_key_input']);
 		// Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');

@@ -268,7 +268,7 @@ function initMap()
 		lng = event.latLng.lng();
 		lat = round_down(lat);
 		lng = round_down(lng);
-		var coord_key = lat + '|' + lng;
+		var coord_key = lat + ',' + lng;
 		// Get land_data
 		land = get_single_land(coord_key, function(land){
 			land_data = JSON.parse(land);
@@ -358,8 +358,7 @@ function initMap()
 			cache: false,
 			success: function(html)
 			{
-				var lands = html.split('|');
-				callback(lands);
+				callback(html);
 				return true;
 			}
 		});
