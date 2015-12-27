@@ -6,7 +6,8 @@ class Game extends CI_Controller {
 
 	function __construct() {
 	    parent::__construct();
-	    $this->load->model('game_model', '', TRUE);
+        $this->load->model('game_model', '', TRUE);
+	    $this->load->model('user_model', '', TRUE);
 	}
 
 	// Map view
@@ -44,9 +45,9 @@ class Game extends CI_Controller {
 
 	// Claim unclaimed land
 	public function land_form()
-	{
+    {
+        require 'global.php';
 		$_POST['price'] = str_replace(',', '', $_POST['price']);
-		$_POST['price'] = substr($_POST['price'], 8);
 		$_POST['coord_key_input'] = str_replace(',', '|', $_POST['coord_key_input']);
 		// Validation
         $this->load->library('form_validation');
@@ -61,10 +62,9 @@ class Game extends CI_Controller {
 
 		// Fail
 	    if ($this->form_validation->run() == FALSE) {
-	    	$this->session->set_flashdata('failed_form', 'login');
-	    	$this->session->set_flashdata('validation_errors', validation_errors());
-	    	echo validation_errors();
-	        // redirect('', 'refresh');
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            redirect('', 'refresh');
 		// Success
 	    } else {
 	    	$claimed = 1;
@@ -75,8 +75,7 @@ class Game extends CI_Controller {
 	        $price = $this->input->post('price');
 	        $content = $this->input->post('content');
 	        $primary_color = $this->input->post('primary_color');
-		    $session_data = $this->session->userdata('logged_in');
-	        $user_key = $session_data['id'];
+	        $user_key = $user_id;
 	        $query_action = $this->game_model->update_land_data($claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color);
 	        redirect('', 'refresh');
 	    }
@@ -85,6 +84,43 @@ class Game extends CI_Controller {
 	// Validate Login Callback
 	public function land_form_validation($form_type_input)
 	{
-		return true;
+        require 'global.php';
+        // Get land info for verifying our inputs
+        $coord_key = $this->input->post('coord_key_input');
+        $query_result = $this->game_model->get_single_land($coord_key);
+        $land_square = isset($query_result[0]) ? $query_result[0] : false;
+
+        // Check for inaccuracies
+        if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
+            $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
+            return false;
+        }
+        else if ($form_type_input === 'update' && $land_square['user_key'] != $user_id) {
+            $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
+            return false;
+        }
+        else if ($form_type_input === 'buy' && $land_square['user_key'] === $user_id) {
+            $this->form_validation->set_message('land_form_validation', 'This land is already yours');
+            return false;
+        }
+        else if ($cash < $land_square['price'])
+        {
+            $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
+            return false;
+        }
+
+        // Get seller and buying party info
+        $selling_owner_id = $land_square['user_key'];
+        $buying_owner_id = $user_id;
+        $amount = $land_square['price'];
+        $selling_owner = $this->user_model->get_user($selling_owner_id);
+        $buying_owner = $this->user_model->get_user($buying_owner_id);
+
+        // Do sale
+        $new_selling_owner_cash = $selling_owner['cash'] + $amount;
+        $new_buying_owner_cash = $buying_owner['cash'] - $amount;
+        $query_action = $this->game_model->land_sale($selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
+
+        return true;
 	}
 }

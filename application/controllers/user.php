@@ -108,7 +108,7 @@ class User extends CI_Controller {
                     'cash' => $cash
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
-                return TRUE;
+                return true;
             }
         }
     }

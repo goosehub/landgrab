@@ -24,16 +24,17 @@ Game Theory
     How to encourage selling of land, high volume trading
     How do stale players lose land
     How to discourage mass dupe user registration manipulation
+    How to deal with sitting profiles of stagnant money
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Claim, Update, Buy Land
     Gameplay Mechanics
 
 Low Priority
+    Record of game transactions
     Password Resets
     User Profiles???
 

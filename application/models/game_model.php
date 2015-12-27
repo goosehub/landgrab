@@ -41,6 +41,27 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Do land sale if possible
+ function land_sale($selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash)
+ {
+    // Seller add cash
+    $data = array(
+        'cash' => $new_selling_owner_cash
+    );
+    $this->db->where('id', $selling_owner_id);
+    $this->db->update('user', $data);
+    echo '<br>' . $this->db->last_query() . '<br>';
+
+    // Buyer detuct cash
+    $data = array(
+        'cash' => $new_buying_owner_cash
+    );
+    $this->db->where('id', $buying_owner_id);
+    $this->db->update('user', $data);
+    echo '<br>' . $this->db->last_query() . '<br>';
+
+    return true;
+ }
 
 }
 ?>

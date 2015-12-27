@@ -87,6 +87,9 @@
 	  }
 
 	  /* Land Form */
+	  #land_form .row {
+	  	margin-right: 0;
+	  }
 	  #land_form textarea {
 	  	height: 3em;
 	  }
@@ -143,6 +146,19 @@
 
     <!-- Center Blocks -->
 
+    <!-- Error Block -->
+    <div id="error_block" class="center_block">
+    	<strong>There was an issue</strong>
+
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
+
+    	<!-- Validation Errors -->
+    	<?php if ($failed_form === 'error_block') { echo $validation_errors; } ?>
+
+    </div>
+
     <!-- Login Block -->
     <div id="login_block" class="center_block">
     	<strong>Login</strong>
@@ -193,7 +209,7 @@
     	    <label for="input_confirm">Confirm</label>
     	    <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
     	  </div>
-    	  <button type="submit" class="btn btn-action form-control">Register</button>
+    	  <button type="submit" class="btn btn-action form-control">Register To Play</button>
 	    </form>
     </div>
 
@@ -294,30 +310,43 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		return '<form action="land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
+		result = '<form action="land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
-		  + '' + ucwords(form_type) + ' This Land'
-		+ '</button><br><br>'
+		  + '' + ucwords(form_type) + ' This Land';
+		if (form_type === 'buy') {
+			result += ' ($' + money_format(d['price']) + ')';
+		}
+		result += '</button><br><br>'
 		+ '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="' + form_type + '_input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="' + form_type + '_input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
             + '<input type="hidden" id="' + form_type + '_input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="' + form_type + '_input_lat" name="lat_input" value="' + d['lat'] + '">'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="' + form_type + '_input_land_name">Name</label>'
+            + '</div><div class="col-md-8">'
             + '<input type="text" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
-            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="Price: $' + d['price'] + '">'
+            + '</div></div>'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="' + form_type + '_input_price">Price</label>'
+            + '</div><div class="col-md-8">'
+            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="' + money_format(d['price']) + '">'
+            + '</div></div>'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="' + form_type + '_input_content">Description</label>'
+            + '</div><div class="col-md-8">'
             + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
-            + '<strong>Color:</strong> <input type="color" class="" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
+            + '</div></div>'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="' + form_type + '_input_primary_color">Color</label>'
+            + '</div><div class="col-md-8">'
+            + '<input type="color" class="form-control" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
+            + '</div></div>'
           + '</div>'
           + '<button type="submit" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
 		+ '</div></form>';
-	}
-
-	// Uppercase words
-	function ucwords (str) {
-	    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
-	        return $1.toUpperCase();
-	    });
+		return result;
 	}
 
 	// Get single land ajax
@@ -334,6 +363,13 @@ function initMap()
 				return true;
 			}
 		});
+	}
+
+	// Uppercase words
+	function ucwords (str) {
+	    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+	        return $1.toUpperCase();
+	    });
 	}
 
 	// For money formatting
@@ -492,6 +528,10 @@ setTimeout(function(){
 // 
 // User Controls
 // 
+
+<?php if ($failed_form === 'error_block') { ?>
+	$('#error_block').show();
+<?php } ?>
 
 $('.login_button').click(function(){
 	$('.center_block').hide();
