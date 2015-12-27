@@ -1,3 +1,3 @@
-<h1>Land</h1>
+<h1>LandGrab</h1>
 
 A game in development

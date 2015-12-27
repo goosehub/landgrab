@@ -25,9 +25,6 @@ Game Theory
     How do stale players lose land
     How to discourage mass dupe user registration manipulation
 
-Name
-    Land Grab
-
 ==========================================================================================
     Goals
 ==========================================================================================
