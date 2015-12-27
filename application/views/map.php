@@ -120,15 +120,24 @@
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
 		  <!-- <li><a href="#">Profile</a></li> -->
-		  <li><a href="#">How To Play</a></li>
-		  <li><a href="#">About The Site</a></li>
-		  <li><a href="#">Report Bugs</a></li>
+		  <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
+		  <li><a class="about_button btn btn-default">About LandGrab</a></li>
+		  <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
 		  <li role="separator" class="divider"></li>
 		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
 		</ul>
 	    <?php } else { ?>
     	<button class="login_button btn btn-info">Login</button>
     	<button class="register_button btn btn-action">Register</button>
+		<button class="info_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			Info
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
+		  <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
+		  <li><a class="about_button btn btn-default">About LandGrab</a></li>
+		  <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
+		</ul>
 	    <?php } ?>
     </div>
 
@@ -186,6 +195,33 @@
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Register</button>
 	    </form>
+    </div>
+
+    <!-- How To Play Block -->
+    <div id="how_to_play_block" class="center_block">
+    	<strong>How To Play</strong>
+
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
+    </div>
+
+    <!-- About Block -->
+    <div id="about_block" class="center_block">
+    	<strong>About LandGrab</strong>
+
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
+    </div>
+
+    <!-- Report Bugs Block -->
+    <div id="report_bugs_block" class="center_block">
+    	<strong>Report Bugs</strong>
+
+    	<button type="button" class="exit_center_block btn btn-default btn-sm">
+    	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    	</button>
     </div>
 
 	<!-- jQuery -->
@@ -384,16 +420,12 @@ function initMap()
 
 	<?php // No comments below because of performance ?>
 	<?php foreach ($lands as $land) { ?> 
-	    primary_lat = <?php echo $land['lat']; ?>;
-	    primary_lng = <?php echo $land['lng']; ?>;
-
 	    shape = [
-	        {lat: primary_lat, lng: primary_lng},
-	        {lat: primary_lat + box_size, lng: primary_lng},
-	        {lat: primary_lat + box_size, lng: primary_lng - box_size},
-	        {lat: primary_lat, lng: primary_lng - box_size}
+	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?>},
+	        {lat: <?php echo $land['lat']; ?> + box_size, lng: <?php echo $land['lng']; ?>},
+	        {lat: <?php echo $land['lat']; ?> + box_size, lng: <?php echo $land['lng']; ?> - box_size},
+	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?> - box_size}
 	    ];
-
 	    box = new google.maps.Polygon({
 	      map: map,
 	      paths: shape,
@@ -402,12 +434,11 @@ function initMap()
 	      <?php if ($land['claimed']) { ?>
 	      fillOpacity: 0.3,
 	      <?php } else { ?>
-	      fillOpacity: 0,
+	      fillOpacity: 0.1,
 	      <?php } ?>
 	      fillColor: "#<?php echo $land['primary_color']; ?>",
 	      strokeColor: "#<?php echo $land['secondary_color']; ?>"
 	    });
-
 	    box.setMap(map);
 	    box.addListener('click', set_window);
 	    infoWindow = new google.maps.InfoWindow;
@@ -470,6 +501,21 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
 	$('.center_block').hide();
 	$('#register_block').show();
+});
+
+$('.how_to_play_button').click(function(){
+	$('.center_block').hide();
+	$('#how_to_play_block').show();
+});
+
+$('.about_button').click(function(){
+	$('.center_block').hide();
+	$('#about_block').show();
+});
+
+$('.report_bugs_button').click(function(){
+	$('.center_block').hide();
+	$('#report_bugs_block').show();
 });
 
 $('.exit_center_block').click(function(){
