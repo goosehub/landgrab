@@ -37,6 +37,7 @@ class Game extends CI_Controller {
         $data['failed_form'] = $this->session->flashdata('failed_form');
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
+        // Load view
 		$this->load->view('map', $data);
 	}
 
@@ -132,6 +133,7 @@ class Game extends CI_Controller {
             return false;
         }
 
+        // Do transaction
         if ($form_type_input === 'buy')
         {
             // Get seller and buying party info
@@ -146,6 +148,7 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->land_sale($world_key, $selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
         }
 
+        // Return validation true if not returned false yet
         return true;
 	}
 }

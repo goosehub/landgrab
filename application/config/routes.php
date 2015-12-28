@@ -15,6 +15,9 @@ $route['user/register'] = "user/register";
 $route['user/login'] = "user/login";
 $route['user/logout'] = "user/logout";
 
+// Token
+$route['cron/(:any)'] = "cron/index/$1";
+
 // Not found
 $route['404_override'] = 'user/page_not_found';
 
