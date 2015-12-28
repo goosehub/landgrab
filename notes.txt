@@ -32,6 +32,8 @@ Game Theory
 
 High Priority
     Gameplay Mechanics
+    Scoreboard
+    Easier to find own properties
 
 Low Priority
     Record of game transactions

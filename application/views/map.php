@@ -219,6 +219,21 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
+        
+        <hr>
+        <p>
+            LandGrab is a game of Claiming, Buying, and Selling Land.
+            You can aim to accumilate the most wealth, or to own the most land.
+            With some skill, you can own areas like New York, Paris, or Tel-Aviv.
+        </p>
+        <p>
+            You start the game with $1,000,000.
+            You can claim any unowned land for free.
+            You must set a price on land you own.
+            <!-- You will have to pay an hour tax of 1% on price you set, so don't set the price so high you run out of cash, but not so low you lose valuable land. -->
+            <!-- Every hour, the taxes gets distributed among the land owners based on amount of land owned. -->
+            <!-- When you run out of cash, you lose. -->
+        </p>
     </div>
 
     <!-- About Block -->
@@ -228,6 +243,10 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
+        
+        <hr>
+        <p>LandGrab is a game developed by Goose. Developed in PHP with CodeIgniter 3.</p>
+        <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
     </div>
 
     <!-- Report Bugs Block -->
@@ -237,6 +256,13 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
+
+        <hr>
+        <p>Please report all bugs to 
+            <strong>
+                <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>
+            </strong>
+        </p>
     </div>
 
 	<!-- jQuery -->
