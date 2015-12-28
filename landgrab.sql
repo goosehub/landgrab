@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2015 at 12:28 AM
+-- Generation Time: Dec 28, 2015 at 01:48 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -4314,7 +4314,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `claimed`, `user_key`, `lan
 (4255, '24,-80', '24', '-80', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4256, '26,-80', '26', '-80', 1, 2, 'Miami', 1000, 'Just Jose', '#ff0000', '#a1d490', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4257, '28,-80', '28', '-80', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
-(4258, '30,-80', '30', '-80', 1, 1, 'Jax', 60, 'Home sweet home!', '#008080', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
+(4258, '30,-80', '30', '-80', 1, 1, 'Jax', 60, 'Home sweet home!', '#ffff00', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:53:09'),
 (4259, '32,-80', '32', '-80', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4260, '34,-80', '34', '-80', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4261, '36,-80', '36', '-80', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
@@ -4656,7 +4656,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `claimed`, `user_key`, `lan
 (4596, '34,-72', '34', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4597, '36,-72', '36', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4598, '38,-72', '38', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
-(4599, '40,-72', '40', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
+(4599, '40,-72', '40', '-72', 1, 1, 'New York New York', 1500, 'If you can make it here, you can make it anywhere', '#ff0000', '#222222', '2015-12-25 06:06:54', '2015-12-28 00:28:44'),
 (4600, '42,-72', '42', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4601, '44,-72', '44', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
 (4602, '46,-72', '46', '-72', 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-25 06:06:54', '2015-12-27 23:26:59'),
@@ -15225,17 +15225,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `facebook_id`, `email`, `cash`, `desc`, `location`, `primary_color`, `secondary_color`, `flag_image`, `profile_image`, `created`, `modified`) VALUES
-(1, 'goose', '$2y$10$VvLWbplOf4RQIL4mMMIiNuwsSajn6tvXhCdfdBizvmgi3c4hsLQXC', 0, 'placeholder@gmail.com', 2000, '', '', '', '', '', '', '2015-12-24 05:24:37', '2015-12-27 22:39:35'),
-(2, 'alex', '$2y$10$5iI.wsEemKnWJmWW0nQdku2GYC3fbHid/f0LgB5FP7Y34ap.opl/C', 0, 'placeholder@gmail.com', 6000, '', '', '', '', '', '', '2015-12-24 15:09:09', '2015-12-27 22:39:35'),
-(3, 'bob', '$2y$10$44SV3dQEtd4/Qu2.3cOCdewAUYPDYhzr1JEIhHJZbltvYadm03Ld.', 0, 'placeholder@gmail.com', 0, '', '', '', '', '', '', '2015-12-24 15:13:02', '2015-12-24 15:13:02'),
-(4, 'tommy', '$2y$10$ktZOZ4zD/S2/tLTM.Fv7z.CJjBXtpsp2gziLRZ4KFa5iQ8tEGi.M.', 0, 'placeholder@gmail.com', 0, '', '', '', '', '', '', '2015-12-27 21:05:05', '2015-12-27 21:05:05');
+(1, 'goose', '$2y$10$VvLWbplOf4RQIL4mMMIiNuwsSajn6tvXhCdfdBizvmgi3c4hsLQXC', 0, 'placeholder@gmail.com', 1000000, '', '', '', '', '', '', '2015-12-24 05:24:37', '2015-12-28 00:48:04'),
+(2, 'alex', '$2y$10$5iI.wsEemKnWJmWW0nQdku2GYC3fbHid/f0LgB5FP7Y34ap.opl/C', 0, 'placeholder@gmail.com', 1000000, '', '', '', '', '', '', '2015-12-24 15:09:09', '2015-12-28 00:48:00'),
+(3, 'bob', '$2y$10$44SV3dQEtd4/Qu2.3cOCdewAUYPDYhzr1JEIhHJZbltvYadm03Ld.', 0, 'placeholder@gmail.com', 1000000, '', '', '', '', '', '', '2015-12-24 15:13:02', '2015-12-28 00:47:59'),
+(4, 'tommy', '$2y$10$ktZOZ4zD/S2/tLTM.Fv7z.CJjBXtpsp2gziLRZ4KFa5iQ8tEGi.M.', 0, 'placeholder@gmail.com', 1000000, '', '', '', '', '', '', '2015-12-27 21:05:05', '2015-12-28 00:47:55'),
+(5, 'newbie', '$2y$10$mGwPNCp1ephJUXGFreUD4OhRfBl4kgfleb5OB0Sr6yNV8mTFROtOK', 0, 'placeholder@gmail.com', 1000000, '', '', '', '', '', '', '2015-12-28 00:47:35', '2015-12-28 00:47:35');
 
 -- --------------------------------------------------------
 

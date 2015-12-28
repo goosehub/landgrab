@@ -19,7 +19,7 @@ Class user_model extends CI_Model
     }
  }
  // Register
- function register($username, $password, $email, $facebook_id)
+ function register($username, $password, $email, $facebook_id, $cash)
  {
     $this->db->select('username');
     $this->db->from('user');
@@ -36,6 +36,7 @@ Class user_model extends CI_Model
         'username' => $username,
         'password' => password_hash($password, PASSWORD_BCRYPT),
         'email' => $email,
+        'cash' => $cash,
         'facebook_id' => $facebook_id
         );
         $this->db->insert('user', $data);

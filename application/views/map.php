@@ -519,8 +519,14 @@ function initMap()
 // User Controls
 // 
 
+// Show error block if errors exist
 <?php if ($failed_form === 'error_block') { ?>
 	$('#error_block').show();
+<?php } ?>
+
+// Show how to play after registering
+<?php if ($just_registered) { ?>
+$('#how_to_play_block').show();
 <?php } ?>
 
 $('.login_button').click(function(){
@@ -537,10 +543,6 @@ $('.how_to_play_button').click(function(){
 	$('.center_block').hide();
 	$('#how_to_play_block').show();
 });
-
-<?php if ($just_registered) { ?>
-$('#how_to_play_block').show();
-<?php } ?>
 
 $('.about_button').click(function(){
 	$('.center_block').hide();

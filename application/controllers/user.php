@@ -84,7 +84,7 @@ class User extends CI_Controller {
         // Set parameters
         $email = "placeholder@gmail.com";
         $username = $this->input->post('username');
-        $cash = 0;
+        $cash = 1000000;
 		// Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {
@@ -93,7 +93,7 @@ class User extends CI_Controller {
         } else {
 			// Attempt new user register
             $facebook_id = 0;
-            $result = $this->user_model->register($username, $password, $email, $facebook_id);
+            $result = $this->user_model->register($username, $password, $email, $facebook_id, $cash);
 			// Fail
             if (! $result) {
                 $this->form_validation->set_message('insert_database', 'Username already exists');
