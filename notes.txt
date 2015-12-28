@@ -18,8 +18,9 @@ Leaderboards
 Game Theory
     Will new players be able to get into the market?
     How to encourage selling of land, high volume trading
-    How do stale players lose land
     How to discourage mass dupe user registration manipulation
+        Detection?
+    How do stale players lose land
     How to deal with sitting accounts of stagnant money
 
 ==========================================================================================
@@ -27,18 +28,18 @@ Game Theory
 ==========================================================================================
 
 High Priority
-    Gameplay Mechanics
-    Leaderboards
-    Easier to find own properties
-    Users by world
+    CRON gameplay Mechanics
+    Bug on world 2, where claimed land shows as unclaimed
 
 Low Priority
+    Leaderboards
     Record of game transactions
-    Password Resets
     Trade Land
     User Profiles
 
 No Priority
+    Dupe account detection and action
+    Password Resets
     General Security
     Social Media Share
     Facebook login

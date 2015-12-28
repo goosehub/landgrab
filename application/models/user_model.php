@@ -35,7 +35,7 @@ Class user_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Get all worlds
- function get_all_world_keys()
+ function get_all_worlds()
  {
     $this->db->select('*');
     $this->db->from('world');

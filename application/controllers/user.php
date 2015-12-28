@@ -96,9 +96,9 @@ class User extends CI_Controller {
             // Success
             } else {
                 // Create account for each world
-                $world_keys = $this->user_model->get_all_world_keys();
+                $worlds = $this->user_model->get_all_worlds();
                 $cash = 1000000;
-                foreach ($world_keys as $world)
+                foreach ($worlds as $world)
                 {
                     $account_id = $this->user_model->create_player_account($user_id, $world['id'], $cash);
                 }

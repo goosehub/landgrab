@@ -17,11 +17,12 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Get world by slug
- function get_world_by_slug($slug)
+ function get_world_by_slug_or_id($slug)
  {
     $this->db->select('*');
     $this->db->from('world');
     $this->db->where('slug', $slug);
+    $this->db->or_where('id', $slug);
     $this->db->limit(1);
     $query = $this->db->get();
     $result = $query->result_array();

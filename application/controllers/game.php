@@ -11,14 +11,13 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 'default')
+	public function index($world_slug = 1)
 	{
 		require 'global.php';
 
         // Get world
-        $world = $data['world'] = $this->game_model->get_world_by_slug($world_slug);
-        if (!isset($world))
-        {
+        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_slug);
+        if (!$world) {
             $this->load->view('page_not_found', $data);
             return false;
         }
@@ -27,8 +26,12 @@ class Game extends CI_Controller {
         $account = $this->user_model->get_account_by_keys($user_id, $world['id']);
         $data['cash'] = $account['cash'];
 
+        // Get worlds
+        $data['worlds'] = $this->user_model->get_all_worlds();
+
         // Get lands
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
+
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
@@ -77,11 +80,12 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
         $this->form_validation->set_rules('primary_color', 'color', 'trim|required|max_length[7]');
 
-		// Fail
+        $world_key = $this->input->post('world_key_input');
+        // Fail
 	    if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('', 'refresh');
+            redirect('world/' . $world_key, 'refresh');
 		// Success
 	    } else {
 	    	$claimed = 1;
@@ -95,7 +99,7 @@ class Game extends CI_Controller {
 	        $primary_color = $this->input->post('primary_color');
 	        $user_key = $user_id;
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color);
-	        redirect('', 'refresh');
+	        redirect('world/' . $world_key, 'refresh');
 	    }
 	}
 

@@ -127,31 +127,37 @@
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
     	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($cash); ?>.00</button>
-		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			<?php echo $username; ?>
-		  <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
-		  <!-- <li><a href="#">Profile</a></li> -->
-		  <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
-		  <li><a class="about_button btn btn-default">About LandGrab</a></li>
-		  <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
-		  <li role="separator" class="divider"></li>
-		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
-		</ul>
+        <div class="btn-group">
+    		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    			<?php echo $username; ?>
+    		  <span class="caret"></span>
+    		</button>
+    		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
+    		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
+    		</ul>
+        </div>
 	    <?php } else { ?>
-    	<button class="login_button btn btn-info">Login</button>
+    	<button class="login_button btn btn-primary">Login</button>
     	<button class="register_button btn btn-action">Register</button>
-		<button class="info_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			Info
-		  <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
-		  <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
-		  <li><a class="about_button btn btn-default">About LandGrab</a></li>
-		  <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
-		</ul>
 	    <?php } ?>
+        <div class="btn-group">
+            <button class="info_button btn btn-info dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                LandGrab
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="info_dropdown">
+              <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
+              <li><a class="about_button btn btn-default">About LandGrab</a></li>
+              <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
+              <li role="separator" class="divider"></li>
+              <li class="text-center"><strong>Worlds</strong></li>
+              <?php foreach ($worlds as $world_list) { ?>
+              <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
+                  <strong><?php echo $world_list['slug']; ?></strong>
+              </a></li>
+              <?php } ?>
+            </ul>
+        </div>
     </div>
 
     <!-- Center Blocks -->
@@ -348,7 +354,7 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		result = '<form action="land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
+		result = '<form action="<?=base_url()?>land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land';
 		if (form_type === 'buy') {
@@ -496,8 +502,13 @@ function initMap()
 	    ];
 	    box = new google.maps.Polygon({
 	      map: map,
-	      paths: shape,
-	      strokeWeight: 0.2,
+          paths: shape,
+          <?php if ($land['user_key'] === $user_id) { ?>
+	      strokeWeight: 3,
+          strokeColor: "#428BCA",
+          <?php } else { ?>
+          strokeWeight: 0.2,
+          <?php } ?>
 	      <?php if ($land['claimed']) { ?>
 	      fillColor: "<?php echo $land['primary_color']; ?>",
 	      fillOpacity: 0.5,
