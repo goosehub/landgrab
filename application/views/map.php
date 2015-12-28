@@ -290,22 +290,22 @@
 	<script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
 	<script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
 
+    <!-- Loading Overlay -->
+    <script>
+        loading = function() {
+            // add the overlay with loading image to the page
+            var over = '<div id="overlay"><p>Loading...</p></div>';
+            $(over).appendTo('body');
+        };
+        loading();
+    </script>
+    
 	<!-- Master Script -->
-	<script>
-// Loading Overlay
-loading = function() {
-    // add the overlay with loading image to the page
-    var over = '<div id="overlay"><p>Loading...</p></div>';
-    $(over).appendTo('body');
-    // Remove loading overlay
-    setTimeout(function(){
-        $('#overlay').fadeOut();
-    }, 4000);
-};
-loading();
+    <script>
 
 function initMap() 
 {
+
     // Set World
     var world_key = <?php echo $world['id']; ?>
 
@@ -554,6 +554,17 @@ function initMap()
 	// Game Controls
 	// 
 
+    // 
+    // Remove overlay
+    // 
+
+    // Remove loading overlay based on idle status
+    google.maps.event.addListenerOnce(map, 'idle', function(){
+    });
+    // Remove loading overlay based on tiles loaded status
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+        $('#overlay').fadeOut();
+    });
 }
 
 // 

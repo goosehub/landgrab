@@ -6,6 +6,7 @@ Game Mechanics
     Unclaimed land is free to claim
     All land must have a price
     Players must pay land tax of 1% of selling price every hour
+    Players must pay cash tax of 1% of total cash every hour
     Players receive an equal chunk of tax money for each land they own
     New Players get X amount/percent, to be deducted from new tax season
     When player has no cash, all land is marked as unclaimed
@@ -22,6 +23,9 @@ Game Theory
         Detection?
     How do stale players lose land
     How to deal with sitting accounts of stagnant money
+
+    Lose Condition to Prevent Inflation?
+    Growth Strategy?
 
 ==========================================================================================
     Goals
