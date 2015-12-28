@@ -29,7 +29,6 @@ Game Theory
 
 High Priority
     CRON gameplay Mechanics
-    Bug on world 2, where claimed land shows as unclaimed
 
 Low Priority
     Leaderboards
