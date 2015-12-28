@@ -230,7 +230,8 @@
             You start the game with $1,000,000.
             You can claim any unowned land for free.
             You must set a price on land you own.
-            <!-- You will have to pay an hour tax of 1% on price you set, so don't set the price so high you run out of cash, but not so low you lose valuable land. -->
+            <!-- You will have to pay a tax of 1% on the price you set each our. -->
+            <!-- The key is not to set the price so high you run out of cash, and not so low you lose valuable land. -->
             <!-- Every hour, the taxes gets distributed among the land owners based on amount of land owned. -->
             <!-- When you run out of cash, you lose. -->
         </p>
@@ -292,7 +293,7 @@ function initMap()
 		var lng = round_down(event.latLng.lng());
 		var coord_key = lat + ',' + lng;
 		// Get land_data
-		land = get_single_land(coord_key, function(land){
+		land = get_single_land(coord_key, world_key, function(land){
 			land_data = JSON.parse(land);
 			// View
 			// Create string
@@ -344,6 +345,7 @@ function initMap()
 		+ '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="' + form_type + '_input_form_type" name="form_type_input" value="' + form_type + '">'
+            + '<input type="hidden" id="' + form_type + '_input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="' + form_type + '_input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
             + '<input type="hidden" id="' + form_type + '_input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="' + form_type + '_input_lat" name="lat_input" value="' + d['lat'] + '">'
@@ -374,11 +376,14 @@ function initMap()
 	}
 
 	// Get single land ajax
-	function get_single_land(coord_key, callback) {
+	function get_single_land(coord_key, world_key, callback) {
 		$.ajax({
 			url: "<?=base_url()?>get_single_land",
 			type: "GET",
-			data: { coord_key: coord_key },
+			data: { 
+                coord_key: coord_key,
+                world_key: world_key 
+            },
 			cache: false,
 			success: function(html)
 			{
@@ -411,14 +416,20 @@ function initMap()
 	// For rounding land coords
 	function round_down(n) {
 		if (n > 0) {
-	        return Math.floor(n/box_size) * box_size;
+	        return Math.floor(n/land_size) * land_size;
 		}
-	    else if ( n < 0) {return Math.ceil(n/box_size) * box_size;
+	    else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
 	    }
 	    else {
-	        return box_size;
+	        return land_size;
 	    }
 	}
+
+    // 
+    // Set World
+    // 
+
+    var world_key = <?php echo $world['id']; ?>
 
 	// 
 	// Get Lands
@@ -450,24 +461,13 @@ function initMap()
 		zoom: 3,
 		minZoom: 3,
 		maxZoom: 10,
-
-		// Prevent panning and zooming
-		// draggable: false,
-		// scrollwheel: false,
-		// panControl: false,
-
 		// Map type
 		mapTypeId: google.maps.MapTypeId.TERRAIN 
 		// mapTypeId: google.maps.MapTypeId.HYBRID 
 	});
 
 	// Size of land box squares
-	var box_size = 2;
-	// Area covered defined with these limits
-	// Must be evenly divisible by box_size
-	// var x_limit = 180;
-	// var y_limit = 84;
-	// Box size 2 with lng limit of 180 and lat limit of 84 and box size of 2 creates 15120 land squares and covers the globe
+    var land_size = <?php echo $world['land_size'] ?>;
 
 	// 
 	// Land loop
@@ -477,9 +477,9 @@ function initMap()
 	<?php foreach ($lands as $land) { ?> 
 	    shape = [
 	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?>},
-	        {lat: <?php echo $land['lat']; ?> + box_size, lng: <?php echo $land['lng']; ?>},
-	        {lat: <?php echo $land['lat']; ?> + box_size, lng: <?php echo $land['lng']; ?> - box_size},
-	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?> - box_size}
+	        {lat: <?php echo $land['lat']; ?> + land_size, lng: <?php echo $land['lng']; ?>},
+	        {lat: <?php echo $land['lat']; ?> + land_size, lng: <?php echo $land['lng']; ?> - land_size},
+	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?> - land_size}
 	    ];
 	    box = new google.maps.Polygon({
 	      map: map,

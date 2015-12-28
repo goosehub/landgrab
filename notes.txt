@@ -8,23 +8,19 @@ Game Mechanics
     Players must pay land tax of 1% of selling price every hour
     Players receive an equal chunk of tax money for each land they own
     New Players get X amount/percent, to be deducted from new tax season
-    When player has no cash, land is marked as unclaimed
+    When player has no cash, all land is marked as unclaimed
 Leaderboards
     Cash Leaderboard
     Land Value Leaderboard
     Net Worth Leaderboard
     Highest Land Value Leaderboard
     Lowest Land Value Leaderboard
-Game Actions
-    Claim Land
-    Buy land
-    Trade Land ???
 Game Theory
     Will new players be able to get into the market?
     How to encourage selling of land, high volume trading
     How do stale players lose land
     How to discourage mass dupe user registration manipulation
-    How to deal with sitting profiles of stagnant money
+    How to deal with sitting accounts of stagnant money
 
 ==========================================================================================
     Goals
@@ -32,13 +28,15 @@ Game Theory
 
 High Priority
     Gameplay Mechanics
-    Scoreboard
+    Leaderboards
     Easier to find own properties
+    Users by world
 
 Low Priority
     Record of game transactions
     Password Resets
-    User Profiles???
+    Trade Land
+    User Profiles
 
 No Priority
     General Security
@@ -64,6 +62,10 @@ Maximum Ajax to reduce bandwidth, server strain, and client load
 ==========================================================================================
     Documentation
 ==========================================================================================
+
+Map Size
+    15120 squares
+    Box size 2 with lng limit of 180 and lat limit of 84 and box size of 2 creates 15120 land squares and covers the globe
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple

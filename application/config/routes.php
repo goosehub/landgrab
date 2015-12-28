@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = "game";
 
 // Game functions
+$route['world/(:any)'] = "game/index/$1";
 $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
 

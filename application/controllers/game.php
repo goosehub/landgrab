@@ -11,11 +11,20 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index()
+	public function index($world_slug = 'default')
 	{
 		require 'global.php';
-		// Get lands
-        $data['lands'] = $this->game_model->get_all_lands();
+        // Get world
+        $world = $this->game_model->get_world_by_slug($world_slug);
+        if (isset($world[0]))
+        {
+            $world = $data['world'] = $world[0];
+        } else {
+            $this->load->view('page_not_found', $data);
+            return false;
+        }
+        // Get lands
+        $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
@@ -27,11 +36,12 @@ class Game extends CI_Controller {
 	// Get infomation on single land
 	public function get_single_land()
 	{
-		// Set coord input
+		// Set input
 		$coord_key = $_GET['coord_key'];
+        $world_key = isset($_GET['world_key']) ? $_GET['world_key'] : 1;
 
 	    // Get Land Square
-        $query_result = $this->game_model->get_single_land($coord_key);
+        $query_result = $this->game_model->get_single_land($world_key, $coord_key);
         $land_square = isset($query_result[0]) ? $query_result[0] : false;
 
         // Add username to array
@@ -61,6 +71,7 @@ class Game extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');
         $this->form_validation->set_rules('coord_key_input', 'Coord Key Input', 'trim|required|max_length[8]');
+        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('lng_input', 'Lng Input', 'trim|required|max_length[4]');
         $this->form_validation->set_rules('lat_input', 'Lat Input', 'trim|required|max_length[4]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
@@ -76,7 +87,8 @@ class Game extends CI_Controller {
 		// Success
 	    } else {
 	    	$claimed = 1;
-	        $coord_key = $this->input->post('coord_key_input');
+            $coord_key = $this->input->post('coord_key_input');
+	        $world_key = $this->input->post('world_key_input');
 	        $lat = $this->input->post('lat_input');
 	        $lng = $this->input->post('lng_input');
 	        $land_name = $this->input->post('land_name');
@@ -84,7 +96,7 @@ class Game extends CI_Controller {
 	        $content = $this->input->post('content');
 	        $primary_color = $this->input->post('primary_color');
 	        $user_key = $user_id;
-	        $query_action = $this->game_model->update_land_data($claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color);
 	        redirect('', 'refresh');
 	    }
 	}
@@ -95,7 +107,8 @@ class Game extends CI_Controller {
         require 'global.php';
         // Get land info for verifying our inputs
         $coord_key = $this->input->post('coord_key_input');
-        $query_result = $this->game_model->get_single_land($coord_key);
+        $world_key = $this->input->post('world_key_input');
+        $query_result = $this->game_model->get_single_land($world_key, $coord_key);
         $land_square = isset($query_result[0]) ? $query_result[0] : false;
 
         // Check for inaccuracies
@@ -129,7 +142,7 @@ class Game extends CI_Controller {
             // Do sale
             $new_selling_owner_cash = $selling_owner['cash'] + $amount;
             $new_buying_owner_cash = $buying_owner['cash'] - $amount;
-            $query_action = $this->game_model->land_sale($selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
+            $query_action = $this->game_model->land_sale($world_key, $selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
         }
 
         return true;
