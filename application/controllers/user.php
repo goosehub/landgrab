@@ -47,15 +47,11 @@ class User extends CI_Controller {
 		// Success
 		} else {
 			// Login
-            $sess_array = array();
-            foreach ($result as $row) {
-                $sess_array = array(
-                    'id' => $row['id'],
-                    'username' => $row['username'],
-                    'cash' => $row['cash']
-                );
-                $this->session->set_userdata('logged_in', $sess_array);
-            }
+            $sess_array = array(
+                'id' => $result['id'],
+                'username' => $result['username']
+            );
+            $this->session->set_userdata('logged_in', $sess_array);
             return TRUE;
         }
 	}
@@ -84,26 +80,32 @@ class User extends CI_Controller {
         // Set parameters
         $email = "placeholder@gmail.com";
         $username = $this->input->post('username');
-        $cash = 1000000;
-		// Email Validation
+        // Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {
             $this->form_validation->set_message('insert_database', 'This is not a working email address');
             return false;
         } else {
-			// Attempt new user register
+            // Attempt new user register
             $facebook_id = 0;
-            $result = $this->user_model->register($username, $password, $email, $facebook_id, $cash);
-			// Fail
-            if (! $result) {
+            $user_id = $this->user_model->register($username, $password, $email, $facebook_id);
+            // Fail
+            if (! $user_id) {
                 $this->form_validation->set_message('insert_database', 'Username already exists');
                 return false;
-			// Success
+            // Success
             } else {
+                // Create account for each world
+                $world_keys = $this->user_model->get_all_world_keys();
+                $cash = 1000000;
+                foreach ($world_keys as $world)
+                {
+                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $cash);
+                }
 				// Login
                 $sess_array = array();
                 $sess_array = array(
-                    'id' => $result,
+                    'id' => $user_id,
                     'username' => $username,
                     'cash' => $cash
                 );

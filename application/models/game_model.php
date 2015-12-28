@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Use this where needed for debugging
-// echo '<br>' . $this->db->last_query() . '<br>';
+    // echo '<br>' . $this->db->last_query() . '<br>';
 
 Class game_model extends CI_Model
 {
@@ -13,7 +13,8 @@ Class game_model extends CI_Model
     $this->db->from('world');
     $this->db->where('id', $world_id);
     $query = $this->db->get();
-    return $query->result_array();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
  }
  // Get world by slug
  function get_world_by_slug($slug)
@@ -21,8 +22,10 @@ Class game_model extends CI_Model
     $this->db->select('*');
     $this->db->from('world');
     $this->db->where('slug', $slug);
+    $this->db->limit(1);
     $query = $this->db->get();
-    return $query->result_array();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
  }
  // Get all lands
  function get_all_lands_in_world($world_key)
@@ -41,7 +44,8 @@ Class game_model extends CI_Model
     $this->db->where('coord_key', $coord_key);
     $this->db->where('world_key', $world_key);
     $query = $this->db->get();
-    return $query->result_array();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
  function update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color)
@@ -69,15 +73,17 @@ Class game_model extends CI_Model
     $data = array(
         'cash' => $new_selling_owner_cash
     );
-    $this->db->where('id', $selling_owner_id);
-    $this->db->update('user', $data);
+    $this->db->where('user_key', $selling_owner_id);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('account', $data);
 
     // Buyer detuct cash
     $data = array(
         'cash' => $new_buying_owner_cash
     );
-    $this->db->where('id', $buying_owner_id);
-    $this->db->update('user', $data);
+    $this->db->where('user_key', $buying_owner_id);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('account', $data);
 
     return true;
  }

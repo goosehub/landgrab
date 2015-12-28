@@ -102,6 +102,17 @@
 	      right: 0;
 	      background: #000;
 	  }
+      #overlay p {
+        font-size: 2em;
+        color: #222;
+        position: absolute;
+        text-align: center;
+        top: 30vh;
+        left: 40%;
+        width: 20%;
+        background: #fff;
+        padding: 0.5em;
+      }
 	  #loading {
 	      width: 50px;
 	  }
@@ -267,18 +278,22 @@
     </div>
 
 	<!-- jQuery -->
-	<script src="resources/jquery/jquery-1.11.1.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
+	<script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<!-- Master Script -->
 	<script>
 // Loading Overlay
 loading = function() {
     // add the overlay with loading image to the page
-    var over = '<div id="overlay"></div>';
+    var over = '<div id="overlay"><p>Loading...</p></div>';
     $(over).appendTo('body');
+    // Remove loading overlay
+    setTimeout(function(){
+        $('#overlay').fadeOut();
+    }, 4000);
 };
-// loading();
+loading();
 
 function initMap() 
 {
@@ -330,8 +345,6 @@ function initMap()
 			infoWindow.open(map);
 		});
 	}
-
-	$('iframe').attr('id', 'google_maps_iframe');
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
@@ -447,7 +460,7 @@ function initMap()
 	var log_check = <?php echo $log_check; ?>;
 	var user_id = <?php echo $user_id; ?>;
 	var username = '<?php echo $username; ?>';
-	var cash = <?php echo $cash; ?>;
+	var cash = <?php echo $cash + ''; ?>;
 
 	// 
 	// Map options
@@ -533,11 +546,6 @@ function initMap()
 	// 
 	// Game Controls
 	// 
-
-	// Remove loading overlay
-	setTimeout(function(){
-		$('#overlay').fadeOut();
-	}, 10000);
 
 }
 

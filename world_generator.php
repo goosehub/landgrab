@@ -7,11 +7,11 @@
 // 
 
 // World Key
-$world_key = 1;
+$world_key = 2;
 
 // Size of land box squares
 // Recommend between 1 and 4
-$box_size = 3;
+$box_size = 2;
 
 // Area covered defined with these limits
 // x of 180 and y of 84 covers the globe

@@ -8,7 +8,6 @@ $user_id = $data['user_id'] = 0;
 $cash = $data['cash'] = 0;
 $username = $data['username'] = '';
 
-
 // Logged in information
 if ($this->session->userdata('logged_in')) 
 {
@@ -18,7 +17,6 @@ if ($this->session->userdata('logged_in'))
     $username = $data['username'] = $session_data['username'];
     $user_id = $data['user_id'] = $session_data['id'];
     $user = $this->user_model->get_user($user_id);
-    $cash = $data['cash'] = $user['cash'];
 }
 
 ?>

@@ -14,15 +14,19 @@ class Game extends CI_Controller {
 	public function index($world_slug = 'default')
 	{
 		require 'global.php';
+
         // Get world
-        $world = $this->game_model->get_world_by_slug($world_slug);
-        if (isset($world[0]))
+        $world = $data['world'] = $this->game_model->get_world_by_slug($world_slug);
+        if (!isset($world))
         {
-            $world = $data['world'] = $world[0];
-        } else {
             $this->load->view('page_not_found', $data);
             return false;
         }
+
+        // Get account
+        $account = $this->user_model->get_account_by_keys($user_id, $world['id']);
+        $data['cash'] = $account['cash'];
+
         // Get lands
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
         // Validation erros
@@ -38,20 +42,14 @@ class Game extends CI_Controller {
 	{
 		// Set input
 		$coord_key = $_GET['coord_key'];
-        $world_key = isset($_GET['world_key']) ? $_GET['world_key'] : 1;
+        $world_key = $_GET['world_key'];
 
 	    // Get Land Square
-        $query_result = $this->game_model->get_single_land($world_key, $coord_key);
-        $land_square = isset($query_result[0]) ? $query_result[0] : false;
+        $land_square = $this->game_model->get_single_land($world_key, $coord_key);
 
         // Add username to array
         $owner = $this->user_model->get_user($land_square['user_key']);
-        if (isset($owner['username']))
-        {
-            $land_square['username'] = $owner['username'];
-        } else {
-            $land_square['username'] = '';
-        }
+        $land_square['username'] = isset($owner['username']) ? $owner['username'] : '';
 
 	    // Echo data to client to be parsed
 	    if ($land_square) {
@@ -108,8 +106,8 @@ class Game extends CI_Controller {
         // Get land info for verifying our inputs
         $coord_key = $this->input->post('coord_key_input');
         $world_key = $this->input->post('world_key_input');
-        $query_result = $this->game_model->get_single_land($world_key, $coord_key);
-        $land_square = isset($query_result[0]) ? $query_result[0] : false;
+        $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_key);
 
         // Check for inaccuracies
         if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
@@ -124,7 +122,7 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         }
-        else if ($cash < $land_square['price'])
+        else if ($buyer_account['cash'] < $land_square['price'])
         {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
             return false;
@@ -133,15 +131,14 @@ class Game extends CI_Controller {
         if ($form_type_input === 'buy')
         {
             // Get seller and buying party info
-            $selling_owner_id = $land_square['user_key'];
-            $buying_owner_id = $user_id;
             $amount = $land_square['price'];
-            $selling_owner = $this->user_model->get_user($selling_owner_id);
-            $buying_owner = $this->user_model->get_user($buying_owner_id);
+            $selling_owner_id = $land_square['user_key'];
+            $seller_account = $this->user_model->get_account_by_keys($selling_owner_id, $world_key);
+            $buying_owner_id = $user_id;
 
             // Do sale
-            $new_selling_owner_cash = $selling_owner['cash'] + $amount;
-            $new_buying_owner_cash = $buying_owner['cash'] - $amount;
+            $new_selling_owner_cash = $seller_account['cash'] + $amount;
+            $new_buying_owner_cash = $buyer_account['cash'] - $amount;
             $query_action = $this->game_model->land_sale($world_key, $selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
         }
 
