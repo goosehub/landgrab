@@ -22,14 +22,15 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_login_validation');
         
+        $world_key = $this->input->post('world_key');
 		// Fail
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('', 'refresh');
+            redirect('world/' . $world_key, 'refresh');
 		// Success
         } else {
-            redirect('', 'refresh');
+            redirect('world/' . $world_key, 'refresh');
         }
 	}
 
@@ -42,7 +43,7 @@ class User extends CI_Controller {
         $result = $this->user_model->login($username, $password);        
         // Fail
 		if (! $result) {
-            $this->form_validation->set_message('check_database', 'Invalid username or password');
+            $this->form_validation->set_message('login_validation', 'Invalid username or password');
             return false;
 		// Success
 		} else {
@@ -63,15 +64,17 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_register_validation|min_length[6]|matches[confirm]');
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
+
+        $world_key = $this->input->post('world_key');
         // Fail
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('', 'refresh');
+            redirect('world/' . $world_key, 'refresh');
         // Success
         } else {
             $this->session->set_flashdata('just_registered', true);
-            redirect('', 'refresh');
+            redirect('world/' . $world_key, 'refresh');
         }
 	}
 
@@ -83,7 +86,7 @@ class User extends CI_Controller {
         // Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {
-            $this->form_validation->set_message('insert_database', 'This is not a working email address');
+            $this->form_validation->set_message('register_validation', 'This is not a working email address');
             return false;
         } else {
             // Attempt new user register
@@ -91,7 +94,7 @@ class User extends CI_Controller {
             $user_id = $this->user_model->register($username, $password, $email, $facebook_id);
             // Fail
             if (! $user_id) {
-                $this->form_validation->set_message('insert_database', 'Username already exists');
+                $this->form_validation->set_message('register_validation', 'Username already exists');
                 return false;
             // Success
             } else {

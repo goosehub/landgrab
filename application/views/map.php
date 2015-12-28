@@ -101,6 +101,7 @@
 	      bottom: 0;
 	      right: 0;
 	      background: #000;
+          opacity: 0.9;
 	  }
       #overlay p {
         font-size: 2em;
@@ -189,6 +190,7 @@
     	<!-- Form -->
 		<?php echo form_open('user/login'); ?>
     	  <div class="form-group">
+            <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
     	    <label for="input_username">Username</label>
     	    <input type="username" class="form-control" id="login_input_username" name="username" placeholder="Username">
     	  </div>
@@ -214,6 +216,7 @@
     	<!-- Form -->
 		<?php echo form_open('user/register'); ?>
     	  <div class="form-group">
+            <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
     	    <label for="input_username">Username</label>
     	    <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
     	  </div>
@@ -303,6 +306,21 @@ loading();
 
 function initMap() 
 {
+    // Set World
+    var world_key = <?php echo $world['id']; ?>
+
+    // Get Lands
+    <?php
+    $js_lands = json_encode($lands);
+    echo "var lands = ". $js_lands . ";\n";
+    ?>
+
+    // Pass Session Variables
+    var log_check = <?php echo $log_check; ?>;
+    var user_id = <?php echo $user_id; ?>;
+    var username = '<?php echo $username; ?>';
+    var cash = <?php echo $cash + ''; ?>;
+
 	// 
 	// Functions
 	// 
@@ -316,13 +334,15 @@ function initMap()
 		// Get land_data
 		land = get_single_land(coord_key, world_key, function(land){
 			land_data = JSON.parse(land);
-			// View
 			// Create string
-
-			if (land_data['claimed'] === '0') {
-				content_string = '<div class="land_window"><strong>Unclaimed</strong><br>';
+            var content_string = '<div class="land_window">';
+            if (land_data['claimed'] === '0' && log_check) {
+                // 
+            }
+			else if (land_data['claimed'] === '0') {
+				content_string += '<strong>Unclaimed</strong><br>';
 			} else  {
-				var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>'
+				content_string += '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>'
 				+ 'Owned by <strong>' + land_data['username'] + '</strong><br>'
 				+ '' + land_data['content'] + '<br>';
 			}
@@ -443,30 +463,6 @@ function initMap()
 	        return land_size;
 	    }
 	}
-
-    // 
-    // Set World
-    // 
-
-    var world_key = <?php echo $world['id']; ?>
-
-	// 
-	// Get Lands
-	// 
-
-	<?php
-	$js_lands = json_encode($lands);
-	echo "var lands = ". $js_lands . ";\n";
-	?>
-
-	// 
-	// Pass Session Variables
-	// 
-
-	var log_check = <?php echo $log_check; ?>;
-	var user_id = <?php echo $user_id; ?>;
-	var username = '<?php echo $username; ?>';
-	var cash = <?php echo $cash + ''; ?>;
 
 	// 
 	// Map options
