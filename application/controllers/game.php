@@ -34,6 +34,15 @@ class Game extends CI_Controller {
         $query_result = $this->game_model->get_single_land($coord_key);
         $land_square = isset($query_result[0]) ? $query_result[0] : false;
 
+        // Add username to array
+        $owner = $this->user_model->get_user($land_square['user_key']);
+        if (isset($owner['username']))
+        {
+            $land_square['username'] = $owner['username'];
+        } else {
+            $land_square['username'] = '';
+        }
+
 	    // Echo data to client to be parsed
 	    if ($land_square) {
 	    	echo json_encode($land_square);
@@ -108,17 +117,20 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // Get seller and buying party info
-        $selling_owner_id = $land_square['user_key'];
-        $buying_owner_id = $user_id;
-        $amount = $land_square['price'];
-        $selling_owner = $this->user_model->get_user($selling_owner_id);
-        $buying_owner = $this->user_model->get_user($buying_owner_id);
+        if ($form_type_input === 'buy')
+        {
+            // Get seller and buying party info
+            $selling_owner_id = $land_square['user_key'];
+            $buying_owner_id = $user_id;
+            $amount = $land_square['price'];
+            $selling_owner = $this->user_model->get_user($selling_owner_id);
+            $buying_owner = $this->user_model->get_user($buying_owner_id);
 
-        // Do sale
-        $new_selling_owner_cash = $selling_owner['cash'] + $amount;
-        $new_buying_owner_cash = $buying_owner['cash'] - $amount;
-        $query_action = $this->game_model->land_sale($selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
+            // Do sale
+            $new_selling_owner_cash = $selling_owner['cash'] + $amount;
+            $new_buying_owner_cash = $buying_owner['cash'] - $amount;
+            $query_action = $this->game_model->land_sale($selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash);
+        }
 
         return true;
 	}

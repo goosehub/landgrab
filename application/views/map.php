@@ -61,7 +61,6 @@
 
 	  /* Top right block*/
 	  #top_right_block {
-	  	display: none;
 	  	position: absolute;
 		top: 0.5em;
 		right: 6em;
@@ -252,11 +251,10 @@ loading = function() {
     var over = '<div id="overlay"></div>';
     $(over).appendTo('body');
 };
-loading();
+// loading();
 
 function initMap() 
 {
-
 	// 
 	// Functions
 	// 
@@ -264,10 +262,8 @@ function initMap()
 	// Set land window
 	function set_window(event) {
 		// Set Parameters
-		lat = event.latLng.lat();
-		lng = event.latLng.lng();
-		lat = round_down(lat);
-		lng = round_down(lng);
+		var lat = round_down(event.latLng.lat());
+		var lng = round_down(event.latLng.lng());
 		var coord_key = lat + ',' + lng;
 		// Get land_data
 		land = get_single_land(coord_key, function(land){
@@ -278,7 +274,9 @@ function initMap()
 			if (land_data['claimed'] === '0') {
 				content_string = '<div class="land_window"><strong>Unclaimed</strong><br>';
 			} else  {
-				var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>' + land_data['content'] + '<br>';
+				var content_string = '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>'
+				+ 'Owned by <strong>' + land_data['username'] + '</strong><br>'
+				+ '' + land_data['content'] + '<br>';
 			}
 			if (log_check) {
 				// 
@@ -449,10 +447,6 @@ function initMap()
 	// Land loop
 	// 
 
-	var primary_lat = false;
-	var primary_lng = false;
-	var shape = false;
-
 	<?php // No comments below because of performance ?>
 	<?php foreach ($lands as $land) { ?> 
 	    shape = [
@@ -464,15 +458,13 @@ function initMap()
 	    box = new google.maps.Polygon({
 	      map: map,
 	      paths: shape,
-	      strokeWeight: 1,
-	      strokeOpacity: 0.2,
+	      strokeWeight: 0.2,
 	      <?php if ($land['claimed']) { ?>
-	      fillOpacity: 0.3,
+	      fillColor: "<?php echo $land['primary_color']; ?>",
+	      fillOpacity: 0.5,
 	      <?php } else { ?>
-	      fillOpacity: 0.1,
+	      fillOpacity: 0,
 	      <?php } ?>
-	      fillColor: "#<?php echo $land['primary_color']; ?>",
-	      strokeColor: "#<?php echo $land['secondary_color']; ?>"
 	    });
 	    box.setMap(map);
 	    box.addListener('click', set_window);
@@ -494,7 +486,7 @@ function initMap()
 		featureType: "road.arterial",
 		elementType: "geometry",
 		stylers: [
-		  { hue: "#00ffee" },
+		  // { hue: "#00ffee" },
 		  // { saturation: 50 }
 		]
 	  },{
@@ -516,13 +508,12 @@ function initMap()
 	// Game Controls
 	// 
 
-}
+	// Remove loading overlay
+	setTimeout(function(){
+		$('#overlay').fadeOut();
+	}, 10000);
 
-// Remove loading overlay
-setTimeout(function(){
-	$('#overlay').fadeOut();
-	$('#top_right_block').fadeIn();
-}, 100);
+}
 
 // 
 // User Controls

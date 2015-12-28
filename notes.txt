@@ -43,6 +43,7 @@ No Priority
     Social Media Share
     Facebook login
     International Language Support
+    panTo on set_window (causes error "too much recursion")
 
 ==========================================================================================
     Requirements

@@ -50,7 +50,6 @@ Class game_model extends CI_Model
     );
     $this->db->where('id', $selling_owner_id);
     $this->db->update('user', $data);
-    echo '<br>' . $this->db->last_query() . '<br>';
 
     // Buyer detuct cash
     $data = array(
@@ -58,7 +57,6 @@ Class game_model extends CI_Model
     );
     $this->db->where('id', $buying_owner_id);
     $this->db->update('user', $data);
-    echo '<br>' . $this->db->last_query() . '<br>';
 
     return true;
  }

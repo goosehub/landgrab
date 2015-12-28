@@ -66,7 +66,11 @@ Class user_model extends CI_Model
     $this->db->limit(1);
     $query = $this->db->get();
     $result = $query->result_array();
-    return $result[0];
+    if (isset($result[0])) {
+        return $result[0];
+    } else {
+        return false;
+    }
  }
 
 }
