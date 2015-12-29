@@ -98,13 +98,19 @@ class User extends CI_Controller {
                 return false;
             // Success
             } else {
-                // Create account for each world
+                // Set variables
                 $worlds = $this->user_model->get_all_worlds();
                 $cash = 1000000;
+                
+                // Create account for each world
                 foreach ($worlds as $world)
                 {
-                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $cash);
+                    // Random color for each account
+                    $primary_color = random_hex_color();
+
+                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $cash, $primary_color);
                 }
+
 				// Login
                 $sess_array = array();
                 $sess_array = array(
@@ -129,4 +135,12 @@ class User extends CI_Controller {
 	{
 		$this->load->view('page_not_found');
 	}
+}
+
+// Random color function for generating primary color
+function random_color_part() {
+    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+}
+function random_hex_color() {
+    return '#' . random_color_part() . random_color_part() . random_color_part();
 }

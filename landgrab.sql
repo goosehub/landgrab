@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `user_key` int(10) unsigned NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
   `cash` bigint(20) NOT NULL,
+  `primary_color` varchar(8) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -41,10 +42,10 @@ CREATE TABLE IF NOT EXISTS `account` (
 --
 
 INSERT INTO `account` (`id`, `user_key`, `world_key`, `cash`, `created`, `modified`) VALUES
-(1, 1, 1, 1000000, '2015-12-29 03:58:24', '2015-12-29 03:58:24'),
-(2, 1, 2, 1000000, '2015-12-29 03:58:24', '2015-12-29 03:58:24'),
-(3, 2, 1, 1000000, '2015-12-29 03:58:54', '2015-12-29 03:58:54'),
-(4, 2, 2, 1000000, '2015-12-29 03:58:54', '2015-12-29 03:58:54');
+(1, 1, 1, 1000000, '#000000' '2015-12-29 03:58:24', '2015-12-29 03:58:24'),
+(2, 1, 2, 1000000, '#000000' '2015-12-29 03:58:24', '2015-12-29 03:58:24'),
+(3, 2, 1, 1000000, '#000000' '2015-12-29 03:58:54', '2015-12-29 03:58:54'),
+(4, 2, 2, 1000000, '#000000' '2015-12-29 03:58:54', '2015-12-29 03:58:54');
 
 -- --------------------------------------------------------
 

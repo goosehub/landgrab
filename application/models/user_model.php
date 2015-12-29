@@ -100,13 +100,14 @@ Class user_model extends CI_Model
     }
  }
  // Create player account
- function create_player_account($user_key, $world_key, $cash)
+ function create_player_account($user_key, $world_key, $cash, $primary_color)
  {
     // Insert user into user
     $data = array(
     'world_key' => $world_key,
     'user_key' => $user_key,
-    'cash' => $cash
+    'cash' => $cash,
+    'primary_color' => $primary_color
     );
     $this->db->insert('account', $data);
 
@@ -117,6 +118,16 @@ Class user_model extends CI_Model
     $query = $this->db->get()->row();
     $account_id = $query->id;
     return $account_id;
+ }
+ // Update account primary color
+ function update_account_primary_color($account_id, $primary_color)
+ {
+    $data = array(
+        'primary_color' => $primary_color
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
  }
 
 }

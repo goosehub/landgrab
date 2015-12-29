@@ -141,6 +141,19 @@
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
     		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
+              <li role="separator" class="divider"></li>
+              <li>
+                  <?php echo form_open('account/update_color'); ?>
+                  <div class="row"><div class="col-md-3">
+                      <label for="_input_primary_color">Color</label>
+                  </div><div class="col-md-9">
+                      <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                      <input type="color" class="form-control" id="account_input_primary_color" name="primary_color" value="<?php echo $account['primary_color']; ?>">
+                  </div></div>
+                  <li role="separator" class="divider"></li>
+                  <button type="submit" class="btn btn-primary form-control">Update</button>
+                  </form>
+              </li>
     		</ul>
         </div>
 	    <?php } else { ?>
@@ -528,11 +541,6 @@ function initMap()
             + '</div><div class="col-md-8">'
             + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="' + form_type + '_input_primary_color">Color</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="color" class="form-control" id="' + form_type + '_input_primary_color" name="primary_color" value="' + d['primary_color'] + '">'
-            + '</div></div>'
           + '</div>'
           + '<button type="submit" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
 		+ '</div></form>';
@@ -726,6 +734,11 @@ $('#leaderboard_highest_valued_land_button').click(function(){
 $('#leaderboard_cheapest_land_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_cheapest_land_block').show();
+});
+
+// Stop dropdown closing when clicking color input
+$('#account_input_primary_color').click(function(e) {
+    e.stopPropagation();
 });
 
 // Validation errors shown on page load if exist

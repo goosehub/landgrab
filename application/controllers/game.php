@@ -98,7 +98,6 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
-        $this->form_validation->set_rules('primary_color', 'color', 'trim|required|max_length[7]');
 
         $world_key = $this->input->post('world_key_input');
         // Fail
@@ -116,9 +115,9 @@ class Game extends CI_Controller {
 	        $land_name = $this->input->post('land_name');
 	        $price = $this->input->post('price');
 	        $content = $this->input->post('content');
-	        $primary_color = $this->input->post('primary_color');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-	        $account_key = $account['id'];
+            $account_key = $account['id'];
+	        $primary_color = $account['primary_color'];
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
 	        redirect('world/' . $world_key, 'refresh');
 	    }

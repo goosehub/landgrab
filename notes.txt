@@ -2,12 +2,6 @@
     Notes
 ==========================================================================================
 
-Thanks to
-    google
-    bootstrap
-    jquery
-    ithare
-
 Game Mechanics
     Unclaimed land is free to claim
     All land must have a price
@@ -16,12 +10,6 @@ Game Mechanics
     New Players get X amount/percent, to be deducted from new tax season
     When player has no cash, all land is marked as unclaimed
     Accounts not active for 1 month plus are reset
-Leaderboards
-    Cash Leaderboard
-    Land Value Leaderboard
-    Net Worth Leaderboard
-    Highest Land Value Leaderboard
-    Lowest Land Value Leaderboard
 Game Theory
     Will new players be able to get into the market?
     How to encourage selling of land, high volume trading
@@ -40,17 +28,16 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Default user color
+    Leaderboards
 
 Low Priority
-    Reset account
-    Leaderboards
     Record of game transactions
-    Trade Land
-    User Profiles
-    API
 
 No Priority
+    Trade Land
+    Reset account
+    User Profiles
+    API
     Dupe account detection and action
     Password Resets
     General Security
