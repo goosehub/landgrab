@@ -130,7 +130,7 @@
     	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($account['cash']); ?>.00</button>
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    			<?php echo $username; ?>
+    			<?php echo $user['username']; ?>
     		  <span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
@@ -315,12 +315,16 @@ function initMap()
     echo "var lands = ". $js_lands . ";\n";
     ?>
 
-    // Pass Session Variables
-    var log_check = <?php echo $log_check + ''; ?>;
-    var user_id = <?php echo $user_id + ''; ?>;
-    var account_id = <?php echo $account['id'] + ''; ?>;
-    var username = '<?php echo $username; ?>';
-    var cash = <?php echo $account['cash'] + ''; ?>;
+    // Set Variables
+    <?php if ($log_check) { ?>
+        var log_check = true;
+        var user_id = <?php echo $user_id + ''; ?>;
+        var account_id = <?php echo $account['id'] + ''; ?>;
+        var username = "<?php echo $user['username']; ?>";
+        var cash = <?php echo $account['cash'] + ''; ?>;
+    <?php } else { ?>
+        var log_check = false;
+    <?php } ?>
 
 	// 
 	// Functions
@@ -500,7 +504,7 @@ function initMap()
 	    box = new google.maps.Polygon({
 	      map: map,
           paths: shape,
-          <?php if ($land['account_key'] === $account['id']) { ?>
+          <?php if ($log_check && $land['account_key'] === $account['id']) { ?>
 	      strokeWeight: 3,
           strokeColor: "#428BCA",
           <?php } else { ?>

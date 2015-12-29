@@ -13,7 +13,17 @@ class Game extends CI_Controller {
 	// Map view
 	public function index($world_slug = 1)
 	{
-		require 'global.php';
+        // Defaults for unauthenticated users
+        $log_check = $data['log_check'] = $data['user_id'] = false;
+
+        // User Information
+        if ($this->session->userdata('logged_in')) {
+            // Get user data
+            $log_check = $data['log_check'] = true;
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+            $data['user'] = $this->user_model->get_user($user_id);
+        }
 
         // Get world
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_slug);
@@ -23,7 +33,9 @@ class Game extends CI_Controller {
         }
 
         // Get account
-        $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+        if ($log_check) {
+            $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+        }
 
         // Get worlds
         $data['worlds'] = $this->user_model->get_all_worlds();
@@ -67,8 +79,15 @@ class Game extends CI_Controller {
 	// Claim unclaimed land
 	public function land_form()
     {
-        require 'global.php';
+        // User Information
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        }
+
+        // Remove commas from price input if exists
 		$_POST['price'] = str_replace(',', '', $_POST['price']);
+        
 		// Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');
@@ -108,7 +127,11 @@ class Game extends CI_Controller {
 	// Validate Login Callback
 	public function land_form_validation($form_type_input)
 	{
-        require 'global.php';
+        // User Information
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        }
 
         // Get land info for verifying our inputs
         $coord_key = $this->input->post('coord_key_input');

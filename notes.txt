@@ -23,18 +23,18 @@ Game Theory
         Detection?
     How do stale players lose land
     How to deal with sitting accounts of stagnant money
-
+Solutions
     Lose Condition to Prevent Inflation?
     Growth Strategy?
+    Prevent updating land last 10 minutes of each hour?
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    CRON gameplay Mechanics
+    Additional Gameplay Mechanics
     Default user color
-    Prevent updating land last 10 minutes of each hour 
 
 Low Priority
     Reset account
