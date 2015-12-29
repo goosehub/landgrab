@@ -2,6 +2,12 @@
     Notes
 ==========================================================================================
 
+Thanks to
+    google
+    bootstrap
+    jquery
+    ithare
+
 Game Mechanics
     Unclaimed land is free to claim
     All land must have a price

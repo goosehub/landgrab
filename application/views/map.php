@@ -66,6 +66,12 @@
 		right: 6em;
 		opacity: 0.9;
 	  }
+      #cash_display {
+        opacity: 1;
+      }
+      .leaderboard_link {
+        cursor: pointer;
+      }
 
 	  /* Center Block */
 	  .center_block {
@@ -127,7 +133,7 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-    	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($account['cash']); ?>.00</button>
+    	<button id="cash_display" disabled="disabled" class="btn btn-default">$<?php echo number_format($account['cash']); ?>.00</button>
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     			<?php echo $user['username']; ?>
@@ -150,6 +156,13 @@
               <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
               <li><a class="about_button btn btn-default">About LandGrab</a></li>
               <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
+              <li role="separator" class="divider"></li>
+              <li class="text-center"><strong>Leaderboards</strong></li>
+              <li><a id="leaderboard_net_value_button" class="leaderboard_link">Net Value</a></li>
+              <li><a id="leaderboard_land_owned_button" class="leaderboard_link">Land</a></li>
+              <li><a id="leaderboard_cash_owned_button" class="leaderboard_link">Cash</a></li>
+              <li><a id="leaderboard_highest_valued_land_button" class="leaderboard_link">Highest Valued Land</a></li>
+              <li><a id="leaderboard_cheapest_land_button" class="leaderboard_link">Cheapest Land</a></li>
               <li role="separator" class="divider"></li>
               <li class="text-center"><strong>Worlds</strong></li>
               <?php foreach ($worlds as $world_list) { ?>
@@ -243,17 +256,18 @@
         <hr>
         <p>
             LandGrab is a game of Claiming, Buying, and Selling Land.
-            You can aim to accumilate the most wealth, or to own the most land.
-            With some skill, you can own areas like New York, Paris, or Tel-Aviv.
+            You can aim to accumulate the most wealth, to own the most land, or to own famous areas like New York, Paris, or Tel-Aviv.
         </p>
         <p>
             You start the game with $1,000,000.
             You can claim any unowned land for free.
             You must set a price on land you own.
-            <!-- You will have to pay a tax of 1% on the price you set each our. -->
-            <!-- The key is not to set the price so high you run out of cash, and not so low you lose valuable land. -->
-            <!-- Every hour, the taxes gets distributed among the land owners based on amount of land owned. -->
-            <!-- When you run out of cash, you lose. -->
+            You will have to pay a tax of 1% on the price you set each hour.
+            Every hour, the taxes gets distributed among the land owners based on amount of land owned.
+            When you run out of cash, you lose.
+        </p>
+        <p>
+            It is important not to set your land prices so high you lose cash, yet not so low you lose land. Finding undervalued land, and selling it for a profit is key.
         </p>
     </div>
 
@@ -268,6 +282,11 @@
         <hr>
         <p>LandGrab is a game developed by Goose. Developed in PHP with CodeIgniter 3.</p>
         <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
+        <br>
+        <p>You can contribute to this project on Github</p>
+        <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
+        <br>
+        <p>Special Thanks goes to Google Maps, EllisLabs, <a href="http://ithare.com/" target="_blank">itHare</a>, and all of my users</p>
     </div>
 
     <!-- Report Bugs Block -->
@@ -285,6 +304,69 @@
             </strong>
         </p>
     </div>
+
+    <!-- Leaderboards -->
+
+    <!-- Leaderboard net_value Block -->
+    <div id="leaderboard_net_value_block" class="center_block">
+        <strong>net_value_block</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+
+        <hr>
+
+    </div>
+
+    <!-- Leaderboard land_owned Block -->
+    <div id="leaderboard_land_owned_block" class="center_block">
+        <strong>land_owned_block</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+
+        <hr>
+
+    </div>
+
+    <!-- Leaderboard cash_owned Block -->
+    <div id="leaderboard_cash_owned_block" class="center_block">
+        <strong>cash_owned_block</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+
+        <hr>
+
+    </div>
+
+    <!-- Leaderboard highest_valued_land Block -->
+    <div id="leaderboard_highest_valued_land_block" class="center_block">
+        <strong>highest_valued_land_block</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+
+        <hr>
+
+    </div>
+
+    <!-- Leaderboard cheapest_land Block -->
+    <div id="leaderboard_cheapest_land_block" class="center_block">
+        <strong>cheapest_land_block</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+
+        <hr>
+
+    </div>
+
 
 	<!-- jQuery -->
 	<script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
@@ -416,6 +498,7 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
+        $('#' + form_type + '_input_land_name').focus();
 		result = '<form action="<?=base_url()?>land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land';
@@ -622,6 +705,27 @@ $('.login_button').click(function(){
 
 $('.register_button').click(function(){
 	$('#register_input_username').focus();
+});
+
+$('#leaderboard_net_value_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_net_value_block').show();
+});
+$('#leaderboard_land_owned_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_land_owned_block').show();
+});
+$('#leaderboard_cash_owned_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_cash_owned_block').show();
+});
+$('#leaderboard_highest_valued_land_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_highest_valued_land_block').show();
+});
+$('#leaderboard_cheapest_land_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_cheapest_land_block').show();
 });
 
 // Validation errors shown on page load if exist

@@ -55,7 +55,7 @@ for ($x = -$x_limit; $x < $x_limit; $x = $x + $box_size) {
     for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
         // Get coord_key
         $coord_key = round_down($y, $box_size) . ',' . round_down($x, $box_size);
-        echo "(NULL, '" . $coord_key . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', 'FF00FF', '222222', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        echo "(NULL, '" . $coord_key . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
             echo ';';
