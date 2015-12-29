@@ -15,7 +15,7 @@ if ($this->session->userdata('logged_in'))
     $log_check = $data['log_check'] = true;
     $session_data = $this->session->userdata('logged_in');
     $username = $data['username'] = $session_data['username'];
-    $user_id = $data['user_id'] = $session_data['id'];
+    $user_id = $data['user_id'] = $session_data['id'];    
     $user = $this->user_model->get_user($user_id);
 }
 

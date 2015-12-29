@@ -6,10 +6,10 @@ Game Mechanics
     Unclaimed land is free to claim
     All land must have a price
     Players must pay land tax of 1% of selling price every hour
-    Players must pay cash tax of 1% of total cash every hour
     Players receive an equal chunk of tax money for each land they own
     New Players get X amount/percent, to be deducted from new tax season
     When player has no cash, all land is marked as unclaimed
+    Accounts not active for 1 month plus are reset
 Leaderboards
     Cash Leaderboard
     Land Value Leaderboard
@@ -33,12 +33,16 @@ Game Theory
 
 High Priority
     CRON gameplay Mechanics
+    Default user color
+    Prevent updating land last 10 minutes of each hour 
 
 Low Priority
+    Reset account
     Leaderboards
     Record of game transactions
     Trade Land
     User Profiles
+    API
 
 No Priority
     Dupe account detection and action

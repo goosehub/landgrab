@@ -127,7 +127,7 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-    	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($cash); ?>.00</button>
+    	<button disabled="disabled" class="cash_display btn btn-default">$<?php echo number_format($account['cash']); ?>.00</button>
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     			<?php echo $username; ?>
@@ -316,10 +316,11 @@ function initMap()
     ?>
 
     // Pass Session Variables
-    var log_check = <?php echo $log_check; ?>;
-    var user_id = <?php echo $user_id; ?>;
+    var log_check = <?php echo $log_check + ''; ?>;
+    var user_id = <?php echo $user_id + ''; ?>;
+    var account_id = <?php echo $account['id'] + ''; ?>;
     var username = '<?php echo $username; ?>';
-    var cash = <?php echo $cash + ''; ?>;
+    var cash = <?php echo $account['cash'] + ''; ?>;
 
 	// 
 	// Functions
@@ -352,7 +353,7 @@ function initMap()
 				// 
 				if (land_data['claimed'] === '0') {
 					content_string += land_update_form('claim', 'btn-action', land_data);
-				} else if (land_data['user_key'] == user_id) {
+				} else if (land_data['account_key'] == account_id) {
 					content_string += land_update_form('update', 'btn-info', land_data);
 				} else {
 					if (land_data['price'] < cash)
@@ -499,7 +500,7 @@ function initMap()
 	    box = new google.maps.Polygon({
 	      map: map,
           paths: shape,
-          <?php if ($land['user_key'] === $user_id) { ?>
+          <?php if ($land['account_key'] === $account['id']) { ?>
 	      strokeWeight: 3,
           strokeColor: "#428BCA",
           <?php } else { ?>

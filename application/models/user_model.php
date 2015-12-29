@@ -34,6 +34,17 @@ Class user_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
+ // Get account by keys
+ function get_account_by_id($account_id)
+ {
+    $this->db->select('*');
+    $this->db->from('account');
+    $this->db->where('id', $account_id);
+    $this->db->limit(1);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
+ }
  // Get all worlds
  function get_all_worlds()
  {

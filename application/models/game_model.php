@@ -37,6 +37,16 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
+ // Get all lands where claimed
+ function get_all_lands_in_world_where_claimed($world_key)
+ {
+    $this->db->select('*');
+    $this->db->from('land');
+    $this->db->where('world_key', $world_key);
+    $this->db->where('claimed', 1);
+    $query = $this->db->get();
+    return $query->result_array();
+ }
  // Get single land
  function get_single_land($world_key, $coord_key)
  {
@@ -49,14 +59,14 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $user_key, $land_name, $price, $content, $primary_color)
+ function update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color)
  {
     $data = array(
         'claimed' => $claimed,
         'coord_key' => $coord_key,
         'lat' => $lat,
         'lng' => $lng,
-        'user_key' => $user_key,
+        'account_key' => $account_key,
         'land_name' => $land_name,
         'price' => $price,
         'content' => $content,
@@ -67,25 +77,28 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
- // Do land sale if possible
- function land_sale($world_key, $selling_owner_id, $buying_owner_id, $new_selling_owner_cash, $new_buying_owner_cash)
+ // Update cash in account
+ function update_account_cash_by_account_id($account_id, $cash)
  {
     // Seller add cash
     $data = array(
-        'cash' => $new_selling_owner_cash
+        'cash' => $cash
     );
-    $this->db->where('user_key', $selling_owner_id);
-    $this->db->where('world_key', $world_key);
+    $this->db->where('id', $account_id);
     $this->db->update('account', $data);
-
-    // Buyer detuct cash
+    return true;
+ }
+ // Forfeit all land of account
+ function forfeit_all_land_of_account($account_id)
+ {
     $data = array(
-        'cash' => $new_buying_owner_cash
+        'claimed' => 0,
+        'account_key' => 0,
+        'price' => 0,
+        'primary_color' => $primary_color
     );
-    $this->db->where('user_key', $buying_owner_id);
-    $this->db->where('world_key', $world_key);
-    $this->db->update('account', $data);
-
+    $this->db->where('account_key', $account_id);
+    $this->db->update('land', $data);
     return true;
  }
 
