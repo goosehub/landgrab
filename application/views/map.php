@@ -305,17 +305,17 @@
 
 function initMap() 
 {
+    // 
+    // Constants
+    // 
 
     // Set World
     var world_key = <?php echo $world['id']; ?>
 
-    // Get Lands
-    <?php
-    $js_lands = json_encode($lands);
-    echo "var lands = ". $js_lands . ";\n";
-    ?>
+    // Size of land box squares
+    var land_size = <?php echo $world['land_size'] ?>;
 
-    // Set Variables
+    // Set user variables
     <?php if ($log_check) { ?>
         var log_check = true;
         var user_id = <?php echo $user_id + ''; ?>;
@@ -326,9 +326,46 @@ function initMap()
         var log_check = false;
     <?php } ?>
 
+    // Map options
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 20, lng: 0},
+        zoom: 3,
+        minZoom: 3,
+        maxZoom: 10,
+        mapTypeId: google.maps.MapTypeId.TERRAIN 
+        // mapTypeId: google.maps.MapTypeId.HYBRID 
+    });
+
+    <?php
+    // Javascript Land Array no longer used
+    // $js_lands = json_encode($lands);
+    // echo "var lands = ". $js_lands . ";\n";
+    ?>
+
 	// 
 	// Functions
 	// 
+
+    // Declare square
+    function declare_square(land_lat, land_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
+        shape = [
+            {lat: land_lat, lng: land_lng},
+            {lat: land_lat + land_size, lng: land_lng},
+            {lat: land_lat + land_size, lng: land_lng - land_size},
+            {lat: land_lat, lng: land_lng - land_size}
+        ];
+        box = new google.maps.Polygon({
+          map: map,
+          paths: shape,
+          strokeWeight: stroke_weight,
+          strokeColor: stroke_color,
+          fillColor: fill_color,
+          fillOpacity: fill_opacity,
+        });
+        box.setMap(map);
+        box.addListener('click', set_window);
+        infoWindow = new google.maps.InfoWindow;
+    }
 
 	// Set land window
 	function set_window(event) {
@@ -470,56 +507,31 @@ function initMap()
 	}
 
 	// 
-	// Map options
-	// 
-
-	var map = new google.maps.Map(document.getElementById('map'), {
-		// Starting center
-		center: {lat: 20, lng: 0},
-
-		// Default zoom and limits
-		zoom: 3,
-		minZoom: 3,
-		maxZoom: 10,
-		// Map type
-		mapTypeId: google.maps.MapTypeId.TERRAIN 
-		// mapTypeId: google.maps.MapTypeId.HYBRID 
-	});
-
-	// Size of land box squares
-    var land_size = <?php echo $world['land_size'] ?>;
-
-	// 
 	// Land loop
 	// 
 
-	<?php // No comments below because of performance ?>
-	<?php foreach ($lands as $land) { ?> 
-	    shape = [
-	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?>},
-	        {lat: <?php echo $land['lat']; ?> + land_size, lng: <?php echo $land['lng']; ?>},
-	        {lat: <?php echo $land['lat']; ?> + land_size, lng: <?php echo $land['lng']; ?> - land_size},
-	        {lat: <?php echo $land['lat']; ?>, lng: <?php echo $land['lng']; ?> - land_size}
-	    ];
-	    box = new google.maps.Polygon({
-	      map: map,
-          paths: shape,
-          <?php if ($log_check && $land['account_key'] === $account['id']) { ?>
-	      strokeWeight: 3,
-          strokeColor: "#428BCA",
-          <?php } else { ?>
-          strokeWeight: 0.2,
-          <?php } ?>
-	      <?php if ($land['claimed']) { ?>
-	      fillColor: "<?php echo $land['primary_color']; ?>",
-	      fillOpacity: 0.5,
-	      <?php } else { ?>
-	      fillOpacity: 0,
-	      <?php } ?>
-	    });
-	    box.setMap(map);
-	    box.addListener('click', set_window);
-	    infoWindow = new google.maps.InfoWindow;
+	<?php // This foreach loop runs between 3000 to 60000 times, so be as dry as possible here, no comments
+    foreach ($lands as $land) { 
+        $stroke_weight = 0.2; 
+        $stroke_color = '#222222';
+        $fill_color = "#FFFFFF";
+        $fill_opacity = '0.1';
+        if ($log_check && $land['account_key'] === $account['id']) { 
+            $stroke_weight = 3; 
+            $stroke_color = '#428BCA';
+        }
+        if ($land['claimed']) {
+          $fill_color = $land['primary_color'];
+          $fill_opacity = '0.5';
+        }
+        ?>
+        declare_square(<?php echo 
+            $land['lat'] . ',' .
+            $land['lng'] . ',' .
+            $stroke_weight . ',' .
+            '"' . $stroke_color . '"' . ',' .
+            '"' . $fill_color . '"' . ',' .
+            $fill_opacity; ?>);
 	<?php } ?>
 
 	// 
@@ -529,18 +541,6 @@ function initMap()
 	// Optional Styling of map
 	var styles = [
 	  {
-		featureType: "all",
-		stylers: [
-		  // { saturation: -80 }
-		]
-	  },{
-		featureType: "road.arterial",
-		elementType: "geometry",
-		stylers: [
-		  // { hue: "#00ffee" },
-		  // { saturation: 50 }
-		]
-	  },{
 		featureType: "poi.business",
 		elementType: "labels",
 		stylers: [
@@ -549,15 +549,16 @@ function initMap()
 	  }
 	];
 
-	var styledMap = new google.maps.StyledMapType(styles,
+	var styled_map = new google.maps.StyledMapType(styles,
 	  {name: "Styled Map"});
-
-	map.mapTypes.set('map_style', styledMap);
+	map.mapTypes.set('map_style', styled_map);
 	map.setMapTypeId('map_style');
 
 	// 
 	// Game Controls
 	// 
+
+    // ...
 
     // 
     // Remove overlay
