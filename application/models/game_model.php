@@ -94,8 +94,7 @@ Class game_model extends CI_Model
     $data = array(
         'claimed' => 0,
         'account_key' => 0,
-        'price' => 0,
-        'primary_color' => $primary_color
+        'price' => 0
     );
     $this->db->where('account_key', $account_id);
     $this->db->update('land', $data);

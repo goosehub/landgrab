@@ -44,7 +44,7 @@ class Cron extends CI_Controller {
             var_dump($land_tax);
 
             // Find account
-            $account = $this->user_model->get_account_by_keys($land['account_key'], $world['id']);
+            $account = $this->user_model->get_account_by_id($land['account_key'], $world['id']);
             echo 'owner account';
             var_dump($account);
 
@@ -71,7 +71,7 @@ class Cron extends CI_Controller {
 
           echo 'taxes collected';
           var_dump($taxes_collected);
-          $fair_share = $taxes_collected / count($claimed_lands);
+          $fair_share = ceil($taxes_collected / count($claimed_lands));
           echo 'fair share';
           var_dump($fair_share);
 
@@ -85,7 +85,7 @@ class Cron extends CI_Controller {
           var_dump($land);
 
             // Add fair share to account
-            $account = $this->user_model->get_account_by_keys($land['account_key'], $world['id']);
+            $account = $this->user_model->get_account_by_id($land['account_key'], $world['id']);
             echo 'account to receive fair share';
             var_dump($account);
             $new_cash_balance = ceil($account['cash'] + $fair_share);

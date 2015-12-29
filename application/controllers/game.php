@@ -114,6 +114,7 @@ class Game extends CI_Controller {
         $coord_key = $this->input->post('coord_key_input');
         $world_key = $this->input->post('world_key_input');
         $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $buyer_account_key = $buyer_account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_key);
 
         // Check for inaccuracies
@@ -121,11 +122,11 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
-        else if ($form_type_input === 'update' && $land_square['account_key'] != $user_id) {
+        else if ($form_type_input === 'update' && $land_square['account_key'] != $buyer_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
             return false;
         }
-        else if ($form_type_input === 'buy' && $land_square['account_key'] === $user_id) {
+        else if ($form_type_input === 'buy' && $land_square['account_key'] === $buyer_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         }
@@ -144,7 +145,6 @@ class Game extends CI_Controller {
             // Get seller and buying party info
             $seller_account_key = $land_square['account_key'];
             $seller_account = $this->user_model->get_account_by_id($seller_account_key);
-            $buyer_account_key = $buyer_account['id'];
 
             // Find new cash balances
             $new_selling_owner_cash = $seller_account['cash'] + $amount;
