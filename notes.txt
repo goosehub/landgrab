@@ -29,13 +29,13 @@ Solutions
 High Priority
     Additional Gameplay Mechanics
     Leaderboards
-    Bug in north east and north west likely caused by rounding math
     Push registering
     Smarter price validation with pennies
     Update color updating existing land colors
 
 Low Priority
     Record of game transactions
+    Rename coord_key to coord_slug
 
 No Priority
     Trade Land
@@ -72,6 +72,9 @@ Maximum Ajax to reduce bandwidth, server strain, and client load
 ==========================================================================================
     Documentation
 ==========================================================================================
+
+coord_key
+    coord_key is top right corner of box
 
 Map Size
     15120 squares

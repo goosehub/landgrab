@@ -465,7 +465,8 @@ function initMap()
 	// Set land window
 	function set_window(event) {
 		// Set Parameters
-		var lat = round_down(event.latLng.lat());
+        // Not entirely sure why I have to subtract land_size on lat for this to work, but leads to correct behavior
+		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_key = lat + ',' + lng;
 		// Get land_data
@@ -500,7 +501,8 @@ function initMap()
 					}
 				}
 			}
-			// content_string += 'Coord Key: ' + land_data['coord_key'] + '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			content_string += 'Coord Key: ' + land_data['coord_key'] + ' | ' + coord_key +
+             '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
@@ -587,12 +589,12 @@ function initMap()
 	// For rounding land coords
 	function round_down(n) {
 		if (n > 0) {
-	        return Math.floor(n/land_size) * land_size;
+	        return Math.ceil(n/land_size) * land_size;
 		}
 	    else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
 	    }
 	    else {
-	        return land_size;
+	        return 0;
 	    }
 	}
 

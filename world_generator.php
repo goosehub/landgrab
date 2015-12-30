@@ -32,18 +32,6 @@ VALUES";
 echo $insert_statement;
 echo '<br>';
 
-function round_down($n, $box_size) {
-    if ($n > 0) {
-        return floor($n/$box_size) * $box_size;
-    }
-    else if ($n < 0) {
-        return ceil($n/$box_size) * $box_size;
-    }
-    else {
-        return 0;
-    }
-}
-
 // 
 // Land loop
 // 
@@ -54,7 +42,7 @@ for ($x = -$x_limit; $x < $x_limit; $x = $x + $box_size) {
     // Loop lat for each lng
     for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
         // Get coord_key
-        $coord_key = round_down($y, $box_size) . ',' . round_down($x, $box_size);
+        $coord_key = $y . ',' . $x;
         echo "(NULL, '" . $coord_key . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
