@@ -29,6 +29,10 @@ Solutions
 High Priority
     Additional Gameplay Mechanics
     Leaderboards
+    Bug in north east and north west likely caused by rounding math
+    Push registering
+    Smarter price validation with pennies
+    Update color updating existing land colors
 
 Low Priority
     Record of game transactions
@@ -45,6 +49,11 @@ No Priority
     Facebook login
     International Language Support
     panTo on set_window (causes error "too much recursion")
+
+To be figured out
+    Hide land form expand button after click
+    Land form name focus
+    Ajax land form submit
 
 ==========================================================================================
     Requirements
