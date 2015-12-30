@@ -299,7 +299,7 @@
         <p>You can contribute to this project on Github</p>
         <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
         <br>
-        <p>Special Thanks goes to Google Maps, EllisLabs, <a href="http://ithare.com/" target="_blank">itHare</a>, and all of my users</p>
+        <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, <a href="http://ithare.com/" target="_blank">itHare</a>, and all of my users</p>
     </div>
 
     <!-- Report Bugs Block -->
@@ -511,8 +511,7 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-        $('#' + form_type + '_input_land_name').focus();
-		result = '<form action="<?=base_url()?>land_form" method="post"><button class="' + form_type + '_land btn ' + button_class + '" type="button" '
+		result = '<form action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land';
 		if (form_type === 'buy') {
@@ -521,25 +520,25 @@ function initMap()
 		result += '</button><br><br>'
 		+ '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
-            + '<input type="hidden" id="' + form_type + '_input_form_type" name="form_type_input" value="' + form_type + '">'
-            + '<input type="hidden" id="' + form_type + '_input_world_key" name="world_key_input" value="' + world_key + '">'
-            + '<input type="hidden" id="' + form_type + '_input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
-            + '<input type="hidden" id="' + form_type + '_input_lng" name="lng_input" value="' + d['lng'] + '">'
-            + '<input type="hidden" id="' + form_type + '_input_lat" name="lat_input" value="' + d['lat'] + '">'
+            + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
+            + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
+            + '<input type="hidden" id="input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
+            + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
+            + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="' + form_type + '_input_land_name">Name</label>'
+            + '<label for="input_land_name">Name</label>'
             + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="' + form_type + '_input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
+            + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="' + form_type + '_input_price">Price</label>'
+            + '<label for="input_price">Price</label>'
             + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="' + form_type + '_input_price" name="price" value="' + money_format(d['price']) + '">'
+            + '<input type="text" class="form-control" id="input_price" name="price" value="' + money_format(d['price']) + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="' + form_type + '_input_content">Description</label>'
+            + '<label for="input_content">Description</label>'
             + '</div><div class="col-md-8">'
-            + '<textarea class="form-control" id="' + form_type + '_input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
+            + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>'
           + '<button type="submit" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
@@ -644,12 +643,6 @@ function initMap()
 	  {name: "Styled Map"});
 	map.mapTypes.set('map_style', styled_map);
 	map.setMapTypeId('map_style');
-
-	// 
-	// Game Controls
-	// 
-
-    // ...
 
     // 
     // Remove overlay
