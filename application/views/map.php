@@ -369,6 +369,7 @@
                     <?php echo $leader_user['username']; ?>
                 </td>
                 <td><?php echo $leader['COUNT(*)']; ?></td>
+                <?php // Math for finding approx area of land owned ?>
                 <td>~<?php echo $leader['COUNT(*)'] * (70 * $world['land_size']); ?> Miles | ~<?php echo $leader['COUNT(*)'] * (112 * $world['land_size']); ?> KM</td>
             </tr>
         <?php $rank++; ?>
@@ -440,8 +441,12 @@
                     style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
                     <?php echo $leader_user['username']; ?>
                 </td>
-                <td><?php echo $leader['land_name']; ?></td>
-                <td>$<?php echo number_format($leader['price']); ?></td>
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                    <?php echo $leader['land_name']; ?>
+                </a></td>
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                    $<?php echo number_format($leader['price']); ?>
+                </a></td>
                 <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
             </tr>
         <?php $rank++; ?>
@@ -479,8 +484,12 @@
                     style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
                     <?php echo $leader_user['username']; ?>
                 </td>
-                <td><?php echo $leader['land_name']; ?></td>
-                <td>$<?php echo number_format($leader['price']); ?></td>
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                    <?php echo $leader['land_name']; ?>
+                </a></td>
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                    $<?php echo number_format($leader['price']); ?>
+                </a></td>
                 <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
             </tr>
         <?php $rank++; ?>
@@ -532,8 +541,16 @@ function initMap()
 
     // Map options
     var map = new google.maps.Map(document.getElementById('map'), {
+        // Zoom on land if set as parameter
+        <?php if ( isset($_GET['land']) ) { 
+        $land_coords_split = explode(',', $_GET['land']); ?>
+        // Logic to center isn't fully understand, but results in correct behavior in all 4 corners
+        center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
+        zoom: 7,
+        <?php } else { ?>
         center: {lat: 20, lng: 0},
         zoom: 3,
+        <?php } ?>
         minZoom: 3,
         maxZoom: 10,
         mapTypeId: google.maps.MapTypeId.TERRAIN 
@@ -574,7 +591,7 @@ function initMap()
 	// Set land window
 	function set_window(event) {
 		// Set Parameters
-        // Not entirely sure why I have to subtract land_size on lat for this to work, but leads to correct behavior
+        // Not entirely sure why I have to subtract land_size on lat for this to work, but results in correct behavior in all 4 corners
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_key = lat + ',' + lng;
