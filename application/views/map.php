@@ -12,126 +12,9 @@
 	<!-- Custom Fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-	<style>
-	  /* Global */
-	  html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		font-family: "Lato";
-	  }
-	  /* Orange Action Bootstrap-Styled Button */
-	  .btn-action {   
-	  	background-color: hsl(44, 100%, 56%) !important; 
-	  	background-repeat: repeat-x; 
-	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc31e", endColorstr="#ffc31e"); 
-	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffc31e), to(#ffc31e)); 
-	  	background-image: -moz-linear-gradient(top, #ffc31e, #ffc31e); 
-	  	background-image: -ms-linear-gradient(top, #ffc31e, #ffc31e); 
-	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffc31e), color-stop(100%, #ffc31e)); 
-	  	background-image: -webkit-linear-gradient(top, #ffc31e, #ffc31e); 
-	  	background-image: -o-linear-gradient(top, #ffc31e, #ffc31e); 
-	  	background-image: linear-gradient(#ffc31e, #ffc31e); 
-	  	border-color: #ffc31e #ffc31e hsl(44, 100%, 56%); 
-	  	color: #333 !important; 
-	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
-	  	-webkit-font-smoothing: antialiased;
-	  }
-	  .btn-action:hover {
-	  	background-color: hsl(38, 100%, 54%) !important; 
-	  	background-repeat: repeat-x; 
-	  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffa814", endColorstr="#ffa814"); 
-	  	background-image: -khtml-gradient(linear, left top, left bottom, from(#ffa814), to(#ffa814)); 
-	  	background-image: -moz-linear-gradient(top, #ffa814, #ffa814); 
-	  	background-image: -ms-linear-gradient(top, #ffa814, #ffa814); 
-	  	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffa814), color-stop(100%, #ffa814)); 
-	  	background-image: -webkit-linear-gradient(top, #ffa814, #ffa814); 
-	  	background-image: -o-linear-gradient(top, #ffa814, #ffa814); 
-	  	background-image: linear-gradient(#ffa814, #ffa814); 
-	  	border-color: #ffa814 #ffa814 hsl(38, 100%, 54%); 
-	  	color: #333 !important; 
-	  	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
-	  	-webkit-font-smoothing: antialiased;
-	  }
+    <!-- Local Style -->
+    <link href="<?=base_url()?>resources/style.css" rel="stylesheet" type="text/css">
 
-	  /* Map */
-	  #map {
-		height: 100%;
-	  }
-
-	  /* Top right block*/
-	  #top_right_block {
-	  	position: absolute;
-		top: 0.5em;
-		right: 6em;
-		opacity: 0.9;
-	  }
-      #cash_display {
-        opacity: 1;
-      }
-      .leaderboard_link {
-        cursor: pointer;
-      }
-
-	  /* Center Block */
-	  .center_block {
-	  	display: none;
-	  	position: absolute;
-		top: 30vh;
-		left: 30%;
-		width: 40%;
-		background: #fff;
-		padding: 1em;
-		border-radius: 1em;
-	  }
-      .leaderboard_block {
-        top: 5vh !important;
-      }
-	  .center_block strong {
-	  	font-size: 1.4em;
-	  }
-	  .exit_center_block {
-	  	float: right;
-	  }
-
-      /* Land Form */
-      .register_to_play {
-        color: #444488;
-        background: #FFC31E;
-        font-weight: bold;
-      }
-	  #land_form .row {
-	  	margin-right: 0;
-	  }
-	  #land_form textarea {
-	  	height: 3em;
-	  }
-
-	  /* Overlay */
-	  #overlay {
-	      position: absolute;
-	      left: 0;
-	      top: 0;
-	      bottom: 0;
-	      right: 0;
-	      background: #000;
-          opacity: 0.9;
-	  }
-      #overlay p {
-        font-size: 2em;
-        color: #222;
-        position: absolute;
-        text-align: center;
-        top: 30vh;
-        left: 40%;
-        width: 20%;
-        background: #fff;
-        padding: 0.5em;
-      }
-	  #loading {
-	      width: 50px;
-	  }
-	</style>
   </head>
   <body>
 
@@ -204,10 +87,8 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-
     	<!-- Validation Errors -->
     	<?php if ($failed_form === 'error_block') { echo $validation_errors; } ?>
-
     </div>
 
     <!-- Login Block -->
@@ -217,10 +98,8 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-
     	<!-- Validation Errors -->
     	<?php if ($failed_form === 'login') { echo $validation_errors; } ?>
-
     	<!-- Form -->
 		<?php echo form_open('user/login'); ?>
     	  <div class="form-group">
@@ -243,10 +122,8 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-
     	<!-- Validation Errors -->
     	<?php if ($failed_form === 'register') { echo $validation_errors; } ?>
-
     	<!-- Form -->
 		<?php echo form_open('user/register'); ?>
     	  <div class="form-group">
@@ -273,7 +150,6 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-        
         <hr>
         <p>
             LandGrab is a game of Claiming, Buying, and Selling Land.
@@ -290,6 +166,10 @@
         <p>
             It is important not to set your land prices so high you lose cash, yet not so low you lose land. Finding undervalued land, and selling it for a profit is key.
         </p>
+        <p>
+            In the top right, you can view the Leaderboards, as well as choose other worlds to play in.
+            You've been given a default color for each world, that you can adjust under your menu in the top right.
+        </p>
     </div>
 
     <!-- About Block -->
@@ -299,7 +179,6 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-        
         <hr>
         <p>LandGrab is a game developed by Goose. Developed in PHP with CodeIgniter 3.</p>
         <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
@@ -317,7 +196,6 @@
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
-
         <hr>
         <p>Please report all bugs to 
             <strong>
@@ -330,14 +208,12 @@
 
     <!-- Leaderboard net_value Block -->
     <div id="leaderboard_net_value_block" class="leaderboard_block center_block">
-        <strong>net_value_block</strong>
+        <strong>Net Value Leaderboard</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
         <hr>
-
     </div>
 
     <!-- Leaderboard land_owned Block -->
@@ -347,9 +223,7 @@
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
         <hr>
-
         <table class="table">
             <tr class="info">
                 <td>Rank</td>
@@ -385,9 +259,7 @@
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
         <hr>
-
         <table class="table">
             <tr class="info">
                 <td>Rank</td>
@@ -419,9 +291,7 @@
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
         <hr>
-
         <table class="table">
             <tr class="info">
                 <td>Rank</td>
@@ -462,9 +332,7 @@
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
         <hr>
-
         <table class="table">
             <tr class="info">
                 <td>Rank</td>
@@ -498,7 +366,6 @@
 
     </div>
 
-
 	<!-- jQuery -->
 	<script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
 	<script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
@@ -515,7 +382,6 @@
     
 	<!-- Master Script -->
     <script>
-
 function initMap() 
 {
     // 
@@ -597,6 +463,7 @@ function initMap()
 		var coord_key = lat + ',' + lng;
 		// Get land_data
 		land = get_single_land(coord_key, world_key, function(land){
+            console.log(land);
 			land_data = JSON.parse(land);
 			// Create string
             var content_string = '<div class="land_window">';
