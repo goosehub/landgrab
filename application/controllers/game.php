@@ -79,6 +79,11 @@ class Game extends CI_Controller {
 
 	    // Echo data to client to be parsed
 	    if ($land_square) {
+            // Strip html entities from all untrusted columns, except content as it's stripped on insert
+            $land_square['land_name'] = htmlentities($land_square['land_name']);
+            $land_square['primary_color'] = htmlentities($land_square['primary_color']);
+            $land_square['secondary_color'] = htmlentities($land_square['secondary_color']);
+            $land_square['username'] = htmlentities($land_square['username']);
 	    	echo json_encode($land_square);
 	    // If none found, default to this
 	    } else {
@@ -124,10 +129,16 @@ class Game extends CI_Controller {
 	        $lng = $this->input->post('lng_input');
 	        $land_name = $this->input->post('land_name');
 	        $price = $this->input->post('price');
-	        $content = $this->input->post('content');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-	        $primary_color = $account['primary_color'];
+            $primary_color = $account['primary_color'];
+
+            // Only allow whitelisted tags for content, and add break tags in place of new lines
+	        $content = $this->input->post('content');
+            $whitelisted_tags = '<iframe><a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';
+            $content = strip_tags(nl2br($content), $whitelisted_tags);
+
+            // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
 	        redirect('world/' . $world_key, 'refresh');
 	    }
