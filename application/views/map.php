@@ -463,7 +463,6 @@ function initMap()
 		var coord_key = lat + ',' + lng;
 		// Get land_data
 		land = get_single_land(coord_key, world_key, function(land){
-            console.log(land);
 			land_data = JSON.parse(land);
 			// Create string
             var content_string = '<div class="land_window">';

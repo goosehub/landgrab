@@ -100,8 +100,16 @@ class Game extends CI_Controller {
             $user_id = $data['user_id'] = $session_data['id'];
         }
 
+        // Remove cents if exists
+        if (substr($_POST['price'], -3, 1) == '.') {
+            $_POST['price'] = substr($_POST['price'], 0, -3);
+        }
+        // Remove dollarsign from price input if exists
+		$_POST['price'] = str_replace('$', '', $_POST['price']);
         // Remove commas from price input if exists
-		$_POST['price'] = str_replace(',', '', $_POST['price']);
+        $_POST['price'] = str_replace(',', '', $_POST['price']);
+        // Remove periods from price input if exists (some cultures use periods instead of commas)
+        $_POST['price'] = str_replace('.', '', $_POST['price']);
         
 		// Validation
         $this->load->library('form_validation');
@@ -173,7 +181,7 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         }
-        else if ($buyer_account['cash'] < $land_square['price'])
+        else if ($form_type_input === 'buy' && $buyer_account['cash'] < $_POST['price'])
         {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
             return false;

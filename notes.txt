@@ -28,12 +28,11 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Smarter price validation with pennies
+    Record of game transactions
+    Rename coord_key to coord_slug
 
 Low Priority
     Net Worth Leaderboard
-    Record of game transactions
-    Rename coord_key to coord_slug
 
 No Priority
     Trade Land
