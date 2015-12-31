@@ -28,11 +28,13 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Leaderboards
     Smarter price validation with pennies
     Update color updating existing land colors
+    Control HTML elements in content, remove from rest
+    Value land leaderboard link to map with get param for zoom and center logic to be applied for purchase
 
 Low Priority
+    Net Worth Leaderboard
     Record of game transactions
     Rename coord_key to coord_slug
 

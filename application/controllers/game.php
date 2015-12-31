@@ -46,16 +46,12 @@ class Game extends CI_Controller {
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
         // Get leaderboards
-        $leaderboard_net_value_data = $this->leaderboard_model->leaderboard_net_value($world_key);
-        // var_dump($leaderboard_net_value_data);
-        $leaderboard_land_owned_data = $this->leaderboard_model->leaderboard_land_owned($world_key);
-        // var_dump($leaderboard_land_owned_data);
-        $leaderboard_cash_owned_data = $this->leaderboard_model->leaderboard_cash_owned($world_key);
-        // var_dump($leaderboard_cash_owned_data);
-        $leaderboard_highest_valued_land_data = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
-        // var_dump($leaderboard_highest_valued_land_data);
-        $leaderboard_cheapest_land_data = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
-        // var_dump($leaderboard_cheapest_land_data);
+        $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
+        // var_dump($data['leaderboard_net_value_data']);
+        $data['leaderboard_land_owned_data'] = $this->leaderboard_model->leaderboard_land_owned($world_key);
+        $data['leaderboard_cash_owned_data'] = $this->leaderboard_model->leaderboard_cash_owned($world_key);
+        $data['leaderboard_highest_valued_land_data'] = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
+        $data['leaderboard_cheapest_land_data'] = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
 
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');

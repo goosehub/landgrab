@@ -84,6 +84,9 @@
 		padding: 1em;
 		border-radius: 1em;
 	  }
+      .leaderboard_block {
+        top: 5vh !important;
+      }
 	  .center_block strong {
 	  	font-size: 1.4em;
 	  }
@@ -93,12 +96,10 @@
 
       /* Land Form */
       .register_to_play {
-        color: #FFC31E;
-        background: #444488;
+        color: #444488;
+        background: #FFC31E;
         font-weight: bold;
       }
-
-	  /* Land Form */
 	  #land_form .row {
 	  	margin-right: 0;
 	  }
@@ -178,7 +179,7 @@
               <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
               <li role="separator" class="divider"></li>
               <li class="text-center"><strong>Leaderboards</strong></li>
-              <li><a id="leaderboard_net_value_button" class="leaderboard_link">Net Value</a></li>
+              <!-- <li><a id="leaderboard_net_value_button" class="leaderboard_link">Net Value</a></li> -->
               <li><a id="leaderboard_land_owned_button" class="leaderboard_link">Land</a></li>
               <li><a id="leaderboard_cash_owned_button" class="leaderboard_link">Cash</a></li>
               <li><a id="leaderboard_highest_valued_land_button" class="leaderboard_link">Highest Valued Land</a></li>
@@ -328,7 +329,7 @@
     <!-- Leaderboards -->
 
     <!-- Leaderboard net_value Block -->
-    <div id="leaderboard_net_value_block" class="center_block">
+    <div id="leaderboard_net_value_block" class="leaderboard_block center_block">
         <strong>net_value_block</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
@@ -340,50 +341,151 @@
     </div>
 
     <!-- Leaderboard land_owned Block -->
-    <div id="leaderboard_land_owned_block" class="center_block">
-        <strong>land_owned_block</strong>
+    <div id="leaderboard_land_owned_block" class="leaderboard_block center_block">
+        <strong>Land Leaderboard</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
 
         <hr>
+
+        <table class="table">
+            <tr class="info">
+                <td>Rank</td>
+                <td>Player</td>    
+                <td>Lands Owned</td>
+                <td>Area <small>(Approx.)</small></td>
+            </tr>    
+        <?php $rank = 1; ?>
+        <?php foreach ($leaderboard_land_owned_data as $leader) { ?>
+        <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
+        <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+            <tr>
+                <td><?php echo $rank; ?></td>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                    style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
+                    <?php echo $leader_user['username']; ?>
+                </td>
+                <td><?php echo $leader['COUNT(*)']; ?></td>
+                <td>~<?php echo $leader['COUNT(*)'] * (70 * $world['land_size']); ?> Miles | ~<?php echo $leader['COUNT(*)'] * (112 * $world['land_size']); ?> KM</td>
+            </tr>
+        <?php $rank++; ?>
+        <?php } ?>
+        </table>
 
     </div>
 
     <!-- Leaderboard cash_owned Block -->
-    <div id="leaderboard_cash_owned_block" class="center_block">
-        <strong>cash_owned_block</strong>
+    <div id="leaderboard_cash_owned_block" class="leaderboard_block center_block">
+        <strong>Cash Leaderboard</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
 
         <hr>
+
+        <table class="table">
+            <tr class="info">
+                <td>Rank</td>
+                <td>Player</td>
+                <td>Cash</td>
+            </tr>    
+        <?php $rank = 1; ?>
+        <?php foreach ($leaderboard_cash_owned_data as $leader_account) { ?>
+        <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+            <tr>
+                <td><?php echo $rank; ?></td>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                    style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
+                    <?php echo $leader_user['username']; ?>
+                </td>
+                <td>$<?php echo number_format($leader_account['cash']); ?></td>
+            </tr>
+        <?php $rank++; ?>
+        <?php } ?>
+        </table>
 
     </div>
 
     <!-- Leaderboard highest_valued_land Block -->
-    <div id="leaderboard_highest_valued_land_block" class="center_block">
-        <strong>highest_valued_land_block</strong>
+    <div id="leaderboard_highest_valued_land_block" class="leaderboard_block center_block">
+        <strong>Highest Value Land Leaderboard</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
 
         <hr>
+
+        <table class="table">
+            <tr class="info">
+                <td>Rank</td>
+                <td>Player</td>
+                <td>Land Name</td>
+                <td>Land Price</td>
+                <td>Land Description</td>
+            </tr>    
+        <?php $rank = 1; ?>
+        <?php foreach ($leaderboard_highest_valued_land_data as $leader) { ?>
+        <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
+        <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+            <tr>
+                <td><?php echo $rank; ?></td>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                    style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
+                    <?php echo $leader_user['username']; ?>
+                </td>
+                <td><?php echo $leader['land_name']; ?></td>
+                <td>$<?php echo number_format($leader['price']); ?></td>
+                <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
+            </tr>
+        <?php $rank++; ?>
+        <?php } ?>
+        </table>
 
     </div>
 
     <!-- Leaderboard cheapest_land Block -->
-    <div id="leaderboard_cheapest_land_block" class="center_block">
-        <strong>cheapest_land_block</strong>
+    <div id="leaderboard_cheapest_land_block" class="leaderboard_block center_block">
+        <strong>Cheapest Land Leaderboard</strong>
 
         <button type="button" class="exit_center_block btn btn-default btn-sm">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
 
         <hr>
+
+        <table class="table">
+            <tr class="info">
+                <td>Rank</td>
+                <td>Player</td>
+                <td>Land Name</td>
+                <td>Land Price</td>
+                <td>Land Description</td>
+            </tr>    
+        <?php $rank = 1; ?>
+        <?php foreach ($leaderboard_cheapest_land_data as $leader) { ?>
+        <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
+        <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+            <tr>
+                <td><?php echo $rank; ?></td>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                    style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
+                    <?php echo $leader_user['username']; ?>
+                </td>
+                <td><?php echo $leader['land_name']; ?></td>
+                <td>$<?php echo number_format($leader['price']); ?></td>
+                <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
+            </tr>
+        <?php $rank++; ?>
+        <?php } ?>
+        </table>
 
     </div>
 
