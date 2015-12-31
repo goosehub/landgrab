@@ -29,7 +29,6 @@ Solutions
 High Priority
     Additional Gameplay Mechanics
     Leaderboards
-    Push registering
     Smarter price validation with pennies
     Update color updating existing land colors
 

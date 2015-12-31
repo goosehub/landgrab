@@ -91,6 +91,13 @@
 	  	float: right;
 	  }
 
+      /* Land Form */
+      .register_to_play {
+        color: #FFC31E;
+        background: #444488;
+        font-weight: bold;
+      }
+
 	  /* Land Form */
 	  #land_form .row {
 	  	margin-right: 0;
@@ -474,16 +481,16 @@ function initMap()
 			land_data = JSON.parse(land);
 			// Create string
             var content_string = '<div class="land_window">';
-            if (land_data['claimed'] === '0' && log_check) {
-                // 
-            }
-			else if (land_data['claimed'] === '0') {
-				content_string += '<strong>Unclaimed</strong><br>';
+			if (land_data['claimed'] === '0') {
+				content_string += '<strong>Unclaimed</strong><br><br>';
 			} else  {
 				content_string += '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>'
 				+ 'Owned by <strong>' + land_data['username'] + '</strong><br>'
 				+ '' + land_data['content'] + '<br>';
 			}
+            if (! log_check) {
+                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key + '?register">Register to Play!</a><br>';
+            }
 			if (log_check) {
 				// 
 				// Abstract to be shorter
@@ -501,8 +508,9 @@ function initMap()
 					}
 				}
 			}
-			content_string += 'Coord Key: ' + land_data['coord_key'] + ' | ' + coord_key +
-             '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+            // debug coord_key
+			// content_string += 'Coord Key: ' + land_data['coord_key'] + ' | ' + coord_key +
+            // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
@@ -730,6 +738,10 @@ $('#leaderboard_cheapest_land_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_cheapest_land_block').show();
 });
+
+if (window.location.href.indexOf('register') >= 0) {
+    $('#register_block').show();
+}
 
 // Stop dropdown closing when clicking color input
 $('#account_input_primary_color').click(function(e) {
