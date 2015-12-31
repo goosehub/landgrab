@@ -122,11 +122,19 @@ Class user_model extends CI_Model
  // Update account primary color
  function update_account_primary_color($account_id, $primary_color)
  {
+    // Update account
     $data = array(
         'primary_color' => $primary_color
     );
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
+
+    // Update lands
+    $data = array(
+        'primary_color' => $primary_color
+    );
+    $this->db->where('account_key', $account_id);
+    $this->db->update('land', $data);
     return true;
  }
 

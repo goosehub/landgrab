@@ -29,7 +29,6 @@ Solutions
 High Priority
     Additional Gameplay Mechanics
     Smarter price validation with pennies
-    Update color updating existing land colors
     Control HTML elements in content, remove from rest
     Value land leaderboard link to map with get param for zoom and center logic to be applied for purchase
 
