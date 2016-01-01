@@ -55,7 +55,7 @@ INSERT INTO `account` (`id`, `user_key`, `world_key`, `cash`, `primary_color`, `
 
 CREATE TABLE IF NOT EXISTS `land` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `coord_key` varchar(8) NOT NULL,
+  `coord_slug` varchar(8) NOT NULL,
   `lat` varchar(4) NOT NULL,
   `lng` varchar(4) NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `land` (
 -- Dumping data for table `land`
 --
 
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (1, '-84,-180', '-84', '-180', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (2, '-80,-180', '-80', '-180', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (3, '-76,-180', '-76', '-180', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
@@ -496,7 +496,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (418, '72,-144', '72', '-144', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (419, '76,-144', '76', '-144', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (420, '80,-144', '80', '-144', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (421, '-84,-140', '-84', '-140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (422, '-80,-140', '-80', '-140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (423, '-76,-140', '-76', '-140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
@@ -916,7 +916,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (837, '68,-104', '68', '-104', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (838, '72,-104', '72', '-104', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (839, '76,-104', '76', '-104', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (840, '80,-104', '80', '-104', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (841, '-84,-100', '-84', '-100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
 (842, '-80,-100', '-80', '-100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:28', '2015-12-29 03:56:28'),
@@ -1340,7 +1340,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (1260, '80,-64', '80', '-64', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1261, '-84,-60', '-84', '-60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1262, '-80,-60', '-80', '-60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (1263, '-76,-60', '-76', '-60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1264, '-72,-60', '-72', '-60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1265, '-68,-60', '-68', '-60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
@@ -1763,7 +1763,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (1682, '-80,-20', '-80', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1683, '-76,-20', '-76', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1684, '-72,-20', '-72', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (1685, '-68,-20', '-68', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1686, '-64,-20', '-64', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
 (1687, '-60,-20', '-60', '-20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:29', '2015-12-29 03:56:29'),
@@ -2194,7 +2194,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (2112, '-40,20', '-40', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2113, '-36,20', '-36', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2114, '-32,20', '-32', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (2115, '-28,20', '-28', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2116, '-24,20', '-24', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2117, '-20,20', '-20', '20', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
@@ -2625,7 +2625,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (2542, '0,60', '0', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2543, '4,60', '4', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2544, '8,60', '8', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (2545, '12,60', '12', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2546, '16,60', '16', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2547, '20,60', '20', '60', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
@@ -3055,7 +3055,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (2971, '36,100', '36', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2972, '40,100', '40', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2973, '44,100', '44', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (2974, '48,100', '48', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2975, '52,100', '52', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (2976, '56,100', '56', '100', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
@@ -3478,7 +3478,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (3393, '44,140', '44', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (3394, '48,140', '48', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (3395, '52,140', '52', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (3396, '56,140', '56', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (3397, '60,140', '60', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
 (3398, '64,140', '64', '140', 1, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:56:30', '2015-12-29 03:56:30'),
@@ -3901,7 +3901,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (3815, '18,-180', '18', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (3816, '21,-180', '21', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (3817, '24,-180', '24', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (3818, '27,-180', '27', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (3819, '30,-180', '30', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (3820, '33,-180', '33', '-180', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
@@ -4318,7 +4318,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (4231, '-78,-156', '-78', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4232, '-75,-156', '-75', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4233, '-72,-156', '-72', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (4234, '-69,-156', '-69', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4235, '-66,-156', '-66', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4236, '-63,-156', '-63', '-156', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
@@ -4734,7 +4734,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (4646, '-9,-135', '-9', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4647, '-6,-135', '-6', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4648, '-3,-135', '-3', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (4649, '0,-135', '0', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4650, '3,-135', '3', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
 (4651, '6,-135', '6', '-135', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:11', '2015-12-29 03:57:11'),
@@ -5151,7 +5151,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (5062, '63,-114', '63', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5063, '66,-114', '66', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5064, '69,-114', '69', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (5065, '72,-114', '72', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5066, '75,-114', '75', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5067, '78,-114', '78', '-114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
@@ -5570,7 +5570,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (5480, '-27,-90', '-27', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5481, '-24,-90', '-24', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5482, '-21,-90', '-21', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (5483, '-18,-90', '-18', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5484, '-15,-90', '-15', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
 (5485, '-12,-90', '-12', '-90', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:12', '2015-12-29 03:57:12'),
@@ -5994,7 +5994,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (5903, '66,-69', '66', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (5904, '69,-69', '69', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (5905, '72,-69', '72', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (5906, '75,-69', '75', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (5907, '78,-69', '78', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (5908, '81,-69', '81', '-69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
@@ -6417,7 +6417,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (6325, '-12,-45', '-12', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6326, '-9,-45', '-9', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6327, '-6,-45', '-6', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (6328, '-3,-45', '-3', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6329, '0,-45', '0', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6330, '3,-45', '3', '-45', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
@@ -6841,7 +6841,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (6748, '81,-24', '81', '-24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6749, '-84,-21', '-84', '-21', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6750, '-81,-21', '-81', '-21', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (6751, '-78,-21', '-78', '-21', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6752, '-75,-21', '-75', '-21', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
 (6753, '-72,-21', '-72', '-21', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:13', '2015-12-29 03:57:13'),
@@ -7269,7 +7269,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (7175, '18,0', '18', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7176, '21,0', '21', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7177, '24,0', '24', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (7178, '27,0', '27', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7179, '30,0', '30', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7180, '33,0', '33', '0', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
@@ -7703,7 +7703,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (7608, '-27,24', '-27', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7609, '-24,24', '-24', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7610, '-21,24', '-21', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (7611, '-18,24', '-18', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7612, '-15,24', '-15', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (7613, '-12,24', '-12', '24', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
@@ -8134,7 +8134,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (8038, '-81,48', '-81', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8039, '-78,48', '-78', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8040, '-75,48', '-75', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (8041, '-72,48', '-72', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8042, '-69,48', '-69', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8043, '-66,48', '-66', '48', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
@@ -8565,7 +8565,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (8468, '33,69', '33', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8469, '36,69', '36', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8470, '39,69', '39', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (8471, '42,69', '42', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8472, '45,69', '45', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
 (8473, '48,69', '48', '69', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:14', '2015-12-29 03:57:14'),
@@ -8996,7 +8996,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (8898, '-21,93', '-21', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (8899, '-18,93', '-18', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (8900, '-15,93', '-15', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (8901, '-12,93', '-12', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (8902, '-9,93', '-9', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (8903, '-6,93', '-6', '93', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
@@ -9422,7 +9422,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (9323, '78,114', '78', '114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9324, '81,114', '81', '114', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9325, '-84,117', '-84', '117', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (9326, '-81,117', '-81', '117', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9327, '-78,117', '-78', '117', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9328, '-75,117', '-75', '117', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
@@ -9845,7 +9845,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (9745, '0,138', '0', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9746, '3,138', '3', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9747, '6,138', '6', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (9748, '9,138', '9', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9749, '12,138', '12', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (9750, '15,138', '15', '138', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
@@ -10267,7 +10267,7 @@ INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `ac
 (10166, '-81,162', '-81', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10167, '-78,162', '-78', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10168, '-75,162', '-75', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15');
-INSERT INTO `land` (`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) VALUES
 (10169, '-72,162', '-72', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10170, '-69,162', '-69', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10171, '-66,162', '-66', '162', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),

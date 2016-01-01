@@ -29,7 +29,6 @@ Solutions
 High Priority
     Additional Gameplay Mechanics
     Record of game transactions
-    Rename coord_key to coord_slug
 
 Low Priority
     Net Worth Leaderboard
@@ -70,8 +69,8 @@ Maximum Ajax to reduce bandwidth, server strain, and client load
     Documentation
 ==========================================================================================
 
-coord_key
-    coord_key is top right corner of box
+coord_slug
+    coord_slug is top right corner of box
 
 Map Size
     15120 squares

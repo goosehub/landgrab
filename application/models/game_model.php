@@ -48,22 +48,22 @@ Class game_model extends CI_Model
     return $query->result_array();
  }
  // Get single land
- function get_single_land($world_key, $coord_key)
+ function get_single_land($world_key, $coord_slug)
  {
     $this->db->select('*');
     $this->db->from('land');
-    $this->db->where('coord_key', $coord_key);
+    $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color)
+ function update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color)
  {
     $data = array(
         'claimed' => $claimed,
-        'coord_key' => $coord_key,
+        'coord_slug' => $coord_slug,
         'lat' => $lat,
         'lng' => $lng,
         'account_key' => $account_key,
@@ -72,7 +72,7 @@ Class game_model extends CI_Model
         'content' => $content,
         'primary_color' => $primary_color
     );
-    $this->db->where('coord_key', $coord_key);
+    $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
     $this->db->update('land', $data);
     return true;

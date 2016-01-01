@@ -26,7 +26,7 @@ $y_limit = 84;
 // 
 
 $insert_statement = "INSERT INTO `land` 
-(`id`, `coord_key`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) 
+(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) 
 VALUES";
 
 echo $insert_statement;
@@ -41,9 +41,9 @@ $i = 1;
 for ($x = -$x_limit; $x < $x_limit; $x = $x + $box_size) {
     // Loop lat for each lng
     for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
-        // Get coord_key
-        $coord_key = $y . ',' . $x;
-        echo "(NULL, '" . $coord_key . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        // Get coord_slug
+        $coord_slug = $y . ',' . $x;
+        echo "(NULL, '" . $coord_slug . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
             echo ';';

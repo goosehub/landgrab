@@ -311,10 +311,10 @@
                     style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
                     <?php echo $leader_user['username']; ?>
                 </td>
-                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                     <?php echo $leader['land_name']; ?>
                 </a></td>
-                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                     $<?php echo number_format($leader['price']); ?>
                 </a></td>
                 <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
@@ -352,10 +352,10 @@
                     style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
                     <?php echo $leader_user['username']; ?>
                 </td>
-                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                     <?php echo $leader['land_name']; ?>
                 </a></td>
-                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_key']; ?>">
+                <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                     $<?php echo number_format($leader['price']); ?>
                 </a></td>
                 <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
@@ -460,9 +460,9 @@ function initMap()
         // Not entirely sure why I have to subtract land_size on lat for this to work, but results in correct behavior in all 4 corners
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
-		var coord_key = lat + ',' + lng;
+		var coord_slug = lat + ',' + lng;
 		// Get land_data
-		land = get_single_land(coord_key, world_key, function(land){
+		land = get_single_land(coord_slug, world_key, function(land){
 			land_data = JSON.parse(land);
 			// Create string
             var content_string = '<div class="land_window">';
@@ -493,8 +493,8 @@ function initMap()
 					}
 				}
 			}
-            // debug coord_key
-			// content_string += 'Coord Key: ' + land_data['coord_key'] + ' | ' + coord_key +
+            // debug coord_slug
+			// content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
             // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
@@ -517,7 +517,7 @@ function initMap()
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
-            + '<input type="hidden" id="input_coord_key" name="coord_key_input" value="' + d['coord_key'] + '">'
+            + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
             + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
             + '<div class="row"><div class="col-md-3">'
@@ -542,12 +542,12 @@ function initMap()
 	}
 
 	// Get single land ajax
-	function get_single_land(coord_key, world_key, callback) {
+	function get_single_land(coord_slug, world_key, callback) {
 		$.ajax({
 			url: "<?=base_url()?>get_single_land",
 			type: "GET",
 			data: { 
-                coord_key: coord_key,
+                coord_slug: coord_slug,
                 world_key: world_key 
             },
 			cache: false,

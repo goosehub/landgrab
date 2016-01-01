@@ -66,11 +66,11 @@ class Game extends CI_Controller {
 	public function get_single_land()
 	{
 		// Set input
-		$coord_key = $_GET['coord_key'];
+		$coord_slug = $_GET['coord_slug'];
         $world_key = $_GET['world_key'];
 
 	    // Get Land Square
-        $land_square = $this->game_model->get_single_land($world_key, $coord_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
 
         // Add username to array
         $account = $this->user_model->get_account_by_id($land_square['account_key']);
@@ -114,7 +114,7 @@ class Game extends CI_Controller {
 		// Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');
-        $this->form_validation->set_rules('coord_key_input', 'Coord Key Input', 'trim|required|max_length[8]');
+        $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('lng_input', 'Lng Input', 'trim|required|max_length[4]');
         $this->form_validation->set_rules('lat_input', 'Lat Input', 'trim|required|max_length[4]');
@@ -131,7 +131,7 @@ class Game extends CI_Controller {
 		// Success
 	    } else {
 	    	$claimed = 1;
-            $coord_key = $this->input->post('coord_key_input');
+            $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
 	        $lat = $this->input->post('lat_input');
 	        $lng = $this->input->post('lng_input');
@@ -147,7 +147,7 @@ class Game extends CI_Controller {
             $content = strip_tags(nl2br($content), $whitelisted_tags);
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_key, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
 	        redirect('world/' . $world_key, 'refresh');
 	    }
 	}
@@ -162,11 +162,11 @@ class Game extends CI_Controller {
         }
 
         // Get land info for verifying our inputs
-        $coord_key = $this->input->post('coord_key_input');
+        $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
         $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $buyer_account_key = $buyer_account['id'];
-        $land_square = $this->game_model->get_single_land($world_key, $coord_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
 
         // Check for inaccuracies
         if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
