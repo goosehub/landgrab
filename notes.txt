@@ -2,6 +2,12 @@
     Notes
 ==========================================================================================
 
+Live Server Instance
+Change encryption_key in config/config.php
+Change database connection in config/database.php
+Change CRON token in controllers/Cron.php
+Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
+
 Game Mechanics
     Unclaimed land is free to claim
     All land must have a price
