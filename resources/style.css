@@ -57,6 +57,18 @@ html, body {
 .leaderboard_link {
   cursor: pointer;
 }
+.cash_dropdown {
+  padding: 0.5em;
+}
+.money_info_item {
+  font-weight: bold;
+}
+.green_profit {
+  color: #009E00;
+}
+.red_profit {
+  color: #FF0000;
+}
 
 /* Center Block */
 .center_block {

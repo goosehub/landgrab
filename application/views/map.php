@@ -24,14 +24,24 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
-    	<button id="cash_display" disabled="disabled" class="btn btn-default">$<?php echo number_format($account['cash']); ?>.00</button>
+    	<button id="cash_display" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            $<?php echo number_format($account['cash']); ?>.00
+          <span class="caret"></span>
+        </button>
+        <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
+          <li>Land Taxes: <span class="money_info_item red_profit">$<?php echo number_format($hourly_taxes); ?></span>/Hour</li>
+          <li>Fair Share: ~ <span class="money_info_item green_profit">$<?php echo number_format($world['fair_share']); ?></span>/Hour</li>
+          <li>Profit: ~ <span class="money_info_item <?php echo $profit_class; ?>">
+              <?php echo $profit_prefix; ?>$<?php echo number_format(abs($profit)); ?>
+          </span>/Hour</li>
+        </ul>
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     			<?php echo $user['username']; ?>
     		  <span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
-    		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
+    		  <li><a class="logout_button btn btn-warning" href="<?=base_url()?>user/logout">Log Out</a></li>
               <li role="separator" class="divider"></li>
               <li>
                   <?php echo form_open('account/update_color'); ?>
@@ -159,9 +169,9 @@
             You start the game with $1,000,000.
             You can claim any unowned land for free.
             You must set a price on land you own.
-            You will have to pay a tax of 1% on the price you set each hour.
-            Every hour, the taxes gets distributed among the land owners based on amount of land owned.
-            When you run out of cash, you lose.
+            You will have to pay a tax of 1% each hour on the prices you set.
+            Every hour, the taxes gets distributed in a "fair share" evenly for each plot of land.
+            When you run out of cash, your account is reset entirely.
         </p>
         <p>
             It is important not to set your land prices so high you lose cash, yet not so low you lose land. Finding undervalued land, and selling it for a profit is key.

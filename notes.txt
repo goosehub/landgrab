@@ -46,7 +46,8 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Hour tax and Fair share displayed
+    Show sales over past time frame in financial drop down
+    Highlight current world
 
 Low Priority
     Transaction log view

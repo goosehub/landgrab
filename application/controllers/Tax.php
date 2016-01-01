@@ -78,6 +78,9 @@ class Tax extends CI_Controller {
           echo 'fair share';
           var_dump($fair_share);
 
+          // Record fair share
+          $query_action = $this->game_model->record_most_recent_fair_share($fair_share, $world['id']);
+
           echo 'start of fair share distribution';
 
           echo '<hr>';

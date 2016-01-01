@@ -34,9 +34,20 @@ class Game extends CI_Controller {
         }
         $world_key = $world['id'];
 
-        // Get account
         if ($log_check) {
-            $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            // Get account
+            $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+
+            // Get account financial information
+            $price_sum = $this->game_model->get_sum_of_account_land_prices($account['id']);
+            $hourly_taxes = $data['hourly_taxes'] = $price_sum['total'] * $world['land_tax_rate'];
+            $profit = $data['profit'] = $world['fair_share'] - $hourly_taxes;
+            $data['profit_class'] = 'green_profit';
+            $data['profit_prefix'] = '';
+            if ($profit < 0) {
+                $data['profit_prefix'] = '-';
+                $data['profit_class'] = 'red_profit';
+            }
         }
 
         // Get worlds

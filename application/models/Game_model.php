@@ -100,6 +100,25 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
-
+ // Get projected tax
+ function get_sum_of_account_land_prices($account_id)
+ {
+    $this->db->select('SUM(price) as total');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_id);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
+ }
+ // Record most recent fair share
+ function record_most_recent_fair_share($fair_share, $world_key)
+ {
+    $data = array(
+        'fair_share' => $fair_share
+    );
+    $this->db->where('id', $world_key);
+    $this->db->update('world', $data);
+    return true;
+}
 }
 ?>
