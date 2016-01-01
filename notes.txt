@@ -49,6 +49,7 @@ High Priority
     Highlight current world in dropdown
     Rename worlds
     Figure out profit inaccuracy, replicate
+    Abstract non maps script
 
 Low Priority
     Transaction log view

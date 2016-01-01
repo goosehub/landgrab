@@ -42,12 +42,12 @@ class Game extends CI_Controller {
             // Get account financial information
             $timespan_days = 7;
 
-            // Taxes and Fair Share
+            // Taxes and Rebate
             $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
             $data['total_lands'] = $land_sum_and_count['count'];
             $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
-            $fair_share = $data['fair_share'] = $world['fair_share'] * $land_sum_and_count['count'];
-            $income = $data['income'] = $fair_share - $hourly_taxes;
+            $rebate = $data['rebate'] = $world['rebate'] * $land_sum_and_count['count'];
+            $income = $data['income'] = $rebate - $hourly_taxes;
             $data['income_class'] = 'green_money';
             $data['income_prefix'] = '+';
             if ($income < 0) {

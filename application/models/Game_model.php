@@ -110,11 +110,11 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
  }
- // Record most recent fair share
- function record_most_recent_fair_share($fair_share, $world_key)
+ // Record most recent rebate
+ function record_most_recent_rebate($rebate, $world_key)
  {
     $data = array(
-        'fair_share' => $fair_share
+        'rebate' => $rebate
     );
     $this->db->where('id', $world_key);
     $this->db->update('world', $data);

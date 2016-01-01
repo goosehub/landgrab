@@ -36,7 +36,7 @@
           <li role="separator" class="divider"></li>
 
           <li>Land Taxes: <span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</li>
-          <li>Fair Share: ~ <span class="money_info_item green_money">$<?php echo number_format($fair_share); ?></span>/Hour</li>
+          <li>Rebates: ~ <span class="money_info_item green_money">$<?php echo number_format($rebate); ?></span>/Hour</li>
           <li>Income: ~ <span class="money_info_item <?php echo $income_class; ?>">
               <?php echo $income_prefix; ?>$<?php echo number_format(abs($income)); ?>
           </span>/Hour</li>

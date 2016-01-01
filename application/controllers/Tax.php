@@ -75,33 +75,33 @@ class Tax extends CI_Controller {
 
           echo 'taxes collected';
           var_dump($taxes_collected);
-          $fair_share = ceil($taxes_collected / count($claimed_lands));
-          echo 'fair share';
-          var_dump($fair_share);
+          $rebate = ceil($taxes_collected / count($claimed_lands));
+          echo 'rebate';
+          var_dump($rebate);
 
-          // Record fair share
-          $query_action = $this->game_model->record_most_recent_fair_share($fair_share, $world['id']);
+          // Record rebate
+          $query_action = $this->game_model->record_most_recent_rebate($rebate, $world['id']);
 
-          echo 'start of fair share distribution';
+          echo 'start of rebate distribution';
 
           echo '<hr>';
 
           // Loop through lands
           foreach ($claimed_lands as $land) {
-          echo 'land to receive fair share';
+          echo 'land to receive rebate';
           var_dump($land);
 
-            // Add fair share to account
+            // Add rebate to account
             $account = $this->user_model->get_account_by_id($land['account_key'], $world['id']);
-            echo 'account to receive fair share';
+            echo 'account to receive rebate';
             var_dump($account);
-            $new_cash_balance = ceil($account['cash'] + $fair_share);
+            $new_cash_balance = ceil($account['cash'] + $rebate);
             echo 'new cash balance';
             var_dump($new_cash_balance);
             $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
             // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'fair_share', $fair_share, $world['id'], $land['coord_slug'], '');
+            $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'rebate', $rebate, $world['id'], $land['coord_slug'], '');
           }
         }
 

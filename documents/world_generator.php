@@ -25,12 +25,14 @@ $y_limit = 84;
 // Logic
 // 
 
+$result = '';
+
 $insert_statement = "INSERT INTO `land` 
 (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `secondary_color`, `created`, `modified`) 
 VALUES";
 
-echo $insert_statement;
-echo '<br>';
+$result .= $insert_statement;
+$result .= '<br>';
 
 // 
 // Land loop
@@ -43,17 +45,22 @@ for ($x = -$x_limit; $x < $x_limit; $x = $x + $box_size) {
     for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
         // Get coord_slug
         $coord_slug = $y . ',' . $x;
-        echo "(NULL, '" . $coord_slug . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $result .= "(NULL, '" . $coord_slug . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
-            echo ';';
-            echo '<br>';
-            echo $insert_statement;
-            echo '<br>';
+            $result .= ';';
+            $result .= '<br>';
+            $result .= $insert_statement;
+            $result .= '<br>';
         } else {
-            echo ',';
+            $result .= ',';
         }
-        echo '<br>';
+        $result .= '<br>';
         $i++;
     }
 }
+
+// Replace last comma with semi colon
+
+$result = rtrim($result, ",");
+$result .= ';';

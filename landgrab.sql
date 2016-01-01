@@ -10658,7 +10658,7 @@ CREATE TABLE IF NOT EXISTS `world` (
   `land_size` int(4) NOT NULL,
   `bank` bigint(20) NOT NULL,
   `land_tax_rate` decimal(4,2) NOT NULL,
-  `fair_share` bigint(20) NOT NULL,
+  `rebate` bigint(20) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -10668,7 +10668,7 @@ CREATE TABLE IF NOT EXISTS `world` (
 -- Dumping data for table `world`
 --
 
-INSERT INTO `world` (`id`, `slug`, `land_size`, `bank`, `land_tax_rate`, `fair_share`, `created`, `modified`) VALUES
+INSERT INTO `world` (`id`, `slug`, `land_size`, `bank`, `land_tax_rate`, `rebate`, `created`, `modified`) VALUES
 (1, 'primary', 4, 1000000000000, '0.01', 0, '2015-12-27 20:40:57', '2015-12-29 03:56:40'),
 (2, 'bigger', 3, 1000000000000, '0.01', 0, '2015-12-28 03:59:52', '2015-12-29 03:56:47');
 
