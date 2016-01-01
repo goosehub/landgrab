@@ -137,20 +137,6 @@ Class user_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
- function new_transaction_record($paying_account_key, $recipient_account_key, $transaction, $amount, $world_key, $coord_slug, $details)
- {
-    // Insert new transaction log
-    $data = array(
-    'paying_account_key' => $paying_account_key,
-    'recipient_account_key' => $recipient_account_key,
-    'transaction' => $transaction,
-    'amount' => $amount,
-    'world_key' => $world_key,
-    'coord_slug' => $coord_slug,
-    'details' => $details
-    );
-    $this->db->insert('transaction_log', $data);
- }
 
 }
 ?>

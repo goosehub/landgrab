@@ -101,14 +101,14 @@ Class game_model extends CI_Model
     return true;
  }
  // Get projected tax
- function get_sum_of_account_land_prices($account_id)
+ function get_sum_and_count_of_account_land($account_id)
  {
-    $this->db->select('SUM(price) as total');
+    $this->db->select('SUM(price) as sum, COUNT(*) as count');
     $this->db->from('land');
     $this->db->where('account_key', $account_id);
     $query = $this->db->get();
     $result = $query->result_array();
-    return isset($result[0]) ? $result[0] : false;
+    return isset($result[0]) ? $result[0] : 0;
  }
  // Record most recent fair share
  function record_most_recent_fair_share($fair_share, $world_key)

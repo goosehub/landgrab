@@ -8,6 +8,7 @@ class Game extends CI_Controller {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
+        $this->load->model('transaction_model', '', TRUE);
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
 
@@ -39,14 +40,41 @@ class Game extends CI_Controller {
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
 
             // Get account financial information
-            $price_sum = $this->game_model->get_sum_of_account_land_prices($account['id']);
-            $hourly_taxes = $data['hourly_taxes'] = $price_sum['total'] * $world['land_tax_rate'];
-            $profit = $data['profit'] = $world['fair_share'] - $hourly_taxes;
-            $data['profit_class'] = 'green_profit';
-            $data['profit_prefix'] = '';
+            $timespan_days = 7;
+
+            // Taxes and Fair Share
+            $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
+            $data['total_lands'] = $land_sum_and_count['count'];
+            $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
+            $fair_share = $data['fair_share'] = $world['fair_share'] * $land_sum_and_count['count'];
+            $income = $data['income'] = $fair_share - $hourly_taxes;
+            $data['income_class'] = 'green_money';
+            $data['income_prefix'] = '+';
+            if ($income < 0) {
+                $data['income_prefix'] = '-';
+                $data['income_class'] = 'red_money';
+            }
+
+            // Purchases and Sales
+            $purchases = $data['purchases'] = $this->transaction_model->get_transaction_purchases($account['id'], $timespan_days);
+            $sales = $data['sales'] = $this->transaction_model->get_transaction_sales($account['id'], $timespan_days);
+            $yield = $data['yield'] = $sales['sum'] - $purchases['sum'];
+            $data['yield_class'] = 'green_money';
+            $data['yield_prefix'] = '+';
+            if ($yield < 0) {
+                $data['yield_prefix'] = '-';
+                $data['yield_class'] = 'red_money';
+            }
+
+            // Total Profit and Losses
+            $losses = $data['losses'] = $this->transaction_model->get_transaction_losses($account['id'], $timespan_days);
+            $gains = $data['gains'] = $this->transaction_model->get_transaction_gains($account['id'], $timespan_days);
+            $profit = $data['profit'] = $gains['sum'] - $losses['sum'];
+            $data['profit_class'] = 'green_money';
+            $data['profit_prefix'] = '+';
             if ($profit < 0) {
                 $data['profit_prefix'] = '-';
-                $data['profit_class'] = 'red_profit';
+                $data['profit_class'] = 'red_money';
             }
         }
 
@@ -219,12 +247,12 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 
             // Record into transaction log
-            $query_action = $this->user_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, '');
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, '');
         }
 
         // Record into transaction log
         if ($form_type === 'claim') {
-            $query_action = $this->user_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '');
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '');
         }
 
         // Return validation true if not returned false yet

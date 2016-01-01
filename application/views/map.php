@@ -29,11 +29,36 @@
           <span class="caret"></span>
         </button>
         <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
-          <li>Land Taxes: <span class="money_info_item red_profit">$<?php echo number_format($hourly_taxes); ?></span>/Hour</li>
-          <li>Fair Share: ~ <span class="money_info_item green_profit">$<?php echo number_format($world['fair_share']); ?></span>/Hour</li>
+
+          <li>Total Lands: <?php echo $total_lands; ?> | 
+          ~<?php echo $total_lands * (70 * $world['land_size']); ?> Miles | ~<?php echo $total_lands * (112 * $world['land_size']); ?> KM</li>
+
+          <li role="separator" class="divider"></li>
+
+          <li>Land Taxes: <span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</li>
+          <li>Fair Share: ~ <span class="money_info_item green_money">$<?php echo number_format($fair_share); ?></span>/Hour</li>
+          <li>Income: ~ <span class="money_info_item <?php echo $income_class; ?>">
+              <?php echo $income_prefix; ?>$<?php echo number_format(abs($income)); ?>
+          </span>/Hour</li>
+
+          <li role="separator" class="divider"></li>
+
+          <li>Purchases: <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span>
+           - <?php echo $purchases['total']; ?> Lands/Last 7 Days</li>
+          <li>Sales: <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span>
+           - <?php echo $sales['total']; ?> Lands/Last 7 Days</li>
+          <li>Yield: <span class="money_info_item <?php echo $yield_class; ?>">
+              <?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?>
+          </span>/Last 7 Days</li>
+
+          <li role="separator" class="divider"></li>
+
+          <li>Gains: ~ <span class="money_info_item red_money">$<?php echo number_format($gains['sum']); ?></span>/Last 7 Days</li>
+          <li>Losses: ~ <span class="money_info_item green_money">$<?php echo number_format($losses['sum']); ?></span>/Last 7 Days</li>
           <li>Profit: ~ <span class="money_info_item <?php echo $profit_class; ?>">
               <?php echo $profit_prefix; ?>$<?php echo number_format(abs($profit)); ?>
-          </span>/Hour</li>
+          </span>/Last 7 Days</li>
+
         </ul>
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -41,7 +66,7 @@
     		  <span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
-    		  <li><a class="logout_button btn btn-warning" href="<?=base_url()?>user/logout">Log Out</a></li>
+    		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
               <li role="separator" class="divider"></li>
               <li>
                   <?php echo form_open('account/update_color'); ?>
@@ -163,7 +188,7 @@
         <hr>
         <p>
             LandGrab is a game of Claiming, Buying, and Selling Land.
-            You can aim to accumulate the most wealth, to own the most land, or to own famous areas like New York, Paris, or Tel-Aviv.
+            You can aim to accumulate the most wealth, to own the most land, own famous areas like New York, Paris, or Tel-Aviv, or just have fun.
         </p>
         <p>
             You start the game with $1,000,000.
@@ -177,8 +202,14 @@
             It is important not to set your land prices so high you lose cash, yet not so low you lose land. Finding undervalued land, and selling it for a profit is key.
         </p>
         <p>
-            In the top right, you can view the Leaderboards, as well as choose other worlds to play in.
-            You've been given a default color for each world, that you can adjust under your menu in the top right.
+            In the top right, you'll find lots of information.
+            You can view your projected hourly, income, investment yield, and overall profit.
+            You can change your color.
+            You can view the Leaderboards.
+            You can also play in different worlds of different density.
+        </p>
+        <p>
+            You can view this info but clicking "How To Play" under the landgrab menu.
         </p>
     </div>
 

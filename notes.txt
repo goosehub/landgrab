@@ -46,8 +46,9 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Show sales over past time frame in financial drop down
-    Highlight current world
+    Highlight current world in dropdown
+    Rename worlds
+    Figure out profit inaccuracy, replicate
 
 Low Priority
     Transaction log view

@@ -63,11 +63,16 @@ html, body {
 .money_info_item {
   font-weight: bold;
 }
-.green_profit {
+.green_money {
   color: #009E00;
 }
-.red_profit {
+.red_money {
   color: #FF0000;
+}
+.logout_button {
+  color: #ff0000 !important;
+  font-weight: bold !important;
+  margin-bottom: 1em;
 }
 
 /* Center Block */

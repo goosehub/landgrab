@@ -8,6 +8,7 @@ class Tax extends CI_Controller {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
+        $this->load->model('transaction_model', '', TRUE);
     }
 
     // Map view
@@ -53,7 +54,7 @@ class Tax extends CI_Controller {
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
-              $query_action = $this->user_model->new_transaction_record(0, $account['id'], 'reset', $new_cash_balance, $world['id'], 0, '');
+              $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'reset', $new_cash_balance, $world['id'], 0, '');
 
             // Detuct tax
             } else {
@@ -64,7 +65,7 @@ class Tax extends CI_Controller {
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
-              $query_action = $this->user_model->new_transaction_record($account['id'], 0, 'land_tax', $land_tax, $world['id'], $land['coord_slug'], '');
+              $query_action = $this->transaction_model->new_transaction_record($account['id'], 0, 'land_tax', $land_tax, $world['id'], $land['coord_slug'], '');
             }
           }
 
@@ -100,7 +101,7 @@ class Tax extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
             // Record into transaction log
-            $query_action = $this->user_model->new_transaction_record(0, $account['id'], 'fair_share', $fair_share, $world['id'], $land['coord_slug'], '');
+            $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'fair_share', $fair_share, $world['id'], $land['coord_slug'], '');
           }
         }
 
