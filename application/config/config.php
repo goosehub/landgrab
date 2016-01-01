@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $allowed_domains = array('localhost/landgrab', 'landgrab.xyz');
-$default_domain  = 'landgrab.xyz';
+$default_domain  = 'localhost/landgrab';
 
 if (in_array($_SERVER['HTTP_HOST'], $allowed_domains, TRUE))
 {
