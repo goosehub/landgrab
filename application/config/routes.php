@@ -20,7 +20,7 @@ $route['user/logout'] = "user/logout";
 
 
 // Token
-$route['cron/(:any)'] = "cron/index/$1";
+$route['tax/(:any)'] = "tax/index/$1";
 
 // Not found
 $route['404_override'] = 'user/page_not_found';

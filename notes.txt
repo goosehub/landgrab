@@ -3,10 +3,22 @@
 ==========================================================================================
 
 Live Server Instance
-Change encryption_key in config/config.php
-Change database connection in config/database.php
-Change CRON token in controllers/Cron.php
-Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
+    Change encryption_key in config/config.php
+    Change database connection in config/database.php
+    Change CRON token in config/constants.php and cron.php
+    Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
+    Set a cron for 
+        0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
+
+Beta Testing Locations
+    Paid
+        https://www.mturk.com/mturk/welcome
+        https://www.reddit.com/r/beermoney
+    Organized
+        http://www.betabound.com/announce/
+    Casual
+        https://www.reddit.com/r/shamelessplug
+        4chan.org/s4s
 
 Game Mechanics
     Unclaimed land is free to claim
@@ -34,6 +46,7 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
+    Hour tax and Fair share displayed
 
 Low Priority
     Transaction log view

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('UTC');
 
-class Cron extends CI_Controller {
+class Tax extends CI_Controller {
 
     function __construct() {
         parent::__construct();
@@ -13,11 +13,8 @@ class Cron extends CI_Controller {
     // Map view
     public function index($token = false)
     {
-      // This variable to be changed in live version
-      $cron_token = '1234';
-
       // Use hash equals function to prevent timing attack
-      if ( hash_equals($cron_token, $token) ) {
+      if ( hash_equals(CRON_TOKEN, $token) ) {
 
         // Loop through worlds
         $worlds = $this->user_model->get_all_worlds();

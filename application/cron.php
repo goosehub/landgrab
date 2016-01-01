@@ -1,14 +1,19 @@
 <?php
 
 // Local base URL
-$base_url = 'http://localhost/landgrab/';
+if ($_SERVER['HTTP_HOST'] === 'localhost') {
+    $base_url = 'http://localhost/landgrab/';
+}
+else
+{
+    $base_url = 'http://landgrab.xyz/';
+}
 
 // Route
-$route = 'cron/';
+$route = 'tax/';
 
 // Token
 // This variable to be changed in live version
 $cron_token = '1234';
-
 
 echo file_get_contents($base_url . $route . $cron_token);

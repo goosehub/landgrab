@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// 
+// Cron Token, for verifying cron actions
+// 
+
+// This variable to be changed for live version
+define('CRON_TOKEN', '1234');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace
