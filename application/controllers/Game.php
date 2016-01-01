@@ -46,8 +46,8 @@ class Game extends CI_Controller {
             $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
             $data['total_lands'] = $land_sum_and_count['count'];
             $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
-            $rebate = $data['rebate'] = $world['rebate'] * $land_sum_and_count['count'];
-            $income = $data['income'] = $rebate - $hourly_taxes;
+            $estimated_rebate = $data['estimated_rebate'] = $world['latest_rebate'] * $land_sum_and_count['count'];
+            $income = $data['income'] = $estimated_rebate - $hourly_taxes;
             $data['income_class'] = 'green_money';
             $data['income_prefix'] = '+';
             if ($income < 0) {

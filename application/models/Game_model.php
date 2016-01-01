@@ -111,10 +111,10 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : 0;
  }
  // Record most recent rebate
- function record_most_recent_rebate($rebate, $world_key)
+ function record_most_recent_rebate($latest_rebate, $world_key)
  {
     $data = array(
-        'rebate' => $rebate
+        'latest_rebate' => $latest_rebate
     );
     $this->db->where('id', $world_key);
     $this->db->update('world', $data);
