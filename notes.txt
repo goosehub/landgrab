@@ -31,14 +31,13 @@ High Priority
 
 Low Priority
     Transaction log view
-    Transaction log for taxes
     Net Worth Leaderboard
+    API
 
 No Priority
     Trade Land
     Reset account
     User Profiles
-    API
     Dupe account detection and action
     Password Resets
     General Security

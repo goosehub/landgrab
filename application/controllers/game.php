@@ -208,14 +208,12 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 
             // Record into transaction log
-            $details = '';
-            $query_action = $this->user_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, $details);
+            $query_action = $this->user_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, '');
         }
 
         // Record into transaction log
         if ($form_type === 'claim') {
-            $details = '';
-            $query_action = $this->user_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, $details);
+            $query_action = $this->user_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '');
         }
 
         // Return validation true if not returned false yet

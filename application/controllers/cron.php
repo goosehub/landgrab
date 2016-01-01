@@ -55,6 +55,9 @@ class Cron extends CI_Controller {
               $new_cash_balance = 10000000;
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
+              // Record into transaction log
+              $query_action = $this->user_model->new_transaction_record(0, $account['id'], 'reset', $new_cash_balance, $world['id'], 0, '');
+
             // Detuct tax
             } else {
               $taxes_collected += $land_tax;
@@ -62,6 +65,9 @@ class Cron extends CI_Controller {
               echo 'new cash balance';
               var_dump($new_cash_balance);
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
+
+              // Record into transaction log
+              $query_action = $this->user_model->new_transaction_record($account['id'], 0, 'land_tax', $land_tax, $world['id'], $land['coord_slug'], '');
             }
           }
 
@@ -92,6 +98,9 @@ class Cron extends CI_Controller {
             echo 'new cash balance';
             var_dump($new_cash_balance);
             $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
+
+            // Record into transaction log
+            $query_action = $this->user_model->new_transaction_record(0, $account['id'], 'fair_share', $fair_share, $world['id'], $land['coord_slug'], '');
           }
         }
 
