@@ -28,9 +28,10 @@ Solutions
 
 High Priority
     Additional Gameplay Mechanics
-    Record of game transactions
 
 Low Priority
+    Transaction log view
+    Transaction log for taxes
     Net Worth Leaderboard
 
 No Priority

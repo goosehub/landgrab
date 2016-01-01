@@ -131,6 +131,7 @@ class Game extends CI_Controller {
 		// Success
 	    } else {
 	    	$claimed = 1;
+            $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
 	        $lat = $this->input->post('lat_input');
@@ -162,6 +163,7 @@ class Game extends CI_Controller {
         }
 
         // Get land info for verifying our inputs
+        $form_type = $this->input->post('form_type_input');
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
         $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
@@ -204,6 +206,16 @@ class Game extends CI_Controller {
             // Do sale
             $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+
+            // Record into transaction log
+            $details = '';
+            $query_action = $this->user_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, $details);
+        }
+
+        // Record into transaction log
+        if ($form_type === 'claim') {
+            $details = '';
+            $query_action = $this->user_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, $details);
         }
 
         // Return validation true if not returned false yet

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2015 at 12:52 AM
+-- Generation Time: Jan 01, 2016 at 04:20 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -10600,6 +10600,26 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (10498, '75,177', '75', '177', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10499, '78,177', '78', '177', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15'),
 (10500, '81,177', '81', '177', 2, 0, 0, '', 0, '', '#FF00FF', '#222222', '2015-12-29 03:57:15', '2015-12-29 03:57:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_log`
+--
+
+CREATE TABLE IF NOT EXISTS `transaction_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `paying_account_key` int(10) unsigned NOT NULL,
+  `recipient_account_key` int(10) unsigned NOT NULL,
+  `transaction` varchar(32) NOT NULL,
+  `amount` bigint(20) NOT NULL,
+  `world_key` int(10) unsigned NOT NULL,
+  `coord_slug` varchar(8) NOT NULL,
+  `details` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
