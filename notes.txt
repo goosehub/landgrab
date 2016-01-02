@@ -10,6 +10,10 @@ Live Server Instance
     Set a cron for 
         0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
 
+Marketing Reserach
+    http://www.indiegamegirl.com/no-budget-marketing/
+    http://gamedevelopment.tutsplus.com/articles/marketing-your-indie-game-the-single-most-important-thing-that-no-one-knows-how-to-do--gamedev-7157
+
 Beta Testing Locations
     Paid
         https://www.mturk.com/mturk/welcome
@@ -17,6 +21,7 @@ Beta Testing Locations
     Organized
         http://www.betabound.com/announce/
     Casual
+        https://www.reddit.com/r/indiegaming
         https://www.reddit.com/r/shamelessplug
         4chan.org/s4s
 
@@ -46,7 +51,6 @@ Solutions
 
 High Priority
     Alpha Testing
-    Social Media Share
 
 Low Priority
     Figure out profit inaccuracy, replicate
@@ -56,6 +60,7 @@ Low Priority
     Transaction log view
 
 No Priority
+    Twitter
     Dupe account detection and action
     General Security
     Password Resets

@@ -114,7 +114,7 @@
         </div>
 	    <?php } else { ?>
     	<button class="login_button btn btn-primary">Login</button>
-    	<button class="register_button btn btn-action">Register</button>
+    	<button class="register_button btn btn-action">Join</button>
 	    <?php } ?>
         <div class="btn-group">
             <button class="info_button btn btn-success dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -185,14 +185,14 @@
                 <p class="lead">Not registered?</p>
             </div>
             <div class="col-md-4">
-                <button class="register_button btn btn-success form-control">Register to play</button>
+                <button class="register_button btn btn-success form-control">Join to play</button>
             </div>
         </div>
     </div>
 
-    <!-- Register Block -->
+    <!-- Join Block -->
     <div id="register_block" class="center_block">
-    	<strong>Register</strong>
+    	<strong>Join</strong>
 
     	<button type="button" class="exit_center_block btn btn-default btn-sm">
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -214,7 +214,7 @@
     	    <label for="input_confirm">Confirm</label>
     	    <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
     	  </div>
-    	  <button type="submit" class="btn btn-action form-control">Register To Play</button>
+    	  <button type="submit" class="btn btn-action form-control">Join To Play</button>
         </form>
         <hr>
         <div class="row">
@@ -263,6 +263,7 @@
                 </p>
             </div>
             <div class="col-md-6">
+              <?php if ($log_check) { ?>
                 <?php echo form_open('account/update_color'); ?>
                 <div class="row"><div class="col-md-6">
                     <label for="_input_primary_color">Your Land Color</label>
@@ -272,6 +273,7 @@
                     value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
                 </div></div>
                 </form>
+              <?php } ?>
             </div>
         </div>
     </div>
@@ -284,13 +286,16 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
         <hr>
-        <p>LandGrab is a game developed by Goose. Developed in PHP with CodeIgniter 3.</p>
+        <p>LandGrab is a game developed by Goose.</p>
         <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
         <br>
-        <p>You can contribute to this project on Github</p>
+        <br>
+        <p>Developed in PHP with CodeIgniter 3. You can contribute to this project on Github</p>
         <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
         <br>
-        <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, <a href="http://ithare.com/" target="_blank">itHare</a>, and all of my users</p>
+        <br>
+        <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, 
+        <a href="http://ithare.com/" target="_blank">itHare</a>, the Beta Testers, and all my users. Thank you!</p>
     </div>
 
     <!-- Report Bugs Block -->
@@ -585,7 +590,7 @@ function initMap()
 				+ '' + land_data['content'] + '<br>';
 			}
             if (! log_check) {
-                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key + '?register">Register to Play!</a><br>';
+                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key + '?register">Join to Play!</a><br>';
             }
 			if (log_check) {
 				// 
