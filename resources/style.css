@@ -74,6 +74,11 @@ html, body {
   font-weight: bold !important;
   margin-bottom: 1em;
 }
+.current_world {
+  padding: 0.2em;
+  border: 0.2em solid #000;
+  border-radius: 0.2em;
+}
 
 /* Center Block */
 .center_block {

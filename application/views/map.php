@@ -25,13 +25,14 @@
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
     	<button id="cash_display" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            $<?php echo number_format($account['cash']); ?>.00
+            $<?php echo number_format($account['cash']); ?>
           <span class="caret"></span>
         </button>
         <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
 
           <li>Total Lands: <?php echo $total_lands; ?> | 
-          ~<?php echo $total_lands * (70 * $world['land_size']); ?> Miles | ~<?php echo $total_lands * (112 * $world['land_size']); ?> KM</li>
+          ~<?php echo $total_lands * (70 * $world['land_size']); ?> Mi&sup2; | 
+          ~<?php echo $total_lands * (112 * $world['land_size']); ?> KM&sup2;</li>
 
           <li role="separator" class="divider"></li>
 
@@ -106,7 +107,7 @@
               <li class="text-center"><strong>Worlds</strong></li>
               <?php foreach ($worlds as $world_list) { ?>
               <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
-                  <strong><?php echo $world_list['slug']; ?></strong>
+                  <strong class="<?php if ($world_list['id'] === $world['id']) { echo 'current_world'; } ?>"><?php echo $world_list['slug']; ?></strong>
               </a></li>
               <?php } ?>
             </ul>
@@ -187,29 +188,26 @@
     	</button>
         <hr>
         <p>
-            LandGrab is a game of Claiming, Buying, and Selling Land.
-            You can aim to accumulate the most wealth, to own the most land, own famous areas like New York, Paris, or Tel-Aviv, or just have fun.
+            LandGrab is a game of Claiming, Buying, and Selling the Real World.
         </p>
         <p>
             You start the game with $1,000,000.
             You can claim any unowned land for free.
-            You must set a price on land you own.
-            You will have to pay a tax of 1% each hour on the prices you set.
-            Every hour, the taxes gets distributed in a "fair share" evenly for each plot of land.
-            When you run out of cash, your account is reset entirely.
+            You set a price on land you own.
+            Land is taxed at 1% each hour on the prices you set.
+            Every hour, the taxes gets distributed in a rebate for each plot of land.
+            If you run out of cash, your account is reset.
         </p>
         <p>
-            It is important not to set your land prices so high you lose cash, yet not so low you lose land. Finding undervalued land, and selling it for a profit is key.
+            In the top right, 
+            you can change the color of your lands, 
+            view your projected hourly, income, investment yield, and overall profit,
+            view the Leaderboards,
+            or play in different worlds of different density.
         </p>
         <p>
-            In the top right, you'll find lots of information.
-            You can view your projected hourly, income, investment yield, and overall profit.
-            You can change your color.
-            You can view the Leaderboards.
-            You can also play in different worlds of different density.
-        </p>
-        <p>
-            You can view this info but clicking "How To Play" under the landgrab menu.
+            This game is in alpha, so feel free to point out bugs or give suggestions.
+            Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
         </p>
     </div>
 
@@ -285,7 +283,8 @@
                 </td>
                 <td><?php echo $leader['COUNT(*)']; ?></td>
                 <?php // Math for finding approx area of land owned ?>
-                <td>~<?php echo $leader['COUNT(*)'] * (70 * $world['land_size']); ?> Miles | ~<?php echo $leader['COUNT(*)'] * (112 * $world['land_size']); ?> KM</td>
+                <td>~<?php echo $leader['COUNT(*)'] * (70 * $world['land_size']); ?> Mi&sup2; | 
+                ~<?php echo $leader['COUNT(*)'] * (112 * $world['land_size']); ?> KM&sup2;</td>
             </tr>
         <?php $rank++; ?>
         <?php } ?>
@@ -502,9 +501,15 @@ function initMap()
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_slug = lat + ',' + lng;
+        console.log(event.latLng.lat() + ',' + event.latLng.lng());
+        console.log(coord_slug);
 		// Get land_data
 		land = get_single_land(coord_slug, world_key, function(land){
 			land_data = JSON.parse(land);
+            if (land_data['error']) {
+                console.log(land_data['error']);
+                return false;
+            }
 			// Create string
             var content_string = '<div class="land_window">';
 			if (land_data['claimed'] === '0') {
@@ -535,8 +540,8 @@ function initMap()
 				}
 			}
             // debug coord_slug
-			// content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
-            // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
+            '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);

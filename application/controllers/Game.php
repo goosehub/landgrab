@@ -114,10 +114,14 @@ class Game extends CI_Controller {
         // Add username to array
         $account = $this->user_model->get_account_by_id($land_square['account_key']);
         $owner = $this->user_model->get_user($account['user_key']);
-        $land_square['username'] = isset($owner['username']) ? $owner['username'] : '';
+        if ( isset($owner['username']) && isset($land_square['land_name']) ) {
+            $land_square['username'] = $owner['username'];
+        } else {
+            $land_square['username'] = '';
+        }
 
-	    // Echo data to client to be parsed
-	    if ($land_square) {
+        // Echo data to client to be parsed
+	    if (isset($land_square['land_name'])) {
             // Strip html entities from all untrusted columns, except content as it's stripped on insert
             $land_square['land_name'] = htmlentities($land_square['land_name']);
             $land_square['primary_color'] = htmlentities($land_square['primary_color']);
@@ -126,7 +130,7 @@ class Game extends CI_Controller {
 	    	echo json_encode($land_square);
 	    // If none found, default to this
 	    } else {
-	        echo 'Error: Land not found';
+	        echo '{"error": "Land not found"}';
 	    }
 	}
 

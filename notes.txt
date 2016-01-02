@@ -3,8 +3,8 @@
 ==========================================================================================
 
 Live Server Instance
-    Change encryption_key in config/config.php
     Change database connection in config/database.php
+    Change encryption_key in config/config.php
     Change CRON token in config/constants.php and cron.php
     Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
     Set a cron for 
@@ -45,20 +45,25 @@ Solutions
 ==========================================================================================
 
 High Priority
-    Additional Gameplay Mechanics
-    Highlight current world in dropdown
-    Rename worlds
-    Figure out profit inaccuracy, replicate
-    Abstract non maps script
+    Alpha Testing
 
 Low Priority
+    Figure out profit inaccuracy, replicate
+    Register/Login same page, more intutive
+    Remember logged in
+    Saved places shouldn't show
+    Show update color on how to play
+    Auto Submit Account Color Update
+    Abstract non maps script
     Transaction log view
     Net Worth Leaderboard
     API
+    Arrow to clarify drop down
+    Show price on update offer
 
 No Priority
     Trade Land
-    Reset account
+    Reset account manually
     User Profiles
     Dupe account detection and action
     Password Resets
