@@ -19,11 +19,34 @@
 	<!-- Custom Fonts -->
 	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <!-- Local Style -->
-    <link href="<?=base_url()?>resources/style.css" rel="stylesheet" type="text/css">
+  <!-- Local Style -->
+  <link href="<?=base_url()?>resources/style.css?<?php echo time(); ?>" rel="stylesheet" type="text/css">
 
   </head>
   <body>
+  <!-- Facebook like code -->
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '523758294469574',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+   (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=523758294469574";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+   </script>
+
+  <div class="top_left_block">
+    <div class="fb-like" data-href="http://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div>
+  </div>
 
   	<!-- Map Element -->
 	<div id="map"></div>
@@ -38,8 +61,8 @@
         <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
 
           <li>Total Lands: <?php echo $total_lands; ?> | 
-          ~<?php echo $total_lands * (70 * $world['land_size']); ?> Mi&sup2; | 
-          ~<?php echo $total_lands * (112 * $world['land_size']); ?> KM&sup2;</li>
+          ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
+          ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2;</li>
 
           <li role="separator" class="divider"></li>
 
@@ -235,7 +258,7 @@
         <div class="row">
             <div class="col-md-6">
                 <p>
-                    This game is in alpha, so feel free to point out bugs or give suggestions.
+                    This game is in beta, so feel free to point out bugs or give suggestions.
                     Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
                 </p>
             </div>
@@ -325,8 +348,8 @@
                 </td>
                 <td><?php echo $leader['COUNT(*)']; ?></td>
                 <?php // Math for finding approx area of land owned ?>
-                <td>~<?php echo $leader['COUNT(*)'] * (70 * $world['land_size']); ?> Mi&sup2; | 
-                ~<?php echo $leader['COUNT(*)'] * (112 * $world['land_size']); ?> KM&sup2;</td>
+                <td>~<?php echo number_format($leader['COUNT(*)'] * (70 * $world['land_size'])); ?> Mi&sup2; | 
+                ~<?php echo number_format($leader['COUNT(*)'] * (112 * $world['land_size'])); ?> KM&sup2;</td>
             </tr>
         <?php $rank++; ?>
         <?php } ?>

@@ -44,6 +44,14 @@ html, body {
   height: 100%;
 }
 
+/* Top left block */
+.top_left_block {
+  position: absolute;
+  top: 0.5em;
+  left: 8em;
+  z-index: 5;
+}
+
 /* Top right block*/
 #top_right_block {
   position: absolute;

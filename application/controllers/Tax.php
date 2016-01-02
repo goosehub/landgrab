@@ -105,6 +105,8 @@ class Tax extends CI_Controller {
           }
         }
 
+        echo 'Tax Controller Successful';
+
         // Generic Page Not Found on fail
         } else {
             $this->load->view('page_not_found');
