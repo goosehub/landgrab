@@ -51,6 +51,12 @@ html, body {
   right: 6em;
   opacity: 0.9;
 }
+@media only screen 
+  and (max-device-width: 600px) {
+  #top_right_block {
+    right: 3em;
+  }
+}
 #cash_display {
   opacity: 1;
 }
@@ -93,6 +99,14 @@ html, body {
   background: #fff;
   padding: 1em;
   border-radius: 1em;
+}
+@media only screen 
+  and (max-device-width: 600px) {
+  .center_block {
+    top: 15vh;
+    left: 5%;
+    width: 95%;   
+  }
 }
 .leaderboard_block {
   top: 5vh !important;

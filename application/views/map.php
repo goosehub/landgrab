@@ -4,7 +4,11 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
-	<title>Land</title>
+    <!-- For Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+	<title>Landgrab</title>
 
     <!-- Link to Favicon -->
     <link rel="icon" href="<?=base_url()?>resources/icon.ico">
@@ -90,7 +94,7 @@
     	<button class="register_button btn btn-action">Register</button>
 	    <?php } ?>
         <div class="btn-group">
-            <button class="info_button btn btn-info dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="info_button btn btn-success dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 LandGrab
               <span class="caret"></span>
             </button>
