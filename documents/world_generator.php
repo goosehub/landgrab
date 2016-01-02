@@ -37,7 +37,8 @@ $world_insert_statement = "INSERT INTO `world`
 VALUES 
 (NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
-$result .= $world_insert_statement;
+// $result .= $world_insert_statement;
+// $result .= '<br>';
 
 // 
 // Land Logic
@@ -56,7 +57,7 @@ $result .= '<br>';
 
 // Loop lng
 $i = 1;
-for ($x = -$x_limit; $x < $x_limit; $x = $x + $box_size) {
+for ($x = -$x_limit; $x <= $x_limit; $x = $x + $box_size) {
     // Loop lat for each lng
     for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
         // Get coord_slug
