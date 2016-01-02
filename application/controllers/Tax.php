@@ -33,22 +33,22 @@ class Tax extends CI_Controller {
           }
 
           foreach ($claimed_lands as $land) {
-          echo 'land to be taxed';
-          var_dump($land);
+          // echo 'land to be taxed';
+          // var_dump($land);
 
             // Find tax amount
             $land_tax = $land['price'] * $world['land_tax_rate'];
-            echo 'land tax amount to be applied';
-            var_dump($land_tax);
+            // echo 'land tax amount to be applied';
+            // var_dump($land_tax);
 
             // Find account
             $account = $this->user_model->get_account_by_id($land['account_key'], $world['id']);
-            echo 'owner account';
-            var_dump($account);
+            // echo 'owner account';
+            // var_dump($account);
 
             // If not enough cash, forfeit all land and reset cash
             if ($account['cash'] < $land_tax) {
-              echo 'not enough cash, land will be forfeited and cash balance reset';
+              // echo 'not enough cash, land will be forfeited and cash balance reset';
               $query_action = $this->game_model->forfeit_all_land_of_account($account['id']);
               $new_cash_balance = 10000000;
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
@@ -60,8 +60,8 @@ class Tax extends CI_Controller {
             } else {
               $taxes_collected += $land_tax;
               $new_cash_balance = ceil($account['cash'] - $land_tax);
-              echo 'new cash balance';
-              var_dump($new_cash_balance);
+              // echo 'new cash balance';
+              // var_dump($new_cash_balance);
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
@@ -69,35 +69,35 @@ class Tax extends CI_Controller {
             }
           }
 
-          echo '<hr>';
-          echo 'end of tax collection';
-          echo '<br>';
+          // echo '<hr>';
+          // echo 'end of tax collection';
+          // echo '<br>';
 
-          echo 'taxes collected';
-          var_dump($taxes_collected);
+          // echo 'taxes collected';
+          // var_dump($taxes_collected);
           $rebate = ceil($taxes_collected / count($claimed_lands));
-          echo 'rebate';
-          var_dump($rebate);
+          // echo 'rebate';
+          // var_dump($rebate);
 
           // Record rebate
           $query_action = $this->game_model->record_most_recent_rebate($rebate, $world['id']);
 
-          echo 'start of rebate distribution';
+          // echo 'start of rebate distribution';
 
-          echo '<hr>';
+          // echo '<hr>';
 
           // Loop through lands
           foreach ($claimed_lands as $land) {
-          echo 'land to receive rebate';
-          var_dump($land);
+          // echo 'land to receive rebate';
+          // var_dump($land);
 
             // Add rebate to account
             $account = $this->user_model->get_account_by_id($land['account_key'], $world['id']);
-            echo 'account to receive rebate';
-            var_dump($account);
+            // echo 'account to receive rebate';
+            // var_dump($account);
             $new_cash_balance = ceil($account['cash'] + $rebate);
-            echo 'new cash balance';
-            var_dump($new_cash_balance);
+            // echo 'new cash balance';
+            // var_dump($new_cash_balance);
             $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
             // Record into transaction log

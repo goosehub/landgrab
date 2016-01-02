@@ -70,9 +70,12 @@ html, body {
   color: #FF0000;
 }
 .logout_button {
-  color: #ff0000 !important;
+  color: #ffffff !important;
   font-weight: bold !important;
   margin-bottom: 1em;
+}
+.logout_button:hover {
+  color: #000000 !important;
 }
 .current_world {
   padding: 0.2em;

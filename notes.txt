@@ -49,19 +49,12 @@ High Priority
 
 Low Priority
     Figure out profit inaccuracy, replicate
-    Register/Login same page, more intutive
-    Remember logged in
-    Saved places shouldn't show
-    Show update color on how to play
-    Auto Submit Account Color Update
-    Abstract non maps script
-    Transaction log view
-    Net Worth Leaderboard
-    API
-    Arrow to clarify drop down
-    Show price on update offer
+    Hide google maps saved places
 
 No Priority
+    Net Worth Leaderboard
+    Transaction log view
+    API
     Trade Land
     Reset account manually
     User Profiles

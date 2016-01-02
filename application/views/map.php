@@ -6,6 +6,9 @@
 
 	<title>Land</title>
 
+    <!-- Link to Favicon -->
+    <link rel="icon" href="<?=base_url()?>resources/icon.ico">
+
 	<!-- Bootstrap -->
 	<link href="<?=base_url()?>resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
@@ -67,7 +70,7 @@
     		  <span class="caret"></span>
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
-    		  <li><a class="logout_button btn btn-default" href="<?=base_url()?>user/logout">Log Out</a></li>
+    		  <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Log Out</a></li>
               <li role="separator" class="divider"></li>
               <li>
                   <?php echo form_open('account/update_color'); ?>
@@ -75,10 +78,9 @@
                       <label for="_input_primary_color">Color</label>
                   </div><div class="col-md-9">
                       <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-                      <input type="color" class="form-control" id="account_input_primary_color" name="primary_color" value="<?php echo $account['primary_color']; ?>">
+                      <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
+                      value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
                   </div></div>
-                  <li role="separator" class="divider"></li>
-                  <button type="submit" class="btn btn-primary form-control">Update</button>
                   </form>
               </li>
     		</ul>
@@ -149,6 +151,16 @@
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Login</button>
 	    </form>
+        <hr>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p class="lead">Not registered?</p>
+            </div>
+            <div class="col-md-4">
+                <button class="register_button btn btn-success form-control">Register to play</button>
+            </div>
+        </div>
     </div>
 
     <!-- Register Block -->
@@ -176,7 +188,17 @@
     	    <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
     	  </div>
     	  <button type="submit" class="btn btn-action form-control">Register To Play</button>
-	    </form>
+        </form>
+        <hr>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p class="lead">Already registered?</p>
+            </div>
+            <div class="col-md-4">
+                <button class="login_button btn btn-primary form-control">Login</button>
+            </div>
+        </div>
     </div>
 
     <!-- How To Play Block -->
@@ -205,10 +227,26 @@
             view the Leaderboards,
             or play in different worlds of different density.
         </p>
-        <p>
-            This game is in alpha, so feel free to point out bugs or give suggestions.
-            Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
-        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    This game is in alpha, so feel free to point out bugs or give suggestions.
+                    Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <?php echo form_open('account/update_color'); ?>
+                <div class="row"><div class="col-md-6">
+                    <label for="_input_primary_color">Your Land Color</label>
+                </div><div class="col-md-6">
+                    <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                    <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
+                    value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
+                </div></div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- About Block -->
@@ -422,29 +460,29 @@
     
 	<!-- Master Script -->
     <script>
+// 
+// Constants
+// 
+
+// Set World
+var world_key = <?php echo $world['id']; ?>
+
+// Size of land box squares
+var land_size = <?php echo $world['land_size'] ?>;
+
+// Set user variables
+<?php if ($log_check) { ?>
+    var log_check = true;
+    var user_id = <?php echo $user_id + ''; ?>;
+    var account_id = <?php echo $account['id'] + ''; ?>;
+    var username = "<?php echo $user['username']; ?>";
+    var cash = <?php echo $account['cash'] + ''; ?>;
+<?php } else { ?>
+    var log_check = false;
+<?php } ?>
+
 function initMap() 
 {
-    // 
-    // Constants
-    // 
-
-    // Set World
-    var world_key = <?php echo $world['id']; ?>
-
-    // Size of land box squares
-    var land_size = <?php echo $world['land_size'] ?>;
-
-    // Set user variables
-    <?php if ($log_check) { ?>
-        var log_check = true;
-        var user_id = <?php echo $user_id + ''; ?>;
-        var account_id = <?php echo $account['id'] + ''; ?>;
-        var username = "<?php echo $user['username']; ?>";
-        var cash = <?php echo $account['cash'] + ''; ?>;
-    <?php } else { ?>
-        var log_check = false;
-    <?php } ?>
-
     // Map options
     var map = new google.maps.Map(document.getElementById('map'), {
         // Zoom on land if set as parameter
@@ -452,7 +490,7 @@ function initMap()
         $land_coords_split = explode(',', $_GET['land']); ?>
         // Logic to center isn't fully understand, but results in correct behavior in all 4 corners
         center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
-        zoom: 7,
+        zoom: 6,
         <?php } else { ?>
         center: {lat: 20, lng: 0},
         zoom: 3,
@@ -540,8 +578,8 @@ function initMap()
 				}
 			}
             // debug coord_slug
-			content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
-            '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
+			// content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
+            // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
 			content_string += '</div>';
 			// Set InfoWindow Interaction
 			infoWindow.setContent(content_string);
@@ -555,10 +593,10 @@ function initMap()
 		result = '<form action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
 		  + '' + ucwords(form_type) + ' This Land';
-		if (form_type === 'buy') {
+		if (form_type != 'claim') {
 			result += ' ($' + money_format(d['price']) + ')';
 		}
-		result += '</button><br><br>'
+		result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
 		+ '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
@@ -711,6 +749,10 @@ function initMap()
 <?php if ($just_registered) { ?>
 $('#how_to_play_block').show();
 <?php } ?>
+
+if (!log_check) {
+    $('#register_block').show();
+}
 
 $('.login_button').click(function(){
 	$('.center_block').hide();
