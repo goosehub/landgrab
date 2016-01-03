@@ -38,6 +38,9 @@ html, body {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
 }
+.fake_link {
+  cursor: pointer;
+}
 
 /* Map */
 #map {
@@ -125,13 +128,13 @@ html, body {
 .exit_center_block {
   float: right;
 }
-
-/* Land Form */
 .register_to_play {
   color: #444488;
   background: #FFC31E;
   font-weight: bold;
 }
+
+/* Land Form */
 #land_form .row {
   margin-right: 0;
 }

@@ -131,7 +131,7 @@
               <li><a id="leaderboard_land_owned_button" class="leaderboard_link">Land</a></li>
               <li><a id="leaderboard_cash_owned_button" class="leaderboard_link">Cash</a></li>
               <li><a id="leaderboard_highest_valued_land_button" class="leaderboard_link">Highest Valued Land</a></li>
-              <li><a id="leaderboard_cheapest_land_button" class="leaderboard_link">Cheapest Land</a></li>
+              <li><a class="leaderboard_cheapest_land_button leaderboard_link">Cheapest Land</a></li>
               <li role="separator" class="divider"></li>
               <li class="text-center"><strong>Worlds</strong></li>
               <?php foreach ($worlds as $world_list) { ?>
@@ -237,23 +237,23 @@
     	</button>
         <hr>
         <p>
-            LandGrab is a game of Claiming, Buying, and Selling the Real World.
+            <strong>LandGrab is a game of Claiming, Buying, and Selling the Real World.</strong>
         </p>
         <p>
-            You start the game with $1,000,000.
-            You can claim any unowned land for free.
-            You set a price on land you own.
-            Land is taxed at 1% each hour on the prices you set.
-            Every hour, the taxes gets distributed in a rebate for each plot of land.
-            If you run out of cash, your account is reset.
+            Begin by buying and claiming land.
+            Set a price on land you buy, but be careful not to charge too much, land is taxed at 1% hourly on the prices you set.
+            Each plot of land scores you an hourly income.
+            Famous areas are valuable.
+            Find undervalued areas and sell them for a big profit.
+            Run out of cash, you lose all land and your account is reset.
         </p>
         <p>
-            In the top right, 
-            you can change the color of your lands, 
-            view your projected hourly, income, investment yield, and overall profit,
-            view the Leaderboards,
-            or play in different worlds of different density.
+            Use the menu to view finances,
+            the leaderboards (<a class="leaderboard_cheapest_land_button fake_link">View the Cheapest Land</a>),
+            or different worlds (<a href="<?=base_url()?>world/big">Here's a bigger world</a>).
         </p>
+
+        <hr>
 
         <div class="row">
             <div class="col-md-6">
@@ -294,7 +294,7 @@
         <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
         <br>
         <br>
-        <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, 
+        <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
         <a href="http://ithare.com/" target="_blank">itHare</a>, the Beta Testers, and all my users. Thank you!</p>
     </div>
 
@@ -839,7 +839,7 @@ $('#leaderboard_highest_valued_land_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_highest_valued_land_block').show();
 });
-$('#leaderboard_cheapest_land_button').click(function(){
+$('.leaderboard_cheapest_land_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_cheapest_land_block').show();
 });
