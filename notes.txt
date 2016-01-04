@@ -15,14 +15,9 @@ Marketing Reserach
     http://gamedevelopment.tutsplus.com/articles/marketing-your-indie-game-the-single-most-important-thing-that-no-one-knows-how-to-do--gamedev-7157
 
 Beta Testing Locations
-    Paid
-        https://www.mturk.com/mturk/welcome
-        https://www.reddit.com/r/beermoney
-    Organized
-        http://www.betabound.com/announce/
-    Casual
-        https://www.reddit.com/r/indiegaming
-        https://www.reddit.com/r/shamelessplug
+    http://www.betabound.com/announce/
+    https://www.reddit.com/r/indiegaming
+    https://www.reddit.com/r/shamelessplug
 
 pyth bot
     http://pastebin.com/01zZ02wY
@@ -44,6 +39,8 @@ High Priority
         Transaction log view
         Show land cost also when not enough cash/not logged in
         Show estimated income of a land plot
+    Language
+        Improve how to play
     Gameplay Mechanics
         Make game zero sum, new player money comes out of taxes and fees
         Make a fee for claiming land
@@ -56,6 +53,9 @@ High Priority
         More frequent taxes
 
 Low Priority
+    Remove time suffix from style.css link
+    Optimize loading times
+    Optimize Tax CRON
     Shift click multiple land select with seperate window
     Figure out what to do with players on cash leaderboard with no land
     Investigate missing CRON emails
