@@ -25,18 +25,27 @@ pyth bot
 Bug
     "When I was trying to buy a land that was priced below the amount of money I had, I couldn't buy it if I typed in a new price that was higher than the amount of money I had. Changing the new price to an amount lower than the amount of money I had allowed me to buy it, and then I was able to change the price I was selling for back to what I originally wanted."
 
+account columns
+    timestamp of last time account viewed
+        Used to pull all new transactions
+            Number of lands (limit 10 with view as 10+ in those cases)
+            List of lands sold with link to lands
+            Total of sales since last load
+            Notification of bankruptcy pop up with z index overriding over views
+    Notification of last tax session is always shown between rebates and income
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
     Features
-        Share link to land on info window
+        Share link to land on info window, a tag wrapped around name
+        Note that safe HTML tags allowed
         List of owned lands
         Notification after a land has been sold
-        Notification after taxes
+        Taxes in cash dropdown
         Notification after bankruptcy
-        Transaction log view
         Show land cost also when not enough cash/not logged in
         Show estimated income of a land plot
     Language
@@ -48,11 +57,14 @@ High Priority
         Fix bug when claiming land and setting price higher than money owned
     Infrastructure
         Replace standard world with kek world, and set default world to 3
+        Research onclick script in info window for features and security
     Considering
         Limit claim, buy, sell transaction frequency
         More frequent taxes
 
 Low Priority
+    Full Transaction log view
+    Style cash dropdown into tables
     Remove time suffix from style.css link
     Optimize loading times
     Optimize Tax CRON
@@ -69,7 +81,7 @@ Low Priority
     Figure out method to create accounts of old users for newly created worlds
 
 No Priority
-    Twitter
+    More sharing
     General Security
     Password Resets
     Reset account manually
