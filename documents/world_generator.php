@@ -7,16 +7,16 @@
 // 
 
 // World Key
-$world_key = 5;
+$world_key = 6;
 
 // World Slug
-$world_slug = 'foo';
+$world_slug = 'kek';
 
 $world_tax_rate = '0.01';
 
 // Size of land box squares
 // Recommend 2, 3, 4, 6, or 12
-$box_size = 2;
+$box_size = 4;
 
 // Area covered defined with these limits
 // x and y limits must be evenly divisible by $box_size
@@ -37,8 +37,8 @@ $world_insert_statement = "INSERT INTO `world`
 VALUES 
 (NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
-// $result .= $world_insert_statement;
-// $result .= '<br>';
+$result .= $world_insert_statement;
+$result .= '<br>';
 
 // 
 // Land Logic

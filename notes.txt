@@ -23,45 +23,53 @@ Beta Testing Locations
     Casual
         https://www.reddit.com/r/indiegaming
         https://www.reddit.com/r/shamelessplug
-        4chan.org/s4s
 
-Game Mechanics
-    Unclaimed land is free to claim
-    All land must have a price
-    Players must pay land tax of 1% of selling price every hour
-    Players receive an equal chunk of tax money for each land they own
-    New Players get X amount/percent, to be deducted from new tax season
-    When player has no cash, all land is marked as unclaimed
-    Accounts not active for 1 month plus are reset
-Game Theory
-    Will new players be able to get into the market?
-    How to encourage selling of land, high volume trading
-    How to discourage mass dupe user registration manipulation
-        Detection?
-    How do stale players lose land
-    How to deal with sitting accounts of stagnant money
-Solutions
-    Lose Condition to Prevent Inflation?
-    Growth Strategy?
-    Prevent updating land last 10 minutes of each hour?
+pyth bot
+    http://pastebin.com/01zZ02wY
+
+Bug
+    "When I was trying to buy a land that was priced below the amount of money I had, I couldn't buy it if I typed in a new price that was higher than the amount of money I had. Changing the new price to an amount lower than the amount of money I had allowed me to buy it, and then I was able to change the price I was selling for back to what I originally wanted."
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Alpha Testing
+    Features
+        Share link to land on info window
+        List of owned lands
+        Notification after a land has been sold
+        Notification after taxes
+        Notification after bankruptcy
+        Transaction log view
+        Show land cost also when not enough cash/not logged in
+        Show estimated income of a land plot
+    Gameplay Mechanics
+        Make game zero sum, new player money comes out of taxes and fees
+        Make a fee for claiming land
+    Bug fixes
+        Fix bug when claiming land and setting price higher than money owned
+    Infrastructure
+        Replace standard world with kek world, and set default world to 3
+    Considering
+        Limit claim, buy, sell transaction frequency
+        More frequent taxes
 
 Low Priority
+    Shift click multiple land select with seperate window
+    Figure out what to do with players on cash leaderboard with no land
+    Investigate missing CRON emails
+    Measure time taxes take to run
+    API
+    Dupe account detection and action
+    Color difference at 180 LNG
     Figure out profit inaccuracy, replicate
     Net Worth Leaderboard
     Hide google maps saved places
-    API
-    Transaction log view
+    Figure out method to create accounts of old users for newly created worlds
 
 No Priority
     Twitter
-    Dupe account detection and action
     General Security
     Password Resets
     Reset account manually

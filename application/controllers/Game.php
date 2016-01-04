@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 1)
+	public function index($world_slug = 6)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
