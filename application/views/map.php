@@ -308,7 +308,7 @@
         <br>
         <br>
         <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
-        <a href="http://ithare.com/" target="_blank">itHare</a>, the Beta Testers, and all my users. Thank you!</p>
+        <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, the rest of the Beta Testers, and all my users. Thank you!</p>
     </div>
 
     <!-- Report Bugs Block -->

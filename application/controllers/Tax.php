@@ -54,7 +54,7 @@ class Tax extends CI_Controller {
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
-              $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'bankruptcy', $new_cash_balance, $world['id'], 0, '');
+              // $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'bankruptcy', $new_cash_balance, $world['id'], 0, '', '');
 
             // Detuct tax
             } else {
@@ -65,7 +65,7 @@ class Tax extends CI_Controller {
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
-              $query_action = $this->transaction_model->new_transaction_record($account['id'], 0, 'land_tax', $land_tax, $world['id'], $land['coord_slug'], '');
+              // $query_action = $this->transaction_model->new_transaction_record($account['id'], 0, 'land_tax', $land_tax, $world['id'], $land['coord_slug'], '', '');
             }
           }
 
@@ -101,7 +101,7 @@ class Tax extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
             // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'rebate', $rebate, $world['id'], $land['coord_slug'], '');
+            // $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'rebate', $rebate, $world['id'], $land['coord_slug'], '', '');
           }
         }
 
