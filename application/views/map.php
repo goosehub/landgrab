@@ -801,14 +801,14 @@ function initMap()
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
         $fill_color = "#FFFFFF";
-        $fill_opacity = '0.1';
+        $fill_opacity = '0';
         if ($log_check && $land['account_key'] === $account['id']) { 
-            $stroke_weight = 3; 
+            $stroke_weight = 5; 
             $stroke_color = '#428BCA';
         }
         if ($land['claimed']) {
           $fill_color = $land['primary_color'];
-          $fill_opacity = '0.5';
+          $fill_opacity = '0.4';
         }
         ?>
         declare_square(<?php echo 
