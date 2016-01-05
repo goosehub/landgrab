@@ -107,7 +107,8 @@ Class user_model extends CI_Model
     'world_key' => $world_key,
     'user_key' => $user_key,
     'cash' => $cash,
-    'primary_color' => $primary_color
+    'primary_color' => $primary_color,
+    'last_load' => date('Y-m-d H:i:s')
     );
     $this->db->insert('account', $data);
 
@@ -135,6 +136,17 @@ Class user_model extends CI_Model
     );
     $this->db->where('account_key', $account_id);
     $this->db->update('land', $data);
+    return true;
+ }
+ // Mark account as loaded
+ function account_loaded($account_id)
+ {
+    // Update account
+    $data = array(
+        'last_load' => date('Y-m-d H:i:s')
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
     return true;
  }
 

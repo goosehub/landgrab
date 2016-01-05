@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/New_York');
 
 class Account extends CI_Controller {
 

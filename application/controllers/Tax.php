@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/New_York');
 
 class Tax extends CI_Controller {
 
@@ -54,7 +54,7 @@ class Tax extends CI_Controller {
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 
               // Record into transaction log
-              $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'reset', $new_cash_balance, $world['id'], 0, '');
+              $query_action = $this->transaction_model->new_transaction_record(0, $account['id'], 'bankruptcy', $new_cash_balance, $world['id'], 0, '');
 
             // Detuct tax
             } else {
@@ -105,7 +105,7 @@ class Tax extends CI_Controller {
           }
         }
 
-        echo 'Tax Controller Successful';
+        echo 'Tax Controller Successful. Timestamp: ' . time();
 
         // Generic Page Not Found on fail
         } else {

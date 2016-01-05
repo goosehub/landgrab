@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
 
@@ -39,12 +39,21 @@ class Game extends CI_Controller {
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
 
+            // Get recently sold lands
+            $data['recently_sold_lands'] = $this->transaction_model->recently_sold_lands($account['id'], $account['last_load']);
+
             // Get account financial information
             $timespan_days = 7;
 
             // Taxes and Rebate
             $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
-            $data['total_lands'] = $land_sum_and_count['count'];
+            $total_lands = $data['total_lands'] = $land_sum_and_count['count'];
+
+            // If less than 1 land, check if bankruptcy since last page load
+            if ($total_lands < 1) { 
+                $this->transaction_model->check_for_bankruptcy($account['id'], $account['last_load']); 
+            }
+
             $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
             $estimated_rebate = $data['estimated_rebate'] = $world['latest_rebate'] * $land_sum_and_count['count'];
             $income = $data['income'] = $estimated_rebate - $hourly_taxes;
@@ -76,6 +85,9 @@ class Game extends CI_Controller {
                 $data['profit_prefix'] = '-';
                 $data['profit_class'] = 'red_money';
             }
+
+            // Record account as loaded
+            $query_action = $this->user_model->account_loaded($account['id']);
         }
 
         // Get worlds
@@ -238,6 +250,9 @@ class Game extends CI_Controller {
             // Get amount of sale
             $amount = $land_square['price'];
 
+            // Get name of land at sale
+            $name_at_sale = $land_square['land_name'];
+
             // Get seller and buying party info
             $seller_account_key = $land_square['account_key'];
             $seller_account = $this->user_model->get_account_by_id($seller_account_key);
@@ -251,12 +266,13 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 
             // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, '');
+            $query_action = $this->transaction_model->new_transaction_record(
+                $buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, $name_at_sale, '');
         }
 
         // Record into transaction log
         if ($form_type === 'claim') {
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '');
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '', '');
         }
 
         // Return validation true if not returned false yet

@@ -40,31 +40,28 @@ account columns
 
 High Priority
     Features
-        Notification after a land has been sold
-    Language
-        Improve how to play
     Gameplay Mechanics
-        Make game zero sum, new player money comes out of taxes and fees
-        Make a fee for claiming land
+        Make game zero sum, new player money comes out of taxes and fees?
     Bug fixes
         Fix bug when claiming land and setting price higher than money owned
+        Login validation overriden by join pop up
     Infrastructure
-        Replace standard world with kek world, and set default world to 3
         Research onclick script in info window for features and security
     Considering
         Limit claim, buy, sell transaction frequency
-        More frequent taxes
 
 Low Priority
+    Replace standard world with kek world, and set default world to 3
+    Improve how to play
     List of owned lands
-    Notification after bankruptcy
     Taxes in cash dropdown
+    Do taxes by user instead of by land?
     Full Transaction log view
     Style cash dropdown into tables
     Remove time suffix from style.css link
     Optimize loading times
     Optimize Tax CRON
-    Shift click multiple land select with seperate window
+    Shift click multiple land select with seperate window?
     Figure out what to do with players on cash leaderboard with no land
     Investigate missing CRON emails
     Measure time taxes take to run

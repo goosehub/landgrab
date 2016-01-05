@@ -54,6 +54,15 @@
 	<!-- Top Right Block -->
 	<div id="top_right_block">
 		<?php if ($log_check) { ?>
+
+      <!-- Recently sold lands button -->
+      <?php if ($recently_sold_lands) { ?>
+        <button class="sold_lands_button btn btn-action"><strong><?php echo count($recently_sold_lands); ?> Sales</strong>
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        </button>
+      <?php } ?>
+
+      <!-- Cash Dropdown -->
     	<button id="cash_display" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             $<?php echo number_format($account['cash']); ?>
           <span class="caret"></span>
@@ -91,6 +100,8 @@
           </span>/Last 7 Days</li>
 
         </ul>
+
+        <!-- User Dropdown -->
         <div class="btn-group">
     		<button class="user_button btn btn-primary dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     			<?php echo $user['username']; ?>
@@ -98,49 +109,51 @@
     		</button>
     		<ul class="dropdown-menu" aria-labelledby="user_dropdown">
     		  <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Log Out</a></li>
-              <li role="separator" class="divider"></li>
-              <li>
-                  <?php echo form_open('account/update_color'); ?>
-                  <div class="row"><div class="col-md-3">
-                      <label for="_input_primary_color">Color</label>
-                  </div><div class="col-md-9">
-                      <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-                      <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
-                      value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
-                  </div></div>
-                  </form>
-              </li>
+          <li role="separator" class="divider"></li>
+          <li>
+              <?php echo form_open('account/update_color'); ?>
+              <div class="row"><div class="col-md-3">
+                  <label for="_input_primary_color">Color</label>
+              </div><div class="col-md-9">
+                  <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                  <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
+                  value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
+              </div></div>
+              </form>
+          </li>
     		</ul>
         </div>
 	    <?php } else { ?>
     	<button class="login_button btn btn-primary">Login</button>
     	<button class="register_button btn btn-action">Join</button>
 	    <?php } ?>
-        <div class="btn-group">
-            <button class="info_button btn btn-success dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                LandGrab
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="info_dropdown">
-              <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
-              <li><a class="about_button btn btn-default">About LandGrab</a></li>
-              <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
-              <li role="separator" class="divider"></li>
-              <li class="text-center"><strong>Leaderboards</strong></li>
-              <!-- <li><a id="leaderboard_net_value_button" class="leaderboard_link">Net Value</a></li> -->
-              <li><a id="leaderboard_land_owned_button" class="leaderboard_link">Land</a></li>
-              <li><a id="leaderboard_cash_owned_button" class="leaderboard_link">Cash</a></li>
-              <li><a id="leaderboard_highest_valued_land_button" class="leaderboard_link">Highest Valued Land</a></li>
-              <li><a class="leaderboard_cheapest_land_button leaderboard_link">Cheapest Land</a></li>
-              <li role="separator" class="divider"></li>
-              <li class="text-center"><strong>Worlds</strong></li>
-              <?php foreach ($worlds as $world_list) { ?>
-              <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
-                  <strong class="<?php if ($world_list['id'] === $world['id']) { echo 'current_world'; } ?>"><?php echo $world_list['slug']; ?></strong>
-              </a></li>
-              <?php } ?>
-            </ul>
-        </div>
+
+      <!-- Main Menu dropdown -->
+      <div class="btn-group">
+        <button class="info_button btn btn-success dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            LandGrab
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="info_dropdown">
+          <li><a class="how_to_play_button btn btn-default">How To Play</a></li>
+          <li><a class="about_button btn btn-default">About LandGrab</a></li>
+          <li><a class="report_bugs_button btn btn-default">Report Bugs</a></li>
+          <li role="separator" class="divider"></li>
+          <li class="text-center"><strong>Leaderboards</strong></li>
+          <!-- <li><a id="leaderboard_net_value_button" class="leaderboard_link">Net Value</a></li> -->
+          <li><a id="leaderboard_land_owned_button" class="leaderboard_link">Land</a></li>
+          <li><a id="leaderboard_cash_owned_button" class="leaderboard_link">Cash</a></li>
+          <li><a id="leaderboard_highest_valued_land_button" class="leaderboard_link">Highest Valued Land</a></li>
+          <li><a class="leaderboard_cheapest_land_button leaderboard_link">Cheapest Land</a></li>
+          <li role="separator" class="divider"></li>
+          <li class="text-center"><strong>Worlds</strong></li>
+          <?php foreach ($worlds as $world_list) { ?>
+          <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
+              <strong class="<?php if ($world_list['id'] === $world['id']) { echo 'current_world'; } ?>"><?php echo $world_list['slug']; ?></strong>
+          </a></li>
+          <?php } ?>
+        </ul>
+      </div>
     </div>
 
     <!-- Center Blocks -->
@@ -306,12 +319,63 @@
     	  <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     	</button>
         <hr>
+
         <p>Please report all bugs to 
             <strong>
                 <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>
             </strong>
         </p>
     </div>
+
+    <!-- Bankruptcy Block -->
+    <div id="bankruptcy_block" class="center_block">
+      <strong>You've gone Bankrupt</strong>
+
+      <button type="button" class="exit_center_block btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+      </button>
+        <hr>
+
+        <p>You've ran out of cash. You're lands have been repossessed, and you're cash reset. You've lost this round.
+        Try to avoid setting prices too high, so that taxes don't eat you to death.</p>
+    </div>
+
+    <!-- Recently Sold Lands -->
+    <?php if ($log_check && $recently_sold_lands ) { ?>
+    <div id="recently_sold_lands_block" class="center_block">
+        <strong>Land Sales since last page load</strong>
+
+        <button type="button" class="exit_center_block btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        </button>
+        <hr>
+
+        <table class="table table-bordered table-hover">
+          <tr class="info">
+            <td>Land</td>
+            <td>Bought by</td>
+            <td>Amount</td>
+          </tr>
+        <?php $i = 0; 
+        foreach ($recently_sold_lands as $transaction) {
+          $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+          $paying_user = $this->user_model->get_user($paying_account['user_key']); ?>
+          <tr>
+          <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
+            <?php echo $transaction['name_at_sale']; ?>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </a></td>
+          <td><?php echo $paying_user['username']; ?></td>
+          <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
+          </tr>
+          <!-- Break after 10 iterations -->
+          <?php $i++; if ($i === 10) { ?>
+          <tr><td><strong>More sales not includes</strong></td></tr>
+          <?php } ?>
+        <?php } ?>
+        </table>
+    </div>
+    <?php } ?>
 
     <!-- Leaderboards -->
 
@@ -590,22 +654,29 @@ function initMap()
 				content_string += '<strong>Unclaimed</strong><br><br>';
 			} else  {
         // Calculate income
-        income = latest_rebate - (land_data['price'] * land_tax_rate);
+        income_prefix = '';
+        income_class = 'green_money';
+        income = Math.floor(parseFloat(latest_rebate - (land_data['price'] * land_tax_rate)));
+        if (income < 0) {
+          income_prefix = '-';
+          income_class = 'red_money';
+          income = Math.abs(income);
+        }
         content_string += '<div class="land_window"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' 
         + land_data['land_name'] + '</strong></a><br>'
         + 'Owned by <strong>' + land_data['username'] + '</strong><br>'
-        + 'Estimated Income: ~$' + money_format(parseInt(income)) + '/Hour<br>'
+        + 'Estimated Income: <strong class="' + income_class + '">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>'
         + '' + land_data['content'] + '<br>';
 			}
-            if (! log_check) {
-              if (land_data['claimed'] === '0') {
-                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-                + '?register">Join to Claim!</a><br>';
-              } else {
-                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-                + '?register">Join to Buy! (' + money_format(land_data['price']) + ')</a><br>';
-              }
-            }
+      if (! log_check) {
+        if (land_data['claimed'] === '0') {
+          content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+          + '?register">Join to Claim!</a><br>';
+        } else {
+          content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+          + '?register">Join to Buy! (' + money_format(land_data['price']) + ')</a><br>';
+        }
+      }
 			if (log_check) {
 				// 
 				// Abstract to be shorter
@@ -835,6 +906,10 @@ $('.login_button').click(function(){
 
 $('.register_button').click(function(){
 	$('#register_input_username').focus();
+});
+
+$('.sold_lands_button').click(function(){
+  $('#recently_sold_lands_block').show();
 });
 
 $('#leaderboard_net_value_button').click(function(){

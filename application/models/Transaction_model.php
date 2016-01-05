@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 Class transaction_model extends CI_Model
 {
 // Insert new transaction log
- function new_transaction_record($paying_account_key, $recipient_account_key, $transaction, $amount, $world_key, $coord_slug, $details)
+ function new_transaction_record($paying_account_key, $recipient_account_key, $transaction, $amount, $world_key, $coord_slug, $name_at_sale, $details)
  {
     $data = array(
     'paying_account_key' => $paying_account_key,
@@ -13,6 +13,7 @@ Class transaction_model extends CI_Model
     'amount' => $amount,
     'world_key' => $world_key,
     'coord_slug' => $coord_slug,
+    'name_at_sale' => $name_at_sale,
     'details' => $details
     );
     $this->db->insert('transaction_log', $data);
@@ -63,4 +64,29 @@ Class transaction_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
  }
+ // Get recent sold lands
+ function recently_sold_lands($account_key, $last_load)
+ {
+    $this->db->select('*');
+    $this->db->from('transaction_log');
+    $this->db->where('recipient_account_key', $account_key);
+    $this->db->where('transaction', 'buy');
+    $this->db->where('created >= ', $last_load);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return $result;
+ }
+ // Check for bankruptcy since last page load
+ function check_for_bankruptcy($account_key, $last_load)
+ {
+    $this->db->select('*');
+    $this->db->from('transaction_log');
+    $this->db->where('recipient_account_key', $account_key);
+    $this->db->where('transaction', 'bankruptcy');
+    $this->db->where('created >= ', $last_load);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return $result;
+ }
+
 }
