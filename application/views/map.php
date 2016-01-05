@@ -497,7 +497,11 @@
 // 
 
 // Set World
-var world_key = <?php echo $world['id']; ?>
+var world_key = <?php echo $world['id']; ?>;
+
+var latest_rebate = <?php echo $world['latest_rebate']; ?>;
+
+var land_tax_rate = <?php echo $world['land_tax_rate']; ?>;
 
 // Size of land box squares
 var land_size = <?php echo $world['land_size'] ?>;
@@ -585,12 +589,22 @@ function initMap()
 			if (land_data['claimed'] === '0') {
 				content_string += '<strong>Unclaimed</strong><br><br>';
 			} else  {
-				content_string += '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>'
-				+ 'Owned by <strong>' + land_data['username'] + '</strong><br>'
-				+ '' + land_data['content'] + '<br>';
+        // Calculate income
+        income = latest_rebate - (land_data['price'] * land_tax_rate);
+        content_string += '<div class="land_window"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' 
+        + land_data['land_name'] + '</strong></a><br>'
+        + 'Owned by <strong>' + land_data['username'] + '</strong><br>'
+        + 'Estimated Income: ~$' + money_format(parseInt(income)) + '/Hour<br>'
+        + '' + land_data['content'] + '<br>';
 			}
             if (! log_check) {
-                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key + '?register">Join to Play!</a><br>';
+              if (land_data['claimed'] === '0') {
+                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+                + '?register">Join to Claim!</a><br>';
+              } else {
+                content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+                + '?register">Join to Buy! (' + money_format(land_data['price']) + ')</a><br>';
+              }
             }
 			if (log_check) {
 				// 
@@ -605,7 +619,7 @@ function initMap()
 					{
 						content_string += land_update_form('buy', 'btn-success', land_data);
 					} else {
-						content_string += '<button class="btn btn-default" disabled="disabled">Not enough cash to buy</button>';
+						content_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + money_format(land_data['price']) + ')</button>';
 					}
 				}
 			}

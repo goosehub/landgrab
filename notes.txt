@@ -40,14 +40,7 @@ account columns
 
 High Priority
     Features
-        Share link to land on info window, a tag wrapped around name
-        Note that safe HTML tags allowed
-        List of owned lands
         Notification after a land has been sold
-        Taxes in cash dropdown
-        Notification after bankruptcy
-        Show land cost also when not enough cash/not logged in
-        Show estimated income of a land plot
     Language
         Improve how to play
     Gameplay Mechanics
@@ -63,6 +56,9 @@ High Priority
         More frequent taxes
 
 Low Priority
+    List of owned lands
+    Notification after bankruptcy
+    Taxes in cash dropdown
     Full Transaction log view
     Style cash dropdown into tables
     Remove time suffix from style.css link
