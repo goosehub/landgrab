@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 6)
+	public function index($world_slug = 1)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -110,7 +110,10 @@ class Game extends CI_Controller {
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
         // Load view
-		$this->load->view('map', $data);
+        $this->load->view('header', $data);
+        $this->load->view('menus', $data);
+        $this->load->view('blocks', $data);
+        $this->load->view('client_logic', $data);
 	}
 
 	// Get infomation on single land
