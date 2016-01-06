@@ -171,3 +171,12 @@ html, body {
 #loading {
     width: 50px;
 }
+
+/* Page Not Found */
+.page_not_found_cont {
+  background: #5555ee;
+  height: 100vh;
+}
+.page_not_found_cont h3, .page_not_found_cont a, .page_not_found_cont a:hover {
+  color: #eeeeee;
+}

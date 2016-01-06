@@ -45,8 +45,9 @@ class Game extends CI_Controller {
             $week_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -7) );
             $data['week_of_sold_lands'] = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $week_ago);
 
+            // 
             // Get account financial information
-            $timespan_days = 7;
+            // 
 
             // Taxes and Rebate
             $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
@@ -66,6 +67,9 @@ class Game extends CI_Controller {
                 $data['income_prefix'] = '-';
                 $data['income_class'] = 'red_money';
             }
+
+            // Set timespan to 7 days
+            $timespan_days = 7;
 
             // Purchases and Sales
             $purchases = $data['purchases'] = $this->transaction_model->get_transaction_purchases($account['id'], $timespan_days);
