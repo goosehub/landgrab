@@ -28,6 +28,12 @@ Ideas
         Might make it simplier, easier to understand, and magnify demand for high value areas without making them money losers.
     Make game zero sum, new player money comes out of taxes and fees?
 
+Engagement
+    Encourage more content
+    Give more to do when on server alone
+    Make it feel active and alive
+    Add more depth to strategy
+
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -55,6 +61,7 @@ Low Priority
         Color difference at 180 LNG
         Attempt to buy land when session is dead cause DB error
             Message: Undefined variable: user_id Filename: controllers/Game.php Line Number: 212
+        Hide google maps saved places
     Infrastructure
         Reduce transaction stats from 7 days to hour
         Clear Live DB of fake users and accounts
@@ -68,9 +75,6 @@ Low Priority
         Measure time taxes take to run
     UX
         Improve how to play
-    Style
-        Style cash dropdown into tables
-        Hide google maps saved places
     Performance
         Optimize loading times
         Optimize Tax CRON to be by person

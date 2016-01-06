@@ -16,40 +16,65 @@
     </button>
     <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
 
+      <li><strong><?php echo $total_lands; ?> Lands</strong> | 
+      ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
+      ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2;</li>
+
       <li role="separator" class="divider"></li>
 
-      <table class="table">
+      <table class="table table-striped table-condensed">
         <tbody>
-          <tr>
-            <td>Land Taxes: </td>
-            <td><span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</td>
+          <tr class="info"><td class="text-center"><strong>Charges</strong></td></tr>
+          <tr class="warning">
+            <td class="text-left">Land Taxes: </td>
+            <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</td>
+          </tr>
+          <tr class="success">
+            <td class="text-left">Rebates: </td>
+            <td class="text-right"><span class="money_info_item green_money">$<?php echo number_format($estimated_rebate); ?></span>/Hour</td>
+          </tr>
+          <tr class="active">
+            <td class="text-left">Income: </td>
+            <td class="text-right">
+              <span class="money_info_item <?php echo $income_class; ?>"><?php echo $income_prefix; ?>$<?php echo number_format(abs($income)); ?></span>/Hour
+            </td>
+          </tr>
+          <tr class="info"><td class="text-center"><strong>Trades</strong></td></tr>
+          <tr class="warning">
+            <td class="text-left">Purchases: </td>
+            <td class="text-right">
+              <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span> - <?php //echo $purchases['total']; ?>/Week
+            </td>
+          </tr>
+          <tr class="success">
+            <td class="text-left">Sales: </td>
+            <td class="text-right">
+              <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span> - <?php //echo $sales['total']; ?>/Week
+            </td>
+          </tr>
+          <tr class="active">
+            <td class="text-left">Yield: </td>
+            <td class="text-right">
+              <span class="money_info_item <?php echo $yield_class; ?>"><?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?> </span>/Week
+            </td>
+          </tr>
+          <tr class="info"><td class="text-center"><strong>Earnings</strong></td></tr>
+          <tr class="warning">
+            <td class="text-left">Losses: </td>
+            <td class="text-right"><span class="money_info_item green_money">$<?php echo number_format($losses['sum']); ?></span>/Week</td>
+          </tr>
+          <tr class="success">
+            <td class="text-left">Gains: </td>
+            <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($gains['sum']); ?></span>/Week</td>
+          </tr>
+          <tr class="active">
+            <td class="text-left">Profit: </td>
+            <td class="text-right">
+              <span class="money_info_item <?php echo $profit_class; ?>"><?php echo $profit_prefix; ?>$<?php echo number_format(abs($profit)); ?></span>/Week
+            </td>
           </tr>
         </tbody>
       </table>
-
-      <li>Land Taxes: <span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</li>
-      <li>Rebates: ~ <span class="money_info_item green_money">$<?php echo number_format($estimated_rebate); ?></span>/Hour</li>
-      <li>Income: ~ <span class="money_info_item <?php echo $income_class; ?>">
-          <?php echo $income_prefix; ?>$<?php echo number_format(abs($income)); ?>
-      </span>/Hour</li>
-
-      <li role="separator" class="divider"></li>
-
-      <li>Purchases: <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span>
-       - <?php echo $purchases['total']; ?> Lands/Last 7 Days</li>
-      <li>Sales: <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span>
-       - <?php echo $sales['total']; ?> Lands/Last 7 Days</li>
-      <li>Yield: <span class="money_info_item <?php echo $yield_class; ?>">
-          <?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?>
-      </span>/Last 7 Days</li>
-
-      <li role="separator" class="divider"></li>
-
-      <li>Gains: ~ <span class="money_info_item red_money">$<?php echo number_format($gains['sum']); ?></span>/Last 7 Days</li>
-      <li>Losses: ~ <span class="money_info_item green_money">$<?php echo number_format($losses['sum']); ?></span>/Last 7 Days</li>
-      <li>Profit: ~ <span class="money_info_item <?php echo $profit_class; ?>">
-          <?php echo $profit_prefix; ?>$<?php echo number_format(abs($profit)); ?>
-      </span>/Last 7 Days</li>
 
     </ul>
 
