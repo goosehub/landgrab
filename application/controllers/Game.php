@@ -172,6 +172,11 @@ class Game extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
         }
+        else
+        {
+            $world_key = $this->input->post('world_key_input');
+            redirect('world/' . $world_key, 'refresh');
+        }
 
         // Remove cents if exists
         if (substr($_POST['price'], -3, 1) == '.') {

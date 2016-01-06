@@ -183,7 +183,7 @@
 <!-- Recently Sold Lands -->
 <?php if ($log_check && $week_of_sold_lands ) { ?>
 <div id="recently_sold_lands_block" class="center_block">
-    <strong>Land Sales since last page load</strong>
+    <strong>Land Sales since last Map load</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -202,7 +202,7 @@
       $paying_user = $this->user_model->get_user($paying_account['user_key']); ?>
       <tr>
           <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
             <?php echo $transaction['name_at_sale']; ?>
           </a></td>
           <td><?php echo $paying_user['username']; ?></td>

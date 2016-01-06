@@ -50,17 +50,9 @@ Low Priority
     Feature
         List of owned lands
         Net Worth Leaderboard
-    Bug fixes
-        Fix Tax Cron
-        Color difference at 180 LNG
-        Attempt to buy land when session is dead cause DB error
-            Message: Undefined variable: user_id Filename: controllers/Game.php Line Number: 212
-        Hide google maps saved places
     Infrastructure
-        Reduce transaction stats from 7 days to hour
-        Clear Live DB of fake users and accounts
-        Replace standard world with kek world, and set default world to 3
-        Do taxes by user instead of by land?
+        Fix Tax Cron
+        Reset live DB
         Figure out method to create accounts of old users for newly created worlds
     Research
         Research onclick script in info window for features and security
@@ -68,12 +60,14 @@ Low Priority
         Investigate missing CRON emails
         Measure time taxes take to run
     UX
-        Improve how to play
+        Improve/update how to play
     Performance
         Optimize loading times
         Optimize Tax CRON to be by person
 
 No Priority
+    Hide google maps saved places
+    Color difference at 180 LNG
     Shift click multiple land select with seperate window?
     API
     More sharing

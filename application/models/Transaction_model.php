@@ -72,6 +72,7 @@ Class transaction_model extends CI_Model
     $this->db->where('recipient_account_key', $account_key);
     $this->db->where('transaction', 'buy');
     $this->db->where('created >= ', $last_load);
+    $this->db->order_by('id', 'DESC');
     $query = $this->db->get();
     $result = $query->result_array();
     return $result;

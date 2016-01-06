@@ -27,7 +27,7 @@
       <table class="table table-striped table-condensed">
         <tbody>
           <tr class="info"><td class="text-center"><strong>Charges</strong></td></tr>
-          <tr class="warning">
+          <tr class="danger">
             <td class="text-left">Land Taxes: </td>
             <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</td>
           </tr>
@@ -42,7 +42,7 @@
             </td>
           </tr>
           <tr class="info"><td class="text-center"><strong>Trades</strong></td></tr>
-          <tr class="warning">
+          <tr class="danger">
             <td class="text-left">Purchases: </td>
             <td class="text-right">
               <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span> /Week
@@ -61,7 +61,7 @@
             </td>
           </tr>
           <tr class="info"><td class="text-center"><strong>Earnings</strong></td></tr>
-          <tr class="warning">
+          <tr class="danger">
             <td class="text-left">Losses: </td>
             <td class="text-right"><span class="money_info_item green_money">$<?php echo number_format($losses['sum']); ?></span>/Week</td>
           </tr>
