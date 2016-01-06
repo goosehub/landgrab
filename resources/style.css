@@ -104,7 +104,9 @@ html, body {
 .center_block {
   display: none;
   position: absolute;
-  top: 30vh;
+  top: 25vh;
+  max-height: 60vh;
+  overflow-y: auto;
   left: 30%;
   width: 40%;
   background: #fff;

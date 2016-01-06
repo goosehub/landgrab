@@ -181,7 +181,7 @@
 </div>
 
 <!-- Recently Sold Lands -->
-<?php if ($log_check && $recently_sold_lands ) { ?>
+<?php if ($log_check && $week_of_sold_lands ) { ?>
 <div id="recently_sold_lands_block" class="center_block">
     <strong>Land Sales since last page load</strong>
 
@@ -197,21 +197,17 @@
         <td>Amount</td>
       </tr>
     <?php $i = 0; 
-    foreach ($recently_sold_lands as $transaction) {
+    foreach ($week_of_sold_lands as $transaction) {
       $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
       $paying_user = $this->user_model->get_user($paying_account['user_key']); ?>
       <tr>
-      <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
-        <?php echo $transaction['name_at_sale']; ?>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-      </a></td>
-      <td><?php echo $paying_user['username']; ?></td>
-      <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
+          <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            <?php echo $transaction['name_at_sale']; ?>
+          </a></td>
+          <td><?php echo $paying_user['username']; ?></td>
+          <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
       </tr>
-      <!-- Break after 10 iterations -->
-      <?php $i++; if ($i === 10) { ?>
-      <tr><td><strong>More sales not includes</strong></td></tr>
-      <?php } ?>
     <?php } ?>
     </table>
 </div>

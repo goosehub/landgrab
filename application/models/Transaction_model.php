@@ -65,7 +65,7 @@ Class transaction_model extends CI_Model
     return isset($result[0]) ? $result[0] : 0;
  }
  // Get recent sold lands
- function recently_sold_lands($account_key, $last_load)
+ function sold_lands_by_account_over_period($account_key, $last_load)
  {
     $this->db->select('*');
     $this->db->from('transaction_log');

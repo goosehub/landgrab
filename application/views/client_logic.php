@@ -328,9 +328,11 @@ function initMap()
 $('#how_to_play_block').show();
 <?php } ?>
 
-if (!log_check) {
+<?php if ($failed_form != 'login') { ?>
+  if (!log_check) {
     $('#register_block').show();
-}
+  }
+<?php } ?>
 
 $('.login_button').click(function(){
 	$('.center_block').hide();

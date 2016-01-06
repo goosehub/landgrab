@@ -40,7 +40,10 @@ class Game extends CI_Controller {
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
 
             // Get recently sold lands
-            $data['recently_sold_lands'] = $this->transaction_model->recently_sold_lands($account['id'], $account['last_load']);
+            $data['recently_sold_lands'] = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $account['last_load']);
+            // Get last week of sales
+            $week_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -7) );
+            $data['week_of_sold_lands'] = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $week_ago);
 
             // Get account financial information
             $timespan_days = 7;

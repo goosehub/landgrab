@@ -49,15 +49,9 @@ Low Priority
         Claim land fee
     Feature
         List of owned lands
-        Taxes in cash dropdown
-        Full Transaction log view
-        Shift click multiple land select with seperate window?
         Net Worth Leaderboard
     Bug fixes
         Fix Tax Cron
-        Fix bug when claiming land and setting price higher than money owned
-        Login validation overriden by join pop up
-        Recent sales overflow
         Color difference at 180 LNG
         Attempt to buy land when session is dead cause DB error
             Message: Undefined variable: user_id Filename: controllers/Game.php Line Number: 212
@@ -80,6 +74,7 @@ Low Priority
         Optimize Tax CRON to be by person
 
 No Priority
+    Shift click multiple land select with seperate window?
     API
     More sharing
     General Security
@@ -119,3 +114,7 @@ Map Size
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
+
+bugs that could not be replicated
+    Fix bug when claiming land and setting price higher than money owned
+        2016-01-06

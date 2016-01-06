@@ -20,6 +20,8 @@
       ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
       ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2;</li>
 
+      <li><button class="sold_lands_button btn btn-action form-control"><strong>Last Week of Sales</strong> </button></li>
+
       <li role="separator" class="divider"></li>
 
       <table class="table table-striped table-condensed">
@@ -43,19 +45,19 @@
           <tr class="warning">
             <td class="text-left">Purchases: </td>
             <td class="text-right">
-              <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span> - <?php //echo $purchases['total']; ?>/Week
+              <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span> /Week
             </td>
           </tr>
           <tr class="success">
             <td class="text-left">Sales: </td>
             <td class="text-right">
-              <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span> - <?php //echo $sales['total']; ?>/Week
+              <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span> /Week
             </td>
           </tr>
           <tr class="active">
             <td class="text-left">Yield: </td>
             <td class="text-right">
-              <span class="money_info_item <?php echo $yield_class; ?>"><?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?> </span>/Week
+              <span class="money_info_item <?php echo $yield_class; ?>"><?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?></span> /Week
             </td>
           </tr>
           <tr class="info"><td class="text-center"><strong>Earnings</strong></td></tr>
