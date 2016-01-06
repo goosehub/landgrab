@@ -34,6 +34,18 @@ Engagement
     Make it feel active and alive
     Add more depth to strategy
 
+Market Orders
+    Max Price
+    Max Amount
+        http://stackoverflow.com/a/1516460/3774582
+    Name
+    Price
+    Desc
+    Checkbox to keep existing value
+        SET `value` = `value`
+    Order by price, RAND()
+    Limit to hemisphere
+
 ==========================================================================================
     Goals
 ==========================================================================================

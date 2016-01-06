@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 1)
+	public function index($world_slug = 6)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -192,6 +192,8 @@ class Game extends CI_Controller {
         $_POST['price'] = str_replace(',', '', $_POST['price']);
         // Remove periods from price input if exists (some cultures use periods instead of commas)
         $_POST['price'] = str_replace('.', '', $_POST['price']);
+        // Remove dashes to prevent negative inputs in price
+        $_POST['price'] = str_replace('-', '', $_POST['price']);
         
 		// Validation
         $this->load->library('form_validation');
