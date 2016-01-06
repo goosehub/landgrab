@@ -643,13 +643,15 @@ function initMap()
         console.log(coord_slug);
 		// Get land_data
 		land = get_single_land(coord_slug, world_key, function(land){
-			land_data = JSON.parse(land);
-            if (land_data['error']) {
-                console.log(land_data['error']);
-                return false;
-            }
+      console.log(land);
+  		land_data = JSON.parse(land);
+      if (land_data['error']) {
+        console.log(land_data['error']);
+        return false;
+      }
+      console.log(land_data['token']);
 			// Create string
-            var content_string = '<div class="land_window">';
+      var content_string = '<div class="land_window">';
 			if (land_data['claimed'] === '0') {
 				content_string += '<strong>Unclaimed</strong><br><br>';
 			} else  {
@@ -721,6 +723,7 @@ function initMap()
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
             + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
+            + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Name</label>'
             + '</div><div class="col-md-8">'

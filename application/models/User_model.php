@@ -70,8 +70,19 @@ Class user_model extends CI_Model
     }
  }
  // Register
- function register($username, $password, $email, $facebook_id)
+ function register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register)
  {
+    $this->db->select('username');
+    $this->db->from('user');
+    $this->db->where('ip', $ip);
+    $this->db->where('created > NOW() - INTERVAL ' . $ip_frequency_register . ' HOUR');
+    $this->db->limit(1);
+    $query = $this->db->get();
+
+    if ($query->num_rows() > 0) {
+        return 'ip_fail';
+    }
+
     $this->db->select('username');
     $this->db->from('user');
     $this->db->where('username', $username);
@@ -86,7 +97,8 @@ Class user_model extends CI_Model
         'username' => $username,
         'password' => password_hash($password, PASSWORD_BCRYPT),
         'email' => $email,
-        'facebook_id' => $facebook_id
+        'facebook_id' => $facebook_id,
+        'ip' => $ip
         );
         $this->db->insert('user', $data);
 
@@ -148,6 +160,17 @@ Class user_model extends CI_Model
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
     return true;
+ }
+ // Set token by keys
+ function set_token($account_id, $token)
+ {
+    // Update account
+    $data = array(
+        'token' => $token
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;    
  }
 
 }

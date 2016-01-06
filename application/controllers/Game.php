@@ -116,8 +116,8 @@ class Game extends CI_Controller {
 	// Get infomation on single land
 	public function get_single_land()
 	{
-		// Set input
-		$coord_slug = $_GET['coord_slug'];
+        // Get input
+        $coord_slug = $_GET['coord_slug'];
         $world_key = $_GET['world_key'];
 
 	    // Get Land Square
@@ -130,6 +130,18 @@ class Game extends CI_Controller {
             $land_square['username'] = $owner['username'];
         } else {
             $land_square['username'] = '';
+        }
+
+        // Set token for account
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $token = md5(uniqid(rand(), true));
+            $query_action = $this->user_model->set_token($account['id'], $token);
+            $land_square['token'] = $token;
+        } else {
+            $land_square['token'] = '';
         }
 
         // Echo data to client to be parsed
@@ -176,6 +188,7 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
+        $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         $world_key = $this->input->post('world_key_input');
         // Fail
@@ -221,12 +234,18 @@ class Game extends CI_Controller {
         $form_type = $this->input->post('form_type_input');
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
+        $token = $this->input->post('token');
         $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $buyer_account_key = $buyer_account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
 
+        // Check if token is correct
+        if ($token != $buyer_account['token']) {
+            $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
+            return false;
+        }
         // Check for inaccuracies
-        if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
+        else if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }

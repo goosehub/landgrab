@@ -91,9 +91,15 @@ class User extends CI_Controller {
         } else {
             // Attempt new user register
             $facebook_id = 0;
-            $user_id = $this->user_model->register($username, $password, $email, $facebook_id);
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip_frequency_register = 1;
+            $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
             // Fail
-            if (! $user_id) {
+            if ($user_id === 'ip_fail') {
+                $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
+                return false;
+            }
+            else if (! $user_id) {
                 $this->form_validation->set_message('register_validation', 'Username already exists');
                 return false;
             // Success
