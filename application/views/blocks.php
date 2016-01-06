@@ -181,7 +181,7 @@
 </div>
 
 <!-- Recently Sold Lands -->
-<?php if ($log_check && $week_of_sold_lands ) { ?>
+<?php if ($log_check && $sold_land_history ) { ?>
 <div id="recently_sold_lands_block" class="center_block">
     <strong>Land Sales since last Map load</strong>
 
@@ -197,7 +197,7 @@
         <td>Amount</td>
       </tr>
     <?php $i = 0; 
-    foreach ($week_of_sold_lands as $transaction) {
+    foreach ($sold_land_history as $transaction) {
       $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
       $paying_user = $this->user_model->get_user($paying_account['user_key']); ?>
       <tr>

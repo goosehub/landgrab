@@ -20,7 +20,7 @@
       ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
       ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2;</li>
 
-      <li><button class="sold_lands_button btn btn-action form-control"><strong>Last Week of Sales</strong> </button></li>
+      <li><button class="sold_lands_button btn btn-action form-control"><strong>24 Hours of Sales</strong> </button></li>
 
       <li role="separator" class="divider"></li>
 

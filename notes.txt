@@ -66,6 +66,7 @@ Low Priority
         Optimize Tax CRON to be by person
 
 No Priority
+    Make blocks ajax to improve speed load
     Hide google maps saved places
     Color difference at 180 LNG
     Shift click multiple land select with seperate window?
