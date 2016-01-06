@@ -47,6 +47,8 @@ Low Priority
         Block too many attempted password attempts
     Gameplay Mechanics
         Claim land fee
+        Market Orders
+        Update all
     Feature
         List of owned lands
         Net Worth Leaderboard
