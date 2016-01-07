@@ -55,6 +55,7 @@ High Priority
 
 Low Priority
     Security/Cheating/Manipulation Prevention
+        Market Order Token
         Cooldown on buy transactions (5 seconds)
         Detect consolidation accounts
         Block too many attempted password attempts

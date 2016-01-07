@@ -7,21 +7,19 @@
 
     <hr>
 
-    <!-- Validation Errors -->
-    <?php if ($failed_form === 'market_order') { echo $validation_errors; } ?>
     <!-- Form -->
     <?php $attributes = array('class' => 'form-horizontal'); ?>
     <?php echo form_open('market_order'); ?>
       <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
-      <input type="hidden" name="account_last_load" value="<?php echo $account['last_load']; ?>">
+      <input type="hidden" name="token" value="<?php echo md5(time()); ?>">
       <div class="form-group">
-        <label for="market_max_lands" class="col-sm-2 control-label">Max Lands</label>
+        <label for="max_lands" class="col-sm-2 control-label">Max Lands</label>
         <div class="col-sm-4">
-          <input type="number" class="form-control" name="market_max_lands" value="1">
+          <input type="number" class="form-control" name="max_lands" value="1">
         </div>
-        <label for="market_max_price" class="col-sm-2 control-label">Max Price</label>
+        <label for="max_price" class="col-sm-2 control-label">Max Price</label>
         <div class="col-sm-4">
-          <input type="number" class="form-control" name="market_max_price" value="0">
+          <input type="number" class="form-control" name="max_price" value="0">
         </div>
       </div>
 
@@ -29,28 +27,28 @@
 
       <div class="form-group">
         <div class="col-sm-3">
-            <label class="market_coord_limit_label">Min Lat</label>
+            <label class="coord_limit_label">Min Lat</label>
         </div>
         <div class="col-sm-3">
-            <label class="market_coord_limit_label">Max Lat</label>
+            <label class="coord_limit_label">Max Lat</label>
         </div>
         <div class="col-sm-3">
-            <label class="market_coord_limit_label">Min Lng</label>
+            <label class="coord_limit_label">Min Lng</label>
         </div>
         <div class="col-sm-3">
-            <label class="market_coord_limit_label">Max Lng</label>
+            <label class="coord_limit_label">Max Lng</label>
         </div>
         <div class="col-sm-3">
-          <input type="number" class="form-control" name="market_min_lat" placeholder="Vertical" value="-84">
+          <input type="number" class="form-control" name="min_lat" placeholder="Vertical" value="-84">
         </div>
         <div class="col-sm-3">
-          <input type="number" class="form-control" name="market_max_lat" placeholder="Vertical" value="84">
+          <input type="number" class="form-control" name="max_lat" placeholder="Vertical" value="84">
         </div>
         <div class="col-sm-3">
-          <input type="number" class="form-control" name="market_min_lng" placeholder="Horizontal" value="-180">
+          <input type="number" class="form-control" name="min_lng" placeholder="Horizontal" value="-180">
         </div>
         <div class="col-sm-3">
-          <input type="number" class="form-control" name="market_max_lng" placeholder="Horizontal" value="-180">
+          <input type="number" class="form-control" name="max_lng" placeholder="Horizontal" value="-180">
         </div>
       </div>
 
@@ -60,25 +58,25 @@
       <br>
 
       <div class="form-group">
-        <label for="market_new_land_name" class="col-sm-3 control-label">New Land Name</label>
+        <label for="new_land_name" class="col-sm-3 control-label">New Land Name</label>
         <div class="col-sm-9">
-          <input type="field" class="form-control" name="market_new_land_name" placeholder="Leave blank to use existing">
+          <input type="field" class="form-control" name="new_land_name" placeholder="Leave blank to use existing">
         </div>
       </div>
       <br>
       <br>
       <div class="form-group">
-        <label for="market_new_price" class="col-sm-3 control-label">New Price</label>
+        <label for="new_price" class="col-sm-3 control-label">New Price</label>
         <div class="col-sm-9">
-          <input type="field" class="form-control" name="market_new_price" placeholder="Leave blank to use existing">
+          <input type="field" class="form-control" name="new_price" value="<?php echo $world['claim_fee']; ?>">
         </div>
       </div>
       <br>
       <br>
       <div class="form-group">
-        <label for="market_new_content" class="col-sm-3 control-label">New Description</label>
+        <label for="new_content" class="col-sm-3 control-label">New Description</label>
         <div class="col-sm-9">
-          <textarea class="form-control" id="input_content" name="market_new_content" placeholder="Leave blank to use existing"></textarea>
+          <textarea class="form-control" id="input_content" name="new_content" placeholder="Leave blank to use existing"></textarea>
         </div>
       </div>
 
