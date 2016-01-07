@@ -105,7 +105,7 @@
 <!-- Recently Sold Lands -->
 <?php if ($log_check && $sold_land_history ) { ?>
 <div id="recently_sold_lands_block" class="center_block">
-    <strong>Land Sales since last Map load</strong>
+    <strong>Land Sales (24 hours)</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>

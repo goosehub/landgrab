@@ -6,23 +6,27 @@
 // Parameters
 // 
 
-// World Key
-$world_key = 6; // Ensure this is the next available key
-$world_slug = 'kek';
-$world_tax_rate = '0.01';
-$claim_fee = 10000;
-
 // Size of land box squares
 // Recommend 2, 3, 4, 6, or 12
-$box_size = 4;
+$box_size = 2;
+
+// World Key
+$world_key = 5; // Ensure this is the next available key
+$world_slug = 'huge';
+$world_tax_rate = '0.01';
+$claim_fee = 1000;
+
+// 
+// Static
+// 
 
 // Area covered defined with these limits
-// x and y limits must be evenly divisible by $box_size
-// x of 180 and y of 84 covers the globe and is divisible by 1, 2, 3, 4, 6, and 12
-// Box size 2 with x limit of 180 and y limit of 84 creates 60480 land squares
-// Box size 3 with x limit of 180 and y limit of 84 creates 6697 land squares
-$x_limit = 180;
-$y_limit = 84;
+// lng and lat limits must be evenly divisible by $box_size
+// lng of 180 and lat of 84 covers the globe and is divisible by 1, 2, 3, 4, 6, and 12
+// Box size 2 with lng limit of 180 and lat limit of 84 creates 60480 land squares
+// Box size 3 with lng limit of 180 and lat limit of 84 creates 6697 land squares
+$lat_limit = 84;
+$lng_limit = 180;
 
 $result = '';
 
@@ -54,12 +58,12 @@ $result .= '<br>';
 
 // Loop lng
 $i = 1;
-for ($x = -$x_limit; $x <= $x_limit; $x = $x + $box_size) {
+for ($lng = -$lng_limit; $lng <= $lng_limit; $lng = $lng + $box_size) {
     // Loop lat for each lng
-    for ($y = -$y_limit; $y < $y_limit; $y = $y + $box_size) {
+    for ($lat = -$lat_limit; $lat < $lat_limit; $lat = $lat + $box_size) {
         // Get coord_slug
-        $coord_slug = $y . ',' . $x;
-        $result .= "(NULL, '" . $coord_slug . "', '" . $y . "', '" . $x . "', " . $world_key . ", '0', '0', '', 0, '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $coord_slug = $lat . ',' . $lng;
+        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '" . $claim_fee . "', '', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
             $result .= ';';
