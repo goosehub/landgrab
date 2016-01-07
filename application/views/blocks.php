@@ -19,7 +19,7 @@
         </div>
         <label for="max_price" class="col-sm-2 control-label">Max Price</label>
         <div class="col-sm-4">
-          <input type="number" class="form-control" name="max_price" value="0">
+          <input type="number" class="form-control" name="max_price" value="<?php echo $world['claim_fee']; ?>">
         </div>
       </div>
 
@@ -48,7 +48,7 @@
           <input type="number" class="form-control" name="min_lng" placeholder="Horizontal" value="-180">
         </div>
         <div class="col-sm-3">
-          <input type="number" class="form-control" name="max_lng" placeholder="Horizontal" value="-180">
+          <input type="number" class="form-control" name="max_lng" placeholder="Horizontal" value="180">
         </div>
       </div>
 

@@ -60,16 +60,17 @@ Low Priority
         Detect consolidation accounts
         Block too many attempted password attempts
     Gameplay Mechanics
-        Claim land fee
-        Market Orders
         Update all
     Feature
         List of owned lands
         Net Worth Leaderboard
     Infrastructure
-        Fix Tax Cron
         Reset live DB
         Figure out method to create accounts of old users for newly created worlds
+    Refactor
+        Form Type naming conflict in Land Form
+        Whitelisted tags in constants
+        Fix Tax
     Research
         Research onclick script in info window for features and security
         Figure out what to do with players on cash leaderboard with no land

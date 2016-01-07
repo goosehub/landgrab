@@ -234,6 +234,7 @@ class Game extends CI_Controller {
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
+            // Return to map
 	        redirect('world/' . $world_key, 'refresh');
 	    }
 	}
@@ -280,49 +281,16 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // Do transaction
-        if ($form_type_input === 'buy')
-        {
-            // Get amount of sale
-            $amount = $land_square['price'];
-
-            // Get name of land at sale
-            $name_at_sale = $land_square['land_name'];
-
-            // Get seller and buying party info
-            $seller_account_key = $land_square['account_key'];
-            $seller_account = $this->user_model->get_account_by_id($seller_account_key);
-
-            // Find new cash balances
-            $new_selling_owner_cash = $seller_account['cash'] + $amount;
-            $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-
-            // Do sale
-            $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
-            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-
-            // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record(
-                $buyer_account_key, $seller_account_key, $form_type, $amount, $world_key, $coord_slug, $name_at_sale, '');
-        }
-
-        // Record into transaction log
-        if ($form_type === 'claim') {
-            $amount = $land_square['price'];
-            $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '', '');
-            $query_action = $this->transaction_model->add_to_world_bank($world_key, $amount);
-        }
-
-        // Return validation true if not returned false yet
-        return true;
+        // Do transaction, and return true if transaction succeeds
+        $amount = $land_square['price'];
+        $name_at_sale = $land_square['land_name'];
+        $seller_account_key = $land_square['account_key'];
+        return $this->land_transaction($form_type_input, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
 
     // Process Market Order
     public function market_order()
     {
-        var_dump($_POST);
         // User Information
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -368,7 +336,7 @@ class Game extends CI_Controller {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             echo validation_errors();
-            // redirect('world/' . $world_key, 'refresh');
+            redirect('world/' . $world_key, 'refresh');
         // Success
         } else {
             $claimed = 1;
@@ -392,9 +360,35 @@ class Game extends CI_Controller {
             $new_content = strip_tags(nl2br($new_content), $whitelisted_tags);
 
             // Do Database action
-            echo 'ready for query';
-            
-            // redirect('world/' . $world_key, 'refresh');
+            $market_order_lands = $this->game_model->market_order_select($world_key, $account_key, $max_lands, $max_price, $min_lat, $max_lat, $min_lng, $max_lng);
+            $claimed = 1;
+            foreach ($market_order_lands as $land) {
+                $coord_slug = $land['coord_slug'];
+                $lat = $land['lat'];
+                $lng = $land['lng'];
+                $amount = $land['price'];
+                $name_at_sale = $land['land_name'];
+                $seller_account_key = $land['account_key'];
+                $buyer_account = $account;
+                if ($land['claimed'] === '0') {
+                    $transaction_type = 'claim';
+                } else {
+                    $transaction_type = 'buy';
+                }
+                // Do transaction
+                $transaction_result = $this->land_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
+
+                // If transaction successful, give land to user
+                if ($transaction_result) {
+                    $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, 
+                        $new_land_name, $new_price, $new_content, $primary_color);
+                } else {
+                    $this->load->view('page_not_found');
+                    return false;
+                }
+            }
+            // Return to map
+            redirect('world/' . $world_key, 'refresh');
         }
     }
 
@@ -424,6 +418,38 @@ class Game extends CI_Controller {
         }
 
         // Return validation true if not returned false yet
+        return true;
+    }
+    // Land Transaction
+    public function land_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)
+    {
+        // Do transaction
+        $new_buying_owner_cash = $buyer_account['cash'] - $amount;
+        $buyer_account_key = $buyer_account['id'];
+        if ($transaction_type === 'buy')
+        {
+            // Get seller and buying party info
+            $seller_account = $this->user_model->get_account_by_id($seller_account_key);
+
+            // Find new cash balances
+            $new_selling_owner_cash = $seller_account['cash'] + $amount;
+
+            // Do sale
+            $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
+            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+
+            // Record into transaction log
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
+                $amount, $world_key, $coord_slug, $name_at_sale, '');
+        }
+
+        // Record into transaction log
+        if ($transaction_type === 'claim') {
+            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
+                $amount, $world_key, $coord_slug, '', '');
+            $query_action = $this->transaction_model->add_to_world_bank($world_key, $amount);
+        }
         return true;
     }
 }

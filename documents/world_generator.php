@@ -7,12 +7,10 @@
 // 
 
 // World Key
-$world_key = 6;
-
-// World Slug
+$world_key = 6; // Ensure this is the next available key
 $world_slug = 'kek';
-
 $world_tax_rate = '0.01';
+$claim_fee = 10000;
 
 // Size of land box squares
 // Recommend 2, 3, 4, 6, or 12
@@ -32,10 +30,9 @@ $result = '';
 // World Logic
 // 
 
-$world_insert_statement = "INSERT INTO `world` 
-(`id`, `slug`, `land_size`, `land_tax_rate`, `latest_rebate`, `created`, `modified`) 
-VALUES 
-(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+$world_insert_statement = "INSERT INTO `world` (`id`, `slug`, `land_size`, `land_tax_rate`, `latest_rebate`, `bank`, `claim_fee`, `created`, `modified`) 
+VALUES
+(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', '0', '" . $claim_fee . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 $result .= $world_insert_statement;
 $result .= '<br>';

@@ -108,8 +108,8 @@ function initMap()
 			// Create string
       var content_string = '<div class="land_window">';
 			if (land_data['claimed'] === '0') {
-				content_string += '<strong>Unclaimed</strong><br><br>'
-        + 'Coord: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br>';
+				content_string += '<strong>Unclaimed</strong><br>'
+        + 'Lat,Lng: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br><br>';
 			} else  {
         // Calculate income
         income_prefix = '';

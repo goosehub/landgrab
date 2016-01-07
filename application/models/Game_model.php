@@ -119,6 +119,25 @@ Class game_model extends CI_Model
     $this->db->where('id', $world_key);
     $this->db->update('world', $data);
     return true;
-}
+ }
+ // Market Order Select
+ function market_order_select($world_key, $account_key, $max_lands, $max_price, $min_lat, $max_lat, $min_lng, $max_lng)
+ {
+    $this->db->select('*');
+    $this->db->from('land');
+    $this->db->where('world_key', $world_key);
+    $this->db->where('price <=', $max_price);
+    $this->db->where('lat >=', $min_lat);
+    $this->db->where('lat <=', $max_lat);
+    $this->db->where('lng >=', $min_lng);
+    $this->db->where('lng <=', $max_lng);
+    $this->db->where('account_key !=', $account_key);
+    $this->db->order_by('price', 'ASC');
+    $this->db->order_by('id', 'random');
+    $this->db->limit($max_lands);
+    $query = $this->db->get();
+    return $query->result_array();
+ }
+
 }
 ?>
