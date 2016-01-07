@@ -1,170 +1,21 @@
-<!-- Error Block -->
-<div id="error_block" class="center_block">
-    <strong>There was an issue</strong>
+<div id="market_order_block" class="center_block">
+    <strong>Market Order</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
-    <!-- Validation Errors -->
-    <?php if ($failed_form === 'error_block') { echo $validation_errors; } ?>
-</div>
 
-<!-- Login Block -->
-<div id="login_block" class="center_block">
-    <strong>Login</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
     <!-- Validation Errors -->
-    <?php if ($failed_form === 'login') { echo $validation_errors; } ?>
+    <?php if ($failed_form === 'market_order') { echo $validation_errors; } ?>
     <!-- Form -->
-    <?php echo form_open('user/login'); ?>
+    <?php echo form_open('market_order'); ?>
       <div class="form-group">
         <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
         <label for="input_username">Username</label>
         <input type="username" class="form-control" id="login_input_username" name="username" placeholder="Username">
       </div>
-      <div class="form-group">
-        <label for="input_password">Password</label>
-        <input type="password" class="form-control" id="login_input_password" name="password" placeholder="Password">
-      </div>
-      <button type="submit" class="btn btn-action form-control">Login</button>
+      <button type="submit" class="btn btn-action form-control">Place Market Order</button>
     </form>
-    <hr>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <p class="lead">Not registered?</p>
-        </div>
-        <div class="col-md-4">
-            <button class="register_button btn btn-success form-control">Join to play</button>
-        </div>
-    </div>
-</div>
-
-<!-- Join Block -->
-<div id="register_block" class="center_block">
-    <strong>Join</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <!-- Validation Errors -->
-    <?php if ($failed_form === 'register') { echo $validation_errors; } ?>
-    <!-- Form -->
-    <?php echo form_open('user/register'); ?>
-      <div class="form-group">
-        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
-        <label for="input_username">Username</label>
-        <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <label for="input_password">Password</label>
-        <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <label for="input_confirm">Confirm</label>
-        <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
-      </div>
-      <button type="submit" class="btn btn-action form-control">Join To Play</button>
-    </form>
-    <hr>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <p class="lead">Already registered?</p>
-        </div>
-        <div class="col-md-4">
-            <button class="login_button btn btn-primary form-control">Login</button>
-        </div>
-    </div>
-</div>
-
-<!-- How To Play Block -->
-<div id="how_to_play_block" class="center_block">
-    <strong>How To Play</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <p>
-        <strong>LandGrab is a game of Claiming, Buying, and Selling the Real World.</strong>
-    </p>
-    <p>
-        Begin by buying and claiming land.
-        Set a price on land you buy, but be careful not to charge too much, land is taxed at 1% hourly on the prices you set.
-        Each plot of land scores you an hourly income.
-        Famous areas are valuable.
-        Find undervalued areas and sell them for a big profit.
-        Run out of cash, you lose all land and your account is reset.
-    </p>
-    <p>
-        Use the menu to view finances,
-        the leaderboards (<a class="leaderboard_cheapest_land_button fake_link">View the Cheapest Land</a>),
-        or different worlds (<a href="<?=base_url()?>world/big">Here's a bigger world</a>).
-    </p>
-
-    <hr>
-
-    <div class="row">
-        <div class="col-md-6">
-            <p>
-                This game is in beta, so feel free to point out bugs or give suggestions.
-                Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
-            </p>
-        </div>
-        <div class="col-md-6">
-          <?php if ($log_check) { ?>
-            <?php echo form_open('account/update_color'); ?>
-            <div class="row"><div class="col-md-6">
-                <label for="_input_primary_color">Your Land Color</label>
-            </div><div class="col-md-6">
-                <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-                <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
-                value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
-            </div></div>
-            </form>
-          <?php } ?>
-        </div>
-    </div>
-</div>
-
-<!-- About Block -->
-<div id="about_block" class="center_block">
-    <strong>About LandGrab</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <p>LandGrab is a game developed by Goose.</p>
-    <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
-    <br>
-    <br>
-    <p>Developed in PHP with CodeIgniter 3. You can contribute to this project on Github</p>
-    <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
-    <br>
-    <br>
-    <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
-    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, the rest of the Beta Testers, and all my users. Thank you!</p>
-</div>
-
-<!-- Report Bugs Block -->
-<div id="report_bugs_block" class="center_block">
-    <strong>Report Bugs</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-
-    <p>Please report all bugs to 
-        <strong>
-            <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>
-        </strong>
-    </p>
 </div>
 
 <!-- Bankruptcy Block -->
@@ -374,4 +225,173 @@
     <?php } ?>
     </table>
 
+</div>
+
+<!-- How To Play Block -->
+<div id="how_to_play_block" class="center_block">
+    <strong>How To Play</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <p>
+        <strong>LandGrab is a game of Claiming, Buying, and Selling the Real World.</strong>
+    </p>
+    <p>
+        Begin by buying and claiming land.
+        Set a price on land you buy, but be careful not to charge too much, land is taxed at 1% hourly on the prices you set.
+        Each plot of land scores you an hourly income.
+        Famous areas are valuable.
+        Find undervalued areas and sell them for a big profit.
+        Run out of cash, you lose all land and your account is reset.
+    </p>
+    <p>
+        Use the menu to view finances,
+        the leaderboards (<a class="leaderboard_cheapest_land_button fake_link">View the Cheapest Land</a>),
+        or different worlds (<a href="<?=base_url()?>world/big">Here's a bigger world</a>).
+    </p>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                This game is in beta, so feel free to point out bugs or give suggestions.
+                Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
+            </p>
+        </div>
+        <div class="col-md-6">
+          <?php if ($log_check) { ?>
+            <?php echo form_open('account/update_color'); ?>
+            <div class="row"><div class="col-md-6">
+                <label for="_input_primary_color">Your Land Color</label>
+            </div><div class="col-md-6">
+                <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
+                value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
+            </div></div>
+            </form>
+          <?php } ?>
+        </div>
+    </div>
+</div>
+
+<!-- About Block -->
+<div id="about_block" class="center_block">
+    <strong>About LandGrab</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <p>LandGrab is a game developed by Goose.</p>
+    <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
+    <br>
+    <br>
+    <p>Developed in PHP with CodeIgniter 3. You can contribute to this project on Github</p>
+    <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
+    <br>
+    <br>
+    <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
+    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, the rest of the Beta Testers, and all my users. Thank you!</p>
+</div>
+
+<!-- Report Bugs Block -->
+<div id="report_bugs_block" class="center_block">
+    <strong>Report Bugs</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+
+    <p>Please report all bugs to 
+        <strong>
+            <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>
+        </strong>
+    </p>
+</div>
+
+<!-- Error Block -->
+<div id="error_block" class="center_block">
+    <strong>There was an issue</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <!-- Validation Errors -->
+    <?php if ($failed_form === 'error_block') { echo $validation_errors; } ?>
+</div>
+
+<!-- Login Block -->
+<div id="login_block" class="center_block">
+    <strong>Login</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <!-- Validation Errors -->
+    <?php if ($failed_form === 'login') { echo $validation_errors; } ?>
+    <!-- Form -->
+    <?php echo form_open('user/login'); ?>
+      <div class="form-group">
+        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+        <label for="input_username">Username</label>
+        <input type="username" class="form-control" id="login_input_username" name="username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="input_password">Password</label>
+        <input type="password" class="form-control" id="login_input_password" name="password" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-action form-control">Login</button>
+    </form>
+    <hr>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p class="lead">Not registered?</p>
+        </div>
+        <div class="col-md-4">
+            <button class="register_button btn btn-success form-control">Join to play</button>
+        </div>
+    </div>
+</div>
+
+<!-- Join Block -->
+<div id="register_block" class="center_block">
+    <strong>Join</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <!-- Validation Errors -->
+    <?php if ($failed_form === 'register') { echo $validation_errors; } ?>
+    <!-- Form -->
+    <?php echo form_open('user/register'); ?>
+      <div class="form-group">
+        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+        <label for="input_username">Username</label>
+        <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="input_password">Password</label>
+        <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="input_confirm">Confirm</label>
+        <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
+      </div>
+      <button type="submit" class="btn btn-action form-control">Join To Play</button>
+    </form>
+    <hr>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p class="lead">Already registered?</p>
+        </div>
+        <div class="col-md-4">
+            <button class="login_button btn btn-primary form-control">Login</button>
+        </div>
+    </div>
 </div>

@@ -369,6 +369,10 @@ $('.sold_lands_button').click(function(){
   $('#recently_sold_lands_block').show();
 });
 
+$('.market_order_button').click(function(){
+  $('#market_order_block').show();
+});
+
 $('#leaderboard_net_value_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_net_value_block').show();

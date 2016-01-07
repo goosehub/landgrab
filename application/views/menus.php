@@ -16,11 +16,19 @@
     </button>
     <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
 
-      <li><strong><?php echo $total_lands; ?> Lands</strong> | 
-      ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
-      ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2;</li>
+      <li>
+        <strong><?php echo $total_lands; ?> Lands</strong> | 
+        ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
+        ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2; 
+      </li>
 
-      <li><button class="sold_lands_button btn btn-action form-control"><strong>24 Hours of Sales</strong> </button></li>
+      <li role="separator" class="divider"></li>
+
+      <li><button class="market_order_button btn btn-action form-control"><strong>Place a Market Order</strong> </button></li>
+
+      <li role="separator" class="divider"></li>
+
+      <li><button class="sold_lands_button btn btn-primary form-control"><strong>Sales Over Last 24 Hours</strong> </button></li>
 
       <li role="separator" class="divider"></li>
 

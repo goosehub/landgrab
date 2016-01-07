@@ -318,4 +318,10 @@ class Game extends CI_Controller {
         // Return validation true if not returned false yet
         return true;
 	}
+
+    // Process Market Order
+    public function market_order()
+    {
+        echo 'hi';
+    }
 }
