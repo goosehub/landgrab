@@ -49,7 +49,7 @@ class Tax extends CI_Controller {
             // If not enough cash, forfeit all land and reset cash
             if ($account['cash'] < $land_tax) {
               // echo 'not enough cash, land will be forfeited and cash balance reset';
-              $query_action = $this->game_model->forfeit_all_land_of_account($account['id']);
+              $query_action = $this->game_model->forfeit_all_land_of_account($account['id'], $world['claim_fee']);
               $new_cash_balance = 1000000;
               $query_action = $this->game_model->update_account_cash_by_account_id($account['id'], $new_cash_balance);
 

@@ -20,12 +20,9 @@
 
 // Set World
 var world_key = <?php echo $world['id']; ?>;
-
-var latest_rebate = <?php echo $world['latest_rebate']; ?>;
-
 var land_tax_rate = <?php echo $world['land_tax_rate']; ?>;
-
-// Size of land box squares
+var latest_rebate = <?php echo $world['latest_rebate']; ?>;
+var world_claim_fee = <?php echo $world['claim_fee']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
 
 // Set user variables
@@ -169,12 +166,9 @@ function initMap()
 	function land_update_form(form_type, button_class, d) {
 		result = '<form action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
-		  + '' + ucwords(form_type) + ' This Land';
-		if (form_type != 'claim') {
-			result += ' ($' + money_format(d['price']) + ')';
-		}
-		result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
-		+ '<div id="land_form" class="collapse">'
+		  + '' + ucwords(form_type) + ' This Land ($' + money_format(d['price']) + ')'
+		  + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
+		    + '<div id="land_form" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'

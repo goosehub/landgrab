@@ -89,12 +89,12 @@ Class game_model extends CI_Model
     return true;
  }
  // Forfeit all land of account
- function forfeit_all_land_of_account($account_id)
+ function forfeit_all_land_of_account($account_id, $price)
  {
     $data = array(
         'claimed' => 0,
         'account_key' => 0,
-        'price' => 0
+        'price' => $price
     );
     $this->db->where('account_key', $account_id);
     $this->db->update('land', $data);

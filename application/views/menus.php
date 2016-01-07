@@ -28,7 +28,7 @@
         <tbody>
           <tr class="info"><td class="text-center"><strong>Charges</strong></td></tr>
           <tr class="danger">
-            <td class="text-left">Land Taxes: </td>
+            <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): </td>
             <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</td>
           </tr>
           <tr class="success">

@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 6)
+	public function index($world_slug = 1)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -308,7 +308,11 @@ class Game extends CI_Controller {
 
         // Record into transaction log
         if ($form_type === 'claim') {
+            $amount = $land_square['price'];
+            $new_buying_owner_cash = $buyer_account['cash'] - $amount;
+            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
             $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, 0, $form_type, 0, $world_key, $coord_slug, '', '');
+            $query_action = $this->transaction_model->add_to_world_bank($world_key, $amount);
         }
 
         // Return validation true if not returned false yet

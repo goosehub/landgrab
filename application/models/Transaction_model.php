@@ -89,5 +89,13 @@ Class transaction_model extends CI_Model
     $result = $query->result_array();
     return $result;
  }
+ // Add amount to world bank
+ function add_to_world_bank($world_key, $amount)
+ {
+    $this->db->set('bank', 'bank + ' . (int) $amount, FALSE);
+    $this->db->where('id', $world_key);
+    $this->db->update('world');
+    return true;
+ }
 
 }
