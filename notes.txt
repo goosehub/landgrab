@@ -34,19 +34,6 @@ Engagement
     Make it feel active and alive
     Add more depth to strategy
 
-Market Orders
-    Max Price
-    Max Amount
-        http://stackoverflow.com/a/1516460/3774582
-    Name
-    Price
-    Desc
-    Ability to keep existing value
-        SET `value` = `value`
-    Order by price, RAND()
-    Limit to hemisphere
-    Set lat, lng limits
-
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -62,7 +49,11 @@ Low Priority
     Gameplay Mechanics
         Update all
     Feature
+        Defaults for Market Order Select
         Feedback on what Market Order bought
+        Allow leave existing on Market Order
+        Max/min on lat lng limits
+            http://stackoverflow.com/questions/19316709/how-to-set-the-max-value-and-min-value-of-input-in-html5-by-javascript-or-jque
         List of owned lands
         Net Worth Leaderboard
     Infrastructure

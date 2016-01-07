@@ -60,7 +60,7 @@
       <div class="form-group">
         <label for="new_land_name" class="col-sm-3 control-label">New Land Name</label>
         <div class="col-sm-9">
-          <input type="field" class="form-control" name="new_land_name" placeholder="Leave blank to use existing">
+          <input type="field" class="form-control" name="new_land_name" placeholder="">
         </div>
       </div>
       <br>
@@ -76,7 +76,7 @@
       <div class="form-group">
         <label for="new_content" class="col-sm-3 control-label">New Description</label>
         <div class="col-sm-9">
-          <textarea class="form-control" id="input_content" name="new_content" placeholder="Leave blank to use existing"></textarea>
+          <textarea class="form-control" id="input_content" name="new_content" placeholder=""></textarea>
         </div>
       </div>
 
