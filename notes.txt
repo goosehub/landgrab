@@ -62,6 +62,7 @@ Low Priority
     Gameplay Mechanics
         Update all
     Feature
+        Feedback on what Market Order bought
         List of owned lands
         Net Worth Leaderboard
     Infrastructure

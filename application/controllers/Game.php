@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 1)
+	public function index($world_slug = 3)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -25,6 +25,9 @@ class Game extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
             $data['user'] = $this->user_model->get_user($user_id);
+            if (! isset($data['user']['username']) ) {
+                redirect('user/logout', 'refresh');
+            }
         }
 
         // Get world
@@ -335,7 +338,6 @@ class Game extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            echo validation_errors();
             redirect('world/' . $world_key, 'refresh');
         // Success
         } else {
@@ -377,6 +379,7 @@ class Game extends CI_Controller {
                 }
                 // Do transaction
                 $transaction_result = $this->land_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
+                $account = $this->user_model->get_account_by_keys($user_id, $world_key);
 
                 // If transaction successful, give land to user
                 if ($transaction_result) {
