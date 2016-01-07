@@ -108,7 +108,8 @@ function initMap()
 			// Create string
       var content_string = '<div class="land_window">';
 			if (land_data['claimed'] === '0') {
-				content_string += '<strong>Unclaimed</strong><br><br>';
+				content_string += '<strong>Unclaimed</strong><br><br>'
+        + 'Coord: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br>';
 			} else  {
         // Calculate income
         income_prefix = '';
@@ -119,11 +120,15 @@ function initMap()
           income_class = 'red_money';
           income = Math.abs(income);
         }
-        content_string += '<div class="land_window"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' 
-        + land_data['land_name'] + '</strong></a><br>'
-        + 'Owned by <strong>' + land_data['username'] + '</strong><br>'
-        + 'Estimated Income: <strong class="' + income_class + '">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>'
-        + '' + land_data['content'] + '<br>';
+        if (land_data['land_name'] != '') {
+          content_string += '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>';
+        }
+        content_string += 'Coord: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br>'
+        + 'Owner: <strong>' + land_data['username'] + '</strong><br>'
+        + 'Income: <strong class="' + income_class + '">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>';
+        if (land_data['content'] != '') {
+          content_string += '<strong>Description</strong><br>' + land_data['content'] + '<br>';
+        }
 			}
       if (! log_check) {
         if (land_data['claimed'] === '0') {

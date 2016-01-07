@@ -322,6 +322,16 @@ class Game extends CI_Controller {
     // Process Market Order
     public function market_order()
     {
-        echo 'hi';
+        var_dump($_POST);
+        // User Information
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        }
+        else
+        {
+            $world_key = $this->input->post('world_key_input');
+            redirect('world/' . $world_key, 'refresh');
+        }
     }
 }

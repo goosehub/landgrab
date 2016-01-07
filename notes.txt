@@ -41,10 +41,11 @@ Market Orders
     Name
     Price
     Desc
-    Checkbox to keep existing value
+    Ability to keep existing value
         SET `value` = `value`
     Order by price, RAND()
     Limit to hemisphere
+    Set lat, lng limits
 
 ==========================================================================================
     Goals

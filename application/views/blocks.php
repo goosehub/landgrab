@@ -5,16 +5,89 @@
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
 
+    <hr>
+
     <!-- Validation Errors -->
     <?php if ($failed_form === 'market_order') { echo $validation_errors; } ?>
     <!-- Form -->
+    <?php $attributes = array('class' => 'form-horizontal'); ?>
     <?php echo form_open('market_order'); ?>
+      <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+      <input type="hidden" name="account_last_load" value="<?php echo $account['last_load']; ?>">
       <div class="form-group">
-        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
-        <label for="input_username">Username</label>
-        <input type="username" class="form-control" id="login_input_username" name="username" placeholder="Username">
+        <label for="market_max_lands" class="col-sm-2 control-label">Max Lands</label>
+        <div class="col-sm-4">
+          <input type="number" class="form-control" name="market_max_lands" value="1">
+        </div>
+        <label for="market_max_price" class="col-sm-2 control-label">Max Price</label>
+        <div class="col-sm-4">
+          <input type="number" class="form-control" name="market_max_price" value="0">
+        </div>
       </div>
-      <button type="submit" class="btn btn-action form-control">Place Market Order</button>
+
+      <br>
+
+      <div class="form-group">
+        <div class="col-sm-3">
+            <label class="market_coord_limit_label">Min Lat</label>
+        </div>
+        <div class="col-sm-3">
+            <label class="market_coord_limit_label">Max Lat</label>
+        </div>
+        <div class="col-sm-3">
+            <label class="market_coord_limit_label">Min Lng</label>
+        </div>
+        <div class="col-sm-3">
+            <label class="market_coord_limit_label">Max Lng</label>
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" name="market_min_lat" placeholder="Vertical" value="-84">
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" name="market_max_lat" placeholder="Vertical" value="84">
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" name="market_min_lng" placeholder="Horizontal" value="-180">
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" name="market_max_lng" placeholder="Horizontal" value="-180">
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <div class="form-group">
+        <label for="market_new_land_name" class="col-sm-3 control-label">New Land Name</label>
+        <div class="col-sm-9">
+          <input type="field" class="form-control" name="market_new_land_name" placeholder="Leave blank to use existing">
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="form-group">
+        <label for="market_new_price" class="col-sm-3 control-label">New Price</label>
+        <div class="col-sm-9">
+          <input type="field" class="form-control" name="market_new_price" placeholder="Leave blank to use existing">
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="form-group">
+        <label for="market_new_content" class="col-sm-3 control-label">New Description</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" id="input_content" name="market_new_content" placeholder="Leave blank to use existing"></textarea>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+
+      <button type="submit" class="btn btn-action form-control"><strong>Place Market Order</strong></button>
+
     </form>
 </div>
 
@@ -294,7 +367,8 @@
     <br>
     <br>
     <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
-    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, the rest of the Beta Testers, and all my users. Thank you!</p>
+    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, /s4s/, 
+    the rest of the Beta Testers, and all my users. Thank you!</p>
 </div>
 
 <!-- Report Bugs Block -->
