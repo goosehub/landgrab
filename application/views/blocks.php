@@ -13,42 +13,57 @@
       <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
       <input type="hidden" name="token" value="<?php echo md5(time()); ?>">
       <div class="form-group">
-        <label for="max_lands" class="col-sm-2 control-label">Max Lands</label>
-        <div class="col-sm-4">
+        <label for="max_lands" class="col-md-2 control-label">Max Lands</label>
+        <div class="col-md-4">
           <input type="number" class="form-control" name="max_lands" value="1">
         </div>
-        <label for="max_price" class="col-sm-2 control-label">Max Price</label>
-        <div class="col-sm-4">
+        <label for="max_price" class="col-md-2 control-label">Max Price</label>
+        <div class="col-md-4">
           <input type="number" class="form-control" name="max_price" value="<?php echo $world['claim_fee']; ?>">
         </div>
       </div>
 
       <br>
 
+      <strong>Presets</strong>
+
+      <br>
+
+      <button type="button" id="north_america_preset" latmin="16" latmax="68" lngmin="-124" lngmax="-60" class="btn btn-default btn-sm">North America</button>
+      <button type="button" id="south_america_preset" latmin="-56" latmax="8" lngmin="-80" lngmax="-36" class="btn btn-default btn-sm">South America</button>
+      <button type="button" id="europe_preset" latmin="36" latmax="68" lngmin="8" lngmax="32" class="btn btn-default btn-sm">Europe</button>
+      <button type="button" id="africa_preset" latmin="-36" latmax="32" lngmin="-12" lngmax="40" class="btn btn-default btn-sm">Africa</button>
+      <button type="button" id="russia_preset" latmin="44" latmax="72" lngmin="36" lngmax="176" class="btn btn-default btn-sm">Russia</button>
+      <button type="button" id="asia_preset" latmin="8" latmax="52" lngmin="76" lngmax="144" class="btn btn-default btn-sm">Asia</button>
+      <button type="button" id="middle_east_preset" latmin="12" latmax="40" lngmin="32" lngmax="72" class="btn btn-default btn-sm">Middle East</button>
+      <button type="button" id="australia_preset" latmin="-40" latmax="-16" lngmin="116" lngmax="156" class="btn btn-default btn-sm">Australia</button>
+
+      <br>
+
       <div class="form-group">
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <label class="coord_limit_label">Min Lat</label>
         </div>
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <label class="coord_limit_label">Max Lat</label>
         </div>
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <label class="coord_limit_label">Min Lng</label>
         </div>
-        <div class="col-sm-3">
+        <div class="col-md-3">
             <label class="coord_limit_label">Max Lng</label>
         </div>
-        <div class="col-sm-3">
-          <input type="number" class="form-control" name="min_lat" placeholder="Vertical" value="-84">
+        <div class="col-md-3">
+          <input type="number" class="form-control" id="min_lat_input" name="min_lat" placeholder="Vertical" value="-84">
         </div>
-        <div class="col-sm-3">
-          <input type="number" class="form-control" name="max_lat" placeholder="Vertical" value="84">
+        <div class="col-md-3">
+          <input type="number" class="form-control" id="max_lat_input" name="max_lat" placeholder="Vertical" value="84">
         </div>
-        <div class="col-sm-3">
-          <input type="number" class="form-control" name="min_lng" placeholder="Horizontal" value="-180">
+        <div class="col-md-3">
+          <input type="number" class="form-control" id="min_lng_input" name="min_lng" placeholder="Horizontal" value="-180">
         </div>
-        <div class="col-sm-3">
-          <input type="number" class="form-control" name="max_lng" placeholder="Horizontal" value="180">
+        <div class="col-md-3">
+          <input type="number" class="form-control" id="max_lng_input" name="max_lng" placeholder="Horizontal" value="180">
         </div>
       </div>
 
@@ -58,24 +73,24 @@
       <br>
 
       <div class="form-group">
-        <label for="new_land_name" class="col-sm-3 control-label">New Land Name</label>
-        <div class="col-sm-9">
+        <label for="new_land_name" class="col-md-3 control-label">New Land Name</label>
+        <div class="col-md-9">
           <input type="field" class="form-control" name="new_land_name" placeholder="">
         </div>
       </div>
       <br>
       <br>
       <div class="form-group">
-        <label for="new_price" class="col-sm-3 control-label">New Price</label>
-        <div class="col-sm-9">
+        <label for="new_price" class="col-md-3 control-label">New Price</label>
+        <div class="col-md-9">
           <input type="field" class="form-control" name="new_price" value="<?php echo $world['claim_fee']; ?>">
         </div>
       </div>
       <br>
       <br>
       <div class="form-group">
-        <label for="new_content" class="col-sm-3 control-label">New Description</label>
-        <div class="col-sm-9">
+        <label for="new_content" class="col-md-3 control-label">New Description</label>
+        <div class="col-md-9">
           <textarea class="form-control" id="input_content" name="new_content" placeholder=""></textarea>
         </div>
       </div>

@@ -19,20 +19,61 @@ Beta Testing Locations
     https://www.reddit.com/r/indiegaming
     https://www.reddit.com/r/shamelessplug
 
-Bug
-    "When I was trying to buy a land that was priced below the amount of money I had, I couldn't buy it if I typed in a new price that was higher than the amount of money I had. Changing the new price to an amount lower than the amount of money I had allowed me to buy it, and then I was able to change the price I was selling for back to what I originally wanted."
+Difference between land squares
+    Location
+    Surrounding squares
+    Price
+    Description
+    Number of times viewed
+    Number of times trades
+    Number of times "tagged"
+
+Game Experience Issues
+    Start of map is difficult
+    After spending money, status queue is met and motivation gone
+    Game does on work unless a critical mass of users are active
+    Presense of other players not felt
+    Strategy is shallow
+    Gameplay is repeditive
+    Game is math intensive
+    Land is often not grouped together
 
 Ideas
-    Fee for claiming land
-    Rebates are a flat amount, but increase each time that a property is bought.
-        Might make it simplier, easier to understand, and magnify demand for high value areas without making them money losers.
     Make game zero sum, new player money comes out of taxes and fees?
+    Income Revamp
+        Tagging (See below)
+        Taxes and fees go into bank
+            Rebates are a flat amount, but increase each time that a property is bought.
+            Extra money for buying and/or selling land
+    3rd element
+        Cash, Land, ???
+    API that gets addresses and checks how often they meet a metric
+    API to get population of square
 
-Engagement
-    Encourage more content
-    Give more to do when on server alone
-    Make it feel active and alive
-    Add more depth to strategy
+Mechanincs
+    Buy low, sell high
+    Land Improvement
+    Land expands natually
+    Tagging others land
+
+Tagging the world
+    Tag others land
+        They recieve money out of group bank
+            How much?
+            How?
+                For each tag?
+                For each user that tags?
+            How to avoid bot abuse
+        Content or comment
+            How would comments be viewed
+
+How to fight bots
+    Something only humans can do
+        reCaptcha
+        Complex strategy
+        Confirm existance of browser, mouse movements
+        Make map domination trivial
+        Make map domination impossible
 
 ==========================================================================================
     Goals
@@ -46,6 +87,7 @@ Low Priority
         Cooldown on buy transactions (5 seconds)
         Detect consolidation accounts
         Block too many attempted password attempts
+        Content CSS Abuse
     Gameplay Mechanics
         Update all
     Feature

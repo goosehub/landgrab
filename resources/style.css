@@ -104,8 +104,8 @@ html, body {
 .center_block {
   display: none;
   position: absolute;
-  top: 25vh;
-  max-height: 60vh;
+  top: 15vh;
+  max-height: 75vh;
   overflow-y: auto;
   overflow-x: hidden;
   left: 30%;
@@ -117,7 +117,6 @@ html, body {
 @media only screen 
   and (max-device-width: 600px) {
   .center_block {
-    top: 15vh;
     left: 5%;
     width: 95%;   
   }

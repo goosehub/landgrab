@@ -104,7 +104,6 @@ function initMap()
         console.log(land_data['error']);
         return false;
       }
-      console.log(land_data['token']);
 			// Create string
       var content_string = '<div class="land_window">';
 			if (land_data['claimed'] === '0') {
@@ -406,6 +405,39 @@ if (window.location.href.indexOf('register') >= 0) {
 // Stop dropdown closing when clicking color input
 $('#account_input_primary_color').click(function(e) {
     e.stopPropagation();
+});
+
+// Preset Logic
+function set_market_order_preset(latmin, latmax, lngmin, lngmax) {
+  $('#min_lat_input').val(latmin);
+  $('#max_lat_input').val(latmax);
+  $('#min_lng_input').val(lngmin);
+  $('#max_lng_input').val(lngmax);
+}
+
+$('#north_america_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#south_america_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#europe_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#africa_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#russia_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#asia_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#middle_east_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
+});
+$('#australia_preset').click(function(e){
+  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
 });
 
 // Validation errors shown on page load if exist
