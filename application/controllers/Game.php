@@ -182,7 +182,7 @@ class Game extends CI_Controller {
         else
         {
             $world_key = $this->input->post('world_key_input');
-            redirect('world/' . $world_key, 'refresh');
+            echo '{"status": "fail", "message": "User not logged in"}';
         }
 
         // Remove cents if exists
@@ -215,7 +215,7 @@ class Game extends CI_Controller {
 	    if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
+            echo '{"status": "fail", "message": ". validation_errors() . "}';
 		// Success
 	    } else {
 	    	$claimed = 1;
@@ -238,7 +238,7 @@ class Game extends CI_Controller {
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
             // Return to map
-	        redirect('world/' . $world_key, 'refresh');
+            echo '{"status": "success"}';
 	    }
 	}
 

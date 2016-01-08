@@ -154,25 +154,45 @@ function initMap()
 						content_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + money_format(land_data['price']) + ')</button>';
 					}
 				}
-			}
+      }
             // debug coord_slug
-			// content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
+      // content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
             // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
-			content_string += '</div>';
-			// Set InfoWindow Interaction
-			infoWindow.setContent(content_string);
-			infoWindow.setPosition(event.latLng);
-			infoWindow.open(map);
-		});
+      content_string += '</div>';
+      // Set InfoWindow Interaction
+      infoWindow.setContent(content_string);
+      infoWindow.setPosition(event.latLng);
+      infoWindow.open(map);
+
+      // 
+      // infoWindow script
+      // 
+
+      google.maps.event.addListener(infoWindow,'domready',function(){
+          // Focus on land name on expanding form, timeout to deflect collapse conflict
+          $('.expand_land_form').click(function(){
+            setTimeout(function(){
+              $('#input_land_name').focus();
+            }, 500);
+          });
+
+          // Submit form ajax
+          $('#submit_land_form').click(function() {
+            $.post('<?=base_url()?>land_form', $('#land_form').serialize());
+            console.log(html);
+          });
+      });
+
+    });
 	}
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		result = '<form action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
-		+ 'data-toggle="collapse" data-target="#land_form" aria-expanded="false" aria-controls="land_form">'
+		result = '<form id="land_form" action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
+		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
 		  + '' + ucwords(form_type) + ' This Land ($' + money_format(d['price']) + ')'
 		  + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
-		    + '<div id="land_form" class="collapse">'
+		    + '<div id="land_form_dropdown" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
@@ -196,7 +216,7 @@ function initMap()
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>'
-          + '<button type="submit" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+          + '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
 		+ '</div></form>';
 		return result;
 	}
