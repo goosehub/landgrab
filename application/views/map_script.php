@@ -2,17 +2,7 @@
 <script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
 <!-- Bootstrap -->
 <script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Loading Overlay -->
-<script>
-  loading = function() {
-      var over = '<div id="overlay"><p>Loading...</p></div>';
-      $(over).appendTo('body');
-  };
-  loading();
-</script>
-
-<!-- Master Script -->
+<!-- Map Script -->
 <script>
 
 // 
@@ -41,6 +31,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 var infoWindow = false;
 var boxes = [];
 
+// Start initMap callback called from google maps script
 function initMap() 
 {
   // 
@@ -50,40 +41,44 @@ function initMap()
   var map = new google.maps.Map(document.getElementById('map'), {
       // Zoom on land if set as parameter
       <?php if ( isset($_GET['land']) ) { 
-      $land_coords_split = explode(',', $_GET['land']); ?>
-      // Logic to center isn't fully understand, but results in correct behavior in all 4 corners
-      center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
-      zoom: 6,
+        $land_coords_split = explode(',', $_GET['land']); ?>
+
+        // Logic to center isn't  understand, but results in correct behavior in all 4 corners
+        center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
+
+        // Zoom should be adjusted based on box size
+        zoom: 6,
       <?php } else { ?>
+
+      // Map center is slightly north centric
       center: {lat: 20, lng: 0},
+      // Zoom shows whole world but no repetition
       zoom: 3,
       <?php } ?>
+      // Prevent seeing more than needed
       minZoom: 3,
+      // Prevent excesssive zoom
       maxZoom: 10,
-      mapTypeId: google.maps.MapTypeId.TERRAIN 
-      // mapTypeId: google.maps.MapTypeId.HYBRID 
+      // Map type
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+      // mapTypeId: google.maps.MapTypeId.HYBRID
+      // mapTypeId: google.maps.MapTypeId.SATELLITE
   });
 
 	// 
 	// Minor Functions
 	// 
 
-  // Get single land ajax
-  function get_single_land(coord_slug, world_key, callback) {
-    $.ajax({
-      url: "<?=base_url()?>get_single_land",
-      type: "GET",
-      data: { 
-                coord_slug: coord_slug,
-                world_key: world_key 
-            },
-      cache: false,
-      success: function(html)
-      {
-        callback(html);
-        return true;
+  // For rounding land coords
+  function round_down(n) {
+    if (n > 0) {
+          return Math.ceil(n/land_size) * land_size;
+    }
+      else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
       }
-    });
+      else {
+          return 0;
+      }
   }
 
   // Uppercase words
@@ -106,16 +101,22 @@ function initMap()
       return x1 + x2;
   }
 
-  // For rounding land coords
-  function round_down(n) {
-    if (n > 0) {
-          return Math.ceil(n/land_size) * land_size;
-    }
-      else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
+  // Get single land ajax
+  function get_single_land(coord_slug, world_key, callback) {
+    $.ajax({
+      url: "<?=base_url()?>get_single_land",
+      type: "GET",
+      data: { 
+                coord_slug: coord_slug,
+                world_key: world_key 
+            },
+      cache: false,
+      success: function(html)
+      {
+        callback(html);
+        return true;
       }
-      else {
-          return 0;
-      }
+    });
   }
 
   // Declare square called by performance sensitive loop
@@ -255,8 +256,9 @@ function initMap()
       // 
 
       google.maps.event.addListener(infoWindow,'domready',function(){
-        // Focus on land name on expanding form, timeout to prevent collapse conflict
+        // When expanding form, hide expand button and Focus on land name, with timeout to prevent collapse conflict
         $('.expand_land_form').click(function(){
+          $('.expand_land_form').hide();
           setTimeout(function(){
             $('#input_land_name').focus();
           }, 200);
@@ -387,7 +389,7 @@ function initMap()
 	// Map Styling
 	// 
 
-	// Optional Styling of map
+	// Styling of map
 	var styles = [
 	  {
   		featureType: "poi.business",
@@ -417,148 +419,4 @@ function initMap()
   // });
 }
 
-// 
-// Interface functions
-// 
-
-// Error reporting
-<?php if ($failed_form === 'error_block') { ?>
-	$('#error_block').show();
-<?php } ?>
-
-// Show how to play after registering
-<?php if ($just_registered) { ?>
-$('#how_to_play_block').show();
-<?php } ?>
-
-// Show register form if not logged in and not failed to log in
-<?php if ($failed_form != 'login') { ?>
-  if (!log_check) {
-    $('#register_block').show();
-  }
-<?php } ?>
-
-// Validation errors shown on page load if exist
-<?php if ($failed_form === 'login') { ?>
-$('#login_block').show();
-<?php } else if ($failed_form === 'register') { ?> 
-$('#register_block').show();
-<?php } ?>
-
-// Show register if server passes register to url
-if (window.location.href.indexOf('register') >= 0) {
-    $('#register_block').show();
-}
-
-// Stop dropdown closing when clicking color input
-$('#account_input_primary_color').click(function(e) {
-    e.stopPropagation();
-});
-
-// 
-// Center block hide and show logic
-// 
-
-$('.exit_center_block').click(function(){
-  $('.center_block').hide();
-});
-$('.login_button').click(function(){
-	$('.center_block').hide();
-	$('#login_block').show();
-});
-$('.register_button').click(function(){
-	$('.center_block').hide();
-	$('#register_block').show();
-});
-$('.how_to_play_button').click(function(){
-	$('.center_block').hide();
-	$('#how_to_play_block').show();
-});
-$('.about_button').click(function(){
-	$('.center_block').hide();
-	$('#about_block').show();
-});
-$('.report_bugs_button').click(function(){
-	$('.center_block').hide();
-	$('#report_bugs_block').show();
-});
-$('.login_button').click(function(){
-	$('#login_input_username').focus();
-});
-$('.register_button').click(function(){
-	$('#register_input_username').focus();
-});
-$('.sold_lands_button').click(function(){
-  $('.center_block').hide();
-  $('#recently_sold_lands_block').show();
-});
-$('.market_order_button').click(function(){
-  $('.center_block').hide();
-  $('#market_order_block').show();
-});
-$('#leaderboard_net_value_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_net_value_block').show();
-});
-$('#leaderboard_land_owned_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_land_owned_block').show();
-});
-$('#leaderboard_cash_owned_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_cash_owned_block').show();
-});
-$('#leaderboard_highest_valued_land_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_highest_valued_land_block').show();
-});
-$('.leaderboard_cheapest_land_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_cheapest_land_block').show();
-});
-
-// 
-// Preset Logic
-// 
-
-function set_market_order_preset(latmin, latmax, lngmin, lngmax) {
-  $('#min_lat_input').val(latmin);
-  $('#max_lat_input').val(latmax);
-  $('#min_lng_input').val(lngmin);
-  $('#max_lng_input').val(lngmax);
-}
-
-$('#north_america_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#south_america_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#europe_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#africa_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#russia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#asia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#middle_east_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#australia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-
 </script>
-
-<!-- Google Maps Script -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_lT8RkN6KffGEfJ3xBcBgn2VZga-a05I&callback=initMap&signed_in=true" async defer>
-</script>
-
-<!-- Footer -->
-  </body>
-</html>

@@ -123,7 +123,9 @@ class Game extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
         $this->load->view('blocks', $data);
-        $this->load->view('client_logic', $data);
+        $this->load->view('map_script', $data);
+        $this->load->view('interface_script', $data);
+        $this->load->view('footer', $data);
 	}
 
 	// Get infomation on single land
@@ -276,19 +278,19 @@ class Game extends CI_Controller {
             // return false;
         }
         // Check for inaccuracies
-        else if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
+        else if ($form_type === 'claim' && $land_square['claimed'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
-        else if ($form_type_input === 'update' && $land_square['account_key'] != $buyer_account_key) {
+        else if ($form_type === 'update' && $land_square['account_key'] != $buyer_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
             return false;
         }
-        else if ($form_type_input === 'buy' && $land_square['account_key'] === $buyer_account_key) {
+        else if ($form_type === 'buy' && $land_square['account_key'] === $buyer_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         }
-        else if ($form_type_input === 'buy' && $buyer_account['cash'] < $_POST['price'])
+        else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['price'])
         {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
             return false;
@@ -298,7 +300,7 @@ class Game extends CI_Controller {
         $amount = $land_square['price'];
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
-        return $this->land_transaction($form_type_input, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
+        return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
 
     // Process Market Order

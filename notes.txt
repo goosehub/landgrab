@@ -80,57 +80,49 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    Update map without reload
-    Style infoWindow
+    Ajax map
     Ajax land sales
+    Ajax Cash and Cash dropdown
+    Ajax leaderboards
+    Fix, refactor, and optimize Tax controller, iterate by person
 
 Low Priority
-    Security/Cheating/Manipulation Prevention
-        Implement tokens for Market Order and ajax land forms
-        Detect consolidation accounts
-        Content CSS Abuse
-    Feature
-        Feedback on what Market Order bought
-        Allow leave existing on Market Order
-        Max/min on lat lng limits
-            http://stackoverflow.com/questions/19316709/how-to-set-the-max-value-and-min-value-of-input-in-html5-by-javascript-or-jque
-        List of owned lands
-        Net Worth Leaderboard
-    Infrastructure
-        Reset live DB
-        Figure out method to create accounts of old users for newly created worlds
-    Refactor
-        Form Type naming conflict in Land Form
-        Whitelisted tags in constants
-        Fix Tax
     Research
-        Research onclick script in info window for features and security
-        Figure out what to do with players on cash leaderboard with no land
-        Investigate missing CRON emails
-        Measure time taxes take to run
+        Research replacing rebate system with something else
+    Security/Cheating/Manipulation Prevention
+        Prevent JS and CSS abuse in land content input with htmlpurifier
+        Implement tokens for ajax land forms to prevent blind forms
     UX
         Improve/update how to play
-    CSS
-        Off color after purchase
-        Better loading screen
-    Performance
-        Optimize loading times
-        Optimize Tax CRON to be by person
+    Bug
+        Fix cash stat inaccuracy
+    Infrastructure
+        Move hosting to LiquidWeb
 
 No Priority
-    Update all lands
-    Block too many attempted password attempts
-    Make blocks ajax to improve speed load
+    Detect consolidation accounts and other bot behavior
+    Better loading screen
+    Net Worth Leaderboard
+    Figure out what to do with players on cash leaderboard with no land
+    Figure out method to create accounts of old users for newly created worlds
+    Update all owned lands at once
+    Off color after purchase
+    Whitelisted tags in constants
+    Land link zoom based off box size
+    Block IP after excessive password attempts
+    Make blocks ajax to improve page speed load
     Hide google maps saved places
     Color difference at 180 LNG
-    Shift click multiple land select with seperate window?
+    Feedback on what Market Order bought
     API
-    More sharing
+    More social sharing
+    Max/min on lat lng limits
+        http://stackoverflow.com/questions/19316709/how-to-set-the-max-value-and-min-value-of-input-in-html5-by-javascript-or-jque
     General Security
-    Performance optimization
     Password Resets
     Reset account manually
     International Language Support
+    Speed optimization
 
 To be figured out
     Hide land form expand button after click
