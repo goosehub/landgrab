@@ -36,6 +36,9 @@ var land_size = <?php echo $world['land_size'] ?>;
     var log_check = false;
 <?php } ?>
 
+// Set infoWindow
+var infoWindow = false;
+
 function initMap() 
 {
     // Map options
@@ -84,7 +87,6 @@ function initMap()
         });
         box.setMap(map);
         box.addListener('click', set_window);
-        infoWindow = new google.maps.InfoWindow;
     }
 
 	// Set land window
@@ -94,11 +96,14 @@ function initMap()
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_slug = lat + ',' + lng;
-        console.log(event.latLng.lat() + ',' + event.latLng.lng());
-        console.log(coord_slug);
-		// Get land_data
+        // console.log(event.latLng.lat() + ',' + event.latLng.lng());
+
+    // 
+		// Load land infoWindow
+    // 
+
 		land = get_single_land(coord_slug, world_key, function(land){
-      console.log(land);
+      // console.log(land);
   		land_data = JSON.parse(land);
       if (land_data['error']) {
         console.log(land_data['error']);
@@ -159,7 +164,17 @@ function initMap()
       // content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
             // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
       content_string += '</div>';
+
+      // 
       // Set InfoWindow Interaction
+      // 
+
+      // Close window if one is open
+      if (infoWindow) {
+          infoWindow.close();
+      }
+      // Set new infoWindow
+      infoWindow = new google.maps.InfoWindow;
       infoWindow.setContent(content_string);
       infoWindow.setPosition(event.latLng);
       infoWindow.open(map);
@@ -169,26 +184,48 @@ function initMap()
       // 
 
       google.maps.event.addListener(infoWindow,'domready',function(){
-          // Focus on land name on expanding form, timeout to deflect collapse conflict
-          $('.expand_land_form').click(function(){
-            setTimeout(function(){
-              $('#input_land_name').focus();
-            }, 500);
-          });
+        // Focus on land name on expanding form, timeout to prevent collapse conflict
+        $('.expand_land_form').click(function(){
+          setTimeout(function(){
+            $('#input_land_name').focus();
+          }, 200);
+        });
 
-          // Submit form ajax
-          $('#submit_land_form').click(function() {
-            $.post('<?=base_url()?>land_form', $('#land_form').serialize());
-            console.log(html);
+        // 
+        // Submit form ajax
+        // 
+        $('#submit_land_form').click(function() {
+          var post_data = $('#land_form').serialize();
+          $('.form_outer_cont').html('<div class="alert alert-success"><strong>Processing...</strong></div>');
+          $.ajax({
+            url: "<?=base_url()?>land_form",
+            type: "POST",
+            data: post_data,
+            cache: false,
+            success: function(data)
+            {
+              // console.log(data);
+              response = JSON.parse(data);
+              if (response['status'] === 'success') {
+                $('.form_outer_cont').html('<div class="alert alert-info"><strong>success</strong></div>');
+              } else {
+                $('.form_outer_cont').html('<div class="alert alert-danger"><strong>' + response['message'] + '</strong></div>');
+              }
+              return true;
+            }
           });
-      });
+        }); // End land form ajax
 
-    });
-	}
+      }); // End infoWindow script domready listener
+
+    }); // End get_single_land callback
+
+	} // End set_window
 
 	// For claiming, updating, and buying land forms
 	function land_update_form(form_type, button_class, d) {
-		result = '<form id="land_form" action="<?=base_url()?>land_form" method="post"><button class="expand_land_form btn ' + button_class + '" type="button" '
+		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
+    + '<button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
 		  + '' + ucwords(form_type) + ' This Land ($' + money_format(d['price']) + ')'
 		  + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
@@ -217,7 +254,7 @@ function initMap()
             + '</div></div>'
           + '</div>'
           + '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
-		+ '</div></form>';
+		+ '</div></form></div>';
 		return result;
 	}
 

@@ -183,20 +183,24 @@ class Game extends CI_Controller {
         {
             $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
+            return false;
         }
 
         // Remove cents if exists
-        if (substr($_POST['price'], -3, 1) == '.') {
-            $_POST['price'] = substr($_POST['price'], 0, -3);
+        if ( isset($_POST['price']) )
+        {
+            if (substr($_POST['price'], -3, 1) == '.') {
+                $_POST['price'] = substr($_POST['price'], 0, -3);
+            }
+            // Remove dollarsign from price input if exists
+            $_POST['price'] = str_replace('$', '', $_POST['price']);
+            // Remove commas from price input if exists
+            $_POST['price'] = str_replace(',', '', $_POST['price']);
+            // Remove periods from price input if exists (some cultures use periods instead of commas)
+            $_POST['price'] = str_replace('.', '', $_POST['price']);
+            // Remove dashes to prevent negative inputs in price
+            $_POST['price'] = str_replace('-', '', $_POST['price']);
         }
-        // Remove dollarsign from price input if exists
-		$_POST['price'] = str_replace('$', '', $_POST['price']);
-        // Remove commas from price input if exists
-        $_POST['price'] = str_replace(',', '', $_POST['price']);
-        // Remove periods from price input if exists (some cultures use periods instead of commas)
-        $_POST['price'] = str_replace('.', '', $_POST['price']);
-        // Remove dashes to prevent negative inputs in price
-        $_POST['price'] = str_replace('-', '', $_POST['price']);
         
 		// Validation
         $this->load->library('form_validation');
@@ -208,14 +212,19 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
-        $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
+        // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         $world_key = $this->input->post('world_key_input');
         // Fail
 	    if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            echo '{"status": "fail", "message": ". validation_errors() . "}';
+            if (validation_errors() === '') {
+                echo '{"status": "fail", "message": "An unknown error occurred"}';
+                // validation_errors() === 'An unknown error occurred';
+            }
+            echo '{"status": "fail", "message": "'. validation_errors() . '"}';
+            return false;
 		// Success
 	    } else {
 	    	$claimed = 1;
@@ -239,6 +248,7 @@ class Game extends CI_Controller {
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
             // Return to map
             echo '{"status": "success"}';
+            return true;
 	    }
 	}
 
@@ -262,8 +272,8 @@ class Game extends CI_Controller {
 
         // Check if token is correct
         if ($token != $buyer_account['token']) {
-            $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
-            return false;
+            // $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
+            // return false;
         }
         // Check for inaccuracies
         else if ($form_type_input === 'claim' && $land_square['claimed'] != 0) {
