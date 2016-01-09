@@ -80,19 +80,16 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    Update land color after purchase
     Update map without reload
-    Performance of infoWindow
+    Style infoWindow
+    Ajax land sales
 
 Low Priority
     Security/Cheating/Manipulation Prevention
         Implement tokens for Market Order and ajax land forms
         Detect consolidation accounts
         Content CSS Abuse
-    Gameplay Mechanics
-        Update all
     Feature
-        Defaults for Market Order Select
         Feedback on what Market Order bought
         Allow leave existing on Market Order
         Max/min on lat lng limits
@@ -113,11 +110,15 @@ Low Priority
         Measure time taxes take to run
     UX
         Improve/update how to play
+    CSS
+        Off color after purchase
+        Better loading screen
     Performance
         Optimize loading times
         Optimize Tax CRON to be by person
 
 No Priority
+    Update all lands
     Block too many attempted password attempts
     Make blocks ajax to improve speed load
     Hide google maps saved places
@@ -126,6 +127,7 @@ No Priority
     API
     More sharing
     General Security
+    Performance optimization
     Password Resets
     Reset account manually
     International Language Support

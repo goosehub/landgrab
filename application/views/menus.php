@@ -22,9 +22,9 @@
         ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2; 
       </li>
 
-      <li role="separator" class="divider"></li>
-
-      <li><button class="market_order_button btn btn-action form-control"><strong>Place a Market Order</strong> </button></li>
+      <!-- Market Order deactivated -->
+      <!-- <li role="separator" class="divider"></li> -->
+      <!-- <li><button class="market_order_button btn btn-action form-control"><strong>Place a Market Order</strong> </button></li> -->
 
       <li role="separator" class="divider"></li>
 

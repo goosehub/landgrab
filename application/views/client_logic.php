@@ -1,11 +1,11 @@
 <!-- jQuery -->
 <script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
+<!-- Bootstrap -->
 <script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Loading Overlay -->
 <script>
   loading = function() {
-      // add the overlay with loading image to the page
       var over = '<div id="overlay"><p>Loading...</p></div>';
       $(over).appendTo('body');
   };
@@ -14,6 +14,7 @@
 
 <!-- Master Script -->
 <script>
+
 // 
 // Constants
 // 
@@ -36,84 +37,141 @@ var land_size = <?php echo $world['land_size'] ?>;
     var log_check = false;
 <?php } ?>
 
-// Set infoWindow
+// Set maps variables
 var infoWindow = false;
+var boxes = [];
 
 function initMap() 
 {
-    // Map options
-    var map = new google.maps.Map(document.getElementById('map'), {
-        // Zoom on land if set as parameter
-        <?php if ( isset($_GET['land']) ) { 
-        $land_coords_split = explode(',', $_GET['land']); ?>
-        // Logic to center isn't fully understand, but results in correct behavior in all 4 corners
-        center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
-        zoom: 6,
-        <?php } else { ?>
-        center: {lat: 20, lng: 0},
-        zoom: 3,
-        <?php } ?>
-        minZoom: 3,
-        maxZoom: 10,
-        mapTypeId: google.maps.MapTypeId.TERRAIN 
-        // mapTypeId: google.maps.MapTypeId.HYBRID 
+  // 
+  // Map options
+  // 
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+      // Zoom on land if set as parameter
+      <?php if ( isset($_GET['land']) ) { 
+      $land_coords_split = explode(',', $_GET['land']); ?>
+      // Logic to center isn't fully understand, but results in correct behavior in all 4 corners
+      center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
+      zoom: 6,
+      <?php } else { ?>
+      center: {lat: 20, lng: 0},
+      zoom: 3,
+      <?php } ?>
+      minZoom: 3,
+      maxZoom: 10,
+      mapTypeId: google.maps.MapTypeId.TERRAIN 
+      // mapTypeId: google.maps.MapTypeId.HYBRID 
+  });
+
+	// 
+	// Minor Functions
+	// 
+
+  // Get single land ajax
+  function get_single_land(coord_slug, world_key, callback) {
+    $.ajax({
+      url: "<?=base_url()?>get_single_land",
+      type: "GET",
+      data: { 
+                coord_slug: coord_slug,
+                world_key: world_key 
+            },
+      cache: false,
+      success: function(html)
+      {
+        callback(html);
+        return true;
+      }
     });
+  }
 
-    <?php
-    // Javascript Land Array no longer used
-    // $js_lands = json_encode($lands);
-    // echo "var lands = ". $js_lands . ";\n";
-    ?>
+  // Uppercase words
+  function ucwords (str) {
+      return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+          return $1.toUpperCase();
+      });
+  }
 
-	// 
-	// Functions
-	// 
+  // For money formatting
+  function money_format(nStr) {
+      nStr += '';
+      x = nStr.split('.');
+      x1 = x[0];
+      x2 = x.length > 1 ? '.' + x[1] : '';
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+              x1 = x1.replace(rgx, '$1' + ',' + '$2');
+      }
+      return x1 + x2;
+  }
 
-    // Declare square
-    function declare_square(land_lat, land_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
-        shape = [
-            {lat: land_lat, lng: land_lng},
-            {lat: land_lat + land_size, lng: land_lng},
-            {lat: land_lat + land_size, lng: land_lng - land_size},
-            {lat: land_lat, lng: land_lng - land_size}
-        ];
-        box = new google.maps.Polygon({
-          map: map,
-          paths: shape,
-          strokeWeight: stroke_weight,
-          strokeColor: stroke_color,
-          fillColor: fill_color,
-          fillOpacity: fill_opacity,
-        });
-        box.setMap(map);
-        box.addListener('click', set_window);
+  // For rounding land coords
+  function round_down(n) {
+    if (n > 0) {
+          return Math.ceil(n/land_size) * land_size;
     }
+      else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
+      }
+      else {
+          return 0;
+      }
+  }
+
+  // Declare square called by performance sensitive loop
+  function declare_square(land_key, land_lat, land_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
+      shape = [
+          {lat: land_lat, lng: land_lng},
+          {lat: land_lat + land_size, lng: land_lng},
+          {lat: land_lat + land_size, lng: land_lng - land_size},
+          {lat: land_lat, lng: land_lng - land_size}
+      ];
+      box = new google.maps.Polygon({
+        map: map,
+        paths: shape,
+        strokeWeight: stroke_weight,
+        strokeColor: stroke_color,
+        fillColor: fill_color,
+        fillOpacity: fill_opacity,
+      });
+      box.setMap(map);
+      box.addListener('click', set_window);
+      boxes[land_key] = box;
+  }
 
 	// Set land window
 	function set_window(event) {
-		// Set Parameters
-        // Not entirely sure why I have to subtract land_size on lat for this to work, but results in correct behavior in all 4 corners
+  	// Set Parameters
+    // Not sure why subtracting land_size on lat makes this work, but results in correct behavior
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_slug = lat + ',' + lng;
-        // console.log(event.latLng.lat() + ',' + event.latLng.lng());
+    // console.log(event.latLng.lat() + ',' + event.latLng.lng());
 
     // 
-		// Load land infoWindow
+		// Create land infoWindow
     // 
 
 		land = get_single_land(coord_slug, world_key, function(land){
+      // Get land
       // console.log(land);
   		land_data = JSON.parse(land);
+      // Handle error
       if (land_data['error']) {
-        console.log(land_data['error']);
+        alert(land_data['error']);
         return false;
       }
-			// Create string
-      var content_string = '<div class="land_window">';
+      // Create string
+      var window_string = '<div class="land_window">';
+
+      // Unclaimed land
 			if (land_data['claimed'] === '0') {
-				content_string += '<strong>Unclaimed</strong><br>'
-        + 'Lat,Lng: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br><br>';
+        // Land name
+				window_string += '<strong class="land_name">Unclaimed</strong><br>';
+        // Coord
+        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
+
+      // Claimed land
 			} else  {
         // Calculate income
         income_prefix = '';
@@ -124,46 +182,59 @@ function initMap()
           income_class = 'red_money';
           income = Math.abs(income);
         }
+
+        // Land name
         if (land_data['land_name'] != '') {
-          content_string += '<div class="land_window"><strong>' + land_data['land_name'] + '</strong><br>';
+          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong>';
         }
-        content_string += 'Coord: <a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '"><strong>' + coord_slug + '</strong></a><br>'
-        + 'Owner: <strong>' + land_data['username'] + '</strong><br>'
-        + 'Income: <strong class="' + income_class + '">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>';
+        // Content
         if (land_data['content'] != '') {
-          content_string += '<strong>Description</strong><br>' + land_data['content'] + '<br>';
+          window_string += '<div class="land_content_div">' + land_data['content'] + '</div><br>';
         }
+        // Owner
+        window_string += 'Owner: <strong class="pull-right">' + land_data['username'] + '</strong><br>';
+        // Coord
+        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
+        // Income
+        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>';
 			}
+      window_string += '<br>';
+
+      // Unregistered users
       if (! log_check) {
         if (land_data['claimed'] === '0') {
-          content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+          window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
           + '?register">Join to Claim!</a><br>';
         } else {
-          content_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
+          window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
           + '?register">Join to Buy! (' + money_format(land_data['price']) + ')</a><br>';
         }
       }
+
+      // Interaction buttons
 			if (log_check) {
-				// 
-				// Abstract to be shorter
-				// 
+        // Claim
 				if (land_data['claimed'] === '0') {
-					content_string += land_update_form('claim', 'btn-action', land_data);
+					window_string += land_update_form('claim', 'btn-action', land_data);
+        // Update
 				} else if (land_data['account_key'] == account_id) {
-					content_string += land_update_form('update', 'btn-info', land_data);
+					window_string += land_update_form('update', 'btn-info', land_data);
+        // Buy
 				} else {
-					if (land_data['price'] < cash)
-					{
-						content_string += land_update_form('buy', 'btn-success', land_data);
+          // Enough cash to buy
+					if (land_data['price'] < cash) {
+						window_string += land_update_form('buy', 'btn-success', land_data);
+          // Not enough cash
 					} else {
-						content_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + money_format(land_data['price']) + ')</button>';
+						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + money_format(land_data['price']) + ')</button>';
 					}
 				}
       }
-            // debug coord_slug
-      // content_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
+      // debug coord_slug
+      // window_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
             // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
-      content_string += '</div>';
+      // End div
+      window_string += '</div>';
 
       // 
       // Set InfoWindow Interaction
@@ -175,7 +246,7 @@ function initMap()
       }
       // Set new infoWindow
       infoWindow = new google.maps.InfoWindow;
-      infoWindow.setContent(content_string);
+      infoWindow.setContent(window_string);
       infoWindow.setPosition(event.latLng);
       infoWindow.open(map);
 
@@ -195,8 +266,14 @@ function initMap()
         // Submit form ajax
         // 
         $('#submit_land_form').click(function() {
+
+          // Serialize form into post data
           var post_data = $('#land_form').serialize();
-          $('.form_outer_cont').html('<div class="alert alert-success"><strong>Processing...</strong></div>');
+
+          // Replace window with processing window
+          $('.form_outer_cont').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+
+          // Submit form
           $.ajax({
             url: "<?=base_url()?>land_form",
             type: "POST",
@@ -205,13 +282,32 @@ function initMap()
             success: function(data)
             {
               // console.log(data);
+              // Return data
               response = JSON.parse(data);
+
+              // If success, close
               if (response['status'] === 'success') {
-                $('.form_outer_cont').html('<div class="alert alert-info"><strong>success</strong></div>');
+                infoWindow.close();
+                // $('.land_window').html('<br><div class="alert alert-wide alert-green"><strong>success</strong></div>');
+                // setTimeout(function(){
+                // infoWindow.close();
+                // }, 800);
+
+                // Update box to reflect user ownership
+                boxes[land_data['id']].setOptions({
+                  strokeWeight: 5, 
+                  strokeColor: '#428BCA',
+                  fillColor: '#<?php echo $account["primary_color"]; ?>',
+                  fillOpacity: 0.4
+                });
+                // console.log(boxes);
+                return true;
+
+              // If error, display error message
               } else {
-                $('.form_outer_cont').html('<div class="alert alert-danger"><strong>' + response['message'] + '</strong></div>');
+                $('.land_window').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                return false;
               }
-              return true;
             }
           });
         }); // End land form ajax
@@ -258,61 +354,11 @@ function initMap()
 		return result;
 	}
 
-	// Get single land ajax
-	function get_single_land(coord_slug, world_key, callback) {
-		$.ajax({
-			url: "<?=base_url()?>get_single_land",
-			type: "GET",
-			data: { 
-                coord_slug: coord_slug,
-                world_key: world_key 
-            },
-			cache: false,
-			success: function(html)
-			{
-				callback(html);
-				return true;
-			}
-		});
-	}
-
-	// Uppercase words
-	function ucwords (str) {
-	    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
-	        return $1.toUpperCase();
-	    });
-	}
-
-	// For money formatting
-	function money_format(nStr) {
-	    nStr += '';
-	    x = nStr.split('.');
-	    x1 = x[0];
-	    x2 = x.length > 1 ? '.' + x[1] : '';
-	    var rgx = /(\d+)(\d{3})/;
-	    while (rgx.test(x1)) {
-	            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	    }
-	    return x1 + x2;
-	}
-
-	// For rounding land coords
-	function round_down(n) {
-		if (n > 0) {
-	        return Math.ceil(n/land_size) * land_size;
-		}
-	    else if ( n < 0) {return Math.ceil(n/land_size) * land_size;
-	    }
-	    else {
-	        return 0;
-	    }
-	}
-
 	// 
 	// Land loop
 	// 
 
-	<?php // This foreach loop runs between 3000 to 60000 times, so be as dry as possible here, no comments
+	<?php // This foreach loop runs between 400 to 60,000 times, so it's as dry as possible here, no comments
     foreach ($lands as $land) { 
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
@@ -328,6 +374,7 @@ function initMap()
         }
         ?>
         declare_square(<?php echo 
+            $land['id'] . ',' .
             $land['lat'] . ',' .
             $land['lng'] . ',' .
             $stroke_weight . ',' .
@@ -343,37 +390,38 @@ function initMap()
 	// Optional Styling of map
 	var styles = [
 	  {
-		featureType: "poi.business",
-		elementType: "labels",
-		stylers: [
-		  { visibility: "off" }
-		]
+  		featureType: "poi.business",
+  		elementType: "labels",
+  		stylers: [
+  		  { visibility: "off" }
+  		]
 	  }
 	];
 
+  // Apply map styling
 	var styled_map = new google.maps.StyledMapType(styles,
 	  {name: "Styled Map"});
 	map.mapTypes.set('map_style', styled_map);
 	map.setMapTypeId('map_style');
 
-    // 
-    // Remove overlay
-    // 
+  // 
+  // Remove overlay
+  // 
 
-    // Remove loading overlay based on idle status
-    google.maps.event.addListenerOnce(map, 'idle', function(){
-    });
-    // Remove loading overlay based on tiles loaded status
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-        $('#overlay').fadeOut();
-    });
+  // Remove loading overlay based on tiles loaded status
+  google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+      $('#overlay').fadeOut();
+  });
+  // Remove loading overlay based on idle status
+  // google.maps.event.addListenerOnce(map, 'idle', function(){
+  // });
 }
 
 // 
-// User Controls
+// Interface functions
 // 
 
-// Show error block if errors exist
+// Error reporting
 <?php if ($failed_form === 'error_block') { ?>
 	$('#error_block').show();
 <?php } ?>
@@ -383,57 +431,71 @@ function initMap()
 $('#how_to_play_block').show();
 <?php } ?>
 
+// Show register form if not logged in and not failed to log in
 <?php if ($failed_form != 'login') { ?>
   if (!log_check) {
     $('#register_block').show();
   }
 <?php } ?>
 
+// Validation errors shown on page load if exist
+<?php if ($failed_form === 'login') { ?>
+$('#login_block').show();
+<?php } else if ($failed_form === 'register') { ?> 
+$('#register_block').show();
+<?php } ?>
+
+// Show register if server passes register to url
+if (window.location.href.indexOf('register') >= 0) {
+    $('#register_block').show();
+}
+
+// Stop dropdown closing when clicking color input
+$('#account_input_primary_color').click(function(e) {
+    e.stopPropagation();
+});
+
+// 
+// Center block hide and show logic
+// 
+
+$('.exit_center_block').click(function(){
+  $('.center_block').hide();
+});
 $('.login_button').click(function(){
 	$('.center_block').hide();
 	$('#login_block').show();
 });
-
 $('.register_button').click(function(){
 	$('.center_block').hide();
 	$('#register_block').show();
 });
-
 $('.how_to_play_button').click(function(){
 	$('.center_block').hide();
 	$('#how_to_play_block').show();
 });
-
 $('.about_button').click(function(){
 	$('.center_block').hide();
 	$('#about_block').show();
 });
-
 $('.report_bugs_button').click(function(){
 	$('.center_block').hide();
 	$('#report_bugs_block').show();
 });
-
-$('.exit_center_block').click(function(){
-	$('.center_block').hide();
-});
-
 $('.login_button').click(function(){
 	$('#login_input_username').focus();
 });
-
 $('.register_button').click(function(){
 	$('#register_input_username').focus();
 });
-
 $('.sold_lands_button').click(function(){
+  $('.center_block').hide();
   $('#recently_sold_lands_block').show();
 });
-
 $('.market_order_button').click(function(){
+  $('.center_block').hide();
   $('#market_order_block').show();
 });
-
 $('#leaderboard_net_value_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_net_value_block').show();
@@ -455,16 +517,10 @@ $('.leaderboard_cheapest_land_button').click(function(){
     $('#leaderboard_cheapest_land_block').show();
 });
 
-if (window.location.href.indexOf('register') >= 0) {
-    $('#register_block').show();
-}
-
-// Stop dropdown closing when clicking color input
-$('#account_input_primary_color').click(function(e) {
-    e.stopPropagation();
-});
-
+// 
 // Preset Logic
+// 
+
 function set_market_order_preset(latmin, latmax, lngmin, lngmax) {
   $('#min_lat_input').val(latmin);
   $('#max_lat_input').val(latmax);
@@ -497,16 +553,12 @@ $('#australia_preset').click(function(e){
   set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
 });
 
-// Validation errors shown on page load if exist
-<?php if ($failed_form === 'login') { ?>
-$('#login_block').show();
-<?php } else if ($failed_form === 'register') { ?> 
-$('#register_block').show();
-<?php } ?>
-
 </script>
+
+<!-- Google Maps Script -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_lT8RkN6KffGEfJ3xBcBgn2VZga-a05I&callback=initMap&signed_in=true" async defer>
 </script>
+
 <!-- Footer -->
   </body>
 </html>

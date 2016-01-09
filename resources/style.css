@@ -147,6 +147,25 @@ html, body {
   height: 3em;
 }
 
+/* InfoWindow */
+.alert-green {
+  background: #5CB85C;
+  color: #fff;
+}
+.alert-blue {
+  background: #428BCA;
+  color: #fff;
+}
+.alert-wide {
+  min-width: 12em;
+  text-align: center;
+}
+  /* Restrict the size of user images */
+.land_window img, .land_window img[style] {
+  max-height: 25vh !important;
+  max-width: 25vw !important;
+}
+
 /* Overlay */
 #overlay {
     position: absolute;
