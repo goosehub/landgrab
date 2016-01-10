@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 3)
+	public function index($world_slug = 1)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -54,10 +54,10 @@ class Game extends CI_Controller {
 
             // Taxes and Rebate
             $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
-            $total_lands = $data['total_lands'] = $land_sum_and_count['count'];
+            $player_land_count = $data['player_land_count'] = $land_sum_and_count['count'];
 
             // If less than 1 land, check if bankruptcy since last page load
-            if ($total_lands < 1) { 
+            if ($player_land_count < 1) { 
                 $this->transaction_model->check_for_bankruptcy($account['id'], $account['last_load']); 
             }
 

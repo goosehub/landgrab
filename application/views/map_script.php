@@ -22,7 +22,9 @@ var land_size = <?php echo $world['land_size'] ?>;
     var user_id = <?php echo $user_id + ''; ?>;
     var account_id = <?php echo $account['id'] + ''; ?>;
     var username = "<?php echo $user['username']; ?>";
+    var account_color = '<?php echo $account["primary_color"]; ?>';
     var cash = <?php echo $account['cash'] + ''; ?>;
+    var player_land_count = <?php echo $player_land_count; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
@@ -88,8 +90,8 @@ function initMap()
       });
   }
 
-  // For money formatting
-  function money_format(nStr) {
+  // For number formatting
+  function number_format(nStr) {
       nStr += '';
       x = nStr.split('.');
       x1 = x[0];
@@ -197,7 +199,7 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Income
-        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + money_format(income) + '/Hour</strong><br>';
+        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Hour</strong><br>';
 			}
       window_string += '<br>';
 
@@ -208,7 +210,7 @@ function initMap()
           + '?register">Join to Claim!</a><br>';
         } else {
           window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Buy! (' + money_format(land_data['price']) + ')</a><br>';
+          + '?register">Join to Buy! (' + number_format(land_data['price']) + ')</a><br>';
         }
       }
 
@@ -227,7 +229,7 @@ function initMap()
 						window_string += land_update_form('buy', 'btn-success', land_data);
           // Not enough cash
 					} else {
-						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + money_format(land_data['price']) + ')</button>';
+						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + number_format(land_data['price']) + ')</button>';
 					}
 				}
       }
@@ -295,11 +297,18 @@ function initMap()
                 // infoWindow.close();
                 // }, 800);
 
+                // Update player variables and displays
+                cash = cash - land_data['price'];
+                $('#cash_display').html(number_format(cash));
+                player_land_count = player_land_count + 1;
+                $('#player_land_count_display').html(player_land_count);
+
+
                 // Update box to reflect user ownership
                 boxes[land_data['id']].setOptions({
                   strokeWeight: 5, 
                   strokeColor: '#428BCA',
-                  fillColor: '#<?php echo $account["primary_color"]; ?>',
+                  fillColor: account_color,
                   fillOpacity: 0.4
                 });
                 // console.log(boxes);
@@ -325,7 +334,7 @@ function initMap()
 		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
     + '<button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
-		  + '' + ucwords(form_type) + ' This Land ($' + money_format(d['price']) + ')'
+		  + '' + ucwords(form_type) + ' This Land ($' + number_format(d['price']) + ')'
 		  + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
 		    + '<div id="land_form_dropdown" class="collapse">'
           + '<div class="form-group">'
@@ -343,7 +352,7 @@ function initMap()
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_price">Price</label>'
             + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="input_price" name="price" value="' + money_format(d['price']) + '">'
+            + '<input type="text" class="form-control" id="input_price" name="price" value="' + number_format(d['price']) + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_content">Description</label>'
@@ -360,7 +369,7 @@ function initMap()
 	// Land loop
 	// 
 
-	<?php // This foreach loop runs between 400 to 60,000 times, so it's as dry as possible here, no comments
+	<?php // This foreach loop runs between 400 to 15,000 times, so it's as dry as possible here, no comments
     foreach ($lands as $land) { 
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';

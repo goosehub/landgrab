@@ -10,16 +10,16 @@
   <?php } ?>
 
   <!-- Cash Dropdown -->
-    <button id="cash_display" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        $<?php echo number_format($account['cash']); ?>
+    <button id="cash_dropdown" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        $<span id="cash_display"><?php echo number_format($account['cash']); ?></span>
       <span class="caret"></span>
     </button>
     <ul class="cash_dropdown dropdown-menu" aria-labelledby="cash_dropdown">
 
       <li>
-        <strong><?php echo $total_lands; ?> Lands</strong> | 
-        ~<?php echo number_format($total_lands * (70 * $world['land_size'])); ?> Mi&sup2; | 
-        ~<?php echo number_format($total_lands * (112 * $world['land_size'])); ?> KM&sup2; 
+        <strong><span id="player_land_count_display"><?php echo $player_land_count; ?></span> Lands</strong> | 
+        ~<?php echo number_format($player_land_count * (70 * $world['land_size'])); ?> Mi&sup2; | 
+        ~<?php echo number_format($player_land_count * (112 * $world['land_size'])); ?> KM&sup2; 
       </li>
 
       <!-- Market Order deactivated -->
