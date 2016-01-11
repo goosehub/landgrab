@@ -3,12 +3,14 @@
     <?php if ($log_check) { ?>
 
   <!-- Recently sold lands button -->
+  <?php if ($log_check) { ?>
     <span id="recently_sold_alert">
       <button class="sold_lands_button btn btn-action"><strong><span id="recently_sold_lands_number">
       <?php echo $recently_sold_lands ? count($recently_sold_lands) : 0; ?> </span> Sales</strong>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
       </button>
     </span>
+  <?php } ?>
 
   <!-- Cash Dropdown -->
     <button id="cash_dropdown" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

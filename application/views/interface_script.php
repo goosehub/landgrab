@@ -111,7 +111,7 @@ $('.sold_lands_button').click(function(){
 });
 
 // Show recently sold alert if exists on page load
-<?php if ($recently_sold_lands) { ?>
+<?php if ($log_check && $recently_sold_lands) { ?>
 $('.recently_sold_alert').show();
 <?php } ?>
 

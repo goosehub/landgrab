@@ -133,9 +133,11 @@ class Game extends CI_Controller {
         // Echo json if data request
         if (isset($_GET['json'])) {
             // Reorganize data
-            $data['financials'] = [];
-            $data['financials']['cash'] = $data['account']['cash'];
-            $data['financials']['player_land_count'] = $data['player_land_count'];
+            if ($log_check) {
+                $data['financials'] = [];
+                $data['financials']['cash'] = $data['account']['cash'];
+                $data['financials']['player_land_count'] = $data['player_land_count'];
+            }
 
             echo json_encode($data);
             return true;
