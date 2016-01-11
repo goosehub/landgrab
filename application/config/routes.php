@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = "game";
 
 // World load
+$route['world/4chan'] = "game/index/3";
 $route['world/(:any)'] = "game/index/$1";
 
 // Game functions

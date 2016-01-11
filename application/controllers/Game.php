@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Map view
-	public function index($world_slug = 1)
+	public function index($world_slug = 3)
 	{
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -33,7 +33,7 @@ class Game extends CI_Controller {
         // Get world
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_slug);
         if (!$world) {
-            $this->load->view('page_not_found', $data);
+            $this->load->view('errors/page_not_found', $data);
             return false;
         }
         $world_key = $world['id'];
@@ -107,8 +107,7 @@ class Game extends CI_Controller {
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
         // Get leaderboards
-        $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
-        // var_dump($data['leaderboard_net_value_data']);
+        // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
         $data['leaderboard_land_owned_data'] = $this->leaderboard_model->leaderboard_land_owned($world_key);
         $data['leaderboard_cash_owned_data'] = $this->leaderboard_model->leaderboard_cash_owned($world_key);
         $data['leaderboard_highest_valued_land_data'] = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
@@ -119,6 +118,12 @@ class Game extends CI_Controller {
         $data['failed_form'] = $this->session->flashdata('failed_form');
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
+        // Echo json if data request
+        if (isset($_GET['json']))
+        {
+            echo json_encode($data);
+            return true;
+        }
         // Load view
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
@@ -398,7 +403,7 @@ class Game extends CI_Controller {
                     $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, 
                         $new_land_name, $new_price, $new_content, $primary_color);
                 } else {
-                    $this->load->view('page_not_found');
+                    $this->load->view('errors/page_not_found');
                     return false;
                 }
             }

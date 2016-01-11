@@ -139,7 +139,7 @@ class User extends CI_Controller {
     // Page Not Found
 	public function page_not_found()
 	{
-		$this->load->view('page_not_found');
+		$this->load->view('errors/page_not_found');
 	}
 }
 

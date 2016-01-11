@@ -122,7 +122,8 @@ html, body {
   }
 }
 .leaderboard_block {
-  top: 5vh !important;
+  top: 5vh;
+  max-height: 90vh;
 }
 .center_block strong {
   font-size: 1.4em;

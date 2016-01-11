@@ -109,7 +109,7 @@ class Tax extends CI_Controller {
 
         // Generic Page Not Found on fail
         } else {
-            $this->load->view('page_not_found');
+            $this->load->view('errors/page_not_found');
         }
     }
 

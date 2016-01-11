@@ -188,7 +188,7 @@ function initMap()
 
         // Land name
         if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong>';
+          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong><br>';
         }
         // Content
         if (land_data['content'] != '') {
@@ -414,6 +414,89 @@ function initMap()
 	  {name: "Styled Map"});
 	map.mapTypes.set('map_style', styled_map);
 	map.setMapTypeId('map_style');
+
+  // 
+  // Update data
+  // 
+
+  // Get update
+  setTimeout(function(){
+    setInterval(function(){
+      get_update_data(world_key);
+    // }, 60 * 1000);
+    }, 5 * 1000);
+  // }, 60 * 1000);
+  }, 1 * 1000);
+
+  // Get single land ajax
+  function get_update_data(world_key) {
+    $.ajax({
+      url: "<?=base_url()?>world/" + world_key,
+      type: "GET",
+      data: { 
+                json: "true"
+            },
+      cache: false,
+      success: function(data)
+      {
+        // console.log(data);
+
+        data = JSON.parse(data);
+        update_lands(data['lands']);
+        // update_sales(data);
+        // update_leaderboards(data);
+        // update_financials(data);
+      }
+    });
+  }
+
+  function update_lands(lands) {
+    // console.log(lands);
+    // Loop through lands
+    // Loop may run as many as 15,000 times, so be performant
+    number_of_lands = lands.length;
+    for (i = 0; i < number_of_lands; i++) {
+
+      // Set variables
+      stroke_weight = 0.2; 
+      stroke_color = '#222222';
+      fill_color = "#0000ff";
+      fill_opacity = 0;
+      if (log_check && lands[i]['account_key'] == account_id) {
+        stroke_weight = 5;
+        stroke_color = '#428BCA';
+      }
+      if (lands[i]['claimed'] == 1) {
+        fill_color = lands[i]['primary_color'];
+        fill_opacity = 0.4;
+      }
+
+      // Apply to box
+      boxes[lands[i]['id']].setOptions({
+        strokeWeight: stroke_weight, 
+        strokeColor: stroke_color,
+        fillColor: fill_color,
+        fillOpacity: fill_opacity
+      });
+    }
+
+    return true;
+  }
+
+  function update_sales(data) {
+    // console.log(data);
+    return true;
+  }
+
+  function update_leaderboards(data) {
+    // console.log(data);
+    return true;
+  }
+
+  function update_financials(data) {
+    // console.log(data);
+    return true;
+  }
 
   // 
   // Remove overlay
