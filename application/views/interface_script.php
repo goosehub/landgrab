@@ -110,6 +110,11 @@ $('.sold_lands_button').click(function(){
   $('#recently_sold_lands_block').show();
 });
 
+// Show recently sold alert if exists on page load
+<?php if ($recently_sold_lands) { ?>
+$('.recently_sold_alert').show();
+<?php } ?>
+
 // 
 // Preset Logic
 // 

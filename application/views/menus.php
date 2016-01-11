@@ -8,11 +8,6 @@
       <?php echo $recently_sold_lands ? count($recently_sold_lands) : 0; ?> </span> Sales</strong>
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
       </button>
-    <?php if ($recently_sold_lands) { ?>
-    <script>
-      $('.recently_sold_alert').show();
-    </script>
-    <?php } ?>
     </span>
 
   <!-- Cash Dropdown -->

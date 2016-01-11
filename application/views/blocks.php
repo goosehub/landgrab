@@ -71,7 +71,7 @@
             <td>Area <small>(Approx.)</small></td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_land_owned as $leader) { ?>
+    <?php foreach ($leaderboards['leaderboard_land_owned'] as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
@@ -105,7 +105,7 @@
             <td>Cash</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_cash_owned as $leader_account) { ?>
+    <?php foreach ($leaderboards['leaderboard_cash_owned'] as $leader_account) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
@@ -138,7 +138,7 @@
             <td>Land Description</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_highest_valued_land as $leader) { ?>
+    <?php foreach ($leaderboards['leaderboard_highest_valued_land'] as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
@@ -177,7 +177,7 @@
             <td>Land Description</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_cheapest_land as $leader) { ?>
+    <?php foreach ($leaderboards['leaderboard_cheapest_land'] as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>

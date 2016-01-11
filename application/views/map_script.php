@@ -443,7 +443,7 @@ function initMap()
       {
         data = JSON.parse(data);
         update_lands(data['lands']);
-        update_sales(data['sales']);
+        update_sales(data['recently_sold_lands']);
         update_financials(data['financials']);
         update_leaderboards(data['leaderboards']);
       }
