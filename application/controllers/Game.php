@@ -121,12 +121,40 @@ class Game extends CI_Controller {
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
         // Get leaderboards
+        // Net Value
         // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
-        $data['leaderboard_land_owned_data'] = $this->leaderboard_model->leaderboard_land_owned($world_key);
-        $data['leaderboard_cash_owned_data'] = $this->leaderboard_model->leaderboard_cash_owned($world_key);
-        $data['leaderboard_highest_valued_land_data'] = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
-        $data['leaderboard_cheapest_land_data'] = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
 
+        // Land owned
+        $leaderboard_land_owned = $this->leaderboard_model->leaderboard_land_owned($world_key);
+        foreach ($leaderboard_land_owned as &$leader) { 
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+        }
+        $data['leaderboard_land_owned'] = $leaderboard_land_owned;
+
+        // Cash owned
+        $leaderboard_cash_owned = $this->leaderboard_model->leaderboard_cash_owned($world_key);
+        foreach ($leaderboard_cash_owned as &$leader_account) { 
+            $leader['user'] = $this->user_model->get_user($leader_account['user_key']);
+        }
+        $data['leaderboard_cash_owned'] = $leaderboard_cash_owned;
+
+        // Highest value land
+        $leaderboard_highest_valued_land = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
+        foreach ($leaderboard_highest_valued_land as &$leader) {
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+        }
+        $data['leaderboard_highest_valued_land'] = $leaderboard_highest_valued_land;
+
+        // Cheapest land
+        $leaderboard_cheapest_land = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
+        foreach ($leaderboard_cheapest_land as &$leader) {
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+        }
+        $data['leaderboard_cheapest_land'] = $leaderboard_cheapest_land;
+        
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
@@ -136,11 +164,11 @@ class Game extends CI_Controller {
         if (isset($_GET['json'])) {
             // Reorganize data
             $data['leaderboards'] = [];
-            // $data['leaderboards'][] = $data['leaderboard_net_value_data'];
-            $data['leaderboards'][] = $data['leaderboard_land_owned_data'];
-            $data['leaderboards'][] = $data['leaderboard_cash_owned_data'];
-            $data['leaderboards'][] = $data['leaderboard_highest_valued_land_data'];
-            $data['leaderboards'][] = $data['leaderboard_cheapest_land_data'];
+            // $data['leaderboards']['leaderboard_net_value_data'] = $data['leaderboard_net_value_data'];
+            $data['leaderboards']['leaderboard_land_owned'] = $data['leaderboard_land_owned'];
+            $data['leaderboards']['leaderboard_cash_owned'] = $data['leaderboard_cash_owned'];
+            $data['leaderboards']['leaderboard_highest_valued_land'] = $data['leaderboard_highest_valued_land'];
+            $data['leaderboards']['leaderboard_cheapest_land'] = $data['leaderboard_cheapest_land'];
 
             $data['sales'] = [];
             $data['sales'] = $data['recently_sold_lands'];

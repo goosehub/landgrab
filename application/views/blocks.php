@@ -71,20 +71,18 @@
             <td>Area <small>(Approx.)</small></td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_land_owned_data as $leader) { ?>
-    <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
-    <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+    <?php foreach ($leaderboard_land_owned as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
                 <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
-                <?php echo $leader_user['username']; ?>
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
             </td>
             <td><?php echo $leader['COUNT(*)']; ?></td>
             <?php // Math for finding approx area of land owned ?>
-            <td>~<?php echo number_format($leader['COUNT(*)'] * (70 * $world['land_size'])); ?> Mi&sup2; | 
-            ~<?php echo number_format($leader['COUNT(*)'] * (112 * $world['land_size'])); ?> KM&sup2;</td>
+            <td><?php echo number_format($leader['COUNT(*)'] * (70 * $world['land_size'])); ?> Mi&sup2; | 
+            <?php echo number_format($leader['COUNT(*)'] * (112 * $world['land_size'])); ?> KM&sup2;</td>
         </tr>
     <?php $rank++; ?>
     <?php } ?>
@@ -107,14 +105,13 @@
             <td>Cash</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_cash_owned_data as $leader_account) { ?>
-    <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+    <?php foreach ($leaderboard_cash_owned as $leader_account) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
                 <span class="glyphicon glyphicon-user" aria-hidden="true" 
                 style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
-                <?php echo $leader_user['username']; ?>
+                <?php echo $leader['user']['username']; ?>
             </td>
             <td>$<?php echo number_format($leader_account['cash']); ?></td>
         </tr>
@@ -141,15 +138,13 @@
             <td>Land Description</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_highest_valued_land_data as $leader) { ?>
-    <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
-    <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+    <?php foreach ($leaderboard_highest_valued_land as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
                 <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
-                <?php echo $leader_user['username']; ?>
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
             </td>
             <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                 <?php echo $leader['land_name']; ?>
@@ -182,15 +177,13 @@
             <td>Land Description</td>
         </tr>    
     <?php $rank = 1; ?>
-    <?php foreach ($leaderboard_cheapest_land_data as $leader) { ?>
-    <?php $leader_account = $this->user_model->get_account_by_id($leader['account_key']); ?>
-    <?php $leader_user = $this->user_model->get_user($leader_account['user_key']); ?>
+    <?php foreach ($leaderboard_cheapest_land as $leader) { ?>
         <tr>
             <td><?php echo $rank; ?></td>
             <td>
                 <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
-                <?php echo $leader_user['username']; ?>
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
             </td>
             <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
                 <?php echo $leader['land_name']; ?>

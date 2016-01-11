@@ -445,7 +445,7 @@ function initMap()
         update_lands(data['lands']);
         update_sales(data['sales']);
         update_financials(data['financials']);
-        // update_leaderboards(data['leaderboards']);
+        update_leaderboards(data['leaderboards']);
       }
     });
   }
@@ -527,8 +527,13 @@ function initMap()
     return true;
   }
 
-  function update_leaderboards(data) {
-    // console.log(data);
+  function update_leaderboards(leaderboards) {
+    // console.log(leaderboards);
+    leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
+    leaderboard_cash_owned = leaderboards['leaderboard_cash_owned'];
+    leaderboard_highest_valued_land = leaderboards['leaderboard_highest_valued_land'];
+    leaderboard_cheapest_land = leaderboards['leaderboard_cheapest_land'];
+
     return true;
   }
 

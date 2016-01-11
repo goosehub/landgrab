@@ -80,8 +80,6 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    Ajax map
-    Ajax land sales
     Ajax Cash dropdown
     Ajax leaderboards
     Fix, refactor, and optimize Tax controller, iterate by person
