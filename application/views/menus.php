@@ -24,8 +24,8 @@
 
       <li>
         <strong><span id="player_land_count_display"><?php echo $player_land_count; ?></span> Lands</strong> | 
-        ~<?php echo number_format($player_land_count * (70 * $world['land_size'])); ?> Mi&sup2; | 
-        ~<?php echo number_format($player_land_count * (112 * $world['land_size'])); ?> KM&sup2; 
+        <span id="player_land_mi_display"><?php echo number_format($player_land_count * (70 * $world['land_size'])); ?></span> Mi&sup2; | 
+       <span id="player_land_km_display"><?php echo number_format($player_land_count * (112 * $world['land_size'])); ?></span> KM&sup2; 
       </li>
 
       <!-- Market Order deactivated -->

@@ -301,7 +301,9 @@ function initMap()
                 cash = cash - land_data['price'];
                 $('#cash_display').html(number_format(cash));
                 player_land_count = player_land_count + 1;
-                $('#player_land_count_display').html(player_land_count);
+                $('#player_land_count_display').html( number_format(player_land_count) );
+                $('#player_land_mi_display').html( number_format(player_land_count * (land_size * 70) ) );
+                $('#player_land_km_display').html( number_format(player_land_count * (land_size * 112) ) );
 
 
                 // Update box to reflect user ownership
@@ -442,8 +444,8 @@ function initMap()
         data = JSON.parse(data);
         update_lands(data['lands']);
         update_sales(data['sales']);
-        // update_leaderboards(data);
-        // update_financials(data);
+        update_financials(data['financials']);
+        // update_leaderboards(data['leaderboards']);
       }
     });
   }
@@ -509,21 +511,23 @@ function initMap()
 
       });
 
-      // for (var i = 0; i < number_of_new_sales; i++) {
-      //     alert(myStringArray[i]);
-      //     //Do something
-      // }
-
     }
     return true;
   }
 
-  function update_leaderboards(data) {
-    // console.log(data);
+  function update_financials(financials) {
+    // Update cash
+    $('#cash_display').html(number_format(financials['cash']));
+
+    // Update total lands
+    $('#player_land_count_display').html( number_format(financials['player_land_count']) );
+    $('#player_land_mi_display').html( number_format(financials['player_land_count'] * (land_size * 70) ) );
+    $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
+
     return true;
   }
 
-  function update_financials(data) {
+  function update_leaderboards(data) {
     // console.log(data);
     return true;
   }

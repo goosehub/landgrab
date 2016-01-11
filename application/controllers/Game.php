@@ -135,15 +135,19 @@ class Game extends CI_Controller {
         // Echo json if data request
         if (isset($_GET['json'])) {
             // Reorganize data
-            $data['leaderboard'] = [];
-            // $data['leaderboard'][] = $data['leaderboard_net_value_data'];
-            $data['leaderboard'][] = $data['leaderboard_land_owned_data'];
-            $data['leaderboard'][] = $data['leaderboard_cash_owned_data'];
-            $data['leaderboard'][] = $data['leaderboard_highest_valued_land_data'];
-            $data['leaderboard'][] = $data['leaderboard_cheapest_land_data'];
+            $data['leaderboards'] = [];
+            // $data['leaderboards'][] = $data['leaderboard_net_value_data'];
+            $data['leaderboards'][] = $data['leaderboard_land_owned_data'];
+            $data['leaderboards'][] = $data['leaderboard_cash_owned_data'];
+            $data['leaderboards'][] = $data['leaderboard_highest_valued_land_data'];
+            $data['leaderboards'][] = $data['leaderboard_cheapest_land_data'];
 
             $data['sales'] = [];
             $data['sales'] = $data['recently_sold_lands'];
+
+            $data['financials'] = [];
+            $data['financials']['cash'] = $data['account']['cash'];
+            $data['financials']['player_land_count'] = $data['player_land_count'];
 
             echo json_encode($data);
             return true;
