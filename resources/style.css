@@ -68,6 +68,9 @@ html, body {
     right: 3em;
   }
 }
+#recently_sold_alert {
+  display: none;
+}
 #cash_display {
   opacity: 1;
 }

@@ -87,6 +87,8 @@ High Priority
     Fix, refactor, and optimize Tax controller, iterate by person
 
 Low Priority
+    Feature
+        Build in way to force page refresh on users (for updates)
     Research
         Research replacing rebate system with something else
     Security/Cheating/Manipulation Prevention
@@ -100,6 +102,7 @@ Low Priority
         Move hosting to LiquidWeb
 
 No Priority
+    Cross browser color picker
     Detect consolidation accounts and other bot behavior
     Better loading screen
     Net Worth Leaderboard

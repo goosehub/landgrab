@@ -439,11 +439,9 @@ function initMap()
       cache: false,
       success: function(data)
       {
-        // console.log(data);
-
         data = JSON.parse(data);
         update_lands(data['lands']);
-        // update_sales(data);
+        update_sales(data['sales']);
         // update_leaderboards(data);
         // update_financials(data);
       }
@@ -451,40 +449,72 @@ function initMap()
   }
 
   function update_lands(lands) {
-    // console.log(lands);
     // Loop through lands
-    // Loop may run as many as 15,000 times, so be performant
+    // This loop may run as many as 15,000 times, so be performant
     number_of_lands = lands.length;
     for (i = 0; i < number_of_lands; i++) {
 
       // Set variables
+      land = lands[i];
       stroke_weight = 0.2; 
       stroke_color = '#222222';
       fill_color = "#0000ff";
       fill_opacity = 0;
-      if (log_check && lands[i]['account_key'] == account_id) {
+      if (log_check && land['account_key'] == account_id) {
         stroke_weight = 5;
         stroke_color = '#428BCA';
       }
-      if (lands[i]['claimed'] == 1) {
-        fill_color = lands[i]['primary_color'];
+      if (land['claimed'] == 1) {
+        fill_color = land['primary_color'];
         fill_opacity = 0.4;
       }
 
-      // Apply to box
-      boxes[lands[i]['id']].setOptions({
+      // Apply variables to box
+      boxes[land['id']].setOptions({
         strokeWeight: stroke_weight, 
         strokeColor: stroke_color,
         fillColor: fill_color,
         fillOpacity: fill_opacity
       });
+
     }
 
     return true;
   }
 
-  function update_sales(data) {
-    // console.log(data);
+  function update_sales(sales) {
+    // If not empty, do logic
+    if (sales.length) {
+
+      // Show alert
+      $('#recently_sold_alert').show();
+
+      // Update existing sales alert number (default to 0 when not visible)
+      number_of_new_sales = sales.length
+      var new_recently_sold = parseInt($('#recently_sold_lands_number').text()) + number_of_new_sales;
+      $('#recently_sold_lands_number').html(new_recently_sold);
+
+      // Add each sale to sales table
+      sales.reverse();
+      $.each(sales, function(index, sale) {
+
+        // Create string, and be sure to keep up to date with sales block
+        var new_sale_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
+            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
+            + '<td>' + sale['paying_username'] + '</td>'
+            + '<td><strong>$' + sale['amount'] + '</strong></td></tr>';
+
+        // Add to sales table after the header row
+        $('#sales_table tr:first').after(new_sale_string);
+
+      });
+
+      // for (var i = 0; i < number_of_new_sales; i++) {
+      //     alert(myStringArray[i]);
+      //     //Do something
+      // }
+
+    }
     return true;
   }
 

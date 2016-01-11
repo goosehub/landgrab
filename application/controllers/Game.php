@@ -12,7 +12,7 @@ class Game extends CI_Controller {
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
 
-	// Map view
+	// Map view and update json
 	public function index($world_slug = 3)
 	{
         // Defaults for unauthenticated users
@@ -43,10 +43,24 @@ class Game extends CI_Controller {
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
 
             // Get recently sold lands
-            $data['recently_sold_lands'] = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $account['last_load']);
+            $recently_sold_lands = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $account['last_load']);
             // Get last week of sales
             $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -1) );
-            $data['sold_land_history'] = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $day_ago);
+            $sold_land_history = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $day_ago);
+
+            // Add usernames to this data
+            foreach ($sold_land_history as &$transaction) {
+                $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+                $paying_user = $this->user_model->get_user($paying_account['user_key']);
+                $transaction['paying_username'] = $paying_user['username'];
+            }
+            $data['sold_land_history'] = $sold_land_history;
+            foreach ($recently_sold_lands as &$transaction) {
+                $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+                $paying_user = $this->user_model->get_user($paying_account['user_key']);
+                $transaction['paying_username'] = $paying_user['username'];
+            }
+            $data['recently_sold_lands'] = $recently_sold_lands;
 
             // 
             // Get account financial information
@@ -119,8 +133,18 @@ class Game extends CI_Controller {
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
         // Echo json if data request
-        if (isset($_GET['json']))
-        {
+        if (isset($_GET['json'])) {
+            // Reorganize data
+            $data['leaderboard'] = [];
+            // $data['leaderboard'][] = $data['leaderboard_net_value_data'];
+            $data['leaderboard'][] = $data['leaderboard_land_owned_data'];
+            $data['leaderboard'][] = $data['leaderboard_cash_owned_data'];
+            $data['leaderboard'][] = $data['leaderboard_highest_valued_land_data'];
+            $data['leaderboard'][] = $data['leaderboard_cheapest_land_data'];
+
+            $data['sales'] = [];
+            $data['sales'] = $data['recently_sold_lands'];
+
             echo json_encode($data);
             return true;
         }

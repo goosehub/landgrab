@@ -11,7 +11,7 @@
     Try to avoid setting prices too high, so that taxes don't eat you to death.</p>
 </div>
 
-<!-- Recently Sold Lands -->
+<!-- Sold Lands -->
 <?php if ($log_check && $sold_land_history ) { ?>
 <div id="recently_sold_lands_block" class="center_block">
     <strong>Land Sales (24 hours)</strong>
@@ -21,22 +21,21 @@
     </button>
     <hr>
 
-    <table class="table table-bordered table-hover">
+    <table id="sales_table" class="table table-bordered table-hover">
       <tr class="info">
         <td>Land</td>
         <td>Bought by</td>
         <td>Amount</td>
       </tr>
     <?php $i = 0; 
-    foreach ($sold_land_history as $transaction) {
-      $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
-      $paying_user = $this->user_model->get_user($paying_account['user_key']); ?>
+    // Keep up to date with update_sales JS function
+    foreach ($sold_land_history as $transaction) { ?>
       <tr>
           <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
           <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
             <?php echo $transaction['name_at_sale']; ?>
           </a></td>
-          <td><?php echo $paying_user['username']; ?></td>
+          <td><?php echo $transaction['paying_username']; ?></td>
           <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
       </tr>
     <?php } ?>

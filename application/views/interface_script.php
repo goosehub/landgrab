@@ -78,10 +78,6 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('#register_input_username').focus();
 });
-$('.sold_lands_button').click(function(){
-  $('.center_block').hide();
-  $('#recently_sold_lands_block').show();
-});
 $('.market_order_button').click(function(){
   $('.center_block').hide();
   $('#market_order_block').show();
@@ -105,6 +101,13 @@ $('#leaderboard_highest_valued_land_button').click(function(){
 $('.leaderboard_cheapest_land_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_cheapest_land_block').show();
+});
+// hide button and reset number to 0
+$('.sold_lands_button').click(function(){
+  $('#recently_sold_alert').hide();
+  $('#recently_sold_lands_number').html('0');
+  $('.center_block').hide();
+  $('#recently_sold_lands_block').show();
 });
 
 // 
