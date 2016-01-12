@@ -123,7 +123,7 @@ class Game extends CI_Controller {
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
         // Get leaderboards
-        $data['leaderboards'] = $this->leaderboards($world_key);
+        $data['leaderboards'] = $this->leaderboards($world);
 
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
@@ -492,39 +492,63 @@ class Game extends CI_Controller {
     }
 
     // Get leaderboards
-    public function leaderboards($world_key)
+    public function leaderboards($world)
     {
+        $world_key = $world['id'];
         // Net Value
         // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
 
         // Land owned
         $leaderboard_land_owned = $this->leaderboard_model->leaderboard_land_owned($world_key);
+        $rank = 1;
         foreach ($leaderboard_land_owned as &$leader) { 
+            $leader['rank'] = $rank;
             $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            // Math for finding approx land area
+            $leader['land_mi'] = number_format($leader['COUNT(*)'] * (70 * $world['land_size']));
+            $leader['land_km'] = number_format($leader['COUNT(*)'] * (112 * $world['land_size']));
+            $rank++;
         }
         $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;
 
         // Cash owned
         $leaderboard_cash_owned = $this->leaderboard_model->leaderboard_cash_owned($world_key);
-        foreach ($leaderboard_cash_owned as &$leader_account) { 
-            $leader['user'] = $this->user_model->get_user($leader_account['user_key']);
+        $rank = 1;
+        foreach ($leaderboard_cash_owned as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['user'] = $this->user_model->get_user($leader['user_key']);
+            $rank++;
         }
         $leaderboards['leaderboard_cash_owned'] = $leaderboard_cash_owned;
 
         // Highest value land
         $leaderboard_highest_valued_land = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
+        $rank = 1;
         foreach ($leaderboard_highest_valued_land as &$leader) {
+            $leader['rank'] = $rank;
             $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $leader['content'] = mb_substr(strip_tags($leader['content']), 0, 42);
+            if (strlen(strip_tags($leader['content'])) === 42) { 
+                $leader['content'] .= '...'; 
+            } 
+            $rank++;
         }
         $leaderboards['leaderboard_highest_valued_land'] = $leaderboard_highest_valued_land;
 
         // Cheapest land
         $leaderboard_cheapest_land = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
+        $rank = 1;
         foreach ($leaderboard_cheapest_land as &$leader) {
+            $leader['rank'] = $rank;
             $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $leader['content'] = mb_substr(strip_tags($leader['content']), 0, 42);
+            if (strlen(strip_tags($leader['content'])) === 42) { 
+                $leader['content'] .= '...'; 
+            }
+            $rank++;
         }
         $leaderboards['leaderboard_cheapest_land'] = $leaderboard_cheapest_land;
 

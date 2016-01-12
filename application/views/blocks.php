@@ -55,150 +55,6 @@
     <hr>
 </div>
 
-<!-- Leaderboard land_owned Block -->
-<div id="leaderboard_land_owned_block" class="leaderboard_block center_block">
-    <strong>Land Leaderboard</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <table class="table">
-        <tr class="info">
-            <td>Rank</td>
-            <td>Player</td>    
-            <td>Lands Owned</td>
-            <td>Area <small>(Approx.)</small></td>
-        </tr>    
-    <?php $rank = 1; ?>
-    <?php foreach ($leaderboards['leaderboard_land_owned'] as $leader) { ?>
-        <tr>
-            <td><?php echo $rank; ?></td>
-            <td>
-                <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
-                <?php echo $leader['user']['username']; ?>
-            </td>
-            <td><?php echo $leader['COUNT(*)']; ?></td>
-            <?php // Math for finding approx area of land owned ?>
-            <td><?php echo number_format($leader['COUNT(*)'] * (70 * $world['land_size'])); ?> Mi&sup2; | 
-            <?php echo number_format($leader['COUNT(*)'] * (112 * $world['land_size'])); ?> KM&sup2;</td>
-        </tr>
-    <?php $rank++; ?>
-    <?php } ?>
-    </table>
-
-</div>
-
-<!-- Leaderboard cash_owned Block -->
-<div id="leaderboard_cash_owned_block" class="leaderboard_block center_block">
-    <strong>Cash Leaderboard</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <table class="table">
-        <tr class="info">
-            <td>Rank</td>
-            <td>Player</td>
-            <td>Cash</td>
-        </tr>    
-    <?php $rank = 1; ?>
-    <?php foreach ($leaderboards['leaderboard_cash_owned'] as $leader_account) { ?>
-        <tr>
-            <td><?php echo $rank; ?></td>
-            <td>
-                <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader_account['primary_color']; ?>"> </span>
-                <?php echo $leader['user']['username']; ?>
-            </td>
-            <td>$<?php echo number_format($leader_account['cash']); ?></td>
-        </tr>
-    <?php $rank++; ?>
-    <?php } ?>
-    </table>
-
-</div>
-
-<!-- Leaderboard highest_valued_land Block -->
-<div id="leaderboard_highest_valued_land_block" class="leaderboard_block center_block">
-    <strong>Highest Value Land Leaderboard</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <table class="table">
-        <tr class="info">
-            <td>Rank</td>
-            <td>Player</td>
-            <td>Land Name</td>
-            <td>Land Price</td>
-            <td>Land Description</td>
-        </tr>    
-    <?php $rank = 1; ?>
-    <?php foreach ($leaderboards['leaderboard_highest_valued_land'] as $leader) { ?>
-        <tr>
-            <td><?php echo $rank; ?></td>
-            <td>
-                <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
-                <?php echo $leader['user']['username']; ?>
-            </td>
-            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
-                <?php echo $leader['land_name']; ?>
-            </a></td>
-            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
-                $<?php echo number_format($leader['price']); ?>
-            </a></td>
-            <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
-        </tr>
-    <?php $rank++; ?>
-    <?php } ?>
-    </table>
-
-</div>
-
-<!-- Leaderboard cheapest_land Block -->
-<div id="leaderboard_cheapest_land_block" class="leaderboard_block center_block">
-    <strong>Cheapest Land Leaderboard</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <table class="table">
-        <tr class="info">
-            <td>Rank</td>
-            <td>Player</td>
-            <td>Land Name</td>
-            <td>Land Price</td>
-            <td>Land Description</td>
-        </tr>    
-    <?php $rank = 1; ?>
-    <?php foreach ($leaderboards['leaderboard_cheapest_land'] as $leader) { ?>
-        <tr>
-            <td><?php echo $rank; ?></td>
-            <td>
-                <span class="glyphicon glyphicon-user" aria-hidden="true" 
-                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
-                <?php echo $leader['user']['username']; ?>
-            </td>
-            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
-                <?php echo $leader['land_name']; ?>
-            </a></td>
-            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
-                $<?php echo number_format($leader['price']); ?>
-            </a></td>
-            <td><?php echo mb_substr(strip_tags($leader['content']), 0, 42); if (strlen(strip_tags($leader['content'])) > 42) { echo '...'; } ?></td>
-        </tr>
-    <?php $rank++; ?>
-    <?php } ?>
-    </table>
-
-</div>
-
 <!-- How To Play Block -->
 <div id="how_to_play_block" class="center_block">
     <strong>How To Play</strong>
@@ -268,6 +124,140 @@
     <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
     <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, /s4s/, 
     the rest of the Beta Testers, and all my users. Thank you!</p>
+</div>
+
+<!-- Leaderboard land_owned Block -->
+<div id="leaderboard_land_owned_block" class="leaderboard_block center_block">
+    <strong>Land Leaderboard</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <table id="leaderboard_land_owned_table" class="table">
+        <tr class="info">
+            <td>Rank</td>
+            <td>Player</td>    
+            <td>Lands Owned</td>
+            <td>Area <small>(Approx.)</small></td>
+        </tr>    
+    <?php foreach ($leaderboards['leaderboard_land_owned'] as $leader) { ?>
+        <tr>
+            <td><?php echo $leader['rank']; ?></td>
+            <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
+            </td>
+            <td><?php echo $leader['COUNT(*)']; ?></td>
+            <td><?php echo $leader['land_mi']; ?> Mi&sup2; | <?php echo $leader['land_km']; ?> KM&sup2;</td>
+        </tr>
+    <?php } ?>
+    </table>
+
+</div>
+
+<!-- Leaderboard cash_owned Block -->
+<div id="leaderboard_cash_owned_block" class="leaderboard_block center_block">
+    <strong>Cash Leaderboard</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <table id="leaderboard_cash_owned_table" class="table">
+        <tr class="info">
+            <td>Rank</td>
+            <td>Player</td>
+            <td>Cash</td>
+        </tr>    
+    <?php foreach ($leaderboards['leaderboard_cash_owned'] as $leader) { ?>
+        <tr>
+            <td><?php echo $leader['rank']; ?></td>
+            <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                style="color: <?php echo $leader['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
+            </td>
+            <td>$<?php echo number_format($leader['cash']); ?></td>
+        </tr>
+    <?php } ?>
+    </table>
+
+</div>
+
+<!-- Leaderboard highest_valued_land Block -->
+<div id="leaderboard_highest_valued_land_block" class="leaderboard_block center_block">
+    <strong>Highest Value Land Leaderboard</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <table id="leaderboard_highest_valued_land_table" class="table">
+        <tr class="info">
+            <td>Rank</td>
+            <td>Player</td>
+            <td>Land Name</td>
+            <td>Land Price</td>
+            <td>Land Description</td>
+        </tr>    
+    <?php foreach ($leaderboards['leaderboard_highest_valued_land'] as $leader) { ?>
+        <tr>
+            <td><?php echo $leader['rank']; ?></td>
+            <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
+            </td>
+            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
+                <?php echo $leader['land_name']; ?>
+            </a></td>
+            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
+                $<?php echo number_format($leader['price']); ?>
+            </a></td>
+            <td><?php echo $leader['content']; ?></td>
+        </tr>
+    <?php } ?>
+    </table>
+
+</div>
+
+<!-- Leaderboard cheapest_land Block -->
+<div id="leaderboard_cheapest_land_block" class="leaderboard_block center_block">
+    <strong>Cheapest Land Leaderboard</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <table id="leaderboard_cheapest_land_table" class="table">
+        <tr class="info">
+            <td>Rank</td>
+            <td>Player</td>
+            <td>Land Name</td>
+            <td>Land Price</td>
+            <td>Land Description</td>
+        </tr>    
+    <?php foreach ($leaderboards['leaderboard_cheapest_land'] as $leader) { ?>
+        <tr>
+            <td><?php echo $leader['rank']; ?></td>
+            <td>
+                <span class="glyphicon glyphicon-user" aria-hidden="true" 
+                style="color: <?php echo $leader['account']['primary_color']; ?>"> </span>
+                <?php echo $leader['user']['username']; ?>
+            </td>
+            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
+                <?php echo $leader['land_name']; ?>
+            </a></td>
+            <td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=<?php echo $leader['coord_slug']; ?>">
+                $<?php echo number_format($leader['price']); ?>
+            </a></td>
+            <td><?php echo $leader['content']; ?></td>
+        </tr>
+    <?php } ?>
+    </table>
+
 </div>
 
 <!-- Report Bugs Block -->

@@ -449,7 +449,7 @@ function initMap()
           update_sales(data['recently_sold_lands']);
           update_financials(data['financials']);
         }
-        
+
       }
     });
   }
@@ -532,11 +532,78 @@ function initMap()
   }
 
   function update_leaderboards(leaderboards) {
-    // console.log(leaderboards);
+    // Set leaderboards
     leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
     leaderboard_cash_owned = leaderboards['leaderboard_cash_owned'];
     leaderboard_highest_valued_land = leaderboards['leaderboard_highest_valued_land'];
     leaderboard_cheapest_land = leaderboards['leaderboard_cheapest_land'];
+
+    // Empty current leaderboards
+    $('#leaderboard_land_owned_table').find('tr:gt(0)').remove();
+    $('#leaderboard_cash_owned_table').find('tr:gt(0)').remove();
+    $('#leaderboard_highest_valued_land_table').find('tr:gt(0)').remove();
+    $('#leaderboard_cheapest_land_table').find('tr:gt(0)').remove();
+
+    // 
+    // Add updated rows to leaderboards
+    // 
+
+    // leaderboard_land_owned
+    $.each(leaderboard_land_owned, function(index, leader) {
+      // Create string, and be sure to keep up to date with sales block
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['primary_color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['COUNT(*)'] + '</td>'
+            + '<td>' + leader['land_mi'] + ' Mi&sup2; | ' + leader['land_km'] + ' KM&sup2;</td></tr>';
+
+      // Add string to table
+      $('#leaderboard_land_owned_table tr:last').after(table_string);
+    });
+
+    // leaderboard_cash_owned
+    $.each(leaderboard_cash_owned, function(index, leader) {
+      // Create string, and be sure to keep up to date with sales block
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['primary_color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>$' + number_format(leader['cash']) + ' </a></td></tr>';
+
+      // Add string to table
+      $('#leaderboard_cash_owned_table tr:last').after(table_string);
+    });
+
+    // leaderboard_highest_valued_land
+    $.each(leaderboard_highest_valued_land, function(index, leader) {
+      // Create string, and be sure to keep up to date with sales block
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['account']['primary_color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
+            + '' + leader['land_name'] + ' </a></td>'
+            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
+            + '$' + number_format(leader['price']) + ' </a></td>'
+            + '<td>' + leader['content'] + '</td> </tr>';
+
+      // Add string to table
+      $('#leaderboard_highest_valued_land_table tr:last').after(table_string);
+    });
+
+    // leaderboard_cheapest_land
+    $.each(leaderboard_cheapest_land, function(index, leader) {
+      // Create string, and be sure to keep up to date with sales block
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['account']['primary_color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
+            + '' + leader['land_name'] + ' </a></td>'
+            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
+            + '$' + number_format(leader['price']) + ' </a></td>'
+            + '<td>' + leader['content'] + '</td> </tr>';
+
+      // Add string to table
+      $('#leaderboard_cheapest_land_table tr:last').after(table_string);
+    });
 
     return true;
   }
