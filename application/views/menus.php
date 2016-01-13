@@ -37,53 +37,84 @@
 
       <table class="table table-striped table-condensed">
         <tbody>
+
           <tr class="info"><td class="text-center"><strong>Charges</strong></td></tr>
+
           <tr class="danger">
             <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): </td>
-            <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($hourly_taxes); ?></span>/Hour</td>
+            <td class="text-right"><span class="money_info_item red_money">
+              $<span id="hourly_taxes"><?php echo number_format($hourly_taxes); ?></span>
+              </span>/Hour
+            </td>
           </tr>
           <tr class="success">
             <td class="text-left">Rebates: </td>
-            <td class="text-right"><span class="money_info_item green_money">$<?php echo number_format($estimated_rebate); ?></span>/Hour</td>
+            <td class="text-right"><span class="money_info_item green_money">
+              $<span id="estimated_rebate"><?php echo number_format($estimated_rebate); ?></span>
+            </span>/Hour
+          </td>
           </tr>
           <tr class="active">
             <td class="text-left">Income: </td>
             <td class="text-right">
-              <span class="money_info_item <?php echo $income_class; ?>"><?php echo $income_prefix; ?>$<?php echo number_format(abs($income)); ?></span>/Hour
+              <span id="income_span" class="money_info_item <?php echo $income_class; ?>">
+                <span id="income_prefix"><?php echo $income_prefix; ?></span>
+                $<span id="income"><?php echo number_format(abs($income)); ?></span>
+              </span>/Hour
             </td>
           </tr>
+
           <tr class="info"><td class="text-center"><strong>Trades</strong></td></tr>
+
           <tr class="danger">
             <td class="text-left">Purchases: </td>
             <td class="text-right">
-              <span class="money_info_item red_money">$<?php echo number_format($purchases['sum']); ?></span> /Week
+              <span class="money_info_item red_money">
+                $<span id="purchases"><?php echo number_format($purchases['sum']); ?></span>
+              </span> /Day
             </td>
           </tr>
           <tr class="success">
             <td class="text-left">Sales: </td>
             <td class="text-right">
-              <span class="money_info_item green_money">$<?php echo number_format($sales['sum']); ?></span> /Week
+              <span class="money_info_item green_money">
+                $<span id="sales"><?php echo number_format($sales['sum']); ?></span>
+              </span> /Day
             </td>
           </tr>
           <tr class="active">
             <td class="text-left">Yield: </td>
             <td class="text-right">
-              <span class="money_info_item <?php echo $yield_class; ?>"><?php echo $yield_prefix; ?>$<?php echo number_format(abs($yield)); ?></span> /Week
+              <span id="yield_span" class="money_info_item <?php echo $yield_class; ?>">
+                <span id="yield_prefix"><?php echo $yield_prefix; ?></span>
+                $<span id="yield"><?php echo number_format(abs($yield)); ?></span>
+              </span> /Day
             </td>
           </tr>
+
           <tr class="info"><td class="text-center"><strong>Earnings</strong></td></tr>
+
           <tr class="danger">
             <td class="text-left">Losses: </td>
-            <td class="text-right"><span class="money_info_item green_money">$<?php echo number_format($losses['sum']); ?></span>/Week</td>
+            <td class="text-right"><span class="money_info_item green_money">
+              $<span id="losses"><?php echo number_format($losses['sum']); ?></span>
+              </span>/Day
+            </td>
           </tr>
           <tr class="success">
             <td class="text-left">Gains: </td>
-            <td class="text-right"><span class="money_info_item red_money">$<?php echo number_format($gains['sum']); ?></span>/Week</td>
+            <td class="text-right"><span class="money_info_item red_money">
+              $<span id="gains"><?php echo number_format($gains['sum']); ?></span>
+              </span>/Day
+            </td>
           </tr>
           <tr class="active">
             <td class="text-left">Profit: </td>
             <td class="text-right">
-              <span class="money_info_item <?php echo $profit_class; ?>"><?php echo $profit_prefix; ?>$<?php echo number_format(abs($profit)); ?></span>/Week
+              <span id="profit_span" class="money_info_item <?php echo $profit_class; ?>">
+                <span id="span_prefix"><?php echo $profit_prefix; ?></span>
+                $<span id="profit"><?php echo number_format(abs($profit)); ?></span>
+              </span>/Day
             </td>
           </tr>
         </tbody>

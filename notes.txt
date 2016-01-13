@@ -80,11 +80,9 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    Ajax Cash dropdown
-    Ajax leaderboards
-    Fix, refactor, and optimize Tax controller, iterate by person
 
 Low Priority
+    Performance
     Feature
         Build in way to force page refresh on users (for updates)
     Research
@@ -96,10 +94,12 @@ Low Priority
         Improve/update how to play
     Bug
         Fix cash stat inaccuracy
+        Ajax Bankruptcy
     Infrastructure
         Move hosting to LiquidWeb
 
 No Priority
+    Tax cron optimization
     Cross browser color picker
     Detect consolidation accounts and other bot behavior
     Better loading screen

@@ -450,6 +450,8 @@ function initMap()
           update_financials(data['financials']);
         }
 
+        console.log('update');
+
       }
     });
   }
@@ -527,6 +529,31 @@ function initMap()
     $('#player_land_count_display').html( number_format(financials['player_land_count']) );
     $('#player_land_mi_display').html( number_format(financials['player_land_count'] * (land_size * 70) ) );
     $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
+
+    $('#hourly_taxes').html( number_format(financials['hourly_taxes']) );
+    $('#estimated_rebate').html( number_format(financials['estimated_rebate']) );
+    $('#income').html( number_format( Math.abs(financials['income']) ) );
+    $('#income_prefix').html( number_format(financials['income_prefix']) );
+    $('#income_span').removeClass();
+    $('#income_span').addClass( 'money_info_item' );
+    $('#income_span').addClass( financials['income_class'] );
+
+    $('#purchases').html( number_format(financials['purchases'].sum) );
+    $('#sales').html( number_format(financials['sales'].sum) );
+    $('#yield').html( number_format( Math.abs(financials['yield']) ) );
+    $('#yield_prefix').html( number_format(financials['yield_prefix']) );
+    $('#yield_span').removeClass();
+    $('#yield_span').addClass( 'money_info_item' );
+    $('#yield_span').addClass( financials['yield_class'] );
+
+    $('#losses').html( number_format(financials['losses'].sum) );
+    $('#gains').html( number_format(financials['gains'].sum) );
+    $('#profit').html( number_format( Math.abs(financials['profit']) ) );
+    $('#profit_prefix').html( number_format(financials['profit_prefix']) );
+    $('#profit_span').removeClass();
+    $('#profit_span').addClass( 'money_info_item' );
+    $('#profit_span').addClass( financials['profit_class'] );
+    
 
     return true;
   }

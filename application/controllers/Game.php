@@ -41,12 +41,17 @@ class Game extends CI_Controller {
         if ($log_check) {
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            $account_key = $account['id'];
+
+            // 
+            // Get Sales History
+            // 
 
             // Get recently sold lands
-            $recently_sold_lands = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $account['last_load']);
+            $recently_sold_lands = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
             // Get last week of sales
             $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -1) );
-            $sold_land_history = $this->transaction_model->sold_lands_by_account_over_period($account['id'], $day_ago);
+            $sold_land_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
 
             // Get sold land history
             foreach ($sold_land_history as &$transaction) {
@@ -69,12 +74,12 @@ class Game extends CI_Controller {
             // 
 
             // Taxes and Rebate
-            $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account['id']);
+            $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account_key);
             $player_land_count = $data['player_land_count'] = $land_sum_and_count['count'];
 
             // If less than 1 land, check if bankruptcy since last page load
             if ($player_land_count < 1) { 
-                $this->transaction_model->check_for_bankruptcy($account['id'], $account['last_load']); 
+                $data['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
             }
 
             $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
@@ -83,37 +88,43 @@ class Game extends CI_Controller {
             $data['income_class'] = 'green_money';
             $data['income_prefix'] = '+';
             if ($income < 0) {
-                $data['income_prefix'] = '-';
                 $data['income_class'] = 'red_money';
+                $data['income_prefix'] = '-';
             }
 
-            // Set timespan to 7 days
-            $timespan_days = 7;
+            // Set timespan days, match in financial menu language
+            $timespan_days = 1;
 
             // Purchases and Sales
-            $purchases = $data['purchases'] = $this->transaction_model->get_transaction_purchases($account['id'], $timespan_days);
-            $sales = $data['sales'] = $this->transaction_model->get_transaction_sales($account['id'], $timespan_days);
+            $purchases = $data['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
+            $sales = $data['sales'] = $this->transaction_model->get_transaction_sales($account_key, $timespan_days);
             $yield = $data['yield'] = $sales['sum'] - $purchases['sum'];
             $data['yield_class'] = 'green_money';
             $data['yield_prefix'] = '+';
             if ($yield < 0) {
-                $data['yield_prefix'] = '-';
                 $data['yield_class'] = 'red_money';
+                $data['yield_prefix'] = '-';
             }
 
             // Total Profit and Losses
-            $losses = $data['losses'] = $this->transaction_model->get_transaction_losses($account['id'], $timespan_days);
-            $gains = $data['gains'] = $this->transaction_model->get_transaction_gains($account['id'], $timespan_days);
+            $losses = $data['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
+            $gains = $data['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
             $profit = $data['profit'] = $gains['sum'] - $losses['sum'];
             $data['profit_class'] = 'green_money';
             $data['profit_prefix'] = '+';
             if ($profit < 0) {
-                $data['profit_prefix'] = '-';
                 $data['profit_class'] = 'red_money';
+                $data['profit_prefix'] = '-';
             }
 
+            // Set nulls to 0
+            $purchases['sum'] = $data['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
+            $sales['sum'] = $data['sales']['sum'] = is_null($sales['sum']) ? 0 : $sales['sum'];
+            $losses['sum'] = $data['losses']['sum'] = is_null($losses['sum']) ? 0 : $losses['sum'];
+            $gains['sum'] = $data['gains']['sum'] = is_null($gains['sum']) ? 0 : $gains['sum'];
+
             // Record account as loaded
-            $query_action = $this->user_model->account_loaded($account['id']);
+            $query_action = $this->user_model->account_loaded($account_key);
         }
 
         // Get worlds
@@ -137,6 +148,24 @@ class Game extends CI_Controller {
                 $data['financials'] = [];
                 $data['financials']['cash'] = $data['account']['cash'];
                 $data['financials']['player_land_count'] = $data['player_land_count'];
+
+                $data['financials']['hourly_taxes'] = $data['hourly_taxes'];
+                $data['financials']['estimated_rebate'] = $data['estimated_rebate'];
+                $data['financials']['income'] = $data['income'];
+                $data['financials']['income_class'] = $data['income_class'];
+                $data['financials']['income_prefix'] = $data['income_prefix'];
+                
+                $data['financials']['purchases'] = $data['purchases'];
+                $data['financials']['sales'] = $data['sales'];
+                $data['financials']['yield'] = $data['yield'];
+                $data['financials']['yield_class'] = $data['yield_class'];
+                $data['financials']['yield_prefix'] = $data['yield_prefix'];
+                
+                $data['financials']['losses'] = $data['losses'];
+                $data['financials']['gains'] = $data['gains'];
+                $data['financials']['profit'] = $data['profit'];
+                $data['financials']['profit_class'] = $data['profit_class'];
+                $data['financials']['profit_prefix'] = $data['profit_prefix'];
             }
 
             echo json_encode($data);

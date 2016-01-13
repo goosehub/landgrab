@@ -12,7 +12,7 @@
 </div>
 
 <!-- Sold Lands -->
-<?php if ($log_check && $sold_land_history ) { ?>
+<?php if ($log_check) { ?>
 <div id="recently_sold_lands_block" class="center_block">
     <strong>Land Sales (24 hours)</strong>
 
@@ -29,15 +29,17 @@
       </tr>
     <?php $i = 0; 
     // Keep up to date with update_sales JS function
-    foreach ($sold_land_history as $transaction) { ?>
-      <tr>
-          <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-            <?php echo $transaction['name_at_sale']; ?>
-          </a></td>
-          <td><?php echo $transaction['paying_username']; ?></td>
-          <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
-      </tr>
+    if ($sold_land_history) {
+        foreach ($sold_land_history as $transaction) { ?>
+          <tr>
+              <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <?php echo $transaction['name_at_sale']; ?>
+              </a></td>
+              <td><?php echo $transaction['paying_username']; ?></td>
+              <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
+          </tr>
+        <?php } ?>
     <?php } ?>
     </table>
 </div>
