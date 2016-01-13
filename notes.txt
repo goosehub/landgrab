@@ -82,7 +82,6 @@ How to fight bots
 High Priority
     Feature
     Security/Cheating/Manipulation Prevention
-        Prevent JS and CSS abuse in land content input with htmlpurifier
         Implement tokens for ajax land forms to prevent blind forms
         Block IP after excessive password attempts
         Detect consolidation accounts and other bot behavior

@@ -133,21 +133,22 @@ class Game extends CI_Controller {
 	// Claim unclaimed land
 	public function land_form()
     {
-        // User Information
+        // Authentication
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
-        }
-        else
-        {
+
+        // If user not logged in, return with fail
+        } else {
             $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
 
         // Remove cents if exists
-        if ( isset($_POST['price']) )
-        {
+        if ( isset($_POST['price']) ) {
+
+            // Detect cents, and remove if exists
             if (substr($_POST['price'], -3, 1) == '.') {
                 $_POST['price'] = substr($_POST['price'], 0, -3);
             }
@@ -173,19 +174,24 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
-        $world_key = $this->input->post('world_key_input');
         // Fail
 	    if ($this->form_validation->run() == FALSE) {
+
+            // Set Fail Errors
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             if (validation_errors() === '') {
                 echo '{"status": "fail", "message": "An unknown error occurred"}';
-                // validation_errors() === 'An unknown error occurred';
             }
+
+            // Return to map as failure
             echo '{"status": "fail", "message": "'. validation_errors() . '"}';
             return false;
+
 		// Success
 	    } else {
+
+            // Set inputs
 	    	$claimed = 1;
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
@@ -198,14 +204,21 @@ class Game extends CI_Controller {
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
 
-            // Only allow whitelisted tags for content, and add break tags in place of new lines
+            // Content input allow only gmail whitelisted tags
 	        $content = $this->input->post('content');
             $whitelisted_tags = '<a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';
+
+            // Disallow these character combination to prevent potential javascript injection
+            $disallowed_strings = ['onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
+            $content = str_replace($disallowed_strings, '', $content);
+
+            // add break tags in place of new lines
             $content = strip_tags(nl2br($content), $whitelisted_tags);
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
-            // Return to map
+
+            // Return to map as success
             echo '{"status": "success"}';
             return true;
 	    }
@@ -391,6 +404,7 @@ class Game extends CI_Controller {
     public function leaderboards($world)
     {
         $world_key = $world['id'];
+        
         // Net Value
         // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
 

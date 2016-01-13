@@ -143,15 +143,13 @@ html, body {
   z-index: 10;
 }
 
-/* Land Form */
+/* InfoWindow */
 #land_form .row {
   margin-right: 0;
 }
 #land_form textarea {
   height: 3em;
 }
-
-/* InfoWindow */
 .alert-green {
   background: #5CB85C;
   color: #fff;
@@ -164,10 +162,15 @@ html, body {
   min-width: 12em;
   text-align: center;
 }
-  /* Restrict the size of user images */
-.land_window img, .land_window img[style] {
+/* Prevent user HTML input from screwing up view */
+/* Specificity rules are very specific here */
+html body .land_window img, .land_window img[style] {
   max-height: 25vh !important;
   max-width: 25vw !important;
+}
+html body .land_content_div, html body .land_content_div[style] {
+  max-height: 200px !important;
+  overflow: auto !important;
 }
 
 /* Overlay */
