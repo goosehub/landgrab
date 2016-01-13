@@ -80,43 +80,43 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-
-Low Priority
     Feature
         Push hard refresh on users (for updates)
+        Ajax Bankruptcy
     Security/Cheating/Manipulation Prevention
         Prevent JS and CSS abuse in land content input with htmlpurifier
         Implement tokens for ajax land forms to prevent blind forms
     UX
         Improve/update how to play
     Bug
-        Fix cash stat inaccuracy
-        Ajax Bankruptcy
+        Test cash stat inaccuracy
     Infrastructure
         Move hosting to LiquidWeb
 
+Low Priority
+    Feature
+        Net Worth Leaderboard
+    Security/Cheating/Manipulation Prevention
+        General Security
+        Detect consolidation accounts and other bot behavior
+        Block IP after excessive password attempts
+    Performance
+        Tax cron optimization
+    UX
+        Cross browser color picker
+        Hide google maps saved places
+    Bug
+        ...
+
 No Priority
-    Tax cron optimization
-    Cross browser color picker
-    Detect consolidation accounts and other bot behavior
-    Better loading screen
-    Net Worth Leaderboard
     Figure out what to do with players on cash leaderboard with no land
     Figure out method to create accounts of old users for newly created worlds
     Update all owned lands at once
-    Off color after purchase
-    Whitelisted tags in constants
     Land link zoom based off box size
-    Block IP after excessive password attempts
     Make blocks ajax to improve page speed load
-    Hide google maps saved places
     Color difference at 180 LNG
-    Feedback on what Market Order bought
-    API
-    More social sharing
-    Max/min on lat lng limits
-        http://stackoverflow.com/questions/19316709/how-to-set-the-max-value-and-min-value-of-input-in-html5-by-javascript-or-jque
-    General Security
+    Better loading screen
+    API world
     Password Resets
     Reset account manually
     International Language Support

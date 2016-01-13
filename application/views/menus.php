@@ -25,10 +25,6 @@
        <span id="player_land_km_display"><?php echo number_format($financials['player_land_count'] * (112 * $world['land_size'])); ?></span> KM&sup2; 
       </li>
 
-      <!-- Market Order deactivated -->
-      <!-- <li role="separator" class="divider"></li> -->
-      <!-- <li><button class="market_order_button btn btn-action form-control"><strong>Place a Market Order</strong> </button></li> -->
-
       <li role="separator" class="divider"></li>
 
       <li><button class="sold_lands_button btn btn-primary form-control"><strong>Sales Over Last 24 Hours</strong> </button></li>

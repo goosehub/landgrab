@@ -11,7 +11,6 @@ $route['world/(:any)'] = "game/index/$1";
 // Game functions
 $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
-$route['market_order'] = "game/market_order";
 
 // Account functions
 $route['account/update_color'] = "account/update_color";

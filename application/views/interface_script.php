@@ -78,10 +78,6 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('#register_input_username').focus();
 });
-$('.market_order_button').click(function(){
-  $('.center_block').hide();
-  $('#market_order_block').show();
-});
 $('#leaderboard_net_value_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_net_value_block').show();
@@ -114,41 +110,5 @@ $('.sold_lands_button').click(function(){
 <?php if ($log_check && $sales['sales_since_last_update']) { ?>
 $('.recently_sold_alert').show();
 <?php } ?>
-
-// 
-// Preset Logic
-// 
-
-function set_market_order_preset(latmin, latmax, lngmin, lngmax) {
-  $('#min_lat_input').val(latmin);
-  $('#max_lat_input').val(latmax);
-  $('#min_lng_input').val(lngmin);
-  $('#max_lng_input').val(lngmax);
-}
-
-$('#north_america_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#south_america_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#europe_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#africa_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#russia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#asia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#middle_east_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
-$('#australia_preset').click(function(e){
-  set_market_order_preset($(this).attr('latmin'), $(this).attr('latmax'), $(this).attr('lngmin'), $(this).attr('lngmax'));
-});
 
 </script>
