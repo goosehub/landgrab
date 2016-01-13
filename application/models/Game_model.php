@@ -37,16 +37,6 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
- // Get all lands where claimed
- function get_all_lands_in_world_where_claimed($world_key)
- {
-    $this->db->select('*');
-    $this->db->from('land');
-    $this->db->where('world_key', $world_key);
-    $this->db->where('claimed', 1);
-    $query = $this->db->get();
-    return $query->result_array();
- }
  // Get single land
  function get_single_land($world_key, $coord_slug)
  {
@@ -88,18 +78,6 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
- // Forfeit all land of account
- function forfeit_all_land_of_account($account_id, $price)
- {
-    $data = array(
-        'claimed' => 0,
-        'account_key' => 0,
-        'price' => $price
-    );
-    $this->db->where('account_key', $account_id);
-    $this->db->update('land', $data);
-    return true;
- }
  // Get projected tax
  function get_sum_and_count_of_account_land($account_id)
  {
@@ -109,16 +87,6 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
- }
- // Record most recent rebate
- function record_most_recent_rebate($latest_rebate, $world_key)
- {
-    $data = array(
-        'latest_rebate' => $latest_rebate
-    );
-    $this->db->where('id', $world_key);
-    $this->db->update('world', $data);
-    return true;
  }
  // Market Order Select
  function market_order_select($world_key, $account_key, $max_lands, $max_price, $min_lat, $max_lat, $min_lng, $max_lng)
