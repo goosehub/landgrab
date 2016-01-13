@@ -1,14 +1,14 @@
 <!-- Bankruptcy Block -->
 <div id="bankruptcy_block" class="center_block">
-  <strong>You've gone Bankrupt</strong>
+  <strong class="text-danger">You've gone Bankrupt</strong>
 
   <button type="button" class="exit_center_block btn btn-default btn-sm">
     <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
   </button>
     <hr>
-
-    <p>You've ran out of cash. You're lands have been repossessed, and you're cash reset. You've lost this round.
-    Try to avoid setting prices too high, so that taxes don't eat you to death.</p>
+    <p>You've ran out of cash. You're lands have been repossessed, and you're cash reset.</p>
+    <p>Try to avoid setting prices too high, so that taxes don't take you to bankruptcy.</p>
+    <p>You've lost this round, but what doesn't kill you makes you stronger.</p>
 </div>
 
 <!-- Sold Lands -->

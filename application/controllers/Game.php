@@ -68,6 +68,10 @@ class Game extends CI_Controller {
 
         // If data request, encode data in json and deliver
         if (isset($_GET['json'])) {
+            // Send refresh signal to clients when true
+            $data['refresh'] = false;
+
+            // Encode and send data
             echo json_encode($data);
             return true;
         }
@@ -332,9 +336,10 @@ class Game extends CI_Controller {
         $player_land_count = $financials['player_land_count'] = $land_sum_and_count['count'];
 
         // If less than 1 land, check if bankruptcy since last page load
-        if ($player_land_count < 1) { 
+        $financials['bankruptcy'] = false;
+        // if ($player_land_count < 1) { 
             $financials['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
-        }
+        // }
 
         // Taxes and Rebates
         $hourly_taxes = $financials['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];

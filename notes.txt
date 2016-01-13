@@ -81,15 +81,16 @@ How to fight bots
 
 High Priority
     Feature
-        Push hard refresh on users (for updates)
-        Ajax Bankruptcy
     Security/Cheating/Manipulation Prevention
         Prevent JS and CSS abuse in land content input with htmlpurifier
         Implement tokens for ajax land forms to prevent blind forms
+        Block IP after excessive password attempts
+        Detect consolidation accounts and other bot behavior
     UX
         Improve/update how to play
-    Bug
-        Test cash stat inaccuracy
+        Cross browser color picker
+    Bugs
+        Testing
     Infrastructure
         Move hosting to LiquidWeb
 
@@ -98,18 +99,12 @@ Low Priority
         Net Worth Leaderboard
     Security/Cheating/Manipulation Prevention
         General Security
-        Detect consolidation accounts and other bot behavior
-        Block IP after excessive password attempts
     Performance
         Tax cron optimization
         Speed optimization
-    UX
-        Cross browser color picker
-        Hide google maps saved places
-    Bug
-        ...
 
 No Priority
+    Hide google maps saved places
     Figure out what to do with players on cash leaderboard with no land
     Figure out method to create accounts of old users for newly created worlds
     Update all owned lands at once

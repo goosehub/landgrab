@@ -443,6 +443,12 @@ function initMap()
       {
         data = JSON.parse(data);
 
+        // Check for refresh signal from server 
+        if (data['refresh']) {
+          alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
+          window.location.reload();
+        }
+
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
         if (log_check) {
@@ -510,7 +516,7 @@ function initMap()
         var new_sale_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
             + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
             + '<td>' + sale['paying_username'] + '</td>'
-            + '<td><strong>$' + sale['amount'] + '</strong></td></tr>';
+            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td></tr>';
 
         // Add to sales table after the header row
         $('#sales_table tr:first').after(new_sale_string);
@@ -554,6 +560,10 @@ function initMap()
     $('#profit_span').addClass( 'money_info_item' );
     $('#profit_span').addClass( financials['profit_class'] );
     
+    // Check for bankruptcy
+    if (financials['bankruptcy'].length) {
+      $('#bankruptcy_block').show();
+    }
 
     return true;
   }
