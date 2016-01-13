@@ -16,6 +16,9 @@
     <!-- Bootstrap -->
     <link href="<?=base_url()?>resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
+    <!-- JSColor -->
+    <script src="<?=base_url()?>resources/jscolor/jscolor.min.js"></script>
+
     <!-- Custom Fonts -->
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 

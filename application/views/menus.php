@@ -126,18 +126,18 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="user_dropdown">
           <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Log Out</a></li>
-      <li role="separator" class="divider"></li>
-      <li>
-          <?php echo form_open('user/update_color'); ?>
-          <div class="row"><div class="col-md-3">
-              <label for="_input_primary_color">Color</label>
-          </div><div class="col-md-9">
-              <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-              <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
-              value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
-          </div></div>
-          </form>
-      </li>
+          <li role="separator" class="divider"></li>
+          <li>
+              <?php echo form_open('user/update_color'); ?>
+              <div class="row"><div class="col-md-3">
+                  <label for="_input_primary_color">Color</label>
+              </div><div class="col-md-9">
+                  <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                  <input class="jscolor color_input form-control" id="account_input_primary_color" name="primary_color" 
+                  value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
+              </div></div>
+              </form>
+          </li>
         </ul>
     </div>
     <?php } else { ?>

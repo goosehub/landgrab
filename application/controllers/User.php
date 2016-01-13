@@ -163,12 +163,22 @@ class User extends CI_Controller {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             redirect('world/' . $world_key, 'refresh');
+
         // Success
         } else {
+
+            // Set color
             $primary_color = $this->input->post('primary_color');
+
+            // Add hash
+            $primary_color = '#' . $primary_color;
+
+            // Set account
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $query_action = $this->user_model->update_account_primary_color($account_key, $primary_color);
+
+            // Redirect to game
             redirect('world/' . $world_key, 'refresh');
         }
     }

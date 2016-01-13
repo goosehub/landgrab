@@ -98,7 +98,7 @@
                 <label for="_input_primary_color">Your Land Color</label>
             </div><div class="col-md-6">
                 <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-                <input type="color" class="color_input form-control" id="account_input_primary_color" name="primary_color" 
+                <input class="jscolor color_input form-control" id="account_input_primary_color" name="primary_color" 
                 value="<?php echo $account['primary_color']; ?>" onchange="this.form.submit()">
             </div></div>
             </form>

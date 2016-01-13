@@ -12,7 +12,7 @@ class Game extends CI_Controller {
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
 
-	// Map view and update json
+	// Game view and update json
 	public function index($world_slug = 3)
 	{
         // Authentication
@@ -184,7 +184,7 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "An unknown error occurred"}';
             }
 
-            // Return to map as failure
+            // Return to game as failure
             echo '{"status": "fail", "message": "'. validation_errors() . '"}';
             return false;
 
@@ -218,7 +218,7 @@ class Game extends CI_Controller {
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
 
-            // Return to map as success
+            // Return to game as success
             echo '{"status": "success"}';
             return true;
 	    }
@@ -404,7 +404,7 @@ class Game extends CI_Controller {
     public function leaderboards($world)
     {
         $world_key = $world['id'];
-        
+
         // Net Value
         // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
 
