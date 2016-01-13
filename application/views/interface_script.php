@@ -105,13 +105,13 @@ $('.leaderboard_cheapest_land_button').click(function(){
 // hide button and reset number to 0
 $('.sold_lands_button').click(function(){
   $('#recently_sold_alert').hide();
-  $('#recently_sold_lands_number').html('0');
+  $('#sales_since_last_update_number').html('0');
   $('.center_block').hide();
-  $('#recently_sold_lands_block').show();
+  $('#sales_since_last_update_block').show();
 });
 
 // Show recently sold alert if exists on page load
-<?php if ($log_check && $recently_sold_lands) { ?>
+<?php if ($log_check && $sales['sales_since_last_update']) { ?>
 $('.recently_sold_alert').show();
 <?php } ?>
 

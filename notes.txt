@@ -82,11 +82,8 @@ How to fight bots
 High Priority
 
 Low Priority
-    Performance
     Feature
-        Build in way to force page refresh on users (for updates)
-    Research
-        Research replacing rebate system with something else
+        Push hard refresh on users (for updates)
     Security/Cheating/Manipulation Prevention
         Prevent JS and CSS abuse in land content input with htmlpurifier
         Implement tokens for ajax land forms to prevent blind forms

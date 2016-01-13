@@ -13,7 +13,7 @@
 
 <!-- Sold Lands -->
 <?php if ($log_check) { ?>
-<div id="recently_sold_lands_block" class="center_block">
+<div id="sales_since_last_update_block" class="center_block">
     <strong>Land Sales (24 hours)</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
@@ -29,8 +29,8 @@
       </tr>
     <?php $i = 0; 
     // Keep up to date with update_sales JS function
-    if ($sold_land_history) {
-        foreach ($sold_land_history as $transaction) { ?>
+    if ($sales['sales_history']) {
+        foreach ($sales['sales_history'] as $transaction) { ?>
           <tr>
               <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
               <span class="glyphicon glyphicon-star" aria-hidden="true"></span>

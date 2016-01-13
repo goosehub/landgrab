@@ -18,9 +18,8 @@ class Game extends CI_Controller {
         // Defaults for unauthenticated users
         $log_check = $data['log_check'] = $data['user_id'] = false;
 
-        // User Information
+        // Authentication
         if ($this->session->userdata('logged_in')) {
-            // Get user data
             $log_check = $data['log_check'] = true;
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
@@ -32,145 +31,53 @@ class Game extends CI_Controller {
 
         // Get world
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_slug);
+
+        // Return 404 if world not found
         if (!$world) {
             $this->load->view('errors/page_not_found', $data);
             return false;
         }
+
+        // Set world key
         $world_key = $world['id'];
 
+        // If logged in, get account specific data
         if ($log_check) {
+
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
             $account_key = $account['id'];
 
-            // 
             // Get Sales History
-            // 
+            $data['sales'] = $this->sales($account);
 
-            // Get recently sold lands
-            $recently_sold_lands = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
-            // Get last week of sales
-            $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -1) );
-            $sold_land_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
-
-            // Get sold land history
-            foreach ($sold_land_history as &$transaction) {
-                $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
-                $paying_user = $this->user_model->get_user($paying_account['user_key']);
-                $transaction['paying_username'] = $paying_user['username'];
-            }
-            $data['sold_land_history'] = $sold_land_history;
-
-            // Get recently sold lands
-            foreach ($recently_sold_lands as &$transaction) {
-                $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
-                $paying_user = $this->user_model->get_user($paying_account['user_key']);
-                $transaction['paying_username'] = $paying_user['username'];
-            }
-            $data['recently_sold_lands'] = $recently_sold_lands;
-
-            // 
             // Get account financial information
-            // 
-
-            // Taxes and Rebate
-            $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account_key);
-            $player_land_count = $data['player_land_count'] = $land_sum_and_count['count'];
-
-            // If less than 1 land, check if bankruptcy since last page load
-            if ($player_land_count < 1) { 
-                $data['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
-            }
-
-            $hourly_taxes = $data['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
-            $estimated_rebate = $data['estimated_rebate'] = $world['latest_rebate'] * $land_sum_and_count['count'];
-            $income = $data['income'] = $estimated_rebate - $hourly_taxes;
-            $data['income_class'] = 'green_money';
-            $data['income_prefix'] = '+';
-            if ($income < 0) {
-                $data['income_class'] = 'red_money';
-                $data['income_prefix'] = '-';
-            }
-
-            // Set timespan days, match in financial menu language
-            $timespan_days = 1;
-
-            // Purchases and Sales
-            $purchases = $data['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
-            $sales = $data['sales'] = $this->transaction_model->get_transaction_sales($account_key, $timespan_days);
-            $yield = $data['yield'] = $sales['sum'] - $purchases['sum'];
-            $data['yield_class'] = 'green_money';
-            $data['yield_prefix'] = '+';
-            if ($yield < 0) {
-                $data['yield_class'] = 'red_money';
-                $data['yield_prefix'] = '-';
-            }
-
-            // Total Profit and Losses
-            $losses = $data['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
-            $gains = $data['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
-            $profit = $data['profit'] = $gains['sum'] - $losses['sum'];
-            $data['profit_class'] = 'green_money';
-            $data['profit_prefix'] = '+';
-            if ($profit < 0) {
-                $data['profit_class'] = 'red_money';
-                $data['profit_prefix'] = '-';
-            }
-
-            // Set nulls to 0
-            $purchases['sum'] = $data['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
-            $sales['sum'] = $data['sales']['sum'] = is_null($sales['sum']) ? 0 : $sales['sum'];
-            $losses['sum'] = $data['losses']['sum'] = is_null($losses['sum']) ? 0 : $losses['sum'];
-            $gains['sum'] = $data['gains']['sum'] = is_null($gains['sum']) ? 0 : $gains['sum'];
+            $data['financials'] = $this->financials($account, $world);
 
             // Record account as loaded
             $query_action = $this->user_model->account_loaded($account_key);
         }
 
-        // Get worlds
-        $data['worlds'] = $this->user_model->get_all_worlds();
-
-        // Get lands
-        $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
-
         // Get leaderboards
         $data['leaderboards'] = $this->leaderboards($world);
+
+        // Get all worlds
+        $data['worlds'] = $this->user_model->get_all_worlds();
+
+        // Get all lands
+        $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
         // Validation erros
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
-        // Echo json if data request
+        // If data request, encode data in json and deliver
         if (isset($_GET['json'])) {
-            // Reorganize data
-            if ($log_check) {
-                $data['financials'] = [];
-                $data['financials']['cash'] = $data['account']['cash'];
-                $data['financials']['player_land_count'] = $data['player_land_count'];
-
-                $data['financials']['hourly_taxes'] = $data['hourly_taxes'];
-                $data['financials']['estimated_rebate'] = $data['estimated_rebate'];
-                $data['financials']['income'] = $data['income'];
-                $data['financials']['income_class'] = $data['income_class'];
-                $data['financials']['income_prefix'] = $data['income_prefix'];
-                
-                $data['financials']['purchases'] = $data['purchases'];
-                $data['financials']['sales'] = $data['sales'];
-                $data['financials']['yield'] = $data['yield'];
-                $data['financials']['yield_class'] = $data['yield_class'];
-                $data['financials']['yield_prefix'] = $data['yield_prefix'];
-                
-                $data['financials']['losses'] = $data['losses'];
-                $data['financials']['gains'] = $data['gains'];
-                $data['financials']['profit'] = $data['profit'];
-                $data['financials']['profit_class'] = $data['profit_class'];
-                $data['financials']['profit_prefix'] = $data['profit_prefix'];
-            }
-
             echo json_encode($data);
             return true;
         }
+
         // Load view
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
@@ -520,6 +427,99 @@ class Game extends CI_Controller {
         return true;
     }
 
+    // Get Sales
+    public function sales($account)
+    {
+        $account_key = $account['id'];
+
+        // Get lands since last update
+        $sales_since_last_update = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
+
+        // Get sales history
+        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -1) );
+        $sales_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
+
+        // Add usernames to sales history
+        foreach ($sales_history as &$transaction) {
+            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+            $paying_user = $this->user_model->get_user($paying_account['user_key']);
+            $transaction['paying_username'] = $paying_user['username'];
+        }
+        $sales['sales_history'] = $sales_history;
+
+        // Add usernames to sales since last update
+        foreach ($sales_since_last_update as &$transaction) {
+            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+            $paying_user = $this->user_model->get_user($paying_account['user_key']);
+            $transaction['paying_username'] = $paying_user['username'];
+        }
+        $sales['sales_since_last_update'] = $sales_since_last_update;
+
+        // Return data
+        return $sales;
+    }
+
+    // Get Financials
+    public function financials($account, $world)
+    {
+        $account_key = $account['id'];
+
+        // Get account information
+        $financials['cash'] = $account['cash'];
+        $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account_key);
+        $player_land_count = $financials['player_land_count'] = $land_sum_and_count['count'];
+
+        // If less than 1 land, check if bankruptcy since last page load
+        if ($player_land_count < 1) { 
+            $financials['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
+        }
+
+        // Taxes and Rebates
+        $hourly_taxes = $financials['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
+        $estimated_rebate = $financials['estimated_rebate'] = $world['latest_rebate'] * $land_sum_and_count['count'];
+        $income = $financials['income'] = $estimated_rebate - $hourly_taxes;
+        $financials['income_class'] = 'green_money';
+        $financials['income_prefix'] = '+';
+        if ($income < 0) {
+            $financials['income_class'] = 'red_money';
+            $financials['income_prefix'] = '-';
+        }
+
+        // Set timespan days, match in financial menu language
+        $timespan_days = 1;
+
+        // Purchases and Sales
+        $purchases = $financials['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
+        $sales = $financials['sales'] = $this->transaction_model->get_transaction_sales($account_key, $timespan_days);
+        $yield = $financials['yield'] = $sales['sum'] - $purchases['sum'];
+        $financials['yield_class'] = 'green_money';
+        $financials['yield_prefix'] = '+';
+        if ($yield < 0) {
+            $financials['yield_class'] = 'red_money';
+            $financials['yield_prefix'] = '-';
+        }
+
+        // Total Profit and Losses
+        $losses = $financials['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
+        $gains = $financials['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
+        $profit = $financials['profit'] = $gains['sum'] - $losses['sum'];
+        $financials['profit_class'] = 'green_money';
+        $financials['profit_prefix'] = '+';
+        if ($profit < 0) {
+            $financials['profit_class'] = 'red_money';
+            $financials['profit_prefix'] = '-';
+        }
+
+        // Set nulls to 0
+        $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
+        $sales['sum'] = $financials['sales']['sum'] = is_null($sales['sum']) ? 0 : $sales['sum'];
+        $losses['sum'] = $financials['losses']['sum'] = is_null($losses['sum']) ? 0 : $losses['sum'];
+        $gains['sum'] = $financials['gains']['sum'] = is_null($gains['sum']) ? 0 : $gains['sum'];
+
+        // Return data
+        return $financials;
+    }
+
     // Get leaderboards
     public function leaderboards($world)
     {
@@ -581,6 +581,7 @@ class Game extends CI_Controller {
         }
         $leaderboards['leaderboard_cheapest_land'] = $leaderboard_cheapest_land;
 
+        // Return data
         return $leaderboards;
     }
 }

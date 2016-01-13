@@ -24,7 +24,7 @@ var land_size = <?php echo $world['land_size'] ?>;
     var username = "<?php echo $user['username']; ?>";
     var account_color = '<?php echo $account["primary_color"]; ?>';
     var cash = <?php echo $account['cash'] + ''; ?>;
-    var player_land_count = <?php echo $player_land_count; ?>;
+    var player_land_count = <?php echo $financials['player_land_count']; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
@@ -446,7 +446,7 @@ function initMap()
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
         if (log_check) {
-          update_sales(data['recently_sold_lands']);
+          update_sales(data['sales']['sales_since_last_update']);
           update_financials(data['financials']);
         }
 
@@ -499,8 +499,8 @@ function initMap()
 
       // Update existing sales alert number (default to 0 when not visible)
       number_of_new_sales = sales.length
-      var new_recently_sold = parseInt($('#recently_sold_lands_number').text()) + number_of_new_sales;
-      $('#recently_sold_lands_number').html(new_recently_sold);
+      var new_recently_sold = parseInt($('#sales_since_last_update_number').text()) + number_of_new_sales;
+      $('#sales_since_last_update_number').html(new_recently_sold);
 
       // Add each sale to sales table
       sales.reverse();
