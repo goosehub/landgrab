@@ -128,7 +128,7 @@
           <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Log Out</a></li>
       <li role="separator" class="divider"></li>
       <li>
-          <?php echo form_open('account/update_color'); ?>
+          <?php echo form_open('user/update_color'); ?>
           <div class="row"><div class="col-md-3">
               <label for="_input_primary_color">Color</label>
           </div><div class="col-md-9">

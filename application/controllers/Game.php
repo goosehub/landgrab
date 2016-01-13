@@ -15,10 +15,8 @@ class Game extends CI_Controller {
 	// Map view and update json
 	public function index($world_slug = 3)
 	{
-        // Defaults for unauthenticated users
-        $log_check = $data['log_check'] = $data['user_id'] = false;
-
         // Authentication
+        $log_check = $data['log_check'] = $data['user_id'] = false;
         if ($this->session->userdata('logged_in')) {
             $log_check = $data['log_check'] = true;
             $session_data = $this->session->userdata('logged_in');
@@ -38,27 +36,23 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // Set world key
-        $world_key = $world['id'];
-
         // If logged in, get account specific data
         if ($log_check) {
 
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
-            $account_key = $account['id'];
 
-            // Get Sales History
+            // Get account sales
             $data['sales'] = $this->sales($account);
 
-            // Get account financial information
+            // Get account financials
             $data['financials'] = $this->financials($account, $world);
 
             // Record account as loaded
-            $query_action = $this->user_model->account_loaded($account_key);
+            $query_action = $this->user_model->account_loaded($account['id']);
         }
 
-        // Get leaderboards
+        // Get world leaderboards
         $data['leaderboards'] = $this->leaderboards($world);
 
         // Get all worlds
@@ -67,7 +61,7 @@ class Game extends CI_Controller {
         // Get all lands
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
-        // Validation erros
+        // Validation errors
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
         $data['just_registered'] = $this->session->flashdata('just_registered');

@@ -13,7 +13,7 @@ $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
 
 // Account functions
-$route['account/update_color'] = "account/update_color";
+$route['user/update_color'] = "user/update_color";
 
 // User functions
 $route['user/login'] = "user/login";
