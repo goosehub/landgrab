@@ -28147,6 +28147,20 @@ INSERT INTO `world` (`id`, `slug`, `land_size`, `land_tax_rate`, `latest_rebate`
 (4, 'big', 3, '0.01', 0, 0, 1000, '2016-01-07 03:56:19', '2016-01-06 22:56:19'),
 (5, 'huge', 2, '0.01', 0, 0, 1000, '2016-01-07 03:56:54', '2016-01-06 22:56:54');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ip_request`
+--
+
+CREATE TABLE IF NOT EXISTS `ip_request` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(64) NOT NULL,
+  `request` varchar(64) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

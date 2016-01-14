@@ -172,6 +172,27 @@ Class user_model extends CI_Model
     $this->db->update('account', $data);
     return true;    
  }
+ // Create player account
+ function record_ip_request($ip, $request)
+ {
+    // Insert user into user
+    $data = array(
+    'ip' => $ip,
+    'request' => $request
+    );
+    $this->db->insert('ip_request', $data);
+ }
+ // Create player account
+ function check_ip_request_since_timestamp($ip, $request, $timestamp)
+ {
+    $this->db->select('*');
+    $this->db->from('ip_request');
+    $this->db->where('ip', $ip);
+    $this->db->where('request', $request);
+    $this->db->where('timestamp >', $timestamp);
+    $query = $this->db->get();
+    return $query->result_array();
+ }
 
 }
 ?>

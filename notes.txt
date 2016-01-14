@@ -83,7 +83,6 @@ High Priority
     Feature
     Security/Cheating/Manipulation Prevention
         Implement tokens for ajax land forms to prevent blind forms
-        Block IP after excessive password attempts
         Detect consolidation accounts and other bot behavior
     UX
         Improve/update how to play

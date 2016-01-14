@@ -17,6 +17,16 @@ class User extends CI_Controller {
 	// Login
 	public function login()
 	{
+        // Check if this is ip has failed login too many times
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * 1);
+        $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
+        $login_limit = 5;
+        if (count($ip_fails) > $login_limit) {
+            echo 'Too many login attempts from this IP';
+            die();
+        }
+
 		// Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
@@ -25,6 +35,10 @@ class User extends CI_Controller {
         $world_key = $this->input->post('world_key');
 		// Fail
         if ($this->form_validation->run() == FALSE) {
+            // Record failed request
+            $result = $this->user_model->record_ip_request($ip, 'login');   
+
+            // Set fail message and redirect to map
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
             redirect('world/' . $world_key, 'refresh');
