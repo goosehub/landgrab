@@ -281,6 +281,17 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         if ($transaction_type === 'buy')
         {
+            // Check for bots and/or consolidation trading
+            $suspicious_max = 1000000;
+            $suspicious_min = 800000;
+            if ($amount <= $suspicious_max && $amount >= $suspicious_min) {
+                $bot_check = $this->bot_pattern($seller_account_key, $suspicious_max, $suspicious_min);
+                if ($bot_check) {
+                    echo '{"error": "' . $bot_check . '"}';
+                    die();
+                }
+            }
+
             // Get seller and buying party info
             $seller_account = $this->user_model->get_account_by_id($seller_account_key);
 
@@ -306,6 +317,41 @@ class Game extends CI_Controller {
         return true;
     }
 
+    // Look for bot pattern
+    public function bot_pattern($account_key, $suspicious_max, $suspicious_min)
+    {
+        // Get sales to search for bot patterns in the last hour
+        $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * 1));
+        $sales_search = $this->transaction_model->sold_lands_by_account_over_period($account_key, $start_search);
+
+        // Not likely a bot if only a few sales
+        $total_sale_min = 3;
+        if ( count($sales_search) <= $total_sale_min) {
+            return false;
+        }
+
+        // Check for bot behavior
+        $found_suspicious_sales = 0;
+        foreach ($sales_search as $sale) {
+            if ($sale['amount'] <= $suspicious_max && $sale['amount'] >= $suspicious_min) {
+                $found_suspicious_sales++;
+            }
+        }
+        $suspicious_ratio_limit = 0.5;
+        $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
+
+        // Log ip, send message, and return false if suspicion is over the limit
+        if ($found_suspicious_sales > $suspicious_total_limit) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $result = $this->user_model->record_ip_request($ip, 'suspicious_sales');   
+
+            return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
+        }
+
+        // If here, pass and return false
+        return false;
+    }
+
     // Get Sales
     public function sales($account)
     {
@@ -315,7 +361,7 @@ class Game extends CI_Controller {
         $sales_since_last_update = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
 
         // Get sales history
-        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * -1) );
+        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 1) );
         $sales_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
 
         // Add usernames to sales history

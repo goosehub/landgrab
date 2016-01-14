@@ -80,10 +80,6 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    Feature
-    Security/Cheating/Manipulation Prevention
-        Implement tokens for ajax land forms to prevent blind forms
-        Detect consolidation accounts and other bot behavior
     UX
         Improve/update how to play
     Bugs
@@ -101,6 +97,8 @@ Low Priority
         Speed optimization
 
 No Priority
+    Implement tokens for ajax land forms to prevent blind forms
+    Improved detection of consolidation accounts and other bot behavior
     Hide google maps saved places
     Figure out what to do with players on cash leaderboard with no land
     Figure out method to create accounts of old users for newly created worlds

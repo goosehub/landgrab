@@ -30,6 +30,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 // Set maps variables
+var update_interval = 30;
 var infoWindow = false;
 var boxes = [];
 
@@ -225,7 +226,7 @@ function initMap()
         // Buy
 				} else {
           // Enough cash to buy
-					if (land_data['price'] < cash) {
+					if (land_data['price'] <= cash) {
 						window_string += land_update_form('buy', 'btn-success', land_data);
           // Not enough cash
 					} else {
@@ -285,9 +286,14 @@ function initMap()
             cache: false,
             success: function(data)
             {
-              // console.log(data);
+              console.log(data);
               // Return data
               response = JSON.parse(data);
+
+              if (response['error']) {
+                $('.land_window').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
 
               // If success, close
               if (response['status'] === 'success') {
@@ -313,7 +319,6 @@ function initMap()
                   fillColor: account_color,
                   fillOpacity: 0.4
                 });
-                // console.log(boxes);
                 return true;
 
               // If error, display error message
@@ -422,13 +427,9 @@ function initMap()
   // 
 
   // Get update
-  setTimeout(function(){
-    setInterval(function(){
-      get_update_data(world_key);
-    // }, 60 * 1000);
-    }, 5 * 1000);
-  // }, 60 * 1000);
-  }, 1 * 1000);
+  setInterval(function(){
+    get_update_data(world_key);
+  }, update_interval * 1000);
 
   // Get single land ajax
   function get_update_data(world_key) {
@@ -441,6 +442,7 @@ function initMap()
       cache: false,
       success: function(data)
       {
+        // console.log(data);
         data = JSON.parse(data);
 
         // Check for refresh signal from server 
@@ -529,6 +531,7 @@ function initMap()
 
   function update_financials(financials) {
     // Update cash
+    cash = parseInt(financials['cash'], 10);
     $('#cash_display').html(number_format(financials['cash']));
 
     // Update total lands

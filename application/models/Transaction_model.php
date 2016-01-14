@@ -25,19 +25,19 @@ Class transaction_model extends CI_Model
     $this->db->from('transaction_log');
     $this->db->where('paying_account_key', $paying_account_key);
     $this->db->where('transaction', 'buy');
-    $this->db->where('created >= DATE(NOW()) - INTERVAL 7 DAY');
+    $this->db->where('created >= DATE(NOW()) - INTERVAL ' . $day_timeframe . ' DAY');
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
  }
- // Get purcheses
+ // Get sales
  function get_transaction_sales($recipient_account_key, $day_timeframe)
  {
     $this->db->select('SUM(amount) as sum, COUNT(*) as total');
     $this->db->from('transaction_log');
     $this->db->where('recipient_account_key', $recipient_account_key);
     $this->db->where('transaction', 'buy');
-    $this->db->where('created >= DATE(NOW()) - INTERVAL 7 DAY');
+    $this->db->where('created >= DATE(NOW()) - INTERVAL ' . $day_timeframe . ' DAY');
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
@@ -48,7 +48,7 @@ Class transaction_model extends CI_Model
     $this->db->select('SUM(amount) as sum');
     $this->db->from('transaction_log');
     $this->db->where('paying_account_key', $paying_account_key);
-    $this->db->where('created >= DATE(NOW()) - INTERVAL 7 DAY');
+    $this->db->where('created >= DATE(NOW()) - INTERVAL ' . $day_timeframe . ' DAY');
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
@@ -59,7 +59,7 @@ Class transaction_model extends CI_Model
     $this->db->select('SUM(amount) as sum');
     $this->db->from('transaction_log');
     $this->db->where('recipient_account_key', $recipient_account_key);
-    $this->db->where('created >= DATE(NOW()) - INTERVAL 7 DAY');
+    $this->db->where('created >= DATE(NOW()) - INTERVAL ' . $day_timeframe . ' DAY');
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
