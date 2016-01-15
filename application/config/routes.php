@@ -4,8 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Default to game map
 $route['default_controller'] = "game";
 
-// World load
+// Marketing routes
 $route['world/4chan'] = "game/index/3";
+$route['world/s4s'] = "game/index/3";
+$route['world/b'] = "game/index/3";
+$route['world/int'] = "game/index/3";
+$route['world/pol'] = "game/index/3";
+$route['world/biz'] = "game/index/3";
+
+// World load
 $route['world/(:any)'] = "game/index/$1";
 
 // Game functions

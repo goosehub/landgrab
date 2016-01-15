@@ -80,12 +80,6 @@ How to fight bots
 ==========================================================================================
 
 High Priority
-    UX
-        Improve/update how to play
-    Bugs
-        Testing
-    Infrastructure
-        Move hosting to LiquidWeb
 
 Low Priority
     Feature
@@ -95,6 +89,8 @@ Low Priority
     Performance
         Tax cron optimization
         Speed optimization
+    Infrastructure
+        Move hosting to LiquidWeb
 
 No Priority
     Reimplement tokens for ajax land forms to prevent blind forms for bot prevention

@@ -38,8 +38,14 @@ html, body {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
 }
+.btn {
+  border-radius: 0;
+}
 .fake_link {
   cursor: pointer;
+}
+.clear_both {
+  clear: both;
 }
 
 /* Map */
@@ -61,6 +67,9 @@ html, body {
   top: 0.5em;
   right: 6em;
   opacity: 0.9;
+}
+#top_right_block ul li:first-child {
+  margin-top: -0.5em !important;
 }
 @media only screen 
   and (max-device-width: 600px) {
@@ -89,6 +98,14 @@ html, body {
 .red_money {
   color: #FF0000;
 }
+.leaderboard_link {
+  width: 100%;
+}
+.current_world {
+  padding: 0.2em;
+  border: 0.2em solid #000;
+  border-radius: 0.2em;
+}
 .logout_button {
   color: #ffffff !important;
   font-weight: bold !important;
@@ -97,10 +114,9 @@ html, body {
 .logout_button:hover {
   color: #000000 !important;
 }
-.current_world {
-  padding: 0.2em;
-  border: 0.2em solid #000;
-  border-radius: 0.2em;
+.landgrab_menu .btn {
+  color: #fff;
+  font-weight: bold;
 }
 
 /* Center Block */
@@ -121,7 +137,7 @@ html, body {
   and (max-device-width: 600px) {
   .center_block {
     left: 5%;
-    width: 95%;   
+    width: 90%;   
   }
 }
 .leaderboard_block {

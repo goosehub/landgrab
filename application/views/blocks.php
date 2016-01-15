@@ -66,21 +66,22 @@
     </button>
     <hr>
     <p>
-        <strong>LandGrab is a game of Claiming, Buying, and Selling the Real World.</strong>
+        <strong>LandGrab is a game of Claiming, Buying, and Selling the World</strong>
     </p>
     <p>
-        Begin by buying and claiming land.
-        Set a price on land you buy, but be careful not to charge too much, land is taxed at 1% hourly on the prices you set.
-        Each plot of land scores you an hourly income.
-        Famous areas are valuable.
-        Find undervalued areas and sell them for a big profit.
-        Run out of cash, you lose all land and your account is reset.
+        Click on any square to buy it.
+        If it's unowned, you can claim it.
+        Land is taxed at 1% hourly on the prices you set.
+        Taxes are redistributed to each player based on how much land they own.
     </p>
     <p>
-        Use the menu to view finances,
-        the leaderboards (<a class="leaderboard_cheapest_land_button fake_link">View the Cheapest Land</a>),
-        or different worlds (<a href="<?=base_url()?>world/big">Here's a bigger world</a>).
+        Owning cheap land makes a safe hourly profit, but trading land makes quick fortunes if done right.
+        New York City, Japan, and Syria are just a few places that players will pay high dollar for.
+        Run out of cash, you lose all land and your cash is reset.
     </p>
+    <blockquote>
+        And remember, buy low, sell high.
+    </blockquote>
 
     <hr>
 
