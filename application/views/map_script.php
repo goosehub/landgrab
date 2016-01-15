@@ -114,9 +114,10 @@ function initMap()
                 world_key: world_key 
             },
       cache: false,
-      success: function(html)
+      success: function(data)
       {
-        callback(html);
+        console.log(data)
+        callback(data);
         return true;
       }
     });

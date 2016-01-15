@@ -207,13 +207,14 @@ class Game extends CI_Controller {
             // Content input allow only gmail whitelisted tags
 	        $content = $this->input->post('content');
             $whitelisted_tags = '<a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';
+            $content = strip_tags($content, $whitelisted_tags);
 
             // Disallow these character combination to prevent potential javascript injection
             $disallowed_strings = ['onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
             $content = str_replace($disallowed_strings, '', $content);
 
-            // add break tags in place of new lines
-            $content = strip_tags(nl2br($content), $whitelisted_tags);
+            // Replace new lines with break tags
+            $content = preg_replace("/\r\n|\r|\n/",'<br/>',$content);
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
@@ -240,7 +241,19 @@ class Game extends CI_Controller {
         $token = $this->input->post('token');
         $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $buyer_account_key = $buyer_account['id'];
+        $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $amount = $land_square['price'];
+        $name_at_sale = $land_square['land_name'];
+        $seller_account_key = $land_square['account_key'];
+        $seller_user = $this->user_model->get_user($seller_account_key);
+
+        // Check for bot patterns and/or consolidation trading
+        $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
+        if ($bot_check) {
+            echo '{"error": "' . $bot_check . '"}';
+            die();
+        }
 
         // Check if token is correct
         if ($token != $buyer_account['token']) {
@@ -267,9 +280,6 @@ class Game extends CI_Controller {
         }
 
         // Do transaction, and return true if transaction succeeds
-        $amount = $land_square['price'];
-        $name_at_sale = $land_square['land_name'];
-        $seller_account_key = $land_square['account_key'];
         return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
 
@@ -279,18 +289,7 @@ class Game extends CI_Controller {
         // Do transaction
         $new_buying_owner_cash = $buyer_account['cash'] - $amount;
         $buyer_account_key = $buyer_account['id'];
-        if ($transaction_type === 'buy')
-        {
-            // Check for bots and/or consolidation trading
-            $suspicious_max = 1000000;
-            $suspicious_min = 800000;
-            if ($amount <= $suspicious_max && $amount >= $suspicious_min) {
-                $bot_check = $this->bot_pattern($seller_account_key, $suspicious_max, $suspicious_min);
-                if ($bot_check) {
-                    echo '{"error": "' . $bot_check . '"}';
-                    die();
-                }
-            }
+        if ($transaction_type === 'buy') {
 
             // Get seller and buying party info
             $seller_account = $this->user_model->get_account_by_id($seller_account_key);
@@ -317,35 +316,94 @@ class Game extends CI_Controller {
         return true;
     }
 
-    // Look for bot pattern
-    public function bot_pattern($account_key, $suspicious_max, $suspicious_min)
+    // Look for bot patterns
+    public function bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount)
     {
-        // Get sales to search for bot patterns in the last hour
-        $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * 1));
-        $sales_search = $this->transaction_model->sold_lands_by_account_over_period($account_key, $start_search);
+        // Note
+        // The methods are kept seperate to allow easy configuration as bot fighting evolves
+        // For speed and resource reasons, be sure to make conditions to do a pattern check minimal
 
-        // Not likely a bot if only a few sales
-        $total_sale_min = 3;
-        if ( count($sales_search) <= $total_sale_min) {
-            return false;
-        }
+        // 
+        // Search for suspicious number sales between the same ip, indicating consolidation accounts
+        // 
 
-        // Check for bot behavior
-        $found_suspicious_sales = 0;
-        foreach ($sales_search as $sale) {
-            if ($sale['amount'] <= $suspicious_max && $sale['amount'] >= $suspicious_min) {
-                $found_suspicious_sales++;
+        // Do check when ips match between buyer and seller
+        if ($buyer_user['ip'] === $seller_user['ip']) {
+            // Get sales to search for bot patterns in the last hour
+            $search_in_hours = 2;
+            $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * $search_in_hours));
+            $found_suspicious_sales = 0;
+            $sales_search = $this->transaction_model->sold_lands_by_account_over_period($seller_account_key, $start_search);
+
+            // Not likely a bot if only a few sales
+            $total_sale_min = 3;
+            if ( count($sales_search) <= $total_sale_min) {
+                return false;
+            }
+
+            foreach ($sales_search as $sale) {
+                $paying_account = $this->user_model->get_account_by_id($sale['paying_account_key']);
+                $recipient_account = $this->user_model->get_account_by_id($sale['recipient_account_key']);
+                $paying_user = $this->user_model->get_user($paying_account['user_key']);
+                $recipient_user = $this->user_model->get_user($recipient_account['user_key']);
+                if ($paying_user['ip'] === $recipient_user['ip']) {
+                    $found_suspicious_sales++;
+                }
+            }
+            $suspicious_ratio_limit = 0.5;
+            $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
+
+            // Log ip, send message, and return false if suspicion is over the limit
+            if ($found_suspicious_sales > $suspicious_total_limit) {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $result = $this->user_model->record_ip_request($ip, 'suspicious_sales_by_ip');   
+
+                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
             }
         }
-        $suspicious_ratio_limit = 0.5;
-        $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
 
-        // Log ip, send message, and return false if suspicion is over the limit
-        if ($found_suspicious_sales > $suspicious_total_limit) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $result = $this->user_model->record_ip_request($ip, 'suspicious_sales');   
+        // 
+        // Search for frequent sales of a suspicious amount, indicating consolidation accounts
+        // 
 
-            return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
+        // Do check when current sale is in the suspicious range
+        $suspicious_max = 1000000;
+        $suspicious_min = 900000;
+        if ($amount <= $suspicious_max && $amount >= $suspicious_min) {
+            // If same IP as well, mark as bot
+            if ($buyer_user['ip'] === $seller_user['ip']) {
+                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
+            }
+
+            // Get sales to search for bot patterns in the last hour
+            $search_in_hours = 2;
+            $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * $search_in_hours));
+            $sales_search = $this->transaction_model->sold_lands_by_account_over_period($account_key, $start_search);
+
+            // Not likely a bot if only a few sales
+            $total_sale_min = 3;
+            if ( count($sales_search) <= $total_sale_min) {
+                return false;
+            }
+
+            // Check for bot behavior
+            $found_suspicious_sales = 0;
+            foreach ($sales_search as $sale) {
+                if ($sale['amount'] <= $suspicious_max && $sale['amount'] >= $suspicious_min) {
+                    $found_suspicious_sales++;
+                }
+            }
+            $suspicious_ratio_limit = 0.5;
+            $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
+
+            // Log ip, send message, and return false if suspicion is over the limit
+            if ($found_suspicious_sales > $suspicious_total_limit) {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $result = $this->user_model->record_ip_request($ip, 'suspicious_sales_by_amount');   
+
+                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
+            }
+
         }
 
         // If here, pass and return false

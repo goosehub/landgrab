@@ -97,8 +97,7 @@ Low Priority
         Speed optimization
 
 No Priority
-    Implement tokens for ajax land forms to prevent blind forms
-    Improved detection of consolidation accounts and other bot behavior
+    Reimplement tokens for ajax land forms to prevent blind forms for bot prevention
     Hide google maps saved places
     Figure out what to do with players on cash leaderboard with no land
     Figure out method to create accounts of old users for newly created worlds
