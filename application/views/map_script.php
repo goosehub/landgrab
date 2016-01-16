@@ -116,7 +116,7 @@ function initMap()
       cache: false,
       success: function(data)
       {
-        console.log(data)
+        // console.log(data)
         callback(data);
         return true;
       }
@@ -287,7 +287,7 @@ function initMap()
             cache: false,
             success: function(data)
             {
-              console.log(data);
+              // console.log(data);
               // Return data
               response = JSON.parse(data);
 

@@ -203,18 +203,9 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
+            $content = $this->input->post('content');
 
-            // Content input allow only gmail whitelisted tags
-	        $content = $this->input->post('content');
-            $whitelisted_tags = '<a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';
-            $content = strip_tags($content, $whitelisted_tags);
-
-            // Disallow these character combination to prevent potential javascript injection
-            $disallowed_strings = ['onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
-            $content = str_replace($disallowed_strings, '', $content);
-
-            // Replace new lines with break tags
-            $content = preg_replace("/\r\n|\r|\n/",'<br/>',$content);
+            $content = $this->sanitize_html($content);
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
@@ -569,4 +560,40 @@ class Game extends CI_Controller {
         // Return data
         return $leaderboards;
     }
+
+    // Function to close tags
+    public function sanitize_html($html) {
+        // Content input allow only gmail whitelisted tags
+        $whitelisted_tags = '<a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';
+        $html = strip_tags($html, $whitelisted_tags);
+
+        // Disallow these character combination to prevent potential javascript injection
+        $disallowed_strings = ['onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
+        $html = str_replace($disallowed_strings, '', $html);
+
+        // Close open tags
+        preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+        $openedtags = $result[1];
+        preg_match_all('#</([a-z]+)>#iU', $html, $result);
+        $closedtags = $result[1];
+        $len_opened = count($openedtags);
+        if (count($closedtags) == $len_opened) {
+            return $html;
+        }
+        $openedtags = array_reverse($openedtags);
+        for ($i=0; $i < $len_opened; $i++) {
+            if (!in_array($openedtags[$i], $closedtags)) {
+                $html .= '</'.$openedtags[$i].'>';
+            } else {
+                unset($closedtags[array_search($openedtags[$i], $closedtags)]);
+            }
+        }
+
+        // Replace new lines with break tags
+        $html = preg_replace("/\r\n|\r|\n/",'<br/>',$html);
+
+        // Return result
+        return $html;
+    }
+
 }
