@@ -160,7 +160,7 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="user_dropdown">
-          <li class="text-center"><strong class="text-success">Thank you for playing</strong></li>
+          <li class="text-center"><strong class="text-success">Joined <?php echo date('M jS Y', strtotime($user['created']) ); ?></strong></li>
           <li role="separator" class="divider"></li>
           <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Log Out</a></li>
           <li role="separator" class="divider"></li>
@@ -189,7 +189,7 @@
       <span class="caret"></span>
     </button>
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="info_dropdown">
-      <li class="text-center"><strong class="text-danger">By Goose</strong></li>
+      <li class="text-center"><strong class="text-danger">Version 1.1.0</strong></li>
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
