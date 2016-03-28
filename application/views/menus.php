@@ -1,6 +1,5 @@
 <!-- Top Right Block -->
 <div id="top_right_block">
-    <?php if ($log_check) { ?>
 
   <!-- Recently sold lands button -->
   <?php if ($log_check) { ?>
@@ -12,6 +11,8 @@
     </span>
   <?php } ?>
 
+
+  <?php if ($log_check) { ?>
   <!-- Cash Dropdown -->
     <button id="cash_dropdown" class="btn btn-default" type="button" id="cash_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         $<span id="cash_display"><?php echo number_format($account['cash']); ?></span>
@@ -121,6 +122,8 @@
 
     </ul>
 
+    <?php } ?>
+
     <!-- Leaderboards dropdown -->
     <div class="btn-group">
       <button class="info_button btn btn-primary dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -152,6 +155,8 @@
         <?php } ?>
       </ul>
     </div>
+
+    <?php if ($log_check) { ?>
 
     <!-- User Dropdown -->
     <div class="btn-group">
