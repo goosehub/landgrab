@@ -127,8 +127,6 @@
     <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
     <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, /s4s/, 
     the rest of the Beta Testers, and all my users. Thank you!</p>
-    <br>
-    Dude this is totally cool. No way you made this.
 </div>
 
 <!-- Leaderboard land_owned Block -->
