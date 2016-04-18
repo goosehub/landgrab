@@ -2,71 +2,8 @@
     Notes
 ==========================================================================================
 
-War Based Idea
-    Play Mechancis
-        Income, Army balance
-            Money-Army-Land
-                Money Grows Money
-                Money Buys Army
-                Army Costs Money
-                Army Takes Land
-        Diplomacy
-            Organic
-        Risk
-            Attack is risk based
-                Advantage to defender
-    Full Rules
-        Players start with $1,000 and 10 army
-        Player gets 1 army each minute for each base
-
-    Money
-    Army
-    Land
-
-    Players get 1000 troops
-    Claim land
-    Place their troops on squars
-    Amount of troops on land is hidden
-    Attack approaches
-        Absolute bidding
-            Attack with more, you win the square
-            Attack with less, you lose the troops to the defender
-        Chance bidding
-            Win the chance, win the square
-            Lose the chance, you lose the troops to the defender
-        Attrition bidding
-            Both sides lose what they lose
-            If defender loses all troops, attacker gets square
-    Tax replacement
-        ?Attrition
-        ?Growth
-    Dominant Strats
-        Liquifying troops for all in attacks until leaving
-            Lock ins?
-        New accounts all in
-            Factors of size difference, like agario
-        Risking and restarting whenever it fails
-            Limit imbalance of battles
-        Huge players
-            Chance
-    Behavior we want
-        Slow measured growth
-            Difficult growth, but agar.io like free "dots"
-        Engaged behavior
-        Big battles
-        Huge amounts of money and small numbers of armies
-    Massive Multiplayers Games to study
-        agar.io
-        civilization
-        stock markets
-        gambling
-
-Bidding
-Gambling
-Trading
-
-Incomplete information
-Money and soilders?
+Charging
+    ...
 
 Other
     Clear name and description on buy
