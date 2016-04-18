@@ -17,10 +17,10 @@ Class tax_model extends CI_Model
     return $query->result_array();
   }
  // Record most recent rebate
- function record_latest_rebate_into_world($world_key, $latest_rebate)
+ function record_land_rebate_into_world($world_key, $land_rebate)
  {
     $data = array(
-        'latest_rebate' => $latest_rebate
+        'land_rebate' => $land_rebate
     );
     $this->db->where('id', $world_key);
     $this->db->update('world', $data);

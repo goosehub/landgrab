@@ -12,7 +12,7 @@
 // Set World
 var world_key = <?php echo $world['id']; ?>;
 var land_tax_rate = <?php echo $world['land_tax_rate']; ?>;
-var latest_rebate = <?php echo $world['latest_rebate']; ?>;
+var land_rebate = <?php echo $world['land_rebate']; ?>;
 var world_claim_fee = <?php echo $world['claim_fee']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
 
@@ -181,7 +181,7 @@ function initMap()
         // Calculate income
         income_prefix = '';
         income_class = 'green_money';
-        income = Math.floor(parseFloat(latest_rebate - (land_data['price'] * land_tax_rate)));
+        income = Math.floor(parseFloat(land_rebate - (land_data['price'] * land_tax_rate)));
         if (income < 0) {
           income_prefix = '-';
           income_class = 'red_money';

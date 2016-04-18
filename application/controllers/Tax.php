@@ -41,7 +41,7 @@ class Tax extends CI_Controller {
           $rebate = ceil($taxes_due / $land_tally);
 
           // Record rebate into world
-          $query_action = $this->tax_model->record_latest_rebate_into_world($world['id'], $rebate);
+          $query_action = $this->tax_model->record_land_rebate_into_world($world['id'], $rebate);
 
           // Get all acounts in world
           $accounts_in_world = $this->tax_model->get_accounts_in_world($world_key, $world['land_tax_rate']);
