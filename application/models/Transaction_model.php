@@ -77,6 +77,19 @@ Class transaction_model extends CI_Model
     $result = $query->result_array();
     return $result;
  }
+ // Get recent leased lands
+ function leased_lands_by_account_over_period($account_key, $last_load)
+ {
+    $this->db->select('*');
+    $this->db->from('transaction_log');
+    $this->db->where('recipient_account_key', $account_key);
+    $this->db->where('transaction', 'lease');
+    $this->db->where('created >= ', $last_load);
+    $this->db->order_by('id', 'DESC');
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return $result;
+ }
  // Check for bankruptcy since last page load
  function check_for_bankruptcy($account_key, $last_load)
  {

@@ -557,6 +557,7 @@ function initMap()
         update_leaderboards(data['leaderboards']);
         if (log_check) {
           update_sales(data['sales']['sales_since_last_update']);
+          update_leases(data['leases']['leases_since_last_update']);
           update_financials(data['financials']);
         }
 
@@ -624,6 +625,37 @@ function initMap()
 
         // Add to sales table after the header row
         $('#sales_table tr:first').after(new_sale_string);
+
+      });
+
+    }
+    return true;
+  }
+
+  function update_leases(leases) {
+    // If not empty, do logic
+    if (leases.length) {
+
+      // Show alert
+      $('#recently_leased_alert').show();
+
+      // Update existing leases alert number (default to 0 when not visible)
+      number_of_new_leases = leases.length
+      var new_recently_leased = parseInt($('#leases_since_last_update_number').text()) + number_of_new_leases;
+      $('#leases_since_last_update_number').html(new_recently_leased);
+
+      // Add each sale to leases table
+      leases.reverse();
+      $.each(leases, function(index, sale) {
+
+        // Create string, and be sure to keep up to date with leases block
+        var new_lease_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
+            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
+            + '<td>' + sale['paying_username'] + '</td>'
+            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td></tr>';
+
+        // Add to leases table after the header row
+        $('#leases_table tr:first').after(new_lease_string);
 
       });
 

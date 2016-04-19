@@ -77,7 +77,7 @@ html, body {
     right: 3em;
   }
 }
-#recently_sold_alert {
+#recently_sold_alert, #recently_leased_alert {
   display: none;
 }
 #cash_display {

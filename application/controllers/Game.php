@@ -45,6 +45,9 @@ class Game extends CI_Controller {
             // Get account sales
             $data['sales'] = $this->sales($account);
 
+            // Get account leases
+            $data['leases'] = $this->leases($account);
+
             // Get account financials
             $data['financials'] = $this->financials($account, $world);
 
@@ -577,6 +580,38 @@ class Game extends CI_Controller {
 
         // Return data
         return $sales;
+    }
+
+    // Get Leases
+    public function leases($account)
+    {
+        $account_key = $account['id'];
+
+        // Get lands since last update
+        $leases_since_last_update = $this->transaction_model->leased_lands_by_account_over_period($account_key, $account['last_load']);
+
+        // Get sales history
+        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 1) );
+        $leases_history = $this->transaction_model->leased_lands_by_account_over_period($account_key, $day_ago);
+
+        // Add usernames to sales history
+        foreach ($leases_history as &$transaction) {
+            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+            $paying_user = $this->user_model->get_user($paying_account['user_key']);
+            $transaction['paying_username'] = $paying_user['username'];
+        }
+        $leases['leases_history'] = $leases_history;
+
+        // Add usernames to sales since last update
+        foreach ($leases_since_last_update as &$transaction) {
+            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
+            $paying_user = $this->user_model->get_user($paying_account['user_key']);
+            $transaction['paying_username'] = $paying_user['username'];
+        }
+        $leases['leases_since_last_update'] = $leases_since_last_update;
+
+        // Return data
+        return $leases;
     }
 
     // Get Financials

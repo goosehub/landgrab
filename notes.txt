@@ -21,14 +21,12 @@ High Priority
     Lease duration minutes after number
     Lease Financial
     Lease Notifications
-    Tax Refactor for rebate
     How to play Update
 
 Low Priority
     Bugs
         Sales on page reload
     Refactor
-        Variable Name Changes
         Reduce dependence on break tag
     Feature
         Net Worth Leaderboard
