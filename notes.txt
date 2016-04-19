@@ -13,11 +13,12 @@ Charging
 
 High Priority
     Automatic $ and , in input
-    Claiming
     Renting
-    Rent Data and Feedback
+    Rent Financial
+    Rent Notifications
     How to play Update
     Tax Refactor
+    Reduce dependence on break tag
 
 Low Priority
     Misc

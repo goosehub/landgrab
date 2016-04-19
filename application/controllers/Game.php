@@ -104,6 +104,15 @@ class Game extends CI_Controller {
             $land_square['username'] = '';
         }
 
+        // Get the land to be used
+        if ( strtotime($land_square['last_charge_end']) > time() ) {
+            $land_square['current_content'] = $land_square['content'];
+            $land_square['rent_active'] = true;
+        } else {
+            $land_square['current_content'] = $land_square['default_content'];
+            $land_square['rent_active'] = false;
+        }
+
         // Set token for account
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');

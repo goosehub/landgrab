@@ -160,6 +160,9 @@ html, body {
 }
 
 /* InfoWindow */
+.land_window {
+  overflow-x: hidden;
+}
 #land_form .row {
   margin-right: 0;
 }
