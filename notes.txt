@@ -13,16 +13,15 @@ Charging
 
 High Priority
     Automatic $ and , in input
-    Renting
     Rent Financial
     Rent Notifications
+    Tax Refactor for rebate
     How to play Update
-    Tax Refactor
-    Reduce dependence on break tag
 
 Low Priority
-    Misc
-        License
+    Refactor
+        Variable Name Changes
+        Reduce dependence on break tag
     Feature
         Net Worth Leaderboard
     Security/Cheating/Manipulation Prevention
@@ -33,6 +32,8 @@ Low Priority
         Speed optimization
     Infrastructure
         Move hosting to LiquidWeb
+    Misc
+        License
 
 No Priority
     Reimplement tokens for ajax land forms to prevent blind forms for bot prevention

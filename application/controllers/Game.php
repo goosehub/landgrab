@@ -267,17 +267,16 @@ class Game extends CI_Controller {
             $account_key = $account['id'];
             $charge = $this->input->post('charge');
             $charge_duration = $this->input->post('charge_duration');
-
             $content = $this->input->post('content');
             $content = $this->sanitize_html($content);
 
-            $last_charge_end = time() + ($charge_duration * 60);
-
             // Do Database action
             if ($form_type === 'buy') {
+                $last_charge_end = date('Y-m-d H:i:s', time() + ($charge_duration * 60) );
                 $query_action = $this->game_model->update_land_content($world_key, $coord_slug, $content, $last_charge_end);
             } else {
-                $query_action = $this->game_model->update_land_default_content($world_key, $coord_slug, $content, $last_charge_end);
+                echo 'here';
+                $query_action = $this->game_model->update_land_default_content($world_key, $coord_slug, $content);
             }
 
             // Return to game as success
@@ -304,7 +303,7 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = $land_square['price'];
+        $amount = $land_square['charge'];
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
         $seller_user = $this->user_model->get_user($seller_account_key);
@@ -347,7 +346,55 @@ class Game extends CI_Controller {
     // Validate Rent Form Callback
     public function rent_form_validation($form_type_input)
     {
-        return true;
+        // User Information
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        }
+
+        // Get land info for verifying our inputs
+        $form_type = $this->input->post('form_type_input');
+        $coord_slug = $this->input->post('coord_slug_input');
+        $world_key = $this->input->post('world_key_input');
+        $token = $this->input->post('token');
+        $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $buyer_account_key = $buyer_account['id'];
+        $buyer_user = $this->user_model->get_user($buyer_account_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $charge = $land_square['charge'];
+        $name_at_sale = $land_square['land_name'];
+        $seller_account_key = $land_square['account_key'];
+        $seller_user = $this->user_model->get_user($seller_account_key);
+
+        // Check for bot patterns and/or consolidation trading
+        // $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
+        // if ($bot_check) {
+        //     echo '{"error": "' . $bot_check . '"}';
+        //     die();
+        // }
+
+        // Check if token is correct
+        if ($token != $buyer_account['token']) {
+            // $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
+            // return false;
+        }
+        // Check for inaccuracies
+        else if ($land_square['claimed'] === 0) {
+            $this->form_validation->set_message('land_form_validation', 'This land is not claimed');
+            return false;
+        }
+        else if ($form_type === 'update' && $land_square['account_key'] != $buyer_account_key) {
+            $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
+            return false;
+        }
+        else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['charge'])
+        {
+            $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to rent this land');
+            return false;
+        }
+
+        // Do transaction, and return true if transaction succeeds
+        return $this->rent_transaction($form_type, $world_key, $coord_slug, $charge, $name_at_sale, $seller_account_key, $buyer_account);
     }
 
     // Land Transaction
@@ -378,6 +425,30 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
             $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
                 $amount, $world_key, $coord_slug, '', '');
+        }
+        return true;
+    }
+
+    public function rent_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)
+    {
+        // Do transaction
+        $new_buying_owner_cash = $buyer_account['cash'] - $amount;
+        $buyer_account_key = $buyer_account['id'];
+        if ($transaction_type === 'buy') {
+
+            // Get seller and buying party info
+            $seller_account = $this->user_model->get_account_by_id($seller_account_key);
+
+            // Find new cash balances
+            $new_selling_owner_cash = $seller_account['cash'] + $amount;
+
+            // Do sale
+            $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
+            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+
+            // Record into transaction log
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'rent', 
+                $amount, $world_key, $coord_slug, $name_at_sale, '');
         }
         return true;
     }

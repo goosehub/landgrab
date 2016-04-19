@@ -443,7 +443,7 @@ function initMap()
   function land_rent_form(form_type, button_class, d) {
     if (form_type === 'buy') {
       charge_phrase = 'Rent  ($' + number_format(d['charge']) + '/' + number_format(d['charge_duration']) + ' Minutes)';
-      content = d['content'];
+      content = '';
     } else {
       charge_phrase = 'Update Default Description';
       content = d['default_content'];

@@ -78,11 +78,10 @@ Class game_model extends CI_Model
     return true;    
  }
  // Update default land content
- function update_land_default_content($world_key, $coord_slug, $default_content, $last_charge_end)
+ function update_land_default_content($world_key, $coord_slug, $default_content)
  {
     $data = array(
-        'default_content' => $default_content,
-        'last_charge_end' => $last_charge_end
+        'default_content' => $default_content
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
