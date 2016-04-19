@@ -167,14 +167,10 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('lng_input', 'Lng Input', 'trim|required|max_length[4]');
-        $this->form_validation->set_rules('lat_input', 'Lat Input', 'trim|required|max_length[4]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
-        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
-        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
+        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|less_than[1000000]');
+        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|less_than[1440]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         // Fail
@@ -199,8 +195,6 @@ class Game extends CI_Controller {
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
-	        $lat = $this->input->post('lat_input');
-	        $lng = $this->input->post('lng_input');
 	        $land_name = $this->input->post('land_name');
             $price = $this->input->post('price');
             $charge = $this->input->post('charge');
@@ -208,13 +202,9 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
-            $content = $this->input->post('content');
-
-            $content = $this->sanitize_html($content);
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, 
-                $price, $charge, $charge_duration, $content, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $charge, $charge_duration, $primary_color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -222,7 +212,72 @@ class Game extends CI_Controller {
 	    }
 	}
 
-	// Validate Login Callback
+    // Claim unclaimed land
+    public function rent_form() {
+        // Authentication
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+
+        // If user not logged in, return with fail
+        } else {
+            $world_key = $this->input->post('world_key_input');
+            echo '{"status": "fail", "message": "User not logged in"}';
+            return false;
+        }
+
+        // Validation
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_rent_form_validation');
+        $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
+        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|less_than[1000000]');
+        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|less_than[1440]');
+        $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+
+            // Set Fail Errors
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            if (validation_errors() === '') {
+                echo '{"status": "fail", "message": "An unknown error occurred"}';
+            }
+
+            // Return to game as failure
+            echo '{"status": "fail", "message": "'. validation_errors() . '"}';
+            return false;
+
+        // Success
+        } else {
+            $form_type = $this->input->post('form_type_input');
+            $coord_slug = $this->input->post('coord_slug_input');
+            $world_key = $this->input->post('world_key_input');
+            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $account_key = $account['id'];
+            $charge = $this->input->post('charge');
+            $charge_duration = $this->input->post('charge_duration');
+
+            $content = $this->input->post('content');
+            $content = $this->sanitize_html($content);
+
+            $last_charge_end = time() + ($charge_duration * 60);
+
+            // Do Database action
+            if ($form_type === 'buy') {
+                $query_action = $this->game_model->update_land_content($world_key, $coord_slug, $content, $last_charge_end);
+            } else {
+                $query_action = $this->game_model->update_land_default_content($world_key, $coord_slug, $content, $last_charge_end);
+            }
+
+            // Return to game as success
+            echo '{"status": "success"}';
+            return true;
+        }
+    }
+
+	// Validate Land Form Callback
 	public function land_form_validation($form_type_input)
 	{
         // User Information
@@ -279,6 +334,12 @@ class Game extends CI_Controller {
         // Do transaction, and return true if transaction succeeds
         return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
+
+    // Validate Rent Form Callback
+    public function rent_form_validation($form_type_input)
+    {
+        return true;
+    }
 
     // Land Transaction
     public function land_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)

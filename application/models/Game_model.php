@@ -49,25 +49,45 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $charge, $charge_duration, $content, $primary_color)
+ function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $charge, $charge_duration, $primary_color)
  {
     $data = array(
         'claimed' => $claimed,
-        'coord_slug' => $coord_slug,
-        'lat' => $lat,
-        'lng' => $lng,
         'account_key' => $account_key,
         'land_name' => $land_name,
         'price' => $price,
         'charge' => $charge,
         'charge_duration' => $charge_duration,
-        'content' => $content,
         'primary_color' => $primary_color
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
     $this->db->update('land', $data);
     return true;
+ }
+ // Update land content
+ function update_land_content($world_key, $coord_slug, $content, $last_charge_end)
+ {
+    $data = array(
+        'content' => $content,
+        'last_charge_end' => $last_charge_end
+    );
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;    
+ }
+ // Update default land content
+ function update_land_default_content($world_key, $coord_slug, $default_content, $last_charge_end)
+ {
+    $data = array(
+        'default_content' => $default_content,
+        'last_charge_end' => $last_charge_end
+    );
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;    
  }
  // Update cash in account
  function update_account_cash_by_account_id($account_id, $cash)

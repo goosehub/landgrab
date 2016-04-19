@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `land` (
   `charge_duration` int(10) unsigned NOT NULL,
   `last_charge_end` timestamp NOT NULL,
   `content` varchar(1024) NOT NULL,
+  `default_content` varchar(1024) NOT NULL,
   `primary_color` varchar(10) NOT NULL,
   `secondary_color` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

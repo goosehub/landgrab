@@ -17,6 +17,7 @@ High Priority
     Renting
     Rent Data and Feedback
     How to play Update
+    Tax Refactor
 
 Low Priority
     Misc
@@ -25,6 +26,7 @@ Low Priority
         Net Worth Leaderboard
     Security/Cheating/Manipulation Prevention
         General Security
+        lat, lng?
     Performance
         Tax cron optimization
         Speed optimization

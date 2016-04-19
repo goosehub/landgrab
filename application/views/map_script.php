@@ -212,7 +212,7 @@ function initMap()
           + '?register">Join to Claim!</a><br>';
         } else {
           window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Buy! (' + number_format(land_data['price']) + ')</a><br>';
+          + '?register">Join to Buy and Rent! (' + number_format(land_data['price']) + ')</a><br>';
         }
       }
 
@@ -220,15 +220,17 @@ function initMap()
 			if (log_check) {
         // Claim
 				if (land_data['claimed'] === '0') {
-					window_string += land_update_form('claim', 'btn-action', land_data);
+					window_string += land_trade_form('claim', 'btn-action', land_data);
         // Update
 				} else if (land_data['account_key'] == account_id) {
-					window_string += land_update_form('update', 'btn-info', land_data);
+					window_string += land_trade_form('update', 'btn-info', land_data);
+          window_string += land_rent_form('update', 'btn-info', land_data);
         // Buy
 				} else {
           // Enough cash to buy
 					if (land_data['price'] <= cash) {
-						window_string += land_update_form('buy', 'btn-success', land_data);
+            window_string += land_trade_form('buy', 'btn-success', land_data);
+            window_string += land_rent_form('buy', 'btn-success', land_data);
           // Not enough cash
 					} else {
 						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + number_format(land_data['price']) + ')</button>';
@@ -269,7 +271,7 @@ function initMap()
         });
 
         // 
-        // Submit form ajax
+        // Submit land form ajax
         // 
         $('#submit_land_form').click(function() {
 
@@ -277,7 +279,7 @@ function initMap()
           var post_data = $('#land_form').serialize();
 
           // Replace window with processing window
-          $('.form_outer_cont').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+          $('#submit_land_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
 
           // Submit form
           $.ajax({
@@ -287,22 +289,17 @@ function initMap()
             cache: false,
             success: function(data)
             {
-              // console.log(data);
               // Return data
               response = JSON.parse(data);
 
               if (response['error']) {
-                $('.land_window').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                $('#submit_land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
                 return false;
               }
 
               // If success, close
               if (response['status'] === 'success') {
                 infoWindow.close();
-                // $('.land_window').html('<br><div class="alert alert-wide alert-green"><strong>success</strong></div>');
-                // setTimeout(function(){
-                // infoWindow.close();
-                // }, 800);
 
                 // Update player variables and displays
                 cash = cash - land_data['price'];
@@ -324,7 +321,53 @@ function initMap()
 
               // If error, display error message
               } else {
-                $('.land_window').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                $('#submit_land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                return false;
+              }
+            }
+          });
+        }); // End land form ajax
+
+        // 
+        // Submit rent form ajax
+        // 
+        $('#submit_rent_form').click(function() {
+
+          // Serialize form into post data
+          var post_data = $('#rent_form').serialize();
+
+          // Replace window with processing window
+          $('#rent_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+
+          // Submit form
+          $.ajax({
+            url: "<?=base_url()?>rent_form",
+            type: "POST",
+            data: post_data,
+            cache: false,
+            success: function(data)
+            {
+              // Return data
+              response = JSON.parse(data);
+
+              if (response['error']) {
+                $('#rent_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+
+              // If success, close
+              if (response['status'] === 'success') {
+                infoWindow.close();
+
+                // Update player variables and displays
+                cash = cash - land_data['charge'];
+                $('#cash_display').html(number_format(cash));
+
+                return true;
+
+              // If error, display error message
+              } else {
+                $('#rent_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
             }
@@ -338,7 +381,7 @@ function initMap()
 	} // End set_window
 
 	// For claiming, updating, and buying land forms
-	function land_update_form(form_type, button_class, d) {
+	function land_trade_form(form_type, button_class, d) {
 		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
     + '<button class="expand_land_form btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
@@ -349,8 +392,6 @@ function initMap()
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
-            + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
-            + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
             + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Name</label>'
@@ -377,6 +418,41 @@ function initMap()
 		+ '</div></form></div>';
 		return result;
 	}
+
+  // For renting or updating land
+  function land_rent_form(form_type, button_class, d) {
+    if (form_type === 'buy') {
+      charge_phrase = 'Rent  ($' + number_format(d['charge']) + '/' + number_format(d['charge_duration']) + ' Minutes)';
+      content = d['content'];
+    } else {
+      charge_phrase = 'Update Default Description';
+      content = d['default_content'];
+    }
+    result = '<div class="form_outer_cont"><form id="rent_form' + '" action="<?=base_url()?>rent_form" method="post">'
+    + '<button class="expand_land_form btn ' + button_class + '" type="button" '
+    + 'data-toggle="collapse" data-target="#rent_form_dropdown" aria-expanded="false" aria-controls="rent_form_dropdown">'
+      + '' + charge_phrase
+      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
+        + '<div id="rent_form_dropdown" class="collapse">'
+          + '<div class="form-group">'
+            + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
+            + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
+            + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
+            + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
+            + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
+            + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
+            + '<input type="hidden" id="charge" name="charge" value="' + d['charge'] + '">'
+            + '<input type="hidden" id="charge_duration" name="charge_duration" value="' + d['charge_duration'] + '">'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="input_land_name">Description</label>'
+            + '</div><div class="col-md-8">'
+            + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + content + '</textarea>'
+            + '</div></div>'
+          + '</div>'
+          + '<button type="button" id="submit_rent_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+    + '</div></form></div>';
+    return result;
+  }
 
 	// 
 	// Land loop
