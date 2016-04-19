@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Game view and update json
-	public function index($world_slug = 3)
+	public function index($world_slug = 1)
 	{
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;
@@ -171,6 +171,9 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('lat_input', 'Lat Input', 'trim|required|max_length[4]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
+        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
+        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
@@ -199,7 +202,9 @@ class Game extends CI_Controller {
 	        $lat = $this->input->post('lat_input');
 	        $lng = $this->input->post('lng_input');
 	        $land_name = $this->input->post('land_name');
-	        $price = $this->input->post('price');
+            $price = $this->input->post('price');
+            $charge = $this->input->post('charge');
+	        $charge_duration = $this->input->post('charge_duration');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
@@ -208,7 +213,8 @@ class Game extends CI_Controller {
             $content = $this->sanitize_html($content);
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, $price, $content, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $lat, $lng, $account_key, $land_name, 
+                $price, $charge, $charge_duration, $content, $primary_color);
 
             // Return to game as success
             echo '{"status": "success"}';

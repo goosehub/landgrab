@@ -15,6 +15,8 @@ $world_key = 5; // Ensure this is the next available key
 $world_slug = 'huge';
 $world_tax_rate = '0.01';
 $claim_fee = 1000;
+$initial_charge;
+$initial_charge_duration
 
 // 
 // Static
@@ -63,7 +65,8 @@ for ($lng = -$lng_limit; $lng <= $lng_limit; $lng = $lng + $box_size) {
     for ($lat = -$lat_limit; $lat < $lat_limit; $lat = $lat + $box_size) {
         // Get coord_slug
         $coord_slug = $lat . ',' . $lng;
-        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '" . $claim_fee . "', '0', '0', '1460000000', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '" . $claim_fee . "', '" . $initial_charge . "', 
+        '" . $initial_charge_duration . "', '1460000000', '#000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
             $result .= ';';

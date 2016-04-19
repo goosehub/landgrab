@@ -12,11 +12,17 @@ Charging
 ==========================================================================================
 
 High Priority
+    Automatic $ and , in input
+    Claiming
+    Renting
+    Rent Data and Feedback
+    How to play Update
 
 Low Priority
+    Misc
+        License
     Feature
         Net Worth Leaderboard
-        Automatic dollarsign and commas in input
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
