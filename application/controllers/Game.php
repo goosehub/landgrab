@@ -302,7 +302,6 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
             $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
                 $amount, $world_key, $coord_slug, '', '');
-            $query_action = $this->transaction_model->add_to_world_bank($world_key, $amount);
         }
         return true;
     }

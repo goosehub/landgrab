@@ -16,6 +16,7 @@ High Priority
 Low Priority
     Feature
         Net Worth Leaderboard
+        Automatic dollarsign and commas in input
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
