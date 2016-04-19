@@ -107,6 +107,7 @@ $('.sold_lands_button').click(function(){
 });
 // hide button and reset number to 0
 $('.leased_lands_button').click(function(){
+  console.log('marco');
   $('#recently_leased_alert').hide();
   $('#leases_since_last_update_number').html('0');
   $('.center_block').hide();

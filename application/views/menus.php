@@ -40,6 +40,8 @@
 
       <li><button class="sold_lands_button btn btn-primary form-control"><strong>Sales Over Last 24 Hours</strong> </button></li>
 
+      <li><button class="leased_lands_button btn btn-success form-control"><strong>Leases Over Last 24 Hours</strong> </button></li>
+
       <li role="separator" class="divider"></li>
 
       <table class="table table-striped table-condensed">
