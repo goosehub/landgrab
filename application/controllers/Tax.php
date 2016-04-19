@@ -37,12 +37,6 @@ class Tax extends CI_Controller {
           // Get total taxes due
           $taxes_due = ceil($world_info[0]['price_tally'] * 0.01);
 
-          // Get rebate to be used later
-          $rebate = ceil($taxes_due / $land_tally);
-
-          // Record rebate into world
-          $query_action = $this->tax_model->record_land_rebate_into_world($world['id'], $rebate);
-
           // Get all acounts in world
           $accounts_in_world = $this->tax_model->get_accounts_in_world($world_key, $world['land_tax_rate']);
 
@@ -57,7 +51,7 @@ class Tax extends CI_Controller {
             if ($account_lands[0]['land_tally'] < 1) { continue; }
 
             // Caluclate rebate and post rebate balance
-            $account_rebate = $rebate * $account_lands[0]['land_tally'];
+            $account_rebate = $world['land_rebate'] * $account_lands[0]['land_tally'];
             $post_rebate_account_balance = $account['cash'] + $account_rebate;
             
             // Calculate taxes and final account balance

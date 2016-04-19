@@ -3,18 +3,9 @@
 ==========================================================================================
 
 Charging
-    ...
-
-Other
-    Clear name and description on buy
-
-Live Server Instance
-    Change database connection in config/database.php
-    Change encryption_key in config/config.php
-    Change CRON token in config/constants.php and cron.php
-    Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
-    Set a cron for 
-        0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
+    Land Rebate is flat amount
+    CRON is per minute
+    Charge to write on land
 
 Marketing Reserach
     http://www.indiegamegirl.com/no-budget-marketing/
@@ -29,15 +20,6 @@ Beta Testing Locations
 Promotion
     http://www.rockpapershotgun.com/
     http://www.bytejacker.com/
-    
-Difference between land squares
-    Location
-    Surrounding squares
-    Price
-    Description
-    Number of times viewed
-    Number of times trades
-    Number of times "tagged"
 
 Game Experience Issues
     Start of map is difficult
@@ -48,35 +30,6 @@ Game Experience Issues
     Gameplay is repeditive
     Game is math intensive
     Land is often not grouped together
-
-Ideas
-    Make game zero sum, new player money comes out of taxes and fees?
-    Income Revamp
-        Tagging (See below)
-        Taxes and fees go into bank
-            Rebates are a flat amount, but increase each time that a property is bought.
-            Extra money for buying and/or selling land
-    3rd element
-        Cash, Land, ???
-    API that gets addresses and checks how often they meet a metric
-    API to get population of square
-
-Mechanincs
-    Buy low, sell high
-    Land Improvement
-    Land expands natually
-    Tagging others land
-
-Tagging the world
-    Tag others land
-        They recieve money out of group bank
-            How much?
-            How?
-                For each tag?
-                For each user that tags?
-            How to avoid bot abuse
-        Content or comment
-            How would comments be viewed
 
 How to fight bots
     Something only humans can do
@@ -140,6 +93,14 @@ Maximum Ajax to reduce bandwidth, server strain, and client load
 ==========================================================================================
     Documentation
 ==========================================================================================
+
+Live Server Instance
+    Change database connection in config/database.php
+    Change encryption_key in config/config.php
+    Change CRON token in config/constants.php and cron.php
+    Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
+    Set a cron for 
+        0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
 
 coord_slug
     coord_slug is top right corner of box

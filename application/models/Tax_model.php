@@ -16,16 +16,6 @@ Class tax_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
   }
- // Record most recent rebate
- function record_land_rebate_into_world($world_key, $land_rebate)
- {
-    $data = array(
-        'land_rebate' => $land_rebate
-    );
-    $this->db->where('id', $world_key);
-    $this->db->update('world', $data);
-    return true;
- }
  // Get accounts in world
  function get_accounts_in_world($world_key)
  {

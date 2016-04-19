@@ -451,8 +451,8 @@ class Game extends CI_Controller {
 
         // Taxes and Rebates
         $hourly_taxes = $financials['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
-        $estimated_rebate = $financials['estimated_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'];
-        $income = $financials['income'] = $estimated_rebate - $hourly_taxes;
+        $current_rebate = $financials['current_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'];
+        $income = $financials['income'] = $current_rebate - $hourly_taxes;
         $financials['income_class'] = 'green_money';
         $financials['income_prefix'] = '+';
         if ($income < 0) {

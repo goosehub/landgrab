@@ -541,7 +541,7 @@ function initMap()
     $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
 
     $('#hourly_taxes').html( number_format(financials['hourly_taxes']) );
-    $('#estimated_rebate').html( number_format(financials['estimated_rebate']) );
+    $('#current_rebate').html( number_format(financials['current_rebate']) );
     $('#income').html( number_format( Math.abs(financials['income']) ) );
     $('#income_prefix').html( number_format(financials['income_prefix']) );
     $('#income_span').removeClass();

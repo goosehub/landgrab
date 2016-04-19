@@ -50,7 +50,7 @@
           <tr class="success">
             <td class="text-left">Rebates: </td>
             <td class="text-right"><span class="money_info_item green_money">
-              $<span id="estimated_rebate"><?php echo number_format($financials['estimated_rebate']); ?></span>
+              $<span id="current_rebate"><?php echo number_format($financials['current_rebate']); ?></span>
             </span>/Hour
           </td>
           </tr>
