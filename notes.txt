@@ -7,38 +7,6 @@ Charging
     CRON is per minute
     Charge to write on land
 
-Marketing Reserach
-    http://www.indiegamegirl.com/no-budget-marketing/
-    http://gamedevelopment.tutsplus.com/articles/marketing-your-indie-game-the-single-most-important-thing-that-no-one-knows-how-to-do--gamedev-7157
-
-Beta Testing Locations
-    http://www.betabound.com/announce/
-    https://www.reddit.com/r/indiegaming
-    https://www.reddit.com/r/shamelessplug
-    https://www.reddit.com/r/internetisbeautiful
-
-Promotion
-    http://www.rockpapershotgun.com/
-    http://www.bytejacker.com/
-
-Game Experience Issues
-    Start of map is difficult
-    After spending money, status queue is met and motivation gone
-    Game does on work unless a critical mass of users are active
-    Presense of other players not felt
-    Strategy is shallow
-    Gameplay is repeditive
-    Game is math intensive
-    Land is often not grouped together
-
-How to fight bots
-    Something only humans can do
-        reCaptcha
-        Complex strategy
-        Confirm existance of browser, mouse movements
-        Make map domination trivial
-        Make map domination impossible
-
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -102,6 +70,38 @@ Live Server Instance
     Set a cron for 
         0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
 
+Marketing Reserach
+    http://www.indiegamegirl.com/no-budget-marketing/
+    http://gamedevelopment.tutsplus.com/articles/marketing-your-indie-game-the-single-most-important-thing-that-no-one-knows-how-to-do--gamedev-7157
+
+Beta Testing Locations
+    http://www.betabound.com/announce/
+    https://www.reddit.com/r/indiegaming
+    https://www.reddit.com/r/shamelessplug
+    https://www.reddit.com/r/internetisbeautiful
+
+Promotion
+    http://www.rockpapershotgun.com/
+    http://www.bytejacker.com/
+
+Game Experience Issues
+    Start of map is difficult
+    After spending money, status queue is met and motivation gone
+    Game does on work unless a critical mass of users are active
+    Presense of other players not felt
+    Strategy is shallow
+    Gameplay is repeditive
+    Game is math intensive
+    Land is often not grouped together
+
+How to fight bots
+    Something only humans can do
+        reCaptcha
+        Complex strategy
+        Confirm existance of browser, mouse movements
+        Make map domination trivial
+        Make map domination impossible
+
 coord_slug
     coord_slug is top right corner of box
 
@@ -114,7 +114,3 @@ Map Size
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
-
-bugs that could not be replicated
-    Fix bug when claiming land and setting price higher than money owned
-        2016-01-06

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2016 at 01:41 AM
+-- Generation Time: Apr 19, 2016 at 02:45 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `land` (
   `land_name` varchar(512) NOT NULL,
   `price` bigint(20) NOT NULL,
   `charge` int(10) unsigned NOT NULL,
+  `charge_duration` int(10) unsigned NOT NULL,
+  `last_charge_end` timestamp NOT NULL,
   `content` varchar(1024) NOT NULL,
   `primary_color` varchar(10) NOT NULL,
   `secondary_color` varchar(10) NOT NULL,
