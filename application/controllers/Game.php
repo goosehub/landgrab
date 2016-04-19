@@ -105,12 +105,12 @@ class Game extends CI_Controller {
         }
 
         // Get the land to be used
-        if ( strtotime($land_square['last_charge_end']) > time() ) {
+        if ( strtotime($land_square['last_lease_end']) > time() ) {
             $land_square['current_content'] = $land_square['content'];
-            $land_square['rent_active'] = true;
+            $land_square['lease_active'] = true;
         } else {
             $land_square['current_content'] = $land_square['default_content'];
-            $land_square['rent_active'] = false;
+            $land_square['lease_active'] = false;
         }
 
         // Set token for account
@@ -178,8 +178,8 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
-        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|less_than[1000000]');
-        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|less_than[1440]');
+        $this->form_validation->set_rules('lease_price', 'Lease Price', 'trim|required|integer|less_than[1000000]');
+        $this->form_validation->set_rules('lease_duration', 'Duration', 'trim|required|integer|less_than[1440]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         // Fail
@@ -206,14 +206,14 @@ class Game extends CI_Controller {
 	        $world_key = $this->input->post('world_key_input');
 	        $land_name = $this->input->post('land_name');
             $price = $this->input->post('price');
-            $charge = $this->input->post('charge');
-	        $charge_duration = $this->input->post('charge_duration');
+            $lease = $this->input->post('lease');
+	        $lease_duration = $this->input->post('lease_duration');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $charge, $charge_duration, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $lease, $lease_duration, $primary_color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -222,7 +222,7 @@ class Game extends CI_Controller {
 	}
 
     // Claim unclaimed land
-    public function rent_form() {
+    public function lease_form() {
         // Authentication
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -237,11 +237,11 @@ class Game extends CI_Controller {
 
         // Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_rent_form_validation');
+        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_lease_form_validation');
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('charge', 'Charge', 'trim|required|integer|less_than[1000000]');
-        $this->form_validation->set_rules('charge_duration', 'Duration', 'trim|required|integer|less_than[1440]');
+        $this->form_validation->set_rules('lease_price', 'Lease Price', 'trim|required|integer|less_than[1000000]');
+        $this->form_validation->set_rules('lease_duration', 'Duration', 'trim|required|integer|less_than[1440]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
 
         // Fail
@@ -265,15 +265,15 @@ class Game extends CI_Controller {
             $world_key = $this->input->post('world_key_input');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-            $charge = $this->input->post('charge');
-            $charge_duration = $this->input->post('charge_duration');
+            $lease_price = $this->input->post('lease_price');
+            $lease_duration = $this->input->post('lease_duration');
             $content = $this->input->post('content');
             $content = $this->sanitize_html($content);
 
             // Do Database action
             if ($form_type === 'buy') {
-                $last_charge_end = date('Y-m-d H:i:s', time() + ($charge_duration * 60) );
-                $query_action = $this->game_model->update_land_content($world_key, $coord_slug, $content, $last_charge_end);
+                $last_lease_end = date('Y-m-d H:i:s', time() + ($lease_duration * 60) );
+                $query_action = $this->game_model->update_land_content($world_key, $coord_slug, $content, $last_lease_end);
             } else {
                 echo 'here';
                 $query_action = $this->game_model->update_land_default_content($world_key, $coord_slug, $content);
@@ -303,7 +303,7 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = $land_square['charge'];
+        $amount = $land_square['lease_price'];
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
         $seller_user = $this->user_model->get_user($seller_account_key);
@@ -343,8 +343,8 @@ class Game extends CI_Controller {
         return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
 
-    // Validate Rent Form Callback
-    public function rent_form_validation($form_type_input)
+    // Validate lease Form Callback
+    public function lease_form_validation($form_type_input)
     {
         // User Information
         if ($this->session->userdata('logged_in')) {
@@ -361,7 +361,7 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $charge = $land_square['charge'];
+        $lease_price = $land_square['lease_price'];
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
         $seller_user = $this->user_model->get_user($seller_account_key);
@@ -387,14 +387,14 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
             return false;
         }
-        else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['charge'])
+        else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['lease_price'])
         {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to rent this land');
+            $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to lease this land');
             return false;
         }
 
         // Do transaction, and return true if transaction succeeds
-        return $this->rent_transaction($form_type, $world_key, $coord_slug, $charge, $name_at_sale, $seller_account_key, $buyer_account);
+        return $this->lease_transaction($form_type, $world_key, $coord_slug, $lease_price, $name_at_sale, $seller_account_key, $buyer_account);
     }
 
     // Land Transaction
@@ -429,7 +429,7 @@ class Game extends CI_Controller {
         return true;
     }
 
-    public function rent_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)
+    public function lease_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)
     {
         // Do transaction
         $new_buying_owner_cash = $buyer_account['cash'] - $amount;
@@ -447,7 +447,7 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 
             // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'rent', 
+            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'lease', 
                 $amount, $world_key, $coord_slug, $name_at_sale, '');
         }
         return true;

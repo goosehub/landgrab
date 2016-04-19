@@ -213,7 +213,7 @@ function initMap()
           + '?register">Join to Claim!</a><br>';
         } else {
           window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Buy and Rent! (' + number_format(land_data['price']) + ')</a><br>';
+          + '?register">Join to Buy and Lease! (' + number_format(land_data['price']) + ')</a><br>';
         }
       }
 
@@ -225,22 +225,22 @@ function initMap()
         // Update
 				} else if (land_data['account_key'] == account_id) {
 					window_string += land_trade_form('update', 'btn-info', land_data);
-          if (land_data['rent_active']) {
+          if (land_data['lease_active']) {
             window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
-            + 'Already Rented ($' + number_format(land_data['charge']) + '/' + number_format(land_data['charge_duration']) + ' Minutes)</button>';
+            + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
           } else {
-            window_string += land_rent_form('update', 'btn-info', land_data);
+            window_string += land_lease_form('update', 'btn-info', land_data);
           }
         // Buy
 				} else {
           // Enough cash to buy
 					if (land_data['price'] <= cash) {
             window_string += land_trade_form('buy', 'btn-success', land_data);
-            if (land_data['rent_active']) {
+            if (land_data['lease_active']) {
             window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
-            + 'Already Rented ($' + number_format(land_data['charge']) + '/' + number_format(land_data['charge_duration']) + ' Minutes)</button>';
+            + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
             } else {
-              window_string += land_rent_form('buy', 'btn-success', land_data);
+              window_string += land_lease_form('buy', 'btn-success', land_data);
             }
           // Not enough cash
 					} else {
@@ -284,9 +284,9 @@ function initMap()
 
         // When expanding form, hide expand button and Focus on land name, with timeout to prevent collapse conflict
         $('.expand_trade').click(function(){
-          $('#rent_form').hide();
+          $('#lease_form').hide();
         });
-        $('.expand_rent').click(function(){
+        $('.expand_lease').click(function(){
           $('#land_form').hide();
         });
 
@@ -349,19 +349,19 @@ function initMap()
         }); // End land form ajax
 
         // 
-        // Submit rent form ajax
+        // Submit lease form ajax
         // 
-        $('#submit_rent_form').click(function() {
+        $('#submit_lease_form').click(function() {
 
           // Serialize form into post data
-          var post_data = $('#rent_form').serialize();
+          var post_data = $('#lease_form').serialize();
 
           // Replace window with processing window
-          $('#rent_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+          $('#lease_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
 
           // Submit form
           $.ajax({
-            url: "<?=base_url()?>rent_form",
+            url: "<?=base_url()?>lease_form",
             type: "POST",
             data: post_data,
             cache: false,
@@ -371,7 +371,7 @@ function initMap()
               response = JSON.parse(data);
 
               if (response['error']) {
-                $('#rent_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
                 return false;
               }
 
@@ -380,14 +380,14 @@ function initMap()
                 infoWindow.close();
 
                 // Update player variables and displays
-                cash = cash - land_data['charge'];
+                cash = cash - land_data['lease_price'];
                 $('#cash_display').html(number_format(cash));
 
                 return true;
 
               // If error, display error message
               } else {
-                $('#rent_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
             }
@@ -414,24 +414,24 @@ function initMap()
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
             + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_land_name">Name</label>'
+            + '<label for="input_land_name">Land Name</label>'
             + '</div><div class="col-md-8">'
             + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_price">Price</label>'
+            + '<label for="input_price">Land Price</label>'
             + '</div><div class="col-md-8">'
             + '<input type="text" class="form-control" id="input_price" name="price" value="' + number_format(d['price']) + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_charge">Charge</label>'
+            + '<label for="input_lease_price">Lease Price</label>'
             + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="input_charge" name="charge" value="' + number_format(d['charge']) + '">'
+            + '<input type="text" class="form-control" id="input_lease_price" name="lease_price" value="' + number_format(d['lease_price']) + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_charge_duration">Duration (Minutes)</label>'
+            + '<label for="input_lease_duration">Lease Duration</label>'
             + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="input_charge_duration" name="charge_duration" value="' + number_format(d['charge_duration']) + '">'
+            + '<input type="text" class="form-control" id="input_lease_duration" name="lease_duration" value="' + number_format(d['lease_duration']) + '">'
             + '</div></div>'
           + '</div>'
           + '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
@@ -439,21 +439,21 @@ function initMap()
 		return result;
 	}
 
-  // For renting or updating land
-  function land_rent_form(form_type, button_class, d) {
+  // For leasing or updating land
+  function land_lease_form(form_type, button_class, d) {
     if (form_type === 'buy') {
-      charge_phrase = 'Rent  ($' + number_format(d['charge']) + '/' + number_format(d['charge_duration']) + ' Minutes)';
+      lease_price_phrase = 'Lease  ($' + number_format(d['lease_price']) + '/' + number_format(d['lease_duration']) + ' Minutes)';
       content = '';
     } else {
-      charge_phrase = 'Update Default Description';
+      lease_price_phrase = 'Update Default Description';
       content = d['default_content'];
     }
-    result = '<div class="form_outer_cont"><form id="rent_form' + '" action="<?=base_url()?>rent_form" method="post">'
-    + '<button class="expand_land_form expand_rent btn ' + button_class + '" type="button" '
-    + 'data-toggle="collapse" data-target="#rent_form_dropdown" aria-expanded="false" aria-controls="rent_form_dropdown">'
-      + '' + charge_phrase
+    result = '<div class="form_outer_cont"><form id="lease_form' + '" action="<?=base_url()?>lease_form" method="post">'
+    + '<button class="expand_land_form expand_lease btn ' + button_class + '" type="button" '
+    + 'data-toggle="collapse" data-target="#lease_form_dropdown" aria-expanded="false" aria-controls="lease_form_dropdown">'
+      + '' + lease_price_phrase
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
-        + '<div id="rent_form_dropdown" class="collapse">'
+        + '<div id="lease_form_dropdown" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
@@ -461,15 +461,15 @@ function initMap()
             + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
             + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
             + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
-            + '<input type="hidden" id="charge" name="charge" value="' + d['charge'] + '">'
-            + '<input type="hidden" id="charge_duration" name="charge_duration" value="' + d['charge_duration'] + '">'
+            + '<input type="hidden" id="lease_price" name="lease_price" value="' + d['lease_price'] + '">'
+            + '<input type="hidden" id="lease_duration" name="lease_duration" value="' + d['lease_duration'] + '">'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Description</label>'
             + '</div><div class="col-md-8">'
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + content + '</textarea>'
             + '</div></div>'
           + '</div>'
-          + '<button type="button" id="submit_rent_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+          + '<button type="button" id="submit_lease_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
     + '</div></form></div>';
     return result;
   }

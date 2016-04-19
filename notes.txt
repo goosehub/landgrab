@@ -3,9 +3,14 @@
 ==========================================================================================
 
 Charging
-    Land Rebate is flat amount
+    Land Income is flat amount
     CRON is per minute
-    Charge to write on land
+    Lease the land description
+
+Strategy Trifecta
+    Income
+    Trading
+    Leasing
 
 ==========================================================================================
     Goals
@@ -13,12 +18,15 @@ Charging
 
 High Priority
     Automatic $ and , in input
-    Rent Financial
-    Rent Notifications
+    Lease duration minutes after number
+    Lease Financial
+    Lease Notifications
     Tax Refactor for rebate
     How to play Update
 
 Low Priority
+    Bugs
+        Sales on page reload
     Refactor
         Variable Name Changes
         Reduce dependence on break tag

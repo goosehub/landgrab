@@ -38,7 +38,7 @@
       <table class="table table-striped table-condensed">
         <tbody>
 
-          <tr class="info"><td class="text-center"><strong>Charges</strong></td></tr>
+          <tr class="info"><td class="text-center"><strong>Income</strong></td></tr>
 
           <tr class="danger">
             <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): </td>
