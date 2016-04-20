@@ -2,39 +2,27 @@
     Notes
 ==========================================================================================
 
-Charging
-    Land Income is flat amount
-    CRON is per minute
-    Lease the land description
-
-Strategy Trifecta
-    Income
-    Trading
-    Leasing
+...
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    How to play Update
-    Check the financials
+    Verify accurate financials
 
 Low Priority
-    Bugs
-        Sales on page reload
-    Refactor
-        Reduce dependence on break tag
     Feature
         Net Worth Leaderboard
     Security/Cheating/Manipulation Prevention
         General Security
-        lat, lng?
     Performance
         Tax cron optimization
         Speed optimization
     Infrastructure
         Move hosting to LiquidWeb
+    Refactor
+        Reduce dependence on break tag
     Misc
         License
 
@@ -52,25 +40,8 @@ No Priority
     Password Resets
     Reset account manually
     International Language Support
-
-To be figured out
-    Hide land form expand button after click
-    Land form name focus
-    Ajax land form submit
-
-==========================================================================================
-    Requirements
-==========================================================================================
-
-Undefined-Life-Span
-2D graphics
-Timing Requirement - seconds
-Multiplayer
-Chrome support
-Profiles
-Facebook login
-International Language Support
-Maximum Ajax to reduce bandwidth, server strain, and client load
+    Facebook login
+    International Language Support
 
 ==========================================================================================
     Documentation
@@ -100,12 +71,7 @@ Promotion
 
 Game Experience Issues
     Start of map is difficult
-    After spending money, status queue is met and motivation gone
     Game does on work unless a critical mass of users are active
-    Presense of other players not felt
-    Strategy is shallow
-    Gameplay is repeditive
-    Game is math intensive
     Land is often not grouped together
 
 How to fight bots

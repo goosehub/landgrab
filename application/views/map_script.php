@@ -559,8 +559,8 @@ function initMap()
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
         if (log_check) {
-          update_sales(data['sales']['sales_since_last_update']);
-          update_leases(data['leases']['leases_since_last_update']);
+          update_sales(data['sales']['sales_history'], data['sales']['sales_since_last_update']);
+          update_leases(data['leases']['leases_history'], data['leases']['leases_since_last_update']);
           update_financials(data['financials']);
         }
 
@@ -604,17 +604,19 @@ function initMap()
     return true;
   }
 
-  function update_sales(sales) {
+  function update_sales(sales, sales_since_last_update) {
     // If not empty, do logic
     if (sales.length) {
 
-      // Show alert
-      $('#recently_sold_alert').show();
-
       // Update existing sales alert number (default to 0 when not visible)
-      number_of_new_sales = sales.length
-      var new_recently_sold = parseInt($('#sales_since_last_update_number').text()) + number_of_new_sales;
-      $('#sales_since_last_update_number').html(new_recently_sold);
+      if (number_of_new_sales = sales_since_last_update.length) {
+        $('#recently_sold_alert').show();
+        var new_recently_sold = parseInt($('#sales_since_last_update_number').text()) + number_of_new_sales;
+        $('#sales_since_last_update_number').html(new_recently_sold);
+      }
+
+      // Remove old table data
+      $('#sales_table tr:not(.info)').remove();
 
       // Add each sale to sales table
       sales.reverse();
@@ -624,7 +626,8 @@ function initMap()
         var new_sale_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
             + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
             + '<td>' + sale['paying_username'] + '</td>'
-            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td></tr>';
+            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td>'
+            + '<td><span>' + sale['when'] + ' Ago</span></td></tr>';
 
         // Add to sales table after the header row
         $('#sales_table tr:first').after(new_sale_string);
@@ -635,27 +638,30 @@ function initMap()
     return true;
   }
 
-  function update_leases(leases) {
+  function update_leases(leases, leases_since_last_update) {
     // If not empty, do logic
     if (leases.length) {
 
-      // Show alert
-      $('#recently_leased_alert').show();
-
       // Update existing leases alert number (default to 0 when not visible)
-      number_of_new_leases = leases.length
-      var new_recently_leased = parseInt($('#leases_since_last_update_number').text()) + number_of_new_leases;
-      $('#leases_since_last_update_number').html(new_recently_leased);
+      if (number_of_new_leases = leases_since_last_update.length) {
+        $('#recently_leased_alert').show();
+        var new_recently_leased = parseInt($('#leases_since_last_update_number').text()) + number_of_new_leases;
+        $('#leases_since_last_update_number').html(new_recently_leased);
+      }
+
+      // Remove old table data
+      $('#leases_table tr:not(.info)').remove();
 
       // Add each sale to leases table
       leases.reverse();
-      $.each(leases, function(index, sale) {
+      $.each(leases, function(index, lease) {
 
         // Create string, and be sure to keep up to date with leases block
-        var new_lease_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
-            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
-            + '<td>' + sale['paying_username'] + '</td>'
-            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td></tr>';
+        var new_lease_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + lease['coord_slug'] + '">'
+            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + lease['name_at_sale'] + '</a></td>'
+            + '<td>' + lease['paying_username'] + '</td>'
+            + '<td><strong>$' + number_format(lease['amount']) + '</strong></td>'
+            + '<td><span>' + lease['when'] + ' Ago</span></td></tr>';
 
         // Add to leases table after the header row
         $('#leases_table tr:first').after(new_lease_string);

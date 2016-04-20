@@ -540,6 +540,8 @@ class Game extends CI_Controller {
     // Get Sales
     public function sales($account)
     {
+        $this->load->helper('date');
+        
         $account_key = $account['id'];
 
         // Get lands since last update
@@ -549,11 +551,13 @@ class Game extends CI_Controller {
         $day_ago = date('Y-m-d H:i:s', time() - (60 * 60 * 24 * 1) );
         $sales_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
 
-        // Add usernames to sales history
         foreach ($sales_history as &$transaction) {
+            // Add usernames to sales history
             $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
             $paying_user = $this->user_model->get_user($paying_account['user_key']);
             $transaction['paying_username'] = $paying_user['username'];
+            // Format time
+            $transaction['when'] = timespan(strtotime($transaction['created']), time());
         }
         $sales['sales_history'] = $sales_history;
 
@@ -572,8 +576,9 @@ class Game extends CI_Controller {
     // Get Leases
     public function leases($account)
     {
-        $account_key = $account['id'];
+        $this->load->helper('date');
 
+        $account_key = $account['id'];
 
         // Get lands since last update
         $leases_since_last_update = $this->transaction_model->leased_lands_by_account_over_period($account_key, $account['last_load']);
@@ -582,11 +587,13 @@ class Game extends CI_Controller {
         $day_ago = date('Y-m-d H:i:s', time() - (60 * 60 * 24 * 1) );
         $leases_history = $this->transaction_model->leased_lands_by_account_over_period($account_key, $day_ago);
 
-        // Add usernames to sales history
         foreach ($leases_history as &$transaction) {
+            // Add usernames to sales history
             $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
             $paying_user = $this->user_model->get_user($paying_account['user_key']);
             $transaction['paying_username'] = $paying_user['username'];
+            // Format time
+            $transaction['when'] = timespan(strtotime($transaction['created']), time());
         }
         $leases['leases_history'] = $leases_history;
 

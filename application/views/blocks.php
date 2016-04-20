@@ -26,6 +26,7 @@
         <td>Land</td>
         <td>Bought by</td>
         <td>Amount</td>
+        <td>When</td>
       </tr>
     <?php $i = 0; 
     // Keep up to date with update_sales JS function
@@ -38,6 +39,7 @@
               </a></td>
               <td><?php echo $transaction['paying_username']; ?></td>
               <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
+              <td><span><?php echo $transaction['when']; ?> Ago</span></td>
           </tr>
         <?php } ?>
     <?php } ?>
@@ -60,6 +62,7 @@
         <td>Land</td>
         <td>Leased to</td>
         <td>Amount</td>
+        <td>When</td>
       </tr>
     <?php $i = 0; 
     // Keep up to date with update_leases JS function
@@ -72,6 +75,7 @@
               </a></td>
               <td><?php echo $transaction['paying_username']; ?></td>
               <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
+              <td><span><?php echo $transaction['when']; ?> Ago</span></td>
           </tr>
         <?php } ?>
     <?php } ?>
