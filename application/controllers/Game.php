@@ -559,7 +559,7 @@ class Game extends CI_Controller {
         $sales_since_last_update = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
 
         // Get sales history
-        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 1) );
+        $day_ago = date('Y-m-d H:i:s', time() - (60 * 60 * 24 * 1) );
         $sales_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
 
         // Add usernames to sales history
@@ -587,11 +587,12 @@ class Game extends CI_Controller {
     {
         $account_key = $account['id'];
 
+
         // Get lands since last update
         $leases_since_last_update = $this->transaction_model->leased_lands_by_account_over_period($account_key, $account['last_load']);
 
         // Get sales history
-        $day_ago = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 1) );
+        $day_ago = date('Y-m-d H:i:s', time() - (60 * 60 * 24 * 1) );
         $leases_history = $this->transaction_model->leased_lands_by_account_over_period($account_key, $day_ago);
 
         // Add usernames to sales history

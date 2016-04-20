@@ -442,16 +442,18 @@ function initMap()
   // For leasing or updating land
   function land_lease_form(form_type, button_class, d) {
     if (form_type === 'buy') {
-      lease_price_phrase = 'Lease  ($' + number_format(d['lease_price']) + '/' + number_format(d['lease_duration']) + ' Minutes)';
+      lease_phrase_top = 'Lease  ($' + number_format(d['lease_price']) + '/' + number_format(d['lease_duration']) + ' Minutes)';
+      lease_phrase_bottom = 'Lease';
       content = '';
     } else {
-      lease_price_phrase = 'Update Default Description';
+      lease_phrase_top = 'Update Default Description';
+      lease_phrase_bottom = 'Update';
       content = d['default_content'];
     }
     result = '<div class="form_outer_cont"><form id="lease_form' + '" action="<?=base_url()?>lease_form" method="post">'
     + '<button class="expand_land_form expand_lease btn ' + button_class + '" type="button" '
     + 'data-toggle="collapse" data-target="#lease_form_dropdown" aria-expanded="false" aria-controls="lease_form_dropdown">'
-      + '' + lease_price_phrase
+      + '' + lease_phrase_top
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
         + '<div id="lease_form_dropdown" class="collapse">'
           + '<div class="form-group">'
@@ -469,7 +471,7 @@ function initMap()
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + content + '</textarea>'
             + '</div></div>'
           + '</div>'
-          + '<button type="button" id="submit_lease_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
+          + '<button type="button" id="submit_lease_form" class="btn btn-primary form-control">' + lease_phrase_bottom + '</button>'
     + '</div></form></div>';
     return result;
   }
