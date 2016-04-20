@@ -157,22 +157,10 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // Remove cents if exists
-        if ( isset($_POST['price']) ) {
-
-            // Detect cents, and remove if exists
-            if (substr($_POST['price'], -3, 1) == '.') {
-                $_POST['price'] = substr($_POST['price'], 0, -3);
-            }
-            // Remove dollarsign from price input if exists
-            $_POST['price'] = str_replace('$', '', $_POST['price']);
-            // Remove commas from price input if exists
-            $_POST['price'] = str_replace(',', '', $_POST['price']);
-            // Remove periods from price input if exists (some cultures use periods instead of commas)
-            $_POST['price'] = str_replace('.', '', $_POST['price']);
-            // Remove dashes to prevent negative inputs in price
-            $_POST['price'] = str_replace('-', '', $_POST['price']);
-        }
+        // Deformat inputs
+        $_POST['price'] = $this->money_deformat($_POST['price']);
+        $_POST['lease_price'] = $this->money_deformat($_POST['lease_price']);
+        $_POST['lease_duration'] = str_replace(',', '', $_POST['lease_duration']);
         
 		// Validation
         $this->load->library('form_validation');
@@ -209,14 +197,14 @@ class Game extends CI_Controller {
 	        $world_key = $this->input->post('world_key_input');
 	        $land_name = $this->input->post('land_name');
             $price = $this->input->post('price');
-            $lease = $this->input->post('lease');
+            $lease_price = $this->input->post('lease_price');
 	        $lease_duration = $this->input->post('lease_duration');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $lease, $lease_duration, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $lease_price, $lease_duration, $primary_color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -278,7 +266,6 @@ class Game extends CI_Controller {
                 $last_lease_end = date('Y-m-d H:i:s', time() + ($lease_duration * 60) );
                 $query_action = $this->game_model->update_land_content($world_key, $coord_slug, $content, $last_lease_end);
             } else {
-                echo 'here';
                 $query_action = $this->game_model->update_land_default_content($world_key, $coord_slug, $content);
             }
 
@@ -741,6 +728,25 @@ class Game extends CI_Controller {
 
         // Return data
         return $leaderboards;
+    }
+
+    public function money_deformat($string) {
+        if ( !isset($string) ) {
+            return '';
+        }
+        // Detect cents, and remove if exists
+        if (substr($string, -3, 1) == '.') {
+            $string = substr($string, 0, -3);
+        }
+        // Remove dollarsign from price input if exists
+        $string = str_replace('$', '', $string);
+        // Remove commas from price input if exists
+        $string = str_replace(',', '', $string);
+        // Remove periods from price input if exists (some cultures use periods instead of commas)
+        $string = str_replace('.', '', $string);
+        // Remove dashes to prevent negative inputs in price
+        $string = str_replace('-', '', $string);
+        return $string;
     }
 
     // Function to close tags

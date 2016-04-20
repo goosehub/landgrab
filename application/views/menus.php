@@ -13,7 +13,7 @@
     <span id="recently_leased_alert">
       <button class="leased_lands_button btn btn-action"><strong><span id="leases_since_last_update_number">
       <?php echo $leases['leases_since_last_update'] ? count($leases['leases_since_last_update']) : 0; ?> </span> Leases</strong>
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
       </button>
     </span>
   <?php } ?>
