@@ -293,7 +293,7 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = $land_square['lease_price'];
+        $amount = $land_square['price'];
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
         $seller_user = $this->user_model->get_user($seller_account_key);
@@ -541,7 +541,7 @@ class Game extends CI_Controller {
     public function sales($account)
     {
         $this->load->helper('date');
-        
+
         $account_key = $account['id'];
 
         // Get lands since last update
@@ -619,13 +619,16 @@ class Game extends CI_Controller {
         $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account_key);
         $player_land_count = $financials['player_land_count'] = $land_sum_and_count['count'];
 
-        // If less than 1 land, check if bankruptcy since last page load
+        // Check if bankruptcy since last page load
         $financials['bankruptcy'] = false;
         // if ($player_land_count < 1) { 
             $financials['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
         // }
 
-        // Taxes and Rebates
+        // Set timespan days, match in financial menu language
+        $timespan_days = 1;
+
+        // Income
         $periodic_taxes = $financials['periodic_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
         $current_rebate = $financials['current_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'];
         $income = $financials['income'] = $current_rebate - $periodic_taxes;
@@ -635,9 +638,6 @@ class Game extends CI_Controller {
             $financials['income_class'] = 'red_money';
             $financials['income_prefix'] = '-';
         }
-
-        // Set timespan days, match in financial menu language
-        $timespan_days = 1;
 
         // Trades
         $purchases = $financials['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
@@ -661,7 +661,7 @@ class Game extends CI_Controller {
             $financials['leases_profit_prefix'] = '-';
         }
 
-        // Total Profit and Losses
+        // Balance
         $losses = $financials['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
         $gains = $financials['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
         $profit = $financials['profit'] = $gains['sum'] - $losses['sum'];
