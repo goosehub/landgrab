@@ -19,7 +19,6 @@ Strategy Trifecta
 High Priority
     Automatic $ and , in input
     Lease duration minutes after number
-    Lease Notifications
     Lease Financial
     How to play Update
     Check the financials

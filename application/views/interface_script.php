@@ -116,12 +116,12 @@ $('.leased_lands_button').click(function(){
 
 // Show recently sold alert if exists on page load
 <?php if ($log_check && $sales['sales_since_last_update']) { ?>
-$('.recently_sold_alert').show();
+$('#recently_sold_alert').show();
 <?php } ?>
 
 // Show recently leased alert if exists on page load
 <?php if ($log_check && $leases['leases_since_last_update']) { ?>
-$('.recently_leased_alert').show();
+$('#recently_leased_alert').show();
 <?php } ?>
 
 </script>
