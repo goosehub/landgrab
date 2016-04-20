@@ -14,9 +14,10 @@ $box_size = 2;
 $world_key = 5; // Ensure this is the next available key
 $world_slug = 'huge';
 $world_tax_rate = '0.01';
-$claim_fee = 1000;
-$initial_lease_price;
-$initial_lease_duration
+$land_rebate = 10;
+$claim_fee = 500;
+$initial_lease_price = 1;
+$initial_lease_duration = 10;
 
 // 
 // Static
@@ -25,7 +26,7 @@ $initial_lease_duration
 // Area covered defined with these limits
 // lng and lat limits must be evenly divisible by $box_size
 // lng of 180 and lat of 84 covers the globe and is divisible by 1, 2, 3, 4, 6, and 12
-// Box size 2 with lng limit of 180 and lat limit of 84 creates 60480 land squares
+// Box size 2 with lng limit of 180 and lat limit of 84 creates 15000+ land squares
 // Box size 3 with lng limit of 180 and lat limit of 84 creates 6697 land squares
 $lat_limit = 84;
 $lng_limit = 180;
@@ -38,7 +39,7 @@ $result = '';
 
 $world_insert_statement = "INSERT INTO `world` (`id`, `slug`, `land_size`, `land_tax_rate`, `land_rebate`, `claim_fee`, `created`, `modified`) 
 VALUES
-(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', '0', '" . $claim_fee . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', '" . $land_rebate . "', '" . $claim_fee . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 $result .= $world_insert_statement;
 $result .= '<br>';

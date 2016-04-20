@@ -17,7 +17,6 @@ Strategy Trifecta
 ==========================================================================================
 
 High Priority
-    Lease Financial
     How to play Update
     Check the financials
 

@@ -619,9 +619,9 @@ class Game extends CI_Controller {
         // }
 
         // Taxes and Rebates
-        $hourly_taxes = $financials['hourly_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
+        $periodic_taxes = $financials['periodic_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
         $current_rebate = $financials['current_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'];
-        $income = $financials['income'] = $current_rebate - $hourly_taxes;
+        $income = $financials['income'] = $current_rebate - $periodic_taxes;
         $financials['income_class'] = 'green_money';
         $financials['income_prefix'] = '+';
         if ($income < 0) {
@@ -632,15 +632,26 @@ class Game extends CI_Controller {
         // Set timespan days, match in financial menu language
         $timespan_days = 1;
 
-        // Purchases and Sales
+        // Trades
         $purchases = $financials['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
         $sales = $financials['sales'] = $this->transaction_model->get_transaction_sales($account_key, $timespan_days);
-        $yield = $financials['yield'] = $sales['sum'] - $purchases['sum'];
-        $financials['yield_class'] = 'green_money';
-        $financials['yield_prefix'] = '+';
-        if ($yield < 0) {
-            $financials['yield_class'] = 'red_money';
-            $financials['yield_prefix'] = '-';
+        $trades_profit = $financials['trades_profit'] = $sales['sum'] - $purchases['sum'];
+        $financials['trades_profit_class'] = 'green_money';
+        $financials['trades_profit_prefix'] = '+';
+        if ($trades_profit < 0) {
+            $financials['trades_profit_class'] = 'red_money';
+            $financials['trades_profit_prefix'] = '-';
+        }
+
+        // Leases
+        $spending = $financials['spending'] = $this->transaction_model->get_transaction_lease_spending($account_key, $timespan_days);
+        $selling = $financials['selling'] = $this->transaction_model->get_transaction_lease_selling($account_key, $timespan_days);
+        $leases_profit = $financials['leases_profit'] = $selling['sum'] - $spending['sum'];
+        $financials['leases_profit_class'] = 'green_money';
+        $financials['leases_profit_prefix'] = '+';
+        if ($leases_profit < 0) {
+            $financials['leases_profit_class'] = 'red_money';
+            $financials['leases_profit_prefix'] = '-';
         }
 
         // Total Profit and Losses

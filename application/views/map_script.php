@@ -202,7 +202,7 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Income
-        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Hour</strong>';
+        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong>';
         window_string += '</div>';
 			}
 
@@ -676,7 +676,7 @@ function initMap()
     $('#player_land_mi_display').html( number_format(financials['player_land_count'] * (land_size * 70) ) );
     $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
 
-    $('#hourly_taxes').html( number_format(financials['hourly_taxes']) );
+    $('#periodic_taxes').html( number_format(financials['periodic_taxes']) );
     $('#current_rebate').html( number_format(financials['current_rebate']) );
     $('#income').html( number_format( Math.abs(financials['income']) ) );
     $('#income_prefix').html( number_format(financials['income_prefix']) );

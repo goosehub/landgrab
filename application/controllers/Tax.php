@@ -17,6 +17,8 @@ class Tax extends CI_Controller {
     {
       // Use hash equals function to prevent timing attack
       if ( hash_equals(CRON_TOKEN, $token) ) {
+        // Stopwatch start
+        echo 'start: ' . time() . ' - ';
 
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();
@@ -87,6 +89,9 @@ class Tax extends CI_Controller {
           } // End account loop
 
         } // End world loop
+
+        // Stopwatch end
+        echo 'end: ' . time() . ' - ';
 
         // Taxes complete, good job! echo for cron email. time() keeps email from going to spam as exact duplicate
         echo 'Tax Controller Successful. Timestamp: ' . time();
