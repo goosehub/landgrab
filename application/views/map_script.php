@@ -686,11 +686,19 @@ function initMap()
 
     $('#purchases').html( number_format(financials['purchases'].sum) );
     $('#sales').html( number_format(financials['sales'].sum) );
-    $('#yield').html( number_format( Math.abs(financials['yield']) ) );
-    $('#yield_prefix').html( number_format(financials['yield_prefix']) );
-    $('#yield_span').removeClass();
-    $('#yield_span').addClass( 'money_info_item' );
-    $('#yield_span').addClass( financials['yield_class'] );
+    $('#trades_profit').html( number_format( Math.abs(financials['trades_profit']) ) );
+    $('#trades_profit_prefix').html( number_format(financials['trades_profit_prefix']) );
+    $('#trades_profit_span').removeClass();
+    $('#trades_profit_span').addClass( 'money_info_item' );
+    $('#trades_profit_span').addClass( financials['trades_profit_class'] );
+
+    $('#spending').html( number_format(financials['spending'].sum) );
+    $('#selling').html( number_format(financials['selling'].sum) );
+    $('#leases_profit').html( number_format( Math.abs(financials['leases_profit']) ) );
+    $('#leases_profit_prefix').html( number_format(financials['leases_profit_prefix']) );
+    $('#leases_profit_span').removeClass();
+    $('#leases_profit_span').addClass( 'money_info_item' );
+    $('#leases_profit_span').addClass( financials['leases_profit_class'] );
 
     $('#losses').html( number_format(financials['losses'].sum) );
     $('#gains').html( number_format(financials['gains'].sum) );

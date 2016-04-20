@@ -142,7 +142,7 @@ class Game extends CI_Controller {
 	    }
 	}
 
-	// Claim unclaimed land
+	// Trade and Update Land
 	public function land_form()
     {
         // Authentication
@@ -212,7 +212,7 @@ class Game extends CI_Controller {
 	    }
 	}
 
-    // Claim unclaimed land
+    // Lease land descriptions
     public function lease_form() {
         // Authentication
         if ($this->session->userdata('logged_in')) {

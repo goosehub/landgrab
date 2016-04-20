@@ -100,18 +100,17 @@
     </button>
     <hr>
     <p>
-        <strong>LandGrab is a game of Buying, and Selling the World</strong>
+        <strong>LandGrab is a game of Owning, Trading, and Leasing the World</strong>
     </p>
     <p>
-        Click on any square to buy it.
-        If it's unowned, you can claim it.
-        Land is taxed at 1% hourly on the prices you set.
-        Taxes are redistributed to each player based on how much land they own.
+        Click on any square to buy or claim it.
+        Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set.
     </p>
     <p>
-        Owning cheap land makes a safe hourly profit, but trading land makes quick fortunes if done right.
-        New York City, Japan, and Syria are just a few places that players will pay high dollar for.
-        Run out of cash, you lose all land and your cash is reset.
+        Own cheap squares to make a safe profit.
+        Trade squares for big profits (or loses).
+        Lease out rights to your squares description.
+        If you run out of cash, you lose all land and your cash is reset.
     </p>
     <blockquote>
         And remember, buy low, sell high.
@@ -353,7 +352,7 @@
             <p class="lead">Not registered?</p>
         </div>
         <div class="col-md-4">
-            <button class="register_button btn btn-success form-control">Join to play</button>
+            <button class="register_button btn btn-success form-control">Join and start immediately</button>
         </div>
     </div>
 </div>
