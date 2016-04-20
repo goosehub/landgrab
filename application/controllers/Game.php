@@ -183,8 +183,8 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "An unknown error occurred"}';
             }
 
-            // Return to game as failure
-            echo '{"status": "fail", "message": "'. validation_errors() . '"}';
+            // Return to game as failure with new lines removed
+            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
             return false;
 
 		// Success

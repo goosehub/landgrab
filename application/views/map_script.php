@@ -299,7 +299,7 @@ function initMap()
           var post_data = $('#land_form').serialize();
 
           // Replace window with processing window
-          $('#submit_land_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+          $('#land_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
 
           // Submit form
           $.ajax({
@@ -313,7 +313,7 @@ function initMap()
               response = JSON.parse(data);
 
               if (response['error']) {
-                $('#submit_land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
                 return false;
               }
 
@@ -341,7 +341,8 @@ function initMap()
 
               // If error, display error message
               } else {
-                $('#submit_land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                console.log(response);
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
             }
