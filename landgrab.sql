@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `land` (
   `price` bigint(20) NOT NULL,
   `lease_price` int(10) unsigned NOT NULL,
   `lease_duration` int(10) unsigned NOT NULL,
-  `last_lease_end` timestamp NOT NULL,
+  `last_lease_end` varchar(512) NOT NULL,
   `content` varchar(1024) NOT NULL,
   `default_content` varchar(1024) NOT NULL,
   `primary_color` varchar(10) NOT NULL,

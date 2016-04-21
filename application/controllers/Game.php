@@ -169,8 +169,8 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
-        $this->form_validation->set_rules('lease_price', 'Lease Price', 'trim|required|integer|less_than[1000000]');
-        $this->form_validation->set_rules('lease_duration', 'Duration', 'trim|required|integer|less_than[1440]');
+        $this->form_validation->set_rules('lease_price', 'Lease Price', 'trim|required|integer|less_than[1000001]');
+        $this->form_validation->set_rules('lease_duration', 'Duration', 'trim|required|integer|less_than[1441]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         // Fail
