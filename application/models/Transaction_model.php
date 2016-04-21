@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// Use this where needed for debugging
+    // echo '<br>' . $this->db->last_query() . '<br>';
+
 Class transaction_model extends CI_Model
 {
 // Insert new transaction log
@@ -24,7 +27,7 @@ Class transaction_model extends CI_Model
     $this->db->select('SUM(amount) as sum, COUNT(*) as total');
     $this->db->from('transaction_log');
     $this->db->where('paying_account_key', $paying_account_key);
-    $this->db->where('transaction', 'buy');
+    $this->db->where_in('transaction', ['buy', 'claim']);
     $this->db->where('created >= DATE(NOW()) - INTERVAL ' . $day_timeframe . ' DAY');
     $query = $this->db->get();
     $result = $query->result_array();

@@ -111,13 +111,12 @@
         Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set.
     </p>
     <p>
-        Own cheap squares to make a safe profit.
-        Trade squares for big profits (or loses).
-        Lease out rights to your squares description.
-        If you run out of cash, you lose all land and your cash is reset.
+        Sit on land for steady income.
+        Trade squares for big profits.
+        Lease out rights to your square's message.
     </p>
     <blockquote>
-        And remember, buy low, sell high.
+        Buy low, sell high, have fun
     </blockquote>
 
     <hr>
@@ -157,7 +156,7 @@
     <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
     <br>
     <br>
-    <p>Developed in PHP with CodeIgniter 3. You can contribute to this project on Github</p>
+    <p>Developed in PHP with CodeIgniter 3 and the Google Maps API. You can view and contribute to this project on GitHub. All Rights Reserved.</p>
     <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
     <br>
     <br>

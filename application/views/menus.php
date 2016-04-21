@@ -53,14 +53,14 @@
             <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): </td>
             <td class="text-right"><span class="money_info_item red_money">
               $<span id="periodic_taxes"><?php echo number_format($financials['periodic_taxes']); ?></span>
-              </span>/Minute
+              </span>/Day
             </td>
           </tr>
           <tr class="success">
             <td class="text-left">Earnings: </td>
             <td class="text-right"><span class="money_info_item green_money">
-              $<span id="current_rebate"><?php echo number_format($financials['current_rebate']); ?></span>
-            </span>/Minute
+              $<span id="periodic_rebate"><?php echo number_format($financials['periodic_rebate']); ?></span>
+            </span>/Day
           </td>
           </tr>
           <tr class="active">
@@ -69,7 +69,7 @@
               <span id="income_span" class="money_info_item <?php echo $financials['income_class']; ?>">
                 <span id="income_prefix"><?php echo $financials['income_prefix']; ?></span>
                 $<span id="income"><?php echo number_format(abs($financials['income'])); ?></span>
-              </span>/Minute
+              </span>/Day
             </td>
           </tr>
 
@@ -133,14 +133,14 @@
 
           <tr class="danger">
             <td class="text-left">Losses: </td>
-            <td class="text-right"><span class="money_info_item green_money">
+            <td class="text-right"><span class="money_info_item red_money">
               $<span id="losses"><?php echo number_format($financials['losses']['sum']); ?></span>
               </span>/Day
             </td>
           </tr>
           <tr class="success">
             <td class="text-left">Gains: </td>
-            <td class="text-right"><span class="money_info_item red_money">
+            <td class="text-right"><span class="money_info_item green_money">
               $<span id="gains"><?php echo number_format($financials['gains']['sum']); ?></span>
               </span>/Day
             </td>

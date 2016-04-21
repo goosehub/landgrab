@@ -13,7 +13,6 @@ High Priority
 
 Low Priority
     Feature
-        Net Worth Leaderboard
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
@@ -27,6 +26,7 @@ Low Priority
         License
 
 No Priority
+    Net Worth Leaderboard
     Reimplement tokens for ajax land forms to prevent blind forms for bot prevention
     Hide google maps saved places
     Figure out what to do with players on cash leaderboard with no land
@@ -68,19 +68,6 @@ Beta Testing Locations
 Promotion
     http://www.rockpapershotgun.com/
     http://www.bytejacker.com/
-
-Game Experience Issues
-    Start of map is difficult
-    Game does on work unless a critical mass of users are active
-    Land is often not grouped together
-
-How to fight bots
-    Something only humans can do
-        reCaptcha
-        Complex strategy
-        Confirm existance of browser, mouse movements
-        Make map domination trivial
-        Make map domination impossible
 
 coord_slug
     coord_slug is top right corner of box

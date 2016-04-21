@@ -93,6 +93,9 @@ function initMap()
 
   // For number formatting
   function number_format(nStr) {
+      if (!nStr) {
+        return 0;
+      }
       nStr += '';
       x = nStr.split('.');
       x1 = x[0];
@@ -447,7 +450,7 @@ function initMap()
       lease_phrase_bottom = 'Lease';
       content = '';
     } else {
-      lease_phrase_top = 'Update Default Description';
+      lease_phrase_top = 'Update Default Message';
       lease_phrase_bottom = 'Update';
       content = d['default_content'];
     }
@@ -467,9 +470,9 @@ function initMap()
             + '<input type="hidden" id="lease_price" name="lease_price" value="' + d['lease_price'] + '">'
             + '<input type="hidden" id="lease_duration" name="lease_duration" value="' + d['lease_duration'] + '">'
             + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_land_name">Description</label>'
+            + '<label for="input_land_name">Message</label>'
             + '</div><div class="col-md-8">'
-            + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + content + '</textarea>'
+            + '<textarea class="form-control" id="input_content" name="content" placeholder="Message">' + content + '</textarea>'
             + '</div></div>'
           + '</div>'
           + '<button type="button" id="submit_lease_form" class="btn btn-primary form-control">' + lease_phrase_bottom + '</button>'
@@ -683,7 +686,7 @@ function initMap()
     $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
 
     $('#periodic_taxes').html( number_format(financials['periodic_taxes']) );
-    $('#current_rebate').html( number_format(financials['current_rebate']) );
+    $('#periodic_rebate').html( number_format(financials['periodic_rebate']) );
     $('#income').html( number_format( Math.abs(financials['income']) ) );
     $('#income_prefix').html( number_format(financials['income_prefix']) );
     $('#income_span').removeClass();

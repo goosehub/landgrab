@@ -333,7 +333,7 @@ class Game extends CI_Controller {
         return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
 	}
 
-    // Validate lease Form Callback
+    // Validate Lease Form Callback
     public function lease_form_validation($form_type_input)
     {
         // User Information
@@ -355,13 +355,6 @@ class Game extends CI_Controller {
         $name_at_sale = $land_square['land_name'];
         $seller_account_key = $land_square['account_key'];
         $seller_user = $this->user_model->get_user($seller_account_key);
-
-        // Check for bot patterns and/or consolidation trading
-        // $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
-        // if ($bot_check) {
-        //     echo '{"error": "' . $bot_check . '"}';
-        //     die();
-        // }
 
         // Check if token is correct
         if ($token != $buyer_account['token']) {
@@ -494,8 +487,8 @@ class Game extends CI_Controller {
         // 
 
         // Do check when current sale is in the suspicious range
-        $suspicious_max = 1000000;
-        $suspicious_min = 900000;
+        $suspicious_max = 100000;
+        $suspicious_min = 90000;
         if ($amount <= $suspicious_max && $amount >= $suspicious_min) {
             // If same IP as well, mark as bot
             if ($buyer_user['ip'] === $seller_user['ip']) {
@@ -629,9 +622,9 @@ class Game extends CI_Controller {
         $timespan_days = 1;
 
         // Income
-        $periodic_taxes = $financials['periodic_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'];
-        $current_rebate = $financials['current_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'];
-        $income = $financials['income'] = $current_rebate - $periodic_taxes;
+        $periodic_taxes = $financials['periodic_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'] * 1 * 60 * 24;
+        $periodic_rebate = $financials['periodic_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'] * 1 * 60 * 24;
+        $income = $financials['income'] = $periodic_rebate - $periodic_taxes;
         $financials['income_class'] = 'green_money';
         $financials['income_prefix'] = '+';
         if ($income < 0) {
