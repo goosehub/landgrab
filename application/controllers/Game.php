@@ -13,7 +13,7 @@ class Game extends CI_Controller {
 	}
 
 	// Game view and update json
-	public function index($world_slug = 1)
+	public function index($world_slug = 5)
 	{
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;

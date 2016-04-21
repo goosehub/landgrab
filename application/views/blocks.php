@@ -355,7 +355,7 @@
             <p class="lead">Not registered?</p>
         </div>
         <div class="col-md-4">
-            <button class="register_button btn btn-success form-control">Join and start immediately</button>
+            <button class="register_button btn btn-success form-control">Join And Play Immediately</button>
         </div>
     </div>
 </div>
@@ -384,7 +384,7 @@
         <label for="input_confirm">Confirm</label>
         <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
       </div>
-      <button type="submit" class="btn btn-action form-control">Join To Play</button>
+      <button type="submit" class="btn btn-action form-control">Join To Play Immediately</button>
     </form>
     <hr>
     <div class="row">
