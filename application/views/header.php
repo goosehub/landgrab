@@ -28,7 +28,7 @@
   </head>
   <body>
   <!-- Facebook like code -->
-  <div id="fb-root"></div>
+<!--   <div id="fb-root"></div>
   <script>
     window.fbAsyncInit = function() {
       FB.init({
@@ -45,10 +45,10 @@
     js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=523758294469574";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-   </script>
+   </script> -->
 
   <div class="top_left_block">
-    <div class="fb-like" data-href="http://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div>
+    <!-- <div class="fb-like" data-href="http://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div> -->
   </div>
 
     <!-- Map Element -->
