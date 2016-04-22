@@ -42,6 +42,19 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `analytics`
+--
+
+CREATE TABLE IF NOT EXISTS `analytics` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `marketing_slug` varchar(64) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ip_request`
 --
 

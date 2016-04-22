@@ -13,8 +13,12 @@ class Game extends CI_Controller {
 	}
 
 	// Game view and update json
-	public function index($world_slug = 5)
+	public function index($world_slug = 5, $marketing_slug = false)
 	{
+        // Record marketing slug into analytics table
+        if ($marketing_slug) {
+            $this->user_model->record_marketing_hit($marketing_slug);
+        }
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;
         if ($this->session->userdata('logged_in')) {

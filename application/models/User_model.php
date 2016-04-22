@@ -193,6 +193,15 @@ Class user_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
+ // Record marketing slug hits
+ function record_marketing_hit($marketing_slug)
+ {
+    // Insert user into user
+    $data = array(
+    'marketing_slug' => $marketing_slug
+    );
+    $this->db->insert('analytics', $data);
+ }
 
 }
 ?>
