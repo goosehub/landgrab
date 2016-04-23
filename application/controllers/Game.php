@@ -163,8 +163,10 @@ class Game extends CI_Controller {
 
         // Deformat inputs
         $_POST['price'] = $this->money_deformat($_POST['price']);
-        $_POST['lease_price'] = $this->money_deformat($_POST['lease_price']);
-        $_POST['lease_duration'] = str_replace(',', '', $_POST['lease_duration']);
+        // $_POST['lease_price'] = $this->money_deformat($_POST['lease_price']);
+        // $_POST['lease_duration'] = str_replace(',', '', $_POST['lease_duration']);
+        $_POST['lease_price'] = 1;
+        $_POST['lease_duration'] = 1;
         
 		// Validation
         $this->load->library('form_validation');

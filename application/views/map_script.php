@@ -299,6 +299,7 @@ function initMap()
         $('#submit_land_form').click(function() {
 
           // Serialize form into post data
+          var input_form_type = $('#input_form_type').val();
           var post_data = $('#land_form').serialize();
 
           // Replace window with processing window
@@ -324,23 +325,26 @@ function initMap()
               if (response['status'] === 'success') {
                 infoWindow.close();
 
-                // Update player variables and displays
-                cash = cash - land_data['price'];
-                $('#cash_display').html(number_format(cash));
-                player_land_count = player_land_count + 1;
-                $('#player_land_count_display').html( number_format(player_land_count) );
-                $('#player_land_mi_display').html( number_format(player_land_count * (land_size * 70) ) );
-                $('#player_land_km_display').html( number_format(player_land_count * (land_size * 112) ) );
+                console.log(input_form_type);
 
+                if (input_form_type != 'update') {
+                  // Update player variables and displays
+                  cash = cash - land_data['price'];
+                  $('#cash_display').html(number_format(cash));
+                  player_land_count = player_land_count + 1;
+                  $('#player_land_count_display').html( number_format(player_land_count) );
+                  $('#player_land_mi_display').html( number_format(player_land_count * (land_size * 70) ) );
+                  $('#player_land_km_display').html( number_format(player_land_count * (land_size * 112) ) );
 
-                // Update box to reflect user ownership
-                boxes[land_data['id']].setOptions({
-                  strokeWeight: 5, 
-                  strokeColor: '#428BCA',
-                  fillColor: account_color,
-                  fillOpacity: 0.4
-                });
-                return true;
+                  // Update box to reflect user ownership
+                  boxes[land_data['id']].setOptions({
+                    strokeWeight: 5, 
+                    strokeColor: '#428BCA',
+                    fillColor: account_color,
+                    fillOpacity: 0.4
+                  });
+                  return true;
+                }
 
               // If error, display error message
               } else {
@@ -427,7 +431,7 @@ function initMap()
             + '</div><div class="col-md-8">'
             + '<input type="text" class="auto_money form-control" id="input_price" name="price" value="$' + number_format(d['price']) + '">'
             + '</div></div>'
-            + '<div class="row"><div class="col-md-3">'
+/*            + '<div class="row"><div class="col-md-3">'
             + '<label for="input_lease_price">Lease Price</label>'
             + '</div><div class="col-md-8">'
             + '<input type="text" class="auto_money form-control" id="input_lease_price" name="lease_price" value="$' + number_format(d['lease_price']) + '">'
@@ -436,7 +440,7 @@ function initMap()
             + '<label for="input_lease_duration">Duration (Minutes)</label>'
             + '</div><div class="col-md-8">'
             + '<input type="text" class="auto_comma form-control" id="input_lease_duration" name="lease_duration" value="' + number_format(d['lease_duration']) + '">'
-            + '</div></div>'
+            + '</div></div>'*/
           + '</div>'
           + '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
 		+ '</div></form></div>';

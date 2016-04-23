@@ -67,7 +67,7 @@ class Tax extends CI_Controller {
               $query_action = $this->tax_model->forfeit_all_land_of_account($account_key, $world['claim_fee']);
 
               // Reset account balance
-              $new_cash_balance = 1000000;
+              $new_cash_balance = 100000;
               $query_action = $this->game_model->update_account_cash_by_account_id($account_key, $new_cash_balance);
 
               // Record into transaction log

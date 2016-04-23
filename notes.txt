@@ -4,23 +4,23 @@
 
 ...
 
-can't lease land when not enough money to buy
-sometimes land isn't updated after buy
-message login
-leaderboard cash
-sales, leases coord when no name
-username limit
-change default land new price
-Better reset on bakruptcy
-
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
+    Chat
+    Auctions
+    Buildings
+    Player Ads
+    sales, leases coord when no name
 
 Low Priority
     Feature
+        Change default land new price
+    Bug
+        Sometimes land isn't updated after buy right during update
+        Fix reset on bakruptcy
     Security/Cheating/Manipulation Prevention
         General Security
     Performance

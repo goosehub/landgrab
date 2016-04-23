@@ -23,14 +23,14 @@ class User extends CI_Controller {
         $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
         $login_limit = 5;
         if (count($ip_fails) > $login_limit) {
-            echo 'Too many login attempts from this IP';
-            die();
+            // echo 'Too many login attempts from this IP';
+            // die();
         }
 
 		// Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_login_validation');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|max_length[32]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|callback_login_validation');
         
         $world_key = $this->input->post('world_key');
 		// Fail
@@ -111,8 +111,8 @@ class User extends CI_Controller {
             $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
             // Fail
             if ($user_id === 'ip_fail') {
-                $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
-                return false;
+                // $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
+                // return false;
             }
             else if (! $user_id) {
                 $this->form_validation->set_message('register_validation', 'Username already exists');
@@ -121,7 +121,7 @@ class User extends CI_Controller {
             } else {
                 // Set variables
                 $worlds = $this->user_model->get_all_worlds();
-                $cash = 1000000;
+                $cash = 100000;
                 
                 // Create account for each world
                 foreach ($worlds as $world)
