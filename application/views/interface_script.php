@@ -123,24 +123,24 @@ $('#recently_sold_alert').show();
 $('#recently_leased_alert').show();
 <?php } ?>
 
-// Insert dollar sign and commas into number while typing
-$('body').on('keyup', 'input.auto_money', function(event) {
-    // Skip for arrow keys
-    if (event.which >= 37 && event.which <= 40) return;
-    // Format number
-    $(this).val(function(index, value) {
-        return '$' + value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    });
-});
+// // Insert dollar sign and commas into number while typing
+// $('body').on('keyup', 'input.auto_money', function(event) {
+//     // Skip for arrow keys
+//     if (event.which >= 37 && event.which <= 40) return;
+//     // Format number
+//     $(this).val(function(index, value) {
+//         return '$' + value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//     });
+// });
 
-// Insert commas into number while typing
-$('body').on('keyup', 'input.auto_comma', function(event) {
-    // Skip for arrow keys
-    if (event.which >= 37 && event.which <= 40) return;
-    // Format number
-    $(this).val(function(index, value) {
-        return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    });
-});
+// // Insert commas into number while typing
+// $('body').on('keyup', 'input.auto_comma', function(event) {
+//     // Skip for arrow keys
+//     if (event.which >= 37 && event.which <= 40) return;
+//     // Format number
+//     $(this).val(function(index, value) {
+//         return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//     });
+// });
 
 </script>

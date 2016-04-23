@@ -4,12 +4,14 @@
 
 ...
 
-login issue
 can't lease land when not enough money to buy
 sometimes land isn't updated after buy
 message login
 leaderboard cash
 sales, leases coord when no name
+username limit
+change default land new price
+Better reset on bakruptcy
 
 ==========================================================================================
     Goals
