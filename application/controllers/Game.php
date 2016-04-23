@@ -218,6 +218,8 @@ class Game extends CI_Controller {
 
     // Lease land descriptions
     public function lease_form() {
+        echo '{"status": "fail", "message": "This feature no longer offered. Please refresh your browser"}';
+        return false;
         // Authentication
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');

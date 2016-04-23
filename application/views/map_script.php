@@ -30,7 +30,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 // Set maps variables
-var update_interval = 30;
+var update_interval = 180;
 var infoWindow = false;
 var boxes = [];
 
@@ -228,23 +228,23 @@ function initMap()
         // Update
 				} else if (land_data['account_key'] == account_id) {
 					window_string += land_trade_form('update', 'btn-info', land_data);
-          if (land_data['lease_active']) {
+/*          if (land_data['lease_active']) {
             window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
             + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
           } else {
             window_string += land_lease_form('update', 'btn-info', land_data);
-          }
+          }*/
         // Buy
 				} else {
           // Enough cash to buy
 					if (land_data['price'] <= cash) {
             window_string += land_trade_form('buy', 'btn-success', land_data);
-            if (land_data['lease_active']) {
+/*            if (land_data['lease_active']) {
             window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
             + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
             } else {
               window_string += land_lease_form('buy', 'btn-success', land_data);
-            }
+            }*/
           // Not enough cash
 					} else {
 						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + number_format(land_data['price']) + ')</button>';
