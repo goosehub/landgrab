@@ -12,6 +12,7 @@ $route['world/v'] = "game/index/5/v";
 $route['world/int'] = "game/index/5/int";
 $route['world/pol'] = "game/index/5/pol";
 $route['world/biz'] = "game/index/5/biz";
+$route['world/webgames'] = "game/index/5/webgames";
 
 // World load
 $route['world/(:any)'] = "game/index/$1";

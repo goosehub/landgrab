@@ -4,6 +4,13 @@
 
 ...
 
+login issue
+can't lease land when not enough money to buy
+sometimes land isn't updated after buy
+message login
+leaderboard cash
+sales, leases coord when no name
+
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -71,6 +78,7 @@ Promote
     https://www.rockpapershotgun.com/hey-prs-and-developers/
     http://www.bytejacker.com/
     https://www.facebook.com/
+    http://www.addictinggames.com/game/upload.jsp#submitFlashGame
 
 coord_slug
     coord_slug is top right corner of box

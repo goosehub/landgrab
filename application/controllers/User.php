@@ -54,9 +54,10 @@ class User extends CI_Controller {
 		// Get other parameters
         $username = $this->input->post('username');
 		// Compare to database
-        $result = $this->user_model->login($username, $password);        
+        $result = $this->user_model->login($username, $password);
+
         // Fail
-		if (! $result) {
+        if (!$result || !password_verify($password, $result['password'])) {
             $this->form_validation->set_message('login_validation', 'Invalid username or password');
             return false;
 		// Success

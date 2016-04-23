@@ -303,11 +303,11 @@ class Game extends CI_Controller {
         $seller_user = $this->user_model->get_user($seller_account_key);
 
         // Check for bot patterns and/or consolidation trading
-        $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
-        if ($bot_check) {
-            echo '{"error": "' . $bot_check . '"}';
-            die();
-        }
+        // $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
+        // if ($bot_check) {
+        //     echo '{"error": "' . $bot_check . '"}';
+        //     die();
+        // }
 
         // Check if token is correct
         if ($token != $buyer_account['token']) {
