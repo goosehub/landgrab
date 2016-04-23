@@ -31,6 +31,9 @@ $route['user/register'] = "user/register";
 $route['user/login'] = "user/login";
 $route['user/logout'] = "user/logout";
 
+// Chat functions
+$route['chat/load'] = "chat/load";
+$route['chat/new_chat'] = "chat/new_chat";
 
 // Token
 $route['tax/(:any)'] = "tax/index/$1";

@@ -192,6 +192,25 @@ html body .land_content_div, html body .land_content_div[style] {
   overflow: auto !important;
 }
 
+/* Chat */
+#chat_parent {
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  width: 20vw;
+}
+#chat_messages_parent {
+  width: 20vw;
+  overflow: hidden;
+}
+#chat_messages_box {
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+#chat_input_parent {
+  height: 35px;
+}
+
 /* Overlay */
 #overlay {
     position: absolute;

@@ -28,6 +28,7 @@ class Game extends CI_Controller {
             $data['user'] = $this->user_model->get_user($user_id);
             if (! isset($data['user']['username']) ) {
                 redirect('user/logout', 'refresh');
+                return false;
             }
         }
 
@@ -89,6 +90,7 @@ class Game extends CI_Controller {
         $this->load->view('blocks', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
+        $this->load->view('chat_script', $data);
         $this->load->view('footer', $data);
 	}
 

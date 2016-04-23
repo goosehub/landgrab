@@ -325,8 +325,6 @@ function initMap()
               if (response['status'] === 'success') {
                 infoWindow.close();
 
-                console.log(input_form_type);
-
                 if (input_form_type != 'update') {
                   // Update player variables and displays
                   cash = cash - land_data['price'];

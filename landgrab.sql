@@ -55,6 +55,22 @@ CREATE TABLE IF NOT EXISTS `analytics` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat`
+--
+
+CREATE TABLE IF NOT EXISTS `chat` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_key` int(10) unsigned NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `message` text NOT NULL,
+  `world_key` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ip_request`
 --
 
