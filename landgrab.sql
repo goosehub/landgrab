@@ -55,6 +55,22 @@ CREATE TABLE IF NOT EXISTS `analytics` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `auction`
+--
+
+CREATE TABLE IF NOT EXISTS `auction` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `coord_slug` varchar(8) NOT NULL,
+  `world_key` int(10) unsigned NOT NULL,
+  `complete` int(1) unsigned NOT NULL,
+  `current_bid` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `chat`
 --
 

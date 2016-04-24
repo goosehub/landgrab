@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Use this where needed for debugging
-    // echo '<br>' . $this->db->last_query() . '<br>';
+// echo '<br>' . $this->db->last_query() . '<br>';
 
 Class game_model extends CI_Model
 {
@@ -110,6 +110,31 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : 0;
+ }
+ // New Auction
+ function new_auction($coord_slug, $world_key)
+ {
+    $data = array(
+    'coord_slug' => $coord_slug,
+    'world_key' => $world_key,
+    'complete' => 0,
+    'current_bid' => 500
+    );
+    $this->db->insert('auction', $data);
+ }
+ // Get active auctions
+ function get_active_auctions($world_key)
+ {
+    $this->db->select('*');
+    $this->db->from('auction');
+    $this->db->where('world_key', $world_key);
+    $this->db->where('complete', 0);
+    $this->db->limit(8);
+    $this->db->order_by('id', 'desc');
+    $this->db->group_by('coord_slug');
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result : [];
  }
 
 }

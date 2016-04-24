@@ -161,13 +161,29 @@
 
     <?php } ?>
 
+    <!-- Live Auctions dropdown -->
+    <div class="btn-group">
+      <button class="info_button btn btn-danger dropdown-toggle" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Listings
+        <span class="caret"></span>
+      </button>
+      <ul id="auctions_listing" class="dropdown-menu" aria-labelledby="auction_dropdown">
+        <li class="text-center"><strong class="text-primary">Land Listings</strong></li>
+        <?php foreach ($auctions as $auction) { ?>
+        <li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=<?php echo $auction['coord_slug']; ?>">
+            <strong class="auction_land_name"><?php echo $auction['land_data']['land_name']; ?></strong>
+        </a></li>
+        <?php } ?>
+      </ul>
+    </div>
+
     <!-- Leaderboards dropdown -->
     <div class="btn-group">
-      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Leaderboards
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="info_dropdown">
+      <ul class="dropdown-menu" aria-labelledby="leaderboard_dropdown">
         <li class="text-center"><strong class="text-primary">Leaderboards</strong></li>
         <!-- <li><a class="leaderboard_net_value_button leaderboard_link text-right">Net Value</a></li> -->
         <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
@@ -179,11 +195,11 @@
 
     <!-- Worlds dropdown -->
     <div class="btn-group">
-      <button class="info_button btn btn-info dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="info_button btn btn-info dropdown-toggle" type="button" id="worlds_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Worlds
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="info_dropdown">
+      <ul class="dropdown-menu" aria-labelledby="worlds_dropdown">
         <li class="text-center"><strong class="text-info">Worlds</strong></li>
         <?php foreach ($worlds as $world_list) { ?>
         <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
@@ -226,11 +242,11 @@
 
   <!-- Main Menu dropdown -->
   <div class="btn-group">
-    <button class="info_button btn btn-danger dropdown-toggle" type="button" id="info_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-default dropdown-toggle" type="button" id="site_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         LandGrab
       <span class="caret"></span>
     </button>
-    <ul class="landgrab_menu dropdown-menu" aria-labelledby="info_dropdown">
+    <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
       <li class="text-center"><strong class="text-danger">Version 1.1.0</strong></li>
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>

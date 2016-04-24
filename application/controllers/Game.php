@@ -69,6 +69,15 @@ class Game extends CI_Controller {
         // Get all lands
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
 
+        // Auctions
+        $data['auctions'] = $this->game_model->get_active_auctions($world['id']);
+        foreach ($data['auctions'] as &$auction) {
+            $auction['land_data'] = $this->game_model->get_single_land($world['id'], $auction['coord_slug']);
+            if ($auction['land_data']['land_name'] === '') {
+                $auction['land_data']['land_name'] = 'Unnamed';
+            }
+        }
+
         // Validation errors
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');

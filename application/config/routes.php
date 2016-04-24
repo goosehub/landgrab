@@ -22,6 +22,9 @@ $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
 $route['lease_form'] = "game/lease_form";
 
+// Auction functions
+$route['new_auction'] = "auction/new_auction";
+
 // Account functions
 $route['user/update_color'] = "user/update_color";
 

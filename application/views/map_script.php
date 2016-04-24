@@ -50,7 +50,7 @@ function initMap()
         center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
 
         // Zoom should be adjusted based on box size
-        zoom: 6,
+        zoom: 8,
       <?php } else { ?>
 
       // Map center is slightly north centric
@@ -235,6 +235,9 @@ function initMap()
           } else {
             window_string += land_lease_form('update', 'btn-info', land_data);
           }*/
+          if (cash > 1000) {
+            window_string += '<button id="auction_submit" class="btn btn-success">Put on land listing ($1,000)</button>';
+          }
         // Buy
 				} else {
           // Enough cash to buy
@@ -401,6 +404,49 @@ function initMap()
           });
         }); // End land form ajax
 
+        // Auction Submit
+        $('#auction_submit').click(function(){
+          coord_slug = $('#input_coord_slug').val();
+          infoWindow.close();
+
+          // Submit form
+          $.ajax({
+            url: "<?=base_url()?>new_auction",
+            type: "POST",
+            data: { 
+                coord_slug: coord_slug,
+                world_key: world_key
+            },
+            cache: false,
+            success: function(data)
+            {
+              // Return data
+              response = JSON.parse(data);
+
+              if (response['error']) {
+                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+
+              // If success, close
+              if (response['status'] === 'success') {
+                infoWindow.close();
+
+                // Update player variables and displays
+                cash = cash - 1000;
+                $('#cash_display').html(number_format(cash));
+
+                return true;
+
+              // If error, display error message
+              } else {
+                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                return false;
+              }
+            }
+          });
+        }); // End auction submit
+
       }); // End infoWindow script domready listener
 
     }); // End get_single_land callback
@@ -421,6 +467,7 @@ function initMap()
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
+            + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
             + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
             + '<div class="row"><div class="col-md-3">'
@@ -576,6 +623,7 @@ function initMap()
           update_sales(data['sales']['sales_history'], data['sales']['sales_since_last_update']);
           update_leases(data['leases']['leases_history'], data['leases']['leases_since_last_update']);
           update_financials(data['financials']);
+          update_auctions(data['auctions']);
         }
 
         console.log('update');
@@ -810,6 +858,27 @@ function initMap()
       $('#leaderboard_cheapest_land_table tr:last').after(table_string);
     });
 
+    return true;
+  }
+
+  function update_auctions(auctions) {
+    // If not empty, do logic
+    if (auctions.length) {
+      // Remove old table data
+      $('#auctions_listing li:nth-child(n+3').remove();
+
+      // Add each auction to auctions listing
+      $.each(auctions, function(index, auction) {
+
+        // Create string, and be sure to keep up to date with sales block
+        var new_auction_string = '<li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=' + auction['coord_slug'] + '">'
+            + '<strong class="auction_land_name">' + auction['land_data']['land_name'] + '</strong></a></li>'
+
+        $('#auctions_listing').append(new_auction_string);
+
+      });
+
+    }
     return true;
   }
 

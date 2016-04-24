@@ -30,7 +30,7 @@ class User extends CI_Controller {
 		// Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('username', 'Username', 'trim|required|max_length[32]');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|callback_login_validation');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[64]|callback_login_validation');
         
         $world_key = $this->input->post('world_key');
 		// Fail
@@ -77,7 +77,7 @@ class User extends CI_Controller {
 	{
 		// Validation
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_register_validation|min_length[6]|matches[confirm]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[64]|matches[confirm]|callback_register_validation');
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
 
         $world_key = $this->input->post('world_key');
