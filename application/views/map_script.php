@@ -205,7 +205,8 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Income
-        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong>';
+        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong><br>';
+        window_string += 'Price: <strong class="pull-right">$' + number_format(land_data['price']) + '</strong>';
         window_string += '</div>';
 			}
 
@@ -411,8 +412,11 @@ function initMap()
 		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
     + '<button class="expand_land_form expand_trade btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
-		  + '' + ucwords(form_type) + ' This Land ($' + number_format(d['price']) + ')'
-		  + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
+		  + '' + ucwords(form_type) + ' This Land';
+      if (form_type != 'update') {
+        result += ' ($' + number_format(d['price']) + ')';
+      }
+		  result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
 		    + '<div id="land_form_dropdown" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
@@ -429,6 +433,11 @@ function initMap()
             + '</div><div class="col-md-8">'
             + '<input type="text" class="auto_money form-control" id="input_price" name="price" value="$' + number_format(d['price']) + '">'
             + '</div></div>'
+            + '<div class="row"><div class="col-md-3">'
+            + '<label for="input_content">Description</label>'
+            + '</div><div class="col-md-8">'
+            + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
+            + '</div></div>'
 /*            + '<div class="row"><div class="col-md-3">'
             + '<label for="input_lease_price">Lease Price</label>'
             + '</div><div class="col-md-8">'
@@ -444,7 +453,7 @@ function initMap()
 		+ '</div></form></div>';
 		return result;
 	}
-
+/*
   // For leasing or updating land
   function land_lease_form(form_type, button_class, d) {
     if (form_type === 'buy') {
@@ -481,7 +490,7 @@ function initMap()
     + '</div></form></div>';
     return result;
   }
-
+*/
 	// 
 	// Land loop
 	// 

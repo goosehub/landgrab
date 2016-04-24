@@ -49,13 +49,15 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $lease_price, $lease_duration, $primary_color)
+ function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $lease_price, $lease_duration, $primary_color)
  {
     $data = array(
         'claimed' => $claimed,
         'account_key' => $account_key,
         'land_name' => $land_name,
         'price' => $price,
+        'content' => $content,
+        'default_content' => $content,
         'lease_price' => $lease_price,
         'lease_duration' => $lease_duration,
         'primary_color' => $primary_color

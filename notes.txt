@@ -5,6 +5,8 @@
 ...
 Fix Land Desc
 Zoom to land on link click
+List of owned lands
++ and - button for land price
 
 ==========================================================================================
     Goals

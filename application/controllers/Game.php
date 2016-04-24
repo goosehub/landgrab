@@ -179,6 +179,7 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
         $this->form_validation->set_rules('lease_price', 'Lease Price', 'trim|required|integer|less_than[1000001]');
         $this->form_validation->set_rules('lease_duration', 'Duration', 'trim|required|integer|less_than[1441]');
+        $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         // Fail
@@ -210,9 +211,10 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
+            $content = $this->input->post('content');
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $lease_price, $lease_duration, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $lease_price, $lease_duration, $primary_color);
 
             // Return to game as success
             echo '{"status": "success"}';
