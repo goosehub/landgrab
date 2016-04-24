@@ -6,7 +6,7 @@ Class user_model extends CI_Model
  // Get all users
  function get_all_users()
  {
-    $this->db->select('*');
+    $this->db->select('id, username, created');
     $this->db->from('user');
     $query = $this->db->get();
     return $query->result_array();
@@ -14,7 +14,7 @@ Class user_model extends CI_Model
  // Get user
  function get_user($user_id)
  {
-    $this->db->select('*');
+    $this->db->select('id, username, created');
     $this->db->from('user');
     $this->db->where('id', $user_id);
     $this->db->limit(1);
