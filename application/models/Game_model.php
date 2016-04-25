@@ -134,10 +134,21 @@ Class game_model extends CI_Model
     $this->db->where('complete', 0);
     $this->db->limit(8);
     $this->db->order_by('id', 'desc');
-    $this->db->group_by('coord_slug');
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result : [];
+ }
+ // Get active auctions
+ function check_if_land_is_active_auction($coord_slug, $world_key)
+ {
+    $this->db->select('*');
+    $this->db->from('auction');
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->where('complete', 0);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result : false;
  }
  // Get auction info
  function get_auction_info($auction_id)

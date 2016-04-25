@@ -161,7 +161,7 @@
     <br>
     <br>
     <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
-    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, chucke, Finesir6969, me on the left, /s4s/, 
+    <a href="http://ithare.com/" target="_blank">itHare</a>, Muddy Dubs, me on the left, /s4s/, llamaseatsocks,
     the rest of the Beta Testers, and all my users. Thank you!</p>
 </div>
 

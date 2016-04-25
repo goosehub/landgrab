@@ -30,7 +30,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 // Set maps variables
-var update_interval = 180;
+var update_interval = 120;
 var infoWindow = false;
 var boxes = [];
 

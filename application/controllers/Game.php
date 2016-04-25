@@ -320,12 +320,14 @@ class Game extends CI_Controller {
 	public function land_form_validation($form_type_input)
 	{
         // User Information
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
+        if (!$this->session->userdata('logged_in')) {
+            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
+            return false;
         }
 
         // Get land info for verifying our inputs
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
         $form_type = $this->input->post('form_type_input');
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
@@ -347,12 +349,12 @@ class Game extends CI_Controller {
         // }
 
         // Check if token is correct
-        if ($token != $buyer_account['token']) {
+        // if ($token != $buyer_account['token']) {
             // $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
             // return false;
-        }
+        // }
         // Check for inaccuracies
-        else if ($form_type === 'claim' && $land_square['claimed'] != 0) {
+        if ($form_type === 'claim' && $land_square['claimed'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
@@ -367,6 +369,9 @@ class Game extends CI_Controller {
         else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['price'])
         {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
+            return false;
+        } else if ($this->game_model->check_if_land_is_active_auction($coord_slug, $world_key)) {
+            $this->form_validation->set_message('land_form_validation', 'This land is currently up for auction');
             return false;
         }
 

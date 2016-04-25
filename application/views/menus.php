@@ -190,7 +190,7 @@
         <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
         <li><a class="leaderboard_cash_owned_button leaderboard_link text-right">Cash</a></li>
         <li><a class="leaderboard_highest_valued_land_button leaderboard_link text-right">Highest Valued Land</a></li>
-        <li><a class="leaderboard_cheapest_land_button leaderboard_link text-right">Cheapest Land</a></li>
+        <!-- <li><a class="leaderboard_cheapest_land_button leaderboard_link text-right">Cheapest Land</a></li> -->
       </ul>
     </div>
 

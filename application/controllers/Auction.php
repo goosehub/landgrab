@@ -67,6 +67,11 @@ class Auction extends CI_Controller {
             return false;
         }
 
+        // Check if active auction
+        if ($this->game_model->check_if_land_is_active_auction($coord_slug, $world_key) ) {
+            return false;
+        }
+
         // Apply charge for auction
         $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 

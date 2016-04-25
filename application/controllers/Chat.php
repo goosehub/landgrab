@@ -15,7 +15,7 @@ class Chat extends CI_Controller {
 	{
         // Set parameters
         $world_key = $_POST['world_key'];
-        $limit = 8;
+        $limit = 12;
 
         // Get chats and reverse array
         $chats = $this->chat_model->load_chat_by_limit($world_key, $limit);
@@ -37,27 +37,31 @@ class Chat extends CI_Controller {
         $this->form_validation->set_rules('chat_input', 'Chat Message', 'trim|required|max_length[144]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
-        // Authentication
-        $log_check = $data['log_check'] = $data['user_id'] = false;
-        if ($this->session->userdata('logged_in')) {
-            $log_check = $data['log_check'] = true;
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
-            $data['user'] = $this->user_model->get_user($user_id);
-            if (! isset($data['user']['username']) ) {
-                redirect('user/logout', 'refresh');
-                return false;
+        if ($this->form_validation->run() == FALSE) {
+            return false;
+        } else {
+            // Authentication
+            $log_check = $data['log_check'] = $data['user_id'] = false;
+            if ($this->session->userdata('logged_in')) {
+                $log_check = $data['log_check'] = true;
+                $session_data = $this->session->userdata('logged_in');
+                $user_id = $data['user_id'] = $session_data['id'];
+                $data['user'] = $this->user_model->get_user($user_id);
+                if (! isset($data['user']['username']) ) {
+                    redirect('user/logout', 'refresh');
+                    return false;
+                }
+                $username = $data['user']['username'];
             }
-            $username = $data['user']['username'];
+
+            // Set variables
+            $world_key = $_POST['world_key'];
+            $message = htmlspecialchars($_POST['chat_input']);
+
+            // Insert chat
+            $result = $this->chat_model->new_chat($user_id, $username, $message, $world_key);
+            return true;
         }
-
-        // Set variables
-        $world_key = $_POST['world_key'];
-        $message = htmlspecialchars($_POST['chat_input']);
-
-        // Insert chat
-        $result = $this->chat_model->new_chat($user_id, $username, $message, $world_key);
-        return true;
     }
 
 }
