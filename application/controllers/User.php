@@ -78,7 +78,7 @@ class User extends CI_Controller {
         // Optional password
         $matches = 'matches[confirm]|';
         if (!isset($_POST['password']) || $_POST['password'] === '') {
-            $random_password = time();
+            $random_password = mt_rand(10000000,99999999); ;
             $_POST['password'] = $random_password;
             $_POST['confirm'] = $random_password;
             $matches = '';

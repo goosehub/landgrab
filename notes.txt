@@ -3,9 +3,12 @@
 ==========================================================================================
 
 ...
-Prevent auction multi bidding
-Fix Land Desc
 Zoom to land on link click
+Prevent auction multi bidding
+Prevent bids on expensive auctions
+Prevent bids on done auctions
+Prevent sale during auction
+Fix Land Desc
 List of owned lands
 + and - button for land price
 
