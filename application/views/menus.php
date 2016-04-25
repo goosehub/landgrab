@@ -100,7 +100,7 @@
               </span> /Day
             </td>
           </tr>
-
+<!-- 
           <tr class="info"><td class="text-center"><strong>Leases</strong></td></tr>
 
           <tr class="danger">
@@ -128,7 +128,7 @@
               </span> /Day
             </td>
           </tr>
-
+ -->
           <tr class="info"><td class="text-center"><strong>Balance</strong></td></tr>
 
           <tr class="danger">

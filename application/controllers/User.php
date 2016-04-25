@@ -75,9 +75,18 @@ class User extends CI_Controller {
 	// Register
 	public function register()
 	{
+        // Optional password
+        $matches = 'matches[confirm]|';
+        if (!isset($_POST['password']) || $_POST['password'] === '') {
+            $random_password = time();
+            $_POST['password'] = $random_password;
+            $_POST['confirm'] = $random_password;
+            $matches = '';
+        }
+
 		// Validation
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[64]|matches[confirm]|callback_register_validation');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[64]|' . $matches . 'callback_register_validation');
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
 
         $world_key = $this->input->post('world_key');

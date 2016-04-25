@@ -401,13 +401,13 @@
       <div class="row">
           <div class="col-md-6">
               <div class="form-group">
-                <label for="input_password">Password</label>
+                <label for="input_password">Password <small>(Optional)</small></label>
                 <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
               </div>
           </div>
           <div class="col-md-6">
               <div class="form-group">
-                <label for="input_confirm">Confirm</label>
+                <label for="input_confirm">Confirm <small>(Optional)</small></label>
                 <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
               </div>
           </div>
