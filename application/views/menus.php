@@ -164,13 +164,14 @@
     <!-- Live Auctions dropdown -->
     <div class="btn-group">
       <button class="info_button btn btn-danger dropdown-toggle" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Listings
+          Auctions
         <span class="caret"></span>
       </button>
       <ul id="auctions_listing" class="dropdown-menu" aria-labelledby="auction_dropdown">
-        <li class="text-center"><strong class="text-primary">Land Listings</strong></li>
+        <li class="text-center"><strong class="text-primary">Live Auctions</strong></li>
         <?php foreach ($auctions as $auction) { ?>
-        <li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=<?php echo $auction['coord_slug']; ?>">
+        <li><a class="auction_link" 
+          href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=<?php echo $auction['coord_slug']; ?>&auction=<?php echo $auction['id']; ?>">
             <strong class="auction_land_name"><?php echo $auction['land_data']['land_name']; ?></strong>
         </a></li>
         <?php } ?>

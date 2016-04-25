@@ -50,7 +50,7 @@ function initMap()
         center: {lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>, lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>},
 
         // Zoom should be adjusted based on box size
-        zoom: 8,
+        zoom: 7,
       <?php } else { ?>
 
       // Map center is slightly north centric
@@ -235,9 +235,6 @@ function initMap()
           } else {
             window_string += land_lease_form('update', 'btn-info', land_data);
           }*/
-          if (cash > 1000) {
-            window_string += '<button id="auction_submit" class="btn btn-success">Put on land listing ($1,000)</button>';
-          }
         // Buy
 				} else {
           // Enough cash to buy
@@ -424,7 +421,7 @@ function initMap()
               response = JSON.parse(data);
 
               if (response['error']) {
-                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
                 return false;
               }
 
@@ -440,7 +437,7 @@ function initMap()
 
               // If error, display error message
               } else {
-                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
             }
@@ -495,9 +492,14 @@ function initMap()
             + '</div><div class="col-md-8">'
             + '<input type="text" class="auto_comma form-control" id="input_lease_duration" name="lease_duration" value="' + number_format(d['lease_duration']) + '">'
             + '</div></div>'*/
-          + '</div>'
-          + '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>'
-		+ '</div></form></div>';
+          + '</div>';
+          if (form_type === 'update' && cash > 1000) {
+            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
+            + '<div id="auction_submit" class="btn btn-success">Put On Auction ($1,000)</div>'
+            + '</div></div>';
+          }
+          result += '<br><button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
+		result += '</div></form></div>';
 		return result;
 	}
 /*
@@ -871,7 +873,8 @@ function initMap()
       $.each(auctions, function(index, auction) {
 
         // Create string, and be sure to keep up to date with sales block
-        var new_auction_string = '<li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=' + auction['coord_slug'] + '">'
+        var new_auction_string = '<li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=' + auction['coord_slug'] 
+        + '&auction=' + auction['id'] + '">'
             + '<strong class="auction_land_name">' + auction['land_data']['land_name'] + '</strong></a></li>'
 
         $('#auctions_listing').append(new_auction_string);
@@ -881,6 +884,61 @@ function initMap()
     }
     return true;
   }
+
+  // Auctions
+  <?php if ( isset($_GET['land']) && isset($_GET['auction']) && isset($auction_data['current_bid']) ) { ?>
+    current_bid = <?php echo $auction_data['current_bid']; ?>;
+    auction_id = <?php echo $auction_data['id']; ?>;
+    auction_coord_slug = <?php echo $auction_data['land']['coord_slug']; ?>;
+    $('#auction_block').show();
+
+    $('#new_bid').click(function(){
+      new_auction_bid(new_bid)
+    });
+
+    function new_auction_bid(new_bid) {
+      $.ajax({
+        url: "<?=base_url()?>new_auction_bid",
+        type: "POST",
+        data: { 
+                  auction_id: auction_id
+              },
+        cache: false,
+        success: function(data)
+        {
+          console.log('Bid success');
+          return true;
+        }
+      });
+    }
+
+    function auction_update() {
+      $.ajax({
+        url: "<?=base_url()?>auction_update",
+        type: "GET",
+        data: { 
+                  auction_id: auction_id
+              },
+        cache: false,
+        success: function(data)
+        {
+          auction_data = JSON.parse(data);
+          $('#current_bid').html(auction_data['current_bid']);
+          $('#current_bid_username').html(auction_data['current_bid_username']);
+          if (auction_data['complete'] != 0) {
+            $('#auction_time_left_parent').html('Auction Over');
+          } else {
+            $('#auction_time_left').html(auction_data['auction_time_left']);
+          }
+          return true;
+        }
+      });
+    }
+    setInterval(function(){
+      auction_update();
+    }, 5000);
+  <?php } ?>
+
 
   // 
   // Remove overlay

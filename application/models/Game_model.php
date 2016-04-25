@@ -112,13 +112,16 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : 0;
  }
  // New Auction
- function new_auction($coord_slug, $world_key)
+ function new_auction($coord_slug, $world_key, $seller_account_key)
  {
     $data = array(
     'coord_slug' => $coord_slug,
     'world_key' => $world_key,
     'complete' => 0,
-    'current_bid' => 500
+    'current_bid' => 500,
+    'seller_account_key' => $seller_account_key,
+    'current_bid_account_key' => $seller_account_key,
+    'last_bid_timestamp' => date('Y-m-d H:i:s', time())
     );
     $this->db->insert('auction', $data);
  }
@@ -136,6 +139,40 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result : [];
  }
+ // Get auction info
+ function get_auction_info($auction_id)
+ {
+    $this->db->select('*');
+    $this->db->from('auction');
+    $this->db->where('id', $auction_id);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : [];
+ }
+ // Apply new auction bid
+ function apply_new_auction_bid($auction_id, $new_bid, $current_bid_account_key)
+ {
+    // Seller add cash
+    $data = array(
+        'current_bid' => $new_bid,
+        'current_bid_account_key' => $current_bid_account_key,
+        'last_bid_timestamp' => date('Y-m-d H:i:s', time())
+    );
+    $this->db->where('id', $auction_id);
+    $this->db->update('auction', $data);
+    return true;
+}
+ // Apply new auction bid
+ function set_auction_as_complete($auction_id)
+ {
+    // Seller add cash
+    $data = array(
+        'complete' => 1
+    );
+    $this->db->where('id', $auction_id);
+    $this->db->update('auction', $data);
+    return true;
+}
 
 }
 ?>

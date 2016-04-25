@@ -45,10 +45,11 @@ class Auction extends CI_Controller {
     public function new_auction_validation()
     {
         // User Information
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
+        if (!$this->session->userdata('logged_in')) {
+            return false;
         }
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
 
         // Get Data
         $coord_slug = $this->input->post('coord_slug');
@@ -70,9 +71,32 @@ class Auction extends CI_Controller {
         $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
 
         // Add as new auction
-        $query_action = $this->game_model->new_auction($coord_slug, $world_key);
+        $query_action = $this->game_model->new_auction($coord_slug, $world_key, $buyer_account_key);
 
         return true;
+    }
+
+    // New auction bid
+    public function new_auction_bid()
+    {
+        // User Information
+        if (! $this->session->userdata('logged_in')) {
+            return false;
+        }
+
+        // Get data
+        $auction_id = $_POST['auction_id'];
+        $auction_data = $this->game_model->get_auction_info($auction_id);
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
+        $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $auction_data['world_key']);
+        $new_bid = $auction_data['current_bid'] + 50;
+        $current_bid_account_key = $account['id'];
+
+        // Apply new auction bid
+        $query_action = $this->game_model->apply_new_auction_bid($auction_id, $new_bid, $current_bid_account_key);
     }
 
 }

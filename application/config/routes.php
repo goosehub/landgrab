@@ -24,6 +24,8 @@ $route['lease_form'] = "game/lease_form";
 
 // Auction functions
 $route['new_auction'] = "auction/new_auction";
+$route['new_auction_bid'] = "auction/new_auction_bid";
+$route['auction_update'] = "game/auction_update";
 
 // Account functions
 $route['user/update_color'] = "user/update_color";

@@ -299,6 +299,28 @@
 
 </div>
 
+<!-- Auction Block -->
+<?php if ( isset($auction_data) ) {  ?>
+<div id="auction_block" class="auction_block center_block">
+    <strong class="text-center"><?php echo $auction_data['land']['land_name'] . ' (' . $auction_data['land']['coord_slug'] . ')'; ?></strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <strong class="text-center">Current Bid: $<span id="current_bid"><?php echo number_format($auction_data['current_bid']); ?></span> 
+    by <span id="current_bid_username"><?php echo $auction_data['current_bid_username']; ?></span></strong><br><br>
+    <strong id="auction_time_left_parent"><span id="auction_time_left"><?php echo $auction_data['auction_time_left']; ?></span> Seconds Left</strong><br><br>
+    <?php if ($log_check) { ?>
+        <?php if ($account['cash'] > $auction_data['current_bid'] + 50) { ?>
+        <span id="new_bid"><button type="button" class="btn btn-success">+$50</button></span>
+        <?php } else { ?>
+        <span id="new_bid"><button type="button" class="btn btn-default disabled">Not enough Cash</button></span>
+        <?php } ?>
+    <?php } ?>
+</div>
+<?php } ?>
+
 <!-- Report Bugs Block -->
 <div id="report_bugs_block" class="center_block">
     <strong>Report Bugs</strong>
