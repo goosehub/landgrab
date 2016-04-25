@@ -32,6 +32,7 @@
         cache: false,
         success: function(html)
         {
+            console.log(html);
             $("#chat_messages_box").html(html);
             $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
         }

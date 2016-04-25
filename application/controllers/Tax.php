@@ -20,6 +20,9 @@ class Tax extends CI_Controller {
         // Stopwatch start
         echo 'start: ' . time() . ' - ';
 
+        // Set cron frequency multiplier by minute
+        $cron_frequency = 5;
+
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();
 
@@ -36,9 +39,6 @@ class Tax extends CI_Controller {
           // Continue if no land to preserve resources and to avoid divide by 0
           if ($land_tally < 1) { continue; }
 
-          // Get total taxes due
-          $taxes_due = ceil($world_info[0]['price_tally'] * 0.01);
-
           // Get all acounts in world
           $accounts_in_world = $this->tax_model->get_accounts_in_world($world_key, $world['land_tax_rate']);
 
@@ -54,11 +54,16 @@ class Tax extends CI_Controller {
 
             // Caluclate rebate and post rebate balance
             $account_rebate = $world['land_rebate'] * $account_lands[0]['land_tally'];
-            $post_rebate_account_balance = $account['cash'] + $account_rebate;
-            
+            $unique_sales = $this->tax_model->get_account_unique_sales_tally($account_key);
+            $rebate_bonus = count($unique_sales);
+            $account_rebate = $account_rebate + $rebate_bonus;
+            $post_rebate_account_balance = $account['cash'] + ($cron_frequency * $account_rebate);
+
             // Calculate taxes and final account balance
             $account_taxes_due = ceil($account_lands[0]['price_tally'] * 0.01);
-            $final_account_balance = $post_rebate_account_balance - $account_taxes_due;
+            $monopoly_tax = floor($account_lands[0]['land_tally'] / 100) * floor($account_lands[0]['land_tally'] / 100);
+            $account_taxes_due = $account_taxes_due - $monopoly_tax;
+            $final_account_balance = $post_rebate_account_balance - ($cron_frequency * $account_taxes_due);
 
             // Bankruptcy
             if ( $final_account_balance < 1 ) {

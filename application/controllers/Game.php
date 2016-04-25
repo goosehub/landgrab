@@ -8,6 +8,7 @@ class Game extends CI_Controller {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
+        $this->load->model('tax_model', '', TRUE);
         $this->load->model('transaction_model', '', TRUE);
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
@@ -667,9 +668,18 @@ class Game extends CI_Controller {
         // Set timespan days, match in financial menu language
         $timespan_days = 1;
 
+        // Unique Sales
+        $unique_sales = $this->tax_model->get_account_unique_sales_tally($account_key);
+        $unique_sales = count($unique_sales);
+        $financials['unique_sales'] = $unique_sales;
+
+        // Monopoly Tax
+        $monopoly_tax = floor($land_sum_and_count['count'] / 100) * floor($land_sum_and_count['count'] / 100);
+        $financials['monopoly_tax'] = $monopoly_tax;
+
         // Income
-        $periodic_taxes = $financials['periodic_taxes'] = $land_sum_and_count['sum'] * $world['land_tax_rate'] * 1 * 60 * 24;
-        $periodic_rebate = $financials['periodic_rebate'] = $world['land_rebate'] * $land_sum_and_count['count'] * 1 * 60 * 24;
+        $periodic_taxes = $financials['periodic_taxes'] = ( ($land_sum_and_count['sum'] * $world['land_tax_rate']) - $monopoly_tax) * 1 * 60 * 24;
+        $periodic_rebate = $financials['periodic_rebate'] = ( ($world['land_rebate'] * $land_sum_and_count['count']) + $unique_sales) * 1 * 60 * 24;
         $income = $financials['income'] = $periodic_rebate - $periodic_taxes;
         $financials['income_class'] = 'green_money';
         $financials['income_prefix'] = '+';
@@ -688,7 +698,7 @@ class Game extends CI_Controller {
             $financials['trades_profit_class'] = 'red_money';
             $financials['trades_profit_prefix'] = '-';
         }
-
+/*
         // Leases
         $spending = $financials['spending'] = $this->transaction_model->get_transaction_lease_spending($account_key, $timespan_days);
         $selling = $financials['selling'] = $this->transaction_model->get_transaction_lease_selling($account_key, $timespan_days);
@@ -699,7 +709,7 @@ class Game extends CI_Controller {
             $financials['leases_profit_class'] = 'red_money';
             $financials['leases_profit_prefix'] = '-';
         }
-
+*/
         // Balance
         $losses = $financials['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
         $gains = $financials['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
@@ -710,8 +720,8 @@ class Game extends CI_Controller {
             $financials['profit_class'] = 'red_money';
             $financials['profit_prefix'] = '-';
         }
-
         // Set nulls to 0
+        $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
         $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
         $sales['sum'] = $financials['sales']['sum'] = is_null($sales['sum']) ? 0 : $sales['sum'];
         $losses['sum'] = $financials['losses']['sum'] = is_null($losses['sum']) ? 0 : $losses['sum'];

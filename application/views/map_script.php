@@ -217,7 +217,7 @@ function initMap()
           + '?register">Join to Claim!</a><br>';
         } else {
           window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Buy and Lease! (' + number_format(land_data['price']) + ')</a><br>';
+          + '?register">Join to Buy! (' + number_format(land_data['price']) + ')</a><br>';
         }
       }
 
@@ -762,13 +762,13 @@ function initMap()
     $('#trades_profit_span').addClass( 'money_info_item' );
     $('#trades_profit_span').addClass( financials['trades_profit_class'] );
 
-    $('#spending').html( number_format(financials['spending'].sum) );
-    $('#selling').html( number_format(financials['selling'].sum) );
-    $('#leases_profit').html( number_format( Math.abs(financials['leases_profit']) ) );
-    $('#leases_profit_prefix').html( number_format(financials['leases_profit_prefix']) );
-    $('#leases_profit_span').removeClass();
-    $('#leases_profit_span').addClass( 'money_info_item' );
-    $('#leases_profit_span').addClass( financials['leases_profit_class'] );
+    // $('#spending').html( number_format(financials['spending'].sum) );
+    // $('#selling').html( number_format(financials['selling'].sum) );
+    // $('#leases_profit').html( number_format( Math.abs(financials['leases_profit']) ) );
+    // $('#leases_profit_prefix').html( number_format(financials['leases_profit_prefix']) );
+    // $('#leases_profit_span').removeClass();
+    // $('#leases_profit_span').addClass( 'money_info_item' );
+    // $('#leases_profit_span').addClass( financials['leases_profit_class'] );
 
     $('#losses').html( number_format(financials['losses'].sum) );
     $('#gains').html( number_format(financials['gains'].sum) );
@@ -777,6 +777,9 @@ function initMap()
     $('#profit_span').removeClass();
     $('#profit_span').addClass( 'money_info_item' );
     $('#profit_span').addClass( financials['profit_class'] );
+
+    $('#unique_sales_span').html( financials['unique_sales'] );
+    $('#monopoly_tax_span').html( financials['monopoly_tax'] );
     
     // Check for bankruptcy
     if (financials['bankruptcy'].length) {

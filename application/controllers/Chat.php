@@ -23,7 +23,10 @@ class Chat extends CI_Controller {
 
         // Echo out chats
         foreach ($chats as $chat) {
-            echo $chat['username'] . ': ' . $chat['message'] . '<br>';
+            $account = $data['account'] = $this->user_model->get_account_by_keys($chat['user_key'], $world_key);
+            echo '<div class="chat_message"><span class="glyphicon glyphicon-user" style="color: ' . $account['primary_color'] . '""></span>' 
+            . $chat['username'] . ': ' . $chat['message'] . '</div>';
+            // echo $chat['username'] . ': ' . $chat['message'] . '<br>';
         }
         return true;
     }

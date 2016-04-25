@@ -108,7 +108,9 @@
     </p>
     <p>
         Click on any square to buy or claim it.
-        Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set.
+        Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set. 
+        Each account receives a bonus $1/minute for each unique sale in the last 24 hours.
+        Each account pays a monopoly penalty for each 100 squares they own, expodentially, starting at $1/minute (1,4,9,16).
     </p>
     <p>
         Sit on land for steady income.

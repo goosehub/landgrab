@@ -50,14 +50,19 @@
           <tr class="info"><td class="text-center"><strong>Income</strong></td></tr>
 
           <tr class="danger">
-            <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): </td>
+          <?php 
+          $monopoly_tax_string = '';
+          if ($financials['monopoly_tax'] > 0) {
+          $monopoly_tax_string = '(<span id="monopoly_tax_span">' . $financials['monopoly_tax'] . ' Penalty</span> )';
+          } ?>
+            <td class="text-left">Land Taxes (<?php echo $world['land_tax_rate'] * 100; ?>%): <?php echo $monopoly_tax_string; ?></td>
             <td class="text-right"><span class="money_info_item red_money">
               $<span id="periodic_taxes"><?php echo number_format($financials['periodic_taxes']); ?></span>
               </span>/Day
             </td>
           </tr>
           <tr class="success">
-            <td class="text-left">Earnings: </td>
+            <td class="text-left">Earnings: ($<span id="unique_sales_span"><?php echo $financials['unique_sales']; ?></span> Bonus)</td>
             <td class="text-right"><span class="money_info_item green_money">
               $<span id="periodic_rebate"><?php echo number_format($financials['periodic_rebate']); ?></span>
             </span>/Day

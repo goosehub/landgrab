@@ -34,6 +34,18 @@ Class tax_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
+ // Get unique sales by account
+ function get_account_unique_sales_tally($account_key)
+ {
+    $this->db->select('COUNT(*) as unique_sales');
+    $this->db->from('transaction_log');
+    $this->db->where('recipient_account_key', $account_key);
+    $this->db->where('transaction', 'buy');
+    $this->db->where('created >= DATE(NOW()) - INTERVAL 1 DAY');
+    $this->db->group_by('coord_slug');
+    $query = $this->db->get();
+    return $query->result_array();
+ }
  // Forfeit all land of account
  function forfeit_all_land_of_account($account_id, $price)
  {
