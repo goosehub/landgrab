@@ -116,7 +116,6 @@ CREATE TABLE IF NOT EXISTS `land` (
   `price` bigint(20) NOT NULL,
   `content` varchar(1024) NOT NULL,
   `primary_color` varchar(10) NOT NULL,
-  `secondary_color` varchar(10) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
