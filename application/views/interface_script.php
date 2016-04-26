@@ -105,22 +105,10 @@ $('.sold_lands_button').click(function(){
   $('.center_block').hide();
   $('#sales_since_last_update_block').show();
 });
-// hide button and reset number to 0
-$('.leased_lands_button').click(function(){
-  $('#recently_leased_alert').hide();
-  $('#leases_since_last_update_number').html('0');
-  $('.center_block').hide();
-  $('#leases_since_last_update_block').show();
-});
 
 // Show recently sold alert if exists on page load
 <?php if ($log_check && $sales['sales_since_last_update']) { ?>
 $('#recently_sold_alert').show();
-<?php } ?>
-
-// Show recently leased alert if exists on page load
-<?php if ($log_check && $leases['leases_since_last_update']) { ?>
-$('#recently_leased_alert').show();
 <?php } ?>
 
 // // Insert dollar sign and commas into number while typing

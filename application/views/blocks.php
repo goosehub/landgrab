@@ -47,42 +47,6 @@
 </div>
 <?php } ?>
 
-<!-- Leased Lands -->
-<?php if ($log_check) { ?>
-<div id="leases_since_last_update_block" class="center_block">
-    <strong>Land Leases (24 hours)</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-
-    <table id="leases_table" class="table table-bordered table-hover">
-      <tr class="info">
-        <td>Land</td>
-        <td>Leased to</td>
-        <td>Amount</td>
-        <td>When</td>
-      </tr>
-    <?php $i = 0; 
-    // Keep up to date with update_leases JS function
-    if ($leases['leases_history']) {
-        foreach ($leases['leases_history'] as $transaction) { ?>
-          <tr>
-              <td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=<?php echo $transaction['coord_slug']; ?>">
-              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <?php echo $transaction['name_at_sale']; ?>
-              </a></td>
-              <td><?php echo $transaction['paying_username']; ?></td>
-              <td><strong>$<?php echo number_format($transaction['amount']); ?></strong></td>
-              <td><span><?php echo $transaction['when']; ?> Ago</span></td>
-          </tr>
-        <?php } ?>
-    <?php } ?>
-    </table>
-</div>
-<?php } ?>
-
 <!-- Leaderboards -->
 
 <!-- Leaderboard net_value Block -->
@@ -115,7 +79,6 @@
     <p>
         Sit on land for steady income.
         Trade squares for big profits.
-        Lease out rights to your square's message.
     </p>
     <blockquote>
         Buy low, sell high, have fun

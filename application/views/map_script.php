@@ -31,6 +31,9 @@ var land_size = <?php echo $world['land_size'] ?>;
 
 // Set maps variables
 var update_interval = 300;
+if (document.location.hostname == "localhost") {
+  var update_interval = 10;
+}
 var infoWindow = false;
 var boxes = [];
 
@@ -229,23 +232,11 @@ function initMap()
         // Update
 				} else if (land_data['account_key'] == account_id) {
 					window_string += land_trade_form('update', 'btn-info', land_data);
-/*          if (land_data['lease_active']) {
-            window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
-            + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
-          } else {
-            window_string += land_lease_form('update', 'btn-info', land_data);
-          }*/
         // Buy
 				} else {
           // Enough cash to buy
 					if (land_data['price'] <= cash) {
             window_string += land_trade_form('buy', 'btn-success', land_data);
-/*            if (land_data['lease_active']) {
-            window_string += '<button class="expand_land_form btn btn-default disabled" type="button">'
-            + 'Already Leased ($' + number_format(land_data['lease_price']) + '/' + number_format(land_data['lease_duration']) + ' Minutes)</button>';
-            } else {
-              window_string += land_lease_form('buy', 'btn-success', land_data);
-            }*/
           // Not enough cash
 					} else {
 						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + number_format(land_data['price']) + ')</button>';
@@ -284,14 +275,6 @@ function initMap()
           setTimeout(function(){
             $('#input_land_name').focus();
           }, 200);
-        });
-
-        // When expanding form, hide expand button and Focus on land name, with timeout to prevent collapse conflict
-        $('.expand_trade').click(function(){
-          $('#lease_form').hide();
-        });
-        $('.expand_lease').click(function(){
-          $('#land_form').hide();
         });
 
         // 
@@ -349,52 +332,6 @@ function initMap()
               } else {
                 console.log(response);
                 $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
-                return false;
-              }
-            }
-          });
-        }); // End land form ajax
-
-        // 
-        // Submit lease form ajax
-        // 
-        $('#submit_lease_form').click(function() {
-
-          // Serialize form into post data
-          var post_data = $('#lease_form').serialize();
-
-          // Replace window with processing window
-          $('#lease_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
-
-          // Submit form
-          $.ajax({
-            url: "<?=base_url()?>lease_form",
-            type: "POST",
-            data: post_data,
-            cache: false,
-            success: function(data)
-            {
-              // Return data
-              response = JSON.parse(data);
-
-              if (response['error']) {
-                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
-                return false;
-              }
-
-              // If success, close
-              if (response['status'] === 'success') {
-                infoWindow.close();
-
-                // Update player variables and displays
-                cash = cash - land_data['lease_price'];
-                $('#cash_display').html(number_format(cash));
-
-                return true;
-
-              // If error, display error message
-              } else {
-                $('#lease_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
             }
@@ -482,16 +419,6 @@ function initMap()
             + '</div><div class="col-md-8">'
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
-/*            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_lease_price">Lease Price</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="text" class="auto_money form-control" id="input_lease_price" name="lease_price" value="$' + number_format(d['lease_price']) + '">'
-            + '</div></div>'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_lease_duration">Duration (Minutes)</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="text" class="auto_comma form-control" id="input_lease_duration" name="lease_duration" value="' + number_format(d['lease_duration']) + '">'
-            + '</div></div>'*/
           + '</div>';
           if (form_type === 'update' && cash > 1000) {
             result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
@@ -502,44 +429,7 @@ function initMap()
 		result += '</div></form></div>';
 		return result;
 	}
-/*
-  // For leasing or updating land
-  function land_lease_form(form_type, button_class, d) {
-    if (form_type === 'buy') {
-      lease_phrase_top = 'Lease  ($' + number_format(d['lease_price']) + '/' + number_format(d['lease_duration']) + ' Minutes)';
-      lease_phrase_bottom = 'Lease';
-      content = '';
-    } else {
-      lease_phrase_top = 'Update Default Message';
-      lease_phrase_bottom = 'Update';
-      content = d['default_content'];
-    }
-    result = '<div class="form_outer_cont"><form id="lease_form' + '" action="<?=base_url()?>lease_form" method="post">'
-    + '<button class="expand_land_form expand_lease btn ' + button_class + '" type="button" '
-    + 'data-toggle="collapse" data-target="#lease_form_dropdown" aria-expanded="false" aria-controls="lease_form_dropdown">'
-      + '' + lease_phrase_top
-      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
-        + '<div id="lease_form_dropdown" class="collapse">'
-          + '<div class="form-group">'
-            + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
-            + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
-            + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
-            + '<input type="hidden" id="input_lng" name="lng_input" value="' + d['lng'] + '">'
-            + '<input type="hidden" id="input_lat" name="lat_input" value="' + d['lat'] + '">'
-            + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
-            + '<input type="hidden" id="lease_price" name="lease_price" value="' + d['lease_price'] + '">'
-            + '<input type="hidden" id="lease_duration" name="lease_duration" value="' + d['lease_duration'] + '">'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_land_name">Message</label>'
-            + '</div><div class="col-md-8">'
-            + '<textarea class="form-control" id="input_content" name="content" placeholder="Message">' + content + '</textarea>'
-            + '</div></div>'
-          + '</div>'
-          + '<button type="button" id="submit_lease_form" class="btn btn-primary form-control">' + lease_phrase_bottom + '</button>'
-    + '</div></form></div>';
-    return result;
-  }
-*/
+
 	// 
 	// Land loop
 	// 
@@ -623,7 +513,6 @@ function initMap()
         update_leaderboards(data['leaderboards']);
         if (log_check) {
           update_sales(data['sales']['sales_history'], data['sales']['sales_since_last_update']);
-          update_leases(data['leases']['leases_history'], data['leases']['leases_since_last_update']);
           update_financials(data['financials']);
           update_auctions(data['auctions']);
         }
@@ -702,40 +591,6 @@ function initMap()
     return true;
   }
 
-  function update_leases(leases, leases_since_last_update) {
-    // If not empty, do logic
-    if (leases.length) {
-
-      // Update existing leases alert number (default to 0 when not visible)
-      if (number_of_new_leases = leases_since_last_update.length) {
-        $('#recently_leased_alert').show();
-        var new_recently_leased = parseInt($('#leases_since_last_update_number').text()) + number_of_new_leases;
-        $('#leases_since_last_update_number').html(new_recently_leased);
-      }
-
-      // Remove old table data
-      $('#leases_table tr:not(.info)').remove();
-
-      // Add each sale to leases table
-      leases.reverse();
-      $.each(leases, function(index, lease) {
-
-        // Create string, and be sure to keep up to date with leases block
-        var new_lease_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + lease['coord_slug'] + '">'
-            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + lease['name_at_sale'] + '</a></td>'
-            + '<td>' + lease['paying_username'] + '</td>'
-            + '<td><strong>$' + number_format(lease['amount']) + '</strong></td>'
-            + '<td><span>' + lease['when'] + ' Ago</span></td></tr>';
-
-        // Add to leases table after the header row
-        $('#leases_table tr:first').after(new_lease_string);
-
-      });
-
-    }
-    return true;
-  }
-
   function update_financials(financials) {
     // Update cash
     cash = parseInt(financials['cash'], 10);
@@ -761,14 +616,6 @@ function initMap()
     $('#trades_profit_span').removeClass();
     $('#trades_profit_span').addClass( 'money_info_item' );
     $('#trades_profit_span').addClass( financials['trades_profit_class'] );
-
-    // $('#spending').html( number_format(financials['spending'].sum) );
-    // $('#selling').html( number_format(financials['selling'].sum) );
-    // $('#leases_profit').html( number_format( Math.abs(financials['leases_profit']) ) );
-    // $('#leases_profit_prefix').html( number_format(financials['leases_profit_prefix']) );
-    // $('#leases_profit_span').removeClass();
-    // $('#leases_profit_span').addClass( 'money_info_item' );
-    // $('#leases_profit_span').addClass( financials['leases_profit_class'] );
 
     // $('#losses').html( number_format(financials['losses'].sum) );
     // $('#gains').html( number_format(financials['gains'].sum) );

@@ -49,8 +49,7 @@ $result .= '<br>';
 // 
 
 $land_insert_statement = "INSERT INTO `land` 
-(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `lease_price`, `lease_duration`, `last_lease_end`, `content`, `default_content`
-    , `primary_color`, `secondary_color`, `created`, `modified`) 
+(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `price`, `content`, `primary_color`, `created`, `modified`)
 VALUES";
 
 $result .= $land_insert_statement;
@@ -67,8 +66,7 @@ for ($lng = -$lng_limit; $lng <= $lng_limit; $lng = $lng + $box_size) {
     for ($lat = -$lat_limit; $lat < $lat_limit; $lat = $lat + $box_size) {
         // Get coord_slug
         $coord_slug = $lat . ',' . $lng;
-        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '" . $claim_fee . "', '" . $initial_lease_price . "', 
-        '" . $initial_lease_duration . "', '1460000000', '', '', #000000', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '" . $claim_fee . "', '', #000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         if ($i % 1000 == 0)
         {
             $result .= ';';

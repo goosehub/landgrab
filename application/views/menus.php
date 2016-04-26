@@ -9,13 +9,6 @@
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
       </button>
     </span>
-
-    <span id="recently_leased_alert">
-      <button class="leased_lands_button btn btn-action"><strong><span id="leases_since_last_update_number">
-      <?php echo $leases['leases_since_last_update'] ? count($leases['leases_since_last_update']) : 0; ?> </span> Leases</strong>
-        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-      </button>
-    </span>
   <?php } ?>
 
 
@@ -39,8 +32,6 @@
       <li role="separator" class="divider"></li>
 
       <li><button class="sold_lands_button btn btn-success form-control"><strong>Sales Over Last 24 Hours</strong> </button></li>
-
-      <!-- <li><button class="leased_lands_button btn btn-primary form-control"><strong>Leases Over Last 24 Hours</strong> </button></li> -->
 
       <li role="separator" class="divider"></li>
 
@@ -106,35 +97,6 @@
             </td>
           </tr>
 <!-- 
-          <tr class="info"><td class="text-center"><strong>Leases</strong></td></tr>
-
-          <tr class="danger">
-            <td class="text-left">Spending: </td>
-            <td class="text-right">
-              <span class="money_info_item red_money">
-                $<span id="spending"><?php echo number_format($financials['spending']['sum']); ?></span>
-              </span> /Day
-            </td>
-          </tr>
-          <tr class="success">
-            <td class="text-left">Selling: </td>
-            <td class="text-right">
-              <span class="money_info_item green_money">
-                $<span id="selling"><?php echo number_format($financials['selling']['sum']); ?></span>
-              </span> /Day
-            </td>
-          </tr>
-          <tr class="active">
-            <td class="text-left">Profit: </td>
-            <td class="text-right">
-              <span id="leases_profit_span" class="money_info_item <?php echo $financials['leases_profit_class']; ?>">
-                <span id="leases_profit_prefix"><?php echo $financials['leases_profit_prefix']; ?></span>
-                $<span id="leases_profit"><?php echo number_format(abs($financials['leases_profit'])); ?></span>
-              </span> /Day
-            </td>
-          </tr>
- -->
-<!-- 
           <tr class="info"><td class="text-center"><strong>Balance</strong></td></tr>
 
           <tr class="danger">
@@ -161,7 +123,7 @@
             </td>
           </tr>
  -->
-          
+
         </tbody>
       </table>
 

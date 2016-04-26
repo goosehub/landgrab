@@ -49,7 +49,7 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $lease_price, $lease_duration, $primary_color)
+ function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $primary_color)
  {
     $data = array(
         'claimed' => $claimed,
@@ -57,9 +57,6 @@ Class game_model extends CI_Model
         'land_name' => $land_name,
         'price' => $price,
         'content' => $content,
-        'default_content' => $content,
-        'lease_price' => $lease_price,
-        'lease_duration' => $lease_duration,
         'primary_color' => $primary_color
     );
     $this->db->where('coord_slug', $coord_slug);
@@ -68,22 +65,10 @@ Class game_model extends CI_Model
     return true;
  }
  // Update land content
- function update_land_content($world_key, $coord_slug, $content, $last_lease_end)
+ function update_land_content($world_key, $coord_slug, $content)
  {
     $data = array(
-        'content' => $content,
-        'last_lease_end' => $last_lease_end
-    );
-    $this->db->where('coord_slug', $coord_slug);
-    $this->db->where('world_key', $world_key);
-    $this->db->update('land', $data);
-    return true;    
- }
- // Update default land content
- function update_land_default_content($world_key, $coord_slug, $default_content)
- {
-    $data = array(
-        'default_content' => $default_content
+        'content' => $content
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
@@ -145,7 +130,7 @@ Class game_model extends CI_Model
     $this->db->from('auction');
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
-    $this->db->where('complete', 0);
+    $this->db->where('last_bid_timestamp > ', date('Y-m-d H:i:s', time() - 300) );
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result : false;
