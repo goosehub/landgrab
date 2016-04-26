@@ -58,7 +58,7 @@ class Auction extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = 1000;
+        $amount = $land_square['price'];
         $new_buying_owner_cash = $buyer_account['cash'] - $amount;
         $buyer_account_key = $buyer_account['id'];
 
@@ -88,20 +88,30 @@ class Auction extends CI_Controller {
         if (! $this->session->userdata('logged_in')) {
             return false;
         }
+        // Validation
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('auction_id', 'Auction ID', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('bid_value', 'Bid Value', 'trim|required|integer|max_length[10]');
 
-        // Get data
-        $auction_id = $_POST['auction_id'];
-        $auction_data = $this->game_model->get_auction_info($auction_id);
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
-        $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $auction_data['world_key']);
-        $new_bid = $auction_data['current_bid'] + 50;
-        $current_bid_account_key = $account['id'];
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            echo '{"status": "fail", "message": "An unknown error occurred"}';
+        } else {
+            // Get data
+            $auction_id = $this->input->post('auction_id');
+            $bid_value = $this->input->post('bid_value');
+            $auction_data = $this->game_model->get_auction_info($auction_id);
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+            $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $auction_data['world_key']);
+            $new_bid = $auction_data['current_bid'] + $bid_value;
+            $current_bid_account_key = $account['id'];
 
-        // Apply new auction bid
-        $query_action = $this->game_model->apply_new_auction_bid($auction_id, $new_bid, $current_bid_account_key);
+            // Apply new auction bid
+            $query_action = $this->game_model->apply_new_auction_bid($auction_id, $new_bid, $current_bid_account_key);
+        }
     }
 
 }

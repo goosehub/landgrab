@@ -32,6 +32,7 @@
         cache: false,
         success: function(html)
         {
+            html = replaceURLWithHTMLLinks(html)
             $("#chat_messages_box").html(html);
             $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
         }
@@ -58,4 +59,10 @@
     $('#chat_input').focus();
     return false;
   }
+
+  function replaceURLWithHTMLLinks(text) {
+      var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+      return text.replace(exp,"<a target='_blank' style='color: #CCCCFF' href='$1'>$1</a>"); 
+  }
+
 </script>

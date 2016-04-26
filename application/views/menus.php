@@ -1,6 +1,28 @@
 <!-- Top Right Block -->
 <div id="top_right_block">
 
+  <!-- Live Auctions dropdown -->
+  <?php 
+  $auctions_active = 'btn-danger';
+  if ( empty($auctions) ) {
+    $auctions_active = 'hidden';
+  } ?>
+  <div class="btn-group">
+    <button class="info_button btn dropdown-toggle <?php echo $auctions_active; ?>" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Auctions
+      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+      <span class="caret"></span>
+    </button>
+    <ul id="auctions_listing" class="dropdown-menu" aria-labelledby="auction_dropdown">
+      <?php foreach ($auctions as $auction) { ?>
+      <li><a class="auction_link" 
+        href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=<?php echo $auction['coord_slug']; ?>&auction=<?php echo $auction['id']; ?>">
+          <strong class="auction_land_name"><?php echo $auction['land_data']['land_name']; ?></strong>
+      </a></li>
+      <?php } ?>
+    </ul>
+  </div>
+
   <!-- Recently sold lands button -->
   <?php if ($log_check) { ?>
     <span id="recently_sold_alert">
@@ -130,28 +152,6 @@
     </ul>
 
     <?php } ?>
-
-    <!-- Live Auctions dropdown -->
-    <?php 
-    $auctions_active = 'btn-danger';
-    if ( empty($auctions) ) {
-      $auctions_active = 'btn-default disabled';
-    } ?>
-    <div class="btn-group">
-      <button class="info_button btn dropdown-toggle <?php echo $auctions_active; ?>" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Auctions
-        <span class="caret"></span>
-      </button>
-      <ul id="auctions_listing" class="dropdown-menu" aria-labelledby="auction_dropdown">
-        <li class="text-center"><strong class="text-primary">Live Auctions</strong></li>
-        <?php foreach ($auctions as $auction) { ?>
-        <li><a class="auction_link" 
-          href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=<?php echo $auction['coord_slug']; ?>&auction=<?php echo $auction['id']; ?>">
-            <strong class="auction_land_name"><?php echo $auction['land_data']['land_name']; ?></strong>
-        </a></li>
-        <?php } ?>
-      </ul>
-    </div>
 
     <!-- Leaderboards dropdown -->
     <div class="btn-group">

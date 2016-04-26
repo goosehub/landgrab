@@ -200,8 +200,8 @@ function initMap()
         }
         window_string += '<div class="land_info">';
         // Content
-        if (land_data['current_content'] != '') {
-          window_string += '<div class="land_content_div">' + land_data['current_content'] + '</div><br>';
+        if (land_data['content'] != '') {
+          window_string += '<div class="land_content_div">' + land_data['content'] + '</div><br>';
         }
         // Owner
         window_string += 'Owner: <strong class="pull-right">' + land_data['username'] + '</strong><br>';
@@ -716,11 +716,10 @@ function initMap()
   function update_auctions(auctions) {
     // If not empty, do logic
     if (auctions.length) {
-      $('#auction_dropdown').removeClass('disabled');
-      $('#auction_dropdown').removeClass('btn-default');
+      $('#auction_dropdown').removeClass('hidden');
       $('#auction_dropdown').addClass('btn-danger');
       // Remove old table data
-      $('#auctions_listing li:nth-child(n+3').remove();
+      $('#auctions_listing li').remove();
 
       // Add each auction to auctions listing
       $.each(auctions, function(index, auction) {
@@ -735,8 +734,7 @@ function initMap()
       });
 
     } else {
-      $('#auction_dropdown').addClass('disabled');
-      $('#auction_dropdown').addClass('btn-default');
+      $('#auction_dropdown').addClass('hidden');
       $('#auction_dropdown').removeClass('btn-danger');
     }
     return true;
@@ -749,16 +747,19 @@ function initMap()
     auction_coord_slug = <?php echo $auction_data['land']['coord_slug']; ?>;
     $('#auction_block').show();
 
-    $('#new_bid').click(function(){
-      new_auction_bid(new_bid)
+    // New bid
+    $('.new_bid').click(function(){
+      var bid_value = $(this).val();
+      new_auction_bid(bid_value)
     });
 
-    function new_auction_bid(new_bid) {
+    function new_auction_bid(bid_value) {
       $.ajax({
         url: "<?=base_url()?>new_auction_bid",
         type: "POST",
         data: { 
-                  auction_id: auction_id
+                  auction_id: auction_id,
+                  bid_value: bid_value
               },
         cache: false,
         success: function(data)
@@ -782,7 +783,7 @@ function initMap()
           auction_data = JSON.parse(data);
           $('#current_bid').html(auction_data['current_bid']);
           $('#current_bid_username').html(auction_data['current_bid_username']);
-          if (auction_data['complete'] != 0) {
+          if (auction_data['auction_time_left'] < 1) {
             $('#auction_time_left_parent').html('Auction Over');
           } else {
             $('#auction_time_left').html(auction_data['auction_time_left']);

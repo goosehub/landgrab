@@ -155,7 +155,7 @@ class Game extends CI_Controller {
             $land_square['primary_color'] = htmlentities($land_square['primary_color']);
             $land_square['username'] = htmlentities($land_square['username']);
             if ($json_output) {
-    	    	echo json_encode($land_square);
+                echo json_encode($land_square);
             } else {
                 return $land_square;
             }
@@ -221,6 +221,8 @@ class Game extends CI_Controller {
             $account_key = $account['id'];
             $primary_color = $account['primary_color'];
             $content = $this->input->post('content');
+            // $content = $this->sanitize_html($content);
+            $content = htmlspecialchars($content);
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $primary_color);
@@ -631,7 +633,7 @@ class Game extends CI_Controller {
         $html = strip_tags($html, $whitelisted_tags);
 
         // Disallow these character combination to prevent potential javascript injection
-        $disallowed_strings = ['onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
+        $disallowed_strings = ['onerror', 'onload', 'onclick', 'ondblclick', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup'];
         $html = str_replace($disallowed_strings, '', $html);
 
         // Close open tags
@@ -674,11 +676,15 @@ class Game extends CI_Controller {
         $coord_slug = $auction['coord_slug'];
         $land_name = $auction['land']['land_name'];
         $claimed = 1;
-        $price = $auction['land']['price'];
+        $price = $auction['current_bid'];
         $content = $auction['land']['content'];
 
+        // Encode and send data
+        echo json_encode($auction);
+        return true;
+
         // End auction if auction is over
-        if ($auction['auction_time_left'] < 1 && !$auction['complete']) {
+        if ($auction['auction_time_left'] < 1) {
             // Do transaction
             $amount = $auction['current_bid'];
             $buyer_account = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
@@ -705,14 +711,8 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $buyer_account_key, $land_name, $price, $content, $primary_color);
 
             // Update auction
-            $query_action = $this->game_model->set_auction_as_complete($auction_id);
-            $auction['complete'] = 1;
             return true;
         }
-
-        // Encode and send data
-        echo json_encode($auction);
-        return true;
     }
 
 }

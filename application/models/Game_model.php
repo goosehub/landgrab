@@ -158,17 +158,6 @@ Class game_model extends CI_Model
     $this->db->update('auction', $data);
     return true;
 }
- // Apply new auction bid
- function set_auction_as_complete($auction_id)
- {
-    // Seller add cash
-    $data = array(
-        'complete' => 1
-    );
-    $this->db->where('id', $auction_id);
-    $this->db->update('auction', $data);
-    return true;
-}
 
 }
 ?>

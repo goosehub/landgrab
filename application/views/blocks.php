@@ -278,9 +278,13 @@
     <strong id="auction_time_left_parent"><span id="auction_time_left"><?php echo $auction_data['auction_time_left']; ?></span> Seconds Left</strong><br><br>
     <?php if ($log_check) { ?>
         <?php if ($account['cash'] > $auction_data['current_bid'] + 50) { ?>
-        <span id="new_bid"><button type="button" class="btn btn-success">+$50</button></span>
+        <input type="button" value="50" class="new_bid btn btn-success"/>
+        <?php } if ($account['cash'] > $auction_data['current_bid'] + 250) { ?>
+        <input type="button" value="250" class="new_bid btn btn-success"/>
+        <?php } if ($account['cash'] > $auction_data['current_bid'] + 1000) { ?>
+        <input type="button" value="1000" class="new_bid btn btn-success"/>
         <?php } else { ?>
-        <span id="new_bid"><button type="button" class="btn btn-default disabled">Not enough Cash</button></span>
+        <div class="btn btn-default disabled">Not enough Cash</div>
         <?php } ?>
     <?php } ?>
 </div>

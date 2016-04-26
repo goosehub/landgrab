@@ -3,13 +3,11 @@
 ==========================================================================================
 
 ...
-chat links
 Zoom to land on link click
-Raise auction bids by other amounts
+Properties highlighted when on auction
 Prevent auction multi bidding
 Prevent bids on expensive auctions
 Prevent bids on done auctions
-Prevent sale during auction
 List of owned lands
 + and - button for land price
 cheapest land error
