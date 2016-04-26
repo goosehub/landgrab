@@ -3,21 +3,19 @@
 ==========================================================================================
 
 ...
-chat with color name
+chat links
 Zoom to land on link click
 Raise auction bids by other amounts
 Prevent auction multi bidding
 Prevent bids on expensive auctions
 Prevent bids on done auctions
 Prevent sale during auction
-Fix Land Desc
 List of owned lands
 + and - button for land price
 cheapest land error
-free land bug
-auction not market as complete if not watched bug
-auctions select by end date, not complete
 auction list update more frequent
+profit leaderboard
+shorten sales over the last 24 hours list
 
 ==========================================================================================
     Goals
