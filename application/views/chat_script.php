@@ -32,7 +32,6 @@
         cache: false,
         success: function(html)
         {
-            console.log(html);
             $("#chat_messages_box").html(html);
             $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
         }
@@ -41,7 +40,7 @@
   chat_load();
 
   // Chat Loop
-  setInterval(chat_load, 3000);
+  setInterval(chat_load, 1000);
 
   // Called by form
   function chat_submit_function(e) {

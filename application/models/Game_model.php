@@ -131,7 +131,7 @@ Class game_model extends CI_Model
     $this->db->select('*');
     $this->db->from('auction');
     $this->db->where('world_key', $world_key);
-    $this->db->where('complete', 0);
+    $this->db->where('last_bid_timestamp < ', date('Y-m-d H:i:s', time() + 270) );
     $this->db->limit(8);
     $this->db->order_by('id', 'desc');
     $query = $this->db->get();

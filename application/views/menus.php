@@ -134,6 +134,7 @@
             </td>
           </tr>
  -->
+<!-- 
           <tr class="info"><td class="text-center"><strong>Balance</strong></td></tr>
 
           <tr class="danger">
@@ -159,6 +160,8 @@
               </span>/Day
             </td>
           </tr>
+ -->
+          
         </tbody>
       </table>
 
@@ -167,8 +170,13 @@
     <?php } ?>
 
     <!-- Live Auctions dropdown -->
+    <?php 
+    $auctions_active = 'btn-danger';
+    if ( empty($auctions) ) {
+      $auctions_active = 'btn-default disabled';
+    } ?>
     <div class="btn-group">
-      <button class="info_button btn btn-danger dropdown-toggle" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="info_button btn dropdown-toggle <?php echo $auctions_active; ?>" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Auctions
         <span class="caret"></span>
       </button>

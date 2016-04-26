@@ -21,7 +21,7 @@ class Tax extends CI_Controller {
         echo 'start: ' . time() . ' - ';
 
         // Set cron frequency multiplier by minute
-        $cron_frequency = 5;
+        $cron_frequency = 15;
 
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();

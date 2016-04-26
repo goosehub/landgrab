@@ -710,6 +710,7 @@ class Game extends CI_Controller {
             $financials['leases_profit_prefix'] = '-';
         }
 */
+/*        
         // Balance
         $losses = $financials['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
         $gains = $financials['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
@@ -720,6 +721,18 @@ class Game extends CI_Controller {
             $financials['profit_class'] = 'red_money';
             $financials['profit_prefix'] = '-';
         }
+*/
+        // Temporary loses
+        $losses['sum'] = $financials['losses']['sum'] = 0;
+        $gains['sum'] = $financials['gains']['sum'] = 0;
+        $profit = $financials['profit'] = $gains['sum'] - $losses['sum'];
+        $financials['profit_class'] = 'green_money';
+        $financials['profit_prefix'] = '+';
+        if ($profit < 0) {
+            $financials['profit_class'] = 'red_money';
+            $financials['profit_prefix'] = '-';
+        }
+
         // Set nulls to 0
         $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
         $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];

@@ -30,7 +30,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 // Set maps variables
-var update_interval = 120;
+var update_interval = 300;
 var infoWindow = false;
 var boxes = [];
 
@@ -770,13 +770,13 @@ function initMap()
     // $('#leases_profit_span').addClass( 'money_info_item' );
     // $('#leases_profit_span').addClass( financials['leases_profit_class'] );
 
-    $('#losses').html( number_format(financials['losses'].sum) );
-    $('#gains').html( number_format(financials['gains'].sum) );
-    $('#profit').html( number_format( Math.abs(financials['profit']) ) );
-    $('#profit_prefix').html( number_format(financials['profit_prefix']) );
-    $('#profit_span').removeClass();
-    $('#profit_span').addClass( 'money_info_item' );
-    $('#profit_span').addClass( financials['profit_class'] );
+    // $('#losses').html( number_format(financials['losses'].sum) );
+    // $('#gains').html( number_format(financials['gains'].sum) );
+    // $('#profit').html( number_format( Math.abs(financials['profit']) ) );
+    // $('#profit_prefix').html( number_format(financials['profit_prefix']) );
+    // $('#profit_span').removeClass();
+    // $('#profit_span').addClass( 'money_info_item' );
+    // $('#profit_span').addClass( financials['profit_class'] );
 
     $('#unique_sales_span').html( financials['unique_sales'] );
     $('#monopoly_tax_span').html( financials['monopoly_tax'] );
@@ -869,6 +869,9 @@ function initMap()
   function update_auctions(auctions) {
     // If not empty, do logic
     if (auctions.length) {
+      $('#auction_dropdown').removeClass('disabled');
+      $('#auction_dropdown').removeClass('btn-default');
+      $('#auction_dropdown').addClass('btn-danger');
       // Remove old table data
       $('#auctions_listing li:nth-child(n+3').remove();
 
@@ -884,6 +887,10 @@ function initMap()
 
       });
 
+    } else {
+      $('#auction_dropdown').addClass('disabled');
+      $('#auction_dropdown').addClass('btn-default');
+      $('#auction_dropdown').removeClass('btn-danger');
     }
     return true;
   }
