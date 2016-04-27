@@ -157,7 +157,18 @@ Class game_model extends CI_Model
     $this->db->where('id', $auction_id);
     $this->db->update('auction', $data);
     return true;
-}
+ }
+ // Make square into city
+ function make_land_into_city($coord_slug, $world_key)
+ {
+    $data = array(
+        'city' => 1
+    );
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;
+ }
 
 }
 ?>

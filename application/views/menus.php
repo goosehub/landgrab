@@ -10,7 +10,7 @@
   <div class="btn-group">
     <button class="info_button btn dropdown-toggle <?php echo $auctions_active; ?>" type="button" id="auction_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Auctions
-      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <span class="caret"></span>
     </button>
     <ul id="auctions_listing" class="dropdown-menu" aria-labelledby="auction_dropdown">

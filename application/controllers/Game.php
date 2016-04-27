@@ -85,6 +85,10 @@ class Game extends CI_Controller {
             $data['refresh'] = false;
 
             // Encode and send data
+            function filter(&$value) {
+              $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
+            }
+            array_walk_recursive($data, "filter");
             echo json_encode($data);
             return true;
         }
@@ -155,6 +159,14 @@ class Game extends CI_Controller {
             $land_square['primary_color'] = htmlentities($land_square['primary_color']);
             $land_square['username'] = htmlentities($land_square['username']);
             if ($json_output) {
+                function filter(&$value) {
+                  $value = nl2br($value);
+                  // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                  $value = strip_tags($value, '<img>');
+                  // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
+                  $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
+                }
+                array_walk_recursive($land_square, "filter");
                 echo json_encode($land_square);
             } else {
                 return $land_square;
@@ -222,7 +234,7 @@ class Game extends CI_Controller {
             $primary_color = $account['primary_color'];
             $content = $this->input->post('content');
             // $content = $this->sanitize_html($content);
-            $content = htmlspecialchars($content);
+            $content = $content;
 
             // Do Database action
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $primary_color);
@@ -680,6 +692,10 @@ class Game extends CI_Controller {
         $content = $auction['land']['content'];
 
         // Encode and send data
+        function filter(&$value) {
+          $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
+        }
+        array_walk_recursive($auction, "filter");
         echo json_encode($auction);
         return true;
 
@@ -713,6 +729,75 @@ class Game extends CI_Controller {
             // Update auction
             return true;
         }
+    }
+
+    // Make square into city
+    public function make_city()
+    {
+        // Validation
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('coord_slug', 'Coord Slug', 'trim|required|max_length[8]|callback_make_city_validation');
+        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]');
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            // Set Fail Errors
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            if (validation_errors() === '') {
+                echo '{"status": "fail", "message": "An unknown error occurred"}';
+            }
+
+            // Return to game as failure with new lines removed
+            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
+            return false;
+
+        // Success
+        } else {
+            // Return to game as success
+            echo '{"status": "success"}';
+            return true;
+        }
+    }
+
+    // Validate make city request
+    public function make_city_validation()
+    {
+        // User Information
+        if (!$this->session->userdata('logged_in')) {
+            return false;
+        }
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
+
+        // Get Data
+        $coord_slug = $this->input->post('coord_slug');
+        $world_key = $this->input->post('world_key');
+        $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $buyer_account_key = $buyer_account['id'];
+        $buyer_user = $this->user_model->get_user($buyer_account_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $amount = 50000;
+        $new_buying_owner_cash = $buyer_account['cash'] - $amount;
+        $buyer_account_key = $buyer_account['id'];
+
+        // Check that this is the proper owner
+        if ($buyer_account_key != $land_square['account_key']) {
+            return false;
+        }
+
+        // Check if active auction
+        if ($this->game_model->check_if_land_is_active_auction($coord_slug, $world_key) ) {
+            return false;
+        }
+
+        // Apply charge for auction
+        $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+
+        // Make land into city
+        $query_action = $this->game_model->make_land_into_city($coord_slug, $world_key);
+
+        return true;
     }
 
 }

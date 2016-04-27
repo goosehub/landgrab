@@ -21,7 +21,6 @@ class Auction extends CI_Controller {
 
         // Fail
         if ($this->form_validation->run() == FALSE) {
-
             // Set Fail Errors
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());

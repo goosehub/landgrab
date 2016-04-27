@@ -20,6 +20,10 @@ $route['world/(:any)'] = "game/index/$1";
 // Game functions
 $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
+
+// Upgrade functions
+$route['make_city'] = "game/make_city";
+
 // Auction functions
 $route['new_auction'] = "auction/new_auction";
 $route['new_auction_bid'] = "auction/new_auction_bid";

@@ -338,6 +338,49 @@ function initMap()
           });
         }); // End land form ajax
 
+        // Make a city submit
+        $('#upgrade_city_submit').click(function(){
+          coord_slug = $('#input_coord_slug').val();
+          infoWindow.close();
+
+          // Submit form
+          $.ajax({
+            url: "<?=base_url()?>make_city",
+            type: "POST",
+            data: { 
+                coord_slug: coord_slug,
+                world_key: world_key
+            },
+            cache: false,
+            success: function(data)
+            {
+              // Return data
+              response = JSON.parse(data);
+
+              if (response['error']) {
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+
+              // If success, close
+              if (response['status'] === 'success') {
+                infoWindow.close();
+
+                // Update player variables and displays
+                cash = cash - 50000;
+                $('#cash_display').html(number_format(cash));
+
+                return true;
+
+              // If error, display error message
+              } else {
+                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
+                return false;
+              }
+            }
+          });
+        });
+
         // Auction Submit
         $('#auction_submit').click(function(){
           coord_slug = $('#input_coord_slug').val();
@@ -422,8 +465,15 @@ function initMap()
           + '</div>';
           if (form_type === 'update' && cash > 1000) {
             result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            + '<div id="auction_submit" class="btn btn-success">Put On Auction ($1,000)</div>'
+            + '<div id="auction_submit" class="btn btn-danger form-control">'
+            + '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Put On Auction/$1,000</div>'
             + '</div></div>';
+          }
+          if (form_type === 'update' && cash > 50000) {
+            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
+            + '<div id="upgrade_city_submit" class="btn btn-action form-control">'
+            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$50,000</div>'
+            + '</div></div>'
           }
           result += '<br><button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';
