@@ -75,10 +75,12 @@
         Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set. 
         Each account receives a bonus $1/minute for each unique sale in the last 24 hours.
         Each account pays a monopoly penalty for each 100 squares they own, expodentially, starting at $1/minute (1,4,9,16).
+        Build cities for $100,000 and receive an additional $1000/minute.
     </p>
     <p>
-        Sit on land for steady income.
-        Trade squares for big profits.
+        Buy land.
+        Trade squares.
+        Build cities.
     </p>
     <blockquote>
         Buy low, sell high, have fun
@@ -278,11 +280,11 @@
     <strong id="auction_time_left_parent"><span id="auction_time_left"><?php echo $auction_data['auction_time_left']; ?></span> Seconds Left</strong><br><br>
     <?php if ($log_check) { ?>
         <?php if ($account['cash'] > $auction_data['current_bid'] + 50) { ?>
-        <input type="button" value="50" class="new_bid btn btn-success"/>
+        <input id="bid_low" type="button" value="50" class="new_bid btn btn-success"/>
         <?php } if ($account['cash'] > $auction_data['current_bid'] + 250) { ?>
-        <input type="button" value="250" class="new_bid btn btn-success"/>
+        <input id="bid_mid" type="button" value="250" class="new_bid btn btn-success"/>
         <?php } if ($account['cash'] > $auction_data['current_bid'] + 1000) { ?>
-        <input type="button" value="1000" class="new_bid btn btn-success"/>
+        <input id="bid_high" type="button" value="1000" class="new_bid btn btn-success"/>
         <?php } else { ?>
         <div class="btn btn-default disabled">Not enough Cash</div>
         <?php } ?>

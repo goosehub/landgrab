@@ -57,7 +57,9 @@ class Tax extends CI_Controller {
             $unique_sales = $this->tax_model->get_account_unique_sales_tally($account_key);
             $rebate_bonus = count($unique_sales);
             $account_rebate = $account_rebate + $rebate_bonus;
-            $post_rebate_account_balance = $account['cash'] + ($cron_frequency * $account_rebate);
+            $owned_cities = $this->tax_model->get_owned_cities($account_key);
+            $city_bonus = $owned_cities[0]['owned_cities'] * 1000;
+            $post_rebate_account_balance = $account['cash'] + ($cron_frequency * $account_rebate) + ($cron_frequency * $city_bonus);
 
             // Calculate taxes and final account balance
             $account_taxes_due = ceil($account_lands[0]['price_tally'] * 0.01);

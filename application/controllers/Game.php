@@ -160,11 +160,11 @@ class Game extends CI_Controller {
             $land_square['username'] = htmlentities($land_square['username']);
             if ($json_output) {
                 function filter(&$value) {
-                  $value = nl2br($value);
                   // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
                   $value = strip_tags($value, '<img>');
                   // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
                   $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
+                  $value = nl2br($value);
                 }
                 array_walk_recursive($land_square, "filter");
                 echo json_encode($land_square);
@@ -498,9 +498,14 @@ class Game extends CI_Controller {
         $monopoly_tax = floor($land_sum_and_count['count'] / 100) * floor($land_sum_and_count['count'] / 100);
         $financials['monopoly_tax'] = $monopoly_tax;
 
+        // Owned Cities
+        $owned_cities = $this->tax_model->get_owned_cities($account_key);
+        $owned_cities = $financials['owned_cities'] = $owned_cities[0]['owned_cities'];
+
         // Income
-        $periodic_taxes = $financials['periodic_taxes'] = ( ($land_sum_and_count['sum'] * $world['land_tax_rate']) - $monopoly_tax) * 1 * 60 * 24;
-        $periodic_rebate = $financials['periodic_rebate'] = ( ($world['land_rebate'] * $land_sum_and_count['count']) + $unique_sales) * 1 * 60 * 24;
+        $city_bonus = $owned_cities * 60 * 24;
+        $periodic_taxes = $financials['periodic_taxes'] = ( ($land_sum_and_count['sum'] * $world['land_tax_rate']) - $monopoly_tax) * 60 * 24;
+        $periodic_rebate = $financials['periodic_rebate'] = ( ($world['land_rebate'] * $land_sum_and_count['count']) + $unique_sales + $city_bonus) * 60 * 24;
         $income = $financials['income'] = $periodic_rebate - $periodic_taxes;
         $financials['income_class'] = 'green_money';
         $financials['income_prefix'] = '+';
@@ -777,7 +782,7 @@ class Game extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = 50000;
+        $amount = 100000;
         $new_buying_owner_cash = $buyer_account['cash'] - $amount;
         $buyer_account_key = $buyer_account['id'];
 

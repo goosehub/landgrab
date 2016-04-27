@@ -2,18 +2,20 @@
     Notes
 ==========================================================================================
 
-...
 Zoom to land on link click
+Refine financials
+anime portal (lng line) issue
 Properties highlighted when on auction
 Prevent auction multi bidding
 Prevent bids on expensive auctions
 Prevent bids on done auctions
 List of owned lands
-+ and - button for land price
 cheapest land error
 auction list update more frequent
 profit leaderboard
 shorten sales over the last 24 hours list
+
+http://dpaste.com/3TJ6XYH
 
 ==========================================================================================
     Goals

@@ -57,7 +57,7 @@ class Auction extends CI_Controller {
         $buyer_account_key = $buyer_account['id'];
         $buyer_user = $this->user_model->get_user($buyer_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = $land_square['price'];
+        $amount = 1000;
         $new_buying_owner_cash = $buyer_account['cash'] - $amount;
         $buyer_account_key = $buyer_account['id'];
 

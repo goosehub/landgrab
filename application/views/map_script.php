@@ -196,7 +196,7 @@ function initMap()
 
         // Land name
         if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong>';
+          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong><br>';
         }
         window_string += '<div class="land_info">';
         // Content
@@ -209,7 +209,12 @@ function initMap()
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Income
         window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong><br>';
-        window_string += 'Price: <strong class="pull-right">$' + number_format(land_data['price']) + '</strong>';
+        window_string += 'Price: <strong class="pull-right">$' + number_format(land_data['price']) + '</strong><br>';
+        // Declare if City
+        if (land_data['city'] == 1) {
+          window_string += 'City <span class="glyphicon glyphicon-home" aria-hidden="true"></span>: '
+          + '<strong class="green_money pull-right">$1000/Minute</strong><br>';
+        }
         window_string += '</div>';
 			}
 
@@ -367,7 +372,7 @@ function initMap()
                 infoWindow.close();
 
                 // Update player variables and displays
-                cash = cash - 50000;
+                cash = cash - 100000;
                 $('#cash_display').html(number_format(cash));
 
                 return true;
@@ -466,13 +471,18 @@ function initMap()
           if (form_type === 'update' && cash > 1000) {
             result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
             + '<div id="auction_submit" class="btn btn-danger form-control">'
-            + '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Put On Auction/$1,000</div>'
+            + '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Auction ($1,000 Fee)</div>'
             + '</div></div>';
           }
-          if (form_type === 'update' && cash > 50000) {
+          if (form_type === 'update' && cash > 100000 && d['city'] == 0) {
             result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
             + '<div id="upgrade_city_submit" class="btn btn-action form-control">'
-            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$50,000</div>'
+            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> City ($100,000 Fee)</div>'
+            + '</div></div>'
+          } else if (form_type === 'update' && cash <= 100000 && d['city'] == 0) {
+            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
+            + '<div id="upgrade_city_submit" class="disabled btn btn-default form-control">'
+            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$100,000</div>'
             + '</div></div>'
           }
           result += '<br><button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
@@ -645,6 +655,9 @@ function initMap()
     // Update cash
     cash = parseInt(financials['cash'], 10);
     $('#cash_display').html(number_format(financials['cash']));
+
+    // Update owned lands
+    $('#owned_cities_span').html(financials['owned_cities']);
 
     // Update total lands
     $('#player_land_count_display').html( number_format(financials['player_land_count']) );
@@ -837,6 +850,15 @@ function initMap()
             $('#auction_time_left_parent').html('Auction Over');
           } else {
             $('#auction_time_left').html(auction_data['auction_time_left']);
+          }
+          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_low').val()) ) {
+            $('#bid_low').addClass('disabled');
+          }
+          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_mid').val()) ) {
+            $('#bid_low').addClass('disabled');
+          }
+          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_high').val()) ) {
+            $('#bid_low').addClass('disabled');
           }
           return true;
         }

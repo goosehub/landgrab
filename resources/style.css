@@ -184,8 +184,8 @@ html, body {
 /* Prevent user HTML input from screwing up view */
 /* Specificity rules are very specific here */
 html body .land_window img, .land_window img[style] {
-  max-height: 25vh !important;
-  max-width: 25vw !important;
+  max-height: 50vh !important;
+  max-width: 50vw !important;
 }
 html body .land_content_div, html body .land_content_div[style] {
   max-height: 200px !important;

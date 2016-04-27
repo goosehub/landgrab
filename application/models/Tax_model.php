@@ -58,5 +58,15 @@ Class tax_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Get owned cities
+ function get_owned_cities($account_key)
+ {
+    $this->db->select('COUNT(*) as owned_cities');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_key);
+    $this->db->where('city', 1);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
 }
 ?>
