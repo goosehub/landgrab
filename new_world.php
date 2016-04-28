@@ -8,16 +8,14 @@
 
 // Size of land box squares
 // Recommend 2, 3, 4, 6, or 12
-$box_size = 2;
+$box_size = 12;
 
 // World Key
-$world_key = 5; // Ensure this is the next available key
+$world_key = 6; // Ensure this is the next available key
 $world_slug = 'huge';
 $world_tax_rate = '0.01';
 $land_rebate = 10;
 $claim_fee = 500;
-$initial_lease_price = 1;
-$initial_lease_duration = 10;
 
 // 
 // Static
@@ -39,7 +37,7 @@ $result = '';
 
 $world_insert_statement = "INSERT INTO `world` (`id`, `slug`, `land_size`, `land_tax_rate`, `land_rebate`, `claim_fee`, `created`, `modified`) 
 VALUES
-(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '0', '" . $land_rebate . "', '" . $claim_fee . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+(NULL, '" . $world_slug . "', '" . $box_size . "', '" . $world_tax_rate . "', '" . $land_rebate . "', '" . $claim_fee . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 $result .= $world_insert_statement;
 $result .= '<br>';
