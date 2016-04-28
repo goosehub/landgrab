@@ -64,7 +64,7 @@ class Tax extends CI_Controller {
 
             // Calculate taxes and final account balance
             $account_taxes_due = ceil($account_lands[0]['price_tally'] * 0.01);
-            $monopoly_tax = floor($account_lands[0]['land_tally'] / 100) * floor($account_lands[0]['land_tally'] / 100);
+            $monopoly_tax = floor($account_lands[0]['land_tally'] / 100) * floor($account_lands[0]['land_tally'] / 100) * 10;
             $account_taxes_due = $account_taxes_due - $monopoly_tax;
             $final_account_balance = $post_rebate_account_balance - ($cron_frequency * $account_taxes_due);
 

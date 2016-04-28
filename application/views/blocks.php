@@ -74,7 +74,7 @@
         Click on any square to buy or claim it.
         Each square makes $<?php echo $world['land_rebate']; ?> each minute with a tax of 1% on the land price you set. 
         Each account receives a bonus $1/minute for each unique sale in the last 24 hours.
-        Each account pays a monopoly penalty for each 100 squares they own, expodentially, starting at $1/minute (1,4,9,16).
+        Each account pays a monopoly penalty for each 100 squares they own, expodentially, starting at $1/minute (10, 40, 90, 160, etc).
         Build cities for $100,000 and receive an additional $1000/minute.
     </p>
     <p>

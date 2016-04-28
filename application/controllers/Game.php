@@ -495,7 +495,7 @@ class Game extends CI_Controller {
         $financials['unique_sales'] = $unique_sales;
 
         // Monopoly Tax
-        $monopoly_tax = floor($land_sum_and_count['count'] / 100) * floor($land_sum_and_count['count'] / 100);
+        $monopoly_tax = floor($land_sum_and_count['count'] / 100) * floor($land_sum_and_count['count'] / 100) * 10;
         $financials['monopoly_tax'] = $monopoly_tax;
 
         // Owned Cities
@@ -503,7 +503,8 @@ class Game extends CI_Controller {
         $owned_cities = $financials['owned_cities'] = $owned_cities[0]['owned_cities'];
 
         // Income
-        $city_bonus = $owned_cities * 60 * 24;
+        // $city_bonus = $owned_cities * 60 * 24;
+        $city_bonus = 0;
         $periodic_taxes = $financials['periodic_taxes'] = ( ($land_sum_and_count['sum'] * $world['land_tax_rate']) - $monopoly_tax) * 60 * 24;
         $periodic_rebate = $financials['periodic_rebate'] = ( ($world['land_rebate'] * $land_sum_and_count['count']) + $unique_sales + $city_bonus) * 60 * 24;
         $income = $financials['income'] = $periodic_rebate - $periodic_taxes;
