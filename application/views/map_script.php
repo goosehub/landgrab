@@ -211,10 +211,10 @@ function initMap()
         window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong><br>';
         window_string += 'Price: <strong class="pull-right">$' + number_format(land_data['price']) + '</strong><br>';
         // Declare if City
-        if (land_data['city'] == 1) {
-          window_string += 'City <span class="glyphicon glyphicon-home" aria-hidden="true"></span>: '
-          + '<strong class="green_money pull-right">$1000/Minute</strong><br>';
-        }
+        // if (land_data['city'] == 1) {
+        //   window_string += 'City <span class="glyphicon glyphicon-home" aria-hidden="true"></span>: '
+        //   + '<strong class="green_money pull-right">$1000/Minute</strong><br>';
+        // }
         window_string += '</div>';
 			}
 
@@ -475,15 +475,15 @@ function initMap()
             + '</div></div>';
           }
           if (form_type === 'update' && cash > 100000 && d['city'] == 0) {
-            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            + '<div id="upgrade_city_submit" class="btn btn-action form-control">'
-            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> City ($100,000 Fee)</div>'
-            + '</div></div>'
+            // result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
+            // + '<div id="upgrade_city_submit" class="btn btn-action form-control">'
+            // + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> City ($100,000 Fee)</div>'
+            // + '</div></div>'
           } else if (form_type === 'update' && cash <= 100000 && d['city'] == 0) {
-            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            + '<div id="upgrade_city_submit" class="disabled btn btn-default form-control">'
-            + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$100,000</div>'
-            + '</div></div>'
+            // result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
+            // + '<div id="upgrade_city_submit" class="disabled btn btn-default form-control">'
+            // + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$100,000</div>'
+            // + '</div></div>'
           }
           result += '<br><button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';

@@ -22,11 +22,6 @@ http://dpaste.com/3TJ6XYH
 ==========================================================================================
 
 High Priority
-    Chat
-    Auctions
-    Buildings
-    Player Ads
-    sales, leases coord when no name
 
 Low Priority
     Feature
