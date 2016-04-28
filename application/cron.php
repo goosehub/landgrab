@@ -9,11 +9,14 @@ else
     $base_url = 'http://landgrab.xyz/';
 }
 
-// Route
-$route = 'tax/';
-
 // Token
 // This variable to be changed in live version
 $cron_token = '1234';
 
+// Taxes
+$route = 'tax/';
+echo file_get_contents($base_url . $route . $cron_token);
+
+// Auctions
+$route = 'auction_process/';
 echo file_get_contents($base_url . $route . $cron_token);

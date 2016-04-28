@@ -158,6 +158,27 @@ Class game_model extends CI_Model
     $this->db->update('auction', $data);
     return true;
  }
+ // Get incomplete auctions
+ function get_incomplete_auctions()
+ {
+    $this->db->select('*');
+    $this->db->from('auction');
+    $this->db->where('complete', 0);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result : [];
+ }
+ // Apply new auction bid
+ function mark_auction_as_complete($auction_id)
+ {
+    // Seller add cash
+    $data = array(
+        'complete' => 1
+    );
+    $this->db->where('id', $auction_id);
+    $this->db->update('auction', $data);
+    return true;
+ }
  // Make square into city
  function make_land_into_city($coord_slug, $world_key)
  {

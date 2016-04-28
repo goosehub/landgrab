@@ -683,7 +683,8 @@ class Game extends CI_Controller {
     public function auction_update()
     {
         // Set data
-        $auction = $this->game_model->get_auction_info($_GET['auction_id']);
+        $auction_id = $_GET['auction_id'];
+        $auction = $this->game_model->get_auction_info($auction_id);
         $auction['land'] = $this->get_single_land($auction['coord_slug'], $auction['world_key']);
         $auction['account'] = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
         $auction['user'] = $this->user_model->get_user($auction['account']['user_key']);
@@ -704,36 +705,75 @@ class Game extends CI_Controller {
         array_walk_recursive($auction, "filter");
         echo json_encode($auction);
         return true;
+    }
 
-        // End auction if auction is over
-        if ($auction['auction_time_left'] < 1) {
-            // Do transaction
-            $amount = $auction['current_bid'];
-            $buyer_account = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
-            $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-            $buyer_account_key = $buyer_account['id'];
-            $primary_color = $buyer_account['primary_color'];
+    // Process auctions
+    public function auction_process($token)
+    {
+        // Use hash equals function to prevent timing attack
+        if ( hash_equals(CRON_TOKEN, $token) ) {
+            // Stopwatch start
+            echo 'start: ' . time() . ' - ';
 
-            // Get seller and buying party info
-            $seller_account_key = $auction['seller_account_key'];
-            $seller_account = $this->user_model->get_account_by_id($seller_account_key);
+            // Get all incomplete auctions
+            $auctions = $this->game_model->get_incomplete_auctions();
 
-            // Find new cash balances
-            $new_selling_owner_cash = $seller_account['cash'] + $amount;
+            // Foreach auction
+            foreach ($auctions as $auction) {
+                // Detect if auction is over
+                $auction['auction_time_left'] = (strtotime($auction['last_bid_timestamp']) + 300) - time();
 
-            // Do sale
-            $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
-            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+                // End auction if auction is over
+                if ($auction['auction_time_left'] < 1) {
+                    // Do transaction
+                    $auction['land'] = $this->get_single_land($auction['coord_slug'], $auction['world_key']);
+                    $auction['account'] = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
+                    $auction['user'] = $this->user_model->get_user($auction['account']['user_key']);
+                    $auction['current_bid_username'] = $auction['user']['username'];
+                    $auction['auction_time_left'] = (strtotime($auction['last_bid_timestamp']) + 300) - time();
+                    $auction_id = $auction['id'];
+                    $world_key = $auction['world_key'];
+                    $coord_slug = $auction['coord_slug'];
+                    $land_name = $auction['land']['land_name'];
+                    $claimed = 1;
+                    $price = $auction['current_bid'];
+                    $content = $auction['land']['content'];
+                    $amount = $auction['current_bid'];
+                    $buyer_account = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
+                    $new_buying_owner_cash = $buyer_account['cash'] - $amount;
+                    $buyer_account_key = $buyer_account['id'];
+                    $primary_color = $buyer_account['primary_color'];
 
-            // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'buy', 
-                $amount, $world_key, $coord_slug, $land_name, '');
+                    // Get seller and buying party info
+                    $seller_account_key = $auction['seller_account_key'];
+                    $seller_account = $this->user_model->get_account_by_id($seller_account_key);
 
-            // Update land
-            $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $buyer_account_key, $land_name, $price, $content, $primary_color);
+                    // Find new cash balances
+                    $new_selling_owner_cash = $seller_account['cash'] + $amount;
 
-            // Update auction
-            return true;
+                    // Do sale
+                    $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
+                    $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
+
+                    // Record into transaction log
+                    $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'buy', 
+                        $amount, $world_key, $coord_slug, $land_name, '');
+
+                    // Update land
+                    $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $buyer_account_key, 
+                        $land_name, $price, $content, $primary_color);
+
+                    // Mark auction as complete
+                    $query_action = $this->game_model->mark_auction_as_complete($auction_id);
+                }
+            }
+
+            // Stopwatch end
+            echo 'end: ' . time() . ' - ';
+
+            // Taxes complete, good job! echo for cron email. time() keeps email from going to spam as exact duplicate
+            echo 'Auction Process Controller Successful. Timestamp: ' . time();
+
         }
     }
 

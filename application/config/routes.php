@@ -42,8 +42,11 @@ $route['user/logout'] = "user/logout";
 $route['chat/load'] = "chat/load";
 $route['chat/new_chat'] = "chat/new_chat";
 
-// Token
+// Tax Cron
 $route['tax/(:any)'] = "tax/index/$1";
+
+// Auction Cron
+$route['auction_process/(:any)'] = "game/auction_process/$1";
 
 // Not found
 $route['404_override'] = 'user/page_not_found';
