@@ -2,26 +2,46 @@
     Notes
 ==========================================================================================
 
-Zoom to land on link click
-Refine financials
-anime portal (lng line) issue
-Properties highlighted when on auction
-Prevent auction multi bidding
-Prevent bids on expensive auctions
-Prevent bids on done auctions
-List of owned lands
-cheapest land error
-auction list update more frequent
-profit leaderboard
-shorten sales over the last 24 hours list
+Army Based
+    Only attack outward from existing owned land vertical or horizontal
 
-http://dpaste.com/3TJ6XYH
+Free army
+    Minimum of 10 free army
+    Every land is 1 free army
+    Can be kept in army and put into defense
+    Army regenerates over 10 minutes
+
+Defense
+    Lands generate 10 defense
+    Upgrade to wall with 50 defense for 1
+    Upgrade to tower with 100 defense for 2
+    Upgrade to fort with 1000 defense for 10
+    Upgrade to castle with 10000 defense for 50
+    Lost on defeat
+
+Other TODO
+    Data Account Migration
+    How to play
+    FAQ
+    Edge of lng lines bugs
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
+    Zoom to land on link click
+    Refine financials
+    anime portal (lng line) issue
+    Properties highlighted when on auction
+    Prevent auction multi bidding
+    Prevent bids on expensive auctions
+    Prevent bids on done auctions
+    List of owned lands
+    cheapest land error
+    auction list update more frequent
+    profit leaderboard
+    shorten sales over the last 24 hours list
 
 Low Priority
     Feature
@@ -102,3 +122,7 @@ Map Size
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
+
+Bots
+    Anonymous bot
+        http://dpaste.com/3TJ6XYH

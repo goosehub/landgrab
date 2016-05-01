@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `account` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_key` int(10) unsigned NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
-  `cash` bigint(20) NOT NULL,
-  `primary_color` varchar(8) NOT NULL,
+  `active_army` int(10) NOT NULL,
+  `passive_army` int(10) NOT NULL,
+  `color` varchar(8) NOT NULL,
   `last_load` varchar(32) NOT NULL,
-  `token` varchar(64) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
@@ -51,22 +51,6 @@ CREATE TABLE IF NOT EXISTS `analytics` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auction`
---
-
-CREATE TABLE IF NOT EXISTS `auction` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `coord_slug` varchar(8) NOT NULL,
-  `world_key` int(10) unsigned NOT NULL,
-  `complete` int(1) unsigned NOT NULL,
-  `current_bid` int(10) unsigned NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -110,13 +94,12 @@ CREATE TABLE IF NOT EXISTS `land` (
   `lat` int(4) NOT NULL,
   `lng` int(4) NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
-  `claimed` int(1) NOT NULL,
   `account_key` int(10) unsigned NOT NULL,
+  `claimed` int(1) NOT NULL,
   `land_name` varchar(512) NOT NULL,
-  `price` bigint(20) NOT NULL,
   `content` varchar(1024) NOT NULL,
-  `city` int(1) NOT NULL,
-  `primary_color` varchar(10) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `color` varchar(8) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
@@ -125,18 +108,18 @@ CREATE TABLE IF NOT EXISTS `land` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction_log`
+-- Table structure for table `action_log`
 --
 
-CREATE TABLE IF NOT EXISTS `transaction_log` (
+CREATE TABLE IF NOT EXISTS `action_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `paying_account_key` int(10) unsigned NOT NULL,
-  `recipient_account_key` int(10) unsigned NOT NULL,
-  `transaction` varchar(32) NOT NULL,
-  `amount` bigint(20) NOT NULL,
+  `active_account_key` int(10) unsigned NOT NULL,
+  `passive_account_key` int(10) unsigned NOT NULL,
+  `action` varchar(32) NOT NULL,
+  `result` varchar(32) NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
   `coord_slug` varchar(8) NOT NULL,
-  `name_at_sale` varchar(512) NOT NULL,
+  `name_at_action` varchar(512) NOT NULL,
   `details` text NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
@@ -171,9 +154,6 @@ CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(126) NOT NULL,
   `land_size` int(4) NOT NULL,
-  `land_tax_rate` decimal(4,2) NOT NULL,
-  `land_rebate` int(10) unsigned NOT NULL,
-  `claim_fee` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
