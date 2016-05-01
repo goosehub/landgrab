@@ -49,6 +49,7 @@ Low Priority
         Zoom to land on link click
         lng line issue
         FAQ
+        Chat spam prevention
     Bug
         Color Update Lightness
         Sometimes land isn't updated after buy right during update
