@@ -155,9 +155,6 @@ html, body {
   background: #FFC31E;
   font-weight: bold;
 }
-#bankruptcy_block {
-  z-index: 10;
-}
 
 /* InfoWindow */
 .land_window {

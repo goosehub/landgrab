@@ -47,7 +47,7 @@ class Game extends CI_Controller {
 
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
-            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
+            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
 
             // Record account as loaded
             $query_action = $this->user_model->account_loaded($account['id']);
@@ -128,7 +128,7 @@ class Game extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
+            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
             $log_check = true;
             // Check if land is in range
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
@@ -243,7 +243,7 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $active_account['land_count'] = $this->game_model->get_count_of_account_land($active_account['id']);
+        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
         $active_account_key = $active_account['id'];
         $active_user = $this->user_model->get_user($active_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);

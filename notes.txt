@@ -19,44 +19,39 @@ Defense
     Upgrade to castle with 10000 defense for 50
     Lost on defeat
 
-Other TODO
-    Data Account Migration
-    How to play
-    FAQ
-    Edge of lng lines bugs
+Attack logic
+    Attacking army takes hits
 
-Fun ideas
-    Castles list
-    Castle Leaderboard
-    Active army leaderboard
-    Defense structure count
-    Flags
-    Owner of famous places
+Gameplay issues
+    What happens when player loses land and is maxed on passive army?
+    What happens when player loses land and is above max on active army?
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Zoom to land on link click
-    Refine financials
-    anime portal (lng line) issue
-    Properties highlighted when on auction
-    Prevent auction multi bidding
-    Prevent bids on expensive auctions
-    Prevent bids on done auctions
-    List of owned lands
-    cheapest land error
-    auction list update more frequent
-    profit leaderboard
-    shorten sales over the last 24 hours list
+    Army on update
+    Attack logic
+    Army CRON
+    Land upgrade
+    How to play
+    Data Account Migration
 
 Low Priority
     Feature
-        Change default land new price
+        Castles list
+        Castle Leaderboard
+        Active army leaderboard
+        Defense structure count
+        Flags
+        Highlighting for defenses
+        Zoom to land on link click
+        lng line issue
+        FAQ
     Bug
+        Color Update Lightness
         Sometimes land isn't updated after buy right during update
-        Fix reset on bakruptcy
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
