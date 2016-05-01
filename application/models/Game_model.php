@@ -105,6 +105,17 @@ Class game_model extends CI_Model
    $query = $this->db->get();
    return $query->result_array();
  }
+ // Upgrade land type
+ function upgrade_land_type($coord_slug, $world_key, $land_type)
+ {
+    $data = array(
+        'land_type' => $land_type
+    );
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;
+ }
 
 }
 ?>

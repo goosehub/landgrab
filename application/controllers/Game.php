@@ -162,7 +162,7 @@ class Game extends CI_Controller {
 	    }
 	}
 
-	// Trade and Update Land
+	// Land form
 	public function land_form()
     {
         // Authentication
@@ -306,6 +306,7 @@ class Game extends CI_Controller {
 
         // Get attack information
         $active_army = $account['active_army'];
+        $land_type_dictionary['unclaimed'] = 0;
         $land_type_dictionary['village'] = 10;
         $land_type_dictionary['wall'] = 50;
         $land_type_dictionary['tower'] = 100;
@@ -324,6 +325,91 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_active_army($account['id'], 0);
             return false;
         }
+    }
+
+    // Land upgrade form
+    public function land_upgrade_form()
+    {
+        // Authentication
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        // If user not logged in, return with fail
+        } else {
+            $world_key = $this->input->post('world_key_input');
+            echo '{"status": "fail", "message": "User not logged in"}';
+            return false;
+        }
+        
+        // Validation
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]|callback_land_upgrade_form_validation');
+        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            if (validation_errors() === '') {
+                echo '{"status": "fail", "message": "An unknown error occurred"}';
+            }
+            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
+            return false;
+        // Success
+        } else {
+            // Set inputs
+            $coord_slug = $this->input->post('coord_slug_input');
+            $world_key = $this->input->post('world_key_input');
+            $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+            $upgrade_type = $this->input->post('upgrade_type');
+            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $account_key = $account['id'];
+
+            // Passive logic applied
+            $land_type_dictionary['wall'] = 1;
+            $land_type_dictionary['tower'] = 2;
+            $land_type_dictionary['fort'] = 10;
+            $land_type_dictionary['castle'] = 50;
+            $defending_army = $land_type_dictionary[$land_type];
+
+            // Update land
+            $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
+
+            echo '{"status": "success", "message": "Upgraded"}';
+
+            return true;
+        }
+    }
+
+    // Validate Land Form Callback
+    public function land_upgrade_form_validation()
+    {
+        // User Information
+        if (!$this->session->userdata('logged_in')) {
+            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
+            return false;
+        }
+
+        // Get land info for verifying our inputs
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
+        $coord_slug = $this->input->post('coord_slug_input');
+        $world_key = $this->input->post('world_key_input');
+        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
+        $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
+        $active_account_key = $active_account['id'];
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+
+        // Check for inaccuracies
+        // Upgrading land that isn't theirs
+        if ($land_square['account_key'] != $active_account_key) {
+            $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
+            return false;
+        }
+
+        // Everything checks out
+        return true;
     }
 
     // Check if land is in range for account

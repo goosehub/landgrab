@@ -26,6 +26,16 @@ var land_size = <?php echo $world['land_size'] ?>;
     var log_check = false;
 <?php } ?>
 
+// Set defense dictionary
+defense_dictionary = new Array();
+defense_dictionary['unclaimed'] = 0;
+defense_dictionary['village'] = 10;
+defense_dictionary['wall'] = 50;
+defense_dictionary['tower'] = 100;
+defense_dictionary['fort'] = 1000;
+defense_dictionary['castle'] = 10000;
+defense_dictionary['city'] = 10000;
+
 // Set maps variables
 var map_update_interval = 120 * 1000;
 if (document.location.hostname == "localhost") {
@@ -194,7 +204,12 @@ function initMap()
         // Owner
         window_string += 'Owner: <strong class="pull-right">' + land_data['username'] + '</strong><br>';
         // Coord
-        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong>';
+        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
+        // Land Type
+        window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
+        // Defense
+        window_string += 'Defense: <strong class="pull-right">' + defense_dictionary[land_data['land_type']] + '</strong>';
+
         window_string += '</div>';
 			}
 
@@ -211,7 +226,9 @@ function initMap()
 					window_string += land_window_form('claim', 'btn-action', land_data);
         // Update
 				} else if (land_data['account_key'] == account_id) {
-					window_string += land_window_form('update', 'btn-info', land_data);
+          window_string += land_window_form('update', 'btn-info', land_data);
+          window_string += '<br>';
+          window_string += upgrade_form(land_data);
         // Buy
 				} else {
           window_string += land_window_form('attack', 'btn-success', land_data);
@@ -284,12 +301,13 @@ function initMap()
                 if (!response['result']) {
                   result_alert = 'alert-danger';
                   $('#active_army_display_span').html(0);
+                  active_army = 0;
                 }
                 $('#land_form').html('<br><div class="alert alert-wide ' + result_alert + '"><strong>' + response['message'] + '</strong></div>');
                 setTimeout(function(){
                   infoWindow.close();
                 }, 1 * 1000);
-                
+
                 if (input_form_type != 'update' && response['result']) {
                   // Update player variables and displays
                   player_land_count = player_land_count + 1;
@@ -308,6 +326,39 @@ function initMap()
             } // End land form ajax success
           }); // End land form ajax
         }); //End submit form
+
+        $('.upgrade_submit').click(function(){
+          // Serialize form into post data
+          $('#land_upgrade_form').append('<input type="hidden" name="upgrade_type" value="' + $(this).val() + '"/>')
+          var post_data = $('#land_upgrade_form').serialize();
+
+          // Replace window with processing window
+          $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-green"><strong>Upgrading</strong></div>');
+
+          // Submit form
+          $.ajax({
+            url: "<?=base_url()?>land_upgrade_form",
+            type: "POST",
+            data: post_data,
+            cache: false,
+            success: function(data)
+            {
+              // Return data
+              response = JSON.parse(data);
+
+              if (response['error'] || response['status'] != 'success') {
+                $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+
+              // If success
+              if (response['status'] === 'success') {
+                infoWindow.close();
+              }
+            }
+          });
+        });
+
       }); // End infoWindow script domready listener
     }); // End get_single_land callback
 	} // End set_window
@@ -315,7 +366,7 @@ function initMap()
 	// For claiming, updating, and buying land forms
 	function land_window_form(form_type, button_class, d) {
 		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
-    + '<button class="expand_land_form expand_trade btn ' + button_class + '" type="button" '
+    + '<button class="expand_land_form expand_trade btn ' + button_class + ' form-control" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
 		  + '' + ucwords(form_type) + ' This Land';
 		  result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
@@ -340,6 +391,30 @@ function initMap()
 		result += '</div></form></div>';
 		return result;
 	}
+
+  function upgrade_form(d) {
+    result = '<div class="form_outer_cont"><form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">'
+    + '<button class="expand_land_form expand_trade btn btn-success form-control" type="button" '
+    + 'data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">'
+      + 'Upgrade This Land'
+      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
+        + '<div id="upgrade_dropdown" class="collapse">'
+          + '<div class="form-group">'
+            + '<strong class="h4">Avilable Upgrades</strong>'
+            + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
+            + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
+            + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
+            if (active_army >= 1 && defense_dictionary[d['land_type']] < 50) {
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="wall">Wall (1)</button>';
+            }
+            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="tower">Tower (2)</button>';
+            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fort">Fort (10)</button>';
+            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="castle">Castle (50)</button>';
+            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="city">City</button>';
+          result +=  '</div>';
+    result += '</div></form></div>';
+    return result;
+  }
 
 	// 
 	// Land loop
@@ -410,6 +485,7 @@ function initMap()
       {
         $('#active_army_display_span').html(data);
         $('#active_army_span').html(data);
+        active_army = parseInt(data);
       }
     });
   }
