@@ -27,6 +27,7 @@ Other TODO
 
 Fun ideas
     Castles list/leaderboard
+    Flags
 
 ==========================================================================================
     Goals

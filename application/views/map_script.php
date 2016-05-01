@@ -180,14 +180,6 @@ function initMap()
 
       // Claimed land
 			} else  {
-        // Calculate income
-        income_prefix = '';
-        income_class = 'green_money';
-        if (income < 0) {
-          income_prefix = '-';
-          income_class = 'red_money';
-          income = Math.abs(income);
-        }
 
         // Land name
         if (land_data['land_name'] != '') {
@@ -201,51 +193,29 @@ function initMap()
         // Owner
         window_string += 'Owner: <strong class="pull-right">' + land_data['username'] + '</strong><br>';
         // Coord
-        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
-        // Income
-        window_string += 'Income: <strong class="' + income_class + ' pull-right">'  + income_prefix + '$' + number_format(income) + '/Minute</strong><br>';
-        window_string += 'Price: <strong class="pull-right">$' + number_format(land_data['price']) + '</strong><br>';
-        // Declare if City
-        // if (land_data['city'] == 1) {
-        //   window_string += 'City <span class="glyphicon glyphicon-home" aria-hidden="true"></span>: '
-        //   + '<strong class="green_money pull-right">$1000/Minute</strong><br>';
-        // }
+        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong>';
         window_string += '</div>';
 			}
 
       // Unregistered users
       if (! log_check) {
-        if (land_data['claimed'] === '0') {
           window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Claim!</a><br>';
-        } else {
-          window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Buy! (' + number_format(land_data['price']) + ')</a><br>';
-        }
+          + '?register">Join to Play!</a>';
       }
 
       // Interaction buttons
 			if (log_check) {
         // Claim
 				if (land_data['claimed'] === '0') {
-					window_string += land_trade_form('claim', 'btn-action', land_data);
+					window_string += land_window_form('claim', 'btn-action', land_data);
         // Update
 				} else if (land_data['account_key'] == account_id) {
-					window_string += land_trade_form('update', 'btn-info', land_data);
+					window_string += land_window_form('update', 'btn-info', land_data);
         // Buy
 				} else {
-          // Enough cash to buy
-					if (land_data['price'] <= cash) {
-            window_string += land_trade_form('buy', 'btn-success', land_data);
-          // Not enough cash
-					} else {
-						window_string += '<button class="btn btn-default" disabled="disabled">Not enough cash (' + number_format(land_data['price']) + ')</button>';
-					}
+          window_string += land_window_form('attack', 'btn-success', land_data);
 				}
       }
-      // debug coord_slug
-      // window_string += 'Coord Key: ' + land_data['coord_slug'] + ' | ' + coord_slug +
-            // '<br>Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() + '<br>';
       // End div
       window_string += '</div>';
 
@@ -311,8 +281,6 @@ function initMap()
 
                 if (input_form_type != 'update') {
                   // Update player variables and displays
-                  cash = cash - land_data['price'];
-                  $('#cash_display').html(number_format(cash));
                   player_land_count = player_land_count + 1;
                   $('#player_land_count_display').html( number_format(player_land_count) );
                   $('#player_land_mi_display').html( number_format(player_land_count * (land_size * 70) ) );
@@ -345,31 +313,22 @@ function initMap()
 	} // End set_window
 
 	// For claiming, updating, and buying land forms
-	function land_trade_form(form_type, button_class, d) {
+	function land_window_form(form_type, button_class, d) {
 		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
     + '<button class="expand_land_form expand_trade btn ' + button_class + '" type="button" '
 		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
 		  + '' + ucwords(form_type) + ' This Land';
-      if (form_type != 'update') {
-        result += ' ($' + number_format(d['price']) + ')';
-      }
-		  result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button><br><br>'
+		  result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
 		    + '<div id="land_form_dropdown" class="collapse">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
-            + '<input type="hidden" id="token" name="token" value="' + d['token'] + '">'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Land Name</label>'
             + '</div><div class="col-md-8">'
             + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
-            + '</div></div>'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_price">Land Price</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="text" class="auto_money form-control" id="input_price" name="price" value="$' + number_format(d['price']) + '">'
             + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_content">Description</label>'
@@ -377,24 +336,7 @@ function initMap()
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>';
-          if (form_type === 'update' && cash > 1000) {
-            result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            + '<div id="auction_submit" class="btn btn-danger form-control">'
-            + '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Auction ($1,000 Fee)</div>'
-            + '</div></div>';
-          }
-          if (form_type === 'update' && cash > 100000 && d['city'] == 0) {
-            // result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            // + '<div id="upgrade_city_submit" class="btn btn-action form-control">'
-            // + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> City ($100,000 Fee)</div>'
-            // + '</div></div>'
-          } else if (form_type === 'update' && cash <= 100000 && d['city'] == 0) {
-            // result += '<div class="row"><div class="col-md-3"></div><div class="col-md-8">'
-            // + '<div id="upgrade_city_submit" class="disabled btn btn-default form-control">'
-            // + '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Make a City/$100,000</div>'
-            // + '</div></div>'
-          }
-          result += '<br><button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
+          result += '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';
 		return result;
 	}
