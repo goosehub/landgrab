@@ -1,5 +1,5 @@
 INSERT INTO `world` (`id`, `slug`, `land_size`, `created`, `modified`) VALUES (NULL, 'huge', '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 (NULL, '-84,-180', '-84', '-180', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-82,-180', '-82', '-180', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-80,-180', '-80', '-180', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -1000,7 +1000,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '62,-158', '62', '-158', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '64,-158', '64', '-158', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '66,-158', '66', '-158', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '68,-158', '68', '-158', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '70,-158', '70', '-158', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -2002,7 +2002,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '46,-134', '46', '-134', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '48,-134', '48', '-134', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '50,-134', '50', '-134', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '52,-134', '52', '-134', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '54,-134', '54', '-134', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -3004,7 +3004,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '30,-110', '30', '-110', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '32,-110', '32', '-110', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '34,-110', '34', '-110', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '36,-110', '36', '-110', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '38,-110', '38', '-110', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -4006,7 +4006,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '14,-86', '14', '-86', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '16,-86', '16', '-86', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '18,-86', '18', '-86', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '20,-86', '20', '-86', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '22,-86', '22', '-86', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -5008,7 +5008,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-2,-62', '-2', '-62', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '0,-62', '0', '-62', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '2,-62', '2', '-62', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '4,-62', '4', '-62', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '6,-62', '6', '-62', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -6010,7 +6010,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-18,-38', '-18', '-38', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-16,-38', '-16', '-38', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-14,-38', '-14', '-38', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '-12,-38', '-12', '-38', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-10,-38', '-10', '-38', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -7012,7 +7012,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-34,-14', '-34', '-14', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-32,-14', '-32', '-14', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-30,-14', '-30', '-14', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '-28,-14', '-28', '-14', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-26,-14', '-26', '-14', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -8014,7 +8014,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-50,10', '-50', '10', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-48,10', '-48', '10', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-46,10', '-46', '10', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '-44,10', '-44', '10', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-42,10', '-42', '10', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -9016,7 +9016,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-66,34', '-66', '34', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-64,34', '-64', '34', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-62,34', '-62', '34', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '-60,34', '-60', '34', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-58,34', '-58', '34', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -10018,7 +10018,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '-82,58', '-82', '58', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-80,58', '-80', '58', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-78,58', '-78', '58', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '-76,58', '-76', '58', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-74,58', '-74', '58', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -11020,7 +11020,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '70,80', '70', '80', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '72,80', '72', '80', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '74,80', '74', '80', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '76,80', '76', '80', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '78,80', '78', '80', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -12022,7 +12022,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '54,104', '54', '104', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '56,104', '56', '104', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '58,104', '58', '104', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '60,104', '60', '104', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '62,104', '62', '104', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -13024,7 +13024,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '38,128', '38', '128', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '40,128', '40', '128', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '42,128', '42', '128', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '44,128', '44', '128', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '46,128', '46', '128', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -14026,7 +14026,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '22,152', '22', '152', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '24,152', '24', '152', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '26,152', '26', '152', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '28,152', '28', '152', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '30,152', '30', '152', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
@@ -15028,7 +15028,7 @@ INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `a
 (NULL, '6,176', '6', '176', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '8,176', '8', '176', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '10,176', '10', '176', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`) VALUES
+INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 
 (NULL, '12,176', '12', '176', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '14,176', '14', '176', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

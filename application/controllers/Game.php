@@ -47,7 +47,7 @@ class Game extends CI_Controller {
 
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
-            $data['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
+            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
 
             // Record account as loaded
             $query_action = $this->user_model->account_loaded($account['id']);
@@ -110,6 +110,9 @@ class Game extends CI_Controller {
 	    // Get Land Square
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
 
+        // Land range false by default
+        $land_square['in_range'] = false;
+
         // Add username to array
         $account = $this->user_model->get_account_by_id($land_square['account_key']);
         $owner = $this->user_model->get_user($account['user_key']);
@@ -120,10 +123,17 @@ class Game extends CI_Controller {
         }
 
         // Get account
+        $log_check = false;
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
+            $log_check = true;
+            // Check if land is in range
+            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
+            $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
+                $world['land_size'], $land_square['lat'], $land_square['lng']);
         }
 
         // Echo data to client to be parsed
@@ -133,6 +143,7 @@ class Game extends CI_Controller {
             $land_square['color'] = htmlentities($land_square['color']);
             $land_square['username'] = htmlentities($land_square['username']);
             if ($json_output) {
+                // Filter tags except img with src only
                 function filter(&$value) {
                   // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
                   $value = strip_tags($value, '<img>');
@@ -189,7 +200,8 @@ class Game extends CI_Controller {
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
-	        $land_name = $this->input->post('land_name');
+            $land_name = $this->input->post('land_name');
+	        $land_type = $this->input->post('land_type');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $color = $account['color'];
@@ -200,6 +212,9 @@ class Game extends CI_Controller {
             // Do attack logic
             if ($form_type === 'attack') {
                 $attack_result = $this->land_attack();
+            }
+            if ($form_type === 'claim' || $form_type === 'attack') {
+                $land_type = 'village';
             }
 
             // Update land
@@ -226,25 +241,36 @@ class Game extends CI_Controller {
         $form_type = $this->input->post('form_type_input');
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
+        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $active_account['land_count'] = $this->game_model->get_count_of_account_land($active_account['id']);
         $active_account_key = $active_account['id'];
         $active_user = $this->user_model->get_user($active_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
         $passive_user = $this->user_model->get_user($passive_account_key);
+        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], 
+            $land_square['lat'], $land_square['lng']);
 
         // Check for inaccuracies
+        // Claiming land that isn't unclaimed
         if ($form_type === 'claim' && $land_square['claimed'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
+        // Updating land that isn't theirs
         else if ($form_type === 'update' && $land_square['account_key'] != $active_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
             return false;
         }
+        // Attacking land that is already theirs
         else if ($form_type === 'attack' && $land_square['account_key'] === $active_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
+            return false;
+        // Attacking or claiming land that is not in range
+        } else if ($form_type != 'update' && !$in_range) {
+            $this->form_validation->set_message('land_form_validation', 'This land is not in range');
             return false;
         }
 
@@ -256,6 +282,26 @@ class Game extends CI_Controller {
     public function land_attack()
     {
         return true;
+    }
+
+    // Check if land is in range for account
+    public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng)
+    {
+        // All land in range if no land
+        if ($land_count < 1) {
+            return true;
+        }
+        // Check surrounding lands
+        $coord_array = [];
+        $coord_array[] = ($lat + $land_size) . ',' . ($lng);
+        $coord_array[] = ($lat) . ',' . ($lng + $land_size);
+        $coord_array[] = ($lat - $land_size) . ',' . ($lng);
+        $coord_array[] = ($lat) . ',' . ($lng - $land_size);
+        $coord_matches = $this->game_model->land_range_check($world_key, $account_key, $coord_array);
+        if (!empty($coord_matches) ) {
+            return true;
+        }
+        return false;
     }
 
     // Get leaderboards

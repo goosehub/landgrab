@@ -21,7 +21,7 @@ var land_size = <?php echo $world['land_size'] ?>;
     var username = "<?php echo $user['username']; ?>";
     var account_color = '<?php echo $account["color"]; ?>';
     var active_army = <?php echo $account['active_army'] + ''; ?>;
-    var player_land_count = <?php echo $land_count; ?>;
+    var player_land_count = <?php echo $account['land_count']; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
@@ -205,7 +205,7 @@ function initMap()
       }
 
       // Interaction buttons
-			if (log_check) {
+			if (land_data['in_range'] && log_check) {
         // Claim
 				if (land_data['claimed'] === '0') {
 					window_string += land_window_form('claim', 'btn-action', land_data);

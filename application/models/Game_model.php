@@ -95,6 +95,17 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]['count']) ? $result[0]['count'] : 0;
  }
+ // Check if any immediate squares belong to current account
+ function land_range_check($world_key, $account_key, $coord_array)
+ {
+    $this->db->select('id');
+    $this->db->from('land');
+    $this->db->where_in('coord_slug', $coord_array);
+    $this->db->where('account_key', $account_key);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
+ }
 
 }
 ?>

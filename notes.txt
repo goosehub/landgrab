@@ -29,7 +29,9 @@ Fun ideas
     Castles list
     Castle Leaderboard
     Active army leaderboard
+    Defense structure count
     Flags
+    Owner of famous places
 
 ==========================================================================================
     Goals

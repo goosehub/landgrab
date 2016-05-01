@@ -44,7 +44,7 @@ $result .= '<br>';
 // 
 
 $land_insert_statement = "INSERT INTO `land` 
-(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `type`, `color`, `created`, `modified`)
+(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`)
 VALUES";
 
 $result .= $land_insert_statement;
