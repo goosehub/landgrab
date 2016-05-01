@@ -95,7 +95,16 @@ Class game_model extends CI_Model
     $this->db->where('id', $account_key);
     $this->db->update('account', $data);
     return true;    
-}
+ }
+ // Get accounts in world
+ function get_accounts_in_world($world_key)
+ {
+   $this->db->select('*');
+   $this->db->from('account');
+   $this->db->where('world_key', $world_key);
+   $query = $this->db->get();
+   return $query->result_array();
+ }
 
 }
 ?>

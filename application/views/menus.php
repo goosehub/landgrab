@@ -1,14 +1,22 @@
 <!-- Top Right Block -->
 <div id="top_right_block">
 
+
+  <!-- Update Dropdown -->
+    <button class="how_to_play_button btn btn-warning">
+        War Update
+    </button>
+
   <?php if ($log_check) { ?>
   <!-- Army Dropdown -->
     <button id="active_army_dropdown" class="btn btn-default" type="button" id="active_army_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <span id="active_army_display"><?php echo number_format($account['active_army']); ?></span>
+        <strong><span id="active_army_display_span"><?php echo number_format($account['active_army']); ?></span></strong> Mobilized Army
       <span class="caret"></span>
     </button>
     <ul class="active_army_dropdown dropdown-menu" aria-labelledby="active_army_dropdown">
-
+      <li>Owned Lands: <strong><span id="owned_lands_span"><?php echo $account['land_count']; ?></span></strong></li>
+      <li>Mobilized Army: <strong><span id="active_army_span"><?php echo $account['active_army']; ?></span></strong></li>
+      <li>Defensive Army: <strong><span id="passive_army_span"><?php echo $account['passive_army']; ?></span></strong></li>
     </ul>
 
     <?php } ?>

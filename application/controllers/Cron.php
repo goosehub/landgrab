@@ -8,7 +8,6 @@ class Cron extends CI_Controller {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
-        $this->load->model('cron_model', '', TRUE);
     }
 
     // Map view
@@ -24,6 +23,9 @@ class Cron extends CI_Controller {
 
         // Set army refill rate by minutes
         $army_refill_rate = 10;
+        if ($_SERVER["HTTP_HOST"] === 'localhost') {
+          $army_refill_rate = 1;
+        }
 
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();
@@ -33,7 +35,7 @@ class Cron extends CI_Controller {
           $world_key = $world['id'];
 
           // Get all acounts in world
-          $accounts_in_world = $this->cron_model->get_accounts_in_world($world_key);
+          $accounts_in_world = $this->game_model->get_accounts_in_world($world_key);
 
           // Loop through accounts
           foreach ($accounts_in_world as $account) {
@@ -51,16 +53,21 @@ class Cron extends CI_Controller {
             }
 
             // Continue to next account if account has no land, no potential active army, or already at potential active army
-            if ($account_lands < 1 || $potential_active_army < 1 || $account['active_army'] === $potential_active_army) {
+            if ($account_lands < 1 || $potential_active_army < 1 || $account['active_army'] >= $potential_active_army) {
               continue;
             }
 
             // Add to potential active army
-            $active_army = $account['active_army'] + ( ($account_lands / $army_refill_rate) * $cron_frequency);
+            $active_army = $account['active_army'] + ceil( ($account_lands / $army_refill_rate) * $cron_frequency);
 
             // Reduce active army to potential maximum if more than potential maximum
             if ($active_army > $potential_active_army) {
               $active_army = $potential_active_army;
+            }
+
+            // Active army at minimum of 10
+            if ($active_army < 10) {
+              $active_army = 10;
             }
 
             // Update account active_army

@@ -19,6 +19,10 @@ Defense
     Upgrade to castle with 10000 defense for 50
     Lost on defeat
 
+Build a city for every 100 lands
+    Bonus 10 active army
+    10000 defense
+
 Attack logic
     Attacking army takes hits
 
@@ -37,6 +41,7 @@ High Priority
     Land upgrade
     How to play
     Data Account Migration
+    Column to verify account has land for CRON speed
 
 Low Priority
     Feature

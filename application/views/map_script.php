@@ -27,9 +27,9 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 // Set maps variables
-var update_interval = 120;
+var map_update_interval = 120 * 1000;
 if (document.location.hostname == "localhost") {
-  update_interval = 10;
+  map_update_interval = 10 * 1000;
 }
 var infoWindow = false;
 var boxes = [];
@@ -258,7 +258,7 @@ function initMap()
           var post_data = $('#land_form').serialize();
 
           // Replace window with processing window
-          $('#land_form').html('<br><div class="alert alert-wide alert-green"><strong>Success</strong></div>');
+          $('#land_form').html('<br><div class="alert alert-wide alert-success"><strong>...</strong></div>');
 
           // Submit form
           $.ajax({
@@ -271,21 +271,29 @@ function initMap()
               // Return data
               response = JSON.parse(data);
 
-              if (response['error']) {
+              if (response['error'] || response['status'] != 'success') {
                 $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
                 return false;
               }
 
-              // If success, close
+              // If success
               if (response['status'] === 'success') {
-                infoWindow.close();
 
-                if (input_form_type != 'update') {
+                // Pass information to user
+                result_alert = 'alert-green';
+                if (!response['result']) {
+                  result_alert = 'alert-danger';
+                  $('#active_army_display_span').html(0);
+                }
+                $('#land_form').html('<br><div class="alert alert-wide ' + result_alert + '"><strong>' + response['message'] + '</strong></div>');
+                setTimeout(function(){
+                  infoWindow.close();
+                }, 1 * 1000);
+                
+                if (input_form_type != 'update' && response['result']) {
                   // Update player variables and displays
                   player_land_count = player_land_count + 1;
-                  $('#player_land_count_display').html( number_format(player_land_count) );
-                  $('#player_land_mi_display').html( number_format(player_land_count * (land_size * 70) ) );
-                  $('#player_land_km_display').html( number_format(player_land_count * (land_size * 112) ) );
+                  $('#owned_lands_span').html( number_format(player_land_count) );
 
                   // Update box to reflect user ownership
                   boxes[land_data['id']].setOptions({
@@ -296,21 +304,12 @@ function initMap()
                   });
                   return true;
                 }
-
-              // If error, display error message
-              } else {
-                console.log(response);
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
-                return false;
               }
-            }
-          });
-        }); // End land form ajax
-
+            } // End land form ajax success
+          }); // End land form ajax
+        }); //End submit form
       }); // End infoWindow script domready listener
-
     }); // End get_single_land callback
-
 	} // End set_window
 
 	// For claiming, updating, and buying land forms
@@ -391,16 +390,41 @@ function initMap()
 	map.setMapTypeId('map_style');
 
   // 
-  // Update data
+  // Update army data
   // 
 
-  // Get update
+  // Get map update
   setInterval(function(){
-    get_update_data(world_key);
-  }, update_interval * 1000);
+    get_army_update(account_id);
+  }, 5 * 1000);
+
+  function get_army_update(account_id) {
+    $.ajax({
+      url: "<?=base_url()?>get_army_update",
+      type: "GET",
+      data: {
+                account_id: account_id
+            },
+      cache: false,
+      success: function(data)
+      {
+        $('#active_army_display_span').html(data);
+        $('#active_army_span').html(data);
+      }
+    });
+  }
+
+  // 
+  // Update map data
+  // 
+
+  // Get map update
+  setInterval(function(){
+    get_map_update(world_key);
+  }, map_update_interval);
 
   // Get single land ajax
-  function get_update_data(world_key) {
+  function get_map_update(world_key) {
     $.ajax({
       url: "<?=base_url()?>world/" + world_key,
       type: "GET",

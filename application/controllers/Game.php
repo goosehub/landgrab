@@ -216,10 +216,21 @@ class Game extends CI_Controller {
                 $attack_result = $this->land_attack($land_square['land_type'], $account);
                 // Return failed attack message
                 if (!$attack_result) {
-                    echo '{"status": "fail", "message": "Your army was defeated in battle"}';
+                    echo '{"status": "success", "result": false, "message": "Defeat"}';
                     return false;
+                } else {
+                    echo '{"status": "success", "result": true, "message": "Victory"}';
                 }
             }
+            // Claim response
+            else if ($form_type === 'claim') {
+                echo '{"status": "success", "result": true, "message": "Claimed"}';
+            // Update response
+            } else {
+                echo '{"status": "success", "result": true, "message": "Updated"}';
+            }
+
+            // Land type for update
             if ($form_type === 'claim' || $form_type === 'attack') {
                 $land_type = 'village';
             } else {
@@ -229,8 +240,6 @@ class Game extends CI_Controller {
             // Update land
 	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $land_type, $color);
 
-            // Return to game as success
-            echo '{"status": "success"}';
             return true;
 	    }
 	}
@@ -358,6 +367,14 @@ class Game extends CI_Controller {
 
         // Return data
         return $leaderboards;
+    }
+
+    // Get army update
+    public function get_army_update()
+    {
+        $account_id = $this->input->get('account_id');
+        $account = $this->user_model->get_account_by_id($account_id);
+        echo $account['active_army'];
     }
 
     // Function to close tags
