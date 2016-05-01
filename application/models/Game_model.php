@@ -86,6 +86,16 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
+ // Update account active army
+ function update_account_active_army($account_key, $active_army)
+ {
+    $data = array(
+        'active_army' => $active_army
+    );
+    $this->db->where('id', $account_key);
+    $this->db->update('account', $data);
+    return true;    
+}
 
 }
 ?>

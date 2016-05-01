@@ -312,6 +312,7 @@ class Game extends CI_Controller {
             return true;
         } else {
             // On failure, destroy active army of attacker
+            $query_action = $this->game_model->update_account_active_army($account['id'], 0);
             return false;
         }
     }

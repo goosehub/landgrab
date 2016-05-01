@@ -9,7 +9,6 @@ class Cron extends CI_Controller {
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('cron_model', '', TRUE);
-        $this->load->model('transaction_model', '', TRUE);
     }
 
     // Map view
@@ -21,7 +20,10 @@ class Cron extends CI_Controller {
         echo 'start: ' . time() . ' - ';
 
         // Set cron frequency multiplier by minute
-        $cron_frequency = 5;
+        $cron_frequency = 1;
+
+        // Set army refill rate by minutes
+        $army_refill_rate = 10;
 
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();
@@ -30,27 +32,39 @@ class Cron extends CI_Controller {
         foreach ($worlds as $world) {
           $world_key = $world['id'];
 
-          // Get info for tax logic
-          $world_info = $this->cron_model->get_world_tax_info($world_key);
-
-          // Get total amount of lands
-          $land_tally = $world_info[0]['land_tally'];
-
-          // Continue if no land to preserve resources and to avoid divide by 0
-          if ($land_tally < 1) { continue; }
-
           // Get all acounts in world
-          $accounts_in_world = $this->cron_model->get_accounts_in_world($world_key, $world['land_tax_rate']);
+          $accounts_in_world = $this->cron_model->get_accounts_in_world($world_key);
 
           // Loop through accounts
           foreach ($accounts_in_world as $account) {
             $account_key = $account['id'];
 
-            // Get lands and price sum
-            $account_lands = $this->cron_model->get_account_for_taxes($account_key);
+            // Get land total
+            $account_lands = $this->user_model->get_count_of_account_land($account_key);
 
-            // Skip if person has no land
-            if ($account_lands[0]['land_tally'] < 1) { continue; }
+            // Get potential active army
+            $potential_active_army = $account_lands - $account['passive_army'];
+
+            // Potential active army at minimum of 10
+            if ($potential_active_army < 10) {
+              $potential_active_army = 10;
+            }
+
+            // Continue to next account if account has no land, no potential active army, or already at potential active army
+            if ($account_lands < 1 || $potential_active_army < 1 || $account['active_army'] === $potential_active_army) {
+              continue;
+            }
+
+            // Add to potential active army
+            $active_army = $account['active_army'] + ( ($account_lands / $army_refill_rate) * $cron_frequency);
+
+            // Reduce active army to potential maximum if more than potential maximum
+            if ($active_army > $potential_active_army) {
+              $active_army = $potential_active_army;
+            }
+
+            // Update account active_army
+            $query_action = $this->game_model->update_account_active_army($account_key, $active_army);
 
           } // End account loop
 
