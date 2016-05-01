@@ -53,8 +53,6 @@
 
       <li role="separator" class="divider"></li>
 
-      <li><strong>Owned Cities</strong>: <span id="owned_cities_span"><?php echo $financials['owned_cities']; ?></span></li>
-
       <li role="separator" class="divider"></li>
 
       <li><button class="sold_lands_button btn btn-success form-control"><strong>Sales Over Last 24 Hours</strong> </button></li>
