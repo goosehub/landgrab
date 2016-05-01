@@ -14,12 +14,13 @@ class Game extends CI_Controller {
 	}
 
 	// Game view and update json
-	public function index($world_slug = 5, $marketing_slug = false)
+	public function index($world_slug = 1, $marketing_slug = false)
 	{
         // Record marketing slug into analytics table
         if ($marketing_slug) {
             $this->user_model->record_marketing_hit($marketing_slug);
         }
+
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;
         if ($this->session->userdata('logged_in')) {
@@ -48,12 +49,6 @@ class Game extends CI_Controller {
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
 
-            // Get account sales
-            $data['sales'] = $this->sales($account);
-
-            // Get account financials
-            $data['financials'] = $this->financials($account, $world);
-
             // Record account as loaded
             $query_action = $this->user_model->account_loaded($account['id']);
         }
@@ -66,13 +61,6 @@ class Game extends CI_Controller {
 
         // Get all lands
         $data['lands'] = $this->game_model->get_all_lands_in_world($world['id']);
-
-        // Auctions
-        $data['auctions'] = $this->game_model->get_active_auctions($world['id']);
-        foreach ($data['auctions'] as &$auction) {
-            $auction['land_data'] = $this->game_model->get_single_land($world['id'], $auction['coord_slug']);
-            $auction['land_data']['land_name'] .= ' (' . $auction['land_data']['coord_slug'] . ')';
-        }
 
         // Validation errors
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
@@ -91,16 +79,6 @@ class Game extends CI_Controller {
             array_walk_recursive($data, "filter");
             echo json_encode($data);
             return true;
-        }
-
-        // Auction Interface
-        if (isset($_GET['land']) && isset($_GET['auction'])) {
-            $data['auction_data'] = $this->game_model->get_auction_info($_GET['auction']);
-            $data['auction_data']['land'] = $this->get_single_land($data['auction_data']['coord_slug'], $data['auction_data']['world_key']);
-            $data['auction_data']['account'] = $this->user_model->get_account_by_id($data['auction_data']['current_bid_account_key']);
-            $data['auction_data']['user'] = $this->user_model->get_user($data['auction_data']['account']['user_key']);
-            $data['auction_data']['current_bid_username'] = $data['auction_data']['user']['username'];
-            $data['auction_data']['auction_time_left'] = (strtotime($data['auction_data']['last_bid_timestamp']) + 300) - time();
         }
 
         // Load view
@@ -564,9 +542,6 @@ class Game extends CI_Controller {
     {
         $world_key = $world['id'];
 
-        // Net Value
-        // $data['leaderboard_net_value_data'] = $this->leaderboard_model->leaderboard_net_value($world_key);
-
         // Land owned
         $leaderboard_land_owned = $this->leaderboard_model->leaderboard_land_owned($world_key);
         $rank = 1;
@@ -580,46 +555,6 @@ class Game extends CI_Controller {
             $rank++;
         }
         $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;
-
-        // Cash owned
-        $leaderboard_cash_owned = $this->leaderboard_model->leaderboard_cash_owned($world_key);
-        $rank = 1;
-        foreach ($leaderboard_cash_owned as &$leader) { 
-            $leader['rank'] = $rank;
-            $leader['user'] = $this->user_model->get_user($leader['user_key']);
-            $rank++;
-        }
-        $leaderboards['leaderboard_cash_owned'] = $leaderboard_cash_owned;
-
-        // Highest value land
-        $leaderboard_highest_valued_land = $this->leaderboard_model->leaderboard_highest_valued_land($world_key);
-        $rank = 1;
-        foreach ($leaderboard_highest_valued_land as &$leader) {
-            $leader['rank'] = $rank;
-            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
-            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
-            $leader['content'] = mb_substr(strip_tags($leader['content']), 0, 42);
-            if (strlen(strip_tags($leader['content'])) === 42) { 
-                $leader['content'] .= '...'; 
-            } 
-            $rank++;
-        }
-        $leaderboards['leaderboard_highest_valued_land'] = $leaderboard_highest_valued_land;
-
-        // Cheapest land
-        $leaderboard_cheapest_land = $this->leaderboard_model->leaderboard_cheapest_land($world_key);
-        $rank = 1;
-        foreach ($leaderboard_cheapest_land as &$leader) {
-            $leader['rank'] = $rank;
-            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
-            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
-            $leader['content'] = mb_substr(strip_tags($leader['content']), 0, 42);
-            if (strlen(strip_tags($leader['content'])) === 42) { 
-                $leader['content'] .= '...'; 
-            }
-            $rank++;
-        }
-        $leaderboards['leaderboard_cheapest_land'] = $leaderboard_cheapest_land;
 
         // Return data
         return $leaderboards;
@@ -677,173 +612,6 @@ class Game extends CI_Controller {
 
         // Return result
         return $html;
-    }
-
-    // Update auction information
-    public function auction_update()
-    {
-        // Set data
-        $auction_id = $_GET['auction_id'];
-        $auction = $this->game_model->get_auction_info($auction_id);
-        $auction['land'] = $this->get_single_land($auction['coord_slug'], $auction['world_key']);
-        $auction['account'] = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
-        $auction['user'] = $this->user_model->get_user($auction['account']['user_key']);
-        $auction['current_bid_username'] = $auction['user']['username'];
-        $auction['auction_time_left'] = (strtotime($auction['last_bid_timestamp']) + 300) - time();
-        $auction_id = $auction['id'];
-        $world_key = $auction['world_key'];
-        $coord_slug = $auction['coord_slug'];
-        $land_name = $auction['land']['land_name'];
-        $claimed = 1;
-        $price = $auction['current_bid'];
-        $content = $auction['land']['content'];
-
-        // Encode and send data
-        function filter(&$value) {
-          $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
-        }
-        array_walk_recursive($auction, "filter");
-        echo json_encode($auction);
-        return true;
-    }
-
-    // Process auctions
-    public function auction_process($token)
-    {
-        // Use hash equals function to prevent timing attack
-        if ( hash_equals(CRON_TOKEN, $token) ) {
-            // Stopwatch start
-            echo 'start: ' . time() . ' - ';
-
-            // Get all incomplete auctions
-            $auctions = $this->game_model->get_incomplete_auctions();
-
-            // Foreach auction
-            foreach ($auctions as $auction) {
-                // Detect if auction is over
-                $auction['auction_time_left'] = (strtotime($auction['last_bid_timestamp']) + 300) - time();
-
-                // End auction if auction is over
-                if ($auction['auction_time_left'] < 1) {
-                    // Do transaction
-                    $auction['land'] = $this->get_single_land($auction['coord_slug'], $auction['world_key']);
-                    $auction['account'] = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
-                    $auction['user'] = $this->user_model->get_user($auction['account']['user_key']);
-                    $auction['current_bid_username'] = $auction['user']['username'];
-                    $auction['auction_time_left'] = (strtotime($auction['last_bid_timestamp']) + 300) - time();
-                    $auction_id = $auction['id'];
-                    $world_key = $auction['world_key'];
-                    $coord_slug = $auction['coord_slug'];
-                    $land_name = $auction['land']['land_name'];
-                    $claimed = 1;
-                    $price = $auction['current_bid'];
-                    $content = $auction['land']['content'];
-                    $amount = $auction['current_bid'];
-                    $buyer_account = $this->user_model->get_account_by_id($auction['current_bid_account_key']);
-                    $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-                    $buyer_account_key = $buyer_account['id'];
-                    $primary_color = $buyer_account['primary_color'];
-
-                    // Get seller and buying party info
-                    $seller_account_key = $auction['seller_account_key'];
-                    $seller_account = $this->user_model->get_account_by_id($seller_account_key);
-
-                    // Find new cash balances
-                    $new_selling_owner_cash = $seller_account['cash'] + $amount;
-
-                    // Do sale
-                    $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
-                    $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-
-                    // Record into transaction log
-                    $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, 'buy', 
-                        $amount, $world_key, $coord_slug, $land_name, '');
-
-                    // Update land
-                    $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $buyer_account_key, 
-                        $land_name, $price, $content, $primary_color);
-
-                    // Mark auction as complete
-                    $query_action = $this->game_model->mark_auction_as_complete($auction_id);
-                }
-            }
-
-            // Stopwatch end
-            echo 'end: ' . time() . ' - ';
-
-            // Taxes complete, good job! echo for cron email. time() keeps email from going to spam as exact duplicate
-            echo 'Auction Process Controller Successful. Timestamp: ' . time();
-
-        }
-    }
-
-    // Make square into city
-    public function make_city()
-    {
-        // Validation
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('coord_slug', 'Coord Slug', 'trim|required|max_length[8]|callback_make_city_validation');
-        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]');
-
-        // Fail
-        if ($this->form_validation->run() == FALSE) {
-            // Set Fail Errors
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            if (validation_errors() === '') {
-                echo '{"status": "fail", "message": "An unknown error occurred"}';
-            }
-
-            // Return to game as failure with new lines removed
-            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
-            return false;
-
-        // Success
-        } else {
-            // Return to game as success
-            echo '{"status": "success"}';
-            return true;
-        }
-    }
-
-    // Validate make city request
-    public function make_city_validation()
-    {
-        // User Information
-        if (!$this->session->userdata('logged_in')) {
-            return false;
-        }
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
-
-        // Get Data
-        $coord_slug = $this->input->post('coord_slug');
-        $world_key = $this->input->post('world_key');
-        $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $buyer_account_key = $buyer_account['id'];
-        $buyer_user = $this->user_model->get_user($buyer_account_key);
-        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = 100000;
-        $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-        $buyer_account_key = $buyer_account['id'];
-
-        // Check that this is the proper owner
-        if ($buyer_account_key != $land_square['account_key']) {
-            return false;
-        }
-
-        // Check if active auction
-        if ($this->game_model->check_if_land_is_active_auction($coord_slug, $world_key) ) {
-            return false;
-        }
-
-        // Apply charge for auction
-        $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-
-        // Make land into city
-        $query_action = $this->game_model->make_land_into_city($coord_slug, $world_key);
-
-        return true;
     }
 
 }

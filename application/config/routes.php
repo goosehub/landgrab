@@ -21,14 +21,6 @@ $route['world/(:any)'] = "game/index/$1";
 $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
 
-// Upgrade functions
-$route['make_city'] = "game/make_city";
-
-// Auction functions
-$route['new_auction'] = "auction/new_auction";
-$route['new_auction_bid'] = "auction/new_auction_bid";
-$route['auction_update'] = "game/auction_update";
-
 // Account functions
 $route['user/update_color'] = "user/update_color";
 
@@ -44,9 +36,6 @@ $route['chat/new_chat'] = "chat/new_chat";
 
 // Tax Cron
 $route['tax/(:any)'] = "tax/index/$1";
-
-// Auction Cron
-$route['auction_process/(:any)'] = "game/auction_process/$1";
 
 // Not found
 $route['404_override'] = 'user/page_not_found';

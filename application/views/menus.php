@@ -173,22 +173,6 @@
       </ul>
     </div>
 
-    <!-- Worlds dropdown -->
-    <div class="btn-group">
-      <button class="info_button btn btn-info dropdown-toggle" type="button" id="worlds_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Worlds
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="worlds_dropdown">
-        <li class="text-center"><strong class="text-info">Worlds</strong></li>
-        <?php foreach ($worlds as $world_list) { ?>
-        <li><a class="world_link" href="<?=base_url()?>world/<?php echo $world_list['slug']; ?>">
-            <strong class="<?php if ($world_list['id'] === $world['id']) { echo 'current_world'; } ?>"><?php echo $world_list['slug']; ?></strong>
-        </a></li>
-        <?php } ?>
-      </ul>
-    </div>
-
     <?php if ($log_check) { ?>
 
     <!-- User Dropdown -->
@@ -227,7 +211,7 @@
       <span class="caret"></span>
     </button>
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-      <li class="text-center"><strong class="text-danger">Version 1.1.0</strong></li>
+      <li class="text-center"><strong class="text-danger">Version 2.0.0</strong></li>
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
