@@ -200,9 +200,11 @@ class Game extends CI_Controller {
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
+            $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
             $account_key = $account['id'];
             $color = $account['color'];
             $content = $this->input->post('content');
@@ -211,14 +213,21 @@ class Game extends CI_Controller {
 
             // Do attack logic
             if ($form_type === 'attack') {
-                $attack_result = $this->land_attack();
+                $attack_result = $this->land_attack($land_square['land_type'], $account);
+                // Return failed attack message
+                if (!$attack_result) {
+                    echo '{"status": "fail", "message": "Your army was defeated in battle"}';
+                    return false;
+                }
             }
             if ($form_type === 'claim' || $form_type === 'attack') {
                 $land_type = 'village';
+            } else {
+                $land_type = $land_square['land_type'];
             }
 
             // Update land
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $land_type, $color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -279,9 +288,32 @@ class Game extends CI_Controller {
 	}
 
     // Land Transaction
-    public function land_attack()
-    {
-        return true;
+    public function land_attack($land_type, $account)
+    {        
+        // If attacker has no lands and land is not fortified, then attacker wins
+        if ($account['land_count'] < 1) {
+            return true;
+        }
+
+        // Get attack information
+        $active_army = $account['active_army'];
+        $land_type_dictionary['village'] = 10;
+        $land_type_dictionary['wall'] = 50;
+        $land_type_dictionary['tower'] = 100;
+        $land_type_dictionary['fort'] = 1000;
+        $land_type_dictionary['castle'] = 10000;
+        $defending_army = $land_type_dictionary[$land_type];
+        $attack_power = rand(0,$active_army);
+        $defend_power = rand(0,$defending_army);
+        
+        // Do random attack with two sides
+        if ($attack_power > $defend_power) {
+            // On victory, change losers passive army if needed
+            return true;
+        } else {
+            // On failure, destroy active army of attacker
+            return false;
+        }
     }
 
     // Check if land is in range for account
