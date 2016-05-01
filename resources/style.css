@@ -166,6 +166,9 @@ html, body {
 #land_form textarea {
   height: 3em;
 }
+.upgrade_parent {
+  width: 300px;
+}
 .alert-green {
   background: #5CB85C;
   color: #fff;

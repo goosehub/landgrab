@@ -306,13 +306,8 @@ class Game extends CI_Controller {
 
         // Get attack information
         $active_army = $account['active_army'];
-        $land_type_dictionary['unclaimed'] = 0;
-        $land_type_dictionary['village'] = 10;
-        $land_type_dictionary['wall'] = 50;
-        $land_type_dictionary['tower'] = 100;
-        $land_type_dictionary['fort'] = 1000;
-        $land_type_dictionary['castle'] = 10000;
-        $defending_army = $land_type_dictionary[$land_type];
+        $defense_dictionary = $this->defense_dictionary();
+        $defending_army = $defense_dictionary[$land_type];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
         
@@ -365,14 +360,15 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
-            // Passive logic applied
-            $land_type_dictionary['wall'] = 1;
-            $land_type_dictionary['tower'] = 2;
-            $land_type_dictionary['fort'] = 10;
-            $land_type_dictionary['castle'] = 50;
-            $defending_army = $land_type_dictionary[$land_type];
+            // Update passive and active army
+            $land_type_dictionary = $this->land_type_dictionary();
+            $defending_army = $land_type_dictionary[$upgrade_type];
+            $new_active_army = $account['active_army'] - $land_type_dictionary[$upgrade_type];
+            $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
+            $new_passive_army = $account['passive_army'] + $land_type_dictionary[$upgrade_type] - $land_type_dictionary[$land_square['land_type']];
+            $query_action = $this->game_model->update_account_passive_army($account_key, $new_passive_army);
 
-            // Update land
+            // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
 
             echo '{"status": "success", "message": "Upgraded"}';
@@ -396,15 +392,27 @@ class Game extends CI_Controller {
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-        $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
-        $active_account_key = $active_account['id'];
+        $upgrade_type = $this->input->post('upgrade_type');
+        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+        $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $land_type_dictionary = $this->land_type_dictionary();
 
         // Check for inaccuracies
         // Upgrading land that isn't theirs
-        if ($land_square['account_key'] != $active_account_key) {
+        if ($land_square['account_key'] != $account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
+            return false;
+        }
+        // Doing an upgade they don't have enough active army for
+        if ($account['active_army'] < $land_type_dictionary[$upgrade_type]) {
+            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought active army for this upgrade');
+            return false;
+        }
+        // Doing an upgade they don't have enough passive army for
+        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type]) {
+            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
             return false;
         }
 
@@ -461,6 +469,29 @@ class Game extends CI_Controller {
         $account_id = $this->input->get('account_id');
         $account = $this->user_model->get_account_by_id($account_id);
         echo $account['active_army'];
+    }
+
+    // Land type cost dictionary
+    public function land_type_dictionary()
+    {
+        $land_type_dictionary['village'] = 0;
+        $land_type_dictionary['wall'] = 1;
+        $land_type_dictionary['tower'] = 2;
+        $land_type_dictionary['fort'] = 10;
+        $land_type_dictionary['castle'] = 50;
+        return $land_type_dictionary;
+    }
+
+    // Land type defense dictionary
+    public function defense_dictionary()
+    {
+        $defense_dictionary['unclaimed'] = 0;
+        $defense_dictionary['village'] = 10;
+        $defense_dictionary['wall'] = 50;
+        $defense_dictionary['tower'] = 100;
+        $defense_dictionary['fort'] = 1000;
+        $defense_dictionary['castle'] = 10000;
+        return $defense_dictionary;
     }
 
     // Function to close tags
