@@ -26,7 +26,9 @@ Other TODO
     Edge of lng lines bugs
 
 Fun ideas
-    Castles list/leaderboard
+    Castles list
+    Castle Leaderboard
+    Active army leaderboard
     Flags
 
 ==========================================================================================

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Use this where needed for debugging
     // echo '<br>' . $this->db->last_query() . '<br>';
 
-Class tax_model extends CI_Model
+Class cron_model extends CI_Model
 {
   // Get world tax info
   function get_world_tax_info($world_key)

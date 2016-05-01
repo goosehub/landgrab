@@ -34,8 +34,8 @@ $route['user/logout'] = "user/logout";
 $route['chat/load'] = "chat/load";
 $route['chat/new_chat'] = "chat/new_chat";
 
-// Tax Cron
-$route['tax/(:any)'] = "tax/index/$1";
+// Cron
+$route['cron/(:any)'] = "cron/index/$1";
 
 // Not found
 $route['404_override'] = 'user/page_not_found';

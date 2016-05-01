@@ -8,8 +8,7 @@ class Game extends CI_Controller {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
-        $this->load->model('tax_model', '', TRUE);
-        $this->load->model('transaction_model', '', TRUE);
+        $this->load->model('action_model', '', TRUE);
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
 
@@ -103,8 +102,7 @@ class Game extends CI_Controller {
             $json_output = true;
             $coord_slug = $_GET['coord_slug'];
             $world_key = $_GET['world_key'];
-        } 
-        else {
+        } else {
             echo '{"error": "Input missing"}';
             return false;
         }
@@ -117,8 +115,7 @@ class Game extends CI_Controller {
         $owner = $this->user_model->get_user($account['user_key']);
         if ( isset($owner['username']) && isset($land_square['land_name']) ) {
             $land_square['username'] = $owner['username'];
-        } 
-        else {
+        } else {
             $land_square['username'] = '';
         }
 
@@ -145,13 +142,11 @@ class Game extends CI_Controller {
                 }
                 array_walk_recursive($land_square, "filter");
                 echo json_encode($land_square);
-            } 
-            else {
+            } else {
                 return $land_square;
             }
-        } 
 	    // If none found, default to this
-        else {
+        } else {
 	        echo '{"error": "Land not found"}';
 	    }
 	}
@@ -163,9 +158,8 @@ class Game extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
-        } 
         // If user not logged in, return with fail
-        else {
+        } else {
             $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
@@ -188,9 +182,8 @@ class Game extends CI_Controller {
             }
             echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
             return false;
-        } 
 		// Success
-        else {
+        } else {
             // Set inputs
 	    	$claimed = 1;
             $form_type = $this->input->post('form_type_input');
