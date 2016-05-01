@@ -41,7 +41,11 @@
   chat_load();
 
   // Chat Loop
-  setInterval(chat_load, 1000);
+  chat_interval = 2 * 1000;
+  if (document.location.hostname == "localhost") {
+    chat_interval = 10 * 1000;
+  }
+  setInterval(chat_load, chat_interval);
 
   // Called by form
   function chat_submit_function(e) {

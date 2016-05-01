@@ -48,6 +48,7 @@ class Game extends CI_Controller {
 
             // Get account
             $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            $data['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
 
             // Record account as loaded
             $query_action = $this->user_model->account_loaded($account['id']);
@@ -97,11 +98,13 @@ class Game extends CI_Controller {
         // Get input
         if ($coord_slug && $world_key) {
             $json_output = false;
-        } else if (isset($_GET['coord_slug']) && isset($_GET['world_key']) ) {
+        } 
+        else if (isset($_GET['coord_slug']) && isset($_GET['world_key']) ) {
             $json_output = true;
             $coord_slug = $_GET['coord_slug'];
             $world_key = $_GET['world_key'];
-        } else {
+        } 
+        else {
             echo '{"error": "Input missing"}';
             return false;
         }
@@ -114,11 +117,12 @@ class Game extends CI_Controller {
         $owner = $this->user_model->get_user($account['user_key']);
         if ( isset($owner['username']) && isset($land_square['land_name']) ) {
             $land_square['username'] = $owner['username'];
-        } else {
+        } 
+        else {
             $land_square['username'] = '';
         }
 
-        // Set token for account
+        // Get account
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
@@ -141,11 +145,13 @@ class Game extends CI_Controller {
                 }
                 array_walk_recursive($land_square, "filter");
                 echo json_encode($land_square);
-            } else {
+            } 
+            else {
                 return $land_square;
             }
+        } 
 	    // If none found, default to this
-	    } else {
+        else {
 	        echo '{"error": "Land not found"}';
 	    }
 	}
@@ -157,16 +163,13 @@ class Game extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
-
+        } 
         // If user not logged in, return with fail
-        } else {
+        else {
             $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
-
-        // Deformat inputs
-        $_POST['price'] = $this->money_deformat($_POST['price']);
         
 		// Validation
         $this->load->library('form_validation');
@@ -174,34 +177,26 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
-        $this->form_validation->set_rules('price', 'Price', 'trim|required|integer|max_length[20]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
-        // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         // Fail
 	    if ($this->form_validation->run() == FALSE) {
-
-            // Set Fail Errors
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             if (validation_errors() === '') {
                 echo '{"status": "fail", "message": "An unknown error occurred"}';
             }
-
-            // Return to game as failure with new lines removed
             echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
             return false;
-
+        } 
 		// Success
-	    } else {
-
+        else {
             // Set inputs
 	    	$claimed = 1;
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
 	        $land_name = $this->input->post('land_name');
-            $price = $this->input->post('price');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
             $color = $account['color'];
@@ -209,8 +204,13 @@ class Game extends CI_Controller {
             // $content = $this->sanitize_html($content);
             $content = $content;
 
-            // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $color);
+            // Do attack logic
+            if ($form_type === 'attack') {
+                $attack_result = $this->land_attack();
+            }
+
+            // Update land
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -233,90 +233,36 @@ class Game extends CI_Controller {
         $form_type = $this->input->post('form_type_input');
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
-        $token = $this->input->post('token');
-        $buyer_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $buyer_account_key = $buyer_account['id'];
-        $buyer_user = $this->user_model->get_user($buyer_account_key);
+        $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $active_account_key = $active_account['id'];
+        $active_user = $this->user_model->get_user($active_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $amount = $land_square['price'];
-        $name_at_sale = $land_square['land_name'];
-        $seller_account_key = $land_square['account_key'];
-        $seller_user = $this->user_model->get_user($seller_account_key);
+        $name_at_action = $land_square['land_name'];
+        $passive_account_key = $land_square['account_key'];
+        $passive_user = $this->user_model->get_user($passive_account_key);
 
-        // Check for bot patterns and/or consolidation trading
-        // $bot_check = $this->bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount);
-        // if ($bot_check) {
-        //     echo '{"error": "' . $bot_check . '"}';
-        //     die();
-        // }
-
-        // Check if token is correct
-        // if ($token != $buyer_account['token']) {
-            // $this->form_validation->set_message('land_form_validation', 'Token is wrong. Someone else may be using your account.');
-            // return false;
-        // }
         // Check for inaccuracies
         if ($form_type === 'claim' && $land_square['claimed'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
-        else if ($form_type === 'update' && $land_square['account_key'] != $buyer_account_key) {
+        else if ($form_type === 'update' && $land_square['account_key'] != $active_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
             return false;
         }
-        else if ($form_type === 'buy' && $land_square['account_key'] === $buyer_account_key) {
+        else if ($form_type === 'attack' && $land_square['account_key'] === $active_account_key) {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         }
-        else if ($form_type === 'buy' && $buyer_account['cash'] < $_POST['price'])
-        {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enough cash to buy this land');
-            return false;
-        } else if ($this->game_model->check_if_land_is_active_auction($coord_slug, $world_key)) {
-            $this->form_validation->set_message('land_form_validation', 'This land is currently up for auction');
-            return false;
-        }
 
-        // Do transaction, and return true if transaction succeeds
-        return $this->land_transaction($form_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account);
+        // Everything checks out
+        return true;
 	}
 
     // Land Transaction
-    public function land_transaction($transaction_type, $world_key, $coord_slug, $amount, $name_at_sale, $seller_account_key, $buyer_account)
+    public function land_attack()
     {
-        // Do transaction
-        $new_buying_owner_cash = $buyer_account['cash'] - $amount;
-        $buyer_account_key = $buyer_account['id'];
-        if ($transaction_type === 'buy') {
-
-            // Get seller and buying party info
-            $seller_account = $this->user_model->get_account_by_id($seller_account_key);
-
-            // Find new cash balances
-            $new_selling_owner_cash = $seller_account['cash'] + $amount;
-
-            // Do sale
-            $query_action = $this->game_model->update_account_cash_by_account_id($seller_account_key, $new_selling_owner_cash);
-            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-
-            // Record into transaction log
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
-                $amount, $world_key, $coord_slug, $name_at_sale, '');
-        }
-
-        // Record into transaction log
-        if ($transaction_type === 'claim') {
-            $query_action = $this->game_model->update_account_cash_by_account_id($buyer_account_key, $new_buying_owner_cash);
-            $query_action = $this->transaction_model->new_transaction_record($buyer_account_key, $seller_account_key, $transaction_type, 
-                $amount, $world_key, $coord_slug, '', '');
-        }
         return true;
-    }
-
-    // Look for bot patterns
-    public function bot_detection()
-    {
-        return false;
     }
 
     // Get leaderboards
@@ -340,25 +286,6 @@ class Game extends CI_Controller {
 
         // Return data
         return $leaderboards;
-    }
-
-    public function money_deformat($string) {
-        if ( !isset($string) ) {
-            return '';
-        }
-        // Detect cents, and remove if exists
-        if (substr($string, -3, 1) == '.') {
-            $string = substr($string, 0, -3);
-        }
-        // Remove dollarsign from price input if exists
-        $string = str_replace('$', '', $string);
-        // Remove commas from price input if exists
-        $string = str_replace(',', '', $string);
-        // Remove periods from price input if exists (some cultures use periods instead of commas)
-        $string = str_replace('.', '', $string);
-        // Remove dashes to prevent negative inputs in price
-        $string = str_replace('-', '', $string);
-        return $string;
     }
 
     // Function to close tags

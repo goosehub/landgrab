@@ -49,13 +49,12 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $color)
+ function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $color)
  {
     $data = array(
         'claimed' => $claimed,
         'account_key' => $account_key,
         'land_name' => $land_name,
-        'price' => $price,
         'content' => $content,
         'color' => $color
     );
@@ -86,15 +85,15 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
- // Get projected tax
- function get_sum_and_count_of_account_land($account_id)
+ // Get count of land by account
+ function get_count_of_account_land($account_id)
  {
-    $this->db->select('SUM(price) as sum, COUNT(*) as count');
+    $this->db->select('COUNT(*) as count');
     $this->db->from('land');
     $this->db->where('account_key', $account_id);
     $query = $this->db->get();
     $result = $query->result_array();
-    return isset($result[0]) ? $result[0] : 0;
+    return isset($result[0]['count']) ? $result[0]['count'] : 0;
  }
 
 }

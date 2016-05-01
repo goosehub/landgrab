@@ -21,6 +21,7 @@ var land_size = <?php echo $world['land_size'] ?>;
     var username = "<?php echo $user['username']; ?>";
     var account_color = '<?php echo $account["color"]; ?>';
     var active_army = <?php echo $account['active_army'] + ''; ?>;
+    var player_land_count = <?php echo $land_count; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
@@ -28,7 +29,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 // Set maps variables
 var update_interval = 120;
 if (document.location.hostname == "localhost") {
-  var update_interval = 10;
+  update_interval = 10;
 }
 var infoWindow = false;
 var boxes = [];
