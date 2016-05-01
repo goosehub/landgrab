@@ -5,6 +5,7 @@
   <!-- Update Dropdown -->
     <button class="how_to_play_button btn btn-warning">
         War Update
+        <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 
   <?php if ($log_check) { ?>
