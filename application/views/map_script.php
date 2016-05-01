@@ -126,7 +126,7 @@ function initMap()
   }
 
   // Declare square called by performance sensitive loop
-  function declare_square(land_key, land_lat, land_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
+  function z(land_key, land_lat, land_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
       shape = [
           {lat: land_lat, lng: land_lng},
           {lat: land_lat + land_size, lng: land_lng},
@@ -417,16 +417,14 @@ function initMap()
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
-        ?>
-        declare_square(<?php echo 
+        ?>z(<?php echo 
             $land['id'] . ',' .
             $land['lat'] . ',' .
             $land['lng'] . ',' .
             $stroke_weight . ',' .
             '"' . $stroke_color . '"' . ',' .
             '"' . $fill_color . '"' . ',' .
-            $fill_opacity; ?>);
-	<?php } ?>
+            $fill_opacity; ?>);<?php } ?>
 
 	// 
 	// Map Styling
