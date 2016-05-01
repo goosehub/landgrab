@@ -111,14 +111,14 @@ Class user_model extends CI_Model
     }
  }
  // Create player account
- function create_player_account($user_key, $world_key, $cash, $primary_color)
+ function create_player_account($user_key, $world_key, $active_army, $color)
  {
     // Insert user into user
     $data = array(
     'world_key' => $world_key,
     'user_key' => $user_key,
-    'cash' => $cash,
-    'primary_color' => $primary_color,
+    'active_army' => $active_army,
+    'color' => $color,
     'last_load' => date('Y-m-d H:i:s')
     );
     $this->db->insert('account', $data);
@@ -132,18 +132,18 @@ Class user_model extends CI_Model
     return $account_id;
  }
  // Update account primary color
- function update_account_primary_color($account_id, $primary_color)
+ function update_account_color($account_id, $color)
  {
     // Update account
     $data = array(
-        'primary_color' => $primary_color
+        'color' => $color
     );
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
 
     // Update lands
     $data = array(
-        'primary_color' => $primary_color
+        'color' => $color
     );
     $this->db->where('account_key', $account_id);
     $this->db->update('land', $data);
@@ -159,17 +159,6 @@ Class user_model extends CI_Model
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
     return true;
- }
- // Set token by keys
- function set_token($account_id, $token)
- {
-    // Update account
-    $data = array(
-        'token' => $token
-    );
-    $this->db->where('id', $account_id);
-    $this->db->update('account', $data);
-    return true;    
  }
  // Create player account
  function record_ip_request($ip, $request)

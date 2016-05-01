@@ -105,7 +105,7 @@ class User extends CI_Controller {
 	// Validate Register Callback
     public function register_validation($password) {
         // Set parameters
-        $email = "placeholder@gmail.com";
+        $email = 'placeholder@gmail.com';
         $username = $this->input->post('username');
         // Email Validation
         $this->load->helper('email');
@@ -130,15 +130,15 @@ class User extends CI_Controller {
             } else {
                 // Set variables
                 $worlds = $this->user_model->get_all_worlds();
-                $cash = 100000;
+                $active_army = 10;
                 
                 // Create account for each world
                 foreach ($worlds as $world)
                 {
                     // Random color for each account
-                    $primary_color = random_hex_color();
+                    $color = random_hex_color();
 
-                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $cash, $primary_color);
+                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $active_army, $color);
                 }
 
 				// Login
@@ -146,7 +146,7 @@ class User extends CI_Controller {
                 $sess_array = array(
                     'id' => $user_id,
                     'username' => $username,
-                    'cash' => $cash
+                    'active_army' => $active_army
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
                 return true;
@@ -178,7 +178,7 @@ class User extends CI_Controller {
         // Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('primary_color', 'color', 'trim|required|max_length[7]');
+        $this->form_validation->set_rules('color', 'color', 'trim|required|max_length[7]');
 
         $world_key = $this->input->post('world_key_input');
 
@@ -192,15 +192,15 @@ class User extends CI_Controller {
         } else {
 
             // Set color
-            $primary_color = $this->input->post('primary_color');
+            $color = $this->input->post('color');
 
             // Add hash
-            $primary_color = '#' . $primary_color;
+            $color = '#' . $color;
 
             // Set account
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-            $query_action = $this->user_model->update_account_primary_color($account_key, $primary_color);
+            $query_action = $this->user_model->update_account_color($account_key, $color);
 
             // Redirect to game
             redirect('world/' . $world_key, 'refresh');

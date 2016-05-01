@@ -123,18 +123,13 @@ class Game extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $token = md5(uniqid(rand(), true));
-            $query_action = $this->user_model->set_token($account['id'], $token);
-            $land_square['token'] = $token;
-        } else {
-            $land_square['token'] = '';
         }
 
         // Echo data to client to be parsed
 	    if (isset($land_square['land_name'])) {
             // Strip html entities from all untrusted columns, except content as it's stripped on insert
             $land_square['land_name'] = htmlentities($land_square['land_name']);
-            $land_square['primary_color'] = htmlentities($land_square['primary_color']);
+            $land_square['color'] = htmlentities($land_square['color']);
             $land_square['username'] = htmlentities($land_square['username']);
             if ($json_output) {
                 function filter(&$value) {
@@ -209,13 +204,13 @@ class Game extends CI_Controller {
             $price = $this->input->post('price');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-            $primary_color = $account['primary_color'];
+            $color = $account['color'];
             $content = $this->input->post('content');
             // $content = $this->sanitize_html($content);
             $content = $content;
 
             // Do Database action
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $primary_color);
+	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $price, $content, $color);
 
             // Return to game as success
             echo '{"status": "success"}';
@@ -319,222 +314,9 @@ class Game extends CI_Controller {
     }
 
     // Look for bot patterns
-    public function bot_detection($buyer_user, $seller_user, $buyer_account_key, $seller_account_key, $amount)
+    public function bot_detection()
     {
-        // Note
-        // The methods are kept seperate to allow easy configuration as bot fighting evolves
-        // For speed and resource reasons, be sure to make conditions to do a pattern check minimal
-
-        // 
-        // Search for suspicious number sales between the same ip, indicating consolidation accounts
-        // 
-
-        // Do check when ips match between buyer and seller
-        if ($buyer_user['ip'] === $seller_user['ip']) {
-            // Get sales to search for bot patterns in the last hour
-            $search_in_hours = 2;
-            $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * $search_in_hours));
-            $found_suspicious_sales = 0;
-            $sales_search = $this->transaction_model->sold_lands_by_account_over_period($seller_account_key, $start_search);
-
-            // Not likely a bot if only a few sales
-            $total_sale_min = 3;
-            if ( count($sales_search) <= $total_sale_min) {
-                return false;
-            }
-
-            foreach ($sales_search as $sale) {
-                $paying_account = $this->user_model->get_account_by_id($sale['paying_account_key']);
-                $recipient_account = $this->user_model->get_account_by_id($sale['recipient_account_key']);
-                $paying_user = $this->user_model->get_user($paying_account['user_key']);
-                $recipient_user = $this->user_model->get_user($recipient_account['user_key']);
-                if ($paying_user['ip'] === $recipient_user['ip']) {
-                    $found_suspicious_sales++;
-                }
-            }
-            $suspicious_ratio_limit = 0.5;
-            $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
-
-            // Log ip, send message, and return false if suspicion is over the limit
-            if ($found_suspicious_sales > $suspicious_total_limit) {
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $result = $this->user_model->record_ip_request($ip, 'suspicious_sales_by_ip');   
-
-                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
-            }
-        }
-
-        // 
-        // Search for frequent sales of a suspicious amount, indicating consolidation accounts
-        // 
-
-        // Do check when current sale is in the suspicious range
-        $suspicious_max = 100000;
-        $suspicious_min = 90000;
-        if ($amount <= $suspicious_max && $amount >= $suspicious_min) {
-            // If same IP as well, mark as bot
-            if ($buyer_user['ip'] === $seller_user['ip']) {
-                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
-            }
-
-            // Get sales to search for bot patterns in the last hour
-            $search_in_hours = 2;
-            $start_search = date('Y-m-d H:i:s', time() - (60 * 60 * $search_in_hours));
-            $sales_search = $this->transaction_model->sold_lands_by_account_over_period($account_key, $start_search);
-
-            // Not likely a bot if only a few sales
-            $total_sale_min = 3;
-            if ( count($sales_search) <= $total_sale_min) {
-                return false;
-            }
-
-            // Check for bot behavior
-            $found_suspicious_sales = 0;
-            foreach ($sales_search as $sale) {
-                if ($sale['amount'] <= $suspicious_max && $sale['amount'] >= $suspicious_min) {
-                    $found_suspicious_sales++;
-                }
-            }
-            $suspicious_ratio_limit = 0.5;
-            $suspicious_total_limit = count($sales_search) * $suspicious_ratio_limit;
-
-            // Log ip, send message, and return false if suspicion is over the limit
-            if ($found_suspicious_sales > $suspicious_total_limit) {
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $result = $this->user_model->record_ip_request($ip, 'suspicious_sales_by_amount');   
-
-                return 'You seem to be a bot, or using muliple accounts. If this was a mistake, please contact me at goosepostbox@gmail.com.';
-            }
-
-        }
-
-        // If here, pass and return false
         return false;
-    }
-
-    // Get Sales
-    public function sales($account)
-    {
-        $this->load->helper('date');
-
-        $account_key = $account['id'];
-
-        // Get lands since last update
-        $sales_since_last_update = $this->transaction_model->sold_lands_by_account_over_period($account_key, $account['last_load']);
-
-        // Get sales history
-        $day_ago = date('Y-m-d H:i:s', time() - (60 * 60 * 24 * 1) );
-        $sales_history = $this->transaction_model->sold_lands_by_account_over_period($account_key, $day_ago);
-
-        foreach ($sales_history as &$transaction) {
-            // Add usernames to sales history
-            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
-            $paying_user = $this->user_model->get_user($paying_account['user_key']);
-            $transaction['paying_username'] = $paying_user['username'];
-            // Format time
-            $transaction['when'] = timespan(strtotime($transaction['created']), time());
-        }
-        $sales['sales_history'] = $sales_history;
-
-        // Add usernames to sales since last update
-        foreach ($sales_since_last_update as &$transaction) {
-            $paying_account = $this->user_model->get_account_by_id($transaction['paying_account_key']);
-            $paying_user = $this->user_model->get_user($paying_account['user_key']);
-            $transaction['paying_username'] = $paying_user['username'];
-        }
-        $sales['sales_since_last_update'] = $sales_since_last_update;
-
-        // Return data
-        return $sales;
-    }
-
-    // Get Financials
-    public function financials($account, $world)
-    {
-        $account_key = $account['id'];
-
-        // Get account information
-        $financials['cash'] = $account['cash'];
-        $land_sum_and_count = $this->game_model->get_sum_and_count_of_account_land($account_key);
-        $player_land_count = $financials['player_land_count'] = $land_sum_and_count['count'];
-
-        // Check if bankruptcy since last page load
-        $financials['bankruptcy'] = false;
-        // if ($player_land_count < 1) { 
-            $financials['bankruptcy'] = $this->transaction_model->check_for_bankruptcy($account_key, $account['last_load']); 
-        // }
-
-        // Set timespan days, match in financial menu language
-        $timespan_days = 1;
-
-        // Unique Sales
-        $unique_sales = $this->tax_model->get_account_unique_sales_tally($account_key);
-        $unique_sales = count($unique_sales);
-        $financials['unique_sales'] = $unique_sales;
-
-        // Monopoly Tax
-        $monopoly_tax = floor($land_sum_and_count['count'] / 100) * floor($land_sum_and_count['count'] / 100) * 10;
-        $financials['monopoly_tax'] = $monopoly_tax;
-
-        // Owned Cities
-        $owned_cities = $this->tax_model->get_owned_cities($account_key);
-        $owned_cities = $financials['owned_cities'] = $owned_cities[0]['owned_cities'];
-
-        // Income
-        // $city_bonus = $owned_cities * 60 * 24;
-        $city_bonus = 0;
-        $periodic_taxes = $financials['periodic_taxes'] = ( ($land_sum_and_count['sum'] * $world['land_tax_rate']) - $monopoly_tax) * 60 * 24;
-        $periodic_rebate = $financials['periodic_rebate'] = ( ($world['land_rebate'] * $land_sum_and_count['count']) + $unique_sales + $city_bonus) * 60 * 24;
-        $income = $financials['income'] = $periodic_rebate - $periodic_taxes;
-        $financials['income_class'] = 'green_money';
-        $financials['income_prefix'] = '+';
-        if ($income < 0) {
-            $financials['income_class'] = 'red_money';
-            $financials['income_prefix'] = '-';
-        }
-
-        // Trades
-        $purchases = $financials['purchases'] = $this->transaction_model->get_transaction_purchases($account_key, $timespan_days);
-        $sales = $financials['sales'] = $this->transaction_model->get_transaction_sales($account_key, $timespan_days);
-        $trades_profit = $financials['trades_profit'] = $sales['sum'] - $purchases['sum'];
-        $financials['trades_profit_class'] = 'green_money';
-        $financials['trades_profit_prefix'] = '+';
-        if ($trades_profit < 0) {
-            $financials['trades_profit_class'] = 'red_money';
-            $financials['trades_profit_prefix'] = '-';
-        }
-/*        
-        // Balance
-        $losses = $financials['losses'] = $this->transaction_model->get_transaction_losses($account_key, $timespan_days);
-        $gains = $financials['gains'] = $this->transaction_model->get_transaction_gains($account_key, $timespan_days);
-        $profit = $financials['profit'] = $gains['sum'] - $losses['sum'];
-        $financials['profit_class'] = 'green_money';
-        $financials['profit_prefix'] = '+';
-        if ($profit < 0) {
-            $financials['profit_class'] = 'red_money';
-            $financials['profit_prefix'] = '-';
-        }
-*/
-        // Temporary loses
-        $losses['sum'] = $financials['losses']['sum'] = 0;
-        $gains['sum'] = $financials['gains']['sum'] = 0;
-        $profit = $financials['profit'] = $gains['sum'] - $losses['sum'];
-        $financials['profit_class'] = 'green_money';
-        $financials['profit_prefix'] = '+';
-        if ($profit < 0) {
-            $financials['profit_class'] = 'red_money';
-            $financials['profit_prefix'] = '-';
-        }
-
-        // Set nulls to 0
-        $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
-        $purchases['sum'] = $financials['purchases']['sum'] = is_null($purchases['sum']) ? 0 : $purchases['sum'];
-        $sales['sum'] = $financials['sales']['sum'] = is_null($sales['sum']) ? 0 : $sales['sum'];
-        $losses['sum'] = $financials['losses']['sum'] = is_null($losses['sum']) ? 0 : $losses['sum'];
-        $gains['sum'] = $financials['gains']['sum'] = is_null($gains['sum']) ? 0 : $gains['sum'];
-
-        // Return data
-        return $financials;
     }
 
     // Get leaderboards

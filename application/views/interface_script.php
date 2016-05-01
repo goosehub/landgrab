@@ -41,7 +41,7 @@ if (window.location.href.indexOf('register') >= 0) {
 }
 
 // Stop dropdown closing when clicking color input
-$('#account_input_primary_color').click(function(e) {
+$('#account_input_color').click(function(e) {
     e.stopPropagation();
 });
 
@@ -78,57 +78,9 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('#register_input_username').focus();
 });
-$('.leaderboard_net_value_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_net_value_block').show();
-});
 $('.leaderboard_land_owned_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_land_owned_block').show();
 });
-$('.leaderboard_cash_owned_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_cash_owned_block').show();
-});
-$('.leaderboard_highest_valued_land_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_highest_valued_land_block').show();
-});
-$('.leaderboard_cheapest_land_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_cheapest_land_block').show();
-});
-// hide button and reset number to 0
-$('.sold_lands_button').click(function(){
-  $('#recently_sold_alert').hide();
-  $('#sales_since_last_update_number').html('0');
-  $('.center_block').hide();
-  $('#sales_since_last_update_block').show();
-});
-
-// Show recently sold alert if exists on page load
-<?php if ($log_check && $sales['sales_since_last_update']) { ?>
-$('#recently_sold_alert').show();
-<?php } ?>
-
-// // Insert dollar sign and commas into number while typing
-// $('body').on('keyup', 'input.auto_money', function(event) {
-//     // Skip for arrow keys
-//     if (event.which >= 37 && event.which <= 40) return;
-//     // Format number
-//     $(this).val(function(index, value) {
-//         return '$' + value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//     });
-// });
-
-// // Insert commas into number while typing
-// $('body').on('keyup', 'input.auto_comma', function(event) {
-//     // Skip for arrow keys
-//     if (event.which >= 37 && event.which <= 40) return;
-//     // Format number
-//     $(this).val(function(index, value) {
-//         return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-//     });
-// });
 
 </script>

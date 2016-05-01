@@ -11,9 +11,6 @@
 
 // Set World
 var world_key = <?php echo $world['id']; ?>;
-var land_tax_rate = <?php echo $world['land_tax_rate']; ?>;
-var land_rebate = <?php echo $world['land_rebate']; ?>;
-var world_claim_fee = <?php echo $world['claim_fee']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
 
 // Set user variables
@@ -22,15 +19,14 @@ var land_size = <?php echo $world['land_size'] ?>;
     var user_id = <?php echo $user_id + ''; ?>;
     var account_id = <?php echo $account['id'] + ''; ?>;
     var username = "<?php echo $user['username']; ?>";
-    var account_color = '<?php echo $account["primary_color"]; ?>';
-    var cash = <?php echo $account['cash'] + ''; ?>;
-    var player_land_count = <?php echo $financials['player_land_count']; ?>;
+    var account_color = '<?php echo $account["color"]; ?>';
+    var active_army = <?php echo $account['active_army'] + ''; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
 
 // Set maps variables
-var update_interval = 300;
+var update_interval = 120;
 if (document.location.hostname == "localhost") {
   var update_interval = 10;
 }
@@ -187,7 +183,6 @@ function initMap()
         // Calculate income
         income_prefix = '';
         income_class = 'green_money';
-        income = Math.floor(parseFloat(land_rebate - (land_data['price'] * land_tax_rate)));
         if (income < 0) {
           income_prefix = '-';
           income_class = 'red_money';
@@ -343,92 +338,6 @@ function initMap()
           });
         }); // End land form ajax
 
-        // Make a city submit
-        $('#upgrade_city_submit').click(function(){
-          coord_slug = $('#input_coord_slug').val();
-          infoWindow.close();
-
-          // Submit form
-          $.ajax({
-            url: "<?=base_url()?>make_city",
-            type: "POST",
-            data: { 
-                coord_slug: coord_slug,
-                world_key: world_key
-            },
-            cache: false,
-            success: function(data)
-            {
-              // Return data
-              response = JSON.parse(data);
-
-              if (response['error']) {
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
-                return false;
-              }
-
-              // If success, close
-              if (response['status'] === 'success') {
-                infoWindow.close();
-
-                // Update player variables and displays
-                cash = cash - 100000;
-                $('#cash_display').html(number_format(cash));
-
-                return true;
-
-              // If error, display error message
-              } else {
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
-                return false;
-              }
-            }
-          });
-        });
-
-        // Auction Submit
-        $('#auction_submit').click(function(){
-          coord_slug = $('#input_coord_slug').val();
-          infoWindow.close();
-
-          // Submit form
-          $.ajax({
-            url: "<?=base_url()?>new_auction",
-            type: "POST",
-            data: { 
-                coord_slug: coord_slug,
-                world_key: world_key
-            },
-            cache: false,
-            success: function(data)
-            {
-              // Return data
-              response = JSON.parse(data);
-
-              if (response['error']) {
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
-                return false;
-              }
-
-              // If success, close
-              if (response['status'] === 'success') {
-                infoWindow.close();
-
-                // Update player variables and displays
-                cash = cash - 1000;
-                $('#cash_display').html(number_format(cash));
-
-                return true;
-
-              // If error, display error message
-              } else {
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
-                return false;
-              }
-            }
-          });
-        }); // End auction submit
-
       }); // End infoWindow script domready listener
 
     }); // End get_single_land callback
@@ -505,7 +414,7 @@ function initMap()
             $stroke_color = '#428BCA';
         }
         if ($land['claimed']) {
-          $fill_color = $land['primary_color'];
+          $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
         ?>
@@ -571,11 +480,6 @@ function initMap()
 
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
-        if (log_check) {
-          update_sales(data['sales']['sales_history'], data['sales']['sales_since_last_update']);
-          update_financials(data['financials']);
-          update_auctions(data['auctions']);
-        }
 
         console.log('update');
 
@@ -600,7 +504,7 @@ function initMap()
         stroke_color = '#428BCA';
       }
       if (land['claimed'] == 1) {
-        fill_color = land['primary_color'];
+        fill_color = land['color'];
         fill_opacity = 0.4;
       }
 
@@ -617,100 +521,11 @@ function initMap()
     return true;
   }
 
-  function update_sales(sales, sales_since_last_update) {
-    // If not empty, do logic
-    if (sales.length) {
-
-      // Update existing sales alert number (default to 0 when not visible)
-      if (number_of_new_sales = sales_since_last_update.length) {
-        $('#recently_sold_alert').show();
-        var new_recently_sold = parseInt($('#sales_since_last_update_number').text()) + number_of_new_sales;
-        $('#sales_since_last_update_number').html(new_recently_sold);
-      }
-
-      // Remove old table data
-      $('#sales_table tr:not(.info)').remove();
-
-      // Add each sale to sales table
-      sales.reverse();
-      $.each(sales, function(index, sale) {
-
-        // Create string, and be sure to keep up to date with sales block
-        var new_sale_string = '<tr><td><a href="<?=base_url()?>world/<?php echo $world['id'] ?>/?land=' + sale['coord_slug'] + '">'
-            + '<span class="glyphicon glyphicon-star" aria-hidden="true"></span> ' + sale['name_at_sale'] + '</a></td>'
-            + '<td>' + sale['paying_username'] + '</td>'
-            + '<td><strong>$' + number_format(sale['amount']) + '</strong></td>'
-            + '<td><span>' + sale['when'] + ' Ago</span></td></tr>';
-
-        // Add to sales table after the header row
-        $('#sales_table tr:first').after(new_sale_string);
-
-      });
-
-    }
-    return true;
-  }
-
-  function update_financials(financials) {
-    // Update cash
-    cash = parseInt(financials['cash'], 10);
-    $('#cash_display').html(number_format(financials['cash']));
-
-    // Update owned lands
-    $('#owned_cities_span').html(financials['owned_cities']);
-
-    // Update total lands
-    $('#player_land_count_display').html( number_format(financials['player_land_count']) );
-    $('#player_land_mi_display').html( number_format(financials['player_land_count'] * (land_size * 70) ) );
-    $('#player_land_km_display').html( number_format(financials['player_land_count'] * (land_size * 112) ) );
-
-    $('#periodic_taxes').html( number_format(financials['periodic_taxes']) );
-    $('#periodic_rebate').html( number_format(financials['periodic_rebate']) );
-    $('#income').html( number_format( Math.abs(financials['income']) ) );
-    $('#income_prefix').html( number_format(financials['income_prefix']) );
-    $('#income_span').removeClass();
-    $('#income_span').addClass( 'money_info_item' );
-    $('#income_span').addClass( financials['income_class'] );
-
-    $('#purchases').html( number_format(financials['purchases'].sum) );
-    $('#sales').html( number_format(financials['sales'].sum) );
-    $('#trades_profit').html( number_format( Math.abs(financials['trades_profit']) ) );
-    $('#trades_profit_prefix').html( number_format(financials['trades_profit_prefix']) );
-    $('#trades_profit_span').removeClass();
-    $('#trades_profit_span').addClass( 'money_info_item' );
-    $('#trades_profit_span').addClass( financials['trades_profit_class'] );
-
-    // $('#losses').html( number_format(financials['losses'].sum) );
-    // $('#gains').html( number_format(financials['gains'].sum) );
-    // $('#profit').html( number_format( Math.abs(financials['profit']) ) );
-    // $('#profit_prefix').html( number_format(financials['profit_prefix']) );
-    // $('#profit_span').removeClass();
-    // $('#profit_span').addClass( 'money_info_item' );
-    // $('#profit_span').addClass( financials['profit_class'] );
-
-    $('#unique_sales_span').html( financials['unique_sales'] );
-    $('#monopoly_tax_span').html( financials['monopoly_tax'] );
-    
-    // Check for bankruptcy
-    if (financials['bankruptcy'].length) {
-      $('#bankruptcy_block').show();
-    }
-
-    return true;
-  }
-
   function update_leaderboards(leaderboards) {
     // Set leaderboards
     leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
-    leaderboard_cash_owned = leaderboards['leaderboard_cash_owned'];
-    leaderboard_highest_valued_land = leaderboards['leaderboard_highest_valued_land'];
-    leaderboard_cheapest_land = leaderboards['leaderboard_cheapest_land'];
-
     // Empty current leaderboards
     $('#leaderboard_land_owned_table').find('tr:gt(0)').remove();
-    $('#leaderboard_cash_owned_table').find('tr:gt(0)').remove();
-    $('#leaderboard_highest_valued_land_table').find('tr:gt(0)').remove();
-    $('#leaderboard_cheapest_land_table').find('tr:gt(0)').remove();
 
     // 
     // Add updated rows to leaderboards
@@ -718,9 +533,8 @@ function initMap()
 
     // leaderboard_land_owned
     $.each(leaderboard_land_owned, function(index, leader) {
-      // Create string, and be sure to keep up to date with sales block
       var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['primary_color'] + '"></span>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
             + '' + leader['user']['username'] + ' </td>'
             + '<td>' + leader['COUNT(*)'] + '</td>'
             + '<td>' + leader['land_mi'] + ' Mi&sup2; | ' + leader['land_km'] + ' KM&sup2;</td></tr>';
@@ -729,146 +543,8 @@ function initMap()
       $('#leaderboard_land_owned_table tr:last').after(table_string);
     });
 
-    // leaderboard_cash_owned
-    $.each(leaderboard_cash_owned, function(index, leader) {
-      // Create string, and be sure to keep up to date with sales block
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['primary_color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>$' + number_format(leader['cash']) + ' </a></td></tr>';
-
-      // Add string to table
-      $('#leaderboard_cash_owned_table tr:last').after(table_string);
-    });
-
-    // leaderboard_highest_valued_land
-    $.each(leaderboard_highest_valued_land, function(index, leader) {
-      // Create string, and be sure to keep up to date with sales block
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['account']['primary_color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
-            + '' + leader['land_name'] + ' </a></td>'
-            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
-            + '$' + number_format(leader['price']) + ' </a></td>'
-            + '<td>' + leader['content'] + '</td> </tr>';
-
-      // Add string to table
-      $('#leaderboard_highest_valued_land_table tr:last').after(table_string);
-    });
-
-    // leaderboard_cheapest_land
-    $.each(leaderboard_cheapest_land, function(index, leader) {
-      // Create string, and be sure to keep up to date with sales block
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['account']['primary_color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
-            + '' + leader['land_name'] + ' </a></td>'
-            + '<td><a class="leaderboard_land_link" href="<?=base_url()?>world/<?php echo $world['id']; ?>/?land=' + leader['coord_slug'] + '">'
-            + '$' + number_format(leader['price']) + ' </a></td>'
-            + '<td>' + leader['content'] + '</td> </tr>';
-
-      // Add string to table
-      $('#leaderboard_cheapest_land_table tr:last').after(table_string);
-    });
-
     return true;
   }
-
-  function update_auctions(auctions) {
-    // If not empty, do logic
-    if (auctions.length) {
-      $('#auction_dropdown').removeClass('hidden');
-      $('#auction_dropdown').addClass('btn-danger');
-      // Remove old table data
-      $('#auctions_listing li').remove();
-
-      // Add each auction to auctions listing
-      $.each(auctions, function(index, auction) {
-
-        // Create string, and be sure to keep up to date with sales block
-        var new_auction_string = '<li><a class="auction_link" href="<?=base_url()?>world/<?php echo $world['slug']; ?>/?land=' + auction['coord_slug'] 
-        + '&auction=' + auction['id'] + '">'
-            + '<strong class="auction_land_name">' + auction['land_data']['land_name'] + '</strong></a></li>'
-
-        $('#auctions_listing').append(new_auction_string);
-
-      });
-
-    } else {
-      $('#auction_dropdown').addClass('hidden');
-      $('#auction_dropdown').removeClass('btn-danger');
-    }
-    return true;
-  }
-
-  // Auctions
-  <?php if ( isset($_GET['land']) && isset($_GET['auction']) && isset($auction_data['current_bid']) ) { ?>
-    current_bid = <?php echo $auction_data['current_bid']; ?>;
-    auction_id = <?php echo $auction_data['id']; ?>;
-    auction_coord_slug = <?php echo $auction_data['land']['coord_slug']; ?>;
-    $('#auction_block').show();
-
-    // New bid
-    $('.new_bid').click(function(){
-      var bid_value = $(this).val();
-      new_auction_bid(bid_value)
-    });
-
-    function new_auction_bid(bid_value) {
-      $.ajax({
-        url: "<?=base_url()?>new_auction_bid",
-        type: "POST",
-        data: { 
-                  auction_id: auction_id,
-                  bid_value: bid_value
-              },
-        cache: false,
-        success: function(data)
-        {
-          console.log('Bid success');
-          return true;
-        }
-      });
-    }
-
-    function auction_update() {
-      $.ajax({
-        url: "<?=base_url()?>auction_update",
-        type: "GET",
-        data: { 
-                  auction_id: auction_id
-              },
-        cache: false,
-        success: function(data)
-        {
-          auction_data = JSON.parse(data);
-          $('#current_bid').html(auction_data['current_bid']);
-          $('#current_bid_username').html(auction_data['current_bid_username']);
-          if (auction_data['auction_time_left'] < 1) {
-            $('#auction_time_left_parent').html('Auction Over');
-          } else {
-            $('#auction_time_left').html(auction_data['auction_time_left']);
-          }
-          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_low').val()) ) {
-            $('#bid_low').addClass('disabled');
-          }
-          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_mid').val()) ) {
-            $('#bid_low').addClass('disabled');
-          }
-          if ( cash <= parseInt(auction_data['current_bid']) + parseInt($('#bid_high').val()) ) {
-            $('#bid_low').addClass('disabled');
-          }
-          return true;
-        }
-      });
-    }
-    setInterval(function(){
-      auction_update();
-    }, 5000);
-  <?php } ?>
-
 
   // 
   // Remove overlay
