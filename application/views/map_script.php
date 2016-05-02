@@ -409,7 +409,7 @@ function initMap()
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
         + '<div id="upgrade_dropdown" class="collapse">'
           + '<div class="form-group">'
-            + '<strong class="h4">Avilable Upgrades</strong><br>'
+            + '<strong class="h4">Available Upgrades</strong><br>'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';

@@ -76,6 +76,8 @@
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
+      <li><a class="faq_button btn btn-primary">FAQ</a></li>
+      <li><a class="btn btn-success" href="https://www.reddit.com/r/LandgrabXYZ/" target="_blank">/r/LandgrabXYZ</a></li>
       <li><a class="report_bugs_button btn btn-danger">Report Bugs</a></li>
     </ul>
   </div>

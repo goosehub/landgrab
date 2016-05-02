@@ -47,9 +47,9 @@ class Cron extends CI_Controller {
             // Get potential active army
             $potential_active_army = $account_lands - $account['passive_army'];
 
-            // Potential active army at minimum of 10
-            if ($potential_active_army < 10) {
-              $potential_active_army = 10;
+            // Potential active army at minimum of 20
+            if ($potential_active_army < 20) {
+              $potential_active_army = 20;
             }
 
             // Continue to next account if account has no land, no potential active army, or already at potential active army
@@ -65,9 +65,9 @@ class Cron extends CI_Controller {
               $active_army = $potential_active_army;
             }
 
-            // Active army at minimum of 10
-            if ($active_army < 10) {
-              $active_army = 10;
+            // Active army at minimum of 20
+            if ($active_army < 20) {
+              $active_army = 20;
             }
 
             // Update account active_army

@@ -299,14 +299,14 @@ class Game extends CI_Controller {
     // Land Transaction
     public function land_attack($land_type, $account)
     {        
+        $defense_dictionary = $this->defense_dictionary();
         // If attacker has no lands and land is not fortified, then attacker wins
-        if ($account['land_count'] < 1) {
+        if ($account['land_count'] < 1 && $defense_dictionary[$land_type] < 50) {
             return true;
         }
 
         // Get attack information
         $active_army = $account['active_army'];
-        $defense_dictionary = $this->defense_dictionary();
         $defending_army = $defense_dictionary[$land_type];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
@@ -429,6 +429,7 @@ class Game extends CI_Controller {
         }
         // Check surrounding lands
         $coord_array = [];
+        $coord_array[] = ($lat) . ',' . ($lng);
         $coord_array[] = ($lat + $land_size) . ',' . ($lng);
         $coord_array[] = ($lat) . ',' . ($lng + $land_size);
         $coord_array[] = ($lat - $land_size) . ',' . ($lng);

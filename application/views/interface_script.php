@@ -68,6 +68,10 @@ $('.about_button').click(function(){
     $('.center_block').hide();
     $('#about_block').show();
 });
+$('.faq_button').click(function(){
+    $('.center_block').hide();
+    $('#faq_block').show();
+});
 $('.report_bugs_button').click(function(){
     $('.center_block').hide();
     $('#report_bugs_block').show();

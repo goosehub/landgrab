@@ -2,33 +2,9 @@
     Notes
 ==========================================================================================
 
-Army Based
-    Only attack outward from existing owned land vertical or horizontal
-
-Free army
-    Minimum of 10 free army
-    Every land is 1 free army
-    Can be kept in army and put into defense
-    Army regenerates over 10 minutes
-
-Defense
-    Lands generate 10 defense
-    Upgrade to wall with 50 defense for 1
-    Upgrade to tower with 100 defense for 2
-    Upgrade to fort with 1000 defense for 10
-    Upgrade to castle with 10000 defense for 50
-    Lost on defeat
-
 Build a city for every 100 lands
     Bonus 10 active army
     10000 defense
-
-Attack logic
-    Attacking army takes hits
-
-Gameplay issues
-    What happens when player loses land and is maxed on passive army?
-    What happens when player loses land and is above max on active army?
 
 ==========================================================================================
     Goals

@@ -130,7 +130,7 @@ class User extends CI_Controller {
             } else {
                 // Set variables
                 $worlds = $this->user_model->get_all_worlds();
-                $active_army = 10;
+                $active_army = 20;
                 
                 // Create account for each world
                 foreach ($worlds as $world)
