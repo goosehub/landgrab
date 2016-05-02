@@ -433,6 +433,15 @@ class Game extends CI_Controller {
         $coord_array[] = ($lat) . ',' . ($lng + $land_size);
         $coord_array[] = ($lat - $land_size) . ',' . ($lng);
         $coord_array[] = ($lat) . ',' . ($lng - $land_size);
+        // Fix lng crossover point
+        foreach ($coord_array as &$coord) {
+            if (strpos($coord, '-180') !== false) {
+                $coord = str_replace('-180', '180', $coord);
+            }
+            if (strpos($coord, '182') !== false) {
+                $coord = str_replace('182', '-178', $coord);
+            }
+        }
         $coord_matches = $this->game_model->land_range_check($world_key, $account_key, $coord_array);
         if (!empty($coord_matches) ) {
             return true;

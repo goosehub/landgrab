@@ -217,7 +217,7 @@ function initMap()
         // Land Type
         window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
         // Defense
-        window_string += 'Defense: <strong class="pull-right">' + defense_dictionary[land_data['land_type']] + '</strong>';
+        window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_data['land_type']]) + '</strong>';
 
         window_string += '</div>';
 			}
@@ -315,7 +315,7 @@ function initMap()
                 $('#land_form').html('<br><div class="alert alert-wide ' + result_alert + '"><strong>' + response['message'] + '</strong></div>');
                 setTimeout(function(){
                   infoWindow.close();
-                }, 1 * 1000);
+                }, 1 * 500);
 
                 if (input_form_type != 'update' && response['result']) {
                   // Update player variables and displays
@@ -324,7 +324,7 @@ function initMap()
 
                   // Update box to reflect user ownership
                   boxes[land_data['id']].setOptions({
-                    strokeWeight: 5, 
+                    strokeWeight: 3, 
                     strokeColor: '#428BCA',
                     fillColor: account_color,
                     fillOpacity: 0.4
@@ -463,21 +463,21 @@ function initMap()
           $fill_opacity = '0.4';
         }
         if ($land['land_type'] === 'wall') {
-          $stroke_weight = 3;
-          $stroke_color = '#13073A';
+          $stroke_weight = 2;
+          $stroke_color = '#613B1A';
         } else if ($land['land_type'] === 'tower') {
-          $stroke_weight = 3;
+          $stroke_weight = 2;
           $stroke_color = '#2D882D';
         } else if ($land['land_type'] === 'fort') {
-          $stroke_weight = 3;
+          $stroke_weight = 2;
           $stroke_color = '#AA9739';
         } else if ($land['land_type'] === 'castle') {
-          $stroke_weight = 3;
+          $stroke_weight = 2;
           $stroke_color = '#AA3939';
         }
         if ($log_check && $land['account_key'] === $account['id']) { 
-            $stroke_weight = 5; 
-            $stroke_color = '#0A37BC';
+            $stroke_weight = 3; 
+            $stroke_color = '#428BCA';
         }
         ?>z(<?php echo 
             $land['id'] . ',' .
@@ -514,9 +514,11 @@ function initMap()
   // 
 
   // Get map update
-  setInterval(function(){
-    get_army_update(account_id);
-  }, 5 * 1000);
+  if (log_check) {
+    setInterval(function(){
+      get_army_update(account_id);
+    }, 5 * 1000);
+  }
 
   function get_army_update(account_id) {
     $.ajax({
@@ -565,8 +567,11 @@ function initMap()
         }
 
         update_lands(data['lands']);
-        update_stats(data['account']);
         update_leaderboards(data['leaderboards']);
+
+        if (log_check) {
+          update_stats(data['account']);
+        }
 
         console.log('update');
 
@@ -591,21 +596,21 @@ function initMap()
         fill_opacity = 0.4;
       }
       if (land['land_type'] === 'wall') {
-        stroke_weight = 3;
-        stroke_color = '#13073A';
+        stroke_weight = 2;
+        stroke_color = '#613B1A';
       } else if (land['land_type'] === 'tower') {
-        stroke_weight = 3;
+        stroke_weight = 2;
         stroke_color = '#2D882D';
       } else if (land['land_type'] === 'fort') {
-        stroke_weight = 3;
+        stroke_weight = 2;
         stroke_color = '#AA9739';
       } else if (land['land_type'] === 'castle') {
-        stroke_weight = 3;
+        stroke_weight = 2;
         stroke_color = '#AA3939';
       }
       if (log_check && land['account_key'] == account_id) {
-        stroke_weight = 5;
-        stroke_color = '#0A37BC';
+        stroke_weight = 3;
+        stroke_color = '#428BCA';
       }
 
       // Apply variables to box

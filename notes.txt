@@ -35,13 +35,9 @@ Gameplay issues
 ==========================================================================================
 
 High Priority
-    Army on update
-    Attack logic
-    Army CRON
-    Land upgrade
-    How to play
-    Data Account Migration
     Column to verify account has land for CRON speed
+    Cities
+    Capitals
 
 Low Priority
     Feature

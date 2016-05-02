@@ -9,13 +9,13 @@
     </button>
     <hr>
     <p>
-        <strong>Landgrab is a game of fighting for the world</strong>
+        <strong>Landgrab is a game of fighting for control of the real world</strong>
     </p>
     <p>
-        This is a beta. More complex features such as walls, towers, forts, castles, and cities are coming. If you are coming from when the game was money based, land has transfered, but money mechanics are no longer used.
+        You pick a place to start your conquest. You can then spread outward. You have 10 mobilized army. Once you have more than 10 lands, your army will grow with your empire. A larger mobilized army has more chance of victory (20 Attack over 10 Defense is 2/1 chance of Victory). If your army is defeated, it will reset to 0, but will rebuild quickly to its maximum size over 10 minutes.
     </p>
     <p>
-        You start with 10 Mobilized Army. You pick a place to start your conquest. You can then spread outward from your starting point. Once you have more than 10 lands, your army will grow with your empire. A larger mobilized army has more chance of victory (20 Attack over 10 Defense is 2/1 chance of Victory). If your army is defeated, it will reset to 0, but will rebuild quickly to its maximum size over 10 minutes.
+        You can defend against attacks by dedicating a portion your mobilized army to defend a square. This will also reduce your maximum mobilized army. Use them to defend your favorite locations, or position them strategically on battle fronts.
     </p>
     <blockquote>
         Fight for the world!
