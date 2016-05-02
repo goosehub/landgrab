@@ -477,6 +477,9 @@ function initMap()
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
+        if ($log_check && $land['account_key'] === $account['id']) {
+            $stroke_color = '#428BCA';
+        }
         if ($land['land_type'] === 'wall') {
           $stroke_weight = 2;
           $stroke_color = '#613B1A';
@@ -491,8 +494,7 @@ function initMap()
           $stroke_color = '#AA3939';
         }
         if ($log_check && $land['account_key'] === $account['id']) { 
-            $stroke_weight = 3; 
-            $stroke_color = '#428BCA';
+            $stroke_weight = 3;
         }
         ?>z(<?php echo 
             $land['id'] . ',' .
@@ -610,6 +612,9 @@ function initMap()
         fill_color = land['color'];
         fill_opacity = 0.4;
       }
+      if (log_check && land['account_key'] == account_id) {
+        stroke_color = '#428BCA';
+      }
       if (land['land_type'] === 'wall') {
         stroke_weight = 2;
         stroke_color = '#613B1A';
@@ -625,7 +630,6 @@ function initMap()
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;
-        stroke_color = '#428BCA';
       }
 
       // Apply variables to box

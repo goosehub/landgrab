@@ -15,6 +15,7 @@ High Priority
     Cities
     Capitals
     Refactor ajax calls to have less brackets
+    Update bug
 
 Low Priority
     Feature
