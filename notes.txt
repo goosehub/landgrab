@@ -14,6 +14,7 @@ High Priority
     Column to verify account has land for CRON speed
     Cities
     Capitals
+    Refactor ajax calls to have less brackets
 
 Low Priority
     Feature

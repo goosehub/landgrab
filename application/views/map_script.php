@@ -216,8 +216,23 @@ function initMap()
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
         window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
-        // Defense
-        window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_data['land_type']]) + '</strong>';
+        if (!land_data['range_check']) {
+          window_string += '<strong class="text-danger pull-right">Under Siege</strong><br>';
+          land_type = land_data['land_type'];
+          if (!land_data['range_check'] && land_type === 'castle') {
+              land_type = 'fort';
+          } else if (!land_data['range_check'] && land_type === 'fort') {
+              land_type = 'tower';
+          } else if (!land_data['range_check'] && land_type === 'tower') {
+              land_type = 'wall';
+          } else if (!land_data['range_check'] && land_type === 'wall') {
+              $land_type = 'village';
+          }
+          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_type]) + '</strong>';
+        } else {
+          // Defense
+          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_data['land_type']]) + '</strong>';
+        }
 
         window_string += '</div>';
 			}

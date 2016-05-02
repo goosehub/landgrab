@@ -133,7 +133,9 @@ class Game extends CI_Controller {
             // Check if land is in range
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
-                $world['land_size'], $land_square['lat'], $land_square['lng']);
+                $world['land_size'], $land_square['lat'], $land_square['lng'], false);
+            $land_square['range_check'] = $this->check_if_land_is_in_range($world_key, $land_square['account_key'], 20, 
+                $world['land_size'], $land_square['lat'], $land_square['lng'], true);
         }
 
         // Echo data to client to be parsed
@@ -200,6 +202,7 @@ class Game extends CI_Controller {
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
+            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
@@ -213,7 +216,7 @@ class Game extends CI_Controller {
 
             // Do attack logic
             if ($form_type === 'attack') {
-                $attack_result = $this->land_attack($land_square['land_type'], $account);
+                $attack_result = $this->land_attack($land_square, $world, $land_square['land_type'], $account);
                 // Return failed attack message
                 if (!$attack_result) {
                     echo '{"status": "success", "result": false, "message": "Defeat"}';
@@ -269,7 +272,7 @@ class Game extends CI_Controller {
         $passive_account_key = $land_square['account_key'];
         $passive_user = $this->user_model->get_user($passive_account_key);
         $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], 
-            $land_square['lat'], $land_square['lng']);
+            $land_square['lat'], $land_square['lng'], false);
 
         // Check for inaccuracies
         // Claiming land that isn't unclaimed
@@ -297,7 +300,7 @@ class Game extends CI_Controller {
 	}
 
     // Land Transaction
-    public function land_attack($land_type, $account)
+    public function land_attack($land_square, $world, $land_type, $account)
     {        
         $defense_dictionary = $this->defense_dictionary();
         // If attacker has no lands and land is not fortified, then attacker wins
@@ -307,6 +310,20 @@ class Game extends CI_Controller {
 
         // Get attack information
         $active_army = $account['active_army'];
+
+        // Siege logic
+        $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
+            $world['land_size'], $land_square['lat'], $land_square['lng'], true);
+        if (!$range_check && $land_type === 'castle') {
+            $land_type = 'fort';
+        } else if (!$range_check && $land_type === 'fort') {
+            $land_type = 'tower';
+        } else if (!$range_check && $land_type === 'tower') {
+            $land_type = 'wall';
+        } else if (!$range_check && $land_type === 'wall') {
+            $land_type = 'village';
+        }
+
         $defending_army = $defense_dictionary[$land_type];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
@@ -421,7 +438,7 @@ class Game extends CI_Controller {
     }
 
     // Check if land is in range for account
-    public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng)
+    public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng, $siege)
     {
         // All land in range if no land
         if ($land_count < 1) {
@@ -429,7 +446,9 @@ class Game extends CI_Controller {
         }
         // Check surrounding lands
         $coord_array = [];
-        $coord_array[] = ($lat) . ',' . ($lng);
+        if ($siege === false) {
+            $coord_array[] = ($lat) . ',' . ($lng);
+        }
         $coord_array[] = ($lat + $land_size) . ',' . ($lng);
         $coord_array[] = ($lat) . ',' . ($lng + $land_size);
         $coord_array[] = ($lat - $land_size) . ',' . ($lng);
