@@ -126,6 +126,51 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Passive army fix
+ function passive_army_fix($account_key)
+ {
+    $query = $this->db->query("
+        UPDATE account AS a INNER JOIN (
+        SELECT COUNT( * ) AS fortify_count
+        FROM account AS a
+        LEFT JOIN land AS b ON b.account_key = a.id
+        WHERE a.id = " . $account_key . "
+        AND b.land_type =  'wall'
+        ) AS c
+        SET  `passive_army` = c.fortify_count WHERE a.id = " . $account_key . ";
+    ");
+    $query = $this->db->query("
+
+        UPDATE account AS a INNER JOIN (
+        SELECT COUNT( * ) AS fortify_count
+        FROM account AS a
+        LEFT JOIN land AS b ON b.account_key = a.id
+        WHERE a.id = " . $account_key . "
+        AND b.land_type =  'tower'
+        ) AS c
+        SET  `passive_army` = `passive_army` + (c.fortify_count * 2) WHERE a.id = " . $account_key . ";
+    ");
+    $query = $this->db->query("
+        UPDATE account AS a INNER JOIN (
+        SELECT COUNT( * ) AS fortify_count
+        FROM account AS a
+        LEFT JOIN land AS b ON b.account_key = a.id
+        WHERE a.id = " . $account_key . "
+        AND b.land_type =  'fort'
+        ) AS c
+        SET  `passive_army` = `passive_army` + (c.fortify_count * 10) WHERE a.id = " . $account_key . ";
+    ");
+    $query = $this->db->query("
+        UPDATE account AS a INNER JOIN (
+        SELECT COUNT( * ) AS fortify_count
+        FROM account AS a
+        LEFT JOIN land AS b ON b.account_key = a.id
+        WHERE a.id = " . $account_key . "
+        AND b.land_type =  'castle'
+        ) AS c
+        SET  `passive_army` = `passive_army` + (c.fortify_count * 50) WHERE a.id = " . $account_key . ";
+    ");
+ }
 
 }
 ?>
