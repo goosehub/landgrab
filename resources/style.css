@@ -76,6 +76,11 @@ html, body {
   #top_right_block {
     right: 3em;
   }
+  .menu_element {
+    display: block;
+    float: right;
+    clear: both;
+  }
 }
 #recently_sold_alert, #recently_leased_alert {
   display: none;
@@ -210,6 +215,15 @@ html body .land_content_div, html body .land_content_div[style] {
 }
 #chat_input_parent {
   height: 35px;
+}
+@media only screen 
+  and (max-device-width: 600px) {
+  .chat_message:nth-child(-n+9) {
+    display: none; 
+  }
+  #chat_messages_parent, #chat_input {
+    width: 75vw;
+  }
 }
 
 /* Overlay */

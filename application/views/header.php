@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <!-- For Mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
 
     <!-- Page Title -->
     <title>Landgrab</title>

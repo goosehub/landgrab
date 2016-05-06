@@ -1,16 +1,15 @@
 <!-- Top Right Block -->
 <div id="top_right_block">
 
-
   <!-- Update Dropdown -->
-    <button class="how_to_play_button btn btn-warning">
+    <button class="how_to_play_button menu_element btn btn-warning">
         War Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 
   <?php if ($log_check) { ?>
   <!-- Army Dropdown -->
-    <button id="active_army_dropdown" class="btn btn-default" type="button" id="active_army_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button id="active_army_dropdown" class="menu_element btn btn-default" type="button" id="active_army_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <strong><span id="active_army_display_span"><?php echo number_format($account['active_army']); ?></span></strong> Mobilized Army
       <span class="caret"></span>
     </button>
@@ -23,7 +22,7 @@
     <?php } ?>
 
     <!-- Leaderboards dropdown -->
-    <div class="btn-group">
+    <div class="menu_element btn-group">
       <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Leaderboards
         <span class="caret"></span>
@@ -37,7 +36,7 @@
     <?php if ($log_check) { ?>
 
     <!-- User Dropdown -->
-    <div class="btn-group">
+    <div class="menu_element btn-group">
         <button class="user_button btn btn-success dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <?php echo $user['username']; ?>
           <span class="caret"></span>
@@ -61,12 +60,12 @@
         </ul>
     </div>
     <?php } else { ?>
-    <button class="login_button btn btn-primary">Login</button>
-    <button class="register_button btn btn-action">Join</button>
+    <button class="login_button menu_element btn btn-primary">Login</button>
+    <button class="register_button menu_element btn btn-action">Join</button>
     <?php } ?>
 
   <!-- Main Menu dropdown -->
-  <div class="btn-group">
+  <div class="menu_element btn-group">
     <button class="info_button btn btn-default dropdown-toggle" type="button" id="site_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         LandGrab
       <span class="caret"></span>
