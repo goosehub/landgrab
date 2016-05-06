@@ -432,7 +432,7 @@ class Game extends CI_Controller {
             return false;
         }
         // Doing an upgade they don't have enough passive army for
-        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type] || $upgrade_type == 'village') {
+        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type] && $upgrade_type != 'village') {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
             return false;
         }
