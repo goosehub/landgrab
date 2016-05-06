@@ -2,9 +2,30 @@
     Notes
 ==========================================================================================
 
+Resource Bonus
+    Mine
+        ...
+    Farm
+        1 farm for every 10 lands, cost 1 army
+    Market
+        Allows faster regen, cost 3 army
+    Guild
+        Better chance in battle, cost 2 army
+    Troops
+    Land
+
+Mechanic
+    Scales up more efficiently
+    Only 1 per player, trades their bonus for other players bonuses
+
+UI
+    Click on opponent land
+    Click on button to offer trade
+    Offer or request access to resource
+
 Build a city for every 100 lands
     Bonus 10 active army
-    10000 defense
+    100 defense
 
 ==========================================================================================
     Goals

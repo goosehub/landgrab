@@ -331,6 +331,10 @@ class Game extends CI_Controller {
         // Do random attack with two sides
         if ($attack_power > $defend_power) {
             // On victory, change losers passive army if needed
+            $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
+            $land_type_dictionary = $this->land_type_dictionary();
+            $new_passive_army = $defender_account['passive_army'] - $land_type_dictionary[$land_square['land_type']];
+            $query_action = $this->game_model->update_account_passive_army($land_square['account_key'], $new_passive_army);
             return true;
         } else {
             // On failure, destroy active army of attacker
@@ -428,7 +432,7 @@ class Game extends CI_Controller {
             return false;
         }
         // Doing an upgade they don't have enough passive army for
-        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type]) {
+        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type] || $upgrade_type == 'village') {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
             return false;
         }

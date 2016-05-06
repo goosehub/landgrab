@@ -46,7 +46,7 @@ land_type_dictionary['fort'] = 10;
 land_type_dictionary['castle'] = 50;
 
 // Set maps variables
-var map_update_interval = 120 * 1000;
+var map_update_interval = 4 * 60 * 1000;
 if (document.location.hostname == "localhost") {
   map_update_interval = 10 * 1000;
 }
@@ -429,7 +429,6 @@ function initMap()
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
             if (active_army >= land_type_dictionary['village'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['village']
               ) {
               result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (0 Mobilized Army for 10 Defense)</button>';
             }

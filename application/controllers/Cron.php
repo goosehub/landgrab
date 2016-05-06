@@ -44,6 +44,7 @@ class Cron extends CI_Controller {
             // Passive army fix at top of each hour
             if (date('i') == '00') {
               $query_action = $this->game_model->passive_army_fix($account_key);
+              continue;
             }
 
             // Get land total

@@ -190,6 +190,7 @@ html body .land_window img, .land_window img[style] {
 html body .land_content_div, html body .land_content_div[style] {
   max-height: 200px !important;
   overflow: auto !important;
+  width: 350px;
 }
 
 /* Chat */
