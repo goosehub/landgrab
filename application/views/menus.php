@@ -2,7 +2,7 @@
 <div id="top_right_block">
 
   <!-- Update Dropdown -->
-    <button class="how_to_play_button menu_element btn btn-warning">
+    <button class="update_parent how_to_play_button menu_element btn btn-warning">
         War Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
@@ -22,7 +22,7 @@
     <?php } ?>
 
     <!-- Leaderboards dropdown -->
-    <div class="menu_element btn-group">
+    <div class="leaderboard_parent menu_element btn-group">
       <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Leaderboards
         <span class="caret"></span>
@@ -36,7 +36,7 @@
     <?php if ($log_check) { ?>
 
     <!-- User Dropdown -->
-    <div class="menu_element btn-group">
+    <div class="user_parent menu_element btn-group">
         <button class="user_button btn btn-success dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <?php echo $user['username']; ?>
           <span class="caret"></span>
@@ -65,7 +65,7 @@
     <?php } ?>
 
   <!-- Main Menu dropdown -->
-  <div class="menu_element btn-group">
+  <div class="main_menu_parent menu_element btn-group">
     <button class="info_button btn btn-default dropdown-toggle" type="button" id="site_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         LandGrab
       <span class="caret"></span>

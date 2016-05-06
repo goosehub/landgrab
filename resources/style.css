@@ -81,6 +81,9 @@ html, body {
     float: right;
     clear: both;
   }
+  .update_parent, .leaderboard_parent, .user_parent, .main_menu_parent {
+    display: none;
+  }
 }
 #recently_sold_alert, #recently_leased_alert {
   display: none;
@@ -196,6 +199,18 @@ html body .land_content_div, html body .land_content_div[style] {
   max-height: 200px !important;
   overflow: auto !important;
   width: 350px;
+}
+@media only screen 
+  and (max-device-width: 600px) {
+  html body .land_window img, .land_window img[style] {
+    max-height: 25vh !important;
+    max-width: 25vw !important;
+  }
+  html body .land_content_div, html body .land_content_div[style] {
+    max-height: 100px !important;
+    overflow: auto !important;
+    width: 150px;
+  }
 }
 
 /* Chat */
