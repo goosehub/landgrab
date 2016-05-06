@@ -51,11 +51,23 @@
   function chat_submit_function(e) {
     // Chat input
     var chat_input = $("#chat_input").val();
-    $.post("<?=base_url()?>chat/new_chat",
+    $.ajax(
     {
-      chat_input: chat_input,
-      world_key: world_key
+        url: "<?=base_url()?>chat/new_chat",
+        type: "POST",
+        data: { 
+          chat_input: chat_input,
+          world_key: world_key
+        },
+        cache: false,
+        success: function(html)
+        {
+          if (html) {
+            alert(html);
+          }
+        }
     });
+
     $('#chat_input').val('');
     // Load log so user can instantly see his message
     chat_load();

@@ -36,7 +36,7 @@ class Chat extends CI_Controller {
     {                
         // Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]|callback_new_chat_validation');
         $this->form_validation->set_rules('chat_input', 'Chat Message', 'trim|required|max_length[144]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
@@ -65,6 +65,30 @@ class Chat extends CI_Controller {
             $result = $this->chat_model->new_chat($user_id, $username, $message, $world_key);
             return true;
         }
+    }
+
+    // New Chat Callback
+    public function new_chat_validation()
+    {
+        // Authentication
+        $log_check = $data['log_check'] = $data['user_id'] = false;
+        if ($this->session->userdata('logged_in')) {
+            $log_check = $data['log_check'] = true;
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        } else {
+            return false;
+        }
+        // Limit number of new chats in a timespan
+        $chat_limit_amount = 8;
+        $chat_limit_length = 60;
+        $recent_chats = $this->chat_model->recent_chats($user_id, $chat_limit_length);
+        if ($recent_chats > $chat_limit_amount) {
+            echo 'Your talking too much';
+            return false;
+        }
+
+        return true;
     }
 
 }

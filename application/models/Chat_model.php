@@ -29,5 +29,17 @@ Class chat_model extends CI_Model
     );
     $this->db->insert('chat', $data);
   }
+  // chat spam check
+  function recent_chats($user_key, $chat_limit_length)
+  {
+    $query = $this->db->query("
+        SELECT COUNT(id) as recent_chats
+        FROM `chat`
+        WHERE `user_key` = '" . $user_key . "'
+        AND `timestamp` > (now() - INTERVAL " . $chat_limit_length . " SECOND);
+    ");
+    $result = $query->result_array();
+    return isset($result[0]['recent_chats']) ? $result[0]['recent_chats'] : false;
+  }
 }
 ?>
