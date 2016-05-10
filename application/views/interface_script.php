@@ -44,6 +44,9 @@ if (window.location.href.indexOf('register') >= 0) {
 $('#account_input_color').click(function(e) {
     e.stopPropagation();
 });
+$('#account_input_default_land_name').click(function(e) {
+    e.stopPropagation();
+});
 
 // 
 // Center block hide and show logic

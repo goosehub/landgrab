@@ -246,6 +246,7 @@ function initMap()
 
       // Interaction buttons
 			if (land_data['in_range'] && log_check) {
+        land_data['account_default_land_name'] = '<?php echo $account['default_land_name']; ?>';
         // Claim
 				if (land_data['claimed'] === '0') {
 					window_string += land_window_form('claim', 'btn-action', land_data);
@@ -415,9 +416,15 @@ function initMap()
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Land Name</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' + d['land_name'] + '">'
-            + '</div></div>'
+            + '</div><div class="col-md-8">';
+            if (d['account_default_land_name']) {
+              result += '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' 
+              + d['account_default_land_name'] + '">';
+            } else {
+              result += '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' 
+              + d['land_name'] + '">';
+            }
+            result += '</div></div>'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_content">Description</label>'
             + '</div><div class="col-md-8">'

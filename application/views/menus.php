@@ -48,12 +48,24 @@
           <li role="separator" class="divider"></li>
           <li>
               <?php echo form_open('user/update_color'); ?>
-              <div class="row"><div class="col-md-3">
+              <div class="row"><div class="col-md-4">
                   <label for="_input_color">Color</label>
-              </div><div class="col-md-9">
+              </div><div class="col-md-8">
                   <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
                   <input class="jscolor color_input form-control" id="account_input_color" name="color" 
                   value="<?php echo $account['color']; ?>" onchange="this.form.submit()">
+              </div></div>
+              </form>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li>
+              <?php echo form_open('user/update_default_land_name'); ?>
+              <div class="row"><div class="col-md-4">
+                  <label for="_input_color">Default Land Name</label>
+              </div><div class="col-md-8">
+                  <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
+                  <input type="text" id="account_input_default_land_name" class="form-control" name="default_land_name" 
+                    value="<?php echo $account['default_land_name']; ?>">
               </div></div>
               </form>
           </li>

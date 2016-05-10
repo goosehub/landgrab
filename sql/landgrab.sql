@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `active_army` int(10) NOT NULL,
   `passive_army` int(10) NOT NULL,
   `color` varchar(8) NOT NULL,
+  `default_land_name` varchar(512) NOT NULL,
   `last_load` varchar(32) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,

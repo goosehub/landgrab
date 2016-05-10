@@ -160,6 +160,17 @@ Class user_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Update account default land name
+ function update_account_default_land_name($account_id, $default_land_name)
+ {
+    // Update account
+    $data = array(
+        'default_land_name' => $default_land_name
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
+ }
  // Mark account as loaded
  function account_loaded($account_id)
  {
