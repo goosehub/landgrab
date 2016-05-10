@@ -60,8 +60,8 @@ class Game extends CI_Controller {
         $data['worlds'] = $this->user_model->get_all_worlds();
 
         // Get all lands
-        $update_timespan = 30;
-        $data['update_timespan'] = $update_timespan * 1000;
+        $update_timespan = 60 * 2;
+        $data['update_timespan'] = ($update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $update_timespan);
         } else {
@@ -547,7 +547,7 @@ class Game extends CI_Controller {
         $defense_dictionary['wall'] = 50;
         $defense_dictionary['tower'] = 100;
         $defense_dictionary['fort'] = 1000;
-        $defense_dictionary['castle'] = 10000;
+        $defense_dictionary['castle'] = 5000;
         return $defense_dictionary;
     }
 

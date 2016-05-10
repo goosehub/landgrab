@@ -34,7 +34,7 @@ defense_dictionary['village'] = 10;
 defense_dictionary['wall'] = 50;
 defense_dictionary['tower'] = 100;
 defense_dictionary['fort'] = 1000;
-defense_dictionary['castle'] = 10000;
+defense_dictionary['castle'] = 5000;
 defense_dictionary['city'] = 10000;
 
 // Set land type cost dictionary
