@@ -64,6 +64,10 @@ $('.how_to_play_button').click(function(){
     $('.center_block').hide();
     $('#how_to_play_block').show();
 });
+$('.update_info_button').click(function(){
+    $('.center_block').hide();
+    $('#update_info_block').show();
+});
 $('.about_button').click(function(){
     $('.center_block').hide();
     $('#about_block').show();

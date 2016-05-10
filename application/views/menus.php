@@ -2,8 +2,8 @@
 <div id="top_right_block">
 
   <!-- Update Dropdown -->
-    <button class="update_parent how_to_play_button menu_element btn btn-warning hidden">
-        Update
+    <button class="update_info_button menu_element btn btn-warning">
+        Tweak Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 

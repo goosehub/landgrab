@@ -46,6 +46,21 @@
     </div>
 </div>
 
+<!-- Update Block -->
+<div id="update_info_block" class="center_block">
+    <strong>Recent Updates</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <ul>
+        <li>Castles are downgraded from 10,000 defense to 5,000 defense.</li>
+        <li>Land can now be unclaimed.</li>
+        <li>Game is now faster and more bandwidth effecient.</li>
+    </ul>
+</div>
+
 <!-- About Block -->
 <div id="about_block" class="center_block">
     <strong>About LandGrab</strong>

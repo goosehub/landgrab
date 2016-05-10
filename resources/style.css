@@ -81,7 +81,7 @@ html, body {
     float: right;
     clear: both;
   }
-  .update_parent, .leaderboard_parent, .user_parent, .main_menu_parent {
+  .update_info_button, .leaderboard_parent, .user_parent, .main_menu_parent {
     display: none;
   }
 }
