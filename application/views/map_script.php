@@ -246,7 +246,7 @@ function initMap()
 
       // Interaction buttons
 			if (land_data['in_range'] && log_check) {
-        land_data['account_default_land_name'] = '<?php echo $account['default_land_name']; ?>';
+        land_data['account_default_land_name'] = '<?php echo isset($account['default_land_name']) ? $account['default_land_name'] : ''; ?>';
         // Claim
 				if (land_data['claimed'] === '0') {
 					window_string += land_window_form('claim', 'btn-action', land_data);
