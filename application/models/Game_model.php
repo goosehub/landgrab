@@ -37,6 +37,16 @@ Class game_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
+ // Get all lands recently updated
+ function get_all_lands_in_world_recently_updated($world_key, $update_timespan)
+ {
+    $this->db->select('*');
+    $this->db->from('land');
+    $this->db->where('world_key', $world_key);
+    $this->db->where('modified >', date('Y-m-d H:i:s', time() - $update_timespan));
+    $query = $this->db->get();
+    return $query->result_array();
+ }
  // Get single land
  function get_single_land($world_key, $coord_slug)
  {
@@ -57,7 +67,8 @@ Class game_model extends CI_Model
         'land_name' => $land_name,
         'content' => $content,
         'land_type' => $land_type,
-        'color' => $color
+        'color' => $color,
+        'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
@@ -68,7 +79,8 @@ Class game_model extends CI_Model
  function update_land_content($world_key, $coord_slug, $content)
  {
     $data = array(
-        'content' => $content
+        'content' => $content,
+        'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);
@@ -119,7 +131,8 @@ Class game_model extends CI_Model
  function upgrade_land_type($coord_slug, $world_key, $land_type)
  {
     $data = array(
-        'land_type' => $land_type
+        'land_type' => $land_type,
+        'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('coord_slug', $coord_slug);
     $this->db->where('world_key', $world_key);

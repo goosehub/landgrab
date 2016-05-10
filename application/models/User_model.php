@@ -153,7 +153,8 @@ Class user_model extends CI_Model
 
     // Update lands
     $data = array(
-        'color' => $color
+        'color' => $color,
+        'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('account_key', $account_id);
     $this->db->update('land', $data);
