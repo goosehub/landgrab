@@ -46,7 +46,7 @@ land_type_dictionary['fort'] = 10;
 land_type_dictionary['castle'] = 50;
 
 // Set maps variables
-var map_update_interval = 4 * 60 * 1000;
+var map_update_interval = <?php echo $update_timespan; ?>;
 if (document.location.hostname == "localhost") {
   map_update_interval = 10 * 1000;
 }
