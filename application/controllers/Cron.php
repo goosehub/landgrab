@@ -41,12 +41,6 @@ class Cron extends CI_Controller {
           foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
 
-            // Passive army fix at top of each hour
-            if (date('i') == '00') {
-              $query_action = $this->game_model->passive_army_fix($account_key);
-              continue;
-            }
-
             // Get land total
             $account_lands = $this->user_model->get_count_of_account_land($account_key);
 
