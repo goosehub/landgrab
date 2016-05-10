@@ -413,7 +413,7 @@ function initMap()
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Land Name</label>'
             + '</div><div class="col-md-8">';
-            if (d['account_default_land_name']) {
+            if (d['account_default_land_name'] && form_type != 'update') {
               result += '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' 
               + d['account_default_land_name'] + '">';
             } else {
