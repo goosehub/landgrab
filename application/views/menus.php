@@ -66,6 +66,7 @@
                   <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
                   <input type="text" id="account_input_default_land_name" class="form-control" name="default_land_name" 
                     value="<?php echo $account['default_land_name']; ?>">
+                    <button type="submit" id="submit_default_land_name" class="hidden">Submit</button>
               </div></div>
               </form>
           </li>

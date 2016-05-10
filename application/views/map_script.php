@@ -403,12 +403,8 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_window_form(form_type, button_class, d) {
-		result = '<div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
-    + '<button class="expand_land_form expand_trade btn ' + button_class + ' form-control" type="button" '
-		+ 'data-toggle="collapse" data-target="#land_form_dropdown" aria-expanded="false" aria-controls="land_form_dropdown">'
-		  + '' + ucwords(form_type) + ' This Land';
-		  result += ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
-		    + '<div id="land_form_dropdown" class="collapse">'
+		result = '<hr><div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
+		  result += '<div id="land_form_dropdown">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'

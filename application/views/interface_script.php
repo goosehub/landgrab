@@ -40,12 +40,17 @@ if (window.location.href.indexOf('register') >= 0) {
     $('#register_block').show();
 }
 
-// Stop dropdown closing when clicking color input
+// Stop dropdown closing when clicking input
 $('#account_input_color').click(function(e) {
     e.stopPropagation();
 });
 $('#account_input_default_land_name').click(function(e) {
     e.stopPropagation();
+});
+
+// Submit input on focus out
+$('#account_input_default_land_name').focusout(function(e) {
+    $('#submit_default_land_name').click();
 });
 
 // 
