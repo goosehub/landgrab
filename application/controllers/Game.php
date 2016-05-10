@@ -410,6 +410,11 @@ class Game extends CI_Controller {
             // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
 
+            // If unclaiming, mark land as unclaimed
+            if ($upgrade_type === 'unclaimed') {
+                $query_action = $this->game_model->update_land_data($world_key, 0, $coord_slug, 0, '', '', 'unclaimed', '#000000');
+            }
+
             echo '{"status": "success", "message": "Upgraded"}';
 
             return true;
@@ -525,6 +530,7 @@ class Game extends CI_Controller {
     // Land type cost dictionary
     public function land_type_dictionary()
     {
+        $land_type_dictionary['unclaimed'] = 0;
         $land_type_dictionary['village'] = 0;
         $land_type_dictionary['wall'] = 1;
         $land_type_dictionary['tower'] = 2;

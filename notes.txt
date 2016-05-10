@@ -32,9 +32,9 @@ Build a city for every 100 lands
 ==========================================================================================
 
 High Priority
-    Cities
-    Capitals
-    Refactor ajax calls to have less brackets
+    Trade Mechanic
+    Cities Mechanic
+    Capitals Mechanic
 
 Low Priority
     Feature
@@ -48,9 +48,8 @@ Low Priority
         lng line issue
         FAQ
     Bug
-        Login Bug
-        Color Update Lightness
         Sometimes land isn't updated after buy right during update
+        White edit text (confirmed on chrome on mac)
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
@@ -58,6 +57,7 @@ Low Priority
     Infrastructure
         Move hosting to LiquidWeb
     Refactor
+        Refactor ajax calls to have less brackets
         Reduce dependence on break tag
     Misc
         License

@@ -39,6 +39,7 @@ defense_dictionary['city'] = 10000;
 
 // Set land type cost dictionary
 land_type_dictionary = new Array();
+land_type_dictionary['unclaimed'] = 0;
 land_type_dictionary['village'] = 0;
 land_type_dictionary['wall'] = 1;
 land_type_dictionary['tower'] = 2;
@@ -354,6 +355,7 @@ function initMap()
         $('.upgrade_submit').click(function(){
           // Serialize form into post data
           $('#land_upgrade_form').append('<input type="hidden" name="upgrade_type" value="' + $(this).val() + '"/>')
+          var upgrade_type = $(this).val();
           var post_data = $('#land_upgrade_form').serialize();
 
           // Replace window with processing window
@@ -379,6 +381,17 @@ function initMap()
               if (response['status'] === 'success') {
                 infoWindow.close();
               }
+
+              if (upgrade_type === 'unclaimed') {
+                  // Update box to reflect user ownership
+                  boxes[land_data['id']].setOptions({
+                    strokeWeight: 0, 
+                    strokeColor: '#000000',
+                    fillColor: '#000000',
+                    fillOpacity: 0
+                  });
+              }
+
             }
           });
         });
@@ -428,6 +441,7 @@ function initMap()
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaimed (Leave this land)</button>';
             if (active_army >= land_type_dictionary['village'] 
               ) {
               result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (0 Mobilized Army for 10 Defense)</button>';
