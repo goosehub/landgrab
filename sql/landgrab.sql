@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_key` int(10) unsigned NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
+  `active_account` int(1) unsigned NOT NULL,
   `active_army` int(10) NOT NULL,
   `passive_army` int(10) NOT NULL,
   `color` varchar(8) NOT NULL,
@@ -37,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 

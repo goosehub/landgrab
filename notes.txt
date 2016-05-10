@@ -32,11 +32,9 @@ Build a city for every 100 lands
 ==========================================================================================
 
 High Priority
-    Column to verify account has land for CRON speed
     Cities
     Capitals
     Refactor ajax calls to have less brackets
-    Update bug
 
 Low Priority
     Feature
@@ -49,8 +47,8 @@ Low Priority
         Zoom to land on link click
         lng line issue
         FAQ
-        Chat spam prevention
     Bug
+        Login Bug
         Color Update Lightness
         Sometimes land isn't updated after buy right during update
     Security/Cheating/Manipulation Prevention

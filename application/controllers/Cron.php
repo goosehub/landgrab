@@ -35,10 +35,10 @@ class Cron extends CI_Controller {
           $world_key = $world['id'];
 
           // Get all acounts in world
-          $accounts_in_world = $this->game_model->get_accounts_in_world($world_key);
+          $active_accounts_in_world = $this->game_model->get_active_accounts_in_world($world_key);
 
           // Loop through accounts
-          foreach ($accounts_in_world as $account) {
+          foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
 
             // Passive army fix at top of each hour

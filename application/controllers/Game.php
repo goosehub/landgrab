@@ -221,6 +221,7 @@ class Game extends CI_Controller {
             $content = $content;
 
             // Do attack logic
+            $attack_result = null;
             if ($form_type === 'attack') {
                 $attack_result = $this->land_attack($land_square, $world, $land_square['land_type'], $account);
                 // Return failed attack message
@@ -229,6 +230,12 @@ class Game extends CI_Controller {
                     return false;
                 } else {
                     echo '{"status": "success", "result": true, "message": "Victory"}';
+                    // Check if account losing land is now inactive
+                    $loser_account_lands = $this->user_model->get_count_of_account_land($land_square['account_key']);
+                    // If so, mark as inactive
+                    if (intVal($loser_account_lands) === 1) {
+                        $query_action = $this->game_model->update_account_active_state($land_square['account_key'], 0);
+                    }
                 }
             }
             // Claim response
@@ -237,6 +244,11 @@ class Game extends CI_Controller {
             // Update response
             } else {
                 echo '{"status": "success", "result": true, "message": "Updated"}';
+            }
+
+            if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
+                // Mark account as active
+                $query_action = $this->game_model->update_account_active_state($account_key, 1);
             }
 
             // Land type for update

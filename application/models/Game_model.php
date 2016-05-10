@@ -127,6 +127,16 @@ Class game_model extends CI_Model
    $query = $this->db->get();
    return $query->result_array();
  }
+ // Get active accounts in world
+ function get_active_accounts_in_world($world_key)
+ {
+   $this->db->select('*');
+   $this->db->from('account');
+   $this->db->where('world_key', $world_key);
+   $this->db->where('active_account', 1);
+   $query = $this->db->get();
+   return $query->result_array();
+ }
  // Upgrade land type
  function upgrade_land_type($coord_slug, $world_key, $land_type)
  {
@@ -139,6 +149,20 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Mark account as active
+ function update_account_active_state($account_id, $active_state)
+ {
+    // Update account
+    $data = array(
+        'active_account' => $active_state
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
+ }
+
+
+
  // Passive army fix
  function passive_army_fix($account_key)
  {
