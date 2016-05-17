@@ -53,6 +53,37 @@ land_type_dictionary['town'] = 0;
 land_type_dictionary['city'] = 0;
 land_type_dictionary['capital'] = 0;
 
+land_type = new Array();
+land_type['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_type['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_type['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_type['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_type['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
+land_type['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_type['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
+land_type['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
+land_type['city'] = create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
+land_type['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+
+function create_land_prototype(slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, 
+                                                    population_gain, food_gain, ore_gain, gold_gain, army_gain) {
+  var object = new Object();
+  object.slug = slug,
+  object.name = name,
+  object.defense = defense,
+  object.population_cost = population_cost,
+  object.food_cost = food_cost,
+  object.ore_cost = ore_cost,
+  object.gold_cost = gold_cost,
+  object.army_cost = army_cost,
+  object.population_gain = population_gain,
+  object.food_gain = food_gain,
+  object.ore_gain = ore_gain,
+  object.gold_gain = gold_gain,
+  object.army_gain = army_gain
+  return object;
+}
+
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
 if (document.location.hostname == "localhost") {

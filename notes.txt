@@ -29,19 +29,21 @@ city
 capital
 
 Land Prototype
-    slug
-    name
-    defense
-    population cost
-    food cost
-    ore cost
-    gold cost
-    army cost
-    population plus
-    food plus
-    ore plus
-    gold plus
-    army plus
+    slug,
+    name,
+    defense,
+    population_cost,
+    food_cost,
+    ore_cost,
+    gold_cost,
+    army_cost,
+    population_gain,
+    food_gain,
+    ore_gain,
+    gold_gain,
+    army_gain,
+
+slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
 Mechanic
     Scales up more efficiently
