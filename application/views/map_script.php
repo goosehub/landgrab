@@ -27,32 +27,6 @@ var land_size = <?php echo $world['land_size'] ?>;
     var log_check = false;
 <?php } ?>
 
-// Set defense dictionary
-defense_dictionary = new Array();
-defense_dictionary['unclaimed'] = 0;
-defense_dictionary['village'] = 10;
-defense_dictionary['farm'] = 10;
-defense_dictionary['mine'] = 10;
-defense_dictionary['market'] = 10;
-defense_dictionary['fortification'] = 100;
-defense_dictionary['stronghold'] = 500;
-defense_dictionary['town'] = 50;
-defense_dictionary['city'] = 100;
-defense_dictionary['capital'] = 1000;
-
-// Set land type cost dictionary
-land_type_dictionary = new Array();
-land_type_dictionary['unclaimed'] = 0;
-land_type_dictionary['village'] = 0;
-land_type_dictionary['farm'] = 0;
-land_type_dictionary['mine'] = 0;
-land_type_dictionary['market'] = 0;
-land_type_dictionary['fortification'] = 0;
-land_type_dictionary['stronghold'] = 0;
-land_type_dictionary['town'] = 0;
-land_type_dictionary['city'] = 0;
-land_type_dictionary['capital'] = 0;
-
 land_type = new Array();
 land_type['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
 land_type['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);

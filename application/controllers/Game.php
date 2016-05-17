@@ -525,33 +525,36 @@ class Game extends CI_Controller {
     // Land type cost dictionary
     public function land_type_dictionary()
     {
-        $land_type_dictionary['unclaimed'] = 0;
-        $land_type_dictionary['village'] = 0;
-        $land_type_dictionary['farm'] = 0;
-        $land_type_dictionary['mine'] = 0;
-        $land_type_dictionary['market'] = 0;
-        $land_type_dictionary['fortification'] = 0;
-        $land_type_dictionary['stronghold'] = 0;
-        $land_type_dictionary['town'] = 0;
-        $land_type_dictionary['city'] = 0;
-        $land_type_dictionary['capital'] = 0;
-        return $land_type_dictionary;
+        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['village'] = $this->create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
+        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
+        $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+        return $land_type;
     }
 
-    // Land type defense dictionary
-    public function defense_dictionary()
-    {
-        $defense_dictionary['unclaimed'] = 0;
-        $defense_dictionary['village'] = 10;
-        $defense_dictionary['farm'] = 10;
-        $defense_dictionary['mine'] = 10;
-        $defense_dictionary['market'] = 10;
-        $defense_dictionary['fortification'] = 100;
-        $defense_dictionary['stronghold'] = 500;
-        $defense_dictionary['town'] = 50;
-        $defense_dictionary['city'] = 100;
-        $defense_dictionary['capital'] = 1000;
-        return $defense_dictionary;
+    public function create_land_prototype($slug, $name, $defense, $population_cost, $food_cost, $ore_cost, $gold_cost, $army_cost, 
+                                                    $population_gain, $food_gain, $ore_gain, $gold_gain, $army_gain) {
+      $object = [];
+      $object['slug'] = $slug;
+      $object['name'] = $name;
+      $object['defense'] = $defense;
+      $object['population_cost'] = $population_cost;
+      $object['food_cost'] = $food_cost;
+      $object['ore_cost'] = $ore_cost;
+      $object['gold_cost'] = $gold_cost;
+      $object['army_cost'] = $army_cost;
+      $object['population_gain'] = $population_gain;
+      $object['food_gain'] = $food_gain;
+      $object['ore_gain'] = $ore_gain;
+      $object['gold_gain'] = $gold_gain;
+      $object['army_gain'] = $army_gain;
+      return $object;
     }
 
     // Function to close tags
