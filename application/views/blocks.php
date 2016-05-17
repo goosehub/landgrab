@@ -55,11 +55,7 @@
     </button>
     <hr>
     <ul>
-        <li>Castles are downgraded from 10,000 defense to 5,000 defense.</li>
-        <li>Land can now be unclaimed.</li>
-        <li>Default land names can now be set under your account dropdown.</li>
-        <li>Streamlined attacking and updating interface</li>
-        <li>Game is now faster and more bandwidth effecient.</li>
+        <li></li>
     </ul>
 </div>
 

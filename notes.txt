@@ -12,10 +12,10 @@ Farm = Food - 1 Population
 Mine = Ore - 2 Population
 Market = Gold - 3 Ore
 Fortification = Defense - 1 Army
-Castle = Army + Defense - 2 Gold
-Town = 10 Population - 5 Food
-City
-Capital
+Stronghold = Army + Defense - 2 Gold
+Town = 10 Population + Defense - 5 Food
+City = 100 population + Defense - 10 food - 5 gold - 5 ore
+Capital = 20 army + Defense - 1 per player
 
 unclaimed
 village
@@ -23,10 +23,25 @@ farm
 mine
 market
 fortification
-castle
+stronghold
 town
 city
 capital
+
+Land Prototype
+    slug
+    name
+    defense
+    population cost
+    food cost
+    ore cost
+    gold cost
+    army cost
+    population plus
+    food plus
+    ore plus
+    gold plus
+    army plus
 
 Mechanic
     Scales up more efficiently
@@ -46,14 +61,19 @@ Build a city for every 100 lands
 ==========================================================================================
 
 High Priority
+    Land Prototype
+    Upgrade Logic
+    Value Logic
+
+Moderate Priority
     Trade Mechanic
     Cities Mechanic
     Capitals Mechanic
 
 Low Priority
     Feature
-        Castles list
-        Castle Leaderboard
+        Strongholds list
+        Stronghold Leaderboard
         Active army leaderboard
         Defense structure count
         Flags
@@ -75,6 +95,7 @@ Low Priority
         Reduce dependence on break tag
     Misc
         License
+        Hats
 
 No Priority
     Speed optimization

@@ -35,8 +35,8 @@ defense_dictionary['farm'] = 10;
 defense_dictionary['mine'] = 10;
 defense_dictionary['market'] = 10;
 defense_dictionary['fortification'] = 100;
-defense_dictionary['castle'] = 500;
-defense_dictionary['town'] = 10;
+defense_dictionary['stronghold'] = 500;
+defense_dictionary['town'] = 50;
 defense_dictionary['city'] = 100;
 defense_dictionary['capital'] = 1000;
 
@@ -48,7 +48,7 @@ land_type_dictionary['farm'] = 0;
 land_type_dictionary['mine'] = 0;
 land_type_dictionary['market'] = 0;
 land_type_dictionary['fortification'] = 0;
-land_type_dictionary['castle'] = 0;
+land_type_dictionary['stronghold'] = 0;
 land_type_dictionary['town'] = 0;
 land_type_dictionary['city'] = 0;
 land_type_dictionary['capital'] = 0;
@@ -224,17 +224,12 @@ function initMap()
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
         window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
-        if (!land_data['range_check']) {
+        if (log_check && !land_data['range_check']) {
           window_string += '<strong class="text-danger pull-right">Under Siege</strong><br>';
           land_type = land_data['land_type'];
-          if (!land_data['range_check'] && land_type === 'castle') {
-              land_type = 'fort';
-          } else if (!land_data['range_check'] && land_type === 'fort') {
-              land_type = 'tower';
-          } else if (!land_data['range_check'] && land_type === 'tower') {
-              land_type = 'wall';
-          } else if (!land_data['range_check'] && land_type === 'wall') {
-              $land_type = 'village';
+          // Seige Logic
+          if (!land_data['range_check']) {
+            land_type = 'village';
           }
           window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_type]) + '</strong>';
         } else {
@@ -451,36 +446,16 @@ function initMap()
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaimed (Leave this land)</button>';
-            if (active_army >= land_type_dictionary['village'] 
-              ) {
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (0 Mobilized Army for 10 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['wall'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['wall']
-              ) {
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="wall">Wall (1 Mobilized Army for  50 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['tower'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['tower']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="tower">Tower (2 Mobilized Army for 100 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['fort'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['fort']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fort">Fort (10 Mobilized  Army for 1000 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['castle'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['castle']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="castle">Castle (50 Mobilized  Army for 10000 Defense)</button>';
-            }
-            // if (active_army >= land_type_dictionary['city'] 
-            // && player_land_count >= parseInt(passive_army) + land_type_dictionary['city']
-            // ) {
-            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="city">City</button>';
-            // }
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaim (Leave this land)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (1 Mobilized Army for  50 Defense)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="farm">Farm (1 Population)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="mine">Mine (2 Population)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="market">Market (3 Ore)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="town">Town (5 Food)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fortification">Fortification (1 Army)</button>';
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="stronghold">stronghold (2 Gold)</button>';
+              result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="city">City (Coming Soon)</button>';
+              result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="capital">Capital (Coming Soon)</button>';
           result +=  '</div>';
     result += '</div></form></div>';
     return result;
@@ -503,16 +478,10 @@ function initMap()
         if ($log_check && $land['account_key'] === $account['id']) {
             $stroke_color = '#428BCA';
         }
-        if ($land['land_type'] === 'wall') {
-          $stroke_weight = 2;
-          $stroke_color = '#613B1A';
-        } else if ($land['land_type'] === 'tower') {
-          $stroke_weight = 2;
-          $stroke_color = '#2D882D';
-        } else if ($land['land_type'] === 'fort') {
+        if ($land['land_type'] === 'fortification') {
           $stroke_weight = 2;
           $stroke_color = '#AA9739';
-        } else if ($land['land_type'] === 'castle') {
+        } else if ($land['land_type'] === 'stronghold') {
           $stroke_weight = 2;
           $stroke_color = '#AA3939';
         }
@@ -638,16 +607,10 @@ function initMap()
       if (log_check && land['account_key'] == account_id) {
         stroke_color = '#428BCA';
       }
-      if (land['land_type'] === 'wall') {
-        stroke_weight = 2;
-        stroke_color = '#613B1A';
-      } else if (land['land_type'] === 'tower') {
-        stroke_weight = 2;
-        stroke_color = '#2D882D';
-      } else if (land['land_type'] === 'fort') {
+      if (land['land_type'] === 'fortification') {
         stroke_weight = 2;
         stroke_color = '#AA9739';
-      } else if (land['land_type'] === 'castle') {
+      } else if (land['land_type'] === 'stronghold') {
         stroke_weight = 2;
         stroke_color = '#AA3939';
       }

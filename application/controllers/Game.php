@@ -332,13 +332,8 @@ class Game extends CI_Controller {
         // Siege logic
         $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
             $world['land_size'], $land_square['lat'], $land_square['lng'], true);
-        if (!$range_check && $land_type === 'castle') {
-            $land_type = 'fort';
-        } else if (!$range_check && $land_type === 'fort') {
-            $land_type = 'tower';
-        } else if (!$range_check && $land_type === 'tower') {
-            $land_type = 'wall';
-        } else if (!$range_check && $land_type === 'wall') {
+        // Seige logic
+        if (!$range_check) {
             $land_type = 'village';
         }
 
@@ -536,7 +531,7 @@ class Game extends CI_Controller {
         $land_type_dictionary['mine'] = 0;
         $land_type_dictionary['market'] = 0;
         $land_type_dictionary['fortification'] = 0;
-        $land_type_dictionary['castle'] = 0;
+        $land_type_dictionary['stronghold'] = 0;
         $land_type_dictionary['town'] = 0;
         $land_type_dictionary['city'] = 0;
         $land_type_dictionary['capital'] = 0;
@@ -552,8 +547,8 @@ class Game extends CI_Controller {
         $defense_dictionary['mine'] = 10;
         $defense_dictionary['market'] = 10;
         $defense_dictionary['fortification'] = 100;
-        $defense_dictionary['castle'] = 500;
-        $defense_dictionary['town'] = 10;
+        $defense_dictionary['stronghold'] = 500;
+        $defense_dictionary['town'] = 50;
         $defense_dictionary['city'] = 100;
         $defense_dictionary['capital'] = 1000;
         return $defense_dictionary;
