@@ -1,4 +1,4 @@
-INSERT INTO `world` (`id`, `slug`, `land_size`, `created`, `modified`) VALUES (NULL, 'huge', '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO `world` (`id`, `slug`, `land_size`, `created`, `modified`) VALUES (1, 'huge', '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`) VALUES
 (NULL, '-84,-180', '-84', '-180', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (NULL, '-82,-180', '-82', '-180', 1, '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),

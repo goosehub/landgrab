@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `land` (
   `claimed` int(1) NOT NULL,
   `land_name` varchar(512) NOT NULL,
   `content` varchar(1024) NOT NULL,
-  `type` varchar(64) NOT NULL,
+  `land_type` varchar(64) NOT NULL,
   `color` varchar(8) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
