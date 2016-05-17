@@ -532,10 +532,14 @@ class Game extends CI_Controller {
     {
         $land_type_dictionary['unclaimed'] = 0;
         $land_type_dictionary['village'] = 0;
-        $land_type_dictionary['wall'] = 1;
-        $land_type_dictionary['tower'] = 2;
-        $land_type_dictionary['fort'] = 10;
-        $land_type_dictionary['castle'] = 50;
+        $land_type_dictionary['farm'] = 0;
+        $land_type_dictionary['mine'] = 0;
+        $land_type_dictionary['market'] = 0;
+        $land_type_dictionary['fortification'] = 0;
+        $land_type_dictionary['castle'] = 0;
+        $land_type_dictionary['town'] = 0;
+        $land_type_dictionary['city'] = 0;
+        $land_type_dictionary['capital'] = 0;
         return $land_type_dictionary;
     }
 
@@ -544,10 +548,14 @@ class Game extends CI_Controller {
     {
         $defense_dictionary['unclaimed'] = 0;
         $defense_dictionary['village'] = 10;
-        $defense_dictionary['wall'] = 50;
-        $defense_dictionary['tower'] = 100;
-        $defense_dictionary['fort'] = 1000;
-        $defense_dictionary['castle'] = 5000;
+        $defense_dictionary['farm'] = 10;
+        $defense_dictionary['mine'] = 10;
+        $defense_dictionary['market'] = 10;
+        $defense_dictionary['fortification'] = 100;
+        $defense_dictionary['castle'] = 500;
+        $defense_dictionary['town'] = 10;
+        $defense_dictionary['city'] = 100;
+        $defense_dictionary['capital'] = 1000;
         return $defense_dictionary;
     }
 

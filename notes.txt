@@ -8,36 +8,25 @@ Avoid skinner boxes
 Progression to teach the game
 Scale of strat
 
-Acheivers
-Explorers
-Socializers
-Killers
-
-Acting
-Interacting
-Players
-World
-
-Farm
-Mine
-Market
-Guild
-Castle
-Town
-
+Farm = Food - 1 Population
+Mine = Ore - 2 Population
+Market = Gold - 3 Ore
+Fortification = Defense - 1 Army
+Castle = Army + Defense - 2 Gold
+Town = 10 Population - 5 Food
 City
+Capital
 
-Resource Bonus
-    Mine
-        ...
-    Farm
-        1 farm for every 10 lands, cost 1 army
-    Market
-        Allows faster regen, cost 3 army
-    Guild
-        Better chance in battle, cost 2 army
-    Troops
-    Land
+unclaimed
+village
+farm
+mine
+market
+fortification
+castle
+town
+city
+capital
 
 Mechanic
     Scales up more efficiently
