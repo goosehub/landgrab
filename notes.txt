@@ -71,9 +71,10 @@ Build a city for every 100 lands
 High Priority
     Upgrade Logic
     Value Logic
+    User Numbers
+    How to play
     Migrate Data
-        Population
-    Taxes
+        Land type to village
     Testing
 
 Moderate Priority
