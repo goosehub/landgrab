@@ -376,8 +376,12 @@ function initMap()
               // Return data
               response = JSON.parse(data);
 
-              if (response['error'] || response['status'] != 'success') {
+              if (response['error']) {
                 $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+              if (response['status'] != 'success') {
+                $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
 

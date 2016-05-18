@@ -70,6 +70,7 @@ Build a city for every 100 lands
 
 High Priority
     Upgrade Logic
+    Update down into resource update
     Value Logic
     User Numbers
     How to play

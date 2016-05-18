@@ -420,7 +420,7 @@ class Game extends CI_Controller {
     {
         // User Information
         if (!$this->session->userdata('logged_in')) {
-            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You are not currently logged in. Please log in again.');
             return false;
         }
 
@@ -436,16 +436,42 @@ class Game extends CI_Controller {
         $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_dictionary = $this->land_dictionary();
+        $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
+        $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'];
+        $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'];
+        $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'];
+        $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'];
 
         // Check for inaccuracies
         // Upgrading land that isn't theirs
         if ($land_square['account_key'] != $account_key) {
-            $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'This land is no longer yours');
             return false;
         }
         // Verify land type exists
         if (!isset($land_dictionary[$upgrade_type]) ) {
-            $this->form_validation->set_message('land_form_validation', 'This land type doesn\'t exist');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'This land type doesn\'t exist');
+            return false;
+        }
+        // Check resources
+        if ($population < 0 && $account['population'] < abs($population) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough population');
+            return false;
+        }
+        if ($ore < 0 && $account['ore'] < abs($ore) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough ore');
+            return false;
+        }
+        if ($gold < 0 && $account['gold'] < abs($gold) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough gold');
+            return false;
+        }
+        if ($army < 0 && $account['army'] < abs($army) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough army');
+            return false;
+        }
+        if ($food < 0 && $account['food'] < abs($food) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough food');
             return false;
         }
 
