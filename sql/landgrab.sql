@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `account` (
   `world_key` int(10) unsigned NOT NULL,
   `active_account` int(1) unsigned NOT NULL,
   `active_army` int(10) NOT NULL,
-  `passive_army` int(10) NOT NULL,
   `population` int(10) unsigned NOT NULL,
   `food` int(10) unsigned NOT NULL,
   `ore` int(10) unsigned NOT NULL,

@@ -320,9 +320,9 @@ class Game extends CI_Controller {
     // Land Transaction
     public function land_attack($land_square, $world, $land_type, $account)
     {        
-        $defense_dictionary = $this->defense_dictionary();
+        $land_dictionary = $this->land_dictionary();
         // If attacker has no lands and land is not fortified, then attacker wins
-        if ($account['land_count'] < 1 && $defense_dictionary[$land_type] < 50) {
+        if ($account['land_count'] < 1 && $land_dictionary[$land_type]['defense'] < 50) {
             return true;
         }
 
@@ -337,7 +337,7 @@ class Game extends CI_Controller {
             $land_type = 'village';
         }
 
-        $defending_army = $defense_dictionary[$land_type];
+        $defending_army = $land_dictionary[$land_type]['defense'];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
         
@@ -345,8 +345,8 @@ class Game extends CI_Controller {
         if ($attack_power > $defend_power) {
             // On victory, change losers passive army if needed
             $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
-            $land_type_dictionary = $this->land_type_dictionary();
-            $new_passive_army = $defender_account['passive_army'] - $land_type_dictionary[$land_square['land_type']];
+            // Todo
+            // $new_passive_army = $defender_account['passive_army'] - $land_type_dictionary[$land_square['land_type']];
             $query_action = $this->game_model->update_account_passive_army($land_square['account_key'], $new_passive_army);
             return true;
         } else {
@@ -394,6 +394,8 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
+            // Todo
+/*
             // Update passive and active army
             $land_type_dictionary = $this->land_type_dictionary();
             $defending_army = $land_type_dictionary[$upgrade_type];
@@ -401,7 +403,7 @@ class Game extends CI_Controller {
             $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
             $new_passive_army = $account['passive_army'] + $land_type_dictionary[$upgrade_type] - $land_type_dictionary[$land_square['land_type']];
             $query_action = $this->game_model->update_account_passive_army($account_key, $new_passive_army);
-
+*/
             // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
 
@@ -436,7 +438,7 @@ class Game extends CI_Controller {
         $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
         $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $land_type_dictionary = $this->land_type_dictionary();
+        $land_dictionary = $this->land_dictionary();
 
         // Check for inaccuracies
         // Upgrading land that isn't theirs
@@ -444,7 +446,8 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
             return false;
         }
-        // Doing an upgade they don't have enough active army for
+        // TODO
+/*        // Doing an upgade they don't have enough active army for
         if ($account['active_army'] < $land_type_dictionary[$upgrade_type]) {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enought active army for this upgrade');
             return false;
@@ -454,7 +457,7 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
             return false;
         }
-
+*/
         // Everything checks out
         return true;
     }
@@ -522,22 +525,7 @@ class Game extends CI_Controller {
         echo $account['active_army'];
     }
 
-    // Land type cost dictionary
-    public function land_type_dictionary()
-    {
-        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['village'] = $this->create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
-        $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
-        return $land_type;
-    }
-
+    // Creates land dictionary
     public function create_land_prototype($slug, $name, $defense, $population_cost, $food_cost, $ore_cost, $gold_cost, $army_cost, 
                                                     $population_gain, $food_gain, $ore_gain, $gold_gain, $army_gain) {
       $object = [];
@@ -555,6 +543,22 @@ class Game extends CI_Controller {
       $object['gold_gain'] = $gold_gain;
       $object['army_gain'] = $army_gain;
       return $object;
+    }
+
+    // Land dictionary for reference
+    public function land_dictionary()
+    {
+        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['village'] = $this->create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
+        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
+        $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+        return $land_type;
     }
 
     // Function to close tags

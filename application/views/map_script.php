@@ -21,23 +21,23 @@ var land_size = <?php echo $world['land_size'] ?>;
     var username = "<?php echo $user['username']; ?>";
     var account_color = '<?php echo $account["color"]; ?>';
     var active_army = <?php echo $account['active_army'] + ''; ?>;
-    var passive_army = <?php echo $account['passive_army'] + ''; ?>;
     var player_land_count = <?php echo $account['land_count']; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
 
-land_type = new Array();
-land_type['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_type['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_type['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_type['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_type['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
-land_type['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_type['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-land_type['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-land_type['city'] = create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
-land_type['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+land_dictionary = new Array();
+land_dictionary['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
+land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
+land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+land_dictionary_length = land_dictionary.length;
 
 function create_land_prototype(slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, 
                                                     population_gain, food_gain, ore_gain, gold_gain, army_gain) {
@@ -229,17 +229,13 @@ function initMap()
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
         window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
+        // Seige Logic
         if (log_check && !land_data['range_check']) {
           window_string += '<strong class="text-danger pull-right">Under Siege</strong><br>';
-          land_type = land_data['land_type'];
-          // Seige Logic
-          if (!land_data['range_check']) {
-            land_type = 'village';
-          }
-          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_type]) + '</strong>';
+          window_string += 'Defense: <strong class="pull-right">' + 10 + '</strong>';
         } else {
           // Defense
-          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_data['land_type']]) + '</strong>';
+          window_string += 'Defense: <strong class="pull-right">' + number_format(land_dictionary[land_data['land_type']].defense) + '</strong>';
         }
 
         window_string += '</div>';
@@ -451,16 +447,20 @@ function initMap()
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaim (Leave this land)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (1 Mobilized Army for  50 Defense)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="farm">Farm (1 Population)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="mine">Mine (2 Population)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="market">Market (3 Ore)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="town">Town (5 Food)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fortification">Fortification (1 Army)</button>';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="stronghold">stronghold (2 Gold)</button>';
-              result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="city">City (Coming Soon)</button>';
-              result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="capital">Capital (Coming Soon)</button>';
+            for (i = 0; 9 < land_type_length; i++) {
+              result += '<button type="button" class="upgrade_submit btn btn-default form-control" '
+              + 'value="' + land_type[i]['slug'] + '">' + land_type[i]['name'] + '</button>';
+            }
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaim (Leave this land)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (1 Mobilized Army for  50 Defense)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="farm">Farm (1 Population)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="mine">Mine (2 Population)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="market">Market (3 Ore)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="town">Town (5 Food)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fortification">Fortification (1 Army)</button>';
+              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="stronghold">stronghold (2 Gold)</button>';
+              // result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="city">City (Coming Soon)</button>';
+              // result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="capital">Capital (Coming Soon)</button>';
           result +=  '</div>';
     result += '</div></form></div>';
     return result;
@@ -639,10 +639,8 @@ function initMap()
   function update_stats(account) {
     $('#active_army_display_span').html(account['active_army']);
     $('#active_army_span').html(account['active_army']);
-    $('#passive_army_span').html(account['passive_army']);
     $('#owned_lands_span').html(account['land_count']);
     active_army = account['active_army'];
-    passive_army = account['passive_army'];
   }
 
   function update_leaderboards(leaderboards) {

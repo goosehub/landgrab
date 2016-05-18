@@ -45,6 +45,12 @@ Land Prototype
 
 slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
+Testing
+    Logged In
+    Logged Out
+    New Account
+    Migrate data
+
 Mechanic
     Scales up more efficiently
     Only 1 per player, trades their bonus for other players bonuses
@@ -63,9 +69,10 @@ Build a city for every 100 lands
 ==========================================================================================
 
 High Priority
-    Land Prototype
     Upgrade Logic
     Value Logic
+    Taxes
+    Testing
 
 Moderate Priority
     Trade Mechanic

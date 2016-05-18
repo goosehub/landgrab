@@ -16,7 +16,6 @@
     <ul class="active_army_dropdown dropdown-menu" aria-labelledby="active_army_dropdown">
       <li>Owned Lands: <strong><span id="owned_lands_span"><?php echo $account['land_count']; ?></span></strong></li>
       <li>Mobilized Army: <strong><span id="active_army_span"><?php echo $account['active_army']; ?></span></strong></li>
-      <li>Defensive Army: <strong><span id="passive_army_span"><?php echo $account['passive_army']; ?></span></strong></li>
     </ul>
 
     <?php } ?>

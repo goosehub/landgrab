@@ -44,9 +44,6 @@ class Cron extends CI_Controller {
             // Get land total
             $account_lands = $this->user_model->get_count_of_account_land($account_key);
 
-            // Get potential active army
-            $potential_active_army = $account_lands - $account['passive_army'];
-
             // Potential active army at minimum of 20
             if ($potential_active_army < 20) {
               $potential_active_army = 20;
