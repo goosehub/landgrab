@@ -35,9 +35,9 @@ land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 
 land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
 land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
 land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
-land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
-land_dictionary_length = land_dictionary.length;
+land_dictionary['city'] = create_land_prototype('city', 'City (Coming Soon)', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
+land_dictionary['capital'] = create_land_prototype('capital', 'Capital (Coming Soon)', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+land_dictionary_length = Object.keys(land_dictionary).length;
 
 function create_land_prototype(slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, 
                                                     population_gain, food_gain, ore_gain, gold_gain, army_gain) {
@@ -447,21 +447,12 @@ function initMap()
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
-            for (i = 0; 9 < land_type_length; i++) {
+            for(var prop in land_dictionary) {
+              console.log('marco');
               result += '<button type="button" class="upgrade_submit btn btn-default form-control" '
-              + 'value="' + land_type[i]['slug'] + '">' + land_type[i]['name'] + '</button>';
+              + 'value="' + land_dictionary[prop]['slug'] + '">' + land_dictionary[prop]['name'] + '</button>';
             }
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaim (Leave this land)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (1 Mobilized Army for  50 Defense)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="farm">Farm (1 Population)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="mine">Mine (2 Population)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="market">Market (3 Ore)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="town">Town (5 Food)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fortification">Fortification (1 Army)</button>';
-              // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="stronghold">stronghold (2 Gold)</button>';
-              // result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="city">City (Coming Soon)</button>';
-              // result += '<button type="button" class="upgrade_submit disabled btn btn-default form-control" value="capital">Capital (Coming Soon)</button>';
-          result +=  '</div>';
+            result +=  '</div>';
     result += '</div></form></div>';
     return result;
   }

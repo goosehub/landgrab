@@ -446,6 +446,12 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
             return false;
         }
+        // Verify land type exists
+        if (!isset($land_dictionary[$upgrade_type]) ) {
+            $this->form_validation->set_message('land_form_validation', 'This land type doesn\'t exist');
+            return false;
+        }
+
         // TODO
 /*        // Doing an upgade they don't have enough active army for
         if ($account['active_army'] < $land_type_dictionary[$upgrade_type]) {
