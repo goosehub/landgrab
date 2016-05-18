@@ -8,17 +8,26 @@
     </button>
 
   <?php if ($log_check) { ?>
-  <!-- Army Dropdown -->
-    <button id="active_army_dropdown" class="menu_element btn btn-default" type="button" id="active_army_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <strong><span id="active_army_display_span"><?php echo number_format($account['active_army']); ?></span></strong> Mobilized Army
+  <!-- Stat Dropdown -->
+    <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span id="active_army_display_span" class="bold_font"><?php echo number_format($account['active_army']); ?></span>/
+        <span id="ready_army_display_span" class="bold_font"><?php echo number_format($account['army']); ?></span> Army,
+        <span id="pop_display_span" class="bold_font"><?php echo number_format($account['population']); ?></span> Pop,
+        <span id="food_display_span" class="bold_font"><?php echo number_format($account['food']); ?></span> Food,
+        <span id="ore_display_span" class="bold_font"><?php echo number_format($account['ore']); ?></span> Ore,
+        <span id="gold_display_span" class="bold_font"><?php echo number_format($account['gold']); ?></span> Gold
       <span class="caret"></span>
     </button>
-    <ul class="active_army_dropdown dropdown-menu" aria-labelledby="active_army_dropdown">
-      <li>Owned Lands: <strong><span id="owned_lands_span"><?php echo $account['land_count']; ?></span></strong></li>
-      <li>Mobilized Army: <strong><span id="active_army_span"><?php echo $account['active_army']; ?></span></strong></li>
+    <ul class="stat_dropdown dropdown-menu" aria-labelledby="stat_dropdown">
+      <li>Owned Lands: <span id="owned_lands_span" class="bold_font pull-right"><?php echo $account['land_count']; ?></span></li>
+      <li>Ready Army: <span id="active_army_span" class="bold_font pull-right"><?php echo $account['active_army']; ?></span></li>
+      <li>Potential Army: <span id="ready_army_span" class="bold_font pull-right"><?php echo $account['army']; ?></span></li>
+      <li>Population: <span id="population_span" class="bold_font pull-right"><?php echo $account['population']; ?></span></li>
+      <li>Food: <span id="population_span" class="bold_font pull-right"><?php echo $account['population']; ?></span></li>
+      <li>Ore: <span id="ore_span" class="bold_font pull-right"><?php echo $account['ore']; ?></span></li>
+      <li>Gold: <span id="gold_span" class="bold_font pull-right"><?php echo $account['gold']; ?></span></li>
     </ul>
-
-    <?php } ?>
+  <?php } ?>
 
     <!-- Leaderboards dropdown -->
     <div class="leaderboard_parent menu_element btn-group">

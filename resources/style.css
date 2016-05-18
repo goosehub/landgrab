@@ -47,6 +47,9 @@ html, body {
 .clear_both {
   clear: both;
 }
+.bold_font {
+  font-weight: bold;
+}
 
 /* Map */
 #map {
@@ -85,26 +88,11 @@ html, body {
     display: none;
   }
 }
-#recently_sold_alert, #recently_leased_alert {
-  display: none;
-}
-#cash_display {
-  opacity: 1;
+.stat_dropdown li {
+  margin-right: 1em;
 }
 .leaderboard_link {
   cursor: pointer;
-}
-.cash_dropdown {
-  padding: 0.5em;
-}
-.money_info_item {
-  font-weight: bold;
-}
-.green_money {
-  color: #009E00;
-}
-.red_money {
-  color: #FF0000;
 }
 .leaderboard_link {
   width: 100%;

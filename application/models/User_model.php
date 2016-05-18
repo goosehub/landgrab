@@ -153,6 +153,7 @@ Class user_model extends CI_Model
     $this->db->set('food', 'food+' . $food, false);
     $this->db->where('id', $account_id);
     $this->db->update('account');
+    // echo '<br>' . $this->db->last_query() . '<br>';
     return true;
  }
  // Update account primary color

@@ -27,16 +27,16 @@ var land_size = <?php echo $world['land_size'] ?>;
 <?php } ?>
 
 land_dictionary = new Array();
-land_dictionary['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 land_dictionary['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_dictionary['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
-land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0);
+land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
+land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
+land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
 land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
 land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-land_dictionary['city'] = create_land_prototype('city', 'City (Coming Soon)', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
-land_dictionary['capital'] = create_land_prototype('capital', 'Capital (Coming Soon)', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 1, 100, 0, 0, 0, 0);
+// land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
 land_dictionary_length = Object.keys(land_dictionary).length;
 
 function create_land_prototype(slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, 
@@ -216,9 +216,9 @@ function initMap()
 
         // Land name
         if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong><br>';
+          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong>';
         }
-        window_string += '<div class="land_info">';
+        window_string += '<div class="land_info"><br>';
         // Content
         if (land_data['content'] != '') {
           window_string += '<div class="land_content_div">' + land_data['content'] + '</div><br>';
@@ -289,6 +289,7 @@ function initMap()
         $('.expand_land_form').click(function(){
           $('.expand_land_form').hide();
           $('.land_info').hide();
+          $('.land_form_cont').hide();
           setTimeout(function(){
             $('#input_land_name').focus();
           }, 200);
@@ -410,7 +411,7 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_window_form(form_type, button_class, d) {
-		result = '<hr><div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
+		result = '<div class="form_outer_cont land_form_cont"><hr><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
 		  result += '<div id="land_form_dropdown">'
           + '<div class="form-group">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
@@ -453,7 +454,7 @@ function initMap()
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
             for(var prop in land_dictionary) {
               console.log('marco');
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" '
+              result += '<button type="button" class="upgrade_submit btn btn-info form-control" '
               + 'value="' + land_dictionary[prop]['slug'] + '">' + land_dictionary[prop]['name'] + '</button>';
             }
             result +=  '</div>';
@@ -633,7 +634,17 @@ function initMap()
 
   function update_stats(account) {
     $('#active_army_display_span').html(account['active_army']);
+    $('#ready_army_display_span').html(account['army']);
+    $('#pop_display_span').html(account['pop']);
+    $('#food_display_span').html(account['food']);
+    $('#ore_display_span').html(account['ore']);
+    $('#gold_display_span').html(account['gold']);
     $('#active_army_span').html(account['active_army']);
+    $('#ready_army_span').html(account['army']);
+    $('#pop_span').html(account['pop']);
+    $('#food_span').html(account['food']);
+    $('#ore_span').html(account['ore']);
+    $('#gold_span').html(account['gold']);
     $('#owned_lands_span').html(account['land_count']);
     active_army = account['active_army'];
   }

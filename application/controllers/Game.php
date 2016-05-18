@@ -389,16 +389,24 @@ class Game extends CI_Controller {
             $world_key = $this->input->post('world_key_input');
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
             $upgrade_type = $this->input->post('upgrade_type');
+            $land_type = $land_square['land_type'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
             // Update resources
             $land_dictionary = $this->land_dictionary();
+            // Calculate change in resources from previous to new
             $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
-            $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'];
-            $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'];
-            $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'];
-            $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'];
+            - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
+            $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
+            - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
+            $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'] 
+            - $land_dictionary[$land_type]['gold_gain'] + $land_dictionary[$land_type]['gold_cost'];
+            $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'] 
+            - $land_dictionary[$land_type]['army_gain'] + $land_dictionary[$land_type]['army_cost'];
+            $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'] 
+            - $land_dictionary[$land_type]['food_gain'] + $land_dictionary[$land_type]['food_cost'];
+
             $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
 
             // Update land type
@@ -435,12 +443,19 @@ class Game extends CI_Controller {
         $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
         $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $land_type = $land_square['land_type'];
         $land_dictionary = $this->land_dictionary();
+        // Calculate change in resources from previous to new
         $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
-        $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'];
-        $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'];
-        $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'];
-        $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'];
+        - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
+        $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
+        - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
+        $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'] 
+        - $land_dictionary[$land_type]['gold_gain'] + $land_dictionary[$land_type]['gold_cost'];
+        $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'] 
+        - $land_dictionary[$land_type]['army_gain'] + $land_dictionary[$land_type]['army_cost'];
+        $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'] 
+        - $land_dictionary[$land_type]['food_gain'] + $land_dictionary[$land_type]['food_cost'];
 
         // Check for inaccuracies
         // Upgrading land that isn't theirs
@@ -547,7 +562,7 @@ class Game extends CI_Controller {
 
     // Creates land dictionary
     public function create_land_prototype($slug, $name, $defense, $population_cost, $food_cost, $ore_cost, $gold_cost, $army_cost, 
-                                                    $population_gain, $food_gain, $ore_gain, $gold_gain, $army_gain) {
+                                                                  $population_gain, $food_gain, $ore_gain, $gold_gain, $army_gain) {
       $object = [];
       $object['slug'] = $slug;
       $object['name'] = $name;
@@ -568,16 +583,16 @@ class Game extends CI_Controller {
     // Land dictionary for reference
     public function land_dictionary()
     {
-        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         $land_type['village'] = $this->create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0);
-        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0);
+        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
+        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
+        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
         $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
         $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 0, 1, 0, 100, 0, 0, 0, 0);
-        $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 1, 100, 0, 0, 0, 0);
+        // $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
         return $land_type;
     }
 

@@ -50,6 +50,7 @@ Testing
     Logged Out
     New Account
     Migrate data
+        UPDATE `land` SET `land_type` = 'village' WHERE `land_type` != 'unclaimed';
 
 Mechanic
     Scales up more efficiently
@@ -69,13 +70,10 @@ Build a city for every 100 lands
 ==========================================================================================
 
 High Priority
-    Upgrade Logic
-    Update down into resource update
-    Value Logic
-    User Numbers
     How to play
     Migrate Data
-        Land type to village
+        Unclaimed land type to village
+        Set Population
     Testing
 
 Moderate Priority
