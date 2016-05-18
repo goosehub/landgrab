@@ -343,11 +343,9 @@ class Game extends CI_Controller {
         
         // Do random attack with two sides
         if ($attack_power > $defend_power) {
-            // On victory, change losers passive army if needed
-            $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
-            // Todo
-            // $new_passive_army = $defender_account['passive_army'] - $land_type_dictionary[$land_square['land_type']];
-            $query_action = $this->game_model->update_account_passive_army($land_square['account_key'], $new_passive_army);
+            // On victory, change losers population
+            // TODO
+            // ...
             return true;
         } else {
             // On failure, destroy active army of attacker
@@ -394,16 +392,15 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
-            // Todo
-/*
-            // Update passive and active army
-            $land_type_dictionary = $this->land_type_dictionary();
-            $defending_army = $land_type_dictionary[$upgrade_type];
-            $new_active_army = $account['active_army'] - $land_type_dictionary[$upgrade_type];
-            $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
-            $new_passive_army = $account['passive_army'] + $land_type_dictionary[$upgrade_type] - $land_type_dictionary[$land_square['land_type']];
-            $query_action = $this->game_model->update_account_passive_army($account_key, $new_passive_army);
-*/
+            // Update resources
+            $land_dictionary = $this->land_dictionary();
+            $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
+            $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'];
+            $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'];
+            $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'];
+            $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'];
+            $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
+
             // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
 
@@ -452,18 +449,9 @@ class Game extends CI_Controller {
             return false;
         }
 
+        // Ensure they have enouugh check
         // TODO
-/*        // Doing an upgade they don't have enough active army for
-        if ($account['active_army'] < $land_type_dictionary[$upgrade_type]) {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought active army for this upgrade');
-            return false;
-        }
-        // Doing an upgade they don't have enough passive army for
-        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type] && $upgrade_type != 'village') {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
-            return false;
-        }
-*/
+
         // Everything checks out
         return true;
     }

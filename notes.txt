@@ -71,6 +71,8 @@ Build a city for every 100 lands
 High Priority
     Upgrade Logic
     Value Logic
+    Migrate Data
+        Population
     Taxes
     Testing
 
@@ -78,6 +80,8 @@ Moderate Priority
     Trade Mechanic
     Cities Mechanic
     Capitals Mechanic
+    Apostrophy in default land name encoding bug
+    Lng line issue
 
 Low Priority
     Feature
