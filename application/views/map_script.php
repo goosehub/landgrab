@@ -500,7 +500,7 @@ function initMap()
 	// Land loop
 	// 
 
-	<?php // This foreach loop runs between 400 to 15,000 times, so it's as dry as possible here, no comments
+	<?php // This foreach loop runs 15,000 times, so bandwidth is key
     foreach ($lands as $land) { 
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
@@ -515,10 +515,13 @@ function initMap()
         }
         if ($land['land_type'] === 'fortification') {
           $stroke_weight = 2;
-          $stroke_color = '#AA9739';
+          $stroke_color = '#585858';
         } else if ($land['land_type'] === 'stronghold') {
           $stroke_weight = 2;
           $stroke_color = '#AA3939';
+        } else if ($land['land_type'] === 'city') {
+          $stroke_weight = 2;
+          $stroke_color = '#2D882D';
         }
         if ($log_check && $land['account_key'] === $account['id']) { 
             $stroke_weight = 3;
@@ -623,7 +626,7 @@ function initMap()
 
   function update_lands(lands) {
     // Loop through lands
-    // This loop may run as many as 15,000 times, so be performant
+    // This loop may run up to 15,000 times, so focus is performance
     number_of_lands = lands.length;
     for (i = 0; i < number_of_lands; i++) {
 
@@ -642,10 +645,13 @@ function initMap()
       }
       if (land['land_type'] === 'fortification') {
         stroke_weight = 2;
-        stroke_color = '#AA9739';
+        stroke_color = '#585858';
       } else if (land['land_type'] === 'stronghold') {
         stroke_weight = 2;
         stroke_color = '#AA3939';
+      } else if (land['land_type'] === 'city') {
+        stroke_weight = 2;
+        stroke_color = '#2D882D';
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;

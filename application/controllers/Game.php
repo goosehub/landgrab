@@ -490,25 +490,27 @@ class Game extends CI_Controller {
             return false;
         }
         // Check resources
-        if ($population < 0 && $account['population'] < abs($population) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough population');
-            return false;
-        }
-        if ($ore < 0 && $account['ore'] < abs($ore) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough ore');
-            return false;
-        }
-        if ($gold < 0 && $account['gold'] < abs($gold) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough gold');
-            return false;
-        }
-        if ($army < 0 && $account['army'] < abs($army) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough army');
-            return false;
-        }
-        if ($food < 0 && $account['food'] < abs($food) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough food');
-            return false;
+        if ($upgrade_type != 'unclaimed' && $upgrade_type != 'village') {
+            if ($population < 0 && $account['population'] < abs($population) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough population');
+                return false;
+            }
+            if ($ore < 0 && $account['ore'] < abs($ore) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough ore');
+                return false;
+            }
+            if ($gold < 0 && $account['gold'] < abs($gold) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough gold');
+                return false;
+            }
+            if ($army < 0 && $account['army'] < abs($army) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough army');
+                return false;
+            }
+            if ($food < 0 && $account['food'] < abs($food) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough food');
+                return false;
+            }
         }
 
         // Ensure they have enouugh check
