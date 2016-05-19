@@ -2,8 +2,8 @@
 <div id="top_right_block">
 
   <!-- Update Dropdown -->
-    <button class="update_info_button menu_element btn btn-warning">
-        Tweak Update
+    <button class="update_info_button menu_element btn btn-danger">
+        The Resource Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 
@@ -98,6 +98,7 @@
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
       <li><a class="faq_button btn btn-primary">FAQ</a></li>
       <li><a class="btn btn-success" href="https://www.reddit.com/r/LandgrabXYZ/" target="_blank">/r/LandgrabXYZ</a></li>
+      <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
       <li><a class="report_bugs_button btn btn-danger">Report Bugs</a></li>
     </ul>
   </div>

@@ -35,7 +35,7 @@ land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 
 land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
 land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
 land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 10);
-land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 0, 100, 0, 0, 0, 40);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 20, 1, 1, 0, 100, 0, 0, 0, 40);
 // land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
 land_dictionary_length = Object.keys(land_dictionary).length;
 
@@ -218,7 +218,7 @@ function initMap()
         if (land_data['land_name'] != '') {
           window_string += '<strong class="land_name h3">' + land_data['land_name'] + '</strong>';
         }
-        window_string += '<div class="land_info"><br>';
+        window_string += '<div class="land_info">';
         // Content
         if (land_data['content'] != '') {
           window_string += '<div class="land_content_div">' + land_data['content'] + '</div><br>';
@@ -456,11 +456,10 @@ function initMap()
     result = '<div class="form_outer_cont upgrade_parent"><form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">'
     + '<button class="expand_land_form btn btn-success form-control" type="button" '
     + 'data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">'
-      + 'Upgrade This Land'
+      + 'Convert This Land'
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
         + '<div id="upgrade_dropdown" class="collapse">'
           + '<div class="form-group">'
-            + '<strong class="h4 text-center">Available Upgrades</strong><br>'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';

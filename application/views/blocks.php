@@ -9,16 +9,13 @@
     </button>
     <hr>
     <p>
-        <strong>Landgrab is a game of fighting for control of the real world</strong>
+        <strong>Landgrab is a game of fighting for control of the world.</strong>
     </p>
     <p>
-        You pick a place to start your conquest. You can then spread outward. You have 20 mobilized army. Once you have more than 20 lands, your army will grow with your empire. A larger mobilized army has more chance of victory (20 Attack over 10 Defense is 2/1 chance of Victory). If your army is defeated, it will reset to 0, but will gain 20 in the next minute, then rebuild to its maximum size over 10 minutes.
-    </p>
-    <p>
-        You can defend against attacks by dedicating a portion your mobilized army to defend a square. This will also reduce your maximum mobilized army. Use them to defend your favorite locations, or position them strategically on battle fronts. If a fortification is surrounded, it is considered under siege and it's defense is downgraded.
+        You pick a place to start your conquest. You can then spread outward. Build farms, mines, fortifications, cities and more to strengthen your empire and your army. Make allies along the way to ensure your survival. Lost a battle and your army will regen by 20 a minute until its max is reached. Convert all your lands to unclaimed to start over.
     </p>
     <blockquote>
-        Fight for the world!
+        The world is yours.
     </blockquote>
 
     <hr>
@@ -55,7 +52,11 @@
     </button>
     <hr>
     <ul>
-        <li></li>
+        <li>Resource system in place.</li>
+        <li>Resources such as Population, Food, Ore, and Gold added.</li>
+        <li>The list of land types is now unclaimed, village farm, mine, market, fortification, stronghold, town, and city.</li>
+        <li>Army is now treated as a resource.</li>
+        <li>Army regens by 20 a minute until max is reached.</li>
     </ul>
 </div>
 
@@ -91,10 +92,9 @@
     <p><strong>Why does it say I claimed the land, but it's the wrong color?</strong></p>
     <p>This happens when you get a land and update your map at the exact same time. It is somewhat rare and difficult to fix, but I am working on it.</p>
     <p><strong>Can you make a map with smaller squares?</strong></p>
+    <p>The map currently consists of 15,000+ squares. Any more would be pushing most computers and browsers beyond its limits.</p>
     <p><strong>Can water squares be seperate from land squares?</strong></p>
-    <p>This game is built on the Google Maps API. It does not tell me if a square of coords have land or not. It would need to be manually entered for each of the squares. There's also the sticky case of what counts as land or water (islands). At the moment, no plans to seperate the two.</p>
-    <p><strong>Can you make a map with smaller squares?</strong></p>
-    <p>Unfortunately, the current 15K+ squares are already pushing the limits of most browsers, as well as bandwidth and backend resources as well. This is not currently on the table.</p>
+    <p>This game is built on the Google Maps API. It does not tell me if a square of coords have land or not. It would need to be manually entered for each of the squares. There's also the sticky case of what counts as land or water (islands). At the moment, there's no plans to seperate the two.</p>
     <p><strong>Can you make it so new users can't start inside my land?</strong></p>
     <p>New users have to start somewhere. They can take any unfortified land. Also, calculating connected walls for each action requires a large amount of path finding logic that is currently not possible if it was desired.</p>
 </div>

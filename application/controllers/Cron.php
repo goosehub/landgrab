@@ -51,8 +51,8 @@ class Cron extends CI_Controller {
 
             // Temporary
             // Migrate account fix
-            $account_lands = $this->user_model->get_count_of_account_land($account_key);
-            $query_action = $this->game_model->update_account_population($account_key, $account_lands);
+            // $account_lands = $this->user_model->get_count_of_account_land($account_key);
+            // $query_action = $this->game_model->update_account_population($account_key, $account_lands);
 
           } // End account loop
 
