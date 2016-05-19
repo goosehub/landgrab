@@ -10,22 +10,22 @@
   <?php if ($log_check) { ?>
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <span id="active_army_display_span" class="bold_font"><?php echo number_format($account['active_army']); ?></span>/
-        <span id="ready_army_display_span" class="bold_font"><?php echo number_format($account['army']); ?></span> Army,
-        <span id="population_display_span" class="bold_font"><?php echo number_format($account['population']); ?></span> Pop,
-        <span id="food_display_span" class="bold_font"><?php echo number_format($account['food']); ?></span> Food,
-        <span id="ore_display_span" class="bold_font"><?php echo number_format($account['ore']); ?></span> Ore,
-        <span id="gold_display_span" class="bold_font"><?php echo number_format($account['gold']); ?></span> Gold
+        <span id="active_army_display_span" class="bold_font text-danger"><?php echo number_format($account['active_army']); ?></span>/
+        <span id="ready_army_display_span" class="bold_font text-danger"><?php echo number_format($account['army']); ?></span> Army,
+        <span id="population_display_span" class="bold_font text-success"><?php echo number_format($account['population']); ?></span> Pop,
+        <span id="food_display_span" class="bold_font text-primary"><?php echo number_format($account['food']); ?></span> Food,
+        <span id="ore_display_span" class="bold_font text-info"><?php echo number_format($account['ore']); ?></span> Ore,
+        <span id="gold_display_span" class="bold_font text-warning"><?php echo number_format($account['gold']); ?></span> Gold
       <span class="caret"></span>
     </button>
     <ul class="stat_dropdown dropdown-menu" aria-labelledby="stat_dropdown">
       <li>Owned Lands: <span id="owned_lands_span" class="bold_font pull-right"><?php echo $account['land_count']; ?></span></li>
-      <li>Ready Army: <span id="active_army_span" class="bold_font pull-right"><?php echo $account['active_army']; ?></span></li>
-      <li>Potential Army: <span id="ready_army_span" class="bold_font pull-right"><?php echo $account['army']; ?></span></li>
-      <li>Population: <span id="population_span" class="bold_font pull-right"><?php echo $account['population']; ?></span></li>
-      <li>Food: <span id="food_span" class="bold_font pull-right"><?php echo $account['food']; ?></span></li>
-      <li>Ore: <span id="ore_span" class="bold_font pull-right"><?php echo $account['ore']; ?></span></li>
-      <li>Gold: <span id="gold_span" class="bold_font pull-right"><?php echo $account['gold']; ?></span></li>
+      <li>Ready Army: <span id="active_army_span" class="bold_font pull-right text-danger"><?php echo $account['active_army']; ?></span></li>
+      <li>Potential Army: <span id="ready_army_span" class="bold_font pull-right text-danger"><?php echo $account['army']; ?></span></li>
+      <li>Population: <span id="population_span" class="bold_font pull-right text-success"><?php echo $account['population']; ?></span></li>
+      <li>Food: <span id="food_span" class="bold_font pull-right text-primary"><?php echo $account['food']; ?></span></li>
+      <li>Ore: <span id="ore_span" class="bold_font pull-right text-info"><?php echo $account['ore']; ?></span></li>
+      <li>Gold: <span id="gold_span" class="bold_font pull-right text-warning"><?php echo $account['gold']; ?></span></li>
     </ul>
   <?php } ?>
 
