@@ -51,6 +51,7 @@ Testing
     New Account
     Migrate data
         UPDATE `land` SET `land_type` = 'village' WHERE `land_type` != 'unclaimed';
+        UPDATE `account` SET `food`=0,`population`=0,`gold`=0,`ore`=0,`army`=20,`active_army`=20 WHERE 1;
 
 Mechanic
     Scales up more efficiently

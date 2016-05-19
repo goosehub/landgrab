@@ -411,9 +411,13 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_window_form(form_type, button_class, d) {
+    var hide_class = '';
+    if (form_type != 'update') {
+      hide_class = 'hidden';
+    }
 		result = '<div class="form_outer_cont land_form_cont"><hr><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
 		  result += '<div id="land_form_dropdown">'
-          + '<div class="form-group">'
+          + '<div class="form-group ' + hide_class + '">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
@@ -578,13 +582,11 @@ function initMap()
 
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
-
         if (log_check) {
           update_stats(data['account']);
         }
 
         console.log('update');
-
       }
     });
   }
@@ -635,13 +637,13 @@ function initMap()
   function update_stats(account) {
     $('#active_army_display_span').html(account['active_army']);
     $('#ready_army_display_span').html(account['army']);
-    $('#pop_display_span').html(account['pop']);
+    $('#population_display_span').html(account['population']);
     $('#food_display_span').html(account['food']);
     $('#ore_display_span').html(account['ore']);
     $('#gold_display_span').html(account['gold']);
     $('#active_army_span').html(account['active_army']);
     $('#ready_army_span').html(account['army']);
-    $('#pop_span').html(account['pop']);
+    $('#population_span').html(account['population']);
     $('#food_span').html(account['food']);
     $('#ore_span').html(account['ore']);
     $('#gold_span').html(account['gold']);

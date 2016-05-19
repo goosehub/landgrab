@@ -219,11 +219,13 @@ class Game extends CI_Controller {
             $content = $this->input->post('content');
             // $content = $this->sanitize_html($content);
             $content = $content;
+            $land_dictionary = $this->land_dictionary();
 
             // Do attack logic
             $attack_result = null;
             if ($form_type === 'attack') {
-                $attack_result = $this->land_attack($land_square, $world, $land_square['land_type'], $account);
+                $land_type = $land_square['land_type'];
+                $attack_result = $this->land_attack($land_square, $world, $land_type, $account);
                 // Return failed attack message
                 if (!$attack_result) {
                     echo '{"status": "success", "result": false, "message": "Defeat"}';
@@ -232,10 +234,17 @@ class Game extends CI_Controller {
                     echo '{"status": "success", "result": true, "message": "Victory"}';
                     // Check if account losing land is now inactive
                     $loser_account_lands = $this->user_model->get_count_of_account_land($land_square['account_key']);
-                    // If so, mark as inactive
                     if (intVal($loser_account_lands) === 1) {
                         $query_action = $this->game_model->update_account_active_state($land_square['account_key'], 0);
                     }
+
+                    // Update resources for the loser
+                    $population = $land_dictionary[$land_type]['population_cost'] - $land_dictionary[$land_type]['population_gain'];
+                    $ore = $land_dictionary[$land_type]['ore_cost'] - $land_dictionary[$land_type]['ore_gain'];
+                    $gold = $land_dictionary[$land_type]['gold_cost'] - $land_dictionary[$land_type]['gold_gain'];
+                    $army = $land_dictionary[$land_type]['army_cost'] - $land_dictionary[$land_type]['army_gain'];
+                    $food = $land_dictionary[$land_type]['food_cost'] - $land_dictionary[$land_type]['food_gain'];
+                    $query_action = $this->user_model->increment_account_resources_by_id($land_square['account_key'], $population, $ore, $gold, $army, $food);
                 }
             }
             // Claim response
@@ -244,6 +253,17 @@ class Game extends CI_Controller {
             // Update response
             } else {
                 echo '{"status": "success", "result": true, "message": "Updated"}';
+            }
+
+            // Update resources for the this account
+            if ($form_type != 'update') {
+                $default_land_type = 'village';
+                $population = $land_dictionary[$default_land_type]['population_gain'] - $land_dictionary[$default_land_type]['population_cost'];
+                $ore = $land_dictionary[$default_land_type]['ore_gain'] - $land_dictionary[$default_land_type]['ore_cost'];
+                $gold = $land_dictionary[$default_land_type]['gold_gain'] - $land_dictionary[$default_land_type]['gold_cost'];
+                $army = $land_dictionary[$default_land_type]['army_gain'] - $land_dictionary[$default_land_type]['army_cost'];
+                $food = $land_dictionary[$default_land_type]['food_gain'] - $land_dictionary[$default_land_type]['food_cost'];
+                $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
             }
 
             if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
@@ -396,7 +416,7 @@ class Game extends CI_Controller {
             // Update resources
             $land_dictionary = $this->land_dictionary();
             // Calculate change in resources from previous to new
-            $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
+            $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost']
             - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
             $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
             - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
@@ -446,7 +466,7 @@ class Game extends CI_Controller {
         $land_type = $land_square['land_type'];
         $land_dictionary = $this->land_dictionary();
         // Calculate change in resources from previous to new
-        $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost'];
+        $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost']
         - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
         $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
         - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
