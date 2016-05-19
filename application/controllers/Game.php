@@ -610,8 +610,8 @@ class Game extends CI_Controller {
         $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
         $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
         $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 1, 100, 0, 0, 0, 0);
+        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 10);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 0, 100, 0, 0, 0, 40);
         // $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
         return $land_type;
     }

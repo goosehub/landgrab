@@ -34,8 +34,8 @@ land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 
 land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
 land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
 land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 0);
-land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 1, 100, 0, 0, 0, 0);
+land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 10);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 10, 1, 1, 0, 100, 0, 0, 0, 40);
 // land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
 land_dictionary_length = Object.keys(land_dictionary).length;
 
@@ -216,7 +216,7 @@ function initMap()
 
         // Land name
         if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong>';
+          window_string += '<strong class="land_name h3">' + land_data['land_name'] + '</strong>';
         }
         window_string += '<div class="land_info"><br>';
         // Content
@@ -415,6 +415,14 @@ function initMap()
     if (form_type != 'update') {
       hide_class = 'hidden';
     }
+    var action_class = '';
+    if (form_type === 'update') {
+      action_class = 'btn-primary';
+    } else if (form_type === 'attack') {
+      action_class = 'btn-danger';
+    } else {
+      action_class = 'btn-info';
+    }
 		result = '<div class="form_outer_cont land_form_cont"><hr><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
 		  result += '<div id="land_form_dropdown">'
           + '<div class="form-group ' + hide_class + '">'
@@ -439,30 +447,53 @@ function initMap()
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>';
-          result += '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
+          result += '<button type="button" id="submit_land_form" class="btn + ' + action_class + ' form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';
 		return result;
 	}
 
   function upgrade_form(d) {
     result = '<div class="form_outer_cont upgrade_parent"><form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">'
-    + '<button class="expand_land_form expand_trade btn btn-success form-control" type="button" '
+    + '<button class="expand_land_form btn btn-success form-control" type="button" '
     + 'data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">'
       + 'Upgrade This Land'
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
         + '<div id="upgrade_dropdown" class="collapse">'
           + '<div class="form-group">'
-            + '<strong class="h4">Available Upgrades</strong><br>'
+            + '<strong class="h4 text-center">Available Upgrades</strong><br>'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
             for(var prop in land_dictionary) {
-              console.log('marco');
-              result += '<button type="button" class="upgrade_submit btn btn-info form-control" '
+              result += '<button type="button" class="upgrade_submit btn btn-success" '
               + 'value="' + land_dictionary[prop]['slug'] + '">' + land_dictionary[prop]['name'] + '</button>';
+              result += land_type_info(prop);
+              result += '<br>';
             }
             result +=  '</div>';
     result += '</div></form></div>';
+    return result;
+  }
+
+  function land_type_info(land_type) {
+    console.log(land_type);
+    result = '<div class="expand_land_type_info btn btn-info" type="button" '
+    + 'data-toggle="collapse" data-target="#' + land_type + '_info_dropdown" aria-expanded="false" aria-controls="' + land_type + '_info_dropdown">'
+      + 'Info'
+      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>'
+        + '<div id="' + land_type + '_info_dropdown" class="info_details_parent collapse">';
+        result += 'Defense: <span class="pull-right"><strong class="text-primary">+' + land_dictionary[land_type].defense + '</strong></span><br>';
+        result += 'Population: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].population_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].population_cost + '</strong></span><br>';
+        result += 'Food: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].food_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].food_cost + '</strong></span><br>';
+        result += 'Ore: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].ore_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].ore_cost + '</strong></span><br>';
+        result += 'Gold: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].gold_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].gold_cost + '</strong></span><br>';
+        result += 'Army: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].army_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].army_cost + '</strong></span><br>';
+    result += '</div>';
     return result;
   }
 

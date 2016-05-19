@@ -7,43 +7,11 @@ Avoid skinner boxes
     think during downtime
 Progression to teach the game
 Scale of strat
-
-Farm = Food - 1 Population
-Mine = Ore - 2 Population
-Market = Gold - 3 Ore
-Fortification = Defense - 1 Army
-Stronghold = Army + Defense - 2 Gold
-Town = 10 Population + Defense - 5 Food
-City = 100 population + Defense - 10 food - 5 gold - 5 ore
-Capital = 20 army + Defense - 1 per player
-
-unclaimed
-village
-farm
-mine
-market
-fortification
-stronghold
-town
-city
-capital
+Tech Tree
 
 Land Prototype
-    slug,
-    name,
-    defense,
-    population_cost,
-    food_cost,
-    ore_cost,
-    gold_cost,
-    army_cost,
-    population_gain,
-    food_gain,
-    ore_gain,
-    gold_gain,
-    army_gain,
-
-slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
+    unclaimed, village farm, mine, market, fortification, stronghold, town, city, capital
+    slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
 Testing
     Logged In
@@ -52,19 +20,6 @@ Testing
     Migrate data
         UPDATE `land` SET `land_type` = 'village' WHERE `land_type` != 'unclaimed';
         UPDATE `account` SET `food`=0,`population`=0,`gold`=0,`ore`=0,`army`=20,`active_army`=20 WHERE 1;
-
-Mechanic
-    Scales up more efficiently
-    Only 1 per player, trades their bonus for other players bonuses
-
-UI
-    Click on opponent land
-    Click on button to offer trade
-    Offer or request access to resource
-
-Build a city for every 100 lands
-    Bonus 10 active army
-    100 defense
 
 ==========================================================================================
     Goals
