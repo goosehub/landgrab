@@ -92,7 +92,7 @@
       <span class="caret"></span>
     </button>
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-      <li class="text-center"><strong class="text-danger">Version 2.0.0</strong></li>
+      <li class="text-center"><strong class="text-danger">Version 3.0.0</strong></li>
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
       <li><a class="about_button btn btn-info">About LandGrab</a></li>

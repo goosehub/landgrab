@@ -155,6 +155,7 @@ html, body {
 /* InfoWindow */
 .land_window {
   overflow-x: hidden;
+  min-width: 120px;
 }
 #land_form .row {
   margin-right: 0;

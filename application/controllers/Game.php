@@ -60,7 +60,7 @@ class Game extends CI_Controller {
         $data['worlds'] = $this->user_model->get_all_worlds();
 
         // Get all lands
-        $update_timespan = 15 * 2;
+        $update_timespan = 20;
         $data['update_timespan'] = ($update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $update_timespan);
@@ -91,6 +91,7 @@ class Game extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
         $this->load->view('blocks', $data);
+        $this->load->view('leaderboards', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
         $this->load->view('chat_script', $data);
@@ -490,23 +491,23 @@ class Game extends CI_Controller {
         }
         // Check resources
         if ($population < 0 && $account['population'] < abs($population) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough population');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough population');
             return false;
         }
         if ($ore < 0 && $account['ore'] < abs($ore) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough ore');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough ore');
             return false;
         }
         if ($gold < 0 && $account['gold'] < abs($gold) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough gold');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough gold');
             return false;
         }
         if ($army < 0 && $account['army'] < abs($army) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough army');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough army');
             return false;
         }
         if ($food < 0 && $account['food'] < abs($food) ) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You do not have enough food');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough food');
             return false;
         }
 
@@ -562,12 +563,53 @@ class Game extends CI_Controller {
             $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
             // Math for finding approx land area
-            $leader['land_mi'] = number_format($leader['COUNT(*)'] * (70 * $world['land_size']));
-            $leader['land_km'] = number_format($leader['COUNT(*)'] * (112 * $world['land_size']));
+            $leader['land_mi'] = number_format($leader['total'] * (70 * $world['land_size']));
+            $leader['land_km'] = number_format($leader['total'] * (112 * $world['land_size']));
             $rank++;
         }
         $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;
-
+/*        
+        // Cities
+        $leaderboard_cities = $this->leaderboard_model->leaderboard_cities($world_key);
+        $rank = 1;
+        foreach ($leaderboard_cities as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_cities'] = $leaderboard_cities;
+        // Strongholds
+        $leaderboard_strongholds = $this->leaderboard_model->leaderboard_strongholds($world_key);
+        $rank = 1;
+        foreach ($leaderboard_strongholds as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_strongholds'] = $leaderboard_strongholds;
+        // Army
+        $leaderboard_army = $this->leaderboard_model->leaderboard_army($world_key);
+        $rank = 1;
+        foreach ($leaderboard_army as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['id']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_Army'] = $leaderboard_army;
+        // Population
+        $leaderboard_population = $this->leaderboard_model->leaderboard_population($world_key);
+        $rank = 1;
+        foreach ($leaderboard_population as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['id']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_population'] = $leaderboard_population;
+*/
         // Return data
         return $leaderboards;
     }
@@ -609,9 +651,9 @@ class Game extends CI_Controller {
         $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
         $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
         $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
-        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 10);
-        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 20, 1, 1, 0, 100, 0, 0, 0, 40);
+        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 0, 4, 0, 1, 0, 0, 0, 50);
+        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 0, 0, 10, 0, 0, 0, 10);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 20, 0, 1, 0, 100, 0, 0, 0, 20);
         // $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
         return $land_type;
     }

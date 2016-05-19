@@ -33,9 +33,9 @@ land_dictionary['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 
 land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
 land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
 land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
-land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 2, 0, 0, 1, 0, 0, 0, 20);
-land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 1, 0, 10, 0, 0, 0, 10);
-land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 20, 1, 1, 0, 100, 0, 0, 0, 40);
+land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 0, 4, 0, 1, 0, 0, 0, 50);
+land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 0, 0, 10, 0, 0, 0, 10);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 20, 0, 1, 0, 100, 0, 0, 0, 20);
 // land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
 land_dictionary_length = Object.keys(land_dictionary).length;
 
@@ -228,14 +228,14 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
-        window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
-        // Seige Logic
+        window_string += 'Land: <strong class="text-success pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
+        // Defense
         if (log_check && !land_data['range_check']) {
+          // Seige Logic
           window_string += '<strong class="text-danger pull-right">Under Siege</strong><br>';
-          window_string += 'Defense: <strong class="pull-right">' + 10 + '</strong>';
+          window_string += 'Defense: <strong class="text-danger pull-right">' + 10 + '</strong>';
         } else {
-          // Defense
-          window_string += 'Defense: <strong class="pull-right">' + number_format(land_dictionary[land_data['land_type']].defense) + '</strong>';
+          window_string += 'Defense: <strong class="text-danger pull-right">' + number_format(land_dictionary[land_data['land_type']].defense) + '</strong>';
         }
 
         window_string += '</div>';
@@ -696,7 +696,7 @@ function initMap()
       var table_string = '<tr><td>' + leader['rank'] + '</td>'
             + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
             + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['COUNT(*)'] + '</td>'
+            + '<td>' + leader['total'] + '</td>'
             + '<td>' + leader['land_mi'] + ' Mi&sup2; | ' + leader['land_km'] + ' KM&sup2;</td></tr>';
 
       // Add string to table

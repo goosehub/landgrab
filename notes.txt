@@ -26,7 +26,6 @@ Testing
 ==========================================================================================
 
 High Priority
-    How to play
     Migrate Data
         Unclaimed land type to village
         Set Population
