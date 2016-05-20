@@ -38,6 +38,10 @@
       <ul class="dropdown-menu" aria-labelledby="leaderboard_dropdown">
         <li class="text-center"><strong class="text-primary">Leaderboards</strong></li>
         <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
+        <li><a class="leaderboard_army_button leaderboard_link text-right">Army</a></li>
+        <li><a class="leaderboard_population_button leaderboard_link text-right">Population</a></li>
+        <li><a class="leaderboard_strongholds_button leaderboard_link text-right">Strongholds</a></li>
+        <li><a class="leaderboard_cities_button leaderboard_link text-right">Cities</a></li>
       </ul>
     </div>
 

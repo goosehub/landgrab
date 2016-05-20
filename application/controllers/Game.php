@@ -569,8 +569,7 @@ class Game extends CI_Controller {
             $leader['land_km'] = number_format($leader['total'] * (112 * $world['land_size']));
             $rank++;
         }
-        $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;
-/*        
+        $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;        
         // Cities
         $leaderboard_cities = $this->leaderboard_model->leaderboard_cities($world_key);
         $rank = 1;
@@ -600,7 +599,7 @@ class Game extends CI_Controller {
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
             $rank++;
         }
-        $leaderboards['leaderboard_Army'] = $leaderboard_army;
+        $leaderboards['leaderboard_army'] = $leaderboard_army;
         // Population
         $leaderboard_population = $this->leaderboard_model->leaderboard_population($world_key);
         $rank = 1;
@@ -611,7 +610,7 @@ class Game extends CI_Controller {
             $rank++;
         }
         $leaderboards['leaderboard_population'] = $leaderboard_population;
-*/
+
         // Return data
         return $leaderboards;
     }

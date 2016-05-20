@@ -701,8 +701,16 @@ function initMap()
   function update_leaderboards(leaderboards) {
     // Set leaderboards
     leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
+    leaderboard_cities = leaderboards['leaderboard_cities'];
+    leaderboard_strongholds = leaderboards['leaderboard_strongholds'];
+    leaderboard_army = leaderboards['leaderboard_army'];
+    leaderboard_population = leaderboards['leaderboard_population'];
     // Empty current leaderboards
     $('#leaderboard_land_owned_table').find('tr:gt(0)').remove();
+    $('#leaderboard_cities_table').find('tr:gt(0)').remove();
+    $('#leaderboard_strongholds_table').find('tr:gt(0)').remove();
+    $('#leaderboard_army_table').find('tr:gt(0)').remove();
+    $('#leaderboard_population_table').find('tr:gt(0)').remove();
 
     // 
     // Add updated rows to leaderboards
@@ -718,6 +726,46 @@ function initMap()
 
       // Add string to table
       $('#leaderboard_land_owned_table tr:last').after(table_string);
+    });
+    // leaderboard_cities
+    $.each(leaderboard_cities, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['total'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_cities_table tr:last').after(table_string);
+    });
+    // leaderboard_strongholds
+    $.each(leaderboard_strongholds, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['total'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_strongholds_table tr:last').after(table_string);
+    });
+    // leaderboard_army
+    $.each(leaderboard_army, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['army'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_army_table tr:last').after(table_string);
+    });
+    // leaderboard_population
+    $.each(leaderboard_population, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['population'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_population_table tr:last').after(table_string);
     });
 
     return true;

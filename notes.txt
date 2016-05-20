@@ -13,15 +13,15 @@ Land Prototype
     unclaimed, village farm, mine, market, fortification, stronghold, town, city, capital
     slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
-Testing
-    Logged In
-    Logged Out
-    New Account
-    Migrate data
-        UPDATE `land` SET `land_type` = 'village' WHERE `land_type` != 'unclaimed';
-        UPDATE `account` SET `food`=0,`population`=0,`gold`=0,`ore`=0,`army`=20,`active_army`=20 WHERE 1;
-
-Attack land when no longer in range
+Govern
+    Need 1 per population
+    If you are lacking, you can not attack or claim land
+Capitol
+    Free
+    Gives 100 allowed governance
+Statehouse
+    10 Govern
+    1 Gold
 
 ==========================================================================================
     Goals
@@ -30,10 +30,9 @@ Attack land when no longer in range
 High Priority
 
 Moderate Priority
+    Attack land when no longer in range bug
     Trade Mechanic
-    Cities Mechanic
-    Capitals Mechanic
-    Apostrophy in default land name encoding bug
+    Capitols Mechanic
     Lng line issue
 
 Low Priority
@@ -50,6 +49,7 @@ Low Priority
     Bug
         Sometimes land isn't updated after buy right during update
         White edit text (confirmed on chrome on mac)
+        Apostrophy in default land name encoding bug needs a real fix
     Security/Cheating/Manipulation Prevention
         General Security
     Performance

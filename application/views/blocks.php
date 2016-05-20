@@ -46,12 +46,18 @@
 <!-- Update Block -->
 <div id="update_info_block" class="center_block">
     <strong>Recent Updates</strong>
-    <small>Version 3.0.0</small>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
+    
     <hr>
+
+    <small>Version 3.1.0</small>
+    <ul>
+        <li>New Leaderboards.</li>
+    </ul>
+    <small>Version 3.0.0</small>
     <ul>
         <li>Resource system in place.</li>
         <li>Resources such as Population, Food, Ore, and Gold added.</li>
@@ -59,7 +65,6 @@
         <li>Army is now treated as a resource.</li>
         <li>Army regens by 20 a minute until max is reached.</li>
         <li>User interface improved for less clicking.</li>
-        <li>New Leaderboards are coming very soon.</li>
     </ul>
 </div>
 

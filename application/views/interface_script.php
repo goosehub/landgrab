@@ -98,5 +98,21 @@ $('.leaderboard_land_owned_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_land_owned_block').show();
 });
+$('.leaderboard_cities_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_cities_block').show();
+});
+$('.leaderboard_strongholds_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_strongholds_block').show();
+});
+$('.leaderboard_army_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_army_block').show();
+});
+$('.leaderboard_population_button').click(function(){
+    $('.center_block').hide();
+    $('#leaderboard_population_block').show();
+});
 
 </script>
