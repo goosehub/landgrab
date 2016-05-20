@@ -21,15 +21,13 @@ Testing
         UPDATE `land` SET `land_type` = 'village' WHERE `land_type` != 'unclaimed';
         UPDATE `account` SET `food`=0,`population`=0,`gold`=0,`ore`=0,`army`=20,`active_army`=20 WHERE 1;
 
+Attack land when no longer in range
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Migrate Data
-        Unclaimed land type to village
-        Set Population
-    Testing
 
 Moderate Priority
     Trade Mechanic

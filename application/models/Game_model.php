@@ -108,16 +108,6 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;    
  }
- // Update account population
- function update_account_population($account_key, $population)
- {
-    $data = array(
-        'population' => $population
-    );
-    $this->db->where('id', $account_key);
-    $this->db->update('account', $data);
-    return true;    
- }
  // Get accounts in world
  function get_accounts_in_world($world_key)
  {

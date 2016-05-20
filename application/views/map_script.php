@@ -475,7 +475,6 @@ function initMap()
   }
 
   function land_type_info(land_type) {
-    console.log(land_type);
     result = '<div class="expand_land_type_info btn btn-info" type="button" '
     + 'data-toggle="collapse" data-target="#' + land_type + '_info_dropdown" aria-expanded="false" aria-controls="' + land_type + '_info_dropdown">'
       + 'Info'
@@ -518,10 +517,16 @@ function initMap()
           $stroke_color = '#585858';
         } else if ($land['land_type'] === 'stronghold') {
           $stroke_weight = 2;
-          $stroke_color = '#AA3939';
+          $stroke_color = '#F72525';
         } else if ($land['land_type'] === 'city') {
           $stroke_weight = 2;
           $stroke_color = '#2D882D';
+        } else if ($land['land_type'] === 'town') {
+          $stroke_weight = 2;
+          $stroke_color = '#F7DB25';
+        } else if ($land['land_type'] === 'market') {
+          $stroke_weight = 2;
+          $stroke_color = '#911BA2';
         }
         if ($log_check && $land['account_key'] === $account['id']) { 
             $stroke_weight = 3;
@@ -648,10 +653,16 @@ function initMap()
         stroke_color = '#585858';
       } else if (land['land_type'] === 'stronghold') {
         stroke_weight = 2;
-        stroke_color = '#AA3939';
+        stroke_color = '#F72525';
       } else if (land['land_type'] === 'city') {
         stroke_weight = 2;
         stroke_color = '#2D882D';
+      } else if (land['land_type'] === 'town') {
+        stroke_weight = 2;
+        stroke_color = '#F7DB25';
+      } else if (land['land_type'] === 'market') {
+        stroke_weight = 2;
+        stroke_color = '#911BA2';
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;

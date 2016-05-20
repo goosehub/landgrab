@@ -49,11 +49,6 @@ class Cron extends CI_Controller {
             // Update account active_army
             $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
 
-            // Temporary
-            // Migrate account fix
-            // $account_lands = $this->user_model->get_count_of_account_land($account_key);
-            // $query_action = $this->game_model->update_account_population($account_key, $account_lands);
-
           } // End account loop
 
         } // End world loop
