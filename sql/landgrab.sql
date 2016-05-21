@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS `account` (
   `food` int(11) NOT NULL,
   `ore` int(11) NOT NULL,
   `gold` int(11) NOT NULL,
-  `corruption` int(11) NOT NULL,
   `army` int(11) NOT NULL,
   `color` varchar(8) NOT NULL,
   `default_land_name` varchar(512) NOT NULL,

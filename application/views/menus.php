@@ -3,7 +3,7 @@
 
   <!-- Update Dropdown -->
     <button class="update_info_button menu_element btn btn-danger">
-        The Corruption Update
+        The Army Type Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 
@@ -16,12 +16,6 @@
         <span id="food_display_span" class="bold_font text-primary"><?php echo number_format($account['food']); ?></span> Food,
         <span id="ore_display_span" class="bold_font text-info"><?php echo number_format($account['ore']); ?></span> Ore,
         <span id="gold_display_span" class="bold_font text-warning"><?php echo number_format($account['gold']); ?></span> Gold
-        <span id="corruption_display_span" class="bold_font text-danger">
-          <?php echo $account['corruption'] ? number_format($account['corruption']) : ''; ?>
-        </span>
-        <span id="corruption_word_span">
-          <?php echo $account['corruption'] ? ' Corruption' : ''; ?>          
-        </span>
       <span class="caret"></span>
     </button>
     <ul id="stat_dropdown_block" class="stat_dropdown dropdown-menu" aria-labelledby="stat_dropdown">
@@ -32,7 +26,6 @@
       <li>Food: <span id="food_span" class="bold_font pull-right text-primary"><?php echo $account['food']; ?></span></li>
       <li>Ore: <span id="ore_span" class="bold_font pull-right text-info"><?php echo $account['ore']; ?></span></li>
       <li>Gold: <span id="gold_span" class="bold_font pull-right text-warning"><?php echo $account['gold']; ?></span></li>
-      <li>Corruption: <span id="corruption_span" class="bold_font pull-right text-danger"><?php echo $account['corruption']; ?></span></li>
     </ul>
   <?php } ?>
 

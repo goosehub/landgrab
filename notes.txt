@@ -25,17 +25,47 @@ Statehouse
 
 100 lands cause 1 corruption
 
+Multiple Armies
+    Soldiers
+    Artillery
+    Special Ops
+
+Types of attacks
+    Land Attack (Take)
+    Bombard (Downgrade)
+    Secret Attack
+
+Other regen
+
+Rebalance
+    Population for towns too
+    Fort nerf
+
+Other army
+    Rock
+        Twice as likely to win
+    Paper
+        Regens twice as fast
+    Scissors
+        Only lose half army on loss
+
+Other regen resources
+Earned resources
+Faster regen resource
+Spend on regen resource
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Auto farm or mine on conquer
     Highlight what can be built or not
-    Corruption column
-    Rebalance land type
-    Apply land rebalance retroactively
+    Corruption in land info
+    Corruption in upgrade
+    Corruption loss in attack
+    Visual for farm and mine
+    Balance upward
+    Apply land rebalance retroactively ability
 
 Moderate Priority
     Attack land when no longer in range bug

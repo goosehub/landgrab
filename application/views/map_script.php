@@ -695,15 +695,6 @@ function initMap()
     $('#food_span').html(account['food']);
     $('#ore_span').html(account['ore']);
     $('#gold_span').html(account['gold']);
-    // Corruption
-    $('#corruption_span').html(account['corruption']);
-    if (account['corruption'] != '0') {
-      $('#corruption_display_span').html(account['corruption']);
-      $('#corruption_word_span').html(' Corruption');
-    } else {
-      $('#corruption_display_span').html('');
-      $('#corruption_word_span').html('');
-    }
     active_army = account['active_army'];
   }
 

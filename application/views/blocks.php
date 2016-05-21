@@ -55,8 +55,7 @@
 
     <small>Version 3.2.0</small>
     <ul>
-        <li>New Corruption Resource.</li>
-        <li>New Statehouse Landtype.</li>
+        <li>Army types (See How To Play)</li>
     </ul>
     <small>Version 3.1.0</small>
     <ul>
