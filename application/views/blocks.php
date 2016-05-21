@@ -12,7 +12,7 @@
         <strong>Landgrab is a game of fighting for control of the world.</strong>
     </p>
     <p>
-        You pick a place to start your conquest. You can then spread outward. Build farms, mines, fortifications, cities and more to strengthen your empire and your army. Make allies along the way to ensure your survival. Lost a battle and your army will regen by 20 a minute until its max is reached. Convert all your lands to unclaimed to start over.
+        You pick a place to start your conquest. You can then spread outward. Build farms, mines, fortifications, cities and more to strengthen your empire and your army. Make allies along the way to ensure your survival. Lost a battle and your army will regen by 20 a minute until its max is reached. Pick an army type to beat your enemies. Rock has a double bonus against Scissors, Paper has triple bonus against Rock, and Scissors has a quad bonus against Paper. Convert all your lands to unclaimed to start over.
     </p>
     <blockquote>
         The world is yours.
@@ -55,8 +55,7 @@
 
     <small>Version 3.2.0</small>
     <ul>
-        <li>New Corruption Resource.</li>
-        <li>New Statehouse Landtype.</li>
+        <li>Army types (See How To Play)</li>
     </ul>
     <small>Version 3.1.0</small>
     <ul>
