@@ -21,30 +21,42 @@ var land_size = <?php echo $world['land_size'] ?>;
     var username = "<?php echo $user['username']; ?>";
     var account_color = '<?php echo $account["color"]; ?>';
     var active_army = <?php echo $account['active_army'] + ''; ?>;
-    var passive_army = <?php echo $account['passive_army'] + ''; ?>;
     var player_land_count = <?php echo $account['land_count']; ?>;
 <?php } else { ?>
     var log_check = false;
 <?php } ?>
 
-// Set defense dictionary
-defense_dictionary = new Array();
-defense_dictionary['unclaimed'] = 0;
-defense_dictionary['village'] = 10;
-defense_dictionary['wall'] = 50;
-defense_dictionary['tower'] = 100;
-defense_dictionary['fort'] = 1000;
-defense_dictionary['castle'] = 5000;
-defense_dictionary['city'] = 10000;
+land_dictionary = new Array();
+land_dictionary['unclaimed'] = create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+land_dictionary['village'] = create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+land_dictionary['farm'] = create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0);
+land_dictionary['mine'] = create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
+land_dictionary['market'] = create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
+land_dictionary['fortification'] = create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
+land_dictionary['stronghold'] = create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 0, 4, 0, 1, 0, 0, 0, 50);
+land_dictionary['town'] = create_land_prototype('town', 'Town', 50, 0, 5, 0, 0, 0, 10, 0, 0, 0, 10);
+land_dictionary['city'] = create_land_prototype('city', 'City', 100, 0, 20, 0, 1, 0, 100, 0, 0, 0, 20);
+// land_dictionary['capital'] = create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
+land_dictionary_length = Object.keys(land_dictionary).length;
 
-// Set land type cost dictionary
-land_type_dictionary = new Array();
-land_type_dictionary['unclaimed'] = 0;
-land_type_dictionary['village'] = 0;
-land_type_dictionary['wall'] = 1;
-land_type_dictionary['tower'] = 2;
-land_type_dictionary['fort'] = 10;
-land_type_dictionary['castle'] = 50;
+function create_land_prototype(slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, 
+                                                    population_gain, food_gain, ore_gain, gold_gain, army_gain) {
+  var object = new Object();
+  object.slug = slug,
+  object.name = name,
+  object.defense = defense,
+  object.population_cost = population_cost,
+  object.food_cost = food_cost,
+  object.ore_cost = ore_cost,
+  object.gold_cost = gold_cost,
+  object.army_cost = army_cost,
+  object.population_gain = population_gain,
+  object.food_gain = food_gain,
+  object.ore_gain = ore_gain,
+  object.gold_gain = gold_gain,
+  object.army_gain = army_gain
+  return object;
+}
 
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
@@ -204,7 +216,7 @@ function initMap()
 
         // Land name
         if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name">' + land_data['land_name'] + '</strong><br>';
+          window_string += '<strong class="land_name h3">' + land_data['land_name'] + '</strong>';
         }
         window_string += '<div class="land_info">';
         // Content
@@ -216,23 +228,14 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
-        window_string += 'Land: <strong class="pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
-        if (!land_data['range_check']) {
+        window_string += 'Land: <strong class="text-success pull-right">' + ucwords(land_data['land_type']) + '</strong><br>';
+        // Defense
+        if (log_check && !land_data['range_check']) {
+          // Seige Logic
           window_string += '<strong class="text-danger pull-right">Under Siege</strong><br>';
-          land_type = land_data['land_type'];
-          if (!land_data['range_check'] && land_type === 'castle') {
-              land_type = 'fort';
-          } else if (!land_data['range_check'] && land_type === 'fort') {
-              land_type = 'tower';
-          } else if (!land_data['range_check'] && land_type === 'tower') {
-              land_type = 'wall';
-          } else if (!land_data['range_check'] && land_type === 'wall') {
-              $land_type = 'village';
-          }
-          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_type]) + '</strong>';
+          window_string += 'Defense: <strong class="text-danger pull-right">' + 10 + '</strong>';
         } else {
-          // Defense
-          window_string += 'Defense: <strong class="pull-right">' + number_format(defense_dictionary[land_data['land_type']]) + '</strong>';
+          window_string += 'Defense: <strong class="text-danger pull-right">' + number_format(land_dictionary[land_data['land_type']].defense) + '</strong>';
         }
 
         window_string += '</div>';
@@ -286,6 +289,7 @@ function initMap()
         $('.expand_land_form').click(function(){
           $('.expand_land_form').hide();
           $('.land_info').hide();
+          $('.land_form_cont').hide();
           setTimeout(function(){
             $('#input_land_name').focus();
           }, 200);
@@ -373,8 +377,12 @@ function initMap()
               // Return data
               response = JSON.parse(data);
 
-              if (response['error'] || response['status'] != 'success') {
+              if (response['error']) {
                 $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
+                return false;
+              }
+              if (response['status'] != 'success') {
+                $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
                 return false;
               }
 
@@ -403,9 +411,21 @@ function initMap()
 
 	// For claiming, updating, and buying land forms
 	function land_window_form(form_type, button_class, d) {
-		result = '<hr><div class="form_outer_cont"><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
+    var hide_class = '';
+    if (form_type != 'update') {
+      hide_class = 'hidden';
+    }
+    var action_class = '';
+    if (form_type === 'update') {
+      action_class = 'btn-primary';
+    } else if (form_type === 'attack') {
+      action_class = 'btn-danger';
+    } else {
+      action_class = 'btn-info';
+    }
+		result = '<div class="form_outer_cont land_form_cont"><hr><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
 		  result += '<div id="land_form_dropdown">'
-          + '<div class="form-group">'
+          + '<div class="form-group ' + hide_class + '">'
             + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
@@ -427,55 +447,51 @@ function initMap()
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>';
-          result += '<button type="button" id="submit_land_form" class="btn btn-primary form-control">' + ucwords(form_type) + '</button>';
+          result += '<button type="button" id="submit_land_form" class="btn + ' + action_class + ' form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';
 		return result;
 	}
 
   function upgrade_form(d) {
     result = '<div class="form_outer_cont upgrade_parent"><form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">'
-    + '<button class="expand_land_form expand_trade btn btn-success form-control" type="button" '
+    + '<button class="expand_land_form btn btn-success form-control" type="button" '
     + 'data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">'
-      + 'Upgrade This Land'
+      + 'Convert This Land'
       + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></button>'
         + '<div id="upgrade_dropdown" class="collapse">'
           + '<div class="form-group">'
-            + '<strong class="h4">Available Upgrades</strong><br>'
             + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
             + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
             + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">';
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="unclaimed">Unclaimed (Leave this land)</button>';
-            if (active_army >= land_type_dictionary['village'] 
-              ) {
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="village">Village (0 Mobilized Army for 10 Defense)</button>';
+            for(var prop in land_dictionary) {
+              result += '<button type="button" class="upgrade_submit btn btn-success" '
+              + 'value="' + land_dictionary[prop]['slug'] + '">' + land_dictionary[prop]['name'] + '</button>';
+              result += land_type_info(prop);
+              result += '<br>';
             }
-            if (active_army >= land_type_dictionary['wall'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['wall']
-              ) {
-              result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="wall">Wall (1 Mobilized Army for  50 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['tower'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['tower']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="tower">Tower (2 Mobilized Army for 100 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['fort'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['fort']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="fort">Fort (10 Mobilized  Army for 1000 Defense)</button>';
-            }
-            if (active_army >= land_type_dictionary['castle'] 
-              && player_land_count >= parseInt(passive_army) + land_type_dictionary['castle']
-              ) {
-            result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="castle">Castle (50 Mobilized  Army for 10000 Defense)</button>';
-            }
-            // if (active_army >= land_type_dictionary['city'] 
-            // && player_land_count >= parseInt(passive_army) + land_type_dictionary['city']
-            // ) {
-            // result += '<button type="button" class="upgrade_submit btn btn-default form-control" value="city">City</button>';
-            // }
-          result +=  '</div>';
+            result +=  '</div>';
     result += '</div></form></div>';
+    return result;
+  }
+
+  function land_type_info(land_type) {
+    result = '<div class="expand_land_type_info btn btn-info" type="button" '
+    + 'data-toggle="collapse" data-target="#' + land_type + '_info_dropdown" aria-expanded="false" aria-controls="' + land_type + '_info_dropdown">'
+      + 'Info'
+      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>'
+        + '<div id="' + land_type + '_info_dropdown" class="info_details_parent collapse">';
+        result += 'Defense: <span class="pull-right"><strong class="text-primary">+' + land_dictionary[land_type].defense + '</strong></span><br>';
+        result += 'Population: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].population_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].population_cost + '</strong></span><br>';
+        result += 'Food: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].food_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].food_cost + '</strong></span><br>';
+        result += 'Ore: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].ore_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].ore_cost + '</strong></span><br>';
+        result += 'Gold: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].gold_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].gold_cost + '</strong></span><br>';
+        result += 'Army: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].army_gain + '</strong>'
+        + ' / -<strong class="text-danger">' + land_dictionary[land_type].army_cost + '</strong></span><br>';
+    result += '</div>';
     return result;
   }
 
@@ -483,7 +499,7 @@ function initMap()
 	// Land loop
 	// 
 
-	<?php // This foreach loop runs between 400 to 15,000 times, so it's as dry as possible here, no comments
+	<?php // This foreach loop runs 15,000 times, so bandwidth is key
     foreach ($lands as $land) { 
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
@@ -496,18 +512,21 @@ function initMap()
         if ($log_check && $land['account_key'] === $account['id']) {
             $stroke_color = '#428BCA';
         }
-        if ($land['land_type'] === 'wall') {
+        if ($land['land_type'] === 'fortification') {
           $stroke_weight = 2;
-          $stroke_color = '#613B1A';
-        } else if ($land['land_type'] === 'tower') {
+          $stroke_color = '#585858';
+        } else if ($land['land_type'] === 'stronghold') {
+          $stroke_weight = 2;
+          $stroke_color = '#F72525';
+        } else if ($land['land_type'] === 'city') {
           $stroke_weight = 2;
           $stroke_color = '#2D882D';
-        } else if ($land['land_type'] === 'fort') {
+        } else if ($land['land_type'] === 'town') {
           $stroke_weight = 2;
-          $stroke_color = '#AA9739';
-        } else if ($land['land_type'] === 'castle') {
+          $stroke_color = '#F7DB25';
+        } else if ($land['land_type'] === 'market') {
           $stroke_weight = 2;
-          $stroke_color = '#AA3939';
+          $stroke_color = '#911BA2';
         }
         if ($log_check && $land['account_key'] === $account['id']) { 
             $stroke_weight = 3;
@@ -601,20 +620,18 @@ function initMap()
 
         update_lands(data['lands']);
         update_leaderboards(data['leaderboards']);
-
         if (log_check) {
           update_stats(data['account']);
         }
 
         console.log('update');
-
       }
     });
   }
 
   function update_lands(lands) {
     // Loop through lands
-    // This loop may run as many as 15,000 times, so be performant
+    // This loop may run up to 15,000 times, so focus is performance
     number_of_lands = lands.length;
     for (i = 0; i < number_of_lands; i++) {
 
@@ -631,18 +648,21 @@ function initMap()
       if (log_check && land['account_key'] == account_id) {
         stroke_color = '#428BCA';
       }
-      if (land['land_type'] === 'wall') {
+      if (land['land_type'] === 'fortification') {
         stroke_weight = 2;
-        stroke_color = '#613B1A';
-      } else if (land['land_type'] === 'tower') {
+        stroke_color = '#585858';
+      } else if (land['land_type'] === 'stronghold') {
+        stroke_weight = 2;
+        stroke_color = '#F72525';
+      } else if (land['land_type'] === 'city') {
         stroke_weight = 2;
         stroke_color = '#2D882D';
-      } else if (land['land_type'] === 'fort') {
+      } else if (land['land_type'] === 'town') {
         stroke_weight = 2;
-        stroke_color = '#AA9739';
-      } else if (land['land_type'] === 'castle') {
+        stroke_color = '#F7DB25';
+      } else if (land['land_type'] === 'market') {
         stroke_weight = 2;
-        stroke_color = '#AA3939';
+        stroke_color = '#911BA2';
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;
@@ -662,19 +682,44 @@ function initMap()
   }
 
   function update_stats(account) {
-    $('#active_army_display_span').html(account['active_army']);
-    $('#active_army_span').html(account['active_army']);
-    $('#passive_army_span').html(account['passive_army']);
     $('#owned_lands_span').html(account['land_count']);
+    $('#active_army_display_span').html(account['active_army']);
+    $('#ready_army_display_span').html(account['army']);
+    $('#population_display_span').html(account['population']);
+    $('#food_display_span').html(account['food']);
+    $('#ore_display_span').html(account['ore']);
+    $('#gold_display_span').html(account['gold']);
+    $('#active_army_span').html(account['active_army']);
+    $('#ready_army_span').html(account['army']);
+    $('#population_span').html(account['population']);
+    $('#food_span').html(account['food']);
+    $('#ore_span').html(account['ore']);
+    $('#gold_span').html(account['gold']);
+    // Corruption
+    $('#corruption_span').html(account['corruption']);
+    if (account['corruption'] != '0') {
+      $('#corruption_display_span').html(account['corruption']);
+      $('#corruption_word_span').html(' Corruption');
+    } else {
+      $('#corruption_display_span').html('');
+      $('#corruption_word_span').html('');
+    }
     active_army = account['active_army'];
-    passive_army = account['passive_army'];
   }
 
   function update_leaderboards(leaderboards) {
     // Set leaderboards
     leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
+    leaderboard_cities = leaderboards['leaderboard_cities'];
+    leaderboard_strongholds = leaderboards['leaderboard_strongholds'];
+    leaderboard_army = leaderboards['leaderboard_army'];
+    leaderboard_population = leaderboards['leaderboard_population'];
     // Empty current leaderboards
     $('#leaderboard_land_owned_table').find('tr:gt(0)').remove();
+    $('#leaderboard_cities_table').find('tr:gt(0)').remove();
+    $('#leaderboard_strongholds_table').find('tr:gt(0)').remove();
+    $('#leaderboard_army_table').find('tr:gt(0)').remove();
+    $('#leaderboard_population_table').find('tr:gt(0)').remove();
 
     // 
     // Add updated rows to leaderboards
@@ -685,11 +730,51 @@ function initMap()
       var table_string = '<tr><td>' + leader['rank'] + '</td>'
             + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
             + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['COUNT(*)'] + '</td>'
+            + '<td>' + leader['total'] + '</td>'
             + '<td>' + leader['land_mi'] + ' Mi&sup2; | ' + leader['land_km'] + ' KM&sup2;</td></tr>';
 
       // Add string to table
       $('#leaderboard_land_owned_table tr:last').after(table_string);
+    });
+    // leaderboard_cities
+    $.each(leaderboard_cities, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['total'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_cities_table tr:last').after(table_string);
+    });
+    // leaderboard_strongholds
+    $.each(leaderboard_strongholds, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['total'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_strongholds_table tr:last').after(table_string);
+    });
+    // leaderboard_army
+    $.each(leaderboard_army, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['army'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_army_table tr:last').after(table_string);
+    });
+    // leaderboard_population
+    $.each(leaderboard_population, function(index, leader) {
+      var table_string = '<tr><td>' + leader['rank'] + '</td>'
+            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
+            + '' + leader['user']['username'] + ' </td>'
+            + '<td>' + leader['population'] + '</td>'
+
+      // Add string to table
+      $('#leaderboard_population_table tr:last').after(table_string);
     });
 
     return true;

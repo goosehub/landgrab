@@ -41,37 +41,13 @@ class Cron extends CI_Controller {
           foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
 
-            // Get land total
-            $account_lands = $this->user_model->get_count_of_account_land($account_key);
-
-            // Get potential active army
-            $potential_active_army = $account_lands - $account['passive_army'];
-
-            // Potential active army at minimum of 20
-            if ($potential_active_army < 20) {
-              $potential_active_army = 20;
-            }
-
-            // Continue to next account if account has no land, no potential active army, or already at potential active army
-            if ($account_lands < 1 || $potential_active_army < 1 || $account['active_army'] >= $potential_active_army) {
-              continue;
-            }
-
-            // Add to potential active army
-            $active_army = $account['active_army'] + ceil( ($account_lands / $army_refill_rate) * $cron_frequency);
-
-            // Reduce active army to potential maximum if more than potential maximum
-            if ($active_army > $potential_active_army) {
-              $active_army = $potential_active_army;
-            }
-
-            // Active army at minimum of 20
-            if ($active_army < 20) {
-              $active_army = 20;
+            $new_active_army = $account['active_army'] + 20;
+            if ($new_active_army > $account['army']) {
+              $new_active_army = $account['army'];
             }
 
             // Update account active_army
-            $query_action = $this->game_model->update_account_active_army($account_key, $active_army);
+            $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
 
           } // End account loop
 

@@ -128,6 +128,7 @@ Class user_model extends CI_Model
     'world_key' => $world_key,
     'user_key' => $user_key,
     'active_army' => $active_army,
+    'army' => $active_army,
     'color' => $color,
     'last_load' => date('Y-m-d H:i:s')
     );
@@ -140,6 +141,20 @@ Class user_model extends CI_Model
     $query = $this->db->get()->row();
     $account_id = $query->id;
     return $account_id;
+ }
+ // Increment account resources by id
+ function increment_account_resources_by_id($account_id, $population, $ore, $gold, $army, $food)
+ {
+    // Update account
+    $this->db->set('population', 'population+' . $population, false);
+    $this->db->set('ore', 'ore+' . $ore, false);
+    $this->db->set('gold', 'gold+' . $gold, false);
+    $this->db->set('army', 'army+' . $army, false);
+    $this->db->set('food', 'food+' . $food, false);
+    $this->db->where('id', $account_id);
+    $this->db->update('account');
+    // echo '<br>' . $this->db->last_query() . '<br>';
+    return true;
  }
  // Update account primary color
  function update_account_color($account_id, $color)

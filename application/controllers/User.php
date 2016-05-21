@@ -235,6 +235,9 @@ class User extends CI_Controller {
             // Set default land name
             $default_land_name = $this->input->post('default_land_name');
 
+            // Bug fix for unescaped '
+            $default_land_name = str_replace("'", "", $default_land_name);
+
             // Set account
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];

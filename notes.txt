@@ -7,64 +7,46 @@ Avoid skinner boxes
     think during downtime
 Progression to teach the game
 Scale of strat
+Tech Tree
 
-Acheivers
-Explorers
-Socializers
-Killers
+Land Prototype
+    unclaimed, village farm, mine, market, fortification, stronghold, town, city, capital
+    slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
-Acting
-Interacting
-Players
-World
+Govern
+    Need 1 per population
+    If you are lacking, you can not attack or claim land
+Capitol
+    Free
+    Gives 100 allowed governance
+Statehouse
+    10 Govern
+    1 Gold
 
-Farm
-Mine
-Market
-Guild
-Castle
-Town
+100 lands cause 1 corruption
 
-City
-
-Resource Bonus
-    Mine
-        ...
-    Farm
-        1 farm for every 10 lands, cost 1 army
-    Market
-        Allows faster regen, cost 3 army
-    Guild
-        Better chance in battle, cost 2 army
-    Troops
-    Land
-
-Mechanic
-    Scales up more efficiently
-    Only 1 per player, trades their bonus for other players bonuses
-
-UI
-    Click on opponent land
-    Click on button to offer trade
-    Offer or request access to resource
-
-Build a city for every 100 lands
-    Bonus 10 active army
-    100 defense
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
+    Auto farm or mine on conquer
+    Highlight what can be built or not
+    Corruption column
+    Rebalance land type
+    Apply land rebalance retroactively
+
+Moderate Priority
+    Attack land when no longer in range bug
     Trade Mechanic
-    Cities Mechanic
-    Capitals Mechanic
+    Capitols Mechanic
+    Lng line issue
 
 Low Priority
     Feature
-        Castles list
-        Castle Leaderboard
+        Strongholds list
+        Stronghold Leaderboard
         Active army leaderboard
         Defense structure count
         Flags
@@ -75,6 +57,7 @@ Low Priority
     Bug
         Sometimes land isn't updated after buy right during update
         White edit text (confirmed on chrome on mac)
+        Apostrophy in default land name encoding bug needs a real fix
     Security/Cheating/Manipulation Prevention
         General Security
     Performance
@@ -86,6 +69,7 @@ Low Priority
         Reduce dependence on break tag
     Misc
         License
+        Hats
 
 No Priority
     Speed optimization

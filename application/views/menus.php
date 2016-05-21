@@ -2,24 +2,39 @@
 <div id="top_right_block">
 
   <!-- Update Dropdown -->
-    <button class="update_info_button menu_element btn btn-warning">
-        Tweak Update
+    <button class="update_info_button menu_element btn btn-danger">
+        The Corruption Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 
   <?php if ($log_check) { ?>
-  <!-- Army Dropdown -->
-    <button id="active_army_dropdown" class="menu_element btn btn-default" type="button" id="active_army_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <strong><span id="active_army_display_span"><?php echo number_format($account['active_army']); ?></span></strong> Mobilized Army
+  <!-- Stat Dropdown -->
+    <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span id="active_army_display_span" class="bold_font text-danger"><?php echo number_format($account['active_army']); ?></span>/
+        <span id="ready_army_display_span" class="bold_font text-danger"><?php echo number_format($account['army']); ?></span> Army,
+        <span id="population_display_span" class="bold_font text-success"><?php echo number_format($account['population']); ?></span> Pop,
+        <span id="food_display_span" class="bold_font text-primary"><?php echo number_format($account['food']); ?></span> Food,
+        <span id="ore_display_span" class="bold_font text-info"><?php echo number_format($account['ore']); ?></span> Ore,
+        <span id="gold_display_span" class="bold_font text-warning"><?php echo number_format($account['gold']); ?></span> Gold
+        <span id="corruption_display_span" class="bold_font text-danger">
+          <?php echo $account['corruption'] ? number_format($account['corruption']) : ''; ?>
+        </span>
+        <span id="corruption_word_span">
+          <?php echo $account['corruption'] ? ' Corruption' : ''; ?>          
+        </span>
       <span class="caret"></span>
     </button>
-    <ul class="active_army_dropdown dropdown-menu" aria-labelledby="active_army_dropdown">
-      <li>Owned Lands: <strong><span id="owned_lands_span"><?php echo $account['land_count']; ?></span></strong></li>
-      <li>Mobilized Army: <strong><span id="active_army_span"><?php echo $account['active_army']; ?></span></strong></li>
-      <li>Defensive Army: <strong><span id="passive_army_span"><?php echo $account['passive_army']; ?></span></strong></li>
+    <ul id="stat_dropdown_block" class="stat_dropdown dropdown-menu" aria-labelledby="stat_dropdown">
+      <li>Owned Lands: <span id="owned_lands_span" class="bold_font pull-right"><?php echo $account['land_count']; ?></span></li>
+      <li>Ready Army: <span id="active_army_span" class="bold_font pull-right text-danger"><?php echo $account['active_army']; ?></span></li>
+      <li>Potential Army: <span id="ready_army_span" class="bold_font pull-right text-danger"><?php echo $account['army']; ?></span></li>
+      <li>Population: <span id="population_span" class="bold_font pull-right text-success"><?php echo $account['population']; ?></span></li>
+      <li>Food: <span id="food_span" class="bold_font pull-right text-primary"><?php echo $account['food']; ?></span></li>
+      <li>Ore: <span id="ore_span" class="bold_font pull-right text-info"><?php echo $account['ore']; ?></span></li>
+      <li>Gold: <span id="gold_span" class="bold_font pull-right text-warning"><?php echo $account['gold']; ?></span></li>
+      <li>Corruption: <span id="corruption_span" class="bold_font pull-right text-danger"><?php echo $account['corruption']; ?></span></li>
     </ul>
-
-    <?php } ?>
+  <?php } ?>
 
     <!-- Leaderboards dropdown -->
     <div class="leaderboard_parent menu_element btn-group">
@@ -30,6 +45,10 @@
       <ul class="dropdown-menu" aria-labelledby="leaderboard_dropdown">
         <li class="text-center"><strong class="text-primary">Leaderboards</strong></li>
         <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
+        <li><a class="leaderboard_army_button leaderboard_link text-right">Army</a></li>
+        <li><a class="leaderboard_population_button leaderboard_link text-right">Population</a></li>
+        <li><a class="leaderboard_strongholds_button leaderboard_link text-right">Strongholds</a></li>
+        <li><a class="leaderboard_cities_button leaderboard_link text-right">Cities</a></li>
       </ul>
     </div>
 
@@ -84,12 +103,13 @@
       <span class="caret"></span>
     </button>
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-      <li class="text-center"><strong class="text-danger">Version 2.0.0</strong></li>
+      <li class="text-center"><strong class="text-danger">Version 3.0.0</strong></li>
       <li role="separator" class="divider"></li>
       <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
       <li><a class="faq_button btn btn-primary">FAQ</a></li>
       <li><a class="btn btn-success" href="https://www.reddit.com/r/LandgrabXYZ/" target="_blank">/r/LandgrabXYZ</a></li>
+      <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
       <li><a class="report_bugs_button btn btn-danger">Report Bugs</a></li>
     </ul>
   </div>

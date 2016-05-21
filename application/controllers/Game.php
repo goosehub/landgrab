@@ -60,7 +60,7 @@ class Game extends CI_Controller {
         $data['worlds'] = $this->user_model->get_all_worlds();
 
         // Get all lands
-        $update_timespan = 15 * 2;
+        $update_timespan = 20;
         $data['update_timespan'] = ($update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $update_timespan);
@@ -91,6 +91,7 @@ class Game extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
         $this->load->view('blocks', $data);
+        $this->load->view('leaderboards', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
         $this->load->view('chat_script', $data);
@@ -219,11 +220,13 @@ class Game extends CI_Controller {
             $content = $this->input->post('content');
             // $content = $this->sanitize_html($content);
             $content = $content;
+            $land_dictionary = $this->land_dictionary();
 
             // Do attack logic
             $attack_result = null;
             if ($form_type === 'attack') {
-                $attack_result = $this->land_attack($land_square, $world, $land_square['land_type'], $account);
+                $land_type = $land_square['land_type'];
+                $attack_result = $this->land_attack($land_square, $world, $land_type, $account);
                 // Return failed attack message
                 if (!$attack_result) {
                     echo '{"status": "success", "result": false, "message": "Defeat"}';
@@ -232,10 +235,17 @@ class Game extends CI_Controller {
                     echo '{"status": "success", "result": true, "message": "Victory"}';
                     // Check if account losing land is now inactive
                     $loser_account_lands = $this->user_model->get_count_of_account_land($land_square['account_key']);
-                    // If so, mark as inactive
                     if (intVal($loser_account_lands) === 1) {
                         $query_action = $this->game_model->update_account_active_state($land_square['account_key'], 0);
                     }
+
+                    // Update resources for the loser
+                    $population = $land_dictionary[$land_type]['population_cost'] - $land_dictionary[$land_type]['population_gain'];
+                    $ore = $land_dictionary[$land_type]['ore_cost'] - $land_dictionary[$land_type]['ore_gain'];
+                    $gold = $land_dictionary[$land_type]['gold_cost'] - $land_dictionary[$land_type]['gold_gain'];
+                    $army = $land_dictionary[$land_type]['army_cost'] - $land_dictionary[$land_type]['army_gain'];
+                    $food = $land_dictionary[$land_type]['food_cost'] - $land_dictionary[$land_type]['food_gain'];
+                    $query_action = $this->user_model->increment_account_resources_by_id($land_square['account_key'], $population, $ore, $gold, $army, $food);
                 }
             }
             // Claim response
@@ -244,6 +254,17 @@ class Game extends CI_Controller {
             // Update response
             } else {
                 echo '{"status": "success", "result": true, "message": "Updated"}';
+            }
+
+            // Update resources for the this account
+            if ($form_type != 'update') {
+                $default_land_type = 'village';
+                $population = $land_dictionary[$default_land_type]['population_gain'] - $land_dictionary[$default_land_type]['population_cost'];
+                $ore = $land_dictionary[$default_land_type]['ore_gain'] - $land_dictionary[$default_land_type]['ore_cost'];
+                $gold = $land_dictionary[$default_land_type]['gold_gain'] - $land_dictionary[$default_land_type]['gold_cost'];
+                $army = $land_dictionary[$default_land_type]['army_gain'] - $land_dictionary[$default_land_type]['army_cost'];
+                $food = $land_dictionary[$default_land_type]['food_gain'] - $land_dictionary[$default_land_type]['food_cost'];
+                $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
             }
 
             if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
@@ -320,9 +341,9 @@ class Game extends CI_Controller {
     // Land Transaction
     public function land_attack($land_square, $world, $land_type, $account)
     {        
-        $defense_dictionary = $this->defense_dictionary();
+        $land_dictionary = $this->land_dictionary();
         // If attacker has no lands and land is not fortified, then attacker wins
-        if ($account['land_count'] < 1 && $defense_dictionary[$land_type] < 50) {
+        if ($account['land_count'] < 1 && $land_dictionary[$land_type]['defense'] <= 10) {
             return true;
         }
 
@@ -332,27 +353,20 @@ class Game extends CI_Controller {
         // Siege logic
         $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
             $world['land_size'], $land_square['lat'], $land_square['lng'], true);
-        if (!$range_check && $land_type === 'castle') {
-            $land_type = 'fort';
-        } else if (!$range_check && $land_type === 'fort') {
-            $land_type = 'tower';
-        } else if (!$range_check && $land_type === 'tower') {
-            $land_type = 'wall';
-        } else if (!$range_check && $land_type === 'wall') {
+        // Seige logic
+        if (!$range_check) {
             $land_type = 'village';
         }
 
-        $defending_army = $defense_dictionary[$land_type];
+        $defending_army = $land_dictionary[$land_type]['defense'];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
         
         // Do random attack with two sides
         if ($attack_power > $defend_power) {
-            // On victory, change losers passive army if needed
-            $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
-            $land_type_dictionary = $this->land_type_dictionary();
-            $new_passive_army = $defender_account['passive_army'] - $land_type_dictionary[$land_square['land_type']];
-            $query_action = $this->game_model->update_account_passive_army($land_square['account_key'], $new_passive_army);
+            // On victory, change losers population
+            // TODO
+            // ...
             return true;
         } else {
             // On failure, destroy active army of attacker
@@ -396,16 +410,25 @@ class Game extends CI_Controller {
             $world_key = $this->input->post('world_key_input');
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
             $upgrade_type = $this->input->post('upgrade_type');
+            $land_type = $land_square['land_type'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
-            // Update passive and active army
-            $land_type_dictionary = $this->land_type_dictionary();
-            $defending_army = $land_type_dictionary[$upgrade_type];
-            $new_active_army = $account['active_army'] - $land_type_dictionary[$upgrade_type];
-            $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
-            $new_passive_army = $account['passive_army'] + $land_type_dictionary[$upgrade_type] - $land_type_dictionary[$land_square['land_type']];
-            $query_action = $this->game_model->update_account_passive_army($account_key, $new_passive_army);
+            // Update resources
+            $land_dictionary = $this->land_dictionary();
+            // Calculate change in resources from previous to new
+            $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost']
+            - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
+            $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
+            - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
+            $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'] 
+            - $land_dictionary[$land_type]['gold_gain'] + $land_dictionary[$land_type]['gold_cost'];
+            $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'] 
+            - $land_dictionary[$land_type]['army_gain'] + $land_dictionary[$land_type]['army_cost'];
+            $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'] 
+            - $land_dictionary[$land_type]['food_gain'] + $land_dictionary[$land_type]['food_cost'];
+
+            $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
 
             // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
@@ -426,7 +449,7 @@ class Game extends CI_Controller {
     {
         // User Information
         if (!$this->session->userdata('logged_in')) {
-            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'You are not currently logged in. Please log in again.');
             return false;
         }
 
@@ -441,24 +464,57 @@ class Game extends CI_Controller {
         $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
         $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $land_type_dictionary = $this->land_type_dictionary();
+        $land_type = $land_square['land_type'];
+        $land_dictionary = $this->land_dictionary();
+        // Calculate change in resources from previous to new
+        $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost']
+        - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
+        $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
+        - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
+        $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'] 
+        - $land_dictionary[$land_type]['gold_gain'] + $land_dictionary[$land_type]['gold_cost'];
+        $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'] 
+        - $land_dictionary[$land_type]['army_gain'] + $land_dictionary[$land_type]['army_cost'];
+        $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'] 
+        - $land_dictionary[$land_type]['food_gain'] + $land_dictionary[$land_type]['food_cost'];
 
         // Check for inaccuracies
         // Upgrading land that isn't theirs
         if ($land_square['account_key'] != $account_key) {
-            $this->form_validation->set_message('land_form_validation', 'This land is no longer yours');
+            $this->form_validation->set_message('land_upgrade_form_validation', 'This land is no longer yours');
             return false;
         }
-        // Doing an upgade they don't have enough active army for
-        if ($account['active_army'] < $land_type_dictionary[$upgrade_type]) {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought active army for this upgrade');
+        // Verify land type exists
+        if (!isset($land_dictionary[$upgrade_type]) ) {
+            $this->form_validation->set_message('land_upgrade_form_validation', 'This land type doesn\'t exist');
             return false;
         }
-        // Doing an upgade they don't have enough passive army for
-        if ($account['land_count'] < $account['passive_army'] + $land_type_dictionary[$upgrade_type] && $upgrade_type != 'village') {
-            $this->form_validation->set_message('land_form_validation', 'You don\'t have enought passive army for this upgrade');
-            return false;
+        // Check resources
+        if ($upgrade_type != 'unclaimed' && $upgrade_type != 'village') {
+            if ($population < 0 && $account['population'] < abs($population) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough population');
+                return false;
+            }
+            if ($ore < 0 && $account['ore'] < abs($ore) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough ore');
+                return false;
+            }
+            if ($gold < 0 && $account['gold'] < abs($gold) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough gold');
+                return false;
+            }
+            if ($army < 0 && $account['army'] < abs($army) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough army');
+                return false;
+            }
+            if ($food < 0 && $account['food'] < abs($food) ) {
+                $this->form_validation->set_message('land_upgrade_form_validation', 'You will not have enough food');
+                return false;
+            }
         }
+
+        // Ensure they have enouugh check
+        // TODO
 
         // Everything checks out
         return true;
@@ -509,11 +565,51 @@ class Game extends CI_Controller {
             $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
             $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
             // Math for finding approx land area
-            $leader['land_mi'] = number_format($leader['COUNT(*)'] * (70 * $world['land_size']));
-            $leader['land_km'] = number_format($leader['COUNT(*)'] * (112 * $world['land_size']));
+            $leader['land_mi'] = number_format($leader['total'] * (70 * $world['land_size']));
+            $leader['land_km'] = number_format($leader['total'] * (112 * $world['land_size']));
             $rank++;
         }
-        $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;
+        $leaderboards['leaderboard_land_owned'] = $leaderboard_land_owned;        
+        // Cities
+        $leaderboard_cities = $this->leaderboard_model->leaderboard_cities($world_key);
+        $rank = 1;
+        foreach ($leaderboard_cities as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_cities'] = $leaderboard_cities;
+        // Strongholds
+        $leaderboard_strongholds = $this->leaderboard_model->leaderboard_strongholds($world_key);
+        $rank = 1;
+        foreach ($leaderboard_strongholds as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_strongholds'] = $leaderboard_strongholds;
+        // Army
+        $leaderboard_army = $this->leaderboard_model->leaderboard_army($world_key);
+        $rank = 1;
+        foreach ($leaderboard_army as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['id']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_army'] = $leaderboard_army;
+        // Population
+        $leaderboard_population = $this->leaderboard_model->leaderboard_population($world_key);
+        $rank = 1;
+        foreach ($leaderboard_population as &$leader) { 
+            $leader['rank'] = $rank;
+            $leader['account'] = $this->user_model->get_account_by_id($leader['id']);
+            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
+            $rank++;
+        }
+        $leaderboards['leaderboard_population'] = $leaderboard_population;
 
         // Return data
         return $leaderboards;
@@ -527,28 +623,40 @@ class Game extends CI_Controller {
         echo $account['active_army'];
     }
 
-    // Land type cost dictionary
-    public function land_type_dictionary()
-    {
-        $land_type_dictionary['unclaimed'] = 0;
-        $land_type_dictionary['village'] = 0;
-        $land_type_dictionary['wall'] = 1;
-        $land_type_dictionary['tower'] = 2;
-        $land_type_dictionary['fort'] = 10;
-        $land_type_dictionary['castle'] = 50;
-        return $land_type_dictionary;
+    // Creates land dictionary
+    public function create_land_prototype($slug, $name, $defense, $population_cost, $food_cost, $ore_cost, $gold_cost, $army_cost, 
+                                                                  $population_gain, $food_gain, $ore_gain, $gold_gain, $army_gain) {
+      $object = [];
+      $object['slug'] = $slug;
+      $object['name'] = $name;
+      $object['defense'] = $defense;
+      $object['population_cost'] = $population_cost;
+      $object['food_cost'] = $food_cost;
+      $object['ore_cost'] = $ore_cost;
+      $object['gold_cost'] = $gold_cost;
+      $object['army_cost'] = $army_cost;
+      $object['population_gain'] = $population_gain;
+      $object['food_gain'] = $food_gain;
+      $object['ore_gain'] = $ore_gain;
+      $object['gold_gain'] = $gold_gain;
+      $object['army_gain'] = $army_gain;
+      return $object;
     }
 
-    // Land type defense dictionary
-    public function defense_dictionary()
+    // Land dictionary for reference
+    public function land_dictionary()
     {
-        $defense_dictionary['unclaimed'] = 0;
-        $defense_dictionary['village'] = 10;
-        $defense_dictionary['wall'] = 50;
-        $defense_dictionary['tower'] = 100;
-        $defense_dictionary['fort'] = 1000;
-        $defense_dictionary['castle'] = 5000;
-        return $defense_dictionary;
+        $land_type['unclaimed'] = $this->create_land_prototype('unclaimed', 'Unclaimed', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        $land_type['village'] = $this->create_land_prototype('village', 'Village', 10, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        $land_type['farm'] = $this->create_land_prototype('farm', 'Farm', 10, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0);
+        $land_type['mine'] = $this->create_land_prototype('mine', 'Mine', 10, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0);
+        $land_type['market'] = $this->create_land_prototype('market', 'Market', 10, 0, 0, 3, 0, 0, 1, 0, 0, 1, 0);
+        $land_type['fortification'] = $this->create_land_prototype('fortification', 'Fortification', 100, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0);
+        $land_type['stronghold'] = $this->create_land_prototype('stronghold', 'Stronghold', 500, 10, 0, 0, 4, 0, 1, 0, 0, 0, 50);
+        $land_type['town'] = $this->create_land_prototype('town', 'Town', 50, 0, 5, 0, 0, 0, 10, 0, 0, 0, 10);
+        $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 20, 0, 1, 0, 100, 0, 0, 0, 20);
+        // $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
+        return $land_type;
     }
 
     // Function to close tags
