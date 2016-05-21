@@ -43,11 +43,11 @@ Rebalance
 
 Other army
     Rock
-        Twice as likely to win
+        Double winning vs Scissors
     Paper
-        Regens twice as fast
+        Triple winning vs Rock
     Scissors
-        Only lose half army on loss
+        Quad winning vs Paper
 
 Other regen resources
 Earned resources

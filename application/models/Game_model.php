@@ -150,6 +150,17 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
+ // Upgrade account army type
+ function update_account_army_type($account_id, $army_type)
+ {
+    // Update account
+    $data = array(
+        'army_type' => $army_type
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
+ }
 
 }
 ?>

@@ -180,7 +180,6 @@ class Game extends CI_Controller {
             $user_id = $data['user_id'] = $session_data['id'];
         // If user not logged in, return with fail
         } else {
-            $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
@@ -384,7 +383,6 @@ class Game extends CI_Controller {
             $user_id = $data['user_id'] = $session_data['id'];
         // If user not logged in, return with fail
         } else {
-            $world_key = $this->input->post('world_key_input');
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
@@ -517,6 +515,47 @@ class Game extends CI_Controller {
         // TODO
 
         // Everything checks out
+        return true;
+    }
+
+    public function army_upgrade_form()
+    {
+        // Authentication
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $data['user_id'] = $session_data['id'];
+        // If user not logged in, return with fail
+        } else {
+            echo '{"status": "fail", "message": "User not logged in"}';
+            return false;
+        }
+        
+        // Validation
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('army_type', 'Army Type', 'trim|required|max_length[32]|callback_army_upgrade_form_validation');
+        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]');
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            if (validation_errors() === '') {
+                echo '{"status": "fail", "message": "An unknown error occurred"}';
+            }
+            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
+            return false;
+        // Success
+        } else {
+            $world_key = $this->input->post('world_key');
+            $army_type = $this->input->post('army_type');
+            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $query_result = $this->game_model->update_account_army_type($account['id'], $army_type);
+            echo '{"status": "success", "message": "Upgraded"}';
+        }
+    }
+
+    public function army_upgrade_form_validation()
+    {
         return true;
     }
 

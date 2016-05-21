@@ -66,6 +66,37 @@ if (document.location.hostname == "localhost") {
 var infoWindow = false;
 var boxes = [];
 
+// 
+// Rock Paper Scissors Upgrade
+// 
+
+$('#scissors_select').click(function(){
+    do_army_type_upgrade('scissors');
+});
+$('#paper_select').click(function(){
+    do_army_type_upgrade('paper');
+});
+$('#rock_select').click(function(){
+    do_army_type_upgrade('rock');
+});
+
+function do_army_type_upgrade(army_type) {
+  $.ajax({
+    url: "<?=base_url()?>army_upgrade_form",
+    type: "POST",
+    data: { 
+              army_type: army_type,
+              world_key: world_key 
+          },
+    cache: false,
+    success: function(data)
+    {
+      console.log(data)
+      return true;
+    }
+  });
+}
+
 // Start initMap callback called from google maps script
 function initMap() 
 {
