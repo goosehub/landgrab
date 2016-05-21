@@ -41,7 +41,7 @@ class Cron extends CI_Controller {
           foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
 
-            $new_active_army = $account['active_army'] + 20;
+            $new_active_army = $account['active_army'] + 100;
             if ($new_active_army > $account['army']) {
               $new_active_army = $account['army'];
             }

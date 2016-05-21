@@ -3,7 +3,7 @@
 
   <!-- Update Dropdown -->
     <button class="update_info_button menu_element btn btn-danger">
-        The Army Type Update
+        The Rock Paper Scissors Update
         <span class="glyphicon glyphicon-asterisk"></span>
     </button>
 

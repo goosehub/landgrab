@@ -579,6 +579,11 @@ class Game extends CI_Controller {
 
     public function army_upgrade_form_validation()
     {
+        $army_type = $this->input->post('army_type');
+        // Check that it is valid
+        if ($army_type != 'rock' && $army_type != 'paper' && $army_type != 'scissors') {
+            return false;
+        }
         return true;
     }
 
