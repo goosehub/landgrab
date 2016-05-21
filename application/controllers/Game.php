@@ -349,6 +349,9 @@ class Game extends CI_Controller {
         // Get attack information
         $active_army = $account['active_army'];
 
+        // Get defender account
+        $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
+
         // Siege logic
         $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
             $world['land_size'], $land_square['lat'], $land_square['lng'], true);
@@ -360,6 +363,26 @@ class Game extends CI_Controller {
         $defending_army = $land_dictionary[$land_type]['defense'];
         $attack_power = rand(0,$active_army);
         $defend_power = rand(0,$defending_army);
+
+        // Army type logic
+        if ($account['army_type'] === 'rock' && $defender_account['army_type'] === 'scissors') {
+            $attack_power = $attack_power * 2;
+        }
+        if ($account['army_type'] === 'paper' && $defender_account['army_type'] === 'rock') {
+            $attack_power = $attack_power * 3;
+        }
+        if ($account['army_type'] === 'scissors' && $defender_account['army_type'] === 'paper') {
+            $attack_power = $attack_power * 4;
+        }
+        if ($account['army_type'] === 'scissors' && $defender_account['army_type'] === 'rock') {
+            $defend_power = $defend_power * 2;
+        }
+        if ($account['army_type'] === 'rock' && $defender_account['army_type'] === 'paper') {
+            $defend_power = $defend_power * 3;
+        }
+        if ($account['army_type'] === 'paper' && $defender_account['army_type'] === 'scissors') {
+            $defend_power = $defend_power * 4;
+        }
         
         // Do random attack with two sides
         if ($attack_power > $defend_power) {
