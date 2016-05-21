@@ -695,6 +695,9 @@ function initMap()
     $('#food_span').html(account['food']);
     $('#ore_span').html(account['ore']);
     $('#gold_span').html(account['gold']);
+    var account_army_type = account['army_type'][0].toUpperCase() + account['army_type'].slice(1);
+    $('#army_type_span').html(account_army_type);
+    $('#army_type_display_span').html(account_army_type);
     active_army = account['active_army'];
   }
 

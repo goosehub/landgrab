@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `ore` int(11) NOT NULL,
   `gold` int(11) NOT NULL,
   `army` int(11) NOT NULL,
+  `army_type` varchar(32) NOT NULL,
   `color` varchar(8) NOT NULL,
   `default_land_name` varchar(512) NOT NULL,
   `last_load` varchar(32) NOT NULL,
