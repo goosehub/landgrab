@@ -23,11 +23,19 @@ Statehouse
     10 Govern
     1 Gold
 
+100 lands cause 1 corruption
+
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
+    Auto farm or mine on conquer
+    Highlight what can be built or not
+    Corruption column
+    Rebalance land type
+    Apply land rebalance retroactively
 
 Moderate Priority
     Attack land when no longer in range bug

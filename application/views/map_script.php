@@ -682,6 +682,7 @@ function initMap()
   }
 
   function update_stats(account) {
+    $('#owned_lands_span').html(account['land_count']);
     $('#active_army_display_span').html(account['active_army']);
     $('#ready_army_display_span').html(account['army']);
     $('#population_display_span').html(account['population']);
@@ -694,7 +695,15 @@ function initMap()
     $('#food_span').html(account['food']);
     $('#ore_span').html(account['ore']);
     $('#gold_span').html(account['gold']);
-    $('#owned_lands_span').html(account['land_count']);
+    // Corruption
+    $('#corruption_span').html(account['corruption']);
+    if (account['corruption'] != '0') {
+      $('#corruption_display_span').html(account['corruption']);
+      $('#corruption_word_span').html(' Corruption');
+    } else {
+      $('#corruption_display_span').html('');
+      $('#corruption_word_span').html('');
+    }
     active_army = account['active_army'];
   }
 

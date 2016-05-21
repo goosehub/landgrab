@@ -50,9 +50,14 @@
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
-    
+
     <hr>
 
+    <small>Version 3.2.0</small>
+    <ul>
+        <li>New Corruption Resource.</li>
+        <li>New Statehouse Landtype.</li>
+    </ul>
     <small>Version 3.1.0</small>
     <ul>
         <li>New Leaderboards.</li>
