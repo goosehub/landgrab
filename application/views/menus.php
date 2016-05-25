@@ -2,10 +2,10 @@
 <div id="top_right_block">
 
   <!-- Update Dropdown -->
-    <button class="update_info_button menu_element btn btn-danger">
-        The Rock Paper Scissors Update
+<!--     <button class="update_info_button menu_element btn btn-danger">
+        The ___ Update
         <span class="glyphicon glyphicon-asterisk"></span>
-    </button>
+    </button> -->
 
   <?php if ($log_check) { ?>
   <!-- Stat Dropdown -->
@@ -29,9 +29,9 @@
       <li>Ore: <span id="ore_span" class="bold_font pull-right text-info"><?php echo $account['ore']; ?></span></li>
       <li>Gold: <span id="gold_span" class="bold_font pull-right text-warning"><?php echo $account['gold']; ?></span></li>
       <li>Army Type: 
-        <div id="scissors_select" class="btn btn-danger btn-sm pull-right">Scissors</div>
-        <div id="paper_select" class="btn btn-primary btn-sm pull-right">Paper</div>
-        <div id="rock_select" class="btn btn-success btn-sm pull-right">Rock</div>
+        <div id="mech_select" class="btn btn-danger btn-sm pull-right">Mech</div>
+        <div id="trench_select" class="btn btn-primary btn-sm pull-right">Trench</div>
+        <div id="gorilla_select" class="btn btn-success btn-sm pull-right">Gorilla</div>
       </li>
     </ul>
   <?php } ?>

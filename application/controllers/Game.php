@@ -365,22 +365,22 @@ class Game extends CI_Controller {
         $defend_power = rand(0,$defending_army);
 
         // Army type logic
-        if ($account['army_type'] === 'rock' && $defender_account['army_type'] === 'scissors') {
+        if ($account['army_type'] === 'gorilla' && $defender_account['army_type'] === 'mech') {
             $attack_power = $attack_power * 2;
         }
-        if ($account['army_type'] === 'paper' && $defender_account['army_type'] === 'rock') {
+        if ($account['army_type'] === 'trench' && $defender_account['army_type'] === 'gorilla') {
             $attack_power = $attack_power * 3;
         }
-        if ($account['army_type'] === 'scissors' && $defender_account['army_type'] === 'paper') {
+        if ($account['army_type'] === 'mech' && $defender_account['army_type'] === 'trench') {
             $attack_power = $attack_power * 4;
         }
-        if ($account['army_type'] === 'scissors' && $defender_account['army_type'] === 'rock') {
+        if ($account['army_type'] === 'mech' && $defender_account['army_type'] === 'gorilla') {
             $defend_power = $defend_power * 2;
         }
-        if ($account['army_type'] === 'rock' && $defender_account['army_type'] === 'paper') {
+        if ($account['army_type'] === 'gorilla' && $defender_account['army_type'] === 'trench') {
             $defend_power = $defend_power * 3;
         }
-        if ($account['army_type'] === 'paper' && $defender_account['army_type'] === 'scissors') {
+        if ($account['army_type'] === 'trench' && $defender_account['army_type'] === 'mech') {
             $defend_power = $defend_power * 4;
         }
         
@@ -581,7 +581,7 @@ class Game extends CI_Controller {
     {
         $army_type = $this->input->post('army_type');
         // Check that it is valid
-        if ($army_type != 'rock' && $army_type != 'paper' && $army_type != 'scissors') {
+        if ($army_type != 'gorilla' && $army_type != 'trench' && $army_type != 'mech') {
             return false;
         }
         return true;

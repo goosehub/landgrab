@@ -42,12 +42,12 @@ Rebalance
     Fort nerf
 
 Other army
-    Rock
-        Double winning vs Scissors
-    Paper
-        Triple winning vs Rock
-    Scissors
-        Quad winning vs Paper
+    Gorilla
+        Double winning vs Mech
+    Trench
+        Triple winning vs Gorilla
+    Mech
+        Quad winning vs Trench
 
 Other regen resources
 Earned resources
@@ -146,7 +146,7 @@ Promote
     https://www.reddit.com/r/iama
     https://www.reddit.com/r/indiegaming
     https://www.reddit.com/r/webgames
-    https://www.rockpapershotgun.com/hey-prs-and-developers/
+    https://www.gorillatrenchshotgun.com/hey-prs-and-developers/
     http://www.bytejacker.com/
     https://www.facebook.com/
     http://www.addictinggames.com/game/upload.jsp#submitFlashGame

@@ -67,17 +67,17 @@ var infoWindow = false;
 var boxes = [];
 
 // 
-// Rock Paper Scissors Upgrade
+// Gorilla Trench Mech Upgrade
 // 
 
-$('#scissors_select').click(function(){
-    do_army_type_upgrade('scissors');
+$('#mech_select').click(function(){
+    do_army_type_upgrade('mech');
 });
-$('#paper_select').click(function(){
-    do_army_type_upgrade('paper');
+$('#trench_select').click(function(){
+    do_army_type_upgrade('trench');
 });
-$('#rock_select').click(function(){
-    do_army_type_upgrade('rock');
+$('#gorilla_select').click(function(){
+    do_army_type_upgrade('gorilla');
 });
 
 function do_army_type_upgrade(army_type) {
