@@ -2,6 +2,66 @@
     Notes
 ==========================================================================================
 
+Taking land Mechanic
+    Attack
+    Buy
+    Influence
+    All the above
+
+Resources
+    Land
+    Pop
+    Wealth
+    Army
+    Electric Power
+    Influence
+    Defense
+
+Land
+    Land
+        +1 pop
+    Capitol
+        Free but you only get 1
+    Town
+        every 50 lands
+    City
+        every 250 lands
+    Metropolis
+        every 1000 lands
+    Fortification
+        - something
+Upgrades
+    Wealth
+        Industry
+        Finance
+        Technology
+    Power
+        Coal and Gas
+        Nuclear
+        Solar and Wind
+    Army
+        Outpost
+        Barracks
+        Base
+    Infrastructure
+        Highways
+        Airport
+        Subway
+    Education
+        Library
+        Museum
+        University
+    Public
+        Courthouse
+        Jail
+        Hospital
+    Entertainment
+        Plaza
+        Arena
+        Statium
+
+Land leaderboards
+
 Avoid skinner boxes
     long term choices
     think during downtime
@@ -111,7 +171,6 @@ No Priority
     Update all owned lands at once
     Land link zoom based off box size
     Make blocks ajax to improve page speed load
-    Color difference at 180 LNG
     Better loading screen
     API world
     Password Resets
