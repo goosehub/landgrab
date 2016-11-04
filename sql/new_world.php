@@ -59,20 +59,23 @@ $i = 1;
 for ($lng = -$lng_limit; $lng <= $lng_limit; $lng = $lng + $box_size) {
     // Loop lat for each lng
     for ($lat = -$lat_limit; $lat < $lat_limit; $lat = $lat + $box_size) {
-        // Get coord_slug
-        $coord_slug = $lat . ',' . $lng;
-        $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-        if ($i % 1000 == 0)
-        {
-            $result .= ';';
+        // This prevents bug where -180 and 180 overlap, creating land the UI can't access
+        if ($lng != '-180') {
+            // Get coord_slug
+            $coord_slug = $lat . ',' . $lng;
+            $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+            if ($i % 1000 == 0)
+            {
+                $result .= ';';
+                $result .= '<br>';
+                $result .= $land_insert_statement;
+                $result .= '<br>';
+            } else {
+                $result .= ',';
+            }
             $result .= '<br>';
-            $result .= $land_insert_statement;
-            $result .= '<br>';
-        } else {
-            $result .= ',';
+            $i++;
         }
-        $result .= '<br>';
-        $i++;
     }
 }
 
