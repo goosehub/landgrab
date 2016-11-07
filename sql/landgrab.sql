@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `world_key` int(10) unsigned NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `land` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27945 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `world` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
