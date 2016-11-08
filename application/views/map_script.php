@@ -15,15 +15,14 @@ var land_size = <?php echo $world['land_size'] ?>;
 
 // Set user variables
 <?php if ($log_check) { ?>
-    var log_check = true;
-    var user_id = <?php echo $user_id + ''; ?>;
-    var account_id = <?php echo $account['id'] + ''; ?>;
-    var username = "<?php echo $user['username']; ?>";
-    var account_color = '<?php echo $account["color"]; ?>';
-    var active_army = <?php echo $account['active_army'] + ''; ?>;
-    var player_land_count = <?php echo $account['land_count']; ?>;
+var log_check = true;
+var user_id = <?php echo $user_id + ''; ?>;
+var account_id = <?php echo $account['id'] + ''; ?>;
+var username = "<?php echo $user['username']; ?>";
+var account = JSON.parse('<?php echo json_encode($account); ?>');
+var player_land_count = <?php echo $account['land_count']; ?>;
 <?php } else { ?>
-    var log_check = false;
+var log_check = false;
 <?php } ?>
 
 land_dictionary = new Array();
@@ -65,37 +64,6 @@ if (document.location.hostname == "localhost") {
 }
 var infoWindow = false;
 var boxes = [];
-
-// 
-// Gorilla Trench Mech Upgrade
-// 
-
-$('#mech_select').click(function(){
-    do_army_type_upgrade('mech');
-});
-$('#trench_select').click(function(){
-    do_army_type_upgrade('trench');
-});
-$('#gorilla_select').click(function(){
-    do_army_type_upgrade('gorilla');
-});
-
-function do_army_type_upgrade(army_type) {
-  $.ajax({
-    url: "<?=base_url()?>army_upgrade_form",
-    type: "POST",
-    data: { 
-              army_type: army_type,
-              world_key: world_key 
-          },
-    cache: false,
-    success: function(data)
-    {
-      console.log(data)
-      return true;
-    }
-  });
-}
 
 // Start initMap callback called from google maps script
 function initMap() 
@@ -236,7 +204,7 @@ function initMap()
       var window_string = '<div class="land_window">';
 
       // Unclaimed land
-			if (land_data['claimed'] === '0') {
+			if (land_data['land_type'] === '0') {
         // Land name
 				window_string += '<strong class="land_name">Unclaimed</strong><br>';
         // Coord
@@ -280,9 +248,8 @@ function initMap()
 
       // Interaction buttons
 			if (land_data['in_range'] && log_check) {
-        land_data['account_default_land_name'] = '<?php echo isset($account['default_land_name']) ? $account['default_land_name'] : ''; ?>';
         // Claim
-				if (land_data['claimed'] === '0') {
+				if (land_data['land_type'] === '0') {
 					window_string += land_window_form('claim', 'btn-action', land_data);
         // Update
 				} else if (land_data['account_key'] == account_id) {
@@ -378,9 +345,19 @@ function initMap()
                   boxes[land_data['id']].setOptions({
                     strokeWeight: 3, 
                     strokeColor: '#428BCA',
-                    fillColor: account_color,
+                    fillColor: account['color'],
                     fillOpacity: 0.4
                   });
+
+                  // Tutorial Rule
+                  if (account['tutorial'] < 2) {
+                    $('#tutorial_block').fadeOut(1000, function(){
+                      $('#tutorial_block').fadeIn();
+                      $('#tutorial_title').html('We The People');
+                      $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+                    });
+                  }
+
                   return true;
                 }
               }
@@ -464,20 +441,20 @@ function initMap()
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_land_name">Land Name</label>'
             + '</div><div class="col-md-8">';
-            if (d['account_default_land_name'] && form_type != 'update') {
-              result += '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' 
-              + d['account_default_land_name'] + '">';
-            } else {
-              result += '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="' 
-              + d['land_name'] + '">';
-            }
-            result += '</div></div>'
+            + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="'+ d['land_name'] + '">'
+            + '</div></div>'
             + '<div class="row"><div class="col-md-3">'
             + '<label for="input_content">Description</label>'
             + '</div><div class="col-md-8">'
             + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
             + '</div></div>'
           + '</div>';
+
+          // Language adjustment for Tutorial
+          if (account['tutorial'] < 2) {
+            form_type = 'Build Your Capitol';
+          }
+
           result += '<button type="button" id="submit_land_form" class="btn + ' + action_class + ' form-control">' + ucwords(form_type) + '</button>';
 		result += '</div></form></div>';
 		return result;
@@ -536,7 +513,7 @@ function initMap()
         $stroke_color = '#222222';
         $fill_color = "#FFFFFF";
         $fill_opacity = '0';
-        if ($land['claimed']) {
+        if ($land['land_type'] != 0) {
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
@@ -591,34 +568,6 @@ function initMap()
 	  {name: "Styled Map"});
 	map.mapTypes.set('map_style', styled_map);
 	map.setMapTypeId('map_style');
-
-  // 
-  // Update army data
-  // 
-
-  // Get map update
-  if (log_check) {
-    setInterval(function(){
-      get_army_update(account_id);
-    }, 5 * 1000);
-  }
-
-  function get_army_update(account_id) {
-    $.ajax({
-      url: "<?=base_url()?>get_army_update",
-      type: "GET",
-      data: {
-                account_id: account_id
-            },
-      cache: false,
-      success: function(data)
-      {
-        $('#active_army_display_span').html(data);
-        $('#active_army_span').html(data);
-        active_army = parseInt(data);
-      }
-    });
-  }
 
   // 
   // Update map data
@@ -713,23 +662,6 @@ function initMap()
   }
 
   function update_stats(account) {
-    $('#owned_lands_span').html(account['land_count']);
-    $('#active_army_display_span').html(account['active_army']);
-    $('#ready_army_display_span').html(account['army']);
-    $('#population_display_span').html(account['population']);
-    $('#food_display_span').html(account['food']);
-    $('#ore_display_span').html(account['ore']);
-    $('#gold_display_span').html(account['gold']);
-    $('#active_army_span').html(account['active_army']);
-    $('#ready_army_span').html(account['army']);
-    $('#population_span').html(account['population']);
-    $('#food_span').html(account['food']);
-    $('#ore_span').html(account['ore']);
-    $('#gold_span').html(account['gold']);
-    var account_army_type = account['army_type'][0].toUpperCase() + account['army_type'].slice(1);
-    $('#army_type_span').html(account_army_type);
-    $('#army_type_display_span').html(account_army_type);
-    active_army = account['active_army'];
   }
 
   function update_leaderboards(leaderboards) {

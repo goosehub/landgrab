@@ -40,23 +40,16 @@ if (window.location.href.indexOf('register') >= 0) {
     $('#register_block').show();
 }
 
-// Stop dropdown closing when clicking input
-$('#account_input_color').click(function(e) {
-    e.stopPropagation();
-});
-$('#account_input_default_land_name').click(function(e) {
-    e.stopPropagation();
-});
-
-// Submit input on focus out
-$('#account_input_default_land_name').focusout(function(e) {
-    $('#submit_default_land_name').click();
-});
-
 // 
 // Center block hide and show logic
 // 
 
+$('#stat_dropdown').click(function(){
+    $('#management_block').show();
+});
+$('.user_button').click(function(){
+    $('#account_update_block').show();
+});
 $('.exit_center_block').click(function(){
   $('.center_block').hide();
 });

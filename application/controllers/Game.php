@@ -59,6 +59,9 @@ class Game extends CI_Controller {
         // Get all worlds
         $data['worlds'] = $this->user_model->get_all_worlds();
 
+        // Get government dictionary
+        $government_dictionary = $data['government_dictionary'] = $this->government_dictionary();
+
         // Get all lands
         $update_timespan = 20;
         $data['update_timespan'] = ($update_timespan / 2) * 1000;
@@ -94,6 +97,7 @@ class Game extends CI_Controller {
         $this->load->view('leaderboards', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
+        $this->load->view('tutorial_script', $data);
         $this->load->view('chat_script', $data);
         $this->load->view('footer', $data);
 	}
@@ -204,7 +208,6 @@ class Game extends CI_Controller {
 		// Success
         } else {
             // Set inputs
-	    	$claimed = 1;
             $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
@@ -224,7 +227,7 @@ class Game extends CI_Controller {
             // Do attack logic
             $attack_result = null;
             if ($form_type === 'attack') {
-                $land_type = $land_square['land_type'];
+/*                $land_type = $land_square['land_type'];
                 $attack_result = $this->land_attack($land_square, $world, $land_type, $account);
                 // Return failed attack message
                 if (!$attack_result) {
@@ -239,13 +242,7 @@ class Game extends CI_Controller {
                     }
 
                     // Update resources for the loser
-                    $population = $land_dictionary[$land_type]['population_cost'] - $land_dictionary[$land_type]['population_gain'];
-                    $ore = $land_dictionary[$land_type]['ore_cost'] - $land_dictionary[$land_type]['ore_gain'];
-                    $gold = $land_dictionary[$land_type]['gold_cost'] - $land_dictionary[$land_type]['gold_gain'];
-                    $army = $land_dictionary[$land_type]['army_cost'] - $land_dictionary[$land_type]['army_gain'];
-                    $food = $land_dictionary[$land_type]['food_cost'] - $land_dictionary[$land_type]['food_gain'];
-                    $query_action = $this->user_model->increment_account_resources_by_id($land_square['account_key'], $population, $ore, $gold, $army, $food);
-                }
+                }*/
             }
             // Claim response
             else if ($form_type === 'claim') {
@@ -257,13 +254,6 @@ class Game extends CI_Controller {
 
             // Update resources for the this account
             if ($form_type != 'update') {
-                $default_land_type = 'village';
-                $population = $land_dictionary[$default_land_type]['population_gain'] - $land_dictionary[$default_land_type]['population_cost'];
-                $ore = $land_dictionary[$default_land_type]['ore_gain'] - $land_dictionary[$default_land_type]['ore_cost'];
-                $gold = $land_dictionary[$default_land_type]['gold_gain'] - $land_dictionary[$default_land_type]['gold_cost'];
-                $army = $land_dictionary[$default_land_type]['army_gain'] - $land_dictionary[$default_land_type]['army_cost'];
-                $food = $land_dictionary[$default_land_type]['food_gain'] - $land_dictionary[$default_land_type]['food_cost'];
-                $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
             }
 
             if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
@@ -271,15 +261,20 @@ class Game extends CI_Controller {
                 $query_action = $this->game_model->update_account_active_state($account_key, 1);
             }
 
+            // Make capitol if tutorial
+            if ($account['tutorial'] < 2) {
+                $land_type = 2;
+                $query_action = $this->user_model->update_account_tutorial($account_key, 2);
+            }
             // Land type for update
             if ($form_type === 'claim' || $form_type === 'attack') {
-                $land_type = 'village';
+                $land_type = 1;
             } else {
                 $land_type = $land_square['land_type'];
             }
 
             // Update land
-	        $query_action = $this->game_model->update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $land_type, $color);
+	        $query_action = $this->game_model->update_land_data($world_key, $coord_slug, $account_key, $land_name, $content, $land_type, $color);
 
             return true;
 	    }
@@ -314,7 +309,7 @@ class Game extends CI_Controller {
 
         // Check for inaccuracies
         // Claiming land that isn't unclaimed
-        if ($form_type === 'claim' && $land_square['claimed'] != 0) {
+        if ($form_type === 'claim' && $land_square['land_type'] != 0) {
             $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
             return false;
         }
@@ -430,33 +425,25 @@ class Game extends CI_Controller {
             $coord_slug = $this->input->post('coord_slug_input');
             $world_key = $this->input->post('world_key_input');
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-            $upgrade_type = $this->input->post('upgrade_type');
+            // $upgrade_type = $this->input->post('upgrade_type');
+            $upgrade_type = 1;
+            // Make capitol if tutorial
+            if ($account['tutorial'] < 2) {
+                $upgrade_type = 2;
+            }
             $land_type = $land_square['land_type'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
 
             // Update resources
             $land_dictionary = $this->land_dictionary();
-            // Calculate change in resources from previous to new
-            $population = $land_dictionary[$upgrade_type]['population_gain'] - $land_dictionary[$upgrade_type]['population_cost']
-            - $land_dictionary[$land_type]['population_gain'] + $land_dictionary[$land_type]['population_cost'];
-            $ore = $land_dictionary[$upgrade_type]['ore_gain'] - $land_dictionary[$upgrade_type]['ore_cost'] 
-            - $land_dictionary[$land_type]['ore_gain'] + $land_dictionary[$land_type]['ore_cost'];
-            $gold = $land_dictionary[$upgrade_type]['gold_gain'] - $land_dictionary[$upgrade_type]['gold_cost'] 
-            - $land_dictionary[$land_type]['gold_gain'] + $land_dictionary[$land_type]['gold_cost'];
-            $army = $land_dictionary[$upgrade_type]['army_gain'] - $land_dictionary[$upgrade_type]['army_cost'] 
-            - $land_dictionary[$land_type]['army_gain'] + $land_dictionary[$land_type]['army_cost'];
-            $food = $land_dictionary[$upgrade_type]['food_gain'] - $land_dictionary[$upgrade_type]['food_cost'] 
-            - $land_dictionary[$land_type]['food_gain'] + $land_dictionary[$land_type]['food_cost'];
-
-            $query_action = $this->user_model->increment_account_resources_by_id($account_key, $population, $ore, $gold, $army, $food);
 
             // Update land type
             $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $upgrade_type);
 
             // If unclaiming, mark land as unclaimed
-            if ($upgrade_type === 'unclaimed') {
-                $query_action = $this->game_model->update_land_data($world_key, 0, $coord_slug, 0, '', '', 'unclaimed', '#000000');
+            if ($upgrade_type === 0) {
+                $query_action = $this->game_model->update_land_data($world_key, $coord_slug, 0, '', '', 0, '#000000');
             }
 
             echo '{"status": "success", "message": "Upgraded"}';
@@ -538,52 +525,6 @@ class Game extends CI_Controller {
         // TODO
 
         // Everything checks out
-        return true;
-    }
-
-    public function army_upgrade_form()
-    {
-        // Authentication
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
-        // If user not logged in, return with fail
-        } else {
-            echo '{"status": "fail", "message": "User not logged in"}';
-            return false;
-        }
-        
-        // Validation
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('army_type', 'Army Type', 'trim|required|max_length[32]|callback_army_upgrade_form_validation');
-        $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]');
-
-        // Fail
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            if (validation_errors() === '') {
-                echo '{"status": "fail", "message": "An unknown error occurred"}';
-            }
-            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
-            return false;
-        // Success
-        } else {
-            $world_key = $this->input->post('world_key');
-            $army_type = $this->input->post('army_type');
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $query_result = $this->game_model->update_account_army_type($account['id'], $army_type);
-            echo '{"status": "success", "message": "Upgraded"}';
-        }
-    }
-
-    public function army_upgrade_form_validation()
-    {
-        $army_type = $this->input->post('army_type');
-        // Check that it is valid
-        if ($army_type != 'gorilla' && $army_type != 'trench' && $army_type != 'mech') {
-            return false;
-        }
         return true;
     }
 
@@ -724,6 +665,16 @@ class Game extends CI_Controller {
         $land_type['city'] = $this->create_land_prototype('city', 'City', 100, 0, 20, 0, 1, 0, 100, 0, 0, 0, 20);
         // $land_type['capital'] = $this->create_land_prototype('capital', 'Capital', 1000, 0, 0, 0, 3, 0, 100, 0, 0, 0, 0);
         return $land_type;
+    }
+
+    // Land dictionary for reference
+    public function government_dictionary()
+    {
+        $government_dictionary[0] = 'Anarchy';
+        $government_dictionary[1] = 'Democracy';
+        $government_dictionary[2] = 'Oligarchy';
+        $government_dictionary[3] = 'Autocracy';
+        return $government_dictionary;
     }
 
     // Function to close tags

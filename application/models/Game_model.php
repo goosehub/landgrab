@@ -59,10 +59,9 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $claimed, $coord_slug, $account_key, $land_name, $content, $land_type, $color)
+ function update_land_data($world_key, $coord_slug, $account_key, $land_name, $content, $land_type, $color)
  {
     $data = array(
-        'claimed' => $claimed,
         'account_key' => $account_key,
         'land_name' => $land_name,
         'content' => $content,
@@ -145,17 +144,6 @@ Class game_model extends CI_Model
     // Update account
     $data = array(
         'active_account' => $active_state
-    );
-    $this->db->where('id', $account_id);
-    $this->db->update('account', $data);
-    return true;
- }
- // Upgrade account army type
- function update_account_army_type($account_id, $army_type)
- {
-    // Update account
-    $data = array(
-        'army_type' => $army_type
     );
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);

@@ -1,4 +1,95 @@
-<!-- Leaderboards -->
+<!-- Tutorial Block -->
+<div id="tutorial_block">
+    <span class="exit_tutorial glyphicon glyphicon-remove-sign pull-right" aria-hidden="true"></span>
+    <span id="tutorial_title"></span>
+    <br>
+    <span id="tutorial_text"></span>
+</div>
+
+<!-- Management Block -->
+<div id="management_block" class="center_block">
+    <strong>foobar</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+
+    <!-- Form -->
+    <?php echo form_open('user/management_form'); ?>
+        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+    </form>
+
+    <hr>
+    <button type="submit" class="btn btn-action form-control">Update Nation</button>
+</div>
+
+<!-- Account Update -->
+<div id="account_update_block" class="center_block">
+    <strong>Nation Settings</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+
+    <!-- Form -->
+    <?php echo form_open('user/update_account_info'); ?>
+        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_nation_name">Nation Name</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="nation_name" name="nation_name" value="<?php echo $account['nation_name']; ?>">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_nation_flag">National Flag</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_nation_color">National Color</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="jscolor color_input form-control" id="nation_color" name="nation_color" value="<?php echo $account['color']; ?>">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_leader_name">Leader Name</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="leader_name" name="leader_name" value="<?php echo $account['leader_name']; ?>">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_leader_portrait">Leader Portrait</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="file" class="form-control" id="leader_portrait" name="leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-success form-control">Update Nation</button>
+    </form>
+</div>
 
 <!-- How To Play Block -->
 <div id="how_to_play_block" class="center_block">

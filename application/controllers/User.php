@@ -167,8 +167,8 @@ class User extends CI_Controller {
 	}
 
     // Update color
-    public function update_color()
-    {        
+    public function update_account_info()
+    {
         // User Information
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -177,10 +177,14 @@ class User extends CI_Controller {
         
         // Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('color', 'color', 'trim|required|max_length[7]');
+        $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('nation_color', 'Nation Color', 'trim|required|max_length[7]');
+        $this->form_validation->set_rules('nation_name', 'Nation Name', 'trim|max_length[50]');
+        $this->form_validation->set_rules('nation_flag', 'Nation Flag', 'trim|max_length[500]');
+        $this->form_validation->set_rules('leader_name', 'Leader Name', 'trim|max_length[50]');
+        $this->form_validation->set_rules('leader_portrait', 'Leader Portrait', 'trim|max_length[500]');
 
-        $world_key = $this->input->post('world_key_input');
+        $world_key = $this->input->post('world_key');
 
         // Fail
         if ($this->form_validation->run() == FALSE) {
@@ -192,56 +196,24 @@ class User extends CI_Controller {
         } else {
 
             // Set color
-            $color = $this->input->post('color');
+            $nation_color = $this->input->post('nation_color');
+            $nation_name = $this->input->post('nation_name');
+            $nation_flag = $this->input->post('nation_flag');
+            $leader_name = $this->input->post('leader_name');
+            $leader_portrait = $this->input->post('leader_portrait');
 
             // Add hash
-            $color = '#' . $color;
+            $color = '#' . $nation_color;
 
             // Set account
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-            $query_action = $this->user_model->update_account_color($account_key, $color);
+            $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
 
-            // Redirect to game
-            redirect('world/' . $world_key, 'refresh');
-        }
-    }
-
-    // Update color
-    public function update_default_land_name()
-    {        
-        // User Information
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
-        }
-        
-        // Validation
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('default_land_name', 'Default Landname', 'trim|max_length[50]');
-
-        $world_key = $this->input->post('world_key_input');
-
-        // Fail
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
-
-        // Success
-        } else {
-
-            // Set default land name
-            $default_land_name = $this->input->post('default_land_name');
-
-            // Bug fix for unescaped '
-            $default_land_name = str_replace("'", "", $default_land_name);
-
-            // Set account
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account_key = $account['id'];
-            $query_action = $this->user_model->update_account_default_land_name($account_key, $default_land_name);
+            // Progress Tutorial
+            if ($account['tutorial'] < 1) {
+                $query_action = $this->user_model->update_account_tutorial($account_key, 1);
+            }
 
             // Redirect to game
             redirect('world/' . $world_key, 'refresh');

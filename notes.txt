@@ -2,88 +2,145 @@
     Notes
 ==========================================================================================
 
-Taking land Mechanic
-    Attack
-    Buy
-    Influence
-    All the above
+Todo
+    Tutorial
+    Modifiers
+    Mechanics
 
+    Remember map or satallite
+    Ocean Reporting
+    How to play
+    About
+    Leaderboards
+
+                    User Story
+Start game
+    Pick username
+    Password or not now
+    Birth of a Nation - Country Name, Flag, Leader Name, Leader Portrait
+    Declare Independence - Pick Starting Location as Capitol
+    We The People / Death and Taxes - Pick a government, set taxes, balance the budget
+    Building for the Future - Improve your city
+    War never changes - Build a military
+    Manifest Destiny - Expand outward, explain attacking
+
+Land->Cities->Population->Resources->Military->Land
+
+                    Metrics
+Land
+Population
+GDP
+Treasury
+Military
+Political Support
+
+                    Land
+Unclaimed
+Village
+Capitol once
+Town every 20 lands
+City every 10 towns
+Metropolis every 5 cities
+
+                    Mechanics
+Attack
+    if ($support >= $governement_support_level) {
+        $wait_in_minutes = ceil( ($defense / $attack) * $land_defense);
+        $new_support = $support - 1
+    }
+Tax
+    Takes percentage of GDP for Treasury
+    Each percent takes percent from support
+Government
+    Anarchy
+        Default
+        No actions can be taken
+    Democracy
+        Min Support at 50
+    Oligarchy
+        Min Support at 30
+        Taxes less effective
+    Autocracy
+        Min Support at 10
+        GDP less effective
+        Faster 
+Military Budget
+    From Treasury
+    Increases military power
+Entitlements Budget
+    From Treasury
+    Increases support
+
+?Trade
+?Law
+?Military Type
+?Attack Type
+?Corruption
+?Unemployment
+    Population / GDP
+Report as water
+
+                    Data Info
+Improvements
+    Hospital +pop
+    Military base +mil
+    School +GDP +pop
+
+        Industry +gdp
+        Commerce +gdp
+        Residential +gdp
+    Coal +gdp +pop
+    Nuclear +gdp +pop
+    Wind +gdp +pop
+        Police Station +support
+        Courthouse +support
+        Jail +support
+        Highway +gdp +pop
+        Subway Line +gdp +pop
+        Airport +gdp +pop
+    Library +GDP
+    University +GDP
+        Park +support
+        Community Center +support
+        Statium +support
+
+                    Questions
+Can support positive modifiers break on big levels
+
+
+                    Other
 Resources
     Land
-    Pop
-    Wealth
-    Army
-    Electric Power
-    Influence
-    Defense
+    Population
+    GDP
+    Tax Rate
+    Treasury
+    Political Support
+    Military
+        Energy
+        Agriculture
+        Health
+        Education
+        Resources
 
-Land
-    Land
-        +1 pop
-    Capitol
-        Free but you only get 1
-    Town
-        every 50 lands
-    City
-        every 250 lands
-    Metropolis
-        every 1000 lands
-    Fortification
-        - something
-Upgrades
-    Wealth
-        Industry
-        Finance
-        Technology
-    Power
-        Coal and Gas
-        Nuclear
-        Solar and Wind
-    Army
-        Outpost
-        Barracks
-        Base
-    Infrastructure
-        Highways
-        Airport
-        Subway
-    Education
-        Library
-        Museum
-        University
-    Public
-        Courthouse
-        Jail
-        Hospital
-    Entertainment
-        Plaza
-        Arena
-        Statium
+Political Support
+    Lower taxes is more
+    Less attacking is more
+    More being attacked is more
 
-Land leaderboards
+Country Name
+Leader Name
+User Name
 
-Avoid skinner boxes
-    long term choices
-    think during downtime
-Progression to teach the game
-Scale of strat
-Tech Tree
+Lose when you lose your last land
+World total leaderboard (sum of all players)
 
-Land Prototype
-    unclaimed, village farm, mine, market, fortification, stronghold, town, city, capital
-    slug, name, defense, population_cost, food_cost, ore_cost, gold_cost, army_cost, population_gain, food_gain, ore_gain, gold_gain, army_gain
 
-Govern
-    Need 1 per population
-    If you are lacking, you can not attack or claim land
-Capitol
-    Free
-    Gives 100 allowed governance
-Statehouse
-    10 Govern
-    1 Gold
 
-100 lands cause 1 corruption
+
+
+
+
 
 Multiple Armies
     Soldiers
