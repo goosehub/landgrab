@@ -16,13 +16,13 @@
       <strong><span id="military_budget_span" class="text-danger"><?php echo $account['military_budget']; ?></span></strong>% -
       <strong><span id="entitlements_span" class="text-info"><?php echo $account['entitlements_budget']; ?></span></strong>%
       |
-      Pop: <strong><span id="population_span">1K</span></strong>
+      Pop: <strong><span span="population_span">1K</span></strong>
       |
-      $<strong><span id="gdp_span" class="text-success">812M</span></strong> -
-      $<strong><span id="treasury_span" class="text-warning">200M</span></strong> -
-      $<strong><span id="military_span" class="text-danger">182M</span></strong>
+      $<strong><span span="gdp_span" class="text-success">812M</span></strong> -
+      $<strong><span span="treasury_span" class="text-warning">200M</span></strong> -
+      $<strong><span span="military_span" class="text-danger">182M</span></strong>
       |
-      Support: <strong><span id="political_support_span" class="text-primary">59</span></strong>% -
+      Support: <strong><span span="political_support_span" class="text-primary">59</span></strong>% -
 
       <span class="caret"></span>
     </button>

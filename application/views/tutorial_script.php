@@ -25,6 +25,10 @@ if (account['tutorial'] === '0') {
     $('#tutorial_block').fadeIn();
     $('#tutorial_title').html('We The People');
     $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+} else if (account['tutorial'] === '3') {
+    $('#tutorial_block').fadeIn();
+    $('#tutorial_title').html('Building for the Future');
+    $('#tutorial_text').html('Click on your Capitol and build it up');
 }
 
 </script>

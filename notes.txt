@@ -6,6 +6,9 @@ Todo
     Tutorial
     Modifiers
     Mechanics
+    City Popup Menu
+    Modifier aggregate queries and hook up
+    Attacking Mechnanic
 
     Remember map or satallite
     Ocean Reporting

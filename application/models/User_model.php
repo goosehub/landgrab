@@ -163,6 +163,20 @@ Class user_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Update account laws
+ function update_account_laws($account_id, $government, $tax_rate, $military_budget, $entitlements_budget)
+ {
+    // Update account
+    $data = array(
+        'government' => $government,
+        'tax_rate' => $tax_rate,
+        'military_budget' => $military_budget,
+        'entitlements_budget' => $entitlements_budget
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
+}
  // Progress Tutorial
  function update_account_tutorial($account_id, $tutorial)
  {

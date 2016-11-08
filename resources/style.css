@@ -3,7 +3,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Lato";
+  font-family: 'Lato', sans-serif;
 }
 /* Orange Action Bootstrap-Styled Button */
 .btn-action {   
@@ -131,13 +131,17 @@ html, body {
   padding: 0.2em;
   background: #FFF0DC;
   border-radius: 0.2em;
-  font-family: 'Cookie', cursive;
 }
 #tutorial_title {
   font-size: 3em;
+  font-family: 'Cookie', cursive;
 }
 #tutorial_text {
-  font-size: 1.5em;
+  font-size: 1.2em;
+  font-family: 'Lato', sans-serif;
+}
+.exit_tutorial {
+  font-size: 1.2em;
 }
 
 /* Center Block */
@@ -160,6 +164,10 @@ html, body {
     left: 5%;
     width: 90%;   
   }
+}
+#law_block {
+  width: 80%;
+  left: 10%;
 }
 .leaderboard_block {
   top: 5vh;

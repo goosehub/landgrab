@@ -45,7 +45,7 @@ if (window.location.href.indexOf('register') >= 0) {
 // 
 
 $('#stat_dropdown').click(function(){
-    $('#management_block').show();
+    $('#law_block').show();
 });
 $('.user_button').click(function(){
     $('#account_update_block').show();

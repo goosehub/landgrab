@@ -27,6 +27,7 @@ $route['get_army_update'] = "game/get_army_update";
 
 // Account functions
 $route['user/update_account_info'] = "user/update_account_info";
+$route['user/law_form'] = "user/law_form";
 
 // User functions
 $route['user/login'] = "user/login";

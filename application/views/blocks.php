@@ -6,22 +6,128 @@
     <span id="tutorial_text"></span>
 </div>
 
-<!-- Management Block -->
-<div id="management_block" class="center_block">
-    <strong>foobar</strong>
+<!-- law Block -->
+<div id="law_block" class="center_block">
+    <strong>State of the State</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
 
-    <!-- Form -->
-    <?php echo form_open('user/management_form'); ?>
-        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
-    </form>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Form -->
+            <?php echo form_open('user/law_form'); ?>
+                <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="input_government" class="pull-right">Form Of Government: </label>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" id="input_government" name="input_government" value="<?php echo $account['government']; ?>">
+                                <option value="<?php echo $account['government']; ?>"><?php echo $government_dictionary[$account['government']]; ?></option>
+                                <?php if ($account['government'] != 0) { ?>
+                                    <option value="0">Anarchy</option>
+                                <?php } ?>
+                                <?php if ($account['government'] != 1) { ?>
+                                <option value="1">Democracy</option>
+                                <?php } ?>
+                                <?php if ($account['government'] != 2) { ?>
+                                <option value="2">Oligarchy</option>
+                                <?php } ?>
+                                <?php if ($account['government'] != 3) { ?>
+                                <option value="3">Autocracy</option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="input_tax_rate" class="pull-right text-success">Tax Rate: (%)</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" min="0" max="100" required class="form-control" id="tax_rate" name="input_tax_rate" value="<?php echo $account['tax_rate']; ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="input_military_budget" class="pull-right text-danger">Military Budget: (%)</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" min="0" max="100" required class="form-control" id="military_budget" name="input_military_budget" value="<?php echo $account['military_budget']; ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="input_entitlements_budget" class="pull-right text-info">Entitlements Budget: (%)</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="number" min="0" max="100" required class="form-control" id="entitlements_budget" name="input_entitlements_budget" value="<?php echo $account['entitlements_budget']; ?>">
+                        </div>
+                    </div>
+                <hr>
+                <button type="submit" class="btn btn-primary form-control">Pass New Laws</button>
+            </form>
+        </div>
 
-    <hr>
-    <button type="submit" class="btn btn-action form-control">Update Nation</button>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right">Provinces: </strong>
+                </div>
+                <div class="col-md-8">
+                    <strong><span class="territory_span">41</span></strong>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right text-primary">Population: </strong>
+                </div>
+                <div class="col-md-8">
+                    <strong><span class="population_span text-primary">702</span></strong>,000
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right text-success">GDP: </strong>
+                </div>
+                <div class="col-md-8">
+                    $<strong><span class="gdp_span text-success">851</span></strong>,000,000
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right text-warning">Treasury: </strong>
+                </div>
+                <div class="col-md-8">
+                    $<strong><span class="treasury_span text-warning">180</span></strong>,000,000
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right text-danger">Military Spending: </strong>
+                </div>
+                <div class="col-md-8">
+                    $<strong><span class="military_span text-danger">105</span></strong>,000,000
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong class="law_stat_label pull-right text-info">Political Support: </strong>
+                </div>
+                <div class="col-md-8">
+                    <strong><span class="political_support_span text-info">55</span></strong>%
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
 </div>
 
 <!-- Account Update -->
@@ -39,7 +145,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_name">Nation Name</label>
+                    <label for="input_nation_name">Nation Name:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="nation_name" name="nation_name" value="<?php echo $account['nation_name']; ?>">
@@ -49,7 +155,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_flag">National Flag</label>
+                    <label for="input_nation_flag">National Flag:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
@@ -59,7 +165,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_color">National Color</label>
+                    <label for="input_nation_color">National Color:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="jscolor color_input form-control" id="nation_color" name="nation_color" value="<?php echo $account['color']; ?>">
@@ -69,7 +175,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_leader_name">Leader Name</label>
+                    <label for="input_leader_name">Leader Name:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="leader_name" name="leader_name" value="<?php echo $account['leader_name']; ?>">
@@ -79,7 +185,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_leader_portrait">Leader Portrait</label>
+                    <label for="input_leader_portrait">Leader Portrait:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="file" class="form-control" id="leader_portrait" name="leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
@@ -102,9 +208,6 @@
     <p>
         <strong>Landgrab is a game of fighting for control of the world.</strong>
     </p>
-    <p>
-        You pick a place to start your conquest. You can then spread outward. Build farms, mines, fortifications, cities and more to strengthen your empire and your army. Make allies along the way to ensure your survival. Lost a battle and your army will regen by 100 a minute until its max is reached. Pick an army type to beat your enemies. Gorilla has a double bonus against Mech, Trench has triple bonus against Gorilla, and Mech has a quad bonus against Trench. Convert all your lands to unclaimed to start over.
-    </p>
     <blockquote>
         The world is yours.
     </blockquote>
@@ -119,17 +222,6 @@
             </p>
         </div>
         <div class="col-md-6">
-          <?php if ($log_check) { ?>
-            <?php echo form_open('user/update_color'); ?>
-            <div class="row"><div class="col-md-6">
-                <label for="_input_color">Your Land Color</label>
-            </div><div class="col-md-6">
-                <input type="hidden" name="world_key_input" value="<?php echo $world['id']; ?>">
-                <input class="jscolor color_input form-control" id="account_input_color" name="color" 
-                value="<?php echo $account['color']; ?>" onchange="this.form.submit()">
-            </div></div>
-            </form>
-          <?php } ?>
         </div>
     </div>
 </div>
@@ -144,22 +236,9 @@
 
     <hr>
 
-    <small>Version 3.2.0</small>
+    <small>Version 4.0.0</small>
     <ul>
-        <li>Army types (See How To Play)</li>
-    </ul>
-    <small>Version 3.1.0</small>
-    <ul>
-        <li>New Leaderboards.</li>
-    </ul>
-    <small>Version 3.0.0</small>
-    <ul>
-        <li>Resource system in place.</li>
-        <li>Resources such as Population, Food, Ore, and Gold added.</li>
-        <li>The list of land types is now unclaimed, village farm, mine, market, fortification, stronghold, town, and city.</li>
-        <li>Army is now treated as a resource.</li>
-        <li>Army regens by 20 a minute until max is reached.</li>
-        <li>User interface improved for less clicking.</li>
+        <li></li>
     </ul>
 </div>
 
@@ -179,8 +258,8 @@
     <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
     <br>
     <br>
-    <p>Special Thanks goes to Google Maps, EllisLabs, The StackExchange Network, CSS-Tricks,
-    <a href="http://ithare.com/" target="_blank">itHare</a>, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
+    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>
+    <a href="http://ithare.com/" target="_blank">itHare</a>, EllisLabs and British Columbia Institute of Technology for providing CodeIgniter, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
     the rest of the Beta Testers, and all my users. Thank you!</p>
 </div>
 
