@@ -341,9 +341,6 @@ class Game extends CI_Controller {
             return true;
         }
 
-        // Get attack information
-        $active_army = $account['active_army'];
-
         // Get defender account
         $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
 
@@ -352,44 +349,10 @@ class Game extends CI_Controller {
             $world['land_size'], $land_square['lat'], $land_square['lng'], true);
         // Seige logic
         if (!$range_check) {
-            $land_type = 'village';
+            $land_type = 1;
         }
 
-        $defending_army = $land_dictionary[$land_type]['defense'];
-        $attack_power = rand(0,$active_army);
-        $defend_power = rand(0,$defending_army);
-
-        // Army type logic
-        if ($account['army_type'] === 'gorilla' && $defender_account['army_type'] === 'mech') {
-            $attack_power = $attack_power * 2;
-        }
-        if ($account['army_type'] === 'trench' && $defender_account['army_type'] === 'gorilla') {
-            $attack_power = $attack_power * 3;
-        }
-        if ($account['army_type'] === 'mech' && $defender_account['army_type'] === 'trench') {
-            $attack_power = $attack_power * 4;
-        }
-        if ($account['army_type'] === 'mech' && $defender_account['army_type'] === 'gorilla') {
-            $defend_power = $defend_power * 2;
-        }
-        if ($account['army_type'] === 'gorilla' && $defender_account['army_type'] === 'trench') {
-            $defend_power = $defend_power * 3;
-        }
-        if ($account['army_type'] === 'trench' && $defender_account['army_type'] === 'mech') {
-            $defend_power = $defend_power * 4;
-        }
-        
-        // Do random attack with two sides
-        if ($attack_power > $defend_power) {
-            // On victory, change losers population
-            // TODO
-            // ...
-            return true;
-        } else {
-            // On failure, destroy active army of attacker
-            $query_action = $this->game_model->update_account_active_army($account['id'], 0);
-            return false;
-        }
+        return true;
     }
 
     // Land upgrade form

@@ -41,13 +41,7 @@ class Cron extends CI_Controller {
           foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
 
-            $new_active_army = $account['active_army'] + 100;
-            if ($new_active_army > $account['army']) {
-              $new_active_army = $account['army'];
-            }
-
-            // Update account active_army
-            $query_action = $this->game_model->update_account_active_army($account_key, $new_active_army);
+            // Do stuff
 
           } // End account loop
 
