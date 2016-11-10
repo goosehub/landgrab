@@ -6,7 +6,8 @@
     <span id="tutorial_text"></span>
 </div>
 
-<!-- law Block -->
+<!-- Law Block -->
+<?php if ($log_check) { ?>
 <div id="law_block" class="center_block">
     <strong>State of the State</strong>
 
@@ -129,8 +130,10 @@
         </div>
     </div>
 </div>
+<?php } ?>
 
 <!-- Account Update -->
+<?php if ($log_check) { ?>
 <div id="account_update_block" class="center_block">
     <strong>Nation Settings</strong>
 
@@ -196,6 +199,7 @@
         <button type="submit" class="btn btn-success form-control">Update Nation</button>
     </form>
 </div>
+<?php } ?>
 
 <!-- How To Play Block -->
 <div id="how_to_play_block" class="center_block">

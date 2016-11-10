@@ -7,14 +7,20 @@ Todo
     Modifiers
     Mechanics
     City Popup Menu
+    Modifier tutorial default create town and capitol
     Modifier aggregate queries and hook up
     Attacking Mechnanic
+    Highlight land types
 
     Remember map or satallite
     Ocean Reporting
     How to play
     About
     Leaderboards
+    
+
+    Blanking bug (dev only)?
+    Check 
 
                     User Story
 Start game

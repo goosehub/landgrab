@@ -74,6 +74,29 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
     return true;
  }
+ // Update land capitol status
+ function update_land_capitol_status($world_key, $coord_slug, $capitol)
+ {
+    $data = array(
+        'capitol' => $capitol
+    );
+    $this->db->where('coord_slug', $coord_slug);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;
+ }
+ // Remove capitol from account
+ function remove_capitol_from_account($world_key, $account_key)
+ {
+    $data = array(
+        'capitol' => 0
+    );
+    $this->db->where('account_key', $account_key);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;
+
+ }
  // Update land content
  function update_land_content($world_key, $coord_slug, $content)
  {
