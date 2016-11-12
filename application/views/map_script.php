@@ -9,6 +9,13 @@
 // Constants
 // 
 
+land_dictionary = new Array();
+land_dictionary[0] = 'unclaimed';
+land_dictionary[1] = 'village';
+land_dictionary[2] = 'town';
+land_dictionary[3] = 'city';
+land_dictionary[4] = 'metropolis';
+
 // Set World
 var world_key = <?php echo $world['id']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
@@ -24,26 +31,6 @@ var player_land_count = <?php echo $account['land_count']; ?>;
 <?php } else { ?>
 var log_check = false;
 <?php } ?>
-
-land_dictionary = new Array();
-land_dictionary[0] = create_land_prototype('unclaimed', 0, 0, 0, 0, 0);
-land_dictionary[1] = create_land_prototype('village', 1, 1, 0, 0, 0, 0);
-land_dictionary[2] = create_land_prototype('town', 2, 10, 0, 0, 0, 0);
-land_dictionary[3] = create_land_prototype('city', 3, 100, 0, 0, 0, 0);
-land_dictionary[4] = create_land_prototype('metropolis', 4, 1000, 0, 0, 0, 0);
-land_dictionary_length = Object.keys(land_dictionary).length;
-
-function create_land_prototype(slug, defense, population, gdp, treasury, military, support) {
-  var object = new Object();
-  object.slug = slug,
-  object.name = name,
-  object.defense = defense,
-  object.population = population,
-  object.gdp = gdp,
-  object.treasury = treasury,
-  object.support = support
-  return object;
-}
 
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
@@ -183,6 +170,7 @@ function initMap()
       // Get land
       // console.log(land);
   		land_data = JSON.parse(land);
+      console.log(land_data);
       // Handle error
       if (land_data['error']) {
         alert(land_data['error']);
@@ -215,11 +203,11 @@ function initMap()
         // Coord
         window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
         // Land Type
-        window_string += 'Land: <strong class="text-success pull-right">' + ucwords(land_dictionary[land_data['land_type']].slug) + '</strong><br>';
+        window_string += 'Land: <strong class="text-success pull-right">' + ucwords(land_dictionary[land_data['land_type']]) + '</strong><br>';
         // Population
-        window_string += 'Population: <strong class="text-success pull-right">' + number_format(land_dictionary[land_data['land_type']].population * 1000) + '</strong><br>';
+        window_string += 'Population: <strong class="text-success pull-right">' + number_format(land_data['sum_effects']['population']) + '<small>,000</small></strong><br>';
         // Defense
-        window_string += 'Defense: <strong class="text-danger pull-right">' + number_format(land_dictionary[land_data['land_type']].defense) + '</strong>';
+        window_string += 'Defense: <strong class="text-danger pull-right">' + number_format(land_data['sum_effects']['defense']) + '</strong>';
 
         window_string += '</div>';
 			}
@@ -470,25 +458,11 @@ function initMap()
     }
 
     // Unclaim
-    result += '<button type="button" name="upgrade_type" value="-1" class="upgrade_submit btn btn-danger" '
-      + 'value="0">Unclaim this land</button>';
+    // result += '<button type="button" name="upgrade_type" value="-1" class="upgrade_submit btn btn-danger" value="0">Unclaim this land</button>';
 
     // End form
     result += '</form></div>';
 
-    return result;
-  }
-
-  function land_type_info(land_type) {
-    result = '<div class="expand_land_type_info btn btn-info" type="button" '
-    + 'data-toggle="collapse" data-target="#' + land_type + '_info_dropdown" aria-expanded="false" aria-controls="' + land_type + '_info_dropdown">'
-      + 'Info'
-      + ' <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>'
-        + '<div id="' + land_type + '_info_dropdown" class="info_details_parent collapse">';
-        result += 'Defense: <span class="pull-right"><strong class="text-primary">+' + land_dictionary[land_type].defense + '</strong></span><br>';
-        result += 'Population: <span class="pull-right"><strong class="text-success">+' + land_dictionary[land_type].population + '</strong>'
-        + ' / -<strong class="text-danger">' + land_dictionary[land_type].population + '</strong></span><br>';
-    result += '</div>';
     return result;
   }
 
@@ -610,26 +584,20 @@ function initMap()
       stroke_color = '#222222';
       fill_color = "#0000ff";
       fill_opacity = 0;
-      if (land['claimed'] == 1) {
+      if (land['land_type'] > 0) {
         fill_color = land['color'];
         fill_opacity = 0.4;
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_color = '#428BCA';
       }
-      if (land['land_type'] === 'fortification') {
-        stroke_weight = 2;
-        stroke_color = '#585858';
-      } else if (land['land_type'] === 'stronghold') {
-        stroke_weight = 2;
-        stroke_color = '#F72525';
-      } else if (land['land_type'] === 'city') {
+      if (land['land_type'] === 2) {
         stroke_weight = 2;
         stroke_color = '#2D882D';
-      } else if (land['land_type'] === 'town') {
+      } else if (land['land_type'] === 3) {
         stroke_weight = 2;
         stroke_color = '#F7DB25';
-      } else if (land['land_type'] === 'market') {
+      } else if (land['land_type'] === 4) {
         stroke_weight = 2;
         stroke_color = '#911BA2';
       }
@@ -654,6 +622,8 @@ function initMap()
   }
 
   function update_leaderboards(leaderboards) {
+    return true;
+/*
     // Set leaderboards
     leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
     leaderboard_cities = leaderboards['leaderboard_cities'];
@@ -722,7 +692,7 @@ function initMap()
       // Add string to table
       $('#leaderboard_population_table tr:last').after(table_string);
     });
-
+*/
     return true;
   }
 

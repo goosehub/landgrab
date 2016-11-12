@@ -163,5 +163,67 @@ Class game_model extends CI_Model
     return true;
  }
 
+
+
+
+
+ // Get all modify effects
+ function get_effects_of_land($land_key)
+ {
+    $query = $this->db->query("
+        SELECT  *
+        FROM modify_effect
+        LEFT JOIN land_modifier
+        ON modify_effect.id = land_modifier.modify_effect_key
+        WHERE land_modifier.land_key = " . $land_key . ";
+    ");
+    $result = $query->result_array();
+    return $result;
+ }
+ function get_sum_effects_of_land($land_key)
+ {
+    $query = $this->db->query("
+        SELECT 
+        SUM(modify_effect.population) as population,
+        SUM(modify_effect.gdp) as gdp,
+        SUM(modify_effect.treasury) as treasury,
+        SUM(modify_effect.military) as military,
+        SUM(modify_effect.support) as support 
+        FROM modify_effect 
+            LEFT JOIN land_modifier 
+            ON modify_effect.id = land_modifier.modify_effect_key 
+        WHERE land_modifier.land_key = " . $land_key . ";
+    ");
+    $result = $query->result_array();
+    if ( isset($result[0]) ) {
+        return $result[0];
+    }
+    return [];
+ }
+ // Get all modify of land
+ function get_all_modify_effects($world_key)
+ {
+    $this->db->select('*');
+    $this->db->from('modify_effect');
+    $query = $this->db->get();
+    return $query->result_array();
+ }
+ // Add modifier to land
+ function add_modifier_to_land($land_key, $modify_effect_key)
+ {
+    $data = array(
+    'land_key' => $land_key,
+    'modify_effect_key' => $modify_effect_key
+    );
+    $this->db->insert('land_modifier', $data);
+    return true;
+ }
+ // Remove all modifiers from land
+ function remove_modifiers_from_land($land_key)
+ {
+    $this->db->where('land_key', $land_key);
+    $this->db->delete('land_modifier');
+ }
+
 }
 ?>

@@ -4,6 +4,12 @@ date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
 
+    protected $village_key = 2;
+    protected $town_key = 3;
+    protected $city_key = 4;
+    protected $metropolis_key = 5;
+    protected $capitol_key = 6;
+
 	function __construct() {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
@@ -120,6 +126,8 @@ class Game extends CI_Controller {
 
 	    // Get Land Square
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
+        $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
 
         // Land range false by default
         $land_square['in_range'] = false;
@@ -213,6 +221,7 @@ class Game extends CI_Controller {
 	        $world_key = $this->input->post('world_key_input');
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+            $land_key = $land_square['id'];
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
@@ -222,7 +231,6 @@ class Game extends CI_Controller {
             $content = $this->input->post('content');
             // $content = $this->sanitize_html($content);
             $content = $content;
-            $land_dictionary = $this->land_dictionary();
 
             // Do attack logic
             $attack_result = null;
@@ -265,10 +273,17 @@ class Game extends CI_Controller {
             if ($account['tutorial'] < 2) {
                 $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, true);
                 $query_action = $this->user_model->update_account_tutorial($account_key, 2);
+                $land_type = 2;
+                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
+                // Add town to square
             }
             // Land type for update
-            if ($form_type === 'claim' || $form_type === 'attack') {
+            else if ($form_type === 'claim' || $form_type === 'attack') {
                 $land_type = 1;
+                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
             } else {
                 $land_type = $land_square['land_type'];
             }
@@ -335,19 +350,14 @@ class Game extends CI_Controller {
     // Land Transaction
     public function land_attack($land_square, $world, $land_type, $account)
     {        
-        $land_dictionary = $this->land_dictionary();
-        // If attacker has no lands and land is not fortified, then attacker wins
-        if ($account['land_count'] < 1 && $land_dictionary[$land_type]['defense'] <= 10) {
-            return true;
-        }
-
+        return true;
+/*        
         // Get defender account
         $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
 
         // Siege logic
         $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
             $world['land_size'], $land_square['lat'], $land_square['lng'], true);
-/*        
         // Seige logic
         if (!$range_check) {
             $land_type = 1;
@@ -442,7 +452,6 @@ class Game extends CI_Controller {
         $account_key = $account['id'];
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_type = $land_square['land_type'];
-        $land_dictionary = $this->land_dictionary();
         // Calculate change in resources from previous to new
 
         // Check for inaccuracies
@@ -576,17 +585,6 @@ class Game extends CI_Controller {
         $account_id = $this->input->get('account_id');
         $account = $this->user_model->get_account_by_id($account_id);
         echo $account['active_army'];
-    }
-
-    // Land dictionary for reference
-    public function land_dictionary()
-    {
-        $land_type[0] = $this->create_land_prototype('unclaimed', 0, 0, 0, 0, 0, 0);
-        $land_type[1] = $this->create_land_prototype('village', 1, 1, 0, 0, 0, 0);
-        $land_type[2] = $this->create_land_prototype('town', 2, 10, 0, 0, 0, 0);
-        $land_type[3] = $this->create_land_prototype('city', 3, 100, 0, 0, 0, 0);
-        $land_type[4] = $this->create_land_prototype('metropolis', 4, 1000, 0, 0, 0, 0);
-        return $land_type;
     }
 
     // Creates land dictionary

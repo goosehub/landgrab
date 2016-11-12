@@ -11,18 +11,15 @@
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown">
       <strong><span id="government_span" class=""><?php echo $government_dictionary[$account['government']]; ?></span></strong>
-      |
+      | Tax and Spending
       <strong><span id="tax_rate_span" class="text-success"><?php echo $account['tax_rate']; ?></span></strong>% -
       <strong><span id="military_budget_span" class="text-danger"><?php echo $account['military_budget']; ?></span></strong>% -
       <strong><span id="entitlements_span" class="text-info"><?php echo $account['entitlements_budget']; ?></span></strong>%
-      |
-      Pop: <strong><span span="population_span">1K</span></strong>
-      |
-      $<strong><span span="gdp_span" class="text-success">812M</span></strong> -
-      $<strong><span span="treasury_span" class="text-warning">200M</span></strong> -
-      $<strong><span span="military_span" class="text-danger">182M</span></strong>
-      |
-      Support: <strong><span span="political_support_span" class="text-primary">59</span></strong>% -
+      | Pop: <strong><span span="population_span">1K</span></strong>
+      | GDP: $<strong><span span="gdp_span" class="text-success">812M</span></strong>
+      / $<strong><span span="treasury_span" class="text-warning">200M</span></strong>
+      / $<strong><span span="military_span" class="text-danger">182M</span></strong>
+      | Support: <strong><span span="political_support_span" class="text-primary">59</span></strong>%
 
       <span class="caret"></span>
     </button>
