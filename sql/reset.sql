@@ -4,6 +4,6 @@ TRUNCATE `ip_request`;
 
 UPDATE `land` 
 SET `claimed`= 0, `account_key`= 0, `land_name`= '', `content`= '', `color`= '#000000',
-WHERE `claimed` = 1;
+WHERE 1;
 
 TRUNCATE `land_modifier`;

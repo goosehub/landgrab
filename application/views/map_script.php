@@ -16,6 +16,12 @@ land_dictionary[2] = 'town';
 land_dictionary[3] = 'city';
 land_dictionary[4] = 'metropolis';
 
+government_dictionary = new Array();
+government_dictionary[0] = 'Anarchy';
+government_dictionary[1] = 'Democracy';
+government_dictionary[2] = 'Oligarchy';
+government_dictionary[3] = 'Autocracy';
+
 // Set World
 var world_key = <?php echo $world['id']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
@@ -166,58 +172,150 @@ function initMap()
 		// Create land infoWindow
     // 
 
+    $('.center_block').hide();
+
 		land = get_single_land(coord_slug, world_key, function(land){
       // Get land
-      // console.log(land);
-  		land_data = JSON.parse(land);
-      console.log(land_data);
+  		d = JSON.parse(land);
+      console.log(d);
+      console.log(account);
       // Handle error
-      if (land_data['error']) {
-        alert(land_data['error']);
+      if (d['error']) {
+        alert(d['error']);
         return false;
       }
-      // Create string
-      var window_string = '<div class="land_window">';
 
-      // Unclaimed land
-			if (land_data['land_type'] === '0') {
-        // Land name
-				window_string += '<strong class="land_name">Unclaimed</strong><br>';
-        // Coord
-        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
+      console.log('marco');
 
-      // Claimed land
-			} else  {
+      $('#land_form_result').hide();
+      $('.land_form_subparent').hide();
+      $('#land_form_claim, #land_form_attack').hide();
 
-        // Land name
-        if (land_data['land_name'] != '') {
-          window_string += '<strong class="land_name h3">' + land_data['land_name'] + '</strong>';
-        }
-        window_string += '<div class="land_info">';
-        // Content
-        if (land_data['content'] != '') {
-          window_string += '<div class="land_content_div">' + land_data['content'] + '</div><br>';
-        }
-        // Owner
-        window_string += 'Owner: <strong class="pull-right">' + land_data['username'] + '</strong><br>';
-        // Coord
-        window_string += 'Coord: <strong class="pull-right"><a href="<?=base_url()?>world/' + world_key + '?land=' + coord_slug + '">' + coord_slug + '</a></strong><br>';
-        // Land Type
-        window_string += 'Land: <strong class="text-success pull-right">' + ucwords(land_dictionary[land_data['land_type']]) + '</strong><br>';
-        // Population
-        window_string += 'Population: <strong class="text-success pull-right">' + number_format(land_data['sum_effects']['population']) + '<small>,000</small></strong><br>';
-        // Defense
-        window_string += 'Defense: <strong class="text-danger pull-right">' + number_format(land_data['sum_effects']['defense']) + '</strong>';
-
-        window_string += '</div>';
-			}
-
-      // Unregistered users
-      if (! log_check) {
-          window_string += '<a class="register_to_play btn btn-default" href="<?=base_url()?>world/' + world_key 
-          + '?register">Join to Play!</a>';
+      if (!log_check) {
+        $('#join_to_play_button').show();
       }
 
+      if (d['land_type'] === '0') {
+        $('#land_form_unclaimed_parent').show();
+        if (d['in_range']) {
+          $('#land_form_claim').show();
+        }
+      } else {
+        $('#land_form_info_parent').show();
+      }
+
+      if (d['account_key'] === account['id']) {
+        $('#land_form_update_parent').show()
+      } else {
+        $('#land_form_update_parent').hide()
+        if (d['in_range']) {
+          $('#land_form_attack').show();
+        }
+      }
+
+      if (d['capitol'] === '1') {
+        $('#capitol_info').show();
+      } else {
+        $('#capitol_info').hide();
+      }
+
+      $('#land_block').show();
+      $('#input_id').val(d['id']);
+      $('#input_coord_slug').val(d['coord_slug']);
+      if (d['land_name'] != '') {
+        $('#land_name_label').html(d['land_name']);
+      } else {
+        $('#land_name_label').html('Unnamed ' + ucwords(land_dictionary[d['land_type']]));
+      }
+      $('#land_content_label').html(d['content']);
+      $('#land_gdp_label').html(d['sum_effects']['gdp']);
+      $('#land_population_label').html(d['sum_effects']['population']);
+      $('#land_defense_label').html(d['sum_effects']['defense']);
+
+      $('#coord_link').prop('href', '<?=base_url()?>world/' + world_key + '?land=' + coord_slug);
+      $('#coord_link').html(coord_slug);
+      
+
+      // $('#input_land_content').addClass('input_to_label');
+      // $('#input_land_name').addClass('input_to_label');
+
+      $('#government_label').html( government_dictionary[account['government']] );
+      $('#land_type_label').html( ucwords(land_dictionary[d['land_type']]) );
+      $('#nation_label').html(account['nation_name']);
+      $('#leader_name_label').html(account['leader_name']);
+
+      // $('#leader_name_label, #nation_label').css('color', d['color']);
+
+      $('#input_land_name').val(d['land_name']);
+      $('#input_content').val(d['content']);
+
+      $('.submit_land_form').click(function() {
+        // Serialize form into post data
+        var post_data = $('#land_form').serialize();
+
+        // Submit form
+        $.ajax({
+          url: "<?=base_url()?>land_form",
+          type: "POST",
+          data: post_data,
+          cache: false,
+          success: function(data)
+          {
+            // Return data
+            response = JSON.parse(data);
+
+            if (response['error'] || response['status'] != 'success') {
+              $('#land_form_result').show();
+              $('#land_form_result_message').html(response['error']);
+              return false;
+            }
+
+            // If success
+            if (response['status'] === 'success') {
+
+              // Pass information to user
+              result_alert = 'alert-green';
+              if (!response['result']) {
+                result_alert = 'alert-danger';
+              }
+              $('#land_form_result_message').html(response['message']);
+              $('.center_block').hide();
+
+              if (input_form_type != 'update' && response['result']) {
+                // Update player variables and displays
+                // player_land_count = player_land_count + 1;
+                // $('#owned_lands_span').html( number_format(player_land_count) );
+
+                // Update box to reflect user ownership
+                boxes[d['id']].setOptions({
+                  strokeWeight: 3, 
+                  strokeColor: '#428BCA',
+                  fillColor: account['color'],
+                  fillOpacity: 0.4
+                });
+
+                // Tutorial Rule
+                if (account['tutorial'] < 2) {
+                  $('#tutorial_block').fadeOut(1000, function(){
+                    $('#tutorial_block').fadeIn();
+                    $('#tutorial_title').html('We The People');
+                    $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+                  });
+                }
+
+                return true;
+              }
+            }
+          } // End land form ajax success
+        }); // End land form ajax
+      });
+
+      
+
+      return true;
+
+      // Create string
+      var window_string = '<div class="land_window">';
       // Interaction buttons
 			if (land_data['in_range'] && log_check) {
         // Claim
@@ -264,78 +362,6 @@ function initMap()
             $('#input_land_name').focus();
           }, 200);
         });
-
-        // 
-        // Submit land form ajax
-        // 
-        $('#submit_land_form').click(function() {
-
-          // Serialize form into post data
-          var input_form_type = $('#input_form_type').val();
-          var post_data = $('#land_form').serialize();
-
-          // Replace window with processing window
-          $('#land_form').html('<br><div class="alert alert-wide alert-success"><strong>...</strong></div>');
-
-          // Submit form
-          $.ajax({
-            url: "<?=base_url()?>land_form",
-            type: "POST",
-            data: post_data,
-            cache: false,
-            success: function(data)
-            {
-              // Return data
-              response = JSON.parse(data);
-
-              if (response['error'] || response['status'] != 'success') {
-                $('#land_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
-                return false;
-              }
-
-              // If success
-              if (response['status'] === 'success') {
-
-                // Pass information to user
-                result_alert = 'alert-green';
-                if (!response['result']) {
-                  result_alert = 'alert-danger';
-                  $('#active_army_display_span').html(0);
-                  active_army = 0;
-                }
-                $('#land_form').html('<br><div class="alert alert-wide ' + result_alert + '"><strong>' + response['message'] + '</strong></div>');
-                setTimeout(function(){
-                  infoWindow.close();
-                }, 1 * 500);
-
-                if (input_form_type != 'update' && response['result']) {
-                  // Update player variables and displays
-                  player_land_count = player_land_count + 1;
-                  $('#owned_lands_span').html( number_format(player_land_count) );
-
-                  // Update box to reflect user ownership
-                  boxes[land_data['id']].setOptions({
-                    strokeWeight: 3, 
-                    strokeColor: '#428BCA',
-                    fillColor: account['color'],
-                    fillOpacity: 0.4
-                  });
-
-                  // Tutorial Rule
-                  if (account['tutorial'] < 2) {
-                    $('#tutorial_block').fadeOut(1000, function(){
-                      $('#tutorial_block').fadeIn();
-                      $('#tutorial_title').html('We The People');
-                      $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
-                    });
-                  }
-
-                  return true;
-                }
-              }
-            } // End land form ajax success
-          }); // End land form ajax
-        }); //End submit form
 
         $('.upgrade_submit').click(function(){
           // Serialize form into post data

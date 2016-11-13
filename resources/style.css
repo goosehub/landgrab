@@ -144,6 +144,15 @@ html, body {
   font-size: 1.2em;
 }
 
+/* Land Form */
+.input_to_label {
+  background:rgba(0,0,0,0);
+  border:none;
+}
+.coord_label {
+  margin-right: 1em;
+}
+
 /* Center Block */
 .center_block {
   display: none;

@@ -100,6 +100,7 @@ class Game extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
         $this->load->view('blocks', $data);
+        $this->load->view('land_block', $data);
         $this->load->view('leaderboards', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
@@ -198,7 +199,6 @@ class Game extends CI_Controller {
         
 		// Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|alpha|max_length[8]|callback_land_form_validation');
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
@@ -216,7 +216,6 @@ class Game extends CI_Controller {
 		// Success
         } else {
             // Set inputs
-            $form_type = $this->input->post('form_type_input');
             $coord_slug = $this->input->post('coord_slug_input');
 	        $world_key = $this->input->post('world_key_input');
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
@@ -232,38 +231,29 @@ class Game extends CI_Controller {
             // $content = $this->sanitize_html($content);
             $content = $content;
 
+            if ($land_square['land_type'] === 0) {
+                $action_type = 'claim';
+            }
+            if ($account['id'] === $land_square['account_key']) {
+                $action_type = 'update';
+            } else {
+                $action_type = 'attack';
+            }
+
             // Do attack logic
             $attack_result = null;
-            if ($form_type === 'attack') {
-/*                $land_type = $land_square['land_type'];
-                $attack_result = $this->land_attack($land_square, $world, $land_type, $account);
-                // Return failed attack message
-                if (!$attack_result) {
-                    echo '{"status": "success", "result": false, "message": "Defeat"}';
-                    return false;
-                } else {
-                    echo '{"status": "success", "result": true, "message": "Victory"}';
-                    // Check if account losing land is now inactive
-                    $loser_account_lands = $this->user_model->get_count_of_account_land($land_square['account_key']);
-                    if (intVal($loser_account_lands) === 1) {
-                        $query_action = $this->game_model->update_account_active_state($land_square['account_key'], 0);
-                    }
-
-                    // Update resources for the loser
-                }*/
+            if ($action_type === 'attack') {
+                echo '{"status": "success", "result": true, "message": "Updated"}';
             }
             // Claim response
-            else if ($form_type === 'claim') {
+            else if ($action_type === 'claim') {
                 echo '{"status": "success", "result": true, "message": "Claimed"}';
             // Update response
             } else {
                 echo '{"status": "success", "result": true, "message": "Updated"}';
             }
 
-            // Update resources for the this account
-            if ($form_type != 'update') {
-            }
-
+            // Huh?
             if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
                 // Mark account as active
                 $query_action = $this->game_model->update_account_active_state($account_key, 1);
@@ -271,16 +261,16 @@ class Game extends CI_Controller {
 
             // Make capitol if tutorial
             if ($account['tutorial'] < 2) {
+                $land_type = 2;
                 $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, true);
                 $query_action = $this->user_model->update_account_tutorial($account_key, 2);
-                $land_type = 2;
                 $query_action = $this->game_model->remove_modifiers_from_land($land_key);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
                 // Add town to square
             }
             // Land type for update
-            else if ($form_type === 'claim' || $form_type === 'attack') {
+            else if ($action_type === 'update') {
                 $land_type = 1;
                 $query_action = $this->game_model->remove_modifiers_from_land($land_key);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
