@@ -21,31 +21,72 @@
 
         <div id="land_form_unclaimed_parent" class="land_form_subparent">
             <div><strong>Unclaimed Land</strong></div>
+            <br>
             <button type="button" id="land_form_claim" class="submit_land_form btn btn-success">Claim This Land</button>
         </div>
 
         <div id="land_form_info_parent" class="land_form_subparent">
-            <div id="land_name_label"></div>
+            <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
             <div id="leader_name">Led by <strong id="leader_name_label"></strong></div>
 
             <div id="capitol_info">
-                <div id="capitol_label">Capitol of the <strong id="government_label"></strong> of <strong id="nation_label"></strong></div>
+                <div id="capitol_label">Capitol of the <span id="government_label" class="text-primary"></span> of <span id="nation_label" class="text-primary"></span></div>
             </div>
 
-            <div><span id="land_type_label"></span> with a population <span id="land_population_label"></span><small>,000</small></div>
+            <div><span id="land_type_label" class="text-primary"></span> with a population <span id="land_population_label"></span><small>,000</small></div>
             <div>GDP: $<span id="land_gdp_label"></span><small>,000</small></div>
             <div>Defense: <span id="land_defense_label"></span></div>
             <button type="button" id="land_form_attack" class="submit_land_form btn btn-success">Attack this land</button>
         </div>
 
         <div id="land_form_update_parent" class="land_form_subparent">
-            <hr>
+            <br>
             <input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="">
             <textarea class="form-control" id="input_content" name="content" placeholder="Description"></textarea>
             <br>
-            <button type="button" id="land_form_update" class="submit_land_form btn btn-success">Update Land</button>
+            <button type="button" id="land_form_update" class="submit_land_form btn btn-success">Update This Land</button>
         </div>
 
     </form>
+
+    <br>
+
+    <form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">
+        <div id="land_form_upgrade_parent" class="land_form_subparent">
+            <button class="expand_land_form btn btn-primary" type="button" data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">
+                Build on this Land
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </button>
+            <div id="upgrade_dropdown" class="collapse">
+                <div class="form-group">
+                    <input type="hidden" id="input_world_key" name="world_key_input" value="1">
+                    <input type="hidden" id="input_id" name="id_input" value="16998">
+                    <input type="hidden" id="input_coord_slug" name="coord_slug_input" value="30,-80">
+                    <div class="row">
+                        <?php foreach ($modify_effect_dictionary as $effect) { ?>
+                        <div class="col-md-6">
+                            <button type="button" class="upgrade_submit btn btn-success" value="<?php echo $effect['id']; ?>">
+                                <?php echo ucwords(str_replace('_', '', $effect['name'])); ?>
+                            </button>
+                            <div class="expand_land_type_info btn btn-info" type="button" data-toggle="collapse" data-target="#<?php echo $effect['name']; ?>_info_dropdown" aria-expanded="false" aria-controls="<?php echo $effect['name']; ?>_info_dropdown">
+                                Info 
+                                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+                            </div>
+                            <div id="<?php echo $effect['name']; ?>_info_dropdown" class="info_details_parent collapse">
+                                Population: <span class="pull-right"><strong class="text-primary"><?php echo $effect['population']; ?></strong></span><br>
+                                GDP: <span class="pull-right"><strong class="text-primary"><?php echo $effect['gdp']; ?></strong></span><br>
+                                Treasury: <span class="pull-right"><strong class="text-primary"><?php echo $effect['treasury']; ?></strong></span><br>
+                                Defense: <span class="pull-right"><strong class="text-primary"><?php echo $effect['defense']; ?></strong></span><br>
+                                Military: <span class="pull-right"><strong class="text-primary"><?php echo $effect['military']; ?></strong></span><br>
+                                Support: <span class="pull-right"><strong class="text-primary"><?php echo $effect['support']; ?></strong></span><br>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
 </div>

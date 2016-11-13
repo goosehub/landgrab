@@ -28,7 +28,7 @@ if (account['tutorial'] === '0') {
 } else if (account['tutorial'] === '3') {
     $('#tutorial_block').fadeIn();
     $('#tutorial_title').html('Building for the Future');
-    $('#tutorial_text').html('Click on your Capitol and build it up');
+    $('#tutorial_text').html('Click on your Capitol. Name it and start building');
 }
 
 </script>

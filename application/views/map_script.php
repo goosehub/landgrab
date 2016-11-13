@@ -415,83 +415,6 @@ function initMap()
     }); // End get_single_land callback
 	} // End set_window
 
-	// For claiming, updating, and buying land forms
-	function land_window_form(form_type, button_class, d) {
-    var hide_class = '';
-    if (form_type != 'update') {
-      hide_class = 'hidden';
-    }
-    var action_class = '';
-    if (form_type === 'update') {
-      action_class = 'btn-primary';
-    } else if (form_type === 'attack') {
-      action_class = 'btn-danger';
-    } else {
-      action_class = 'btn-info';
-    }
-		result = '<div class="form_outer_cont land_form_cont"><hr><form id="land_form' + '" action="<?=base_url()?>land_form" method="post">'
-		  result += '<div id="land_form_dropdown">'
-          + '<div class="form-group ' + hide_class + '">'
-            + '<input type="hidden" id="input_form_type" name="form_type_input" value="' + form_type + '">'
-            + '<input type="hidden" id="input_world_key" name="world_key_input" value="' + world_key + '">'
-            + '<input type="hidden" id="input_id" name="id_input" value="' + d['id'] + '">'
-            + '<input type="hidden" id="input_coord_slug" name="coord_slug_input" value="' + d['coord_slug'] + '">'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_land_name">Land Name</label>'
-            + '</div><div class="col-md-8">'
-            + '<input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="'+ d['land_name'] + '">'
-            + '</div></div>'
-            + '<div class="row"><div class="col-md-3">'
-            + '<label for="input_content">Description</label>'
-            + '</div><div class="col-md-8">'
-            + '<textarea class="form-control" id="input_content" name="content" placeholder="Description">' + d['content'] + '</textarea>'
-            + '</div></div>'
-          + '</div>';
-
-          // Language adjustment for Tutorial
-          if (account['tutorial'] < 2) {
-            form_type = 'Build Your Capitol';
-          }
-
-          result += '<button type="button" id="submit_land_form" class="btn + ' + action_class + ' form-control">' + ucwords(form_type) + '</button>';
-		result += '</div></form></div>';
-		return result;
-	}
-
-  function upgrade_form(d) {
-    // Start form
-    result = '';
-    result += '<div class="form_outer_cont upgrade_parent"><form id="land_upgrade_form" action="<?=base_url()?>land_upgrade_form" method="post">'
-      + '<input type="hidden" name="world_key_input" value="' + d.world_key + '"/>'
-      + '<input type="hidden" name="coord_slug_input" value="' + d.coord_slug + '"/>';
-
-    // Upgrade
-    if (d.land_type === '1' || false) {
-      upgrade_type = 'town';
-    } else if (d.land_type === '2') {
-      upgrade_type = 'city';
-    } else if (d.land_type === '3') {
-      upgrade_type = 'metropolis';
-    }
-    if (d.land_type != '4') {
-      result += '<button type="button" name="upgrade_type" class="upgrade_submit btn btn-primary" '
-        + 'value="' + d.land_type + '">Make Into ' + ucwords(upgrade_type) + '</button>';
-    }
-
-    // Capitol
-    if (parseInt(d.land_type) > 1 && d.capitol === '0') {
-      result += '<button type="button" name="upgrade_type" value="capitol" class="upgrade_submit btn btn-success">Make Into Nation Capitol</button>'
-    }
-
-    // Unclaim
-    // result += '<button type="button" name="upgrade_type" value="-1" class="upgrade_submit btn btn-danger" value="0">Unclaim this land</button>';
-
-    // End form
-    result += '</form></div>';
-
-    return result;
-  }
-
 	// 
 	// Land loop
 	// 
@@ -502,30 +425,33 @@ function initMap()
         $stroke_color = '#222222';
         $fill_color = "#FFFFFF";
         $fill_opacity = '0';
-        if ($land['land_type'] != 0) {
+        if ($land['land_type'] > 0) {
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
         if ($log_check && $land['account_key'] === $account['id']) {
             $stroke_color = '#428BCA';
         }
-        if ($land['land_type'] === 'fortification') {
+        if ($land['capitol'] === '1') {
+          $stroke_weight = 8;
+          $fill_opacity = '0.8';
+        } else if ($land['land_type'] === 1) {
           $stroke_weight = 2;
           $stroke_color = '#585858';
-        } else if ($land['land_type'] === 'stronghold') {
+        } else if ($land['land_type'] === 2) {
           $stroke_weight = 2;
           $stroke_color = '#F72525';
-        } else if ($land['land_type'] === 'city') {
+        } else if ($land['land_type'] === 3) {
           $stroke_weight = 2;
           $stroke_color = '#2D882D';
-        } else if ($land['land_type'] === 'town') {
+        } else if ($land['land_type'] === 4) {
           $stroke_weight = 2;
           $stroke_color = '#F7DB25';
-        } else if ($land['land_type'] === 'market') {
+        } else if ($land['land_type'] === 5) {
           $stroke_weight = 2;
           $stroke_color = '#911BA2';
         }
-        if ($log_check && $land['account_key'] === $account['id']) { 
+        if ($log_check && $land['account_key'] === $account['id'] && $land['capitol'] != '1') { 
             $stroke_weight = 3;
         }
         ?>z(<?php echo 
@@ -536,6 +462,7 @@ function initMap()
             '"' . $stroke_color . '"' . ',' .
             '"' . $fill_color . '"' . ',' .
             $fill_opacity; ?>);<?php } ?>
+  // Awkward close to prevent unwanted white space
 
 	// 
 	// Map Styling

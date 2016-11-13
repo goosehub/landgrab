@@ -201,10 +201,12 @@ Class game_model extends CI_Model
     return [];
  }
  // Get all modify of land
- function get_all_modify_effects($world_key)
+ function get_all_modify_effects()
  {
     $this->db->select('*');
     $this->db->from('modify_effect');
+    $this->db->order_by('sort_order', 'asc');
+    $this->db->where('sort_order !=', 0);
     $query = $this->db->get();
     return $query->result_array();
  }

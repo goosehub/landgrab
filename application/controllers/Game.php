@@ -68,6 +68,8 @@ class Game extends CI_Controller {
         // Get government dictionary
         $government_dictionary = $data['government_dictionary'] = $this->government_dictionary();
 
+        $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+
         // Get all lands
         $update_timespan = 20;
         $data['update_timespan'] = ($update_timespan / 2) * 1000;
@@ -271,11 +273,11 @@ class Game extends CI_Controller {
             }
             // Land type for update
             else if ($action_type === 'update') {
+                $land_type = $land_square['land_type'];
+            } else {
                 $land_type = 1;
                 $query_action = $this->game_model->remove_modifiers_from_land($land_key);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
-            } else {
-                $land_type = $land_square['land_type'];
             }
 
             // Update land
@@ -416,6 +418,8 @@ class Game extends CI_Controller {
                 $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $new_land_type);
             }
 
+            // Tutorial stuff
+
             echo '{"status": "success", "message": "Upgraded"}';
             return true;
         }
@@ -443,14 +447,6 @@ class Game extends CI_Controller {
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_type = $land_square['land_type'];
         // Calculate change in resources from previous to new
-
-        // Check for inaccuracies
-        // Upgrading land that isn't theirs
-        if ($land_square['account_key'] != $account_key) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'This land is no longer yours');
-            return false;
-        }
-        // Check that rarity conditions are met
 
         // If capitol
         // Check for inaccuracies
