@@ -10,7 +10,7 @@
         </div>
 
         <input type="hidden" id="input_world_key" name="world_key_input" value="<?php echo $world['id']; ?>">
-        <input type="hidden" id="input_id" name="id_input" value="">
+        <input type="text" id="input_id" name="id_input" value="">
         <input type="hidden" id="input_coord_slug" name="coord_slug_input" value="">
         <input type="hidden" id="form_type_input" name="form_type_input" value="">
 
@@ -58,7 +58,7 @@
                         <?php foreach ($modify_effect_dictionary as $effect) { ?>
                         <div class="col-md-6">
                             <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-success" value="<?php echo $effect['id']; ?>">
-                                <?php echo ucwords(str_replace('_', '', $effect['name'])); ?>
+                                <?php echo ucwords(str_replace('_', ' ', $effect['name'])); ?>
                             </button>
                             <div class="expand_land_type_info btn btn-info" type="button" data-toggle="collapse" data-target="#<?php echo $effect['name']; ?>_info_dropdown" aria-expanded="false" aria-controls="<?php echo $effect['name']; ?>_info_dropdown">
                                 Info 

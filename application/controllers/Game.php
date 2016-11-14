@@ -246,44 +246,43 @@ class Game extends CI_Controller {
 
             // Upgrade Logic
             $upgrade_type = false;
-            if ( is_int($form_type) ) {
+            $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+            if ( is_numeric($form_type) ) {
                 $upgrade_type = $form_type;
-                $form_type = 'upgrade';
 
                 foreach ($effects as $effect) {
-                    if ($effect['name'] === 'capitol') {
+                    if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
                         $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
-                        $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, $capitol);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                        $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, $capitol = 1);
                         break;
                     }
-                    else if ($effect['name'] === 'town') {
+                    else if ($effect['name'] === 'town' && $form_type === $effect['id']) {
                         $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                         $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_town_key);
                         break;
                     }
-                    else if ($effect['name'] === 'city') {
+                    else if ($effect['name'] === 'city' && $form_type === $effect['id']) {
                         $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->city_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                         $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_city_key);
                         break;
                     }
-                    else if ($effect['name'] === 'metropolis') {
+                    else if ($effect['name'] === 'metropolis' && $form_type === $effect['id']) {
                         $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->metropolis_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                         $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_metropolis_key);
                         break;
                     }
                 }
 
-                // Capitol
-                // Town, City, Metro
                 // Other
 
                 // Tutorial
                 // $query_action = $this->user_model->update_account_tutorial($account_key, 4);
 
-                echo '{"status": "success", "result": true, "message": "Updated"}';
+                echo '{"status": "success", "result": true, "message": "Built"}';
                 return true;
             }
 
@@ -299,7 +298,7 @@ class Game extends CI_Controller {
             // Do attack logic
             $attack_result = null;
             if ($action_type === 'attack') {
-                echo '{"status": "success", "result": true, "message": "Updated"}';
+                echo '{"status": "success", "result": true, "message": "Captured"}';
             }
             // Claim response
             else if ($action_type === 'claim') {
@@ -366,14 +365,14 @@ class Game extends CI_Controller {
         $passive_account_key = $land_square['account_key'];
         $passive_user = $this->user_model->get_user($passive_account_key);
         $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
-
+/*
         // Upgrade logic
         $upgrade_type = false;
         if ( is_int($form_type) ) {
             $upgrade_type = $form_type;
             $form_type = 'upgrade';   
         }
-
+*/
         // Town, City, Metro, Capitol check
 
         // Upgrade treasury check
@@ -403,136 +402,6 @@ class Game extends CI_Controller {
         return true;
 	}
 
-    // Land Transaction
-    public function land_attack($land_square, $world, $land_type, $account)
-    {        
-        return true;
-/*        
-        // Get defender account
-        $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
-
-        // Siege logic
-        $range_check = $this->check_if_land_is_in_range($world['id'], $land_square['account_key'], 20, 
-            $world['land_size'], $land_square['lat'], $land_square['lng'], true);
-        // Seige logic
-        if (!$range_check) {
-            $land_type = 1;
-        }
-*/
-        return true;
-    }
-/*
-    // Land upgrade form
-    public function land_upgrade_form()
-    {
-        // Authentication
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
-        // If user not logged in, return with fail
-        } else {
-            echo '{"status": "fail", "message": "User not logged in"}';
-            return false;
-        }
-        
-        // Validation
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]|callback_land_upgrade_form_validation');
-        $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
-
-        // Fail
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            if (validation_errors() === '') {
-                echo '{"status": "fail", "message": "An unknown error occurred"}';
-            }
-            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
-            return false;
-        // Success
-        } else {
-            // Set inputs
-            $coord_slug = $this->input->post('coord_slug_input');
-            $world_key = $this->input->post('world_key_input');
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-            $upgrade_type = $this->input->post('upgrade_type');
-            $land_type = $land_square['land_type'];
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account_key = $account['id'];
-
-            // Make town and capitol if tutorial
-            if ($account['tutorial'] < 2) {
-                $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
-                $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, true);
-                $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, 2);
-            }
-            // If capitol, remove old capitol and update capitol flag
-            else if ($upgrade_type === 'capitol') {
-                $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
-                $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, true);
-            }
-            // If unclaiming, mark land as unclaimed
-            else if ($upgrade_type === 0) {
-                $query_action = $this->game_model->update_land_data($world_key, $coord_slug, 0, '', '', 0, '#000000');
-            } 
-            // Update land type
-            else {
-                $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $new_land_type);
-            }
-
-            // Tutorial stuff
-
-            echo '{"status": "success", "message": "Upgraded"}';
-            return true;
-        }
-    }
-
-    // Validate Land Form Callback
-    public function land_upgrade_form_validation()
-    {
-        // User Information
-        if (!$this->session->userdata('logged_in')) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'You are not currently logged in. Please log in again.');
-            return false;
-        }
-
-        // Get land info for verifying our inputs
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
-        $upgrade_type = $this->input->post('upgrade_type');
-        $coord_slug = $this->input->post('coord_slug_input');
-        $world_key = $this->input->post('world_key_input');
-        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
-        $account_key = $account['id'];
-        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $land_type = $land_square['land_type'];
-        // Calculate change in resources from previous to new
-
-        // If capitol
-        // Check for inaccuracies
-        // Land that isn't theirs
-        if ($land_square['account_key'] != $account_key) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'This land is no longer yours');
-            return false;
-        }
-        // Check if updating past what's possible
-        if ($upgrade_type != 'capitol' && $land_square['land_type'] === 4) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'This land can not be upgraded anymore');
-            return false;
-        }
-        // If capitol request, See if the land they want to update is actually a town or greater
-        if ($upgrade_type === 'capitol' && $land_square['land_type'] < 2) {
-            $this->form_validation->set_message('land_upgrade_form_validation', 'Only a Town or greater can be a Capitol');
-            return false;
-        }
-
-        // Everything checks out
-        return true;
-    }
-*/
     // Check if land is in range for account
     public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng, $siege)
     {
@@ -626,14 +495,6 @@ class Game extends CI_Controller {
 
         // Return data
         return $leaderboards;
-    }
-
-    // Get army update
-    public function get_army_update()
-    {
-        $account_id = $this->input->get('account_id');
-        $account = $this->user_model->get_account_by_id($account_id);
-        echo $account['active_army'];
     }
 
     // Creates land dictionary

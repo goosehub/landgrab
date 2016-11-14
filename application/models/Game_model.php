@@ -88,6 +88,24 @@ Class game_model extends CI_Model
  // Remove capitol from account
  function remove_capitol_from_account($world_key, $account_key)
  {
+    // Find capitol effect
+    $this->db->select('id');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_key);
+    $this->db->where('world_key', $world_key);
+    $this->db->where('capitol', 1);
+    $query = $this->db->get();
+    $capitol_land = $query->result_array();
+    if ( isset($capitol_land[0]) ) {
+        // Remove capitol effect
+        $capitol_key = 6;
+        $this->db->where('land_key', $capitol_land[0]['id']);
+        $this->db->where('modify_effect_key', $capitol_key);
+        $this->db->delete('land_modifier');
+    }
+
+
+    // Remove capitol flag
     $data = array(
         'capitol' => 0
     );
@@ -231,7 +249,6 @@ Class game_model extends CI_Model
  function remove_land_type_modifiers_from_land($land_key)
  {
     $land_type_effect_keys = array(2,3,4,5);
-    $this->db->where('world_key', $world_key);
     $this->db->where('land_key', $land_key);
     $this->db->where_in('modify_effect_key', $land_type_effect_keys);
     $this->db->delete('land_modifier');

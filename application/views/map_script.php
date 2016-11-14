@@ -186,6 +186,11 @@ function initMap()
       console.log('marco');
 
       $('#land_block').show();
+
+      // Scroll to top and close open dropdowns
+      $('#land_block').scrollTop(0);
+      $('.in,.open').removeClass('in open');
+
       $('#land_form_result').hide();
       $('.land_form_subparent').hide();
       $('#land_form_submit_claim, #land_form_submit_attack').hide();
@@ -203,9 +208,7 @@ function initMap()
       // Own
       if (log_check && d['account_key'] === account['id']) {
         $('#land_form_update_parent').show()
-        if (d['land_type'] > 1) {
-          $('#land_form_upgrade_parent').show();
-        }
+        $('#land_form_upgrade_parent').show();
       } else if (log_check) {
         // Attack
         $('#land_form_update_parent').hide()
@@ -239,7 +242,6 @@ function initMap()
       $('#coord_link').prop('href', '<?=base_url()?>world/' + world_key + '?land=' + coord_slug);
       $('#coord_link').html(coord_slug);
       
-
       // $('#input_land_content').addClass('input_to_label');
       // $('#input_land_name').addClass('input_to_label');
 
@@ -254,7 +256,10 @@ function initMap()
       $('#input_land_name').val(d['land_name']);
       $('#input_content').val(d['content']);
 
-      // Unbind last get_single_land click handler 
+      // Logic for which upgrades to show
+      // ...
+
+      // Unbind the last click handler from get_single_land 
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
         console.log('waldo');
@@ -295,104 +300,34 @@ function initMap()
               $('#land_form_result_message').html(response['message']);
               $('.center_block').hide();
 
-              if (input_form_type != 'update' && response['result']) {
-                // Update player variables and displays
-                // player_land_count = player_land_count + 1;
-                // $('#owned_lands_span').html( number_format(player_land_count) );
+              // Update player variables and displays
+              // player_land_count = player_land_count + 1;
+              // $('#owned_lands_span').html( number_format(player_land_count) );
 
-                // Update box to reflect user ownership
-                boxes[d['id']].setOptions({
-                  strokeWeight: 3, 
-                  strokeColor: '#428BCA',
-                  fillColor: account['color'],
-                  fillOpacity: 0.4
+              // Update box to reflect user ownership
+              boxes[d['id']].setOptions({
+                strokeWeight: 3, 
+                strokeColor: '#428BCA',
+                fillColor: account['color'],
+                fillOpacity: 0.4
+              });
+
+              // Tutorial Rule
+              if (account['tutorial'] < 2) {
+                $('#tutorial_block').fadeOut(1000, function(){
+                  $('#tutorial_block').fadeIn();
+                  $('#tutorial_title').html('We The People');
+                  $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
                 });
-
-                // Tutorial Rule
-                if (account['tutorial'] < 2) {
-                  $('#tutorial_block').fadeOut(1000, function(){
-                    $('#tutorial_block').fadeIn();
-                    $('#tutorial_title').html('We The People');
-                    $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
-                  });
-                }
-
-                return true;
               }
+
+              return true;
             }
           } // End land form ajax success
         }); // End land form ajax
       });
 
-      
-
       return true;
-
-      // 
-      // infoWindow script
-      // 
-/*
-      google.maps.event.addListener(infoWindow,'domready',function(){
-        // When expanding form, hide expand button and Focus on land name, with timeout to prevent collapse conflict
-        $('.expand_land_form').click(function(){
-          $('.expand_land_form').hide();
-          $('.land_info').hide();
-          $('.land_form_cont').hide();
-          setTimeout(function(){
-            $('#input_land_name').focus();
-          }, 200);
-        });
-
-        $('.upgrade_submit').click(function(){
-          // Serialize form into post data
-          $('#land_upgrade_form').append('<input type="hidden" name="upgrade_type" value="' + $(this).val() + '"/>')
-          var upgrade_type = $(this).val();
-          var post_data = $('#land_upgrade_form').serialize();
-
-          // Replace window with processing window
-          $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-green"><strong>Upgrading</strong></div>');
-
-          // Submit form
-          $.ajax({
-            url: "<?=base_url()?>land_upgrade_form",
-            type: "POST",
-            data: post_data,
-            cache: false,
-            success: function(data)
-            {
-              // Return data
-              response = JSON.parse(data);
-
-              if (response['error']) {
-                $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['error'] + '</strong></div>');
-                return false;
-              }
-              if (response['status'] != 'success') {
-                $('#land_upgrade_form').html('<br><div class="alert alert-wide alert-danger"><strong>' + response['message'] + '</strong></div>');
-                return false;
-              }
-
-              // If success
-              if (response['status'] === 'success') {
-                infoWindow.close();
-              }
-
-              if (upgrade_type === 'unclaimed') {
-                // Update box to reflect user ownership
-                boxes[land_data['id']].setOptions({
-                  strokeWeight: 0, 
-                  strokeColor: '#000000',
-                  fillColor: '#000000',
-                  fillOpacity: 0
-                });
-              }
-
-            }
-          });
-        });
-
-      }); // End infoWindow script domready listener
-*/
 
     }); // End get_single_land callback
 	} // End set_window
@@ -401,8 +336,9 @@ function initMap()
 	// Land loop
 	// 
 
-	<?php // This foreach loop runs 15,000 times, so bandwidth is key
-    foreach ($lands as $land) { 
+	<?php 
+    // This foreach loop runs 15,000 times, so performance and bandwidth is key
+    foreach ($lands as $land) {
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
         $fill_color = "#FFFFFF";
@@ -412,26 +348,22 @@ function initMap()
           $fill_opacity = '0.4';
         }
         if ($log_check && $land['account_key'] === $account['id']) {
-            $stroke_color = '#428BCA';
+          $stroke_color = '#428BCA';
         }
         if ($land['capitol'] === '1') {
-          $stroke_weight = 8;
+          $stroke_weight = 6;
           $fill_opacity = '0.8';
-        } else if ($land['land_type'] === 1) {
-          $stroke_weight = 2;
-          $stroke_color = '#585858';
-        } else if ($land['land_type'] === 2) {
-          $stroke_weight = 2;
-          $stroke_color = '#F72525';
-        } else if ($land['land_type'] === 3) {
-          $stroke_weight = 2;
-          $stroke_color = '#2D882D';
-        } else if ($land['land_type'] === 4) {
-          $stroke_weight = 2;
-          $stroke_color = '#F7DB25';
-        } else if ($land['land_type'] === 5) {
-          $stroke_weight = 2;
-          $stroke_color = '#911BA2';
+          $stroke_color = '#FF0000';
+        } else if ($land['land_type'] === '1') {
+        } else if ($land['land_type'] === '2') {
+          $stroke_weight = 6;
+          $stroke_color = '#00E300';
+        } else if ($land['land_type'] === '3') {
+          $stroke_weight = 6;
+          $stroke_color = '#FF7400';
+        } else if ($land['land_type'] === '4') {
+          $stroke_weight = 6;
+          $stroke_color = '#00C8C8';
         }
         if ($log_check && $land['account_key'] === $account['id'] && $land['capitol'] != '1') { 
             $stroke_weight = 3;

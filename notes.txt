@@ -4,13 +4,15 @@
 
 Todo
     Tutorial
-    Modifiers
+        Modifier tutorial default create town and capitol
+    Modifier validation
     Mechanics
-    City Popup Menu
-    Modifier tutorial default create town and capitol
-    Modifier aggregate queries and hook up
+    Modifier aggregate queries and menu hook up
+    Menu
     Attacking Mechnanic
     Highlight land types
+    Logic for which upgrades to show
+    Consolidate land type and modify keys
 
     Remember map or satallite
     Ocean Reporting
