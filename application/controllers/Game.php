@@ -10,6 +10,12 @@ class Game extends CI_Controller {
     protected $metropolis_key = 5;
     protected $capitol_key = 6;
 
+    protected $land_type_unclaimed_key = 0;
+    protected $land_type_village_key = 1;
+    protected $land_type_town_key = 2;
+    protected $land_type_city_key = 3;
+    protected $land_type_metropolis_key = 4;
+
 	function __construct() {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
@@ -131,12 +137,12 @@ class Game extends CI_Controller {
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
+        $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
 
         // Land range false by default
         $land_square['in_range'] = false;
 
         // Add username to array
-        $account = $this->user_model->get_account_by_id($land_square['account_key']);
         $owner = $this->user_model->get_user($account['user_key']);
         if ( isset($owner['username']) && isset($land_square['land_name']) ) {
             $land_square['username'] = $owner['username'];
@@ -201,6 +207,7 @@ class Game extends CI_Controller {
         
 		// Validation
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|max_length[32]|callback_land_form_validation');
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
@@ -219,9 +226,11 @@ class Game extends CI_Controller {
         } else {
             // Set inputs
             $coord_slug = $this->input->post('coord_slug_input');
-	        $world_key = $this->input->post('world_key_input');
+            $world_key = $this->input->post('world_key_input');
+	        $form_type = $this->input->post('form_type_input');
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+            $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
             $land_key = $land_square['id'];
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
@@ -230,8 +239,53 @@ class Game extends CI_Controller {
             $account_key = $account['id'];
             $color = $account['color'];
             $content = $this->input->post('content');
+
+            // Content
             // $content = $this->sanitize_html($content);
             $content = $content;
+
+            // Upgrade Logic
+            $upgrade_type = false;
+            if ( is_int($form_type) ) {
+                $upgrade_type = $form_type;
+                $form_type = 'upgrade';
+
+                foreach ($effects as $effect) {
+                    if ($effect['name'] === 'capitol') {
+                        $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
+                        $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, $capitol);
+                        break;
+                    }
+                    else if ($effect['name'] === 'town') {
+                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
+                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_town_key);
+                        break;
+                    }
+                    else if ($effect['name'] === 'city') {
+                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->city_key);
+                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_city_key);
+                        break;
+                    }
+                    else if ($effect['name'] === 'metropolis') {
+                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                        $query_action = $this->game_model->add_modifier_to_land($land_key, $this->metropolis_key);
+                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->land_type_metropolis_key);
+                        break;
+                    }
+                }
+
+                // Capitol
+                // Town, City, Metro
+                // Other
+
+                // Tutorial
+                // $query_action = $this->user_model->update_account_tutorial($account_key, 4);
+
+                echo '{"status": "success", "result": true, "message": "Updated"}';
+                return true;
+            }
 
             if ($land_square['land_type'] === 0) {
                 $action_type = 'claim';
@@ -311,8 +365,18 @@ class Game extends CI_Controller {
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
         $passive_user = $this->user_model->get_user($passive_account_key);
-        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], 
-            $land_square['lat'], $land_square['lng'], false);
+        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
+
+        // Upgrade logic
+        $upgrade_type = false;
+        if ( is_int($form_type) ) {
+            $upgrade_type = $form_type;
+            $form_type = 'upgrade';   
+        }
+
+        // Town, City, Metro, Capitol check
+
+        // Upgrade treasury check
 
         // Check for inaccuracies
         // Claiming land that isn't unclaimed
@@ -330,7 +394,7 @@ class Game extends CI_Controller {
             $this->form_validation->set_message('land_form_validation', 'This land is already yours');
             return false;
         // Attacking or claiming land that is not in range
-        } else if ($form_type != 'update' && !$in_range) {
+        } else if ( ($form_type === 'claim' || $form_type === 'attack') && !$in_range) {
             $this->form_validation->set_message('land_form_validation', 'This land is not in range');
             return false;
         }
@@ -357,7 +421,7 @@ class Game extends CI_Controller {
 */
         return true;
     }
-
+/*
     // Land upgrade form
     public function land_upgrade_form()
     {
@@ -393,7 +457,6 @@ class Game extends CI_Controller {
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
             $upgrade_type = $this->input->post('upgrade_type');
-            $new_land_type = $upgrade_type + 1;
             $land_type = $land_square['land_type'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
@@ -469,7 +532,7 @@ class Game extends CI_Controller {
         // Everything checks out
         return true;
     }
-
+*/
     // Check if land is in range for account
     public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng, $siege)
     {

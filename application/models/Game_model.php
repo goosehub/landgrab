@@ -223,7 +223,17 @@ Class game_model extends CI_Model
  // Remove all modifiers from land
  function remove_modifiers_from_land($land_key)
  {
+    $this->db->where('world_key', $world_key);
     $this->db->where('land_key', $land_key);
+    $this->db->delete('land_modifier');
+ }
+ // Remove all modifiers from land
+ function remove_land_type_modifiers_from_land($land_key)
+ {
+    $land_type_effect_keys = array(2,3,4,5);
+    $this->db->where('world_key', $world_key);
+    $this->db->where('land_key', $land_key);
+    $this->db->where_in('modify_effect_key', $land_type_effect_keys);
     $this->db->delete('land_modifier');
  }
 

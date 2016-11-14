@@ -177,8 +177,6 @@ function initMap()
 		land = get_single_land(coord_slug, world_key, function(land){
       // Get land
   		d = JSON.parse(land);
-      console.log(d);
-      console.log(account);
       // Handle error
       if (d['error']) {
         alert(d['error']);
@@ -187,9 +185,10 @@ function initMap()
 
       console.log('marco');
 
+      $('#land_block').show();
       $('#land_form_result').hide();
       $('.land_form_subparent').hide();
-      $('#land_form_claim, #land_form_attack').hide();
+      $('#land_form_submit_claim, #land_form_submit_attack').hide();
 
       if (!log_check) {
         $('#join_to_play_button').show();
@@ -197,19 +196,26 @@ function initMap()
 
       if (d['land_type'] === '0') {
         $('#land_form_unclaimed_parent').show();
-        if (d['in_range']) {
-          $('#land_form_claim').show();
-        }
       } else {
         $('#land_form_info_parent').show();
       }
 
-      if (d['account_key'] === account['id']) {
+      // Own
+      if (log_check && d['account_key'] === account['id']) {
         $('#land_form_update_parent').show()
-      } else {
+        if (d['land_type'] > 1) {
+          $('#land_form_upgrade_parent').show();
+        }
+      } else if (log_check) {
+        // Attack
         $('#land_form_update_parent').hide()
         if (d['in_range']) {
-          $('#land_form_attack').show();
+          if (d['land_type'] === '0') {
+            $('#land_form_submit_claim').show();
+          }
+          else {
+            $('#land_form_submit_attack').show();
+          }
         }
       }
 
@@ -218,8 +224,6 @@ function initMap()
       } else {
         $('#capitol_info').hide();
       }
-
-      $('#land_block').show();
       $('#input_id').val(d['id']);
       $('#input_coord_slug').val(d['coord_slug']);
       if (d['land_name'] != '') {
@@ -239,19 +243,29 @@ function initMap()
       // $('#input_land_content').addClass('input_to_label');
       // $('#input_land_name').addClass('input_to_label');
 
-      $('#government_label').html( government_dictionary[account['government']] );
+      $('#government_label').html( government_dictionary[d['account']['government']] );
       $('#land_type_label').html( ucwords(land_dictionary[d['land_type']]) );
-      $('#nation_label').html(account['nation_name']);
-      $('#leader_name_label').html(account['leader_name']);
+      $('#nation_label').html(d['account']['nation_name']);
+      $('#leader_name_label').html(d['account']['leader_name']);
 
       // $('#leader_name_label, #nation_label').css('color', d['color']);
+
 
       $('#input_land_name').val(d['land_name']);
       $('#input_content').val(d['content']);
 
-      $('.submit_land_form').click(function() {
+      // Unbind last get_single_land click handler 
+      $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
+      $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
+        console.log('waldo');
         // Serialize form into post data
+        $('#form_type_input').val( $(this).val() );
         var post_data = $('#land_form').serialize();
+
+        // Tutorial
+        if ( $(this).val() === 'update' || $.isNumeric( $(this).val() ) ) {
+          console.log('next level of tutorial');
+        }
 
         // Submit form
         $.ajax({
@@ -314,44 +328,10 @@ function initMap()
 
       return true;
 
-      // Create string
-      var window_string = '<div class="land_window">';
-      // Interaction buttons
-			if (land_data['in_range'] && log_check) {
-        // Claim
-				if (land_data['land_type'] === '0') {
-					window_string += land_window_form('claim', 'btn-action', land_data);
-        // Update
-				} else if (land_data['account_key'] == account_id) {
-          window_string += land_window_form('update', 'btn-info', land_data);
-          window_string += '<br>';
-          window_string += upgrade_form(land_data);
-        // Buy
-				} else {
-          window_string += land_window_form('attack', 'btn-success', land_data);
-				}
-      }
-      // End div
-      window_string += '</div>';
-
-      // 
-      // Set InfoWindow Interaction
-      // 
-
-      // Close window if one is open
-      if (infoWindow) {
-          infoWindow.close();
-      }
-      // Set new infoWindow
-      infoWindow = new google.maps.InfoWindow;
-      infoWindow.setContent(window_string);
-      infoWindow.setPosition(event.latLng);
-      infoWindow.open(map);
-
       // 
       // infoWindow script
       // 
-
+/*
       google.maps.event.addListener(infoWindow,'domready',function(){
         // When expanding form, hide expand button and Focus on land name, with timeout to prevent collapse conflict
         $('.expand_land_form').click(function(){
@@ -398,13 +378,13 @@ function initMap()
               }
 
               if (upgrade_type === 'unclaimed') {
-                  // Update box to reflect user ownership
-                  boxes[land_data['id']].setOptions({
-                    strokeWeight: 0, 
-                    strokeColor: '#000000',
-                    fillColor: '#000000',
-                    fillOpacity: 0
-                  });
+                // Update box to reflect user ownership
+                boxes[land_data['id']].setOptions({
+                  strokeWeight: 0, 
+                  strokeColor: '#000000',
+                  fillColor: '#000000',
+                  fillOpacity: 0
+                });
               }
 
             }
@@ -412,6 +392,8 @@ function initMap()
         });
 
       }); // End infoWindow script domready listener
+*/
+
     }); // End get_single_land callback
 	} // End set_window
 
