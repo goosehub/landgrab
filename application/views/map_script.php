@@ -10,11 +10,18 @@
 // 
 
 land_dictionary = new Array();
-land_dictionary[0] = 'unclaimed';
-land_dictionary[1] = 'village';
-land_dictionary[2] = 'town';
-land_dictionary[3] = 'city';
-land_dictionary[4] = 'metropolis';
+land_dictionary[1] = 'unclaimed';
+land_dictionary[2] = 'village';
+land_dictionary[3] = 'town';
+land_dictionary[4] = 'city';
+land_dictionary[5] = 'metropolis';
+
+land_type_key_dictionary = new Array();
+land_type_key_dictionary['unclaimed'] = 1;
+land_type_key_dictionary['village'] = 2;
+land_type_key_dictionary['town'] = 3;
+land_type_key_dictionary['city'] = 4;
+land_type_key_dictionary['metropolis'] = 5;
 
 government_dictionary = new Array();
 government_dictionary[0] = 'Anarchy';
@@ -27,6 +34,7 @@ var world_key = <?php echo $world['id']; ?>;
 var land_size = <?php echo $world['land_size'] ?>;
 
 // Set user variables
+var log_check = false;
 <?php if ($log_check) { ?>
 var log_check = true;
 var user_id = <?php echo $user_id + ''; ?>;
@@ -34,15 +42,10 @@ var account_id = <?php echo $account['id'] + ''; ?>;
 var username = "<?php echo $user['username']; ?>";
 var account = JSON.parse('<?php echo json_encode($account); ?>');
 var player_land_count = <?php echo $account['land_count']; ?>;
-<?php } else { ?>
-var log_check = false;
 <?php } ?>
 
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
-if (document.location.hostname == "localhost") {
-  map_update_interval = 10 * 1000;
-}
 var infoWindow = false;
 var boxes = [];
 
@@ -70,10 +73,10 @@ function initMap()
       // Zoom shows whole world but no repetition
       zoom: 3,
       <?php } ?>
-      // Prevent seeing more than needed
+      // Prevent seeing north and south edge
       minZoom: 3,
       // Prevent excesssive zoom
-      maxZoom: 10,
+      // maxZoom: 10,
       // Map type
       mapTypeId: google.maps.MapTypeId.TERRAIN
       // mapTypeId: google.maps.MapTypeId.HYBRID
@@ -172,7 +175,7 @@ function initMap()
 		// Create land infoWindow
     // 
 
-    $('.center_block').hide();
+    $('.center_block').fadeOut(100);
 
 		land = get_single_land(coord_slug, world_key, function(land){
       // Get land
@@ -183,9 +186,7 @@ function initMap()
         return false;
       }
 
-      console.log('marco');
-
-      $('#land_block').show();
+      $('#land_block').fadeIn(100);
 
       // Scroll to top and close open dropdowns
       $('#land_block').scrollTop(0);
@@ -199,7 +200,7 @@ function initMap()
         $('#join_to_play_button').show();
       }
 
-      if (d['land_type'] === '0') {
+      if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
         $('#land_form_unclaimed_parent').show();
       } else {
         $('#land_form_info_parent').show();
@@ -213,7 +214,7 @@ function initMap()
         // Attack
         $('#land_form_update_parent').hide()
         if (d['in_range']) {
-          if (d['land_type'] === '0') {
+          if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
             $('#land_form_submit_claim').show();
           }
           else {
@@ -262,14 +263,22 @@ function initMap()
       // Unbind the last click handler from get_single_land 
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
-        console.log('waldo');
         // Serialize form into post data
         $('#form_type_input').val( $(this).val() );
         var post_data = $('#land_form').serialize();
 
         // Tutorial
-        if ( $(this).val() === 'update' || $.isNumeric( $(this).val() ) ) {
-          console.log('next level of tutorial');
+        if ( account['tutorial'] === '3' && ( $(this).val() === 'update' || $.isNumeric($(this).val()) ) ) {
+          account['tutorial'] = 4;
+          $('#tutorial_block').fadeOut(1000, function(){
+            $('#tutorial_block').fadeIn();
+            $('#tutorial_title').html('Manifest Destiny');
+            $('#tutorial_text').html('Conquer the world');
+          });
+        }
+        if ( account['tutorial'] === '4' && ( $(this).val() === 'attack' )  || $(this).val() === 'claim' ) {
+          account['tutorial'] = 5;
+          $('#tutorial_block').fadeOut(1000)
         }
 
         // Submit form
@@ -283,9 +292,18 @@ function initMap()
             // Return data
             response = JSON.parse(data);
 
-            if (response['error'] || response['status'] != 'success') {
-              $('#land_form_result').show();
-              $('#land_form_result_message').html(response['error']);
+            if (response['error']) {
+              // Bug here
+              // $('#land_form_result').show();
+              // $('#land_form_result_message').html(response['error']);
+              alert(response['error']);
+              return false;
+            }
+            if (response['status'] === 'fail') {
+              // Bug here
+              // $('#land_form_result').show();
+              // $('#land_form_result_message').html(response['message']);
+              alert(response['message']);
               return false;
             }
 
@@ -293,12 +311,8 @@ function initMap()
             if (response['status'] === 'success') {
 
               // Pass information to user
-              result_alert = 'alert-green';
-              if (!response['result']) {
-                result_alert = 'alert-danger';
-              }
-              $('#land_form_result_message').html(response['message']);
-              $('.center_block').hide();
+              // $('#land_form_result_message').html(response['message']);
+              $('.center_block').fadeOut(300);
 
               // Update player variables and displays
               // player_land_count = player_land_count + 1;
@@ -318,6 +332,7 @@ function initMap()
                   $('#tutorial_block').fadeIn();
                   $('#tutorial_title').html('We The People');
                   $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+                  account['tutorial'] = 2;
                 });
               }
 
@@ -338,35 +353,40 @@ function initMap()
 
 	<?php 
     // This foreach loop runs 15,000 times, so performance and bandwidth is key
+    // Because of this, some unconventional code may be used
     foreach ($lands as $land) {
         $stroke_weight = 0.2; 
         $stroke_color = '#222222';
         $fill_color = "#FFFFFF";
         $fill_opacity = '0';
-        if ($land['land_type'] > 0) {
+        // Unclaimed
+        if ($land['land_type'] > 1) {
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
         if ($log_check && $land['account_key'] === $account['id']) {
           $stroke_color = '#428BCA';
+          $stroke_weight = 3;
         }
         if ($land['capitol'] === '1') {
-          $stroke_weight = 6;
+          $stroke_weight = 2;
           $fill_opacity = '0.8';
           $stroke_color = '#FF0000';
-        } else if ($land['land_type'] === '1') {
-        } else if ($land['land_type'] === '2') {
-          $stroke_weight = 6;
+        } 
+        // Town
+        else if ($land['land_type'] === '3' ) {
+          $stroke_weight = 2;
           $stroke_color = '#00E300';
-        } else if ($land['land_type'] === '3') {
-          $stroke_weight = 6;
-          $stroke_color = '#FF7400';
-        } else if ($land['land_type'] === '4') {
-          $stroke_weight = 6;
-          $stroke_color = '#00C8C8';
-        }
-        if ($log_check && $land['account_key'] === $account['id'] && $land['capitol'] != '1') { 
-            $stroke_weight = 3;
+        } 
+        // City
+        else if ($land['land_type'] === '4' ) {
+          $stroke_weight = 2;
+          $stroke_color = '#FFD900';
+        } 
+        // Metropolis
+        else if ($land['land_type'] === '5' ) {
+          $stroke_weight = 2;
+          $stroke_color = '#A600A6';
         }
         ?>z(<?php echo 
             $land['id'] . ',' .
@@ -375,8 +395,8 @@ function initMap()
             $stroke_weight . ',' .
             '"' . $stroke_color . '"' . ',' .
             '"' . $fill_color . '"' . ',' .
-            $fill_opacity; ?>);<?php } ?>
-  // Awkward close to prevent unwanted white space
+            $fill_opacity; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
+    } ?>
 
 	// 
 	// Map Styling
@@ -444,32 +464,36 @@ function initMap()
     // This loop may run up to 15,000 times, so focus is performance
     number_of_lands = lands.length;
     for (i = 0; i < number_of_lands; i++) {
-
       // Set variables
       land = lands[i];
       stroke_weight = 0.2; 
       stroke_color = '#222222';
       fill_color = "#0000ff";
       fill_opacity = 0;
-      if (land['land_type'] > 0) {
+      if (land['land_type'] > land_type_key_dictionary['unclaimed']) {
         fill_color = land['color'];
         fill_opacity = 0.4;
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_color = '#428BCA';
-      }
-      if (land['land_type'] === 2) {
-        stroke_weight = 2;
-        stroke_color = '#2D882D';
-      } else if (land['land_type'] === 3) {
-        stroke_weight = 2;
-        stroke_color = '#F7DB25';
-      } else if (land['land_type'] === 4) {
-        stroke_weight = 2;
-        stroke_color = '#911BA2';
-      }
-      if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;
+      }
+      if (land['capitol'] == 1) {
+        stroke_weight = 2;
+        fill_opacity = '0.8';
+        stroke_color = '#FF0000';
+      }
+      else if (land['land_type'] == land_type_key_dictionary['town']) {
+        stroke_weight = 2;
+        stroke_color = '#00E300';
+      } 
+      else if (land['land_type'] == land_type_key_dictionary['city']) {
+        stroke_weight = 2;
+        stroke_color = '#FFD900';
+      } 
+      else if (land['land_type'] == land_type_key_dictionary['metropolis']) {
+        stroke_weight = 2;
+        stroke_color = '#A600A6';
       }
 
       // Apply variables to box
@@ -486,80 +510,10 @@ function initMap()
   }
 
   function update_stats(account) {
+    return true;
   }
 
   function update_leaderboards(leaderboards) {
-    return true;
-/*
-    // Set leaderboards
-    leaderboard_land_owned = leaderboards['leaderboard_land_owned'];
-    leaderboard_cities = leaderboards['leaderboard_cities'];
-    leaderboard_strongholds = leaderboards['leaderboard_strongholds'];
-    leaderboard_army = leaderboards['leaderboard_army'];
-    leaderboard_population = leaderboards['leaderboard_population'];
-    // Empty current leaderboards
-    $('#leaderboard_land_owned_table').find('tr:gt(0)').remove();
-    $('#leaderboard_cities_table').find('tr:gt(0)').remove();
-    $('#leaderboard_strongholds_table').find('tr:gt(0)').remove();
-    $('#leaderboard_army_table').find('tr:gt(0)').remove();
-    $('#leaderboard_population_table').find('tr:gt(0)').remove();
-
-    // 
-    // Add updated rows to leaderboards
-    // 
-
-    // leaderboard_land_owned
-    $.each(leaderboard_land_owned, function(index, leader) {
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['total'] + '</td>'
-            + '<td>' + leader['land_mi'] + ' Mi&sup2; | ' + leader['land_km'] + ' KM&sup2;</td></tr>';
-
-      // Add string to table
-      $('#leaderboard_land_owned_table tr:last').after(table_string);
-    });
-    // leaderboard_cities
-    $.each(leaderboard_cities, function(index, leader) {
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['total'] + '</td>'
-
-      // Add string to table
-      $('#leaderboard_cities_table tr:last').after(table_string);
-    });
-    // leaderboard_strongholds
-    $.each(leaderboard_strongholds, function(index, leader) {
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['total'] + '</td>'
-
-      // Add string to table
-      $('#leaderboard_strongholds_table tr:last').after(table_string);
-    });
-    // leaderboard_army
-    $.each(leaderboard_army, function(index, leader) {
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['army'] + '</td>'
-
-      // Add string to table
-      $('#leaderboard_army_table tr:last').after(table_string);
-    });
-    // leaderboard_population
-    $.each(leaderboard_population, function(index, leader) {
-      var table_string = '<tr><td>' + leader['rank'] + '</td>'
-            + '<td><span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + leader['color'] + '"></span>'
-            + '' + leader['user']['username'] + ' </td>'
-            + '<td>' + leader['population'] + '</td>'
-
-      // Add string to table
-      $('#leaderboard_population_table tr:last').after(table_string);
-    });
-*/
     return true;
   }
 

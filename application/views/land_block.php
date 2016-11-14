@@ -19,7 +19,7 @@
         <div id="land_form_unclaimed_parent" class="land_form_subparent">
             <div><strong>Unclaimed Land</strong></div>
             <br>
-            <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-success">Claim This Land</button>
+            <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-success">Claim</button>
         </div>
 
         <div id="land_form_info_parent" class="land_form_subparent">
@@ -34,7 +34,7 @@
             <div><span id="land_type_label" class="text-primary"></span> with a population <span id="land_population_label"></span><small>,000</small></div>
             <div>GDP: $<span id="land_gdp_label"></span><small>,000</small></div>
             <div>Defense: <span id="land_defense_label"></span></div>
-            <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-success">Attack this land</button>
+            <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-success">Attack</button>
         </div>
 
         <div id="land_form_update_parent" class="land_form_subparent">
@@ -42,14 +42,14 @@
             <input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="">
             <textarea class="form-control" id="input_content" name="content" placeholder="Description"></textarea>
             <br>
-            <button type="button" id="land_form_submit_update" value="update" class="submit_land_form btn btn-success">Update This Land</button>
+            <button type="button" id="land_form_submit_update" value="update" class="submit_land_form btn btn-success">Update</button>
         </div>
 
         <br>
 
         <div id="land_form_upgrade_parent" class="land_form_subparent">
             <button class="expand_land_form btn btn-primary" type="button" data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">
-                Build on this Land
+                Build
                 <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
             </button>
             <div id="upgrade_dropdown" class="collapse">

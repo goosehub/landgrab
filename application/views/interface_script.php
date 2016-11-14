@@ -44,14 +44,16 @@ if (window.location.href.indexOf('register') >= 0) {
 // Center block hide and show logic
 // 
 
+$('.exit_center_block').click(function(){
+  $('.center_block').hide();
+});
 $('#stat_dropdown').click(function(){
+    $('.center_block').hide();
     $('#law_block').show();
 });
 $('.user_button').click(function(){
+    $('.center_block').hide();
     $('#account_update_block').show();
-});
-$('.exit_center_block').click(function(){
-  $('.center_block').hide();
 });
 $('.login_button').click(function(){
     $('.center_block').hide();
@@ -90,22 +92,6 @@ $('.register_button').click(function(){
 $('.leaderboard_land_owned_button').click(function(){
     $('.center_block').hide();
     $('#leaderboard_land_owned_block').show();
-});
-$('.leaderboard_cities_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_cities_block').show();
-});
-$('.leaderboard_strongholds_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_strongholds_block').show();
-});
-$('.leaderboard_army_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_army_block').show();
-});
-$('.leaderboard_population_button').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_population_block').show();
 });
 
 </script>

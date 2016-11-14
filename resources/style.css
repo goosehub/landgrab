@@ -41,15 +41,6 @@ html, body {
 .btn {
   border-radius: 0;
 }
-.fake_link {
-  cursor: pointer;
-}
-.clear_both {
-  clear: both;
-}
-.bold_font {
-  font-weight: bold;
-}
 
 /* Map */
 #map {
@@ -144,15 +135,6 @@ html, body {
   font-size: 1.2em;
 }
 
-/* Land Form */
-.input_to_label {
-  background:rgba(0,0,0,0);
-  border:none;
-}
-.coord_label {
-  margin-right: 1em;
-}
-
 /* Center Block */
 .center_block {
   display: none;
@@ -194,16 +176,23 @@ html, body {
   font-weight: bold;
 }
 
-/* InfoWindow */
-.land_window {
-  overflow-x: hidden;
-  min-width: 120px;
+/* Land Block */
+.input_to_label {
+  background:rgba(0,0,0,0);
+  border:none;
+}
+.coord_label {
+  margin-right: 1em;
+}
+#land_block {
+  width: 40%;
+  left: 60%;
 }
 #land_form .row {
   margin-right: 0;
 }
 #land_form textarea {
-  height: 3em;
+  height: 4em;
 }
 .alert-green {
   background: #5CB85C;
@@ -225,7 +214,7 @@ html, body {
 }
 /* Prevent user HTML input from screwing up view */
 /* Specificity rules are very specific here */
-html body .land_window img, .land_window img[style] {
+html body .land_block img, .land_block img[style] {
   max-height: 50vh !important;
   max-width: 50vw !important;
 }
@@ -236,7 +225,7 @@ html body .land_content_div, html body .land_content_div[style] {
 }
 @media only screen 
   and (max-device-width: 600px) {
-  html body .land_window img, .land_window img[style] {
+  html body .land_block img, .land_block img[style] {
     max-height: 25vh !important;
     max-width: 25vw !important;
   }

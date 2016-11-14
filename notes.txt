@@ -3,25 +3,26 @@
 ==========================================================================================
 
 Todo
-    Tutorial
-        Modifier tutorial default create town and capitol
-    Modifier validation
     Mechanics
     Modifier aggregate queries and menu hook up
+    Modifier validation
     Menu
     Attacking Mechnanic
     Highlight land types
     Logic for which upgrades to show
-    Consolidate land type and modify keys
+    Pretty UI
 
-    Remember map or satallite
+    Easy to use AI
+    Break down set_window
+    Error handling visual
+    Check lng crossover point fix
     Ocean Reporting
     How to play
+    Refine Tutorial
     About
     Leaderboards
     
-    Blanking bug (dev only)?
-    Check 
+    Remember map or satallite
 
                     User Story
 Start game
@@ -31,10 +32,7 @@ Start game
     Declare Independence - Pick Starting Location as Capitol
     We The People / Death and Taxes - Pick a government, set taxes, balance the budget
     Building for the Future - Improve your city
-    War never changes - Build a military
     Manifest Destiny - Expand outward, explain attacking
-
-Land->Cities->Population->Resources->Military->Land
 
                     Metrics
 Land
@@ -48,8 +46,8 @@ Political Support
 Unclaimed
 Village
 Capitol once
-Town every 20 lands
-City every 10 towns
+Town every 5 lands
+City every 5 towns
 Metropolis every 5 cities
 
                     Mechanics
@@ -114,102 +112,33 @@ Improvements
         Community Center +support
         Statium +support
 
-                    Questions
-Can support positive modifiers break on big levels
-
-
-                    Other
-Resources
-    Land
-    Population
-    GDP
-    Tax Rate
-    Treasury
-    Political Support
-    Military
-        Energy
-        Agriculture
-        Health
-        Education
-        Resources
-
-Political Support
-    Lower taxes is more
-    Less attacking is more
-    More being attacked is more
-
-Country Name
-Leader Name
-User Name
-
-Lose when you lose your last land
-World total leaderboard (sum of all players)
-
-
-
-
-
-
-
-
-Multiple Armies
-    Soldiers
-    Artillery
-    Special Ops
-
-Types of attacks
-    Land Attack (Take)
-    Bombard (Downgrade)
-    Secret Attack
-
-Other regen
-
-Rebalance
-    Population for towns too
-    Fort nerf
-
-Other army
-    Gorilla
-        Double winning vs Mech
-    Trench
-        Triple winning vs Gorilla
-    Mech
-        Quad winning vs Trench
-
-Other regen resources
-Earned resources
-Faster regen resource
-Spend on regen resource
+Attack Types
+    Multiple Armies
+        Soldiers
+        Artillery
+        Special Ops
+    Types of attacks
+        Land Attack (Take)
+        Bombard (Downgrade)
+        Secret Attack
+    Other army
+        Gorilla
+            Double winning vs Mech
+        Trench
+            Triple winning vs Gorilla
+        Mech
+            Quad winning vs Trench
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
-    Highlight what can be built or not
-    Corruption in land info
-    Corruption in upgrade
-    Corruption loss in attack
-    Visual for farm and mine
-    Balance upward
-    Apply land rebalance retroactively ability
 
 Moderate Priority
-    Attack land when no longer in range bug
-    Trade Mechanic
-    Capitols Mechanic
-    Lng line issue
 
 Low Priority
     Feature
-        Strongholds list
-        Stronghold Leaderboard
-        Active army leaderboard
-        Defense structure count
-        Flags
-        Highlighting for defenses
-        Zoom to land on link click
-        lng line issue
         FAQ
     Bug
         Sometimes land isn't updated after buy right during update
@@ -226,7 +155,7 @@ Low Priority
         Reduce dependence on break tag
     Misc
         License
-        Hats
+        Hats (Why the fuck did I write hats?)
 
 No Priority
     Speed optimization
@@ -239,12 +168,12 @@ No Priority
     Land link zoom based off box size
     Make blocks ajax to improve page speed load
     Better loading screen
+    Zoom to land on link click
     API world
     Password Resets
     Reset account manually
     International Language Support
     Facebook login
-    International Language Support
 
 ==========================================================================================
     Documentation
@@ -289,7 +218,3 @@ Map Size
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
-
-Bots
-    Anonymous bot
-        http://dpaste.com/3TJ6XYH
