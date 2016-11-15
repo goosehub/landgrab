@@ -28,17 +28,17 @@
                         <div class="col-md-6">
                             <select class="form-control" id="input_government" name="input_government" value="<?php echo $account['government']; ?>">
                                 <option value="<?php echo $account['government']; ?>"><?php echo $government_dictionary[$account['government']]; ?></option>
-                                <?php if ($account['government'] != 0) { ?>
-                                    <option value="0">Anarchy</option>
-                                <?php } ?>
                                 <?php if ($account['government'] != 1) { ?>
-                                <option value="1">Democracy</option>
+                                <option value="1">Democracy (Minimum Political Support at 50%)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 2) { ?>
-                                <option value="2">Oligarchy</option>
+                                <option value="2">Oligarchy (25% Corruption, Min Support at 30%)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 3) { ?>
-                                <option value="3">Autocracy</option>
+                                <option value="3">Autocracy (50% Corruption, Min Support at 10%)</option>
+                                <?php } ?>
+                                <?php if ($account['government'] != 0) { ?>
+                                    <option value="0">Anarchy (No Functioning Government)</option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -71,62 +71,9 @@
                 <button type="submit" class="btn btn-primary form-control">Pass New Laws</button>
             </form>
         </div>
-
         <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right">Provinces: </strong>
-                </div>
-                <div class="col-md-8">
-                    <strong><span class="territory_span">41</span></strong>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right text-primary">Population: </strong>
-                </div>
-                <div class="col-md-8">
-                    <strong><span class="population_span text-primary">702</span></strong>,000
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right text-success">GDP: </strong>
-                </div>
-                <div class="col-md-8">
-                    $<strong><span class="gdp_span text-success">851</span></strong>,000,000
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right text-warning">Treasury: </strong>
-                </div>
-                <div class="col-md-8">
-                    $<strong><span class="treasury_span text-warning">180</span></strong>,000,000
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right text-danger">Military Spending: </strong>
-                </div>
-                <div class="col-md-8">
-                    $<strong><span class="military_span text-danger">105</span></strong>,000,000
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong class="law_stat_label pull-right text-info">Political Support: </strong>
-                </div>
-                <div class="col-md-8">
-                    <strong><span class="political_support_span text-info">55</span></strong>%
-                </div>
-            </div>
-            <br>
+            <h3>How to Run a Nation</h3>
+            <p class="lead">Governments offer a trade off of corruption that eats at the tax income, and minimum political support needed to function. Each percent increase in taxes decreased support, as does attacking temporarily. Taxes that aren't eaten by corruption then go the budget. Pick what percent goes toward Military Spending, and what goes towards Entitlements spending. Each percent of Entitlemnet Spending increases Support. What's left over is Discretionary Spending for building in your territories. What's left over from that is your Treasury.</p>
         </div>
     </div>
 </div>

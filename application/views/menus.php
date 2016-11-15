@@ -10,14 +10,15 @@
   <?php if ($log_check) { ?>
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown">
-      <strong><span id="government_span" class=""><?php echo $government_dictionary[$account['government']]; ?></span></strong>
-      | Tax: <strong><span id="tax_rate_span" class="text-success"><?php echo $account['tax_rate']; ?></span></strong>%
-      | Pop: <strong><span span="population_span"><?php echo $account['stats']['population']; ?>K</span></strong>
-      | GDP: $<strong><span span="gdp_span" class="text-success"><?php echo $account['stats']['gdp']; ?>M</span></strong>
-      | Treasury: $<strong><span span="treasury_span" class="text-warning"><?php echo $account['stats']['treasury_after']; ?>M</span></strong>
-      | Miliary: $<strong><span span="military_span" class="text-danger"><?php echo $account['stats']['military_after']; ?>M</span></strong>
-      | Entitlements: $<strong><span span="entitlements_span" class="text-danger"><?php echo $account['stats']['entitlements']; ?>M</span></strong>
-      | Support: <strong><span span="political_support_span" class="text-primary"><?php echo $account['stats']['support']; ?></span></strong>%
+      <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
+      | Territories: <strong class="text-info"><span class="land_count_span"><?php echo $account['land_count']; ?></span></strong>
+      | Tax: <strong class="text-success"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
+      | Pop: <strong class="text-primary"><span class="population_span"><?php echo $account['stats']['population']; ?></span>K</strong>
+      | GDP: <strong class="text-success">$<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M</strong>
+      | Treasury: <strong class="text-warning">$<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M</strong>
+      | Miliary: <strong class="text-danger">$<span class="military_span"><?php echo $account['stats']['military_after']; ?></span>M</strong>
+      | Entitlements: <strong class="text-success">$<span class="entitlements_span"><?php echo $account['stats']['entitlements']; ?></span>M</strong>
+      | Support: <strong class="text-default"><span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%</strong>
 
       <span class="caret"></span>
     </button>

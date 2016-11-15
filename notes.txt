@@ -3,27 +3,22 @@
 ==========================================================================================
 
 Todo
-    Mechanics
-    Modifier aggregate queries and menu hook up
-    Modifier validation
-    Menu
+    Non land type Modifier Upgrades
     Attacking Mechnanic
-    Highlight land types
-    Logic for which upgrades to show
-    Pretty UI
+    Logic for which Modifiers to show
+    Modifier validation
 
-    Reorganize model
-    Easy to use AI
-    Break down set_window
-    Error handling visual
-    Check lng crossover point fix
-    Ocean Reporting
-    How to play
-    Refine Tutorial
-    About
     Leaderboards
-    
-    Remember map or satallite
+    National Flag, Leader Portriat
+    Account tax and budget interactive UI
+    Sexy UI
+    Easy to use UI
+    How to play, Refine Tutorial, About
+
+    Check lng crossover point fix
+    Error handling visual
+    Ocean Reporting
+
 
                     User Story
 Start game
@@ -141,6 +136,7 @@ Moderate Priority
 Low Priority
     Feature
         FAQ
+        Remember map or satallite
     Bug
         Sometimes land isn't updated after buy right during update
         White edit text (confirmed on chrome on mac)

@@ -11,6 +11,11 @@ class Game extends CI_Controller {
     protected $metropolis_key = 5;
     protected $capitol_key = 6;
 
+    protected $anarchy_key = 0;
+    protected $democracy_key = 1;
+    protected $oligarchy_key = 2;
+    protected $autocracy_key = 3;
+
 	function __construct() {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
@@ -49,21 +54,9 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // If logged in, get account specific data
+        // If logged in, get full account information
         if ($log_check) {
-
-            // Get account
-            $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
-            $data['account']['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($data['account']['id']);
-            $data['account']['stats'] = $this->game_model->get_sum_effects_for_account($world['id'], $data['account']['id']);
-            $data['account']['stats']['tax_income'] = $data['account']['stats']['gdp'] * ($data['account']['tax_rate'] / 100);
-            $data['account']['stats']['military_after'] = floor($data['account']['stats']['military'] + ($data['account']['stats']['tax_income'] * ($data['account']['military_budget'] / 100) ) );
-            $data['account']['stats']['entitlements'] = floor($data['account']['stats']['tax_income'] * ($data['account']['entitlements_budget'] / 100) );
-            $data['account']['stats']['treasury_after'] = floor($data['account']['stats']['tax_income'] - $data['account']['stats']['military'] - $data['account']['stats']['entitlements']);
-            $data['account']['stats']['support'] = 100 - $data['account']['tax_rate'] + $data['account']['entitlements_budget'] + $data['account']['stats']['support'];
-
-            // Record account as loaded
-            $query_action = $this->user_model->account_loaded($data['account']['id']);
+            $data['account'] = $this->get_full_account($user_id, $world['id']);
         }
 
         // Get world leaderboards
@@ -72,9 +65,8 @@ class Game extends CI_Controller {
         // Get all worlds
         $data['worlds'] = $this->user_model->get_all_worlds();
 
-        // Get government dictionary
-        $government_dictionary = $data['government_dictionary'] = $this->government_dictionary();
-
+        // Get dictionaries
+        $data['government_dictionary'] = $this->government_dictionary();
         $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
 
         // Get all lands
@@ -119,6 +111,46 @@ class Game extends CI_Controller {
         $this->load->view('footer', $data);
 	}
 
+    public function get_full_account($user_id, $world_key)
+    {
+        // Get account
+        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $account['land_count'] = $account['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world_key);
+        $account['stats'] = $this->game_model->get_sum_effects_for_account($world_key, $account['id']);
+
+        // Democracy Taxes
+        if ($account['government'] == $this->democracy_key) {
+            $account['effective_tax_rate'] = $account['tax_rate'];
+        }
+        // Oligarchy Taxes
+        else if ($account['government'] == $this->oligarchy_key) {
+            $account['effective_tax_rate'] = floor($account['tax_rate'] * 0.25);
+        }
+        // Autocracy Taxes
+        else if ($account['government'] == $this->autocracy_key) {
+            $account['effective_tax_rate'] = floor($account['tax_rate'] * 0.5);
+        }
+        // Anarchy
+        else {
+            $account['effective_tax_rate'] = 0;
+        }
+        $account['stats']['tax_income'] = $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100);
+        $account['stats']['military_after'] = floor($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
+        $account['stats']['entitlements'] = floor($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
+        $account['stats']['treasury_after'] = floor($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
+        $account['stats']['support'] = 100 - $account['tax_rate'] + $account['entitlements_budget'] + $account['stats']['support'];
+        // No support for anarchy
+        if ($account['government'] == $this->anarchy_key) {
+            $account['stats']['support'] = 0;
+        }
+
+        // Record account as loaded
+        $query_action = $this->user_model->account_loaded($account['id']);
+
+        // Return account
+        return $account;
+    }
+
 	// Get infomation on single land
 	public function get_single_land($coord_slug = false, $world_key = false)
 	{
@@ -160,10 +192,10 @@ class Game extends CI_Controller {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
+            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world['id']);
             $log_check = true;
             // Check if land is in range
-            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
                 $world['land_size'], $land_square['lat'], $land_square['lng'], false);
             $land_square['range_check'] = $this->check_if_land_is_in_range($world_key, $land_square['account_key'], 20, 
@@ -243,7 +275,7 @@ class Game extends CI_Controller {
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world['id']);
             $account_key = $account['id'];
             $color = $account['color'];
             $content = $this->input->post('content');
@@ -377,7 +409,7 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
+        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id'], $world['id']);
         $active_account_key = $active_account['id'];
         $active_user = $this->user_model->get_user($active_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
