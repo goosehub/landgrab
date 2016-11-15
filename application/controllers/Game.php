@@ -53,11 +53,17 @@ class Game extends CI_Controller {
         if ($log_check) {
 
             // Get account
-            $account = $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
-            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+            $data['account'] = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            $data['account']['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($data['account']['id']);
+            $data['account']['stats'] = $this->game_model->get_sum_effects_for_account($world['id'], $data['account']['id']);
+            $data['account']['stats']['tax_income'] = $data['account']['stats']['gdp'] * ($data['account']['tax_rate'] / 100);
+            $data['account']['stats']['military_after'] = floor($data['account']['stats']['military'] + ($data['account']['stats']['tax_income'] * ($data['account']['military_budget'] / 100) ) );
+            $data['account']['stats']['entitlements'] = floor($data['account']['stats']['tax_income'] * ($data['account']['entitlements_budget'] / 100) );
+            $data['account']['stats']['treasury_after'] = floor($data['account']['stats']['tax_income'] - $data['account']['stats']['military'] - $data['account']['stats']['entitlements']);
+            $data['account']['stats']['support'] = 100 - $data['account']['tax_rate'] + $data['account']['entitlements_budget'] + $data['account']['stats']['support'];
 
             // Record account as loaded
-            $query_action = $this->user_model->account_loaded($account['id']);
+            $query_action = $this->user_model->account_loaded($data['account']['id']);
         }
 
         // Get world leaderboards

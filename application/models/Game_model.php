@@ -188,6 +188,7 @@ Class game_model extends CI_Model
  // Get all modify effects
  function get_effects_of_land($land_key)
  {
+    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
     $query = $this->db->query("
         SELECT  *
         FROM modify_effect
@@ -200,6 +201,7 @@ Class game_model extends CI_Model
  }
  function get_sum_effects_of_land($land_key)
  {
+    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
     $query = $this->db->query("
         SELECT 
         SUM(modify_effect.population) as population,
@@ -211,6 +213,34 @@ Class game_model extends CI_Model
             LEFT JOIN land_modifier 
             ON modify_effect.id = land_modifier.modify_effect_key 
         WHERE land_modifier.land_key = " . $land_key . ";
+    ");
+    $result = $query->result_array();
+    if ( isset($result[0]) ) {
+        return $result[0];
+    }
+    return [];
+ }
+ function get_sum_effects_for_account($world_key, $account_key)
+ {
+    $world_key = mysqli_real_escape_string(get_mysqli(), $world_key);
+    $account_key = mysqli_real_escape_string(get_mysqli(), $account_key);
+    $query = $this->db->query("
+        SELECT 
+        SUM(modify_effect.population) as population,
+        SUM(modify_effect.gdp) as gdp,
+        SUM(modify_effect.treasury) as treasury,
+        SUM(modify_effect.military) as military,
+        SUM(modify_effect.support) as support 
+        FROM modify_effect 
+            LEFT JOIN land_modifier 
+            ON modify_effect.id = land_modifier.modify_effect_key 
+        WHERE land_modifier.land_key IN 
+        (
+            SELECT id
+            FROM land
+            WHERE account_key = " . $account_key . "
+            AND world_key = " . $world_key . "
+        )
     ");
     $result = $query->result_array();
     if ( isset($result[0]) ) {
@@ -254,4 +284,10 @@ Class game_model extends CI_Model
  }
 
 }
+
+function get_mysqli() { 
+    $db = (array)get_instance()->db;
+    return mysqli_connect('localhost', $db['username'], $db['password'], $db['database']);
+} 
+
 ?>

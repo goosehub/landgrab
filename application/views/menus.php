@@ -11,15 +11,13 @@
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown">
       <strong><span id="government_span" class=""><?php echo $government_dictionary[$account['government']]; ?></span></strong>
-      |
-      Tax: <strong><span id="tax_rate_span" class="text-success"><?php echo $account['tax_rate']; ?></span></strong>% -
-      Military: <strong><span id="military_budget_span" class="text-danger"><?php echo $account['military_budget']; ?></span></strong>% -
-      Entitlements: <strong><span id="entitlements_span" class="text-info"><?php echo $account['entitlements_budget']; ?></span></strong>%
-      | Pop: <strong><span span="population_span">1K</span></strong>
-      | GDP: $<strong><span span="gdp_span" class="text-success">812M</span></strong>
-      / Treasury: $<strong><span span="treasury_span" class="text-warning">200M</span></strong>
-      / Miliary: $<strong><span span="military_span" class="text-danger">182M</span></strong>
-      | Support: <strong><span span="political_support_span" class="text-primary">59</span></strong>%
+      | Tax: <strong><span id="tax_rate_span" class="text-success"><?php echo $account['tax_rate']; ?></span></strong>%
+      | Pop: <strong><span span="population_span"><?php echo $account['stats']['population']; ?>K</span></strong>
+      | GDP: $<strong><span span="gdp_span" class="text-success"><?php echo $account['stats']['gdp']; ?>M</span></strong>
+      | Treasury: $<strong><span span="treasury_span" class="text-warning"><?php echo $account['stats']['treasury_after']; ?>M</span></strong>
+      | Miliary: $<strong><span span="military_span" class="text-danger"><?php echo $account['stats']['military_after']; ?>M</span></strong>
+      | Entitlements: $<strong><span span="entitlements_span" class="text-danger"><?php echo $account['stats']['entitlements']; ?>M</span></strong>
+      | Support: <strong><span span="political_support_span" class="text-primary"><?php echo $account['stats']['support']; ?></span></strong>%
 
       <span class="caret"></span>
     </button>

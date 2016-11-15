@@ -12,6 +12,7 @@ Todo
     Logic for which upgrades to show
     Pretty UI
 
+    Reorganize model
     Easy to use AI
     Break down set_window
     Error handling visual
