@@ -5,7 +5,6 @@
 Todo
     How is population useful?
     Display upgrades
-    Update land bug
     Attacking Mechnanic
     Logic for which Modifiers to show
     Modifier validation

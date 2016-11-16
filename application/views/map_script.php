@@ -191,12 +191,10 @@ function initMap()
       // Unbind the last click handler from get_single_land 
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
-        // Serialize form into post data
-        $('#form_type_input').val( $(this).val() );
-        var post_data = $('#land_form').serialize();
 
         // Submit land ajax
-        land_form_ajax(post_data);
+        var form_type = $(this).val();
+        land_form_ajax(form_type);
 
         // Do tutorial progression
         land_form_tutorial( $(this).val() );
@@ -285,7 +283,11 @@ function initMap()
 
   }
 
-  function land_form_ajax(post_data) {
+  function land_form_ajax(form_type) {
+    // Serialize form into post data
+    $('#form_type_input').val(form_type);
+    var post_data = $('#land_form').serialize();
+
     // Submit form
     $.ajax({
       url: "<?=base_url()?>land_form",
@@ -323,13 +325,15 @@ function initMap()
           // player_land_count = player_land_count + 1;
           // $('#owned_lands_span').html( number_format(player_land_count) );
 
-          // Update box to reflect user ownership
-          boxes[d['id']].setOptions({
-            strokeWeight: 3, 
-            strokeColor: '#428BCA',
-            fillColor: account['color'],
-            fillOpacity: 0.4
-          });
+          if (form_type === 'claim' || form_type === 'attack') {
+            // Update box to reflect user ownership
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '#428BCA',
+              fillColor: account['color'],
+              fillOpacity: 0.4
+            });
+          }
 
           // Tutorial Rule
           if (account['tutorial'] < 2) {
