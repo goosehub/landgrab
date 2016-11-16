@@ -287,10 +287,10 @@ class Game extends CI_Controller {
             if ( is_numeric($form_type) ) {
                 $action_type = 'build';
             }
-            if ($land_square['land_type'] === $this->unclaimed_key) {
+            else if ($land_square['land_type'] === $this->unclaimed_key) {
                 $action_type = 'claim';
             }
-            if ($account['id'] === $land_square['account_key']) {
+            else if ($account['id'] === $land_square['account_key']) {
                 $action_type = 'update';
             }
             else {
@@ -300,36 +300,10 @@ class Game extends CI_Controller {
             // Upgrade Logic
             $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
             if ( $action_type === 'build' ) {
-                foreach ($effects as $effect) {
-                    if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
-                        $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                        $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, $capitol = 1);
-                        break;
-                    }
-                    else if ($effect['name'] === 'town' && $form_type === $effect['id']) {
-                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->town_key);
-                        break;
-                    }
-                    else if ($effect['name'] === 'city' && $form_type === $effect['id']) {
-                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->city_key);
-                        break;
-                    }
-                    else if ($effect['name'] === 'metropolis' && $form_type === $effect['id']) {
-                        $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
-                        $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                        $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->metropolis_key);
-                        break;
-                    }
+                $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
+                if (!$result) {
+                    return false;
                 }
-
-                // Other
-
-                // Build response
                 echo '{"status": "success", "result": true, "message": "Built"}';
                 return true;
             }
@@ -447,6 +421,46 @@ class Game extends CI_Controller {
         // Everything checks out
         return true;
 	}
+
+    public function land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug)
+    {
+        foreach ($effects as $effect) {
+            // Capitol
+            if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_capitol_from_account($world_key, $account_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->update_land_capitol_status($world_key, $coord_slug, $capitol = 1);
+                break;
+            }
+            // Town
+            else if ($effect['name'] === 'town' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->town_key);
+                break;
+            }
+            // City
+            else if ($effect['name'] === 'city' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->city_key);
+                break;
+            }
+            // Metropolis
+            else if ($effect['name'] === 'metropolis' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->upgrade_land_type($coord_slug, $world_key, $this->metropolis_key);
+                break;
+            }
+            // Regular Upgrades
+            else if ($form_type === $effect['id']) {
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                break;
+            }
+        }
+        return true;
+    }
 
     // Check if land is in range for account
     public function check_if_land_is_in_range($world_key, $account_key, $land_count, $land_size, $lat, $lng, $siege)
