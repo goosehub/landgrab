@@ -15,6 +15,7 @@ land_dictionary[2] = 'village';
 land_dictionary[3] = 'town';
 land_dictionary[4] = 'city';
 land_dictionary[5] = 'metropolis';
+land_dictionary[6] = 'capitol';
 
 land_type_key_dictionary = new Array();
 land_type_key_dictionary['unclaimed'] = 1;
@@ -22,6 +23,7 @@ land_type_key_dictionary['village'] = 2;
 land_type_key_dictionary['town'] = 3;
 land_type_key_dictionary['city'] = 4;
 land_type_key_dictionary['metropolis'] = 5;
+land_type_key_dictionary['capitol'] = 6;
 
 government_dictionary = new Array();
 government_dictionary[0] = 'Anarchy';
@@ -325,12 +327,46 @@ function initMap()
           // player_land_count = player_land_count + 1;
           // $('#owned_lands_span').html( number_format(player_land_count) );
 
+          // Update Land Style
+
+          // Claim or attack
           if (form_type === 'claim' || form_type === 'attack') {
-            // Update box to reflect user ownership
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
               strokeColor: '#428BCA',
               fillColor: account['color'],
+              fillOpacity: 0.4
+            });
+          }
+          // Captiol
+          else if (form_type == land_type_key_dictionary['capitol']) {
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '#FF0000',
+              fillOpacity: 0.4
+            });
+          }
+          // Town
+          else if (form_type == land_type_key_dictionary['town']) {
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '#00E300',
+              fillOpacity: 0.4
+            });
+          }
+          // City
+          else if (form_type == land_type_key_dictionary['city']) {
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '#FFD900',
+              fillOpacity: 0.4
+            });
+          }
+          // Metroplis
+          else if (form_type == land_type_key_dictionary['metropolis']) {
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '#A600A6',
               fillOpacity: 0.4
             });
           }

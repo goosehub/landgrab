@@ -5,6 +5,7 @@
 Todo
     How is population useful?
     Display upgrades
+    Abstract land type colors into protected variables
     Attacking Mechnanic
     Logic for which Modifiers to show
     Modifier validation
