@@ -333,7 +333,7 @@ function initMap()
           if (form_type === 'claim' || form_type === 'attack') {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
-              strokeColor: '#428BCA',
+              strokeColor: '<?php echo $stroke_color_dictionary['village']; ?>',
               fillColor: account['color'],
               fillOpacity: 0.4
             });
@@ -342,7 +342,7 @@ function initMap()
           else if (form_type == land_type_key_dictionary['capitol']) {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
-              strokeColor: '#FF0000',
+              strokeColor: '<?php echo $stroke_color_dictionary['capitol']; ?>',
               fillOpacity: 0.4
             });
           }
@@ -350,7 +350,7 @@ function initMap()
           else if (form_type == land_type_key_dictionary['town']) {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
-              strokeColor: '#00E300',
+              strokeColor: '<?php echo $stroke_color_dictionary['town']; ?>',
               fillOpacity: 0.4
             });
           }
@@ -358,7 +358,7 @@ function initMap()
           else if (form_type == land_type_key_dictionary['city']) {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
-              strokeColor: '#FFD900',
+              strokeColor: '<?php echo $stroke_color_dictionary['city']; ?>',
               fillOpacity: 0.4
             });
           }
@@ -366,7 +366,7 @@ function initMap()
           else if (form_type == land_type_key_dictionary['metropolis']) {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
-              strokeColor: '#A600A6',
+              strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
               fillOpacity: 0.4
             });
           }
@@ -421,28 +421,28 @@ function initMap()
           $fill_opacity = '0.4';
         }
         if ($log_check && $land['account_key'] === $account['id']) {
-          $stroke_color = '#428BCA';
+          $stroke_color = $stroke_color_dictionary['village'];
           $stroke_weight = 3;
         }
         if ($land['capitol'] === '1') {
           $stroke_weight = 2;
           $fill_opacity = '0.8';
-          $stroke_color = '#FF0000';
+          $stroke_color = $stroke_color_dictionary['capitol'];
         } 
         // Town
         else if ($land['land_type'] === '3' ) {
           $stroke_weight = 2;
-          $stroke_color = '#00E300';
+          $stroke_color = $stroke_color_dictionary['town'];
         } 
         // City
         else if ($land['land_type'] === '4' ) {
           $stroke_weight = 2;
-          $stroke_color = '#FFD900';
+          $stroke_color = $stroke_color_dictionary['city'];
         } 
         // Metropolis
         else if ($land['land_type'] === '5' ) {
           $stroke_weight = 2;
-          $stroke_color = '#A600A6';
+          $stroke_color = $stroke_color_dictionary['metropolis'];
         }
         ?>z(<?php echo 
             $land['id'] . ',' .
@@ -531,25 +531,25 @@ function initMap()
         fill_opacity = 0.4;
       }
       if (log_check && land['account_key'] == account_id) {
-        stroke_color = '#428BCA';
+        stroke_color = '<?php echo $stroke_color_dictionary['village']; ?>';
         stroke_weight = 3;
       }
       if (land['capitol'] == 1) {
         stroke_weight = 2;
         fill_opacity = '0.8';
-        stroke_color = '#FF0000';
+        stroke_color = '<?php echo $stroke_color_dictionary['capitol']; ?>';
       }
       else if (land['land_type'] == land_type_key_dictionary['town']) {
         stroke_weight = 2;
-        stroke_color = '#00E300';
+        stroke_color = '#<?php echo $stroke_color_dictionary['town']; ?>';
       } 
       else if (land['land_type'] == land_type_key_dictionary['city']) {
         stroke_weight = 2;
-        stroke_color = '#FFD900';
+        stroke_color = '<?php echo $stroke_color_dictionary['city']; ?>';
       } 
       else if (land['land_type'] == land_type_key_dictionary['metropolis']) {
         stroke_weight = 2;
-        stroke_color = '#A600A6';
+        stroke_color = '<?php echo $stroke_color_dictionary['metropolis']; ?>';
       }
 
       // Apply variables to box

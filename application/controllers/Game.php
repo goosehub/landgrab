@@ -67,6 +67,7 @@ class Game extends CI_Controller {
 
         // Get dictionaries
         $data['government_dictionary'] = $this->government_dictionary();
+        $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
         $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
 
         // Get all lands
@@ -525,6 +526,16 @@ class Game extends CI_Controller {
         $government_dictionary[2] = 'Oligarchy';
         $government_dictionary[3] = 'Autocracy';
         return $government_dictionary;
+    }
+
+    public function stroke_color_dictionary()
+    {
+        $stroke_color_dictionary['village'] = '#428BCA';
+        $stroke_color_dictionary['capitol'] = '#FF0000';
+        $stroke_color_dictionary['town'] = '#00E300';
+        $stroke_color_dictionary['city'] = '#FFD900';
+        $stroke_color_dictionary['metropolis'] = '#A600A6';
+        return $stroke_color_dictionary;
     }
 
     // Function to close tags
