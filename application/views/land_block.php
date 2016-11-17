@@ -58,7 +58,7 @@
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
         </button>
 
-        <br>
+        <br> <br>
 
         <div id="land_form_more_info_parent" class="land_block_toggle">
             <div id="land_info_dropdown" class="collapse">
@@ -72,7 +72,7 @@
                 <div class="form-group">
                     <div class="row">
                     <?php foreach ($modify_effect_dictionary as $effect) { ?>
-                        <div id="<?php echo $effect['name']; ?>_info_parent" class="col-md-6">
+                        <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
                             <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-success" value="<?php echo $effect['id']; ?>">
                                 <?php echo ucwords(str_replace('_', ' ', $effect['name'])); ?>
                             </button>

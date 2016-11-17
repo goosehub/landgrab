@@ -251,8 +251,9 @@ function initMap()
       $('#land_form_more_info_parent').show();
     }
 
-    // Is a town or larger
-    if (d['land_type'] > land_type_key_dictionary['village']) {
+    console.log(d['sum_modifiers']);
+    // Is a town or larger and has more than it's land type as a modifier
+    if (d['land_type'] > land_type_key_dictionary['village'] && typeof d['sum_modifiers'][1] != 'undefined') {
       $('#button_expand_info').show();
     }
 
@@ -289,10 +290,14 @@ function initMap()
     if (d['land_type'] == land_type_key_dictionary['village']) {
       $('#town_info_parent').show();
     }
-    else if (d['land_type'] == land_type_key_dictionary['town']) {
+    else {
+      $('.effect_info_item').show();
+      $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent').hide();
+    }
+    if (d['land_type'] == land_type_key_dictionary['town']) {
       $('#city_info_parent').show();
     }
-    else if (d['land_type'] == land_type_key_dictionary['city']) {
+    if (d['land_type'] == land_type_key_dictionary['city']) {
       $('#metropolis_info_parent').show();
     }
   }
