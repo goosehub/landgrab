@@ -80,10 +80,27 @@ function initMap()
       // Prevent excesssive zoom
       // maxZoom: 10,
       // Map type
-      mapTypeId: google.maps.MapTypeId.TERRAIN
+      // mapTypeId: google.maps.MapTypeId.TERRAIN
       // mapTypeId: google.maps.MapTypeId.HYBRID
-      // mapTypeId: google.maps.MapTypeId.SATELLITE
+      mapTypeId: google.maps.MapTypeId.SATELLITE
   });
+
+  // Map Styling
+  var styles = [
+    {
+      featureType: "poi.business",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
+  // Apply map styling
+  var styled_map = new google.maps.StyledMapType(styles,
+    {name: "Styled Map"});
+  map.mapTypes.set('map_style', styled_map);
+  map.setMapTypeId('map_style');
 
 	// 
 	// Minor Functions
@@ -122,25 +139,6 @@ function initMap()
               x1 = x1.replace(rgx, '$1' + ',' + '$2');
       }
       return x1 + x2;
-  }
-
-  // Get single land ajax
-  function get_single_land(coord_slug, world_key, callback) {
-    $.ajax({
-      url: "<?=base_url()?>get_single_land",
-      type: "GET",
-      data: { 
-                coord_slug: coord_slug,
-                world_key: world_key 
-            },
-      cache: false,
-      success: function(data)
-      {
-        // console.log(data)
-        callback(data);
-        return true;
-      }
-    });
   }
 
   // Declare square called by performance sensitive loop
@@ -188,7 +186,8 @@ function initMap()
         return false;
       }
 
-      prepare_land_form(coord_slug, world_key, d);
+      prepare_land_form_view(coord_slug, world_key, d);
+      prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
       $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
@@ -207,50 +206,98 @@ function initMap()
     });
 	}
 
-  // Prepare land form for user to view
-  function prepare_land_form(coord_slug, world_key, d) {
+  // Get single land ajax
+  function get_single_land(coord_slug, world_key, callback) {
+    $.ajax({
+      url: "<?=base_url()?>get_single_land",
+      type: "GET",
+      data: { 
+                coord_slug: coord_slug,
+                world_key: world_key 
+            },
+      cache: false,
+      success: function(data)
+      {
+        console.log(data)
+        callback(data);
+        return true;
+      }
+    });
+  }
+
+  // Prepare land form view
+  function prepare_land_form_view(coord_slug, world_key, d) {
     $('#land_block').fadeIn(100);
 
     // Scroll to top and close open dropdowns
     $('#land_block').scrollTop(0);
     $('.in,.open').removeClass('in open');
 
-    $('#land_form_result').hide();
-    $('.land_form_subparent').hide();
-    $('#land_form_submit_claim, #land_form_submit_attack').hide();
+    // Start by hiding everything
+    $('.land_block_toggle').hide();
 
+    // Not logged in
     if (!log_check) {
       $('#join_to_play_button').show();
     }
 
+    // Unclaimed
     if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
       $('#land_form_unclaimed_parent').show();
+    // Claimed
     } else {
       $('#land_form_info_parent').show();
+      $('#land_form_more_info_parent').show();
+    }
+
+    // Is a town or larger
+    if (d['land_type'] > land_type_key_dictionary['village']) {
+      $('#button_expand_info').show();
     }
 
     // Own
     if (log_check && d['account_key'] === account['id']) {
       $('#land_form_update_parent').show()
+      $('#land_form_submit_update').show();
       $('#land_form_upgrade_parent').show();
+      $('#button_expand_upgrade').show();
+    // Do not own
     } else if (log_check) {
-      // Attack
-      $('#land_form_update_parent').hide()
+      // In range
       if (d['in_range']) {
+        // And unclaimed
         if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
           $('#land_form_submit_claim').show();
         }
+        // And claimed
         else {
           $('#land_form_submit_attack').show();
         }
+      // Not in range
+      } else {
+        $('#not_in_range').show();
       }
     }
 
+    // Capitol
     if (d['capitol'] === '1') {
       $('#capitol_info').show();
-    } else {
-      $('#capitol_info').hide();
     }
+
+    // Logic for which upgrades to show
+    if (d['land_type'] == land_type_key_dictionary['village']) {
+      $('#town_info_parent').show();
+    }
+    else if (d['land_type'] == land_type_key_dictionary['town']) {
+      $('#city_info_parent').show();
+    }
+    else if (d['land_type'] == land_type_key_dictionary['city']) {
+      $('#metropolis_info_parent').show();
+    }
+  }
+
+  // Prepare land form data
+  function prepare_land_form_data(coord_slug, world_key, d) {
     $('#input_id').val(d['id']);
     $('#input_coord_slug').val(d['coord_slug']);
     if (d['land_name'] != '') {
@@ -261,7 +308,6 @@ function initMap()
     $('#land_content_label').html(d['content']);
     $('#land_gdp_label').html(d['sum_effects']['gdp']);
     $('#land_population_label').html(d['sum_effects']['population']);
-    $('#land_defense_label').html(d['sum_effects']['defense']);
 
     $('#coord_link').prop('href', '<?=base_url()?>world/' + world_key + '?land=' + coord_slug);
     $('#coord_link').html(coord_slug);
@@ -276,13 +322,8 @@ function initMap()
 
     // $('#leader_name_label, #nation_label').css('color', d['color']);
 
-
     $('#input_land_name').val(d['land_name']);
     $('#input_content').val(d['content']);
-
-    // Logic for which upgrades to show
-    // ...
-
   }
 
   function land_form_ajax(form_type) {
@@ -453,27 +494,6 @@ function initMap()
             '"' . $fill_color . '"' . ',' .
             $fill_opacity; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
     } ?>
-
-	// 
-	// Map Styling
-	// 
-
-	// Styling of map
-	var styles = [
-	  {
-  		featureType: "poi.business",
-  		elementType: "labels",
-  		stylers: [
-  		  { visibility: "off" }
-  		]
-	  }
-	];
-
-  // Apply map styling
-	var styled_map = new google.maps.StyledMapType(styles,
-	  {name: "Styled Map"});
-	map.mapTypes.set('map_style', styled_map);
-	map.setMapTypeId('map_style');
 
   // 
   // Update map data

@@ -185,7 +185,8 @@ html, body {
   margin-right: 1em;
 }
 #land_block {
-  width: 40%;
+  width: 30%;
+  top: 10vh;
   left: 60%;
 }
 #land_form .row {
@@ -207,10 +208,13 @@ html, body {
   text-align: center;
 }
 .upgrade_submit {
-  width: 200px;
+  width: 70%;
 }
-.info_details_parent {
-  width: 200px;
+.expand_land_type_info {
+  width: 25%;
+}
+.effect_pair {
+  font-weight: bold;
 }
 /* Prevent user HTML input from screwing up view */
 /* Specificity rules are very specific here */
