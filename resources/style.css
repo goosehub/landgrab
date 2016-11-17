@@ -216,6 +216,9 @@ html, body {
 .effect_pair {
   font-weight: bold;
 }
+#land_info_div p {
+  font-weight: bold;
+}
 /* Prevent user HTML input from screwing up view */
 /* Specificity rules are very specific here */
 html body .land_block img, .land_block img[style] {

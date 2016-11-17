@@ -187,6 +187,7 @@ function initMap()
       }
 
       prepare_land_form_view(coord_slug, world_key, d);
+      prepare_land_form_more_info(coord_slug, world_key, d);
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
@@ -218,7 +219,7 @@ function initMap()
       cache: false,
       success: function(data)
       {
-        console.log(data)
+        // console.log(data)
         callback(data);
         return true;
       }
@@ -324,6 +325,20 @@ function initMap()
 
     $('#input_land_name').val(d['land_name']);
     $('#input_content').val(d['content']);
+  }
+
+  function prepare_land_form_more_info(coord_slug, world_key, d) {
+    $('#land_info_div').html();
+    var more_info_string = '';
+    for (var i = 0; i < d['sum_modifiers'].length; i++) {
+      // Skip if land type
+      if (d['sum_modifiers'][i]['id'] <= 6) {
+        continue;
+      }
+      var modifier_name = ucwords(d['sum_modifiers'][i]['name'].replace(/_/g, ' '));
+      more_info_string = more_info_string + '<p>' + modifier_name + 's: ' + d['sum_modifiers'][i]['count'] + '</p>';
+    }
+    $('#land_info_div').html(more_info_string);
   }
 
   function land_form_ajax(form_type) {

@@ -173,6 +173,7 @@ class Game extends CI_Controller {
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
+        $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
 
         // Land range false by default

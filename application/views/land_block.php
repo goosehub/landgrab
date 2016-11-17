@@ -62,7 +62,7 @@
 
         <div id="land_form_more_info_parent" class="land_block_toggle">
             <div id="land_info_dropdown" class="collapse">
-                <div id="land_info_div">
+                <div id="land_info_div" class="well">
                 </div>
             </div>
         </div>

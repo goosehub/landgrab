@@ -4,7 +4,7 @@
 
 Todo
     How is population useful?
-    Display upgrades
+    Remove village and other land type conflict
     Attacking Mechnanic
     Logic for which Modifiers to show
     Modifier validation

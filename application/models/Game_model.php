@@ -220,6 +220,28 @@ Class game_model extends CI_Model
     }
     return [];
  }
+ // Get count of modifiers
+ function get_sum_modifiers_for_land($land_key)
+ {
+    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
+    $query = $this->db->query("
+        SELECT 
+        modify_effect.id,
+        modify_effect.name,
+        COUNT(modify_effect.id) AS count
+        FROM modify_effect 
+            LEFT JOIN land_modifier 
+            ON modify_effect.id = land_modifier.modify_effect_key 
+        WHERE land_modifier.land_key = " . $land_key . "
+        GROUP BY modify_effect.id;
+    ");
+    $result = $query->result_array();
+    if ( isset($result[0]) ) {
+        return $result;
+    }
+    return [];
+ }
+ // Get sum of effect values
  function get_sum_effects_for_account($world_key, $account_key)
  {
     $world_key = mysqli_real_escape_string(get_mysqli(), $world_key);
