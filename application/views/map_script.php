@@ -307,6 +307,8 @@ function initMap()
     $('#input_coord_slug').val(d['coord_slug']);
     if (d['land_name'] != '') {
       $('#land_name_label').html(d['land_name']);
+    } else if (d['land_name']['capitol']) {
+      $('#land_name_label').html('Unnamed Capitol');
     } else {
       $('#land_name_label').html('Unnamed ' + ucwords(land_dictionary[d['land_type']]));
     }
@@ -322,8 +324,16 @@ function initMap()
 
     $('#government_label').html( government_dictionary[d['account']['government']] );
     $('#land_type_label').html( ucwords(land_dictionary[d['land_type']]) );
-    $('#nation_label').html(d['account']['nation_name']);
-    $('#leader_name_label').html(d['account']['leader_name']);
+    if (d['account']['nation_name']) {
+      $('#nation_label').html(d['account']['nation_name']);
+    } else {
+      $('#nation_label').html('Anonymous #' + d['account']['id']);
+    }
+    if (d['account']['leader_name']) {
+      $('#leader_name_label').html(d['account']['leader_name']);
+    } else {
+      $('#leader_name_label').html('Anonymous #' + d['account']['id']);
+    }
 
     // $('#leader_name_label, #nation_label').css('color', d['color']);
 

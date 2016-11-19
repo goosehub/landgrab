@@ -22,19 +22,19 @@
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Territories: </strong>
-                        <strong class="law_info_value">
+                        <strong class="law_info_value text-primary">
                             <span class="land_count_span"><?php echo $account['land_count']; ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Population: </strong>
-                        <strong class="law_info_value text-info">
+                        <strong class="law_info_value text-purple">
                             <span class="population_span"><?php echo $account['stats']['population']; ?></span>K
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Annual GDP: </strong>
-                        <strong class="law_info_value text-success">
+                        <strong class="law_info_value text-action">
                             $<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M
                         </strong><br>
                     </span>
@@ -46,7 +46,7 @@
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Corruption: </strong>
-                        <strong class="law_info_value text-danger">
+                        <strong class="law_info_value text-red">
                             <span class="corruption_rate_span"><?php echo $account['stats']['corruption_total']; ?></span>M
                         </strong><br>
                     </span>
@@ -66,7 +66,7 @@
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Treasury: </strong>
-                        <strong class="law_info_value text-warning">
+                        <strong class="law_info_value text-yellow">
                             $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
                         </strong><br>
                     </span>

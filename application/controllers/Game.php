@@ -328,9 +328,15 @@ class Game extends CI_Controller {
                 $action_type = 'attack';
             }
 
+            // Prevent building when no treasury
+            if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0) {
+                echo '{"status": "fail", "message": "Your treasury is too low to build. Try raising taxes."}';
+                return false;
+            }
+
             // Check if player is functioning
             if ($account['government'] == $this->anarchy_key) {
-                echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy Select the white menu above."}';
+                echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy. Select the white menu above."}';
                 return false;
             }
             if (!$account['functioning']) {

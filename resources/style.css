@@ -41,6 +41,18 @@ html, body {
 .btn {
   border-radius: 0;
 }
+.text-action {
+  color: #FF7C00;
+}
+.text-purple {
+  color: #78286B;
+}
+.text-yellow {
+  color: #BDAF20;
+}
+.text-red {
+  color: #E60006;
+}
 
 /* Map */
 #map {

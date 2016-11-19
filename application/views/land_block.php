@@ -31,16 +31,17 @@
         <div id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
-            <div id="leader_name">Led by <strong id="leader_name_label"></strong></div>
+            <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span></div>
 
             <div id="capitol_info" class="land_block_toggle">
-                <div id="capitol_label">Capitol of the <span id="government_label" class="text-success"></span> of <span id="nation_label" class="text-success"></span></div>
+                <div id="capitol_label"><span class="text-red">Capitol</span> of the <span id="government_label" class="text-warning"></span> of <span id="nation_label" class="text-warning"></span></div>
             </div>
 
-            <div><span id="land_type_label" class="text-success"></span> with a Population of <span id="land_population_label"></span><small>K</small></div>
-            <div>GDP: $<span id="land_gdp_label"></span><small>M</small></div>
+            <div><span id="land_type_label" class="text-primary"></span></div>
+            <div class="text-purple">Population of <span id="land_population_label"></span><small>K</small></div>
+            <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
-                Attack  (+<span id="war_weariness_attack_span">0</span> War Weariness)
+                Attack  (+<span id="war_weariness_attack_span" class="text-danger">0</span> War Weariness)
             </button>
         </div>
 
