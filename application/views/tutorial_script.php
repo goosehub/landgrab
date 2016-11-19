@@ -3,7 +3,7 @@
 // Tutorial Logic
 // 
 
-if (log_check && account['tutorial'] == 5) {
+if (log_check && account['tutorial'] < 5) {
     $('.exit_tutorial').click(function(){
         $('#tutorial_block').hide();
     });

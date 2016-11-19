@@ -12,12 +12,10 @@
     <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown">
       <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
       | Territories: <strong class="text-info"><span class="land_count_span"><?php echo $account['land_count']; ?></span></strong>
-      | Tax: <strong class="text-success"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
+      | Tax Rate: <strong class="text-danger"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
       | Pop: <strong class="text-primary"><span class="population_span"><?php echo $account['stats']['population']; ?></span>K</strong>
       | GDP: <strong class="text-success">$<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M</strong>
       | Treasury: <strong class="text-warning">$<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M</strong>
-      | Miliary: <strong class="text-danger">$<span class="military_span"><?php echo $account['stats']['military_after']; ?></span>M</strong>
-      | Entitlements: <strong class="text-success">$<span class="entitlements_span"><?php echo $account['stats']['entitlements']; ?></span>M</strong>
       | Support: <strong class="text-default"><span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%</strong>
 
       <span class="caret"></span>
@@ -65,6 +63,7 @@
       <li><a class="btn btn-success" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
       <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
       <li><a class="report_bugs_button btn btn-danger">Report Bugs</a></li>
+      <li><a class="report_bugs_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>
     </ul>
   </div>
 

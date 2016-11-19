@@ -17,7 +17,75 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Territories: </strong>
+                        <strong class="law_info_value">
+                            <span class="land_count_span"><?php echo $account['land_count']; ?></span>
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Population: </strong>
+                        <strong class="law_info_value text-info">
+                            <span class="population_span"><?php echo $account['stats']['population']; ?></span>K
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Annual GDP: </strong>
+                        <strong class="law_info_value text-success">
+                            $<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Tax Revenue: </strong>
+                        <strong class="law_info_value text-success">
+                            <span class="tax_income_span"><?php echo $account['stats']['tax_income']; ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Corruption: </strong>
+                        <strong class="law_info_value text-danger">
+                            <span class="corruption_rate_span"><?php echo $account['stats']['corruption_rate']; ?></span>%
+                        </strong><br>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Miliary: </strong>
+                        <strong class="law_info_value text-danger">
+                            $<span class="military_span"><?php echo $account['stats']['military_after']; ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Entitlements: </strong>
+                        <strong class="law_info_value text-success">
+                            $<span class="entitlements_span"><?php echo $account['stats']['entitlements']; ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Treasury: </strong>
+                        <strong class="law_info_value text-warning">
+                            $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">War Weariness: </strong>
+                        <strong class="law_info_value text-danger">
+                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>%
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Political Support: </strong>
+                        <strong class="law_info_value text-default">
+                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%
+                        </strong><br>
+                    </span>
+                </div>
+            </div>
+
+            <hr>
             <!-- Form -->
             <?php echo form_open('user/law_form'); ?>
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
@@ -71,7 +139,7 @@
                 <button type="submit" class="btn btn-primary form-control">Pass New Laws</button>
             </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h3>How to Run a Nation</h3>
             <p class="lead">Governments offer a trade off of corruption that eats at the tax income, and minimum political support needed to function. Each percent increase in taxes decreased support, as does attacking temporarily. Taxes that aren't eaten by corruption then go the budget. Pick what percent goes toward Military Spending, and what goes towards Entitlements spending. Each percent of Entitlemnet Spending increases Support. What's left over is Discretionary Spending for building in your territories. What's left over from that is your Treasury.</p>
         </div>

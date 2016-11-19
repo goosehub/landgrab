@@ -242,9 +242,8 @@ Class game_model extends CI_Model
     return [];
  }
  // Get sum of effect values
- function get_sum_effects_for_account($world_key, $account_key)
+ function get_sum_effects_for_account($account_key)
  {
-    $world_key = mysqli_real_escape_string(get_mysqli(), $world_key);
     $account_key = mysqli_real_escape_string(get_mysqli(), $account_key);
     $query = $this->db->query("
         SELECT 
@@ -261,7 +260,6 @@ Class game_model extends CI_Model
             SELECT id
             FROM land
             WHERE account_key = " . $account_key . "
-            AND world_key = " . $world_key . "
         )
     ");
     $result = $query->result_array();
@@ -305,11 +303,30 @@ Class game_model extends CI_Model
     $this->db->delete('land_modifier');
  }
 
+ function add_war_weariness_to_account($account_id, $war_weariness)
+ {
+    $this->db->where('id', $account_id);
+    $this->db->set('war_weariness', 'war_weariness+' . $war_weariness, FALSE);
+    $this->db->update('account');
+ }
+
+ function subtract_war_weariness_from_account($account_id, $war_weariness)
+ {
+    $this->db->where('id', $account_id);
+    $this->db->set('war_weariness', 'war_weariness-' . $war_weariness, FALSE);
+    $this->db->update('account');
+ }
+ function universal_decrease_war_weariness($war_weariness_decrease)
+ {
+    $this->db->where('war_weariness >', 0);
+    $this->db->set('war_weariness', 'war_weariness-' . $war_weariness_decrease, FALSE);
+    $this->db->update('account');
+
+ }
+
 }
 
 function get_mysqli() { 
     $db = (array)get_instance()->db;
     return mysqli_connect('localhost', $db['username'], $db['password'], $db['database']);
-} 
-
-?>
+}

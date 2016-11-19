@@ -19,7 +19,9 @@
         <div id="land_form_unclaimed_parent" class="land_block_toggle">
             <div><strong>Unclaimed Land</strong></div>
             <br>
-            <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">Claim</button>
+            <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">
+                Claim (+1 War Weariness)
+            </button>
         </div>
 
         <div id="not_in_range" class="land_block_toggle">
@@ -37,7 +39,9 @@
 
             <div><span id="land_type_label" class="text-success"></span> with a Population of <span id="land_population_label"></span><small>K</small></div>
             <div>GDP: $<span id="land_gdp_label"></span><small>M</small></div>
-            <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">Attack</button>
+            <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
+                Attack  (+<span id="war_weariness_attack_span">0</span> War Weariness)
+            </button>
         </div>
 
         <span id="land_form_update_parent" class="land_block_toggle">

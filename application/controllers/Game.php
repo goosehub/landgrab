@@ -56,7 +56,8 @@ class Game extends CI_Controller {
 
         // If logged in, get full account information
         if ($log_check) {
-            $data['account'] = $this->get_full_account($user_id, $world['id']);
+            $account = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            $data['account'] = $this->get_full_account($account);
         }
 
         // Get world leaderboards
@@ -112,12 +113,11 @@ class Game extends CI_Controller {
         $this->load->view('footer', $data);
 	}
 
-    public function get_full_account($user_id, $world_key)
+    public function get_full_account($account)
     {
         // Get account
-        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $account['land_count'] = $account['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world_key);
-        $account['stats'] = $this->game_model->get_sum_effects_for_account($world_key, $account['id']);
+        $account['land_count'] = $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+        $account['stats'] = $this->game_model->get_sum_effects_for_account($account['id']);
 
         // Democracy Taxes
         if ($account['government'] == $this->democracy_key) {
@@ -135,14 +135,30 @@ class Game extends CI_Controller {
         else {
             $account['effective_tax_rate'] = 0;
         }
-        $account['stats']['tax_income'] = $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100);
+        $account['stats']['corruption_rate'] = $account['tax_rate'] - $account['effective_tax_rate'];
+        $account['stats']['tax_income'] = floor( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['military_after'] = floor($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
         $account['stats']['entitlements'] = floor($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['treasury_after'] = floor($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
-        $account['stats']['support'] = 100 - $account['tax_rate'] + $account['entitlements_budget'] + $account['stats']['support'];
+        $account['stats']['support'] = 100 - $account['war_weariness'] - $account['tax_rate'] + $account['entitlements_budget'] + $account['stats']['support'];
+        $account['stats']['war_weariness'] = $account['war_weariness'];
         // No support for anarchy
         if ($account['government'] == $this->anarchy_key) {
             $account['stats']['support'] = 0;
+        }
+
+        // See if functioning
+        $account['functioning'] = true;
+        if ($account['government'] == $this->democracy_key && $account['stats']['support'] < 50) {
+            $account['functioning'] = false;
+        }
+        else if ($account['government'] == $this->oligarchy_key && $account['stats']['support'] < 30) {
+            $account['functioning'] = false;
+        }
+        else if ($account['government'] == $this->autocracy_key && $account['stats']['support'] < 10) {
+            $account['functioning'] = false;
+        } else if ($account['government'] == $this->anarchy_key) {
+            $account['functioning'] = false;
         }
 
         // Record account as loaded
@@ -176,6 +192,17 @@ class Game extends CI_Controller {
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
 
+        // War Weariness
+        $land_square['war_weariness'] = 0;
+        if ($this->session->userdata('logged_in')) {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $session_data['id'];
+            $requester_account = $this->user_model->get_account_by_keys($user_id, $world_key);
+            $requester_account = $this->get_full_account($requester_account);
+            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square['account_key']);
+        }
+
+
         // Land range false by default
         $land_square['in_range'] = false;
 
@@ -195,7 +222,7 @@ class Game extends CI_Controller {
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world['id']);
+            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
             $log_check = true;
             // Check if land is in range
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
@@ -277,7 +304,8 @@ class Game extends CI_Controller {
             $land_name = $this->input->post('land_name');
 	        $land_type = $this->input->post('land_type');
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id'], $world['id']);
+            $account = $this->get_full_account($account);
+            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
             $account_key = $account['id'];
             $color = $account['color'];
             $content = $this->input->post('content');
@@ -299,6 +327,12 @@ class Game extends CI_Controller {
                 $action_type = 'attack';
             }
 
+            // Check if player is functioning
+            if (!$account['functioning']) {
+                echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
+                return false;
+            }
+
             // Upgrade Logic
             $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
             if ( $action_type === 'build' ) {
@@ -310,14 +344,17 @@ class Game extends CI_Controller {
                 return true;
             }
 
-            // Do attack logic
-
-            // Huh?
-            if (!$account['active_account'] && (is_null($attack_result) || $attack_result) ) {
-                // Mark account as active
-                $query_action = $this->game_model->update_account_active_state($account_key, 1);
+            // Do war weariness logic
+            if ($action_type === 'attack' || $action_type === 'claim') {
+                $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key']);
+                $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
             }
 
+            // Prevent new players from taking towns or larger
+            if ($account['tutorial'] < 2 && $land_square['land_type'] < 3) {
+                echo '{"status": "fail", "message": "You must start the game at a village or unclaimed land"}';
+                return false;
+            }
             // Make capitol if tutorial
             if ($account['tutorial'] < 2) {
                 $land_type = $this->town_key;
@@ -385,7 +422,7 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id'], $world['id']);
+        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
         $active_account_key = $active_account['id'];
         $active_user = $this->user_model->get_user($active_account_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
@@ -462,6 +499,42 @@ class Game extends CI_Controller {
             }
         }
         return true;
+    }
+
+    public function war_weariness_calculate($account, $defender_account)
+    {
+        // Used to make cron more effecient
+        if ( !$account['active_account'] ) {
+            // Mark account as active
+            $this->game_model->update_account_active_state($account['id'], 1);
+        }
+
+        // If unclaimed, just 1 war weariness
+        if ($defender_account == 0) {
+            $war_weariness = 1;
+            return $war_weariness;
+        }
+
+        // Get accounts
+        $defender_account = $this->user_model->get_account_by_id($defender_account);
+        $defender_account = $this->get_full_account($defender_account);
+
+        // War Weariness Algorithm
+        if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * 2) {
+            $war_weariness = 1;
+        }
+        else if ($account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
+            $war_weariness = 2;
+        }
+        else if ($account['stats']['military_after'] * 2 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 3;
+        }
+        else if ($account['stats']['military_after'] * 3 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 4;
+        } else {
+            $war_weariness = 5;
+        }
+        return $war_weariness;
     }
 
     // Check if land is in range for account

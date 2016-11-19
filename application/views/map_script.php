@@ -219,7 +219,7 @@ function initMap()
       cache: false,
       success: function(data)
       {
-        // console.log(data)
+        // console.log(data);
         callback(data);
         return true;
       }
@@ -251,7 +251,6 @@ function initMap()
       $('#land_form_more_info_parent').show();
     }
 
-    console.log(d['sum_modifiers']);
     // Is a town or larger and has more than it's land type as a modifier
     if (d['land_type'] > land_type_key_dictionary['village'] && typeof d['sum_modifiers'][1] != 'undefined') {
       $('#button_expand_info').show();
@@ -330,6 +329,8 @@ function initMap()
 
     $('#input_land_name').val(d['land_name']);
     $('#input_content').val(d['content']);
+
+    $('#war_weariness_attack_span').html(d['war_weariness']);
   }
 
   function prepare_land_form_more_info(coord_slug, world_key, d) {
@@ -608,12 +609,14 @@ function initMap()
   function update_stats(account) {
     $('.land_count_span').html(account['land_count']);
     $('.tax_rate_span').html(account['tax_rate']);
+    $('.tax_income_span_span').html(account['stats']['tax_income_span']);
     $('.population_span').html(account['stats']['population']);
     $('.gdp_span').html(account['stats']['gdp']);
     $('.population_span').html(account['stats']['population']);
     $('.treasury_span').html(account['stats']['treasury_after']);
     $('.military_span').html(account['stats']['military_after']);
     $('.entitlements_span').html(account['stats']['entitlements']);
+    $('.war_weariness_span').html(account['stats']['war_weariness']);
     $('.political_support_span').html(account['stats']['support']);
     return true;
   }

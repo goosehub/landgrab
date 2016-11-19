@@ -157,8 +157,14 @@ html, body {
   }
 }
 #law_block {
-  width: 80%;
-  left: 10%;
+  left: 5%;
+  width: 90%;
+  top: 10vh;
+  height: 80vh;
+}
+.law_info_value {
+  float: right;
+  clear: both;
 }
 .leaderboard_block {
   top: 5vh;

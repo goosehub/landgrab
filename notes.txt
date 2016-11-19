@@ -4,10 +4,10 @@
 
 Todo
     How is population useful?
-    Remove village and other land type conflict
     Attacking Mechnanic
     Logic for which Modifiers to show
     Modifier validation
+    Anarchy Transition
 
     Leaderboards
     National Flag, Leader Portriat

@@ -14,39 +14,33 @@ class Cron extends CI_Controller {
     public function index($token = false)
     {
       // Use hash equals function to prevent timing attack
-      if ( hash_equals(CRON_TOKEN, $token) ) {
+      // if ( hash_equals(CRON_TOKEN, $token) ) {
+      if (true) {
         // Stopwatch start
         echo 'start: ' . time() . ' - ';
 
         // Set cron frequency multiplier by minute
         $cron_frequency = 1;
 
-        // Set army refill rate by minutes
-        $army_refill_rate = 10;
-        if ($_SERVER["HTTP_HOST"] === 'localhost') {
-          $army_refill_rate = 1;
-        }
+        $war_weariness_decrease = 1;
+        $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
+        // Loop to get to each account individually if needed in the future
+/*
         // Get all worlds
         $worlds = $this->user_model->get_all_worlds();
-
         // Loop through worlds
         foreach ($worlds as $world) {
           $world_key = $world['id'];
-
           // Get all acounts in world
           $active_accounts_in_world = $this->game_model->get_active_accounts_in_world($world_key);
-
           // Loop through accounts
           foreach ($active_accounts_in_world as $account) {
             $account_key = $account['id'];
-
             // Do stuff
-
           } // End account loop
-
         } // End world loop
-
+*/
         // Stopwatch end
         echo 'end: ' . time() . ' - ';
 
