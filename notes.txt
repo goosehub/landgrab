@@ -3,8 +3,7 @@
 ==========================================================================================
 
 Todo
-    How is population useful?
-    Attacking Mechnanic
+    Prevent claim or attack or build on non functioning government
     Logic for which Modifiers to show
     Modifier validation
     Anarchy Transition
@@ -12,14 +11,14 @@ Todo
     Leaderboards
     National Flag, Leader Portriat
     Account tax and budget interactive UI
-    Sexy UI
-    Easy to use UI
+    Help button
     How to play, Refine Tutorial, About
 
     Check lng crossover point fix
     Error handling visual
     Ocean Reporting
 
+    
 
                     User Story
 Start game

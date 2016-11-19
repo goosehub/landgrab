@@ -47,7 +47,7 @@
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Corruption: </strong>
                         <strong class="law_info_value text-danger">
-                            <span class="corruption_rate_span"><?php echo $account['stats']['corruption_rate']; ?></span>%
+                            <span class="corruption_rate_span"><?php echo $account['stats']['corruption_total']; ?></span>M
                         </strong><br>
                     </span>
                 </div>

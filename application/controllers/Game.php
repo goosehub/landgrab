@@ -121,22 +121,23 @@ class Game extends CI_Controller {
 
         // Democracy Taxes
         if ($account['government'] == $this->democracy_key) {
-            $account['effective_tax_rate'] = $account['tax_rate'];
+            $account['stats']['corruption_rate'] = 0;
         }
         // Oligarchy Taxes
         else if ($account['government'] == $this->oligarchy_key) {
-            $account['effective_tax_rate'] = floor($account['tax_rate'] * 0.25);
+            $account['stats']['corruption_rate'] = 25;
         }
         // Autocracy Taxes
         else if ($account['government'] == $this->autocracy_key) {
-            $account['effective_tax_rate'] = floor($account['tax_rate'] * 0.5);
+            $account['stats']['corruption_rate'] = 50;
         }
         // Anarchy
         else {
-            $account['effective_tax_rate'] = 0;
+            $account['stats']['corruption_rate'] = 100;
         }
-        $account['stats']['corruption_rate'] = $account['tax_rate'] - $account['effective_tax_rate'];
+        $account['effective_tax_rate'] = floor($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
         $account['stats']['tax_income'] = floor( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
+        $account['stats']['corruption_total'] = abs(floor($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
         $account['stats']['military_after'] = floor($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
         $account['stats']['entitlements'] = floor($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['treasury_after'] = floor($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
