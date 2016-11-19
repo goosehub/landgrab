@@ -192,6 +192,7 @@ class Game extends CI_Controller {
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
+        $account = $land_square['account'] = $this->get_full_account($account);
 
         // War Weariness
         $land_square['war_weariness'] = 0;

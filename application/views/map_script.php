@@ -260,8 +260,12 @@ function initMap()
     if (log_check && d['account_key'] === account['id']) {
       $('#land_form_update_parent').show()
       $('#land_form_submit_update').show();
-      $('#land_form_upgrade_parent').show();
-      $('#button_expand_upgrade').show();
+      if (d['account']['stats'].treasury_after > 0) {
+        $('#land_form_upgrade_parent').show();
+        $('#button_expand_upgrade').show();
+      } else {
+        $('#land_form_low_treasury').show();
+      }
     // Do not own
     } else if (log_check) {
       // In range

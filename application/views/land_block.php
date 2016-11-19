@@ -63,6 +63,10 @@
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
         </button>
 
+        <button id="land_form_low_treasury" class="expand_land_form btn btn-danger land_block_toggle disabled">
+            Treasury too low to build
+        </button>
+
         <br> <br>
 
         <div id="land_form_more_info_parent" class="land_block_toggle">
