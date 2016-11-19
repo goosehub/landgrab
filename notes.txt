@@ -6,7 +6,6 @@ Todo
     Prevent claim or attack or build on non functioning government
     Logic for which Modifiers to show
     Modifier validation
-    Anarchy Transition
 
     Leaderboards
     National Flag, Leader Portriat

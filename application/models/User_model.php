@@ -229,6 +229,13 @@ Class user_model extends CI_Model
     );
     $this->db->insert('analytics', $data);
  }
+ // Update last government switch
+ function update_government_switch($account_id)
+ {
+    $this->db->where('id', $account_id);
+    $this->db->set('last_government_switch', date('Y-m-d H:i:s', time() ) );
+    $this->db->update('account');
+ }
 
 }
 ?>

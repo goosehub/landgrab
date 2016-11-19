@@ -329,6 +329,10 @@ class Game extends CI_Controller {
             }
 
             // Check if player is functioning
+            if ($account['government'] == $this->anarchy_key) {
+                echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy Select the white menu above."}';
+                return false;
+            }
             if (!$account['functioning']) {
                 echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
                 return false;

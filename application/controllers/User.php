@@ -234,7 +234,7 @@ class User extends CI_Controller {
         // Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('input_government', 'Form of Government', 'trim|required|integer|max_length[1]');
+        $this->form_validation->set_rules('input_government', 'Form of Government', 'trim|required|integer|max_length[1]|callback_law_form_validation');
         $this->form_validation->set_rules('input_tax_rate', 'Tax Rate', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
         $this->form_validation->set_rules('input_military_budget', 'Military Budget', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
         $this->form_validation->set_rules('input_entitlements_budget', 'Entitlements Budget', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
@@ -249,8 +249,6 @@ class User extends CI_Controller {
 
         // Success
         } else {
-
-            // Set color
             $government = $this->input->post('input_government');
             $tax_rate = $this->input->post('input_tax_rate');
             $military_budget = $this->input->post('input_military_budget');
@@ -270,6 +268,21 @@ class User extends CI_Controller {
             redirect('world/' . $world_key, 'refresh');
         }
 
+    }
+
+    public function law_form_validation($government, $world_key)
+    {
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $session_data['id'];
+        $world_key = $this->input->post('world_key');
+        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $government_switch_wait = 1;
+        if ($government != $account['government'] && $account['last_government_switch'] > date('Y-m-d H:i:s', time() - $government_switch_wait * 60) ) {
+            $this->form_validation->set_message('law_form_validation', 'You must wait ' . $government_switch_wait . ' minutes before switching governments again.');
+            return false;
+        }
+        $this->user_model->update_government_switch($account['id']);
+        return true;
     }
 }
 
