@@ -58,7 +58,7 @@ class Game extends CI_Controller {
         if ($log_check) {
             $account = $this->user_model->get_account_by_keys($user_id, $world['id']);
             if (!$account) {
-                echo 'There was an issue loading your account. Please log out by following <a href="' . base_url() . 'user/logout">This Link</a>';
+                echo 'There was an issue loading your account. Please log out by following <a href="' . base_url() . 'user/logout">This Link</a>. Afterwards, please report this bug to goosepostbox@gmail.com';
                 exit();
             }
             $data['account'] = $this->get_full_account($account);
@@ -303,130 +303,129 @@ class Game extends CI_Controller {
             return false;
         } 
 		// Success
+
+        // Set inputs
+        $coord_slug = $this->input->post('coord_slug_input');
+        $world_key = $this->input->post('world_key_input');
+        $form_type = $this->input->post('form_type_input');
+        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
+        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+        $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
+        $land_key = $land_square['id'];
+        $land_name = $this->input->post('land_name');
+        $land_type = $this->input->post('land_type');
+        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $account = $this->get_full_account($account);
+        $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+        $account_key = $account['id'];
+        $color = $account['color'];
+        $content = $this->input->post('content');
+
+        // Content
+        // $content = $this->sanitize_html($content);
+        $content = $content;
+
+        if ( is_numeric($form_type) ) {
+            $action_type = 'build';
+        }
+        else if ($land_square['land_type'] === $this->unclaimed_key) {
+            $action_type = 'claim';
+        }
+        else if ($account['id'] === $land_square['account_key']) {
+            $action_type = 'update';
+        }
         else {
-            // Set inputs
-            $coord_slug = $this->input->post('coord_slug_input');
-            $world_key = $this->input->post('world_key_input');
-	        $form_type = $this->input->post('form_type_input');
-            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-            $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-            $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
-            $land_key = $land_square['id'];
-            $land_name = $this->input->post('land_name');
-	        $land_type = $this->input->post('land_type');
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account = $this->get_full_account($account);
-            $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
-            $account_key = $account['id'];
-            $color = $account['color'];
-            $content = $this->input->post('content');
+            $action_type = 'attack';
+        }
 
-            // Content
-            // $content = $this->sanitize_html($content);
-            $content = $content;
+        // Prevent building when no treasury
+        if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0) {
+            echo '{"status": "fail", "message": "Your treasury is too low to build. Try raising taxes."}';
+            return false;
+        }
 
-            if ( is_numeric($form_type) ) {
-                $action_type = 'build';
-            }
-            else if ($land_square['land_type'] === $this->unclaimed_key) {
-                $action_type = 'claim';
-            }
-            else if ($account['id'] === $land_square['account_key']) {
-                $action_type = 'update';
-            }
-            else {
-                $action_type = 'attack';
-            }
+        // Prevent new players from taking towns or larger
+        if ($account['tutorial'] < 2 && $land_square['land_type'] >= $this->town_key) {
+            echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
+            return false;
+        }
 
-            // Prevent building when no treasury
-            if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0) {
-                echo '{"status": "fail", "message": "Your treasury is too low to build. Try raising taxes."}';
+        // Check if player is functioning
+        if ($account['government'] == $this->anarchy_key && $account['tutorial'] >= 2) {
+            echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy. Select the white menu above."}';
+            return false;
+        }
+
+        if (!$account['functioning'] && $account['tutorial'] >= 2) {
+            echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
+            return false;
+        }
+
+        // Upgrade Logic
+        $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+        if ( $action_type === 'build' ) {
+            $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
+            if (!$result) {
+                echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
                 return false;
             }
-
-            // Prevent new players from taking towns or larger
-            if ($account['tutorial'] < 2 && $land_square['land_type'] >= $this->town_key) {
-                echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
-                return false;
-            }
-
-            // Check if player is functioning
-            if ($account['government'] == $this->anarchy_key && $account['tutorial'] >= 2) {
-                echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy. Select the white menu above."}';
-                return false;
-            }
-
-            if (!$account['functioning'] && $account['tutorial'] >= 2) {
-                echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
-                return false;
-            }
-
-            // Upgrade Logic
-            $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
-            if ( $action_type === 'build' ) {
-                $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
-                if (!$result) {
-                    echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
-                    return false;
-                }
-                echo '{"status": "success", "result": true, "message": "Built"}';
-                return true;
-            }
-
-            // Do war weariness logic
-            if ($action_type === 'attack' || $action_type === 'claim') {
-                $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key']);
-                $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
-            }
-
-            // Make capitol if tutorial
-            if ($account['tutorial'] < 2) {
-                $land_type = $this->town_key;
-                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
-                $query_action = $this->user_model->update_account_tutorial($account_key, 2);
-                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
-                // Add town to square
-            }
-            // Update
-            else if ($action_type === 'update') {
-                $land_type = $land_square['land_type'];
-            // Attack or claim
-            } 
-            else {
-                $land_type = $this->village_key;
-                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
-            }
-
-            // Tutorial progress for update or build
-            if ($account['tutorial'] === '3' && ($action_type === 'update' || $action_type === 'build') ) {
-                $query_action = $this->user_model->update_account_tutorial($account_key, 4);
-            }
-            // Tutorial progress for additional attack or claim
-            else if ($account['tutorial'] === '4' && ($action_type === 'attack' || $action_type === 'claim') ) {
-                $query_action = $this->user_model->update_account_tutorial($account_key, 5);
-            }
-
-            // Update land
-	        $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
-            
-            // Attack response
-            if ($action_type === 'attack') {
-                echo '{"status": "success", "result": true, "message": "Captured"}';
-            }
-            // Claim response
-            else if ($action_type === 'claim') {
-                echo '{"status": "success", "result": true, "message": "Claimed"}';
-            } 
-            // Update response
-            else {
-                echo '{"status": "success", "result": true, "message": "Updated"}';
-            }
-
+            echo '{"status": "success", "result": true, "message": "Built"}';
             return true;
-	    }
+        }
+
+        // Do war weariness logic
+        if ($action_type === 'attack' || $action_type === 'claim') {
+            $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key']);
+            $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
+        }
+
+        // Make capitol if tutorial
+        if ($account['tutorial'] < 2) {
+            $land_type = $this->town_key;
+            $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
+            $query_action = $this->user_model->update_account_tutorial($account_key, 2);
+            $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
+            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
+            // Add town to square
+        }
+        // Update
+        else if ($action_type === 'update') {
+            $land_type = $land_square['land_type'];
+        // Attack or claim
+        } 
+        else {
+            $land_type = $this->village_key;
+            $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
+        }
+
+        // Tutorial progress for update or build
+        if ($account['tutorial'] === '3' && ($action_type === 'update' || $action_type === 'build') ) {
+            $query_action = $this->user_model->update_account_tutorial($account_key, 4);
+        }
+        // Tutorial progress for additional attack or claim
+        else if ($account['tutorial'] === '4' && ($action_type === 'attack' || $action_type === 'claim') ) {
+            $query_action = $this->user_model->update_account_tutorial($account_key, 5);
+        }
+
+        // Update land
+        $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
+        
+        // Attack response
+        if ($action_type === 'attack') {
+            echo '{"status": "success", "result": true, "message": "Captured"}';
+        }
+        // Claim response
+        else if ($action_type === 'claim') {
+            echo '{"status": "success", "result": true, "message": "Claimed"}';
+        } 
+        // Update response
+        else {
+            echo '{"status": "success", "result": true, "message": "Updated"}';
+        }
+
+        return true;
 	}
 
 	// Validate Land Form Callback
@@ -597,23 +596,6 @@ class Game extends CI_Controller {
     public function leaderboards($world)
     {
         return true;
-/*
-        $world_key = $world['id'];
-        // Land owned
-        $leaderboard_land_owned = $this->leaderboard_model->leaderboard_land_owned($world_key);
-        $rank = 1;
-        foreach ($leaderboard_land_owned as &$leader) { 
-            $leader['rank'] = $rank;
-            $leader['account'] = $this->user_model->get_account_by_id($leader['account_key']);
-            $leader['user'] = $this->user_model->get_user($leader['account']['user_key']);
-            // Math for finding approx land area
-            $leader['land_mi'] = number_format($leader['total'] * (70 * $world['land_size']));
-            $leader['land_km'] = number_format($leader['total'] * (112 * $world['land_size']));
-            $rank++;
-        }
-        // Return data
-        return $leaderboards;
-*/
     }
 
     // Land dictionary for reference

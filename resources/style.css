@@ -134,6 +134,7 @@ html, body {
   padding: 0.2em;
   background: #FFF0DC;
   border-radius: 0.2em;
+  z-index: 10;
 }
 #tutorial_title {
   font-size: 3em;

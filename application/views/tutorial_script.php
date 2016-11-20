@@ -13,7 +13,7 @@ if (log_check && account['tutorial'] < 5) {
             $('.user_button').click();
             $('#tutorial_block').fadeIn();
             $('#tutorial_title').html('Birth of a nation');
-            $('#tutorial_text').html('Make the nation your own');
+            $('#tutorial_text').html('Make the nation your own.');
         }, 4 * 1000);
     } else if (account['tutorial'] == 1) {
         $('#tutorial_block').fadeIn();
@@ -24,6 +24,7 @@ if (log_check && account['tutorial'] < 5) {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('We The People');
         $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+        $('#stat_dropdown').click();
     } else if (account['tutorial'] == 3) {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('Building for the Future');

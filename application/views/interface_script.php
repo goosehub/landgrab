@@ -18,7 +18,7 @@ loading();
 
 // Show how to play after registering
 <?php if ($just_registered) { ?>
-$('#how_to_play_block').show();
+// $('#how_to_play_block').show();
 <?php } ?>
 
 // Show register form if not logged in and not failed to log in

@@ -112,50 +112,48 @@ class User extends CI_Controller {
         if (!valid_email($email)) {
             $this->form_validation->set_message('register_validation', 'This is not a working email address');
             return false;
-        } else {
-            // Attempt new user register
-            $facebook_id = 0;
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $ip_frequency_register = 1;
-            $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
-            // Fail
-            if ($user_id === 'ip_fail') {
-                // $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
-                // return false;
-            }
-            else if (! $user_id) {
-                $this->form_validation->set_message('register_validation', 'Username already exists');
-                return false;
-            // Success
-            } else {
-                // Set variables
-                $worlds = $this->user_model->get_all_worlds();
-                
-                // Create account for each world
-                foreach ($worlds as $world)
-                {
-                    // Random color for each account
-                    $color = random_hex_color();
-
-                    // Default these values
-                    $nation_name = $username;
-                    $nation_flag = 'default_nation_flag.png';
-                    $leader_name = $username;
-                    $leader_portrait = 'default_leader_portrait.png';
-
-                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
-                }
-
-				// Login
-                $sess_array = array();
-                $sess_array = array(
-                    'id' => $user_id,
-                    'username' => $username
-                );
-                $this->session->set_userdata('logged_in', $sess_array);
-                return true;
-            }
         }
+        // Attempt new user register
+        $facebook_id = 0;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip_frequency_register = 1;
+        $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
+        // Fail
+        if ($user_id === 'ip_fail') {
+            $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
+            return false;
+        }
+        if (!$user_id) {
+            $this->form_validation->set_message('register_validation', 'Username already exists');
+            return false;
+        }
+        // Success
+        // Set variables
+        $worlds = $this->user_model->get_all_worlds();
+        
+        // Create account for each world
+        foreach ($worlds as $world)
+        {
+            // Random color for each account
+            $color = random_hex_color();
+
+            // Default these values
+            $nation_name = $username;
+            $nation_flag = 'default_nation_flag.png';
+            $leader_name = $username;
+            $leader_portrait = 'default_leader_portrait.png';
+
+            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+        }
+
+		// Login
+        $sess_array = array();
+        $sess_array = array(
+            'id' => $user_id,
+            'username' => $username
+        );
+        $this->session->set_userdata('logged_in', $sess_array);
+        return true;
     }
 
 	// Logout

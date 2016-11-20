@@ -81,6 +81,7 @@ Class user_model extends CI_Model
  // Register
  function register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register)
  {
+    // Check for excessive IPs registers
     $this->db->select('username');
     $this->db->from('user');
     $this->db->where('ip', $ip);
@@ -88,8 +89,9 @@ Class user_model extends CI_Model
     $this->db->limit(1);
     $query = $this->db->get();
 
+    // Disabled for now
     if ($query->num_rows() > 0) {
-        return 'ip_fail';
+        // return 'ip_fail';
     }
 
     $this->db->select('username');
@@ -98,7 +100,7 @@ Class user_model extends CI_Model
     $this->db->limit(1);
     $query = $this->db->get();
 
-    if ($query->num_rows() == 1) {
+    if ($query->num_rows() > 0) {
         return false;
     } else {
         // Insert user into user
