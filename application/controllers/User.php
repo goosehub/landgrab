@@ -210,7 +210,7 @@ class User extends CI_Controller {
 
         // Nation flag
         $nation_flag = '';
-        if ( isset($_FILES['nation_flag']) && !$this->upload->do_upload('nation_flag') ) {
+        if ( $_FILES['nation_flag']['name'] && !$this->upload->do_upload('nation_flag') ) {
             $this->session->set_flashdata('validation_errors', $this->upload->display_errors());
             redirect('world/' . $world_key, 'refresh');
             return false;
@@ -222,7 +222,7 @@ class User extends CI_Controller {
 
         // Leader Portriat
         $leader_portrait = '';
-        if ( isset($_FILES['leader_portrait']) && !$this->upload->do_upload('leader_portrait') ) {
+        if ( $_FILES['leader_portrait']['name'] && !$this->upload->do_upload('leader_portrait') ) {
             echo $this->upload->display_errors();
             return false;
         }

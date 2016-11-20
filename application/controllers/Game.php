@@ -195,8 +195,13 @@ class Game extends CI_Controller {
         $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
-        $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
-        $account = $land_square['account'] = $this->get_full_account($account);
+        if ($land_square['account_key'] != 0) {
+            $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
+            $account = $land_square['account'] = $this->get_full_account($account);
+        } 
+        else {
+            $account = false;
+        }
 
         // War Weariness
         $land_square['war_weariness'] = 0;
@@ -213,12 +218,12 @@ class Game extends CI_Controller {
         $land_square['in_range'] = false;
 
         // Add username to array
-        $owner = $this->user_model->get_user($account['user_key']);
-        if ( isset($owner['username']) && isset($land_square['land_name']) ) {
-            $land_square['username'] = $owner['username'];
-        }
-        else {
-            $land_square['username'] = '';
+        $land_square['username'] = '';
+        if ($account) {
+            $owner = $this->user_model->get_user($account['user_key']);
+            if ( isset($owner['username']) && isset($land_square['land_name']) ) {
+                $land_square['username'] = $owner['username'];
+            }
         }
 
         // Get account
@@ -339,12 +344,19 @@ class Game extends CI_Controller {
                 return false;
             }
 
+            // Prevent new players from taking towns or larger
+            if ($account['tutorial'] < 2 && $land_square['land_type'] >= $this->town_key) {
+                echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
+                return false;
+            }
+
             // Check if player is functioning
-            if ($account['government'] == $this->anarchy_key) {
+            if ($account['government'] == $this->anarchy_key && $account['tutorial'] >= 2) {
                 echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy. Select the white menu above."}';
                 return false;
             }
-            if (!$account['functioning']) {
+
+            if (!$account['functioning'] && $account['tutorial'] >= 2) {
                 echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
                 return false;
             }
@@ -354,6 +366,7 @@ class Game extends CI_Controller {
             if ( $action_type === 'build' ) {
                 $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
                 if (!$result) {
+                    echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
                     return false;
                 }
                 echo '{"status": "success", "result": true, "message": "Built"}';
@@ -366,11 +379,6 @@ class Game extends CI_Controller {
                 $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
             }
 
-            // Prevent new players from taking towns or larger
-            if ($account['tutorial'] < 2 && $land_square['land_type'] < 3) {
-                echo '{"status": "fail", "message": "You must start the game at a village or unclaimed land"}';
-                return false;
-            }
             // Make capitol if tutorial
             if ($account['tutorial'] < 2) {
                 $land_type = $this->town_key;

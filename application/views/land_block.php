@@ -10,7 +10,7 @@
         </div>
 
         <input type="hidden" id="input_world_key" name="world_key_input" value="<?php echo $world['id']; ?>">
-        <input type="text" id="input_id" name="id_input" value="">
+        <input type="hidden" id="input_id" name="id_input" value="">
         <input type="hidden" id="input_coord_slug" name="coord_slug_input" value="">
         <input type="hidden" id="form_type_input" name="form_type_input" value="">
 
@@ -20,7 +20,7 @@
             <div><strong>Unclaimed Land</strong></div>
             <br>
             <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">
-                Claim (+1 War Weariness)
+                Claim <span class="war_weariness_outer_span">(+1 War Weariness)</span>
             </button>
         </div>
 
@@ -28,7 +28,7 @@
             <button disabled class="btn btn-default">This land is not in range</button>
         </div>
 
-        <div id="land_form_info_parent" class="land_block_toggle">
+        <span id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
             <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span></div>
@@ -43,9 +43,9 @@
             <div class="text-purple">Population of <span id="land_population_label"></span><small>K</small></div>
             <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
-                Attack  (+<span id="war_weariness_attack_span" class="text-danger">0</span> War Weariness)
+                Attack  <span class="war_weariness_outer_span">(+<span id="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
             </button>
-        </div>
+        </span>
 
         <span id="land_form_update_parent" class="land_block_toggle">
             <br>
