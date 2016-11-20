@@ -7,6 +7,8 @@ Todo
     Logic for which Modifiers to show
     Modifier validation
 
+    Create account for all current users
+
     Leaderboards
     National Flag, Leader Portriat
     Account tax and budget interactive UI

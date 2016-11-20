@@ -59,7 +59,7 @@ Class game_model extends CI_Model
     return isset($result[0]) ? $result[0] : false;
  }
  // Update land data
- function update_land_data($world_key, $coord_slug, $account_key, $land_name, $content, $land_type, $color)
+ function update_land_data($land_id, $account_key, $land_name, $content, $land_type, $color)
  {
     $data = array(
         'account_key' => $account_key,
@@ -69,30 +69,25 @@ Class game_model extends CI_Model
         'color' => $color,
         'modified' => date('Y-m-d H:i:s', time())
     );
-    $this->db->where('coord_slug', $coord_slug);
-    $this->db->where('world_key', $world_key);
+    $this->db->where('id', $land_id);
     $this->db->update('land', $data);
     return true;
  }
  // Update land capitol status
- function update_land_capitol_status($world_key, $coord_slug, $capitol)
+ function update_land_capitol_status($land_key, $capitol)
  {
-    $data = array(
-        'capitol' => $capitol
-    );
-    $this->db->where('coord_slug', $coord_slug);
-    $this->db->where('world_key', $world_key);
-    $this->db->update('land', $data);
+    $this->db->set('capitol', 1);
+    $this->db->where('id', $land_key);
+    $this->db->update('land');
     return true;
  }
  // Remove capitol from account
- function remove_capitol_from_account($world_key, $account_key)
+ function remove_capitol_from_account($account_key)
  {
     // Find capitol effect
     $this->db->select('id');
     $this->db->from('land');
     $this->db->where('account_key', $account_key);
-    $this->db->where('world_key', $world_key);
     $this->db->where('capitol', 1);
     $query = $this->db->get();
     $capitol_land = $query->result_array();
@@ -104,28 +99,11 @@ Class game_model extends CI_Model
         $this->db->delete('land_modifier');
     }
 
-
     // Remove capitol flag
-    $data = array(
-        'capitol' => 0
-    );
+    $this->db->set('capitol', 0);
     $this->db->where('account_key', $account_key);
-    $this->db->where('world_key', $world_key);
-    $this->db->update('land', $data);
+    $this->db->update('land');
     return true;
-
- }
- // Update land content
- function update_land_content($world_key, $coord_slug, $content)
- {
-    $data = array(
-        'content' => $content,
-        'modified' => date('Y-m-d H:i:s', time())
-    );
-    $this->db->where('coord_slug', $coord_slug);
-    $this->db->where('world_key', $world_key);
-    $this->db->update('land', $data);
-    return true;    
  }
  // Check if any immediate squares belong to current account
  function land_range_check($world_key, $account_key, $coord_array)
@@ -158,14 +136,13 @@ Class game_model extends CI_Model
    return $query->result_array();
  }
  // Upgrade land type
- function upgrade_land_type($coord_slug, $world_key, $land_type)
+ function upgrade_land_type($land_id, $land_type)
  {
     $data = array(
         'land_type' => $land_type,
         'modified' => date('Y-m-d H:i:s', time())
     );
-    $this->db->where('coord_slug', $coord_slug);
-    $this->db->where('world_key', $world_key);
+    $this->db->where('id', $land_id);
     $this->db->update('land', $data);
     return true;
  }
