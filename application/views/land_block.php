@@ -34,6 +34,8 @@
             <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span></div>
 
             <div id="capitol_info" class="land_block_toggle">
+                <img id="land_leader_portrait_image" src="<?base_url()?>uploads/default_leader_portrait.png"/>
+                <img id="land_nation_flag_image" src="<?base_url()?>uploads/default_nation_flag.png"/>
                 <div id="capitol_label"><span class="text-red">Capitol</span> of the <span id="government_label" class="text-warning"></span> of <span id="nation_label" class="text-warning"></span></div>
             </div>
 
@@ -81,8 +83,9 @@
                 <div class="form-group">
                     <div class="row">
                     <?php foreach ($modify_effect_dictionary as $effect) { ?>
+                        <?php $button_color = $effect['id'] < 7 ? 'action' : 'success' ?>
                         <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
-                            <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-success" value="<?php echo $effect['id']; ?>">
+                            <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
                                 <?php echo ucwords(str_replace('_', ' ', $effect['name'])); ?>
                             </button>
                             <div class="expand_land_type_info btn btn-info" type="button" data-toggle="collapse" data-target="#<?php echo $effect['name']; ?>_info_dropdown" aria-expanded="false" aria-controls="<?php echo $effect['name']; ?>_info_dropdown">

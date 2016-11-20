@@ -147,6 +147,16 @@ html, body {
   font-size: 1.2em;
 }
 
+/* Images */
+#account_nation_flag_image, #account_leader_portrait_image {
+  max-width: 100%;
+  max-height: 100px;
+}
+#land_nation_flag_image, #land_leader_portrait_image {
+  max-width: 100%;
+  max-height: 50px;
+}
+
 /* Center Block */
 .center_block {
   display: none;

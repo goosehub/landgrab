@@ -158,7 +158,7 @@
     <hr>
 
     <!-- Form -->
-    <?php echo form_open('user/update_account_info'); ?>
+    <?php echo form_open_multipart('user/update_account_info'); ?>
         <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
         <div class="form-group">
             <div class="row">
@@ -175,7 +175,10 @@
                 <div class="col-md-4">
                     <label for="input_nation_flag">National Flag:</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-2">
+                    <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
+                </div>
+                <div class="col-md-6">
                     <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
                 </div>
             </div>
@@ -205,7 +208,10 @@
                 <div class="col-md-4">
                     <label for="input_leader_portrait">Leader Portrait:</label>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-2">
+                    <img id="account_leader_portrait_image" src="<?=base_url()?>uploads/<?php echo $account['leader_portrait']; ?>"/>
+                </div>
+                <div class="col-md-6">
                     <input type="file" class="form-control" id="leader_portrait" name="leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
                 </div>
             </div>

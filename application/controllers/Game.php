@@ -57,6 +57,10 @@ class Game extends CI_Controller {
         // If logged in, get full account information
         if ($log_check) {
             $account = $this->user_model->get_account_by_keys($user_id, $world['id']);
+            if (!$account) {
+                echo 'There was an issue loading your account. Please log out by following <a href="' . base_url() . 'user/logout">This Link</a>';
+                exit();
+            }
             $data['account'] = $this->get_full_account($account);
         }
 

@@ -121,13 +121,17 @@ Class user_model extends CI_Model
     }
  }
  // Create player account
- function create_player_account($user_key, $world_key, $active_army, $color)
+ function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait)
  {
     // Insert user into user
     $data = array(
     'world_key' => $world_key,
     'user_key' => $user_key,
     'color' => $color,
+    'nation_name' => $nation_name,
+    'nation_flag' => $nation_flag,
+    'leader_name' => $leader_name,
+    'leader_portrait' => $leader_portrait,
     'last_load' => date('Y-m-d H:i:s')
     );
     $this->db->insert('account', $data);

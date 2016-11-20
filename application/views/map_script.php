@@ -284,11 +284,6 @@ function initMap()
       }
     }
 
-    // Capitol
-    if (d['capitol'] === '1') {
-      $('#capitol_info').show();
-    }
-
     // Logic for which upgrades to show
     if (d['land_type'] == land_type_key_dictionary['village']) {
       $('#town_info_parent').show();
@@ -303,6 +298,15 @@ function initMap()
     if (d['land_type'] == land_type_key_dictionary['city']) {
       $('#metropolis_info_parent').show();
     }
+
+    // Capitol
+    if (d['capitol'] === '1') {
+      $('#capitol_info').show();
+      $('#land_leader_portrait_image').prop('src', '<?=base_url()?>uploads/' + d['account']['leader_portrait']);
+      $('#land_nation_flag_image').prop('src', '<?=base_url()?>uploads/' + d['account']['nation_flag']);
+      $('#capitol_info_parent').hide();
+    }
+
   }
 
   // Prepare land form data

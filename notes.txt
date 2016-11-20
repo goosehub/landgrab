@@ -3,17 +3,14 @@
 ==========================================================================================
 
 Todo
-    Prevent claim or attack or build on non functioning government
-    Logic for which Modifiers to show
-    Modifier validation
-
     Create account for all current users
-
-    Leaderboards
-    National Flag, Leader Portriat
-    Account tax and budget interactive UI
+    Fix tutorial
+    Limit land upgrades
     Help button
     How to play, Refine Tutorial, About
+
+    Leaderboards
+    Account tax and budget interactive UI
 
     Check lng crossover point fix
     Error handling visual

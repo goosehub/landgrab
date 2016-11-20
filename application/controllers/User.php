@@ -130,7 +130,6 @@ class User extends CI_Controller {
             } else {
                 // Set variables
                 $worlds = $this->user_model->get_all_worlds();
-                $active_army = 20;
                 
                 // Create account for each world
                 foreach ($worlds as $world)
@@ -138,15 +137,20 @@ class User extends CI_Controller {
                     // Random color for each account
                     $color = random_hex_color();
 
-                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $active_army, $color);
+                    // Default these values
+                    $nation_name = $username;
+                    $nation_flag = 'default_nation_flag.png';
+                    $leader_name = $username;
+                    $leader_portrait = 'default_leader_portrait.png';
+
+                    $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
                 }
 
 				// Login
                 $sess_array = array();
                 $sess_array = array(
                     'id' => $user_id,
-                    'username' => $username,
-                    'active_army' => $active_army
+                    'username' => $username
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
                 return true;
@@ -187,38 +191,66 @@ class User extends CI_Controller {
 
         $world_key = $this->input->post('world_key');
 
-        // Fail
+        // Form Validation Fail
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             redirect('world/' . $world_key, 'refresh');
-
-        // Success
-        } else {
-
-            // Set color
-            $nation_color = $this->input->post('nation_color');
-            $nation_name = $this->input->post('nation_name');
-            $nation_flag = $this->input->post('nation_flag');
-            $leader_name = $this->input->post('leader_name');
-            $leader_portrait = $this->input->post('leader_portrait');
-
-            // Add hash
-            $color = '#' . $nation_color;
-
-            // Set account
-            $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $account_key = $account['id'];
-            $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
-
-            // Progress Tutorial
-            if ($account['tutorial'] < 1) {
-                $query_action = $this->user_model->update_account_tutorial($account_key, 1);
-            }
-
-            // Redirect to game
-            redirect('world/' . $world_key, 'refresh');
+            return false;
         }
+
+        // Image upload Config
+        $config['upload_path']   = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size']      = '1000000';
+        $config['max_width']     = '5000';
+        $config['max_height']    = '5000';
+        $config['encrypt_name']  = TRUE;
+        $this->load->library('upload', $config);
+
+        // Nation flag
+        $nation_flag = '';
+        if ( isset($_FILES['nation_flag']) && !$this->upload->do_upload('nation_flag') ) {
+            $this->session->set_flashdata('validation_errors', $this->upload->display_errors());
+            redirect('world/' . $world_key, 'refresh');
+            return false;
+        }
+        else {
+            $file = $this->upload->data();
+            $nation_flag = $file['file_name'];
+        }
+
+        // Leader Portriat
+        $leader_portrait = '';
+        if ( isset($_FILES['leader_portrait']) && !$this->upload->do_upload('leader_portrait') ) {
+            echo $this->upload->display_errors();
+            return false;
+        }
+        else {
+            $file = $this->upload->data();
+            $leader_portrait = $file['file_name'];
+        }
+
+        // Set non image data
+        $nation_color = $this->input->post('nation_color');
+        $nation_name = $this->input->post('nation_name');
+        $leader_name = $this->input->post('leader_name');
+
+        // Add hash to color
+        $color = '#' . $nation_color;
+
+        // Set account
+        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
+        $account_key = $account['id'];
+        $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+
+        // Progress Tutorial
+        if ($account['tutorial'] < 1) {
+            $query_action = $this->user_model->update_account_tutorial($account_key, 1);
+        }
+
+        // Redirect to game
+        redirect('world/' . $world_key, 'refresh');
     }
 
     // Law

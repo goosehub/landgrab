@@ -23,9 +23,6 @@ $route['land_form'] = "game/land_form";
 $route['land_upgrade_form'] = "game/land_upgrade_form";
 $route['land_capitol_form'] = "game/land_capitol_form";
 
-// Update functions
-$route['get_army_update'] = "game/get_army_update";
-
 // Account functions
 $route['user/update_account_info'] = "user/update_account_info";
 $route['user/law_form'] = "user/law_form";
