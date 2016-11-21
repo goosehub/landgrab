@@ -4,9 +4,8 @@
 
 Todo
     Create account for all current users
-    Fix tutorial
-    Limit land upgrades
     Help button
+    Beta info
     How to play, Refine Tutorial, About
 
     Leaderboards

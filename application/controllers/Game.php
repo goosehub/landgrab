@@ -291,9 +291,10 @@ class Game extends CI_Controller {
             }
         }
         // Return how many surplus or deficiency exists
-        $valid_upgrades['town'] = $village_counts - ($town_counts * 5);
-        $valid_upgrades['city'] = $town_counts - ($city_counts * 5);
-        $valid_upgrades['metropolis'] = $city_counts - ($metropolis_counts * 5);
+        $minimum_of_previous = 5;
+        $valid_upgrades['town'] = $village_counts - (max($town_counts, 1) * $minimum_of_previous);
+        $valid_upgrades['city'] = $town_counts - (max($city_counts, 1) * $minimum_of_previous);
+        $valid_upgrades['metropolis'] = $city_counts - (max($metropolis_counts, 1) * $minimum_of_previous);
         return $valid_upgrades;
     }
 
@@ -323,10 +324,6 @@ class Game extends CI_Controller {
 	    if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            if (validation_errors() === '') {
-                echo '{"status": "fail", "message": "An unknown error occurred"}';
-            }
-            echo '{"status": "fail", "message": "'. trim(preg_replace('/\s\s+/', ' ', validation_errors() )) . '"}';
             return false;
         } 
 		// Success
@@ -488,22 +485,37 @@ class Game extends CI_Controller {
         // Check for inaccuracies
         // Claiming land that isn't unclaimed
         if ($form_type === 'claim' && $land_square['land_type'] != $this->unclaimed_key) {
-            $this->form_validation->set_message('land_form_validation', 'This land has been claimed');
+            echo '{"status": "fail", "message": "This land has been claimed"}';
             return false;
         }
         // Updating land that isn't theirs
         else if ($form_type === 'update' && $land_square['account_key'] != $active_account_key) {
-            $this->form_validation->set_message('land_form_validation', 'This land has been bought and is no longer yours');
+            echo '{"status": "fail", "message": "This land has been bought and is no longer yours"}';
             return false;
         }
         // Attacking land that is already theirs
         else if ($form_type === 'attack' && $land_square['account_key'] === $active_account_key) {
-            $this->form_validation->set_message('land_form_validation', 'This land is already yours');
+            echo '{"status": "fail", "message": "This land is already yours"}';
             return false;
         } 
         // Attacking or claiming land that is not in range
         else if ( ($form_type === 'claim' || $form_type === 'attack') && !$in_range) {
-            $this->form_validation->set_message('land_form_validation', 'This land is not in range');
+            echo '{"status": "fail", "message": "This land is not in range"}';
+            return false;
+        }
+
+        // Check for valid previous lands for land upgrade
+        $valid_upgrades = $this->account_valid_upgrades($active_account_key);
+        if ($form_type == $this->town_key && $valid_upgrades['town'] < 0) {
+            echo '{"status": "fail", "message": "You need more villages first. You may have lost a few since you opened the form."}';
+            return false;
+        }
+        if ($form_type == $this->city_key && $valid_upgrades['city'] < 0) {
+            echo '{"status": "fail", "message": "You need more towns first. You may have lost a few since you opened the form."}';
+            return false;
+        }
+        if ($form_type == $this->metropolis_key && $valid_upgrades['metropolis'] < 0) {
+            echo '{"status": "fail", "message": "You need more cities first. You may have lost a few since you opened the form."}';
             return false;
         }
 

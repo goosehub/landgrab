@@ -169,7 +169,6 @@ function initMap()
 		var lat = round_down(event.latLng.lat()) - land_size;
 		var lng = round_down(event.latLng.lng());
 		var coord_slug = lat + ',' + lng;
-    // console.log(event.latLng.lat() + ',' + event.latLng.lng());
 
     // 
 		// Create land infoWindow
@@ -180,6 +179,8 @@ function initMap()
 		land = get_single_land(coord_slug, world_key, function(land){
       // Get land
   		d = JSON.parse(land);
+      // console.log(d);
+      
       // Handle error
       if (d['error']) {
         alert(d['error']);
@@ -205,7 +206,7 @@ function initMap()
       return true;
 
     });
-	}
+  }
 
   // Get single land ajax
   function get_single_land(coord_slug, world_key, callback) {
@@ -218,7 +219,7 @@ function initMap()
             },
       cache: false,
       success: function(data)
-      {
+      {        
         // console.log(data);
         callback(data);
         return true;
@@ -272,6 +273,40 @@ function initMap()
       } else {
         $('#land_form_low_treasury').show();
       }
+
+      // Logic for which upgrades to show
+      if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] >= 0) {
+        $('#town_info_parent').show();
+      }
+      else {
+        $('.effect_info_item').show();
+        $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent').hide();
+      }
+      if (d['land_type'] == land_type_key_dictionary['town'] && d['valid_upgrades']['city'] >= 0) {
+        $('#city_info_parent').show();
+      }
+      if (d['land_type'] == land_type_key_dictionary['city'] && d['valid_upgrades']['metropolis'] >= 0) {
+        $('#metropolis_info_parent').show();
+      }
+      // Need more message
+      if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] < 0) {
+        $('#lands_needed_for_upgrade').html('You need <strong class="text-action">&nbsp;' 
+          + Math.abs(d['valid_upgrades']['town']) 
+          + '</strong>&nbsp; more Cities to upgrade to a Town');
+        $('#lands_needed_for_upgrade').show();
+      }
+      else if (d['land_type'] == land_type_key_dictionary['town'] && d['valid_upgrades']['city'] < 0) {
+        $('#lands_needed_for_upgrade').html('You need <strong class="text-action">&nbsp;' 
+          + Math.abs(d['valid_upgrades']['city']) 
+          + '</strong>&nbsp; more Towns to upgrade to a City');
+        $('#lands_needed_for_upgrade').show();
+      }
+      else if (d['land_type'] == land_type_key_dictionary['city'] && d['valid_upgrades']['metropolis'] < 0) {
+        $('#lands_needed_for_upgrade').html('You need <strong class="text-action">&nbsp;' 
+          + Math.abs(d['valid_upgrades']['metropolis']) 
+          + '</strong>&nbsp; more Cities to upgrade to a Metropolis');
+        $('#lands_needed_for_upgrade').show();
+      }
     // Do not own
     } else if (log_check) {
       // In range
@@ -288,21 +323,6 @@ function initMap()
       } else {
         $('#not_in_range').show();
       }
-    }
-
-    // Logic for which upgrades to show
-    if (d['land_type'] == land_type_key_dictionary['village']) {
-      $('#town_info_parent').show();
-    }
-    else {
-      $('.effect_info_item').show();
-      $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent').hide();
-    }
-    if (d['land_type'] == land_type_key_dictionary['town']) {
-      $('#city_info_parent').show();
-    }
-    if (d['land_type'] == land_type_key_dictionary['city']) {
-      $('#metropolis_info_parent').show();
     }
 
     // Capitol
@@ -461,8 +481,6 @@ function initMap()
           }
 
           // Tutorial Rule
-          console.log('marco');
-          console.log(account['tutorial']);
           if (account['tutorial'] < 2) {
             $('#tutorial_block').fadeOut(1000, function(){
               $('#tutorial_block').fadeIn();

@@ -78,7 +78,11 @@
             </div>
         </div>
 
+        <div id="need_previous_lands">
+        </div>
+
         <div id="land_form_upgrade_parent" class="land_block_toggle">
+            <p id="lands_needed_for_upgrade" class="land_block_toggle"></p>
             <div id="upgrade_dropdown" class="collapse">
                 <div class="form-group">
                     <div class="row">
