@@ -211,8 +211,8 @@ class Game extends CI_Controller {
             $requester_account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $requester_account = $this->get_full_account($requester_account);
             $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square['account_key']);
+            $land_square['valid_upgrades'] = $this->account_valid_upgrades($requester_account['id']);
         }
-
 
         // Land range false by default
         $land_square['in_range'] = false;
@@ -269,6 +269,33 @@ class Game extends CI_Controller {
 	        echo '{"error": "Land not found"}';
 	    }
 	}
+
+    // Find which land upgrades are valid
+    public function account_valid_upgrades($account_key)
+    {
+        // Get counts of each land type
+        $land_type_counts = $this->game_model->count_lands_of_type_by_account($account_key);
+        $village_counts = $town_counts = $city_counts = $metropolis_counts = 0;
+        foreach ($land_type_counts as $land_type_count) {
+            if ($land_type_count['land_type'] == $this->village_key) {
+                $village_counts = $land_type_count['count'];
+            }
+            else if ($land_type_count['land_type'] == $this->town_key) {
+                $town_counts = $land_type_count['count'];
+            }
+            else if ($land_type_count['land_type'] == $this->city_key) {
+                $city_counts = $land_type_count['count'];
+            }
+            else if ($land_type_count['land_type'] == $this->metropolis_key) {
+                $metropolis_counts = $land_type_count['count'];
+            }
+        }
+        // Return how many surplus or deficiency exists
+        $valid_upgrades['town'] = $village_counts - ($town_counts * 5);
+        $valid_upgrades['city'] = $town_counts - ($city_counts * 5);
+        $valid_upgrades['metropolis'] = $city_counts - ($metropolis_counts * 5);
+        return $valid_upgrades;
+    }
 
 	// Land form
 	public function land_form()

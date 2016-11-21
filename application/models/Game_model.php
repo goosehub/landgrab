@@ -157,6 +157,18 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
+ // Get all lands of type by account
+ function count_lands_of_type_by_account($account_key)
+ {
+   $this->db->select('count(land_type) as count');
+   $this->db->select('land_type');
+   $this->db->from('land');
+   $this->db->where('account_key', $account_key);
+   $this->db->group_by('land_type');
+   $this->db->order_by('land_type', 'ASC');
+   $query = $this->db->get();
+   return $query->result_array();
+}
 
 
 
