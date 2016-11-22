@@ -180,7 +180,7 @@ function initMap()
       // Get land
   		d = JSON.parse(land);
       // console.log(d);
-      
+
       // Handle error
       if (d['error']) {
         alert(d['error']);
@@ -292,7 +292,7 @@ function initMap()
       if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] < 0) {
         $('#lands_needed_for_upgrade').html('You need <strong class="text-action">&nbsp;' 
           + Math.abs(d['valid_upgrades']['town']) 
-          + '</strong>&nbsp; more Cities to upgrade to a Town');
+          + '</strong>&nbsp; more Villages to upgrade to a Town');
         $('#lands_needed_for_upgrade').show();
       }
       else if (d['land_type'] == land_type_key_dictionary['town'] && d['valid_upgrades']['city'] < 0) {

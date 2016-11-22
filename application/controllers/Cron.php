@@ -24,7 +24,17 @@ class Cron extends CI_Controller {
 
         $war_weariness_decrease = 1;
         $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
-
+/*
+        $users = $this->user_model->get_all_users();
+        foreach ($users as $user) {
+          $color = random_hex_color();
+          $nation_name = $user['username'];
+          $nation_flag = 'default_nation_flag.png';
+          $leader_name = $user['username'];
+          $leader_portrait = 'default_leader_portrait.png';
+          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+        }
+*/
         // Loop to get to each account individually if needed in the future
 /*
         // Get all worlds
@@ -69,4 +79,12 @@ class Cron extends CI_Controller {
         }
     }
 
+}
+
+// Random color function for generating primary color
+function random_color_part() {
+    return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+}
+function random_hex_color() {
+    return '#' . random_color_part() . random_color_part() . random_color_part();
 }

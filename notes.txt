@@ -3,9 +3,10 @@
 ==========================================================================================
 
 Todo
-    Create account for all current users
-    Help button
-    Beta info
+    How to run a nation
+    Black Line Bug
+    Number Commas
+
     How to play, Refine Tutorial, About
 
     Leaderboards

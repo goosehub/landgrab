@@ -33,7 +33,7 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Annual GDP: </strong>
+                        <strong class="law_info_item_label">GDP: </strong>
                         <strong class="law_info_value text-action">
                             $<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M
                         </strong><br>
@@ -141,7 +141,7 @@
         </div>
         <div class="col-md-4">
             <h3>How to Run a Nation</h3>
-            <p class="lead">Governments offer a trade off of corruption that eats at the tax income, and minimum political support needed to function. Each percent increase in taxes decreased support, as does attacking temporarily. Taxes that aren't eaten by corruption then go the budget. Pick what percent goes toward Military Spending, and what goes towards Entitlements spending. Each percent of Entitlemnet Spending increases Support. What's left over is Discretionary Spending for building in your territories. What's left over from that is your Treasury.</p>
+            <p class="lead">Taxes on your GDP raise money to spend on your Military to reduce War Weariness, Entitlements to gain Political Support, and for your Treasury to Build your Towns and Cities. War Weariness temporarily worsens your Political Support. Your Government can not function when it's below it's minimum limit. Some Governments allow lower political support but come with Corruption which eats at your Tax income.</p>
         </div>
     </div>
 </div>
@@ -179,6 +179,7 @@
                     <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
                 </div>
                 <div class="col-md-6">
+                    <input type="hidden" name="existing_nation_flag" value="<?php echo $account['nation_flag']; ?>">
                     <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
                 </div>
             </div>
@@ -212,6 +213,7 @@
                     <img id="account_leader_portrait_image" src="<?=base_url()?>uploads/<?php echo $account['leader_portrait']; ?>"/>
                 </div>
                 <div class="col-md-6">
+                    <input type="hidden" name="existing_leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
                     <input type="file" class="form-control" id="leader_portrait" name="leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
                 </div>
             </div>
@@ -409,4 +411,8 @@
             <button class="login_button btn btn-info form-control">Login</button>
         </div>
     </div>
+</div>
+
+<div id="beta_tag">
+    <strong>BETA: Report bugs and balance suggestions to goosepostbox@gmail.com</strong>
 </div>

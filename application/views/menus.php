@@ -23,7 +23,7 @@
   <?php } ?>
 
     <!-- Leaderboards dropdown -->
-    <div class="leaderboard_parent menu_element btn-group">
+<!--     <div class="leaderboard_parent menu_element btn-group">
       <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Leaderboards
         <span class="caret"></span>
@@ -32,7 +32,7 @@
         <li class="text-center"><strong class="text-primary">Leaderboards</strong></li>
         <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
       </ul>
-    </div>
+    </div> -->
 
     <?php if ($log_check) { ?>
 
@@ -57,12 +57,12 @@
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
       <li class="text-center"><strong class="text-danger">Version 4.0.0</strong></li>
       <li role="separator" class="divider"></li>
-      <li><a class="how_to_play_button btn btn-warning">How To Play</a></li>
+      <!-- <li><a class="how_to_play_button btn btn-warning">How To Play</a></li> -->
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
-      <li><a class="faq_button btn btn-primary">FAQ</a></li>
-      <li><a class="btn btn-success" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
+      <!-- <li><a class="faq_button btn btn-primary">FAQ</a></li> -->
+      <li><a class="btn btn-primary" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
       <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
-      <li><a class="report_bugs_button btn btn-danger">Report Bugs</a></li>
+      <li><a class="report_bugs_button btn btn-warning">Report Bugs</a></li>
       <li><a class="report_bugs_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>
     </ul>
   </div>

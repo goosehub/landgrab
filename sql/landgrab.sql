@@ -126,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `land` (
   `account_key` int(10) unsigned NOT NULL,
   `land_type` int(10) unsigned NOT NULL,
   `capitol` int(1) NOT NULL,
-  `under_attack` timestamp NOT NULL,
   `land_name` varchar(512) NOT NULL,
   `content` varchar(1024) NOT NULL,
   `color` varchar(8) NOT NULL,

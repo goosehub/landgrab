@@ -44,7 +44,7 @@ $result .= '<br>';
 // 
 
 $land_insert_statement = "INSERT INTO `land` 
-(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `claimed`, `account_key`, `land_name`, `content`, `land_type`, `color`, `created`, `modified`)
+(`id`, `coord_slug`, `lat`, `lng`, `world_key`, `capitol`, `account_key`, `land_name`, `content`, `land_type`, `color`, `modified`)
 VALUES";
 
 $result .= $land_insert_statement;
@@ -63,7 +63,7 @@ for ($lng = -$lng_limit; $lng <= $lng_limit; $lng = $lng + $box_size) {
         if ($lng != '-180') {
             // Get coord_slug
             $coord_slug = $lat . ',' . $lng;
-            $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+            $result .= "(NULL, '" . $coord_slug . "', '" . $lat . "', '" . $lng . "', " . $world_key . ", '0', '0', '', '', '', '#000000', CURRENT_TIMESTAMP)";
             if ($i % 1000 == 0)
             {
                 $result .= ';';

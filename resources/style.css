@@ -132,7 +132,7 @@ html, body {
   top: 1.5em;
   left: 1em;
   padding: 0.2em;
-  background: #FFF0DC;
+  background: #FFD87C;
   border-radius: 0.2em;
   z-index: 10;
 }
@@ -203,6 +203,17 @@ html, body {
   color: #444488;
   background: #FFC31E;
   font-weight: bold;
+}
+
+/* Beta */
+#beta_tag {
+  position: absolute;
+  bottom: 5px;
+  right: 60px;
+  padding: 0.2em;
+  background: #ECB1E3;
+  opacity: 0.9;
+  font-size: 1.1em;
 }
 
 /* Land Block */

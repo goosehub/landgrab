@@ -49,11 +49,11 @@ $('.exit_center_block').click(function(){
 });
 $('#stat_dropdown').click(function(){
     $('.center_block').hide();
-    $('#law_block').show();
+    $('#law_block').fadeIn();
 });
 $('.user_button').click(function(){
     $('.center_block').hide();
-    $('#account_update_block').show();
+    $('#account_update_block').fadeIn();
 });
 $('.login_button').click(function(){
     $('.center_block').hide();

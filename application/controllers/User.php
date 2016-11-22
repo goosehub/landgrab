@@ -186,6 +186,8 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('nation_flag', 'Nation Flag', 'trim|max_length[500]');
         $this->form_validation->set_rules('leader_name', 'Leader Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('leader_portrait', 'Leader Portrait', 'trim|max_length[500]');
+        $this->form_validation->set_rules('existing_nation_flag', 'Existing Nation Flag', 'trim|max_length[500]');
+        $this->form_validation->set_rules('existing_leader_portrait', 'Existing Leader Portrait', 'trim|max_length[500]');
 
         $world_key = $this->input->post('world_key');
 
@@ -233,6 +235,12 @@ class User extends CI_Controller {
         $nation_color = $this->input->post('nation_color');
         $nation_name = $this->input->post('nation_name');
         $leader_name = $this->input->post('leader_name');
+        if (!$nation_flag) {
+            $nation_flag = $this->input->post('existing_nation_flag');
+        }
+        if (!$leader_portrait) {
+            $leader_portrait = $this->input->post('existing_leader_portrait');
+        }
 
         // Add hash to color
         $color = '#' . $nation_color;
