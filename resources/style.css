@@ -189,6 +189,10 @@ html, body {
   float: right;
   clear: both;
 }
+.law_info_desc_highlight {
+  font-weight: 400;
+  color: #31708f;
+}
 .leaderboard_block {
   top: 5vh;
   max-height: 90vh;
