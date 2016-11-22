@@ -4,8 +4,7 @@
 if ($_SERVER['HTTP_HOST'] === 'localhost') {
     $base_url = 'http://localhost/landgrab/';
 }
-else
-{
+else {
     $base_url = 'http://landgrab.xyz/';
 }
 
@@ -14,5 +13,5 @@ else
 $cron_token = '1234';
 
 // Taxes
-$route = 'tax/';
+$route = 'cron/';
 echo file_get_contents($base_url . $route . $cron_token);
