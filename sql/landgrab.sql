@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2016 at 06:33 AM
+-- Generation Time: Nov 22, 2016 at 03:58 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -31,21 +31,23 @@ CREATE TABLE IF NOT EXISTS `account` (
   `user_key` int(10) unsigned NOT NULL,
   `world_key` int(10) unsigned NOT NULL,
   `active_account` int(1) unsigned NOT NULL,
+  `tutorial` int(10) unsigned NOT NULL,
   `nation_name` varchar(256) NOT NULL,
   `nation_flag` varchar(256) NOT NULL,
   `leader_name` varchar(256) NOT NULL,
   `leader_portrait` varchar(256) NOT NULL,
   `government` int(10) unsigned NOT NULL,
+  `last_government_switch` timestamp NOT NULL,
   `tax_rate` int(10) unsigned NOT NULL,
   `military_budget` int(10) unsigned NOT NULL,
   `entitlements_budget` int(10) unsigned NOT NULL,
+  `war_weariness` int(10) unsigned NOT NULL,
   `color` varchar(8) NOT NULL,
   `last_load` varchar(32) NOT NULL,
-  `tutorial` int(10) unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -95,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `world_key` int(10) unsigned NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `ip_request` (
   `request` varchar(64) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -145,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `land_modifier` (
   `modify_effect_key` int(10) unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=91 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=218 ;
 
 -- --------------------------------------------------------
 
@@ -157,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `modify_effect` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `sort_order` int(10) unsigned NOT NULL,
+  `is_land_upgrade` int(1) NOT NULL,
   `population` int(11) NOT NULL,
   `gdp` int(11) NOT NULL,
   `treasury` int(11) NOT NULL,
@@ -183,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -204,23 +207,16 @@ CREATE TABLE IF NOT EXISTS `world` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
---
--- Dumping data for table `modify_effect`
---
 
-INSERT INTO `modify_effect` (`id`, `name`, `sort_order`, `population`, `gdp`, `treasury`, `defense`, `military`, `support`, `created`) VALUES
-(1, 'unclaimed', 0, 0, 0, 0, 0, 0, 0, '2016-11-08 00:26:05'),
-(2, 'village', 1, 1, 1, 0, 0, 0, 0, '2016-11-08 00:26:51'),
-(3, 'town', 2, 10, 10, 0, 0, 0, 0, '2016-11-08 00:27:27'),
-(4, 'city', 3, 100, 100, 0, 0, 0, 0, '2016-11-08 00:27:58'),
-(5, 'metropolis', 4, 1000, 1000, 0, 0, 0, 0, '2016-11-08 00:28:34'),
-(6, 'capitol', 5, 10, 10, 0, 0, 0, 0, '2016-11-08 00:29:47'),
-(7, 'military_base', 6, 0, 0, -1000, 0, 1000, 0, '2016-11-08 00:34:10'),
-(8, 'hospital', 7, 10, 0, -10, 0, 0, 0, '2016-11-08 00:33:05'),
-(9, 'school', 8, 10, 30, -50, 0, 0, 1, '2016-11-08 00:35:48'),
-(10, 'factory', 9, 10, 50, -30, 0, 0, 0, '2016-11-08 00:45:12'),
-(11, 'skyscrapper', 10, 10, 1000, -500, 0, 0, 0, '2016-11-08 00:45:22');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+INSERT INTO `modify_effect` (`id`, `name`, `sort_order`, `is_land_upgrade`, `population`, `gdp`, `treasury`, `defense`, `military`, `support`, `created`) VALUES
+(1, 'unclaimed', 0, 1, 0, 0, 0, 0, 0, 0, '2016-11-08 00:26:05'),
+(2, 'village', 1, 1, 1, 1, 0, 0, 0, 0, '2016-11-08 00:26:51'),
+(3, 'town', 2, 1, 10, 10, 0, 0, 0, 0, '2016-11-08 00:27:27'),
+(4, 'city', 3, 1, 100, 100, 0, 0, 0, 0, '2016-11-08 00:27:58'),
+(5, 'metropolis', 4, 1, 100, 100, 0, 0, 0, 0, '2016-11-08 00:28:34'),
+(6, 'capitol', 5, 1, 10, 10, 0, 0, 0, 0, '2016-11-08 00:29:47'),
+(7, 'military_base', 6, 0, 0, 0, -100, 0, 100, 0, '2016-11-08 00:34:10'),
+(8, 'hospital', 7, 0, 10, 0, -10, 0, 0, 0, '2016-11-08 00:33:05'),
+(9, 'school', 8, 0, 10, 30, -50, 0, 0, 1, '2016-11-08 00:35:48'),
+(10, 'factory', 9, 0, 10, 50, -30, 0, 0, 0, '2016-11-08 00:45:12'),
+(11, 'skyscraper', 10, 0, 10, 1000, -500, 0, 0, 0, '2016-11-08 00:45:22');
