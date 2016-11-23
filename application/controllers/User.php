@@ -4,6 +4,11 @@ date_default_timezone_set('America/New_York');
 
 class User extends CI_Controller {
 
+    protected $anarchy_key = 0;
+    protected $democracy_key = 1;
+    protected $oligarchy_key = 2;
+    protected $autocracy_key = 3;
+
 	function __construct() {
 	    parent::__construct();
 	    $this->load->model('user_model', '', TRUE);
@@ -319,7 +324,9 @@ class User extends CI_Controller {
             $this->form_validation->set_message('law_form_validation', 'You must wait ' . $government_switch_wait . ' minutes before switching governments again.');
             return false;
         }
-        $this->user_model->update_government_switch($account['id']);
+        if ($government != $this->anarchy_key) {
+            $this->user_model->update_government_switch($account['id']);
+        }
         return true;
     }
 }
