@@ -76,9 +76,12 @@ Class game_model extends CI_Model
  // Update land capitol status
  function update_land_capitol_status($land_key, $capitol)
  {
-    $this->db->set('capitol', 1);
+    $data = array(
+        'capitol' => 1,
+        'modified' => date('Y-m-d H:i:s', time())
+    );
     $this->db->where('id', $land_key);
-    $this->db->update('land');
+    $this->db->update('land', $data);
     return true;
  }
  // Remove capitol from account
@@ -100,9 +103,12 @@ Class game_model extends CI_Model
     }
 
     // Remove capitol flag
-    $this->db->set('capitol', 0);
+    $data = array(
+        'capitol' => 0,
+        'modified' => date('Y-m-d H:i:s', time())
+    );
     $this->db->where('account_key', $account_key);
-    $this->db->update('land');
+    $this->db->update('land', $data);
     return true;
  }
  // Check if any immediate squares belong to current account

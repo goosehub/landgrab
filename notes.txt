@@ -5,13 +5,15 @@
 Todo
     Black Line Bug
     Number Commas
+    Better Tutorial
+    Build with plus signs
+    Chat history
+    Multiple Capitols
     How to play, Refine Tutorial, About
 
     Leaderboards
     Account tax and budget interactive UI
 
-    Check lng crossover point fix
-    Error handling visual
     Ocean Reporting
 
     

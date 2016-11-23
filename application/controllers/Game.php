@@ -139,13 +139,14 @@ class Game extends CI_Controller {
         else {
             $account['stats']['corruption_rate'] = 100;
         }
+        $tax_unpopularity = 4;
         $account['effective_tax_rate'] = floor($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
         $account['stats']['tax_income'] = floor( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['corruption_total'] = abs(floor($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
         $account['stats']['military_after'] = floor($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
         $account['stats']['entitlements'] = floor($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['treasury_after'] = floor($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
-        $account['stats']['support'] = 100 - $account['war_weariness'] - $account['tax_rate'] + $account['entitlements_budget'] + $account['stats']['support'];
+        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + ceil($account['stats']['support'] / 10);
         $account['stats']['war_weariness'] = $account['war_weariness'];
         // No support for anarchy
         if ($account['government'] == $this->anarchy_key) {
@@ -245,9 +246,9 @@ class Game extends CI_Controller {
         // Echo data to client to be parsed
 	    if (isset($land_square['land_name'])) {
             // Strip html entities from all untrusted columns, except content as it's stripped on insert
-            $land_square['land_name'] = htmlentities($land_square['land_name']);
-            $land_square['color'] = htmlentities($land_square['color']);
-            $land_square['username'] = htmlentities($land_square['username']);
+            $land_square['land_name'] = htmlspecialchars($land_square['land_name']);
+            $land_square['color'] = htmlspecialchars($land_square['color']);
+            $land_square['username'] = htmlspecialchars($land_square['username']);
             if ($json_output) {
                 // Filter tags except img with src only
                 function filter(&$value) {

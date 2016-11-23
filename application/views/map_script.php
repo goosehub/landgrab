@@ -37,6 +37,7 @@ var land_size = <?php echo $world['land_size'] ?>;
 
 // Set user variables
 var log_check = false;
+var account = false
 <?php if ($log_check) { ?>
 var log_check = true;
 var user_id = <?php echo $user_id + ''; ?>;
@@ -257,7 +258,7 @@ function initMap()
       $('#button_expand_info').show();
     }
 
-    if (account['tutorial'] < 2) {
+    if (account && account['tutorial'] < 2) {
       $('.war_weariness_outer_span').hide();
     } else {
       $('.war_weariness_outer_span').show();
@@ -347,8 +348,8 @@ function initMap()
       $('#land_name_label').html('Unnamed ' + ucwords(land_dictionary[d['land_type']]));
     }
     $('#land_content_label').html(d['content']);
-    $('#land_gdp_label').html(d['sum_effects']['gdp']);
-    $('#land_population_label').html(d['sum_effects']['population']);
+    $('#land_gdp_label').html(number_format(d['sum_effects']['gdp']) );
+    $('#land_population_label').html(number_format(d['sum_effects']['population']) );
 
     $('#coord_link').prop('href', '<?=base_url()?>world/' + world_key + '?land=' + coord_slug);
     $('#coord_link').html(coord_slug);
@@ -481,7 +482,7 @@ function initMap()
           }
 
           // Tutorial Rule
-          if (account['tutorial'] < 2) {
+          if (account && account['tutorial'] < 2) {
             $('#tutorial_block').fadeOut(1000, function(){
               $('#tutorial_block').fadeIn();
               $('#tutorial_title').html('We The People');
@@ -498,6 +499,9 @@ function initMap()
   }
 
   function land_form_tutorial(land_form_type) {
+    if (!account) {
+      return false;
+    }
     // Tutorial
     if ( account['tutorial'] === '3' && ( land_form_type === 'update' || $.isNumeric(land_form_type) ) ) {
       account['tutorial'] = 4;
@@ -655,15 +659,14 @@ function initMap()
   }
 
   function update_stats(account) {
-    $('.land_count_span').html(account['land_count']);
+    $('.land_count_span').html(number_format(account['land_count']) );
     $('.tax_rate_span').html(account['tax_rate']);
-    $('.tax_income_span_span').html(account['stats']['tax_income_span']);
-    $('.population_span').html(account['stats']['population']);
-    $('.gdp_span').html(account['stats']['gdp']);
-    $('.population_span').html(account['stats']['population']);
-    $('.treasury_span').html(account['stats']['treasury_after']);
-    $('.military_span').html(account['stats']['military_after']);
-    $('.entitlements_span').html(account['stats']['entitlements']);
+    $('.tax_income_span_span').html(number_format(account['stats']['tax_income_span']) );
+    $('.population_span').html(number_format(account['stats']['population']) );
+    $('.gdp_span').html(number_format(account['stats']['gdp']) );
+    $('.treasury_span').html(number_format(account['stats']['treasury_after']) );
+    $('.military_span').html(number_format(account['stats']['military_after']) );
+    $('.entitlements_span').html(number_format(account['stats']['entitlements']) );
     $('.war_weariness_span').html(account['stats']['war_weariness']);
     $('.political_support_span').html(account['stats']['support']);
     return true;
