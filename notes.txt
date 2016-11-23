@@ -3,8 +3,10 @@
 ==========================================================================================
 
 Todo
+    Ways to defend
+    More dynamic attack    
+
     Black Line Bug
-    Number Commas
     Better Tutorial
     Build with plus signs
     Chat history

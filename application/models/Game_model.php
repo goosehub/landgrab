@@ -77,7 +77,7 @@ Class game_model extends CI_Model
  function update_land_capitol_status($land_key, $capitol)
  {
     $data = array(
-        'capitol' => 1,
+        'capitol' => $capitol,
         'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('id', $land_key);

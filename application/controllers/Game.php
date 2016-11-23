@@ -421,8 +421,11 @@ class Game extends CI_Controller {
         } 
         else {
             $land_type = $this->village_key;
+            $land_name = $account['nation_name'];
+            $content = '';
             $query_action = $this->game_model->remove_modifiers_from_land($land_key);
             $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
+            $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
         }
 
         // Tutorial progress for update or build

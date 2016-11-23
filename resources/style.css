@@ -184,6 +184,7 @@ html, body {
   width: 90%;
   top: 10vh;
   height: 80vh;
+  z-index: 10;
 }
 .law_info_value {
   float: right;
