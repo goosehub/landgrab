@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `modify_effect` (
   `support` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -207,16 +207,16 @@ CREATE TABLE IF NOT EXISTS `world` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-
 INSERT INTO `modify_effect` (`id`, `name`, `sort_order`, `is_land_upgrade`, `population`, `gdp`, `treasury`, `defense`, `military`, `support`, `created`) VALUES
-(1, 'unclaimed', 0, 1, 0, 0, 0, 0, 0, 0, '2016-11-08 00:26:05'),
-(2, 'village', 1, 1, 1, 1, 0, 0, 0, 0, '2016-11-08 00:26:51'),
-(3, 'town', 2, 1, 10, 10, 0, 0, 0, 0, '2016-11-08 00:27:27'),
-(4, 'city', 3, 1, 100, 100, 0, 0, 0, 0, '2016-11-08 00:27:58'),
-(5, 'metropolis', 4, 1, 100, 100, 0, 0, 0, 0, '2016-11-08 00:28:34'),
-(6, 'capitol', 5, 1, 10, 10, 0, 0, 0, 0, '2016-11-08 00:29:47'),
-(7, 'military_base', 6, 0, 0, 0, -100, 0, 100, 0, '2016-11-08 00:34:10'),
-(8, 'hospital', 7, 0, 10, 0, -10, 0, 0, 0, '2016-11-08 00:33:05'),
-(9, 'school', 8, 0, 10, 30, -50, 0, 0, 1, '2016-11-08 00:35:48'),
-(10, 'factory', 9, 0, 10, 50, -30, 0, 0, 0, '2016-11-08 00:45:12'),
-(11, 'skyscraper', 10, 0, 10, 1000, -500, 0, 0, 0, '2016-11-08 00:45:22');
+(1, 'unclaimed', 0, 1, 0, 0, 0, 0, 0, 0, '2016-11-08 10:26:05'),
+(2, 'village', 1, 1, 1, 1, 0, 0, 0, 0, '2016-11-08 10:26:51'),
+(3, 'town', 2, 1, 10, 10, 0, 2, 0, 0, '2016-11-08 10:27:27'),
+(4, 'city', 3, 1, 100, 100, 0, 3, 0, 0, '2016-11-08 10:27:58'),
+(5, 'metropolis', 4, 1, 1000, 1000, 0, 4, 0, 0, '2016-11-08 10:28:34'),
+(6, 'fortification', 1, 1, 1, 1, -100, 3, 1, 0, '2016-11-24 06:24:53'),
+(10, 'capitol', 5, 1, 50, 50, 0, 5, 0, 10, '2016-11-08 10:29:47'),
+(11, 'skyscraper', 10, 0, 10, 50, -50, 0, 0, 1, '2016-11-08 10:45:22'),
+(12, 'factory', 9, 0, 10, 10, -25, 0, 1, 0, '2016-11-08 10:45:12'),
+(14, 'hospital', 7, 0, 50, 0, -30, 0, 0, 1, '2016-11-08 10:33:05'),
+(15, 'military_base', 6, 0, 0, 0, -100, 1, 10, 0, '2016-11-08 10:34:10'),
+(16, 'school', 8, 0, 10, 0, -50, 0, 0, 2, '2016-11-08 10:35:48');

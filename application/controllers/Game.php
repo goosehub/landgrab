@@ -144,10 +144,11 @@ class Game extends CI_Controller {
         $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
         $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
-        $account['stats']['military_after'] = ceil($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
+        $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
+        $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
-        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + ceil($account['stats']['support'] / 10);
+        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements']);
+        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
         // No support for anarchy
         if ($account['government'] == $this->anarchy_key) {
@@ -521,6 +522,10 @@ class Game extends CI_Controller {
         }
         if ($form_type == $this->metropolis_key && $valid_upgrades['metropolis'] < 0) {
             echo '{"status": "fail", "message": "You need more cities first. You may have lost a few since you opened the form."}';
+            return false;
+        }
+        if ($form_type == $this->fortification_key && $land_square['land_type'] != $this->village_key) {
+            echo '{"status": "fail", "message": "Only Villages may become Foritications."}';
             return false;
         }
 

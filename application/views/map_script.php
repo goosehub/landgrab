@@ -665,7 +665,7 @@ function initMap()
         stroke_weight = 2;
         stroke_color = '<?php echo $stroke_color_dictionary['metropolis']; ?>';
       }
-      else if ($land['land_type'] == land_type_key_dictionary['fortification'] ) {
+      else if (land['land_type'] == land_type_key_dictionary['fortification'] ) {
         $stroke_weight = 2;
         $stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
       }

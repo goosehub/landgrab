@@ -3,8 +3,10 @@
 ==========================================================================================
 
 Todo
-    Ways to defend
-    More dynamic attack    
+    Demote land
+    Military budget bug
+    Make Capitol Visual Que not there
+    Username wrong
 
     Black Line Bug
     Better Tutorial
