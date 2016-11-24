@@ -9,7 +9,8 @@ class Game extends CI_Controller {
     protected $town_key = 3;
     protected $city_key = 4;
     protected $metropolis_key = 5;
-    protected $capitol_key = 6;
+    protected $fortification_key = 6;
+    protected $capitol_key = 10;
 
     protected $anarchy_key = 0;
     protected $democracy_key = 1;
@@ -129,23 +130,23 @@ class Game extends CI_Controller {
         }
         // Oligarchy Taxes
         else if ($account['government'] == $this->oligarchy_key) {
-            $account['stats']['corruption_rate'] = 25;
+            $account['stats']['corruption_rate'] = 10;
         }
         // Autocracy Taxes
         else if ($account['government'] == $this->autocracy_key) {
-            $account['stats']['corruption_rate'] = 50;
+            $account['stats']['corruption_rate'] = 30;
         }
         // Anarchy
         else {
             $account['stats']['corruption_rate'] = 100;
         }
-        $tax_unpopularity = 4;
-        $account['effective_tax_rate'] = floor($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
-        $account['stats']['tax_income'] = floor( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
-        $account['stats']['corruption_total'] = abs(floor($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
-        $account['stats']['military_after'] = floor($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
-        $account['stats']['entitlements'] = floor($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $account['stats']['treasury_after'] = floor($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
+        $tax_unpopularity = 2;
+        $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
+        $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
+        $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
+        $account['stats']['military_after'] = ceil($account['stats']['military'] + ($account['stats']['tax_income'] * ($account['military_budget'] / 100) ) );
+        $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
+        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military'] - $account['stats']['entitlements']);
         $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + ceil($account['stats']['support'] / 10);
         $account['stats']['war_weariness'] = $account['war_weariness'];
         // No support for anarchy
@@ -211,7 +212,7 @@ class Game extends CI_Controller {
             $user_id = $session_data['id'];
             $requester_account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $requester_account = $this->get_full_account($requester_account);
-            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square['account_key']);
+            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square['account_key'], $land_square);
             $land_square['valid_upgrades'] = $this->account_valid_upgrades($requester_account['id']);
         }
 
@@ -400,7 +401,7 @@ class Game extends CI_Controller {
 
         // Do war weariness logic
         if ($action_type === 'attack' || $action_type === 'claim') {
-            $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key']);
+            $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key'], $land_square);
             $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
         }
 
@@ -558,6 +559,13 @@ class Game extends CI_Controller {
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->metropolis_key);
                 break;
             }
+            // Fortification
+            else if ($effect['name'] === 'fortification' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->upgrade_land_type($land_key, $this->fortification_key);
+                break;
+            }
             // Regular Upgrades
             else if ($form_type === $effect['id']) {
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
@@ -567,7 +575,7 @@ class Game extends CI_Controller {
         return true;
     }
 
-    public function war_weariness_calculate($account, $defender_account)
+    public function war_weariness_calculate($account, $defender_account, $land_square)
     {
         // Used to make cron more effecient
         if ( !$account['active_account'] ) {
@@ -599,6 +607,23 @@ class Game extends CI_Controller {
             $war_weariness = 4;
         } else {
             $war_weariness = 5;
+        }
+        // War Weariness Multiplier
+        // Hardcoded for now
+        if ($land_square['land_type'] == $this->town_key) {
+            $war_weariness = $war_weariness * 2;
+        }
+        else if ($land_square['land_type'] == $this->city_key) {
+            $war_weariness = $war_weariness * 3;
+        }
+        else if ($land_square['land_type'] == $this->metropolis_key) {
+            $war_weariness = $war_weariness * 4;
+        }
+        else if ($land_square['land_type'] == $this->fortification_key) {
+            $war_weariness = $war_weariness * 3;
+        }
+        if ($land_square['capitol'] == 1) {
+            $war_weariness = $war_weariness * 5;
         }
         return $war_weariness;
     }
@@ -654,10 +679,11 @@ class Game extends CI_Controller {
     public function stroke_color_dictionary()
     {
         $stroke_color_dictionary['village'] = '#428BCA';
-        $stroke_color_dictionary['capitol'] = '#FF0000';
         $stroke_color_dictionary['town'] = '#00E300';
         $stroke_color_dictionary['city'] = '#FFD900';
         $stroke_color_dictionary['metropolis'] = '#A600A6';
+        $stroke_color_dictionary['fortification'] = '#222222';
+        $stroke_color_dictionary['capitol'] = '#FF0000';
         return $stroke_color_dictionary;
     }
 

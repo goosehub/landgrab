@@ -24,6 +24,16 @@ class Cron extends CI_Controller {
 
         $war_weariness_decrease = 1;
         $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
+
+/*
+        // Fix to reset only land type modifiers
+        $lands = $this->game_model->get_all_lands_in_world(1);
+
+        $this->game_model->truncate_modifiers();
+        foreach ($lands as $l) {
+          $this->game_model->add_modifier_to_land($l['id'], $l['land_type']);
+        }
+*/
 /*
         $users = $this->user_model->get_all_users();
         foreach ($users as $user) {

@@ -100,10 +100,10 @@
                                 <option value="1">Democracy (Minimum Political Support at 50%)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 2) { ?>
-                                <option value="2">Oligarchy (25% Corruption, Min Support at 30%)</option>
+                                <option value="2">Oligarchy (10% Corruption, Min Support at 30%)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 3) { ?>
-                                <option value="3">Autocracy (50% Corruption, Min Support at 10%)</option>
+                                <option value="3">Autocracy (30% Corruption, Min Support at 10%)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 0) { ?>
                                     <option value="0">Anarchy (No Functioning Government)</option>

@@ -15,7 +15,8 @@ land_dictionary[2] = 'village';
 land_dictionary[3] = 'town';
 land_dictionary[4] = 'city';
 land_dictionary[5] = 'metropolis';
-land_dictionary[6] = 'capitol';
+land_dictionary[6] = 'fortification';
+land_dictionary[10] = 'capitol';
 
 land_type_key_dictionary = new Array();
 land_type_key_dictionary['unclaimed'] = 1;
@@ -23,7 +24,8 @@ land_type_key_dictionary['village'] = 2;
 land_type_key_dictionary['town'] = 3;
 land_type_key_dictionary['city'] = 4;
 land_type_key_dictionary['metropolis'] = 5;
-land_type_key_dictionary['capitol'] = 6;
+land_type_key_dictionary['fortification'] = 6;
+land_type_key_dictionary['capitol'] = 10;
 
 government_dictionary = new Array();
 government_dictionary[0] = 'Anarchy';
@@ -254,7 +256,7 @@ function initMap()
     }
 
     // Is a town or larger and has more than it's land type as a modifier
-    if (d['land_type'] > land_type_key_dictionary['village'] && typeof d['sum_modifiers'][1] != 'undefined') {
+    if (d['land_type'] > land_type_key_dictionary['village'] && d['land_type'] != land_type_key_dictionary['fortification'] && typeof d['sum_modifiers'][1] != 'undefined') {
       $('#button_expand_info').show();
     }
 
@@ -276,6 +278,9 @@ function initMap()
       }
 
       // Logic for which upgrades to show
+      if (d['land_type'] == land_type_key_dictionary['village']) {
+        $('#fortification_info_parent').show();
+      }
       if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] >= 0) {
         $('#town_info_parent').show();
       }
@@ -366,6 +371,9 @@ function initMap()
       } else {
         $('#nation_label').html('Anonymous #' + d['account']['id']);
       }
+      if (d['account']['leader_name'] != d['username']) {
+        $('#username_label').html('(' + d['username'] + ')');
+      }
       if (d['account']['leader_name']) {
         $('#leader_name_label').html(d['account']['leader_name']);
       } else {
@@ -386,7 +394,7 @@ function initMap()
     var more_info_string = '';
     for (var i = 0; i < d['sum_modifiers'].length; i++) {
       // Skip if land type
-      if (d['sum_modifiers'][i]['id'] <= 6) {
+      if (d['sum_modifiers'][i]['id'] <= 10) {
         continue;
       }
       var modifier_name = ucwords(d['sum_modifiers'][i]['name'].replace(/_/g, ' '));
@@ -448,7 +456,7 @@ function initMap()
               fillOpacity: 0.4
             });
           }
-          // Captiol
+          // Capitol
           else if (form_type == land_type_key_dictionary['capitol']) {
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
@@ -477,6 +485,14 @@ function initMap()
             boxes[d['id']].setOptions({
               strokeWeight: 3, 
               strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
+              fillOpacity: 0.4
+            });
+          }
+          // Fortification
+          else if (form_type == land_type_key_dictionary['fortification']) {
+            boxes[d['id']].setOptions({
+              strokeWeight: 3, 
+              strokeColor: '<?php echo $stroke_color_dictionary['fortification']; ?>',
               fillOpacity: 0.4
             });
           }
@@ -557,6 +573,11 @@ function initMap()
         else if ($land['land_type'] === '5' ) {
           $stroke_weight = 2;
           $stroke_color = $stroke_color_dictionary['metropolis'];
+        }
+        // Fortification
+        else if ($land['land_type'] === '6' ) {
+          $stroke_weight = 2;
+          $stroke_color = $stroke_color_dictionary['fortification'];
         }
         ?>z(<?php echo 
             $land['id'] . ',' .
@@ -643,6 +664,10 @@ function initMap()
       else if (land['land_type'] == land_type_key_dictionary['metropolis']) {
         stroke_weight = 2;
         stroke_color = '<?php echo $stroke_color_dictionary['metropolis']; ?>';
+      }
+      else if ($land['land_type'] == land_type_key_dictionary['fortification'] ) {
+        $stroke_weight = 2;
+        $stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
       }
 
       // Apply variables to box

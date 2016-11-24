@@ -31,7 +31,7 @@
         <span id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
-            <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span></div>
+            <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span> <small id="username_label"></small></div>
 
             <div id="capitol_info" class="land_block_toggle">
                 <img id="land_leader_portrait_image" src="<?=base_url()?>uploads/default_leader_portrait.png"/>
@@ -87,7 +87,7 @@
                 <div class="form-group">
                     <div class="row">
                     <?php foreach ($modify_effect_dictionary as $effect) { ?>
-                        <?php $button_color = $effect['id'] < 7 ? 'action' : 'success' ?>
+                        <?php $button_color = $effect['id'] <= 10 ? 'action' : 'success' ?>
                         <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
                             <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
                                 <?php echo ucwords(str_replace('_', ' ', $effect['name'])); ?>
@@ -96,19 +96,6 @@
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </div>
                             <div id="<?php echo $effect['name']; ?>_info_dropdown" class="info_details_parent collapse">
-                                <?php if ($effect['population'] > 0) {
-                                    $this_class = 'success';
-                                } else if ($effect['population'] < 0) {
-                                    $this_class = 'danger';
-                                } else {
-                                    $this_class = 'primary';
-                                } ?>
-                                <div class="effect_pair">
-                                    <span class="effect_label text-purple">Population: </span>
-                                    <span class="effect_value pull-right text-<?php echo $this_class; ?>">
-                                        <?php echo $effect['population']; ?>K
-                                    </span>
-                                </div>
                                 <?php if ($effect['gdp'] > 0) {
                                     $this_class = 'success';
                                 } else if ($effect['gdp'] < 0) {
@@ -135,6 +122,19 @@
                                         <?php echo $effect['treasury']; ?>M
                                     </span>
                                 </div>
+                                <?php if ($effect['population'] > 0) {
+                                    $this_class = 'success';
+                                } else if ($effect['population'] < 0) {
+                                    $this_class = 'danger';
+                                } else {
+                                    $this_class = 'primary';
+                                } ?>
+                                <div class="effect_pair">
+                                    <span class="effect_label text-purple">Population: </span>
+                                    <span class="effect_value pull-right text-<?php echo $this_class; ?>">
+                                        <?php echo $effect['population']; ?>K
+                                    </span>
+                                </div>
                                 <?php if ($effect['military'] > 0) {
                                 $this_class = 'success';
                                 } else if ($effect['military'] <0) {
@@ -146,6 +146,12 @@
                                     <span class="effect_label text-danger">Military: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
                                         <?php echo $effect['military']; ?>M
+                                    </span>
+                                </div>
+                                <div class="effect_pair">
+                                    <span class="effect_label text-text-default">Defense Bonus: </span>
+                                    <span class="effect_value pull-right text-action">
+                                        X<?php echo $effect['defense']; ?>
                                     </span>
                                 </div>
                                 <?php if ($effect['support'] > 0) {

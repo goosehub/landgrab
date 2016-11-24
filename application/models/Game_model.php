@@ -96,7 +96,7 @@ Class game_model extends CI_Model
     $capitol_land = $query->result_array();
     if ( isset($capitol_land[0]) ) {
         // Remove capitol effect
-        $capitol_key = 6;
+        $capitol_key = 10;
         $this->db->where('land_key', $capitol_land[0]['id']);
         $this->db->where('modify_effect_key', $capitol_key);
         $this->db->delete('land_modifier');
@@ -292,7 +292,7 @@ Class game_model extends CI_Model
  // Remove all modifiers from land
  function remove_land_type_modifiers_from_land($land_key)
  {
-    $land_type_effect_keys = array(1, 2, 3, 4, 5);
+    $land_type_effect_keys = array(1, 2, 3, 4, 5, 6);
     $this->db->where('land_key', $land_key);
     $this->db->where_in('modify_effect_key', $land_type_effect_keys);
     $this->db->delete('land_modifier');
@@ -316,7 +316,11 @@ Class game_model extends CI_Model
     $this->db->where('war_weariness >', 0);
     $this->db->set('war_weariness', 'war_weariness-' . $war_weariness_decrease, FALSE);
     $this->db->update('account');
-
+ }
+ function truncate_modifiers()
+ {
+    $this->db->where('land_key >', 0);
+    $this->db->delete('land_modifier');
  }
 
 }
