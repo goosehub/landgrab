@@ -134,7 +134,7 @@ html, body {
   padding: 0.2em;
   background: #FFD87C;
   border-radius: 0.2em;
-  z-index: 10;
+  z-index: 100;
 }
 #tutorial_title {
   font-size: 3em;
@@ -171,6 +171,7 @@ html, body {
   background: #fff;
   padding: 1em;
   border-radius: 1em;
+  z-index: 10;
 }
 @media only screen 
   and (max-device-width: 600px) {
@@ -184,7 +185,6 @@ html, body {
   width: 90%;
   top: 10vh;
   height: 80vh;
-  z-index: 10;
 }
 .law_info_value {
   float: right;
@@ -195,8 +195,21 @@ html, body {
   color: #31708f;
 }
 .leaderboard_block {
-  top: 5vh;
-  max-height: 90vh;
+  top: 10vh;
+  max-height: 85vh;
+  width: 80vw;
+  left: 10vw;
+}
+.leaderboard_leader_portrait, .leaderboard_nation_flag {
+  max-width: 75px;
+  max-height: 75px;
+}
+#leaderboard_table {
+  width: 100% !important;
+}
+/* Only show top 10 */
+#leaderboard_table tbody tr:nth-child(n+6) {
+  display: none;
 }
 .center_block strong {
   font-size: 1.4em;

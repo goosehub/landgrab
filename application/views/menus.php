@@ -23,16 +23,12 @@
   <?php } ?>
 
     <!-- Leaderboards dropdown -->
-<!--     <div class="leaderboard_parent menu_element btn-group">
-      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Leaderboards
+    <div class="leaderboard_parent menu_element btn-group">
+      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown">
+          Leaderboard
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu" aria-labelledby="leaderboard_dropdown">
-        <li class="text-center"><strong class="text-primary">Leaderboards</strong></li>
-        <li><a class="leaderboard_land_owned_button leaderboard_link text-right">Land</a></li>
-      </ul>
-    </div> -->
+    </div>
 
     <?php if ($log_check) { ?>
 

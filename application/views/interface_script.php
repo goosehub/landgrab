@@ -89,9 +89,40 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('#register_input_username').focus();
 });
-$('.leaderboard_land_owned_button').click(function(){
+$('#leaderboard_dropdown').click(function(){
     $('.center_block').hide();
-    $('#leaderboard_land_owned_block').show();
+    $('#leaderboard_block').show();
+});
+
+// jQuery DataTables
+$('.jquery-datatable').dataTable({
+    // No paging of data
+    paging: false,
+    "order": [],
+    // Hide Search
+    bFilter: false,
+    bInfo: false,
+    // Sort by desc on click by default
+    "aoColumns": [
+        { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
+    ],
+    // Do not interpret numeric commas as decimals for sorting
+    // "aoColumnDefs": [
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    //     { "sType": "numeric-comma", "aTargets": [2,3] },
+    // ]
+    // columnDefs: [
+        // { type: 'numeric-comma', targets: 0 }
+    // ]
 });
 
 </script>

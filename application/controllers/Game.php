@@ -110,7 +110,6 @@ class Game extends CI_Controller {
         $this->load->view('menus', $data);
         $this->load->view('blocks', $data);
         $this->load->view('land_block', $data);
-        $this->load->view('leaderboards', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
         $this->load->view('tutorial_script', $data);
@@ -668,7 +667,18 @@ class Game extends CI_Controller {
     // Get leaderboards
     public function leaderboards($world)
     {
-        return true;
+        // This is accounts to get, number shown is determined with use of CSS
+        $limit = 30;
+        $land_leaders = $this->leaderboard_model->leaderboard_land_owned($world['id'], $limit);
+        $leaders = false;
+        foreach ($land_leaders as $leader) {
+            $leader_account = $this->user_model->get_account_by_id($leader['account_key']);
+            $this_leader = $this->get_full_account($leader_account);
+            $leader_user = $this->user_model->get_user($this_leader['user_key']);
+            $this_leader['username'] = $leader_user['username'];
+            $leaders[] = $this_leader;
+        }
+        return $leaders;
     }
 
     // Land dictionary for reference

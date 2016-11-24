@@ -413,6 +413,59 @@
     </div>
 </div>
 
+<div id="leaderboard_block" class="leaderboard_block center_block">
+    <strong>Player Leaderboard</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <table id="leaderboard_table" class="table table-bordered table-hover table-condensed jquery-datatable" style="width=100%;">
+        <thead>
+            <tr>
+                <td>Leader</td>
+                <td>Nation</td>
+                <td>Territories</td>
+                <td>Population</td>
+                <td>GDP</td>
+                <td>Military</td>
+            </tr>    
+        </thead>
+        <tbody>
+            <?php foreach ($leaderboards as $leader) { ?>
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: <?php echo $leader['color']; ?>"> </span>
+                    <strong><?php echo $leader['leader_name']; ?></strong>
+                    <?php if ($leader['leader_name'] != $leader['username']) { ?>
+                        <small>(<?php echo $leader['leader_name']; ?>)</small>
+                    <?php } ?>
+                    <br>
+                    <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>">
+                </td>
+                <td>
+                    <strong><?php echo $leader['nation_name']; ?></strong>
+                    <br>
+                    <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $leader['nation_flag']; ?>">
+                </td>
+                <td>
+                    <?php // First instance for jquery datatables sorting ?>
+                    <strong class="text-success"><?php echo number_format($leader['land_count']); ?></strong>
+                </td>
+                <td>
+                    <strong class="text-purple"><?php echo number_format($leader['stats']['population']); ?></strong><span class="text-purple">,000</span>
+                </td>
+                <td>
+                    <strong class="text-action">$<?php echo number_format($leader['stats']['gdp']); ?></strong><span class="text-action">,000,000</span>
+                </td>
+                <td>
+                    <strong class="text-danger">$<?php echo number_format($leader['stats']['military_after']); ?></strong><span class="text-danger">,000,000</span>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
 <div id="beta_tag">
     <strong>BETA: Report bugs and balance suggestions to goosepostbox@gmail.com</strong>
 </div>

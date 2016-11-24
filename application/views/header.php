@@ -15,6 +15,18 @@
 
     <!-- Bootstrap -->
     <link href="<?=base_url()?>resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- jQuery DataTables -->
+    <link href="<?=base_url()?>resources/datatables/datatables.min.css" rel="stylesheet" type="text/css">
+
+    <!-- jQuery -->
+    <script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- jQuery DataTables -->
+    <script src="<?=base_url()?>resources/datatables/datatables.min.js"></script>
 
     <!-- JSColor -->
     <script src="<?=base_url()?>resources/jscolor/jscolor.min.js"></script>

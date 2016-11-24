@@ -3,21 +3,18 @@
 ==========================================================================================
 
 Todo
-    Demote land
-    Military budget bug
-    Make Capitol Visual Que not there
-    Username wrong
+    After Make Capitol Visual Que not there
+    Username wrong on land sometimes?
+    Potential Updating Map Issues
 
     Black Line Bug
     Better Tutorial
     Build with plus signs
     Chat history
-    Multiple Capitols
     How to play, Refine Tutorial, About
 
-    Leaderboards
+    Demote land
     Account tax and budget interactive UI
-
     Ocean Reporting
 
     

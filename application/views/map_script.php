@@ -1,7 +1,3 @@
-<!-- jQuery -->
-<script src="<?=base_url()?>resources/jquery/jquery-1.11.1.min.js"></script>
-<!-- Bootstrap -->
-<script src="<?=base_url()?>resources/bootstrap/js/bootstrap.min.js"></script>
 <!-- Map Script -->
 <script>
 
