@@ -220,6 +220,8 @@
         </div>
         <hr>
         <button type="submit" class="btn btn-success form-control">Update Nation</button>
+        <br> <br>
+        <a class="report_bugs_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
     </form>
 </div>
 <?php } ?>

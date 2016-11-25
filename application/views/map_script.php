@@ -499,7 +499,7 @@ function initMap()
               $('#tutorial_block').fadeIn();
               $('#tutorial_title').html('We The People');
               $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
-              $('#stat_dropdown').click();
+              $('.stat_dropdown').click();
               account['tutorial'] = 2;
             });
           }

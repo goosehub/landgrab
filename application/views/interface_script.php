@@ -47,7 +47,7 @@ if (window.location.href.indexOf('register') >= 0) {
 $('.exit_center_block').click(function(){
   $('.center_block').hide();
 });
-$('#stat_dropdown').click(function(){
+$('.stat_dropdown').click(function(){
     $('.center_block').hide();
     $('#law_block').fadeIn();
 });

@@ -77,22 +77,34 @@ html, body {
 #top_right_block ul li:first-child {
   margin-top: -0.5em !important;
 }
+#mobile_stat_dropdown {
+  display: none;
+}
 @media only screen 
   and (max-device-width: 600px) {
+  body #stat_dropdown, body .leaderboard_parent, body .main_menu_parent {
+    display: none;
+  }
+  body #mobile_stat_dropdown {
+    display: inline;
+  }
   #top_right_block {
-    right: 3em;
+    right: 0.5em;
   }
   .menu_element {
     display: block;
     float: right;
     clear: both;
   }
-  .update_info_button, .leaderboard_parent, .user_parent, .main_menu_parent {
+  body #land_block, body #law_block, body #account_update_block {
+    width: 95vw;
+    left: 2vw;
+    top: 2vh;
+    min-height: 95vh;
+  }
+  #beta_tag {
     display: none;
   }
-}
-#stat_dropdown {
-  
 }
 .stats_listing li {
   margin-right: 1em;

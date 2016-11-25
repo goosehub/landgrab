@@ -9,7 +9,7 @@
 
   <?php if ($log_check) { ?>
   <!-- Stat Dropdown -->
-    <button id="stat_dropdown" class="menu_element btn btn-default" type="button" id="stat_dropdown">
+    <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
       <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
       | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['land_count']); ?></span></strong>
       | Tax Rate: <strong class="text-success"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
@@ -19,6 +19,11 @@
       | Support: <strong class="text-default"><span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%</strong>
 
       <span class="caret"></span>
+    </button>
+
+
+    <button id="mobile_stat_dropdown" class="stat_dropdown menu_element btn btn-action" type="button">
+      Laws
     </button>
   <?php } ?>
 
