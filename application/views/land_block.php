@@ -151,7 +151,7 @@
                                 <div class="effect_pair">
                                     <span class="effect_label text-text-default">Defense Bonus: </span>
                                     <span class="effect_value pull-right text-action">
-                                        X<?php echo $effect['defense']; ?>
+                                        <?php echo $effect['defense']; ?>X
                                     </span>
                                 </div>
                                 <?php if ($effect['support'] > 0) {

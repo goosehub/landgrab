@@ -145,9 +145,10 @@ class Game extends CI_Controller {
         $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
         $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
-        $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending']);
+        $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements']);
+        $account['stats']['entitlements_effect'] = ceil( ($account['effective_tax_rate'] * $account['entitlements_budget']) / 10);
+        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
         $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
         // No support for anarchy
@@ -551,7 +552,8 @@ class Game extends CI_Controller {
             }
             // Village
             else if ($effect['name'] === 'village' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->village_key);
                 break;

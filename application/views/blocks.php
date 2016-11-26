@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Miliary: </strong>
+                        <strong class="law_info_item_label">Military: </strong>
                         <strong class="law_info_value text-danger">
                             $<span class="military_span"><?php echo $account['stats']['military_after']; ?></span>M
                         </strong><br>
@@ -136,12 +136,19 @@
                         </div>
                     </div>
                 <hr>
-                <button type="submit" class="btn btn-primary form-control">Pass New Laws</button>
+                <button id="pass_new_laws_button" type="submit" class="btn btn-primary form-control">Pass New Laws</button>
             </form>
         </div>
         <div class="col-md-4">
-            <h3>How to Run a Nation</h3>
-            <p class="lead"><span class="law_info_desc_highlight text-info">Taxes</span> on your <span class="law_info_desc_highlight text-info">GDP</span> raise money to spend on your <span class="law_info_desc_highlight text-info">Military</span> to reduce <span class="law_info_desc_highlight text-info">War Weariness</span>, <span class="law_info_desc_highlight text-info">Entitlements</span> to gain <span class="law_info_desc_highlight text-info">Political Support</span>, and for your <span class="law_info_desc_highlight text-info">Treasury</span> to <span class="law_info_desc_highlight text-info">Build</span> your <span class="law_info_desc_highlight text-info">Towns</span> and <span class="law_info_desc_highlight text-info">Cities</span>. <span class="law_info_desc_highlight text-info">War Weariness</span> temporarily worsens your <span class="law_info_desc_highlight text-info">Political Support</span>. Your <span class="law_info_desc_highlight text-info">Government</span> can not function when it's below it's minimum limit. Some <span class="law_info_desc_highlight text-info">Governments</span> allow lower <span class="law_info_desc_highlight text-info">Political Support</span> but come with <span class="law_info_desc_highlight text-info">Corruption</span> which eats at your <span class="law_info_desc_highlight text-info">Tax</span> income.</p>
+            <h3>Useful Information</h3>
+            <ul id="useful_info_list">
+                <li>Taxes allow you to increase your budgets and build on your lands</li>
+                <li>Corruption Eats at your Tax Income</li>
+                <li>A larger Military means a smaller War Weariness penalty on attacking and more on defending</li>
+                <li>Entitlments give you more Political Support</li>
+                <li>War Weariness decreases your Political Support</li>
+                <li>When you reach your minimum Political Support, your government can not longer function</li>
+            </ul>
         </div>
     </div>
 </div>
@@ -209,7 +216,7 @@
             </div>
         </div>
         <hr>
-        <button type="submit" class="btn btn-success form-control">Update Nation</button>
+        <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update Nation</button>
         <br> <br>
         <a class="report_bugs_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
     </form>

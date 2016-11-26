@@ -3,12 +3,11 @@
 ==========================================================================================
 
 Todo
+    Downgrade when non functioning
     After Make Capitol Visual Que not there
-    Username wrong on land sometimes?
-    Fortifications show build dropdown
-
+    Leaderboards ajax
     Potential Updating Map Issues
-    Black Line Bug
+    Black Stroke Line Bug
     Better Tutorial
     Build with plus signs
     Chat history

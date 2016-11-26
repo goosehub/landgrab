@@ -40,6 +40,15 @@ if (window.location.href.indexOf('register') >= 0) {
     $('#register_block').show();
 }
 
+// Validation State of the State screen
+$('#pass_new_laws_button').click(function(){
+    console.log('marco');
+    if ( parseInt($('#military_budget').val()) + parseInt($('#entitlements_budget').val()) > 100) {
+        alert('You\'re military budget plus your entitlements budget can not exceed 100%');
+        return false;
+    }
+});
+
 // 
 // Center block hide and show logic
 // 

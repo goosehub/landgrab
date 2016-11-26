@@ -141,6 +141,7 @@ html, body {
 #tutorial_block {
   display: none;
   position: absolute;
+  max-width: 25vw;
   top: 1.5em;
   left: 1em;
   padding: 0.2em;
