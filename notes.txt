@@ -7,7 +7,6 @@ Todo
     After Make Capitol Visual Que not there
     Leaderboards ajax
     Potential Updating Map Issues
-    Black Stroke Line Bug
     Better Tutorial
     Build with plus signs
     Chat history

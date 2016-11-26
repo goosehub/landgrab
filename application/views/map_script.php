@@ -671,7 +671,6 @@ function initMap()
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_color = '<?php echo $stroke_color_dictionary['village']; ?>';
-        stroke_weight = 3;
       }
       if (land['capitol'] == 1) {
         stroke_weight = 2;
@@ -680,7 +679,7 @@ function initMap()
       }
       else if (land['land_type'] == land_type_key_dictionary['town']) {
         stroke_weight = 2;
-        stroke_color = '#<?php echo $stroke_color_dictionary['town']; ?>';
+        stroke_color = '<?php echo $stroke_color_dictionary['town']; ?>';
       } 
       else if (land['land_type'] == land_type_key_dictionary['city']) {
         stroke_weight = 2;
@@ -693,6 +692,9 @@ function initMap()
       else if (land['land_type'] == land_type_key_dictionary['fortification'] ) {
         $stroke_weight = 2;
         $stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
+      }
+      if (log_check && land['account_key'] == account_id) {
+        stroke_weight = 3;
       }
 
       // Apply variables to box

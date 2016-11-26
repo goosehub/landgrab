@@ -144,8 +144,8 @@
             <ul id="useful_info_list">
                 <li>Taxes allow you to increase your budgets and build on your lands</li>
                 <li>Corruption Eats at your Tax Income</li>
-                <li>A larger Military means a smaller War Weariness penalty on attacking and more on defending</li>
                 <li>Entitlments give you more Political Support</li>
+                <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
                 <li>War Weariness decreases your Political Support</li>
                 <li>When you reach your minimum Political Support, your government can not longer function</li>
             </ul>
