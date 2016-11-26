@@ -5,9 +5,9 @@
 Todo
     After Make Capitol Visual Que not there
     Username wrong on land sometimes?
-    Potential Updating Map Issues
     Fortifications show build dropdown
 
+    Potential Updating Map Issues
     Black Line Bug
     Better Tutorial
     Build with plus signs

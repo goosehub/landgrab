@@ -40,9 +40,8 @@ class Cron extends CI_Controller {
           $color = random_hex_color();
           $nation_name = $user['username'];
           $nation_flag = 'default_nation_flag.png';
-          $leader_name = $user['username'];
           $leader_portrait = 'default_leader_portrait.png';
-          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_portrait);
         }
 */
         // Loop to get to each account individually if needed in the future

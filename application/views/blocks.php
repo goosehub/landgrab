@@ -197,16 +197,6 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_leader_name">Leader Name:</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="leader_name" name="leader_name" value="<?php echo $account['leader_name']; ?>">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
                     <label for="input_leader_portrait">Leader Portrait:</label>
                 </div>
                 <div class="col-md-2">
@@ -437,10 +427,7 @@
             <tr>
                 <td>
                     <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: <?php echo $leader['color']; ?>"> </span>
-                    <strong><?php echo $leader['leader_name']; ?></strong>
-                    <?php if ($leader['leader_name'] != $leader['username']) { ?>
-                        <small>(<?php echo $leader['leader_name']; ?>)</small>
-                    <?php } ?>
+                    <strong><?php echo $leader['username']; ?></strong>
                     <br>
                     <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>">
                 </td>

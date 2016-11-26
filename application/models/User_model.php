@@ -123,7 +123,7 @@ Class user_model extends CI_Model
     }
  }
  // Create player account
- function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait)
+ function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_portrait)
  {
     // Insert user into user
     $data = array(
@@ -132,7 +132,6 @@ Class user_model extends CI_Model
     'color' => $color,
     'nation_name' => $nation_name,
     'nation_flag' => $nation_flag,
-    'leader_name' => $leader_name,
     'leader_portrait' => $leader_portrait,
     'last_load' => date('Y-m-d H:i:s')
     );
@@ -147,14 +146,13 @@ Class user_model extends CI_Model
     return $account_id;
  }
  // Update account information
- function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait)
+ function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
  {
     // Update account
     $data = array(
         'color' => $color,
         'nation_name' => $nation_name,
         'nation_flag' => $nation_flag,
-        'leader_name' => $leader_name,
         'leader_portrait' => $leader_portrait
     );
     $this->db->where('id', $account_id);

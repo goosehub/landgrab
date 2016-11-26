@@ -31,7 +31,7 @@
         <span id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
-            <div id="leader_name" class="text-success">Led by <span id="leader_name_label"></span> <small id="username_label"></small></div>
+            <div id="username" class="text-success">Led by <span id="username_label"></span></div>
 
             <div id="capitol_info" class="land_block_toggle">
                 <img id="land_leader_portrait_image" src="<?=base_url()?>uploads/default_leader_portrait.png"/>

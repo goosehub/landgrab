@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS `account` (
   `tutorial` int(10) unsigned NOT NULL,
   `nation_name` varchar(256) NOT NULL,
   `nation_flag` varchar(256) NOT NULL,
-  `leader_name` varchar(256) NOT NULL,
   `leader_portrait` varchar(256) NOT NULL,
   `government` int(10) unsigned NOT NULL,
   `last_government_switch` timestamp NOT NULL,

@@ -143,12 +143,11 @@ class User extends CI_Controller {
             $color = random_hex_color();
 
             // Default these values
-            $nation_name = $username;
+            $nation_name = $username . ' Nation';
             $nation_flag = 'default_nation_flag.png';
-            $leader_name = $username;
             $leader_portrait = 'default_leader_portrait.png';
 
-            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_portrait);
         }
 
 		// Login
@@ -189,7 +188,6 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('nation_color', 'Nation Color', 'trim|required|max_length[7]');
         $this->form_validation->set_rules('nation_name', 'Nation Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('nation_flag', 'Nation Flag', 'trim|max_length[500]');
-        $this->form_validation->set_rules('leader_name', 'Leader Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('leader_portrait', 'Leader Portrait', 'trim|max_length[500]');
         $this->form_validation->set_rules('existing_nation_flag', 'Existing Nation Flag', 'trim|max_length[500]');
         $this->form_validation->set_rules('existing_leader_portrait', 'Existing Leader Portrait', 'trim|max_length[500]');
@@ -239,7 +237,6 @@ class User extends CI_Controller {
         // Set non image data
         $nation_color = $this->input->post('nation_color');
         $nation_name = $this->input->post('nation_name');
-        $leader_name = $this->input->post('leader_name');
         if (!$nation_flag) {
             $nation_flag = $this->input->post('existing_nation_flag');
         }
@@ -253,7 +250,7 @@ class User extends CI_Controller {
         // Set account
         $account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $account_key = $account['id'];
-        $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_name, $leader_portrait);
+        $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_portrait);
 
         // Progress Tutorial
         if ($account['tutorial'] < 1) {

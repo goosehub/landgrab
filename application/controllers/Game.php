@@ -74,6 +74,7 @@ class Game extends CI_Controller {
         // Get dictionaries
         $data['government_dictionary'] = $this->government_dictionary();
         $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
+        $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
         $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
 
         // Get all lands
@@ -167,6 +168,11 @@ class Game extends CI_Controller {
         } else if ($account['government'] == $this->anarchy_key) {
             $account['functioning'] = false;
         }
+
+        // Get Username
+
+        $user = $this->user_model->get_user($account['user_key']);
+        $account['username'] = $user['username'];
 
         // Record account as loaded
         $query_action = $this->user_model->account_loaded($account['id']);
@@ -535,6 +541,7 @@ class Game extends CI_Controller {
     public function land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug)
     {
         foreach ($effects as $effect) {
+            $land_type_effect_keys = array($this->unclaimed_key, $this->village_key, $this->town_key, $this->city_key, $this->metropolis_key, $this->fortification_key);
             // Capitol
             if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
                 $query_action = $this->game_model->remove_capitol_from_account($account_key);
@@ -542,30 +549,37 @@ class Game extends CI_Controller {
                 $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
                 break;
             }
+            // Village
+            else if ($effect['name'] === 'village' && $form_type === $effect['id']) {
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $query_action = $this->game_model->upgrade_land_type($land_key, $this->village_key);
+                break;
+            }
             // Town
             else if ($effect['name'] === 'town' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->town_key);
                 break;
             }
             // City
             else if ($effect['name'] === 'city' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->city_key);
                 break;
             }
             // Metropolis
             else if ($effect['name'] === 'metropolis' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->metropolis_key);
                 break;
             }
             // Fortification
             else if ($effect['name'] === 'fortification' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key);
+                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
                 $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $query_action = $this->game_model->upgrade_land_type($land_key, $this->fortification_key);
                 break;
@@ -597,7 +611,7 @@ class Game extends CI_Controller {
         $defender_account = $this->user_model->get_account_by_id($defender_account);
         $defender_account = $this->get_full_account($defender_account);
 
-        // War Weariness Algorithm
+        // War Weariness Military Algorithm
         if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * 2) {
             $war_weariness = 1;
         }
@@ -612,22 +626,15 @@ class Game extends CI_Controller {
         } else {
             $war_weariness = 5;
         }
-        // War Weariness Multiplier
-        // Hardcoded for now
-        if ($land_square['land_type'] == $this->town_key) {
-            $war_weariness = $war_weariness * 2;
-        }
-        else if ($land_square['land_type'] == $this->city_key) {
-            $war_weariness = $war_weariness * 3;
-        }
-        else if ($land_square['land_type'] == $this->metropolis_key) {
-            $war_weariness = $war_weariness * 4;
-        }
-        else if ($land_square['land_type'] == $this->fortification_key) {
-            $war_weariness = $war_weariness * 3;
-        }
-        if ($land_square['capitol'] == 1) {
-            $war_weariness = $war_weariness * 5;
+        // War Weariness Defense Bonus
+        $modify_effect_dictionary = $this->game_model->get_all_modify_effects();
+        foreach ($modify_effect_dictionary as $effect) {
+            if ($land_square['land_type'] == $effect['id'] && $effect['defense'] > 0) {
+                $war_weariness = $war_weariness * $effect['defense'];
+            }
+            if ($effect['name'] === 'capitol' && $land_square['capitol'] == 1) {
+                $war_weariness = $war_weariness * $effect['defense'];
+            }
         }
         return $war_weariness;
     }
@@ -700,6 +707,18 @@ class Game extends CI_Controller {
         $stroke_color_dictionary['fortification'] = '#222222';
         $stroke_color_dictionary['capitol'] = '#FF0000';
         return $stroke_color_dictionary;
+    }
+
+    public function land_type_key_dictionary()
+    {
+        $land_type_key_dictionary['unclaimed'] = $this->unclaimed_key;
+        $land_type_key_dictionary['village'] = $this->village_key;
+        $land_type_key_dictionary['town'] = $this->town_key;
+        $land_type_key_dictionary['city'] = $this->city_key;
+        $land_type_key_dictionary['metropolis'] = $this->metropolis_key;
+        $land_type_key_dictionary['fortification'] = $this->fortification_key;
+        $land_type_key_dictionary['capitol'] = $this->capitol_key;
+        return $land_type_key_dictionary;
     }
 
     // Function to close tags

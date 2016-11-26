@@ -15,13 +15,13 @@ land_dictionary[6] = 'fortification';
 land_dictionary[10] = 'capitol';
 
 land_type_key_dictionary = new Array();
-land_type_key_dictionary['unclaimed'] = 1;
-land_type_key_dictionary['village'] = 2;
-land_type_key_dictionary['town'] = 3;
-land_type_key_dictionary['city'] = 4;
-land_type_key_dictionary['metropolis'] = 5;
-land_type_key_dictionary['fortification'] = 6;
-land_type_key_dictionary['capitol'] = 10;
+land_type_key_dictionary['unclaimed'] = <?php echo $land_type_key_dictionary['unclaimed']; ?>;
+land_type_key_dictionary['village'] = <?php echo $land_type_key_dictionary['village']; ?>;
+land_type_key_dictionary['town'] = <?php echo $land_type_key_dictionary['town']; ?>;
+land_type_key_dictionary['city'] = <?php echo $land_type_key_dictionary['city']; ?>;
+land_type_key_dictionary['metropolis'] = <?php echo $land_type_key_dictionary['metropolis']; ?>;
+land_type_key_dictionary['fortification'] = <?php echo $land_type_key_dictionary['fortification']; ?>;
+land_type_key_dictionary['capitol'] = <?php echo $land_type_key_dictionary['capitol']; ?>;
 
 government_dictionary = new Array();
 government_dictionary[0] = 'Anarchy';
@@ -269,27 +269,37 @@ function initMap()
       if (d['account']['stats'].treasury_after > 0) {
         $('#land_form_upgrade_parent').show();
         $('#button_expand_upgrade').show();
+
+        // Logic for which upgrades to show
+        if (d['land_type'] == land_type_key_dictionary['village']) {
+          $('#fortification_info_parent').show();
+        }
+        if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] >= 0) {
+          $('#town_info_parent').show();
+        }
+        else {
+          $('.effect_info_item').show();
+          $('#town_info_parent, #city_info_parent, #metropolis_info_parent').hide();
+        }
+        if (d['land_type'] == land_type_key_dictionary['town']) {
+          if (d['valid_upgrades']['city'] >= 0) {
+            $('#city_info_parent').show();
+          }
+        }
+        if (d['land_type'] == land_type_key_dictionary['city']) {
+          $('#town_info_parent').show();
+          $('#city_info_parent').show();
+          if (d['valid_upgrades']['metropolis'] >= 0) {
+            $('#metropolis_info_parent').show();
+          }
+        }
+        if (d['land_type'] == land_type_key_dictionary['fortification']) {
+          $('.effect_info_item').hide();
+        } 
       } else {
         $('#land_form_low_treasury').show();
       }
 
-      // Logic for which upgrades to show
-      if (d['land_type'] == land_type_key_dictionary['village']) {
-        $('#fortification_info_parent').show();
-      }
-      if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] >= 0) {
-        $('#town_info_parent').show();
-      }
-      else {
-        $('.effect_info_item').show();
-        $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent').hide();
-      }
-      if (d['land_type'] == land_type_key_dictionary['town'] && d['valid_upgrades']['city'] >= 0) {
-        $('#city_info_parent').show();
-      }
-      if (d['land_type'] == land_type_key_dictionary['city'] && d['valid_upgrades']['metropolis'] >= 0) {
-        $('#metropolis_info_parent').show();
-      }
       // Need more message
       if (d['land_type'] == land_type_key_dictionary['village'] && d['valid_upgrades']['town'] < 0) {
         $('#lands_needed_for_upgrade').html('You need <strong class="text-action">&nbsp;' 
@@ -367,17 +377,8 @@ function initMap()
       } else {
         $('#nation_label').html('Anonymous #' + d['account']['id']);
       }
-      if (d['account']['leader_name'] != d['username']) {
-        $('#username_label').html('(' + d['username'] + ')');
-      }
-      if (d['account']['leader_name']) {
-        $('#leader_name_label').html(d['account']['leader_name']);
-      } else {
-        $('#leader_name_label').html('Anonymous #' + d['account']['id']);
-      }
+      $('#username_label').html(d['account']['username']);
     }
-
-    // $('#leader_name_label, #nation_label').css('color', d['color']);
 
     $('#input_land_name').val(d['land_name']);
     $('#input_content').val(d['content']);
@@ -546,32 +547,33 @@ function initMap()
           $fill_color = $land['color'];
           $fill_opacity = '0.4';
         }
-        if ($log_check && $land['account_key'] === $account['id']) {
+        if ($log_check && $land['account_key'] == $account['id']) {
+          // echo 'console.log("marco");';
           $stroke_color = $stroke_color_dictionary['village'];
           $stroke_weight = 3;
         }
-        if ($land['capitol'] === '1') {
+        if ($land['capitol'] == '1') {
           $stroke_weight = 2;
           $fill_opacity = '0.8';
           $stroke_color = $stroke_color_dictionary['capitol'];
         } 
         // Town
-        else if ($land['land_type'] === '3' ) {
+        else if ($land['land_type'] == $land_type_key_dictionary['town']) {
           $stroke_weight = 2;
           $stroke_color = $stroke_color_dictionary['town'];
         } 
         // City
-        else if ($land['land_type'] === '4' ) {
+        else if ($land['land_type'] == $land_type_key_dictionary['city']) {
           $stroke_weight = 2;
           $stroke_color = $stroke_color_dictionary['city'];
         } 
         // Metropolis
-        else if ($land['land_type'] === '5' ) {
+        else if ($land['land_type'] == $land_type_key_dictionary['metropolis']) {
           $stroke_weight = 2;
           $stroke_color = $stroke_color_dictionary['metropolis'];
         }
         // Fortification
-        else if ($land['land_type'] === '6' ) {
+        else if ($land['land_type'] == $land_type_key_dictionary['fortification']) {
           $stroke_weight = 2;
           $stroke_color = $stroke_color_dictionary['fortification'];
         }
