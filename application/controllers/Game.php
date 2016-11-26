@@ -681,6 +681,9 @@ class Game extends CI_Controller {
         $land_leaders = $this->leaderboard_model->leaderboard_land_owned($world['id'], $limit);
         $leaders = false;
         foreach ($land_leaders as $leader) {
+            if ($leader['account_key'] == 0) {
+                continue;
+            }
             $leader_account = $this->user_model->get_account_by_id($leader['account_key']);
             $this_leader = $this->get_full_account($leader_account);
             $leader_user = $this->user_model->get_user($this_leader['user_key']);
