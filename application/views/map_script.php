@@ -581,7 +581,6 @@ function initMap()
           $fill_opacity = '0.4';
         }
         if ($log_check && $land['account_key'] == $account['id']) {
-          // echo 'console.log("marco");';
           $stroke_color = $stroke_color_dictionary['village'];
           $stroke_weight = 3;
         }

@@ -230,7 +230,6 @@ class User extends CI_Controller {
             return false;
         }
         else if ($_FILES['leader_portrait']['name']) {
-            echo 'marco';
             $file = $this->upload->data();
             $leader_portrait = $file['file_name'];
         }
