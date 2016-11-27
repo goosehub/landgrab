@@ -5,6 +5,7 @@
 Todo
     FEATUREL Multi World
     REFACTOR: Include color in single chat query
+    REFACTOR: Remove loop in War Weariness
     BEHAVIOR: Lost all land and no political support
     BUG: Capitol stopped being a capitol
     BEHAVIOR: First land is unnamed

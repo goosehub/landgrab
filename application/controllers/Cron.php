@@ -14,21 +14,22 @@ class Cron extends CI_Controller {
     public function index($token = false)
     {
       // Use hash equals function to prevent timing attack
-      // if ( hash_equals(CRON_TOKEN, $token) ) {
-      if (true) {
+      if ( hash_equals(CRON_TOKEN, $token) ) {
+      // if (true) {
         // Stopwatch start
         // echo 'start: ' . time() . ' - ';
 
         // Set cron frequency multiplier by minute
         $cron_frequency = 1;
 
+        // Decrease war weariness
         $war_weariness_decrease = 3;
         for ($i = 0; $i < $war_weariness_decrease; $i++) {
           $this->game_model->universal_decrease_war_weariness(1);
         }
 
-/*
         // Fix to reset only land type modifiers
+/*
         $lands = $this->game_model->get_all_lands_in_world(1);
 
         $this->game_model->truncate_modifiers();
@@ -36,17 +37,7 @@ class Cron extends CI_Controller {
           $this->game_model->add_modifier_to_land($l['id'], $l['land_type']);
         }
 */
-/*
-        $users = $this->user_model->get_all_users();
-        foreach ($users as $user) {
-          $color = random_hex_color();
-          $nation_name = $user['username'];
-          $nation_flag = 'default_nation_flag.png';
-          $leader_portrait = 'default_leader_portrait.png';
-          $government = 1;
-          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_portrait, $government);
-        }
-*/
+
         // Loop to get to each account individually if needed in the future
 /*
         // Get all worlds
@@ -73,22 +64,6 @@ class Cron extends CI_Controller {
       } else {
           $this->load->view('errors/page_not_found');
       }
-    }
-
-    // Create hash_equals function if not exists
-    protected static function _createHashEquals() {
-        if(!function_exists('hash_equals')) {
-          function hash_equals($str1, $str2) {
-            if(strlen($str1) != strlen($str2)) {
-              return false;
-            } else {
-              $res = $str1 ^ $str2;
-              $ret = 0;
-              for($i = strlen($res) - 1; $i >= 0; $i--) $ret |= ord($res[$i]);
-              return !$ret;
-            }
-          }
-        }
     }
 
 }
