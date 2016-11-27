@@ -5,14 +5,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = "game";
 
 // Marketing routes
-$route['world/4chan'] = "game/index/5/4chan";
-$route['world/s4s'] = "game/index/5/s4s";
-$route['world/b'] = "game/index/5/b";
-$route['world/v'] = "game/index/5/v";
-$route['world/int'] = "game/index/5/int";
-$route['world/pol'] = "game/index/5/pol";
-$route['world/biz'] = "game/index/5/biz";
-$route['world/webgames'] = "game/index/5/webgames";
+$route['world/4chan'] = "game/index/1/4chan";
+$route['world/s4s'] = "game/index/1/s4s";
+$route['world/b'] = "game/index/1/b";
+$route['world/v'] = "game/index/1/v";
+$route['world/int'] = "game/index/1/int";
+$route['world/pol'] = "game/index/1/pol";
+$route['world/biz'] = "game/index/1/biz";
+$route['world/webgames'] = "game/index/1/webgames";
 
 // World load
 $route['world/(:any)'] = "game/index/$1";

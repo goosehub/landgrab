@@ -65,7 +65,7 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Treasury: </strong>
+                        <strong class="law_info_item_label">Leftover Revenue: </strong>
                         <strong class="law_info_value text-yellow">
                             $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
                         </strong><br>
@@ -142,12 +142,15 @@
         <div class="col-md-4">
             <h3>Useful Information</h3>
             <ul id="useful_info_list">
+                <li>Building Towns and Cities and Metropolises are the best way to get more money</li>
+                <li>For every 5 villages, you can build a Town, every 5 Towns a City, and every 5 Cities a Metropolis</li>
                 <li>Taxes allow you to increase your budgets and build on your lands</li>
                 <li>Corruption Eats at your Tax Income</li>
                 <li>Entitlments give you more Political Support</li>
                 <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
                 <li>War Weariness decreases your Political Support</li>
-                <li>When you reach your minimum Political Support, your government can not longer function</li>
+                <li>When you reach your minimum Political Support, your government can no longer function</li>
+                <li>Revenue is what's left over from your budgets and buildings</li>
             </ul>
         </div>
     </div>

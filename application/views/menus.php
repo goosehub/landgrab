@@ -15,7 +15,7 @@
       | Tax Rate: <strong class="text-success"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
       | Pop: <strong class="text-purple"><span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K</strong>
       | GDP: <strong class="text-action">$<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M</strong>
-      | Treasury: <strong class="text-yellow">$<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M</strong>
+      | Revenue: <strong class="text-yellow">$<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M</strong>
       | Support: <strong class="text-default"><span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%</strong>
 
       <span class="caret"></span>

@@ -32,6 +32,9 @@
         cache: false,
         success: function(html)
         {
+            if (!html.startsWith('<div id="chat_check"></div>')) {
+              return false;
+            }
             html = replaceURLWithHTMLLinks(html)
             $("#chat_messages_box").html(html);
             $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);

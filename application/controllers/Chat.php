@@ -21,6 +21,9 @@ class Chat extends CI_Controller {
         $chats = $this->chat_model->load_chat_by_limit($world_key, $limit);
         $chats = array_reverse($chats);
 
+        // Verify everything is okay
+        echo '<div id="chat_check"></div>';
+
         // Echo out chats
         foreach ($chats as $chat) {
             $account = $data['account'] = $this->user_model->get_account_by_keys($chat['user_key'], $world_key);

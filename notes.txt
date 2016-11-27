@@ -3,9 +3,18 @@
 ==========================================================================================
 
 Todo
+    Chat bugging out
+    Image upload bugs
+    First land is unnamed
+    Leaderboards ajax
+    Tab autocomplete for name in chat
+    Multi World
+    Remove Anarchy completely
+    Database Performance
+    Less requests
+
     Downgrade when non functioning
     After Make Capitol Visual Que not there
-    Leaderboards ajax
     Potential Updating Map Issues
     Better Tutorial
     Build with plus signs

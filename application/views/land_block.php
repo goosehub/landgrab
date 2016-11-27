@@ -66,7 +66,7 @@
         </button>
 
         <button id="land_form_low_treasury" class="expand_land_form btn btn-danger land_block_toggle disabled">
-            Treasury too low to build
+            Revenue too low to build
         </button>
 
         <br> <br>

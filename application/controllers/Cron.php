@@ -17,13 +17,15 @@ class Cron extends CI_Controller {
       // if ( hash_equals(CRON_TOKEN, $token) ) {
       if (true) {
         // Stopwatch start
-        echo 'start: ' . time() . ' - ';
+        // echo 'start: ' . time() . ' - ';
 
         // Set cron frequency multiplier by minute
         $cron_frequency = 1;
 
-        $war_weariness_decrease = 1;
-        $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
+        $war_weariness_decrease = 3;
+        for ($i = 0; $i < $war_weariness_decrease; $i++) {
+          $this->game_model->universal_decrease_war_weariness(1);
+        }
 
 /*
         // Fix to reset only land type modifiers
@@ -41,7 +43,8 @@ class Cron extends CI_Controller {
           $nation_name = $user['username'];
           $nation_flag = 'default_nation_flag.png';
           $leader_portrait = 'default_leader_portrait.png';
-          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_portrait);
+          $government = 1;
+          $this->user_model->create_player_account($user['id'], 1, $color, $nation_name, $nation_flag, $leader_portrait, $government);
         }
 */
         // Loop to get to each account individually if needed in the future
@@ -61,10 +64,10 @@ class Cron extends CI_Controller {
         } // End world loop
 */
         // Stopwatch end
-        echo 'end: ' . time() . ' - ';
+        // echo 'end: ' . time() . ' - ';
 
         // Taxes complete, good job! echo for cron email. time() keeps email from going to spam as exact duplicate
-        echo 'Cron Successful. Timestamp: ' . time();
+        // echo 'Cron Successful. Timestamp: ' . time();
 
       // Generic Page Not Found on fail
       } else {

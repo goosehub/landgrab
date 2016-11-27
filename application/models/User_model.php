@@ -123,7 +123,7 @@ Class user_model extends CI_Model
     }
  }
  // Create player account
- function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_portrait)
+ function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_portrait, $government)
  {
     // Insert user into user
     $data = array(
@@ -133,6 +133,7 @@ Class user_model extends CI_Model
     'nation_name' => $nation_name,
     'nation_flag' => $nation_flag,
     'leader_portrait' => $leader_portrait,
+    'government' => $government,
     'last_load' => date('Y-m-d H:i:s')
     );
     $this->db->insert('account', $data);
