@@ -24,9 +24,7 @@ class Cron extends CI_Controller {
 
         // Decrease war weariness
         $war_weariness_decrease = 3;
-        for ($i = 0; $i < $war_weariness_decrease; $i++) {
-          $this->game_model->universal_decrease_war_weariness(1);
-        }
+        $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
         // Fix to reset only land type modifiers
 /*

@@ -91,7 +91,7 @@ Class user_model extends CI_Model
 
     // Disabled for now
     if ($query->num_rows() > 0) {
-        // return 'ip_fail';
+        return 'ip_fail';
     }
 
     $this->db->select('username');

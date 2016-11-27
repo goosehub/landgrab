@@ -21,3 +21,10 @@ SET `war_weariness`= 0
 WHERE 1;
 
 TRUNCATE `land_modifier`;
+
+SELECT
+    *, COUNT(`ip`) AS `value_occurrence`
+    FROM     `user`
+    GROUP BY `ip`
+    ORDER BY `value_occurrence` DESC
+    LIMIT    10;

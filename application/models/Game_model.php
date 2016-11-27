@@ -312,8 +312,12 @@ Class game_model extends CI_Model
  }
  function universal_decrease_war_weariness($war_weariness_decrease)
  {
-    $this->db->where('war_weariness >', 0);
+    $this->db->where('war_weariness >=', $war_weariness_decrease);
     $this->db->set('war_weariness', 'war_weariness-' . $war_weariness_decrease, FALSE);
+    $this->db->update('account');
+
+    $this->db->where('war_weariness <=', $war_weariness_decrease);
+    $this->db->set('war_weariness', 0);
     $this->db->update('account');
  }
  function truncate_modifiers()
