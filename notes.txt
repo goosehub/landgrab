@@ -4,14 +4,14 @@
 
 Todo
     Multi World
+    Downgrade when non functioning
     Capitol stopped being a capitol
-    Image upload bugs
-    Database Performance
-    Less requests
     First land is unnamed
     Leaderboards ajax
-    Downgrade when non functioning
-
+    Lost all land and no political support
+    Database Performance
+    Less requests
+    The CRON token
 
 ==========================================================================================
     Goals

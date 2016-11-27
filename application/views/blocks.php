@@ -146,8 +146,10 @@
                 <li>Entitlments give you more Political Support</li>
                 <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
                 <li>War Weariness decreases your Political Support</li>
+                <li>War Weariness decreases by 3% every minute</li>
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
+                <li>Revenue doesn't increase over time, but is instead a static number</li>
             </ul>
         </div>
     </div>

@@ -117,7 +117,7 @@
                                     $this_class = 'primary';
                                 } ?>
                                 <div class="effect_pair">
-                                    <span class="effect_label text-warning">Treasury: </span>
+                                    <span class="effect_label text-warning">Revenue: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
                                         <?php echo $effect['treasury']; ?>M
                                     </span>

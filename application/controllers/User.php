@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('America/New_York');
 
 class User extends CI_Controller {
-    
+
     protected $democracy_key = 1;
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
@@ -212,24 +212,25 @@ class User extends CI_Controller {
         $this->load->library('upload', $config);
 
         // Nation flag
-        $nation_flag = '';
+        $nation_flag = $this->input->post('existing_nation_flag');
         if ( $_FILES['nation_flag']['name'] && !$this->upload->do_upload('nation_flag') ) {
             $this->session->set_flashdata('validation_errors', $this->upload->display_errors());
             redirect('world/' . $world_key, 'refresh');
             return false;
         }
-        else {
+        else if ($_FILES['nation_flag']['name']) {
             $file = $this->upload->data();
             $nation_flag = $file['file_name'];
         }
 
         // Leader Portriat
-        $leader_portrait = '';
+        $leader_portrait = $this->input->post('existing_leader_portrait');
         if ( $_FILES['leader_portrait']['name'] && !$this->upload->do_upload('leader_portrait') ) {
             echo $this->upload->display_errors();
             return false;
         }
-        else {
+        else if ($_FILES['leader_portrait']['name']) {
+            echo 'marco';
             $file = $this->upload->data();
             $leader_portrait = $file['file_name'];
         }
@@ -237,12 +238,6 @@ class User extends CI_Controller {
         // Set non image data
         $nation_color = $this->input->post('nation_color');
         $nation_name = $this->input->post('nation_name');
-        if (!$nation_flag) {
-            $nation_flag = $this->input->post('existing_nation_flag');
-        }
-        if (!$leader_portrait) {
-            $leader_portrait = $this->input->post('existing_leader_portrait');
-        }
 
         // Add hash to color
         $color = '#' . $nation_color;
