@@ -12,7 +12,6 @@ class Game extends CI_Controller {
     protected $fortification_key = 6;
     protected $capitol_key = 10;
 
-    protected $anarchy_key = 0;
     protected $democracy_key = 1;
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
@@ -21,7 +20,6 @@ class Game extends CI_Controller {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
-        $this->load->model('action_model', '', TRUE);
 	    $this->load->model('leaderboard_model', '', TRUE);
 	}
 
@@ -78,7 +76,7 @@ class Game extends CI_Controller {
         $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
 
         // Get all lands
-        $server_update_timespan = 20;
+        $server_update_timespan = 60;
         $data['update_timespan'] = ($server_update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $server_update_timespan);
@@ -125,6 +123,7 @@ class Game extends CI_Controller {
         $account['stats'] = $this->game_model->get_sum_effects_for_account($account['id']);
 
         // Democracy Taxes
+        $account['stats']['corruption_rate'] = 100;
         if ($account['government'] == $this->democracy_key) {
             $account['stats']['corruption_rate'] = 0;
         }
@@ -135,10 +134,6 @@ class Game extends CI_Controller {
         // Autocracy Taxes
         else if ($account['government'] == $this->autocracy_key) {
             $account['stats']['corruption_rate'] = 30;
-        }
-        // Anarchy
-        else {
-            $account['stats']['corruption_rate'] = 100;
         }
         $tax_unpopularity = 2;
         $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
@@ -151,10 +146,6 @@ class Game extends CI_Controller {
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
         $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
-        // No support for anarchy
-        if ($account['government'] == $this->anarchy_key) {
-            $account['stats']['support'] = 0;
-        }
 
         // See if functioning
         $account['functioning'] = true;
@@ -165,8 +156,6 @@ class Game extends CI_Controller {
             $account['functioning'] = false;
         }
         else if ($account['government'] == $this->autocracy_key && $account['stats']['support'] < 10) {
-            $account['functioning'] = false;
-        } else if ($account['government'] == $this->anarchy_key) {
             $account['functioning'] = false;
         }
 
@@ -380,12 +369,6 @@ class Game extends CI_Controller {
         // Prevent new players from taking towns or larger
         if ($account['tutorial'] < 2 && $land_square['land_type'] >= $this->town_key) {
             echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
-            return false;
-        }
-
-        // Check if player is functioning
-        if ($action_type != 'update' && $account['government'] == $this->anarchy_key && $account['tutorial'] >= 2) {
-            echo '{"status": "fail", "message": "You can not take actions until your government is no longer in Anarchy. Select the white menu above."}';
             return false;
         }
 
@@ -696,7 +679,6 @@ class Game extends CI_Controller {
     // Land dictionary for reference
     public function government_dictionary()
     {
-        $government_dictionary[0] = 'Anarchy';
         $government_dictionary[1] = 'Democracy';
         $government_dictionary[2] = 'Oligarchy';
         $government_dictionary[3] = 'Autocracy';

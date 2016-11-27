@@ -105,9 +105,6 @@
                                 <?php if ($account['government'] != 3) { ?>
                                 <option value="3">Autocracy (30% Corruption, Min Support at 10%)</option>
                                 <?php } ?>
-                                <?php if ($account['government'] != 0) { ?>
-                                    <option value="0">Anarchy (No Functioning Government)</option>
-                                <?php } ?>
                             </select>
                         </div>
                     </div>

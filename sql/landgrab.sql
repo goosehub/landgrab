@@ -51,27 +51,6 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `action_log`
---
-
-CREATE TABLE IF NOT EXISTS `action_log` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `active_account_key` int(10) unsigned NOT NULL,
-  `passive_account_key` int(10) unsigned NOT NULL,
-  `action` varchar(32) NOT NULL,
-  `result` varchar(32) NOT NULL,
-  `world_key` int(10) unsigned NOT NULL,
-  `coord_slug` varchar(8) NOT NULL,
-  `name_at_action` varchar(512) NOT NULL,
-  `details` text NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `analytics`
 --
 
@@ -212,10 +191,10 @@ INSERT INTO `modify_effect` (`id`, `name`, `sort_order`, `is_land_upgrade`, `pop
 (3, 'town', 2, 1, 10, 10, 0, 2, 0, 0, '2016-11-08 10:27:27'),
 (4, 'city', 3, 1, 100, 100, 0, 3, 0, 0, '2016-11-08 10:27:58'),
 (5, 'metropolis', 4, 1, 1000, 1000, 0, 4, 0, 0, '2016-11-08 10:28:34'),
-(6, 'fortification', 2, 1, 1, 1, -50, 3, 1, 0, '2016-11-24 06:24:53'),
-(10, 'capitol', 5, 1, 50, 50, 0, 5, 0, 10, '2016-11-08 10:29:47'),
-(11, 'skyscraper', 10, 0, 50, 15, -20, 0, 0, 1, '2016-11-08 10:45:22'),
+(6, 'fortification', 2, 1, 1, 1, -10, 3, 1, 0, '2016-11-24 06:24:53'),
+(10, 'capitol', 5, 1, 50, 50, 0, 5, 0, 25, '2016-11-08 10:29:47'),
+(11, 'skyscraper', 10, 0, 50, 15, -10, 0, 0, 1, '2016-11-08 10:45:22'),
 (12, 'factory', 9, 0, 10, 5, -10, 0, 1, 0, '2016-11-08 10:45:12'),
-(14, 'hospital', 7, 0, 50, 0, -20, 0, 0, 1, '2016-11-08 10:33:05'),
-(15, 'military_base', 6, 0, 0, 0, -100, 2, 10, 0, '2016-11-08 10:34:10'),
-(16, 'school', 8, 0, 10, 10, -40, 0, 0, 2, '2016-11-08 10:35:48');
+(14, 'hospital', 7, 0, 50, 0, -15, 0, 0, 1, '2016-11-08 10:33:05'),
+(15, 'military_base', 6, 0, 0, 0, -25, 2, 10, 0, '2016-11-08 10:34:10'),
+(16, 'school', 8, 0, 10, 10, -20, 0, 0, 2, '2016-11-08 10:35:48');

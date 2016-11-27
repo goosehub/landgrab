@@ -3,142 +3,29 @@
 ==========================================================================================
 
 Todo
-    Chat bugging out
-    Image upload bugs
-    First land is unnamed
-    Leaderboards ajax
-    Tab autocomplete for name in chat
     Multi World
-    Remove Anarchy completely
+    Capitol stopped being a capitol
+    Image upload bugs
     Database Performance
     Less requests
-
+    First land is unnamed
+    Leaderboards ajax
     Downgrade when non functioning
-    After Make Capitol Visual Que not there
-    Potential Updating Map Issues
-    Better Tutorial
-    Build with plus signs
-    Chat history
-    How to play, Refine Tutorial, About
 
-    Demote land
-    Account tax and budget interactive UI
-    Ocean Reporting
-
-    
-
-                    User Story
-Start game
-    Pick username
-    Password or not now
-    Birth of a Nation - Country Name, Flag, Leader Name, Leader Portrait
-    Declare Independence - Pick Starting Location as Capitol
-    We The People / Death and Taxes - Pick a government, set taxes, balance the budget
-    Building for the Future - Improve your city
-    Manifest Destiny - Expand outward, explain attacking
-
-                    Metrics
-Land
-Population
-GDP
-Treasury
-Military
-Political Support
-
-                    Land
-Unclaimed
-Village
-Capitol once
-Town every 5 lands
-City every 5 towns
-Metropolis every 5 cities
-
-                    Mechanics
-Attack
-    if ($support >= $governement_support_level) {
-        $wait_in_minutes = ceil( ($defense / $attack) * $land_defense);
-        $new_support = $support - 1
-    }
-Tax
-    Takes percentage of GDP for Treasury
-    Each percent takes percent from support
-Government
-    Anarchy
-        Default
-        No actions can be taken
-    Democracy
-        Min Support at 50
-    Oligarchy
-        Min Support at 30
-        Taxes less effective
-    Autocracy
-        Min Support at 10
-        GDP less effective
-        Faster 
-Military Budget
-    From Treasury
-    Increases military power
-Entitlements Budget
-    From Treasury
-    Increases support
-
-?Trade
-?Law
-?Military Type
-?Attack Type
-?Corruption
-?Unemployment
-    Population / GDP
-Report as water
-
-                    Data Info
-Improvements
-    Hospital +pop
-    Military base +mil
-    School +GDP +pop
-
-        Industry +gdp
-        Commerce +gdp
-        Residential +gdp
-    Coal +gdp +pop
-    Nuclear +gdp +pop
-    Wind +gdp +pop
-        Police Station +support
-        Courthouse +support
-        Jail +support
-        Highway +gdp +pop
-        Subway Line +gdp +pop
-        Airport +gdp +pop
-    Library +GDP
-    University +GDP
-        Park +support
-        Community Center +support
-        Statium +support
-
-Attack Types
-    Multiple Armies
-        Soldiers
-        Artillery
-        Special Ops
-    Types of attacks
-        Land Attack (Take)
-        Bombard (Downgrade)
-        Secret Attack
-    Other army
-        Gorilla
-            Double winning vs Mech
-        Trench
-            Triple winning vs Gorilla
-        Mech
-            Quad winning vs Trench
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 High Priority
+    See Notes Todo Above
 
 Moderate Priority
+    Tab autocomplete for name in chat
+    After Make Capitol Visual Que not there
+    Build with plus signs
+    Account tax and budget interactive UI
+    Ocean Reporting
 
 Low Priority
     Feature

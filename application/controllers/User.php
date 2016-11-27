@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('America/New_York');
 
 class User extends CI_Controller {
-
-    protected $anarchy_key = 0;
+    
     protected $democracy_key = 1;
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
@@ -321,9 +320,6 @@ class User extends CI_Controller {
         if ($government != $account['government'] && $account['last_government_switch'] > date('Y-m-d H:i:s', time() - $government_switch_wait * 60) ) {
             $this->form_validation->set_message('law_form_validation', 'You must wait ' . $government_switch_wait . ' minutes before switching governments again.');
             return false;
-        }
-        if ($government != $this->anarchy_key) {
-            $this->user_model->update_government_switch($account['id']);
         }
         return true;
     }
