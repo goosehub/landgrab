@@ -64,16 +64,22 @@ class Game extends CI_Controller {
         }
 
         // Get world leaderboards
-        $data['leaderboards'] = $this->leaderboards($world);
+        if (!isset($_GET['json'])) {
+            $data['leaderboards'] = $this->leaderboards($world);
+        }
 
         // Get all worlds
-        $data['worlds'] = $this->user_model->get_all_worlds();
+        if (!isset($_GET['json'])) {
+            $data['worlds'] = $this->user_model->get_all_worlds();
+        }
 
         // Get dictionaries
-        $data['government_dictionary'] = $this->government_dictionary();
-        $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
-        $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
-        $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+        if (!isset($_GET['json'])) {
+            $data['government_dictionary'] = $this->government_dictionary();
+            $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
+            $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
+            $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+        }
 
         // Get all lands
         $server_update_timespan = 60;

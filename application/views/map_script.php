@@ -650,7 +650,7 @@ function initMap()
         }
 
         update_lands(data['lands']);
-        update_leaderboards(data['leaderboards']);
+        // update_leaderboards(data['leaderboards']);
         if (log_check) {
           update_stats(data['account']);
         }
