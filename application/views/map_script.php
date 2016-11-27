@@ -266,65 +266,61 @@ function initMap()
     if (log_check && d['account_key'] === account['id']) {
       $('#land_form_update_parent').show()
       $('#land_form_submit_update').show();
-      if (d['account']['stats'].treasury_after <= 0) {
-        $('#land_form_low_treasury').show();
-      } else {
-        $('#land_form_upgrade_parent').show();
-        $('#button_expand_upgrade').show();
+      $('#land_form_upgrade_parent').show();
+      $('#button_expand_upgrade').show();
 
-        // Logic for which upgrades to show
-        $('.effect_info_item').show();
-        $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent, #fortification_info_parent').hide();
+      // Logic for which upgrades to show
+      $('.effect_info_item').show();
+      $('#village_info_parent, #town_info_parent, #city_info_parent, #metropolis_info_parent, #fortification_info_parent').hide();
 
-        $('#village_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
-        $('#town_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
-        $('#city_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
+      $('#village_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
+      $('#town_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
+      $('#city_info_parent .upgrade_submit').removeClass('btn-danger').removeClass('btn-action').addClass('btn-action')
 
-        // Village
-        if (d['land_type'] == land_type_key_dictionary['village']) {
-          $('.effect_info_item').hide();
-          $('#fortification_info_parent').show();
-          if (d['valid_upgrades']['town'] >= 0) {
-            $('#town_info_parent').show();
-          }
-        }
-
-        // Forticiation
-        if (d['land_type'] == land_type_key_dictionary['fortification']) {
-          $('.effect_info_item').hide();
-          $('#village_info_parent').show();
-          $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
-        } 
-
-        // Town
-        if (d['land_type'] == land_type_key_dictionary['town']) {
-          $('#village_info_parent').show();
-          $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
-          if (d['valid_upgrades']['city'] >= 0) {
-            $('#city_info_parent').show();
-          }
-        }
-
-        // City
-        if (d['land_type'] == land_type_key_dictionary['city']) {
-          $('#village_info_parent').show();
-          $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+      // Village
+      if (d['land_type'] == land_type_key_dictionary['village']) {
+        $('.effect_info_item').hide();
+        $('#fortification_info_parent').show();
+        if (d['valid_upgrades']['town'] >= 0) {
           $('#town_info_parent').show();
-          $('#town_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
-          if (d['valid_upgrades']['metropolis'] >= 0) {
-            $('#metropolis_info_parent').show();
-          }
         }
+      }
 
-        // Metropolis
-        if (d['land_type'] == land_type_key_dictionary['metropolis']) {
-          $('#village_info_parent').show();
-          $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
-          $('#town_info_parent').show();
-          $('#town_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+      // Forticiation
+      if (d['land_type'] == land_type_key_dictionary['fortification']) {
+        $('.effect_info_item').hide();
+        $('#village_info_parent').show();
+        $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+      } 
+
+      // Town
+      if (d['land_type'] == land_type_key_dictionary['town']) {
+        $('#village_info_parent').show();
+        $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+        if (d['valid_upgrades']['city'] >= 0) {
           $('#city_info_parent').show();
-          $('#city_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
         }
+      }
+
+      // City
+      if (d['land_type'] == land_type_key_dictionary['city']) {
+        $('#village_info_parent').show();
+        $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+        $('#town_info_parent').show();
+        $('#town_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+        if (d['valid_upgrades']['metropolis'] >= 0) {
+          $('#metropolis_info_parent').show();
+        }
+      }
+
+      // Metropolis
+      if (d['land_type'] == land_type_key_dictionary['metropolis']) {
+        $('#village_info_parent').show();
+        $('#village_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+        $('#town_info_parent').show();
+        $('#town_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
+        $('#city_info_parent').show();
+        $('#city_info_parent .upgrade_submit').removeClass('btn-action').addClass('btn-danger')
       }
 
       // Need more message
@@ -345,6 +341,16 @@ function initMap()
           + Math.abs(d['valid_upgrades']['metropolis']) 
           + '</strong>&nbsp; more Cities to upgrade to a Metropolis');
         $('#lands_needed_for_upgrade').show();
+      }
+
+      if (d['account']['stats'].treasury_after <= 0) {
+        $('#land_form_low_treasury').show();
+        $('.effect_info_item').hide();
+        if (d['land_type'] == land_type_key_dictionary['village']) {
+          $('#button_expand_upgrade').hide();
+        } else {
+          $('#village_info_parent').show();
+        }
       }
     // Do not own
     } else if (log_check) {

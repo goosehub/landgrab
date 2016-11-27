@@ -150,6 +150,7 @@
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
+                <li>Try turning on Satellite Mode</li>
             </ul>
         </div>
     </div>
@@ -465,5 +466,5 @@
 </div>
 
 <div id="beta_tag">
-    <strong>BETA: Report bugs and balance suggestions to goosepostbox@gmail.com</strong>
+    <strong>Report bugs to goosepostbox@gmail.com</strong>
 </div>

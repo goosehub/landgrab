@@ -361,8 +361,8 @@ class Game extends CI_Controller {
         }
 
         // Prevent building when no treasury
-        if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0) {
-            echo '{"status": "fail", "message": "Your treasury is too low to build. Try raising taxes."}';
+        if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0 && $form_type != $this->village_key) {
+            echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes."}';
             return false;
         }
 
@@ -372,7 +372,7 @@ class Game extends CI_Controller {
             return false;
         }
 
-        if ($action_type != 'update' && !$account['functioning'] && $account['tutorial'] >= 2) {
+        if ($action_type != 'update' && !$account['functioning'] && $account['tutorial'] >= 2 && $form_type != $this->village_key) {
             echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
             return false;
         }

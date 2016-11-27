@@ -3,15 +3,14 @@
 ==========================================================================================
 
 Todo
-    Multi World
-    Downgrade when non functioning
-    Capitol stopped being a capitol
-    First land is unnamed
-    Leaderboards ajax
-    Lost all land and no political support
-    Database Performance
-    Less requests
-    The CRON token
+    FEATUREL Multi World
+    BEHAVIOR: Lost all land and no political support
+    BUG: Capitol stopped being a capitol
+    BEHAVIOR: First land is unnamed
+    FEATURE: Leaderboards ajax
+    REFACTOR: Database Performance
+    REFACTOR: Less requests
+    REFACTOR: The CRON token
 
 ==========================================================================================
     Goals
