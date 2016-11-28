@@ -163,6 +163,16 @@ Class game_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
+ // Count lands of account
+ function count_lands_of_account($account_key)
+ {
+   $this->db->select('count(land_type) as count');
+   $this->db->from('land');
+   $this->db->where('account_key', $account_key);
+   $query = $this->db->get();
+   $result = $query->result_array();
+   return $result[0];
+}
  // Get all lands of type by account
  function count_lands_of_type_by_account($account_key)
  {
@@ -173,7 +183,8 @@ Class game_model extends CI_Model
    $this->db->group_by('land_type');
    $this->db->order_by('land_type', 'ASC');
    $query = $this->db->get();
-   return $query->result_array();
+   $result = $query->result_array();
+   return $result;
 }
 
 
@@ -308,6 +319,13 @@ Class game_model extends CI_Model
  {
     $this->db->where('id', $account_id);
     $this->db->set('war_weariness', 'war_weariness-' . $war_weariness, FALSE);
+    $this->db->update('account');
+ }
+
+ function set_war_weariness_from_account($account_id, $war_weariness)
+ {
+    $this->db->where('id', $account_id);
+    $this->db->set('war_weariness', $war_weariness);
     $this->db->update('account');
  }
  function universal_decrease_war_weariness($war_weariness_decrease)

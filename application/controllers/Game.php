@@ -436,6 +436,12 @@ class Game extends CI_Controller {
 
         // Update land
         $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
+
+        // Reset War Weariness if attacked player has no land now
+        $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
+        if ($defender_new_land_count['count'] == 0) {
+            $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
+        }
         
         // Attack response
         if ($action_type === 'attack') {
