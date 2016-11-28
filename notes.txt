@@ -7,6 +7,7 @@ Todo
     REFACTOR: Include color in single chat query
     BEHAVIOR: Lost all land and no political support
     BUG: Capitol stopped being a capitol
+    BUG: Military Bases aren't giving Defensive Bonus
     BEHAVIOR: First land is unnamed
     FEATURE: Leaderboards ajax
     REFACTOR: Database Performance

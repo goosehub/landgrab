@@ -120,7 +120,7 @@ class User extends CI_Controller {
         // Attempt new user register
         $facebook_id = 0;
         $ip = $_SERVER['REMOTE_ADDR'];
-        $ip_frequency_register = 1;
+        $ip_frequency_register = 4;
         $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
         // Fail
         if ($user_id === 'ip_fail') {
