@@ -23,12 +23,12 @@ class User extends CI_Controller {
 	{
         // Check if this is ip has failed login too many times
         $ip = $_SERVER['REMOTE_ADDR'];
-        $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * 1);
+        $timestamp = date('Y-m-d H:i:s', time() - 1 * 60 * 60);
         $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
         $login_limit = 5;
         if (count($ip_fails) > $login_limit) {
-            // echo 'Too many login attempts from this IP';
-            // die();
+            echo 'Too many login attempts from this IP. Please wait 20 minutes.';
+            die();
         }
 
 		// Validation
