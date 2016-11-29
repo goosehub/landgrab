@@ -466,6 +466,6 @@
     </table>
 </div>
 
-<div id="beta_tag">
-    <strong>Report bugs to goosepostbox@gmail.com</strong>
+<div id="info_tag">
+    <strong>Latest Update: <a href="" target="_blank">Sniper Nerf Update</a></strong>
 </div>

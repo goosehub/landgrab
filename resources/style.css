@@ -102,7 +102,7 @@ html, body {
     top: 2vh;
     min-height: 95vh;
   }
-  #beta_tag {
+  #info_tag {
     display: none;
   }
 }
@@ -237,9 +237,9 @@ html, body {
 }
 
 /* Beta */
-#beta_tag {
+#info_tag {
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   right: 60px;
   padding: 0.2em;
   background: #ECB1E3;
