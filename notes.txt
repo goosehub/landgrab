@@ -3,9 +3,9 @@
 ==========================================================================================
 
 Todo
-    FEATURE: Multi World
     BUG: Capitol stopped being a capitol
     BUG: Military Bases aren't giving Defensive Bonus
+    FEATURE: UI Prevent Attack when insufficient support
     FEATURE: Leaderboards ajax
     REFACTOR: Database Performance
     REFACTOR: Less requests

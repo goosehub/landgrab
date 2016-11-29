@@ -75,7 +75,7 @@ function initMap()
       zoom: 3,
       <?php } ?>
       // Prevent seeing north and south edge
-      minZoom: 3,
+      minZoom: 2,
       // Prevent excesssive zoom
       // maxZoom: 10,
       // Map type
