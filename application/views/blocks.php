@@ -150,7 +150,6 @@
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
-                <li><a href="https://www.reddit.com/r/LandGrab/comments/5f5bja/state_of_the_game_along_with_newbie_guide/" target="_blank">Read this useful fan made guide to the game</a>
                 <li>Try turning on Satellite Mode</li>
             </ul>
         </div>
@@ -434,6 +433,7 @@
             </tr>    
         </thead>
         <tbody>
+            <?php if (!empty($leaderboards)) { ?>
             <?php foreach ($leaderboards as $leader) { ?>
             <tr>
                 <td>
@@ -461,6 +461,7 @@
                     <strong class="text-danger">$<?php echo number_format($leader['stats']['military_after']); ?></strong><span class="text-danger">,000,000</span>
                 </td>
             </tr>
+            <?php } ?>
             <?php } ?>
         </tbody>
     </table>
