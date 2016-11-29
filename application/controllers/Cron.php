@@ -26,6 +26,19 @@ class Cron extends CI_Controller {
         $war_weariness_decrease = 3;
         $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
+        // Add accounts for new world
+/*
+        $users = $this->user_model->get_all_users();
+        foreach ($users as $user) {
+          $color = random_hex_color();
+          $nation_name = $user['username'] . ' Nation';
+          $nation_flag = 'default_nation_flag.png';
+          $leader_portrait = 'default_leader_portrait.png';
+          $government = 1;
+          $this->user_model->create_player_account($user['id'], 2, $color, $nation_name, $nation_flag, $leader_portrait, $government);
+        }
+*/
+
         // Fix to reset only land type modifiers
 /*
         $lands = $this->game_model->get_all_lands_in_world(1);

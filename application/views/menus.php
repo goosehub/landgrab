@@ -35,6 +35,20 @@
       </button>
     </div>
 
+    <!-- worldss dropdown -->
+    <div class="worlds_parent menu_element btn-group">
+      <button class="info_button btn btn-info dropdown-toggle" type="button" id="worlds_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Worlds
+        <span class="caret"></span>
+      </button>
+      <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
+        <?php foreach ($worlds as $world) { ?>
+        <li class="text-center"><a href="<?=base_url();?>world/<?php echo $world['id']; ?>"><strong class="text-default"><?php echo ucfirst($world['slug']); ?></strong></a></li>
+        <?php } ?>
+      </ul>
+      </ul>
+    </div>
+
     <?php if ($log_check) { ?>
 
     <!-- User Dropdown -->

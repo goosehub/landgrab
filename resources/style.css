@@ -235,10 +235,10 @@ html, body {
 /* Beta */
 #info_tag {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   right: 60px;
   padding: 0.2em;
-  background: #ECB1E3;
+  background: #fff;
   opacity: 0.9;
   font-size: 1.1em;
 }
