@@ -35,6 +35,10 @@
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
 
+    <!-- Define as share image -->
+    <link rel="image_src" href="<?=base_url()?>resources/logos/hero.jpg" / >
+    <meta property='og:image' content='<?=base_url()?>resources/logos/hero.jpg'/>
+
   <!-- Local Style -->
   <link href="<?=base_url()?>resources/style.css?<?php echo time(); ?>" rel="stylesheet" type="text/css">
 
@@ -64,5 +68,8 @@
     <!-- <div class="fb-like" data-href="http://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div> -->
   </div>
 
-    <!-- Map Element -->
-    <div id="map"></div>
+  <!-- Image for crawlers -->
+  <img id="crawler_image" src="<?=base_url()?>resources/logos/hero.jpg" alt="Landgrab" style="display: none;"/>
+
+  <!-- Map Element -->
+  <div id="map"></div>

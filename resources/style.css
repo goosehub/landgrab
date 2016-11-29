@@ -220,10 +220,6 @@ html, body {
 #leaderboard_table {
   width: 100% !important;
 }
-/* Only show top 10 */
-#leaderboard_table tbody tr:nth-child(n+11) {
-  display: none;
-}
 .center_block strong {
   font-size: 1.4em;
 }

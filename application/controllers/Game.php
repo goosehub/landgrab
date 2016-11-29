@@ -689,7 +689,7 @@ class Game extends CI_Controller {
     public function leaderboards($world)
     {
         // This is accounts to get, number shown is determined with use of CSS
-        $limit = 30;
+        $limit = 10;
         $land_leaders = $this->leaderboard_model->leaderboard_land_owned($world['id'], $limit);
         $leaders = false;
         foreach ($land_leaders as $leader) {
