@@ -3,10 +3,9 @@
 ==========================================================================================
 
 Todo
-    FEATUREL Multi World
+    FEATURE: Multi World
     BUG: Capitol stopped being a capitol
     BUG: Military Bases aren't giving Defensive Bonus
-    BEHAVIOR: First land is unnamed
     FEATURE: Leaderboards ajax
     REFACTOR: Database Performance
     REFACTOR: Less requests
@@ -19,6 +18,8 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
+    BEHAVIOR: First land is unnamed
+    BUG: Tutorial update laws before capitol skips step
     Tab autocomplete for name in chat
     After Make Capitol Visual Que not there
     Build with plus signs

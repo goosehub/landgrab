@@ -440,7 +440,8 @@ class Game extends CI_Controller {
         // Reset War Weariness if attacked player has no land now
         $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
         if ($defender_new_land_count['count'] == 0) {
-            $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
+            // Disabled to nerf "snipers"
+            // $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
         }
         
         // Attack response
@@ -620,8 +621,24 @@ class Game extends CI_Controller {
         }
         else if ($account['stats']['military_after'] * 3 >= $defender_account['stats']['military_after']) {
             $war_weariness = 4;
-        } else {
+        }
+        else if ($account['stats']['military_after'] * 4 >= $defender_account['stats']['military_after']) {
             $war_weariness = 5;
+        }
+        else if ($account['stats']['military_after'] * 5 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 6;
+        }
+        else if ($account['stats']['military_after'] * 6 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 7;
+        }
+        else if ($account['stats']['military_after'] * 7 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 8;
+        }
+        else if ($account['stats']['military_after'] * 8 >= $defender_account['stats']['military_after']) {
+            $war_weariness = 9;
+        }
+        else {
+            $war_weariness = 10;
         }
         // War Weariness Defense Bonus
         $modify_effect_dictionary = $this->game_model->get_all_modify_effects();

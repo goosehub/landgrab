@@ -345,8 +345,3 @@ Class game_model extends CI_Model
  }
 
 }
-
-function get_mysqli() { 
-    $db = (array)get_instance()->db;
-    return mysqli_connect('localhost', $db['username'], $db['password'], $db['database']);
-}

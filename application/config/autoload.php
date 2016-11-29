@@ -18,6 +18,7 @@ function random_hex_color() {
     return '#' . random_color_part() . random_color_part() . random_color_part();
 }
 
+// Time Attack Safe string comparison
 function _createHashEquals() {
     if(!function_exists('hash_equals')) {
         function hash_equals($str1, $str2) {
@@ -31,4 +32,10 @@ function _createHashEquals() {
             }
         }
     }
+}
+
+// Get sql connection, used for escaping strings
+function get_mysqli() { 
+    $db = (array)get_instance()->db;
+    return mysqli_connect('localhost', $db['username'], $db['password'], $db['database']);
 }
