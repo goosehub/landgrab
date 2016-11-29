@@ -467,5 +467,8 @@
 </div>
 
 <div id="info_tag">
-    <strong>Latest Update: <a href="" target="_blank">Sniper Nerf Update</a></strong>
+    <strong>Latest Updates: 
+    <a href="https://www.reddit.com/r/LandGrab/comments/5ffmqd/sniper_nerf_update_11282016/" target="_blank">Sniper Nerf</a>
+    |
+    <a href="https://www.reddit.com/r/LandGrab/comments/5fg1ih/multi_world_update_11282016/" target="_blank">Multi-World</a></strong>
 </div>
