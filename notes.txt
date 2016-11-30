@@ -3,10 +3,8 @@
 ==========================================================================================
 
 Todo
-    BUG: Capitol stopped being a capitol
-    BUG: Military Bases aren't giving Defensive Bonus
-    FEATURE: UI Prevent Attack when insufficient support
-    FEATURE: Leaderboards ajax
+    FEATURE: Regular Resets
+    FEATURE: Suicide Button
     REFACTOR: Database Performance
     REFACTOR: Less requests
 
@@ -18,6 +16,9 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
+    FEATURE: UI Prevent Attack when insufficient support (Having difficulty)
+    FEATURE: Leaderboards ajax
+    BUG: Capitol stopped being a capitol (Can't replciate)
     BEHAVIOR: First land is unnamed
     BUG: Tutorial update laws before capitol skips step
     Tab autocomplete for name in chat

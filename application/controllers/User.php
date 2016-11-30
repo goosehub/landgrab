@@ -89,7 +89,7 @@ class User extends CI_Controller {
         }
 
 		// Validation
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|max_length[64]|' . $matches . 'callback_register_validation');
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
 
