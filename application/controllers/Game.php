@@ -201,7 +201,19 @@ class Game extends CI_Controller {
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         if ($land_square['account_key'] != 0) {
             $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
-            $account = $land_square['account'] = $this->get_full_account($account);
+            // This shouldn't happen, but it does
+            // This is a workaround to ensure issue is not noticed
+            if (!$account) {
+                // Unclaim land
+                $this->game_model->update_land_data($land_square['id'], 0, '', '', 1, '#000000');
+                $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
+                $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
+                $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
+                $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
+                $account = false;
+            } else {
+                $account = $land_square['account'] = $this->get_full_account($account);
+            }
         } 
         else {
             $account = false;
@@ -607,6 +619,10 @@ class Game extends CI_Controller {
 
         // Get accounts
         $defender_account = $this->user_model->get_account_by_id($defender_account);
+        if (!$defender_account) {
+            $war_weariness = 1;
+            return $war_weariness;
+        }
         $defender_account = $this->get_full_account($defender_account);
 
         // War Weariness Military Algorithm
@@ -671,11 +687,29 @@ class Game extends CI_Controller {
         $coord_array[] = ($lat) . ',' . ($lng - $land_size);
         // Fix lng crossover point
         foreach ($coord_array as &$coord) {
+            // All
             if (strpos($coord, '-180') !== false) {
                 $coord = str_replace('-180', '180', $coord);
             }
+            // Huge
             if (strpos($coord, '182') !== false) {
                 $coord = str_replace('182', '-178', $coord);
+            }
+            // Big
+            if (strpos($coord, '183') !== false) {
+                $coord = str_replace('183', '-177', $coord);
+            }
+            // Medium
+            if (strpos($coord, '184') !== false) {
+                $coord = str_replace('184', '-176', $coord);
+            }
+            // Small
+            if (strpos($coord, '186') !== false) {
+                $coord = str_replace('186', '-174', $coord);
+            }
+            // Tiny
+            if (strpos($coord, '192') !== false) {
+                $coord = str_replace('192', '-168', $coord);
             }
         }
         $coord_matches = $this->game_model->land_range_check($world_key, $account_key, $coord_array);

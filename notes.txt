@@ -3,8 +3,13 @@
 ==========================================================================================
 
 Todo
+    BUG: Capitol stopped being a capitol (Can't replciate)
+    BUG: Can't cross LNG line
+    BUG: Username alphanumeric
+    BALANCE: Nerf Forts
+    BALANCE: Less Weariness
+    BEHAVIOR: First click say start, not attack
     FEATURE: Regular Resets
-    FEATURE: Suicide Button
     REFACTOR: Database Performance
     REFACTOR: Less requests
 
@@ -16,9 +21,10 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
+    BUG: Some lands get account key that doesn't exist, most likely account_key changed on an update, workaround exists
+    FEATURE: Suicide Button
     FEATURE: UI Prevent Attack when insufficient support (Having difficulty)
     FEATURE: Leaderboards ajax
-    BUG: Capitol stopped being a capitol (Can't replciate)
     BEHAVIOR: First land is unnamed
     BUG: Tutorial update laws before capitol skips step
     Tab autocomplete for name in chat
