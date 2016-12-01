@@ -469,6 +469,8 @@
 </div>
 
 <div id="info_tag">
-    <strong>Latest Updates: 
+    <strong>
+    Latest Updates: 
     <a href="https://www.reddit.com/r/LandGrab/comments/5furzo/bug_and_balance_update_11302016/" target="_blank">Bug and Balance Update</a>
+    </strong>
 </div>

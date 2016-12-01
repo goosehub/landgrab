@@ -210,6 +210,7 @@ class Game extends CI_Controller {
                 $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
                 $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
                 $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
+                $query_action = $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
                 $account = false;
             } else {
                 $account = $land_square['account'] = $this->get_full_account($account);
