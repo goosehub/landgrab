@@ -10,6 +10,14 @@ $autoload['config'] = array();
 $autoload['language'] = array();
 $autoload['model'] = array();
 
+// Return if this is dev
+function is_dev() {
+    if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === 'dev.foobar.com/landgrab') {
+        return true;
+    }
+    return false;
+}
+
 // Random color function for generating primary color
 function random_color_part() {
     return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);

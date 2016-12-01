@@ -90,7 +90,7 @@ Class user_model extends CI_Model
     $query = $this->db->get();
 
     // Disabled for now
-    if ($query->num_rows() > 0) {
+    if ($query->num_rows() > 0 && !is_dev()) {
         return 'ip_fail';
     }
 

@@ -191,8 +191,8 @@ function initMap()
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
-      $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').off('click');
-      $('#land_form_submit_claim, #land_form_submit_attack, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').off('click');
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
 
         // Submit land ajax
         var form_type = $(this).val();
@@ -343,7 +343,7 @@ function initMap()
         $('#lands_needed_for_upgrade').show();
       }
 
-      if (d['account']['stats'].treasury_after <= 0) {
+      if (d['account']['stats'].treasury_after < 0) {
         $('#land_form_low_treasury').show();
         $('.effect_info_item').hide();
         if (d['land_type'] == land_type_key_dictionary['village']) {
@@ -358,11 +358,19 @@ function initMap()
       if (d['in_range']) {
         // And unclaimed
         if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
-          $('#land_form_submit_claim').show();
+          if (account['tutorial'] < 2) {
+            $('#land_form_submit_claim_tutorial').show();
+          } else {
+            $('#land_form_submit_claim').show();
+          }
         }
         // And claimed
         else {
-          $('#land_form_submit_attack').show();
+          if (account['tutorial'] < 2) {
+            $('#land_form_submit_attack_tutorial').show();
+          } else {
+            $('#land_form_submit_attack').show();
+          }
         }
       // Not in range
       } else {

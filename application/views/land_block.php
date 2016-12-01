@@ -22,6 +22,9 @@
             <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">
                 Claim <span class="war_weariness_outer_span">(+1 War Weariness)</span>
             </button>
+            <button type="button" id="land_form_submit_claim_tutorial" value="claim" class="submit_land_form btn btn-action land_block_toggle">
+                Build your Capitol Here
+            </button>
         </div>
 
         <div id="not_in_range" class="land_block_toggle">
@@ -44,6 +47,9 @@
             <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
                 Attack  <span class="war_weariness_outer_span">(+<span id="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
+            </button>
+            <button type="button" id="land_form_submit_attack_tutorial" value="attack" class="submit_land_form btn btn-action land_block_toggle">
+                Build your Capitol Here
             </button>
         </span>
 

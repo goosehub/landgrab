@@ -26,7 +26,7 @@ class User extends CI_Controller {
         $timestamp = date('Y-m-d H:i:s', time() - 1 * 60 * 60);
         $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
         $login_limit = 5;
-        if (count($ip_fails) > $login_limit) {
+        if (count($ip_fails) > $login_limit && !is_dev()) {
             echo 'Too many login attempts from this IP. Please wait 20 minutes.';
             die();
         }

@@ -379,7 +379,7 @@ class Game extends CI_Controller {
         }
 
         // Prevent building when no treasury
-        if ($action_type === 'build' && $account['stats']['treasury_after'] <= 0 && $form_type != $this->village_key) {
+        if ($action_type === 'build' && $account['stats']['treasury_after'] < 0 && $form_type != $this->village_key) {
             echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes."}';
             return false;
         }
@@ -635,26 +635,20 @@ class Game extends CI_Controller {
         else if ($account['stats']['military_after'] * 2 >= $defender_account['stats']['military_after']) {
             $war_weariness = 3;
         }
-        else if ($account['stats']['military_after'] * 3 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * 2 * 2 >= $defender_account['stats']['military_after']) {
             $war_weariness = 4;
         }
-        else if ($account['stats']['military_after'] * 4 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
             $war_weariness = 5;
         }
-        else if ($account['stats']['military_after'] * 5 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
             $war_weariness = 6;
         }
-        else if ($account['stats']['military_after'] * 6 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
             $war_weariness = 7;
         }
-        else if ($account['stats']['military_after'] * 7 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 8;
-        }
-        else if ($account['stats']['military_after'] * 8 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 9;
-        }
         else {
-            $war_weariness = 10;
+            $war_weariness = 8;
         }
         // War Weariness Defense Bonus
         $modify_effect_dictionary = $this->game_model->get_all_modify_effects();
