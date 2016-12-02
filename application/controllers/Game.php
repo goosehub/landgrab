@@ -63,6 +63,11 @@ class Game extends CI_Controller {
             $data['account'] = $this->get_full_account($account);
         }
 
+        // Get last winner
+        $data['last_winner_account'] = $this->user_model->get_account_by_id($world['last_winner_account_key']);
+        $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
+
+
         // Get world leaderboards
         if (!isset($_GET['json'])) {
             $data['leaderboards'] = $this->leaderboards($world);
@@ -150,7 +155,7 @@ class Game extends CI_Controller {
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['entitlements_effect'] = ceil( ($account['effective_tax_rate'] * $account['entitlements_budget']) / 10);
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
-        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['entitlements_budget'] + $account['stats']['support'];
+        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
 
         // See if functioning
@@ -386,7 +391,7 @@ class Game extends CI_Controller {
         }
 
         // Prevent new players from taking towns or larger
-        if ($account['tutorial'] < 2 && $land_square['land_type'] >= $this->town_key) {
+        if ($account['land_count'] < 1 && $land_square['land_type'] >= $this->town_key) {
             echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
             return false;
         }
