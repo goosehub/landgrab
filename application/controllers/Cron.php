@@ -27,7 +27,7 @@ class Cron extends CI_Controller {
 
       // Decrement war weariness
       echo 'Decrementing Universal War Weariness - ';
-      $war_weariness_decrease = 3;
+      $war_weariness_decrease = 5;
       $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
       // Resets
