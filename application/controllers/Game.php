@@ -65,7 +65,16 @@ class Game extends CI_Controller {
 
         // Get last winner
         $data['last_winner_account'] = $this->user_model->get_account_by_id($world['last_winner_account_key']);
-        $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
+        if (!$data['last_winner_account']) {
+            $data['last_winner_account']['username'] = 'No Winner';
+            $data['last_winner_account']['leader_portrait'] = 'default_leader_portrait.png';
+            $data['last_winner_account']['nation_flag'] = 'default_nation_flag.png';
+        } else {
+            $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
+        }
+
+        $next_reset_dictionary = $this->next_reset_dictionary();
+        $data['next_reset'] = $next_reset_dictionary[$world['id']];
 
 
         // Get world leaderboards
@@ -769,6 +778,16 @@ class Game extends CI_Controller {
         $land_type_key_dictionary['fortification'] = $this->fortification_key;
         $land_type_key_dictionary['capitol'] = $this->capitol_key;
         return $land_type_key_dictionary;
+    }
+
+    public function next_reset_dictionary()
+    {
+        $next_reset[1] = 'first of every Month at 10PM ET';
+        $next_reset[2] = 'first and 15 o every month at 10PM ET';
+        $next_reset[3] = 'every Day at 10PM ET';
+        $next_reset[4] = 'at Midnight and Noon';
+        $next_reset[5] = 'Every hour on the hour';
+        return $next_reset;
     }
 
     // Function to close tags

@@ -32,9 +32,9 @@ $result = '';
 // World Logic
 // 
 
-$world_insert_statement = "INSERT INTO `world` (`id`, `slug`, `land_size`, `created`, `modified`) 
+$world_insert_statement = "INSERT INTO `world` (`id`, `slug`, `land_size`, `last_winner_account_key`, `last_winner_land_count`, `created`, `modified`) 
 VALUES
-(NULL, '" . $world_slug . "', '" . $box_size . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+(NULL, '" . $world_slug . "', '" . $box_size . "', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
 $result .= $world_insert_statement;
 $result .= '<br>';

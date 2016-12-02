@@ -1,4 +1,4 @@
-INSERT INTO `world` (`id`, `slug`, `land_size`, `created`, `modified`) VALUES (NULL, 'tiny', '12', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO `world` (`id`, `slug`, `land_size`, `last_winner_account_key`, `last_winner_land_count`, `created`, `modified`) VALUES (NULL, 'tiny', '12', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO `land` (`id`, `coord_slug`, `lat`, `lng`, `world_key`, `capitol`, `account_key`, `land_name`, `content`, `land_type`, `color`, `modified`) VALUES
 (NULL, '-84,-168', '-84', '-168', 5, '0', '0', '', '', 1, '#000000', CURRENT_TIMESTAMP),
 (NULL, '-72,-168', '-72', '-168', 5, '0', '0', '', '', 1, '#000000', CURRENT_TIMESTAMP),

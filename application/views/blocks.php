@@ -422,6 +422,18 @@
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
+
+    <div id="last_winner_parent">
+        <p>
+            This map resets <?php echo $next_reset; ?>
+        </p>
+        <p class="lead">
+            Last Winner with <strong class="text-success"><?php echo $world['last_winner_land_count']; ?></strong> Territories - <strong class="text-primary"><?php echo $last_winner_account['username']; ?></strong>
+            <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $last_winner_account['leader_portrait']; ?>">
+            <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $last_winner_account['nation_flag']; ?>">
+        </p>
+    </div>
+
     <table id="leaderboard_table" class="table table-bordered table-hover table-condensed jquery-datatable" style="width=100%;">
         <thead>
             <tr>
@@ -471,6 +483,6 @@
 <div id="info_tag">
     <strong>
     Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5furzo/bug_and_balance_update_11302016/" target="_blank">Bug and Balance Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5g02bb/snipe_and_entitlements_fix_update_12012016/" target="_blank">Snipe and Entitlements Fix Update</a>
     </strong>
 </div>

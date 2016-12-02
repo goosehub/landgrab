@@ -187,6 +187,40 @@ Class game_model extends CI_Model
    return $result;
 }
 
+ // Update all lands
+ function update_all_lands_in_world($world_key, $account_key, $land_name, $content, $land_type, $color, $capitol)
+ {
+    $data = array(
+        'account_key' => $account_key,
+        'land_name' => $land_name,
+        'content' => $content,
+        'land_type' => $land_type,
+        'color' => $color,
+        'capitol' => $capitol,
+        'modified' => date('Y-m-d H:i:s', time())
+    );
+    $this->db->where('world_key', $world_key);
+    $this->db->update('land', $data);
+    return true;
+ }
+ // Update world with last winner
+ function update_world_with_last_winner($world_id, $last_winner_account_key, $last_winner_land_count)
+ {
+    $data = array(
+        'last_winner_account_key' => $last_winner_account_key,
+        'last_winner_land_count' => $last_winner_land_count,
+        'modified' => date('Y-m-d H:i:s', time())
+    );
+    $this->db->where('id', $world_id);
+    $this->db->update('world', $data);
+    return true;
+ }
+ function world_set_war_weariness($world_key, $war_weariness_decrease)
+ {
+    $this->db->set('war_weariness', $war_weariness_decrease);
+    $this->db->where('world_key', $world_key);
+    $this->db->update('account');
+ }
 
 
 
