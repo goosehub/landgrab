@@ -23,16 +23,17 @@ class Cron extends CI_Controller {
         $this->load->view('errors/page_not_found');
         return false;
       }
-      echo 'Running Cron';
+      echo 'Running Cron - ';
 
       // Decrement war weariness
+      echo 'Decrementing Universal War Weariness - ';
       $war_weariness_decrease = 3;
       $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
       // Resets
-      $world_reset_frequency[1] = '0 20 1 0 *';
-      $world_reset_frequency[2] = '0 20 1,15 0 *';
-      $world_reset_frequency[3] = '0 20 * * *';
+      $world_reset_frequency[1] = '0 20 1 * *';
+      $world_reset_frequency[2] = '0 21 1,15 0 *';
+      $world_reset_frequency[3] = '0 22 * * *';
       $world_reset_frequency[4] = '0 0,12 * * *';
       $world_reset_frequency[5] = '0 * * * *';
 
