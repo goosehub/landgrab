@@ -50,6 +50,21 @@ var map_update_interval = <?php echo $update_timespan; ?>;
 var infoWindow = false;
 var boxes = [];
 
+// Key Press Tracker
+var attack_key_pressed = false;
+var keys = new Array();
+keys['a'] = 65;
+$(document).keydown(function(e) {
+  if (event.which == keys['a']) {
+    attack_key_pressed = true;
+  }
+});
+$(document).keyup(function(e) {
+  if (event.which == keys['a']) {
+    attack_key_pressed = false;
+  }
+});
+
 // Start initMap callback called from google maps script
 function initMap() 
 {
@@ -101,9 +116,9 @@ function initMap()
   map.mapTypes.set('map_style', styled_map);
   map.setMapTypeId('map_style');
 
-	// 
-	// Minor Functions
-	// 
+    // 
+    // Minor Functions
+    // 
 
   // For rounding land coords
   function round_down(n) {
@@ -161,23 +176,23 @@ function initMap()
       boxes[land_key] = box;
   }
 
-	// Set land window
-	function set_window(event) {
-  	// Set Parameters
+    // Set land window
+    function set_window(event) {
+    // Set Parameters
     // Not sure why subtracting land_size on lat makes this work, but results in correct behavior
-		var lat = round_down(event.latLng.lat()) - land_size;
-		var lng = round_down(event.latLng.lng());
-		var coord_slug = lat + ',' + lng;
+        var lat = round_down(event.latLng.lat()) - land_size;
+        var lng = round_down(event.latLng.lng());
+        var coord_slug = lat + ',' + lng;
 
     // 
-		// Create land infoWindow
+        // Create land infoWindow
     // 
 
     $('.center_block').fadeOut(100);
 
-		land = get_single_land(coord_slug, world_key, function(land){
+    land = get_single_land(coord_slug, world_key, attack_key_pressed, function(land, attack_key_pressed){
       // Get land
-  		d = JSON.parse(land);
+      d = JSON.parse(land);
       // console.log(d);
 
       // Handle error
@@ -186,12 +201,24 @@ function initMap()
         return false;
       }
 
-      prepare_land_form_view(coord_slug, world_key, d);
+      prepare_land_form_view(coord_slug, world_key, d, attack_key_pressed);
       prepare_land_form_more_info(coord_slug, world_key, d);
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
       $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').off('click');
+
+      if (attack_key_pressed) {
+        setTimeout(function(){
+          $('#land_form_submit_claim').click();
+          if ($('#land_form_submit_attack').is(":visible")) {
+            $('#land_form_submit_attack').click();
+          } else {
+            $('#land_form_submit_claim').click();
+          }
+        }, 2 * 1000);
+      }
+
       $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
 
         // Submit land ajax
@@ -208,7 +235,7 @@ function initMap()
   }
 
   // Get single land ajax
-  function get_single_land(coord_slug, world_key, callback) {
+  function get_single_land(coord_slug, world_key, attack_key_pressed, callback) {
     $.ajax({
       url: "<?=base_url()?>get_single_land",
       type: "GET",
@@ -220,15 +247,17 @@ function initMap()
       success: function(data)
       {        
         // console.log(data);
-        callback(data);
+        callback(data, attack_key_pressed);
         return true;
       }
     });
   }
 
   // Prepare land form view
-  function prepare_land_form_view(coord_slug, world_key, d) {
-    $('#land_block').fadeIn(100);
+  function prepare_land_form_view(coord_slug, world_key, d, attack_key_pressed) {
+    if (!attack_key_pressed) {
+      $('#land_block').fadeIn(100);
+    }
 
     // Scroll to top and close open dropdowns
     $('#land_block').scrollTop(0);
@@ -571,11 +600,11 @@ function initMap()
     }
   }
 
-	// 
-	// Land loop
-	// 
+    // 
+    // Land loop
+    // 
 
-	<?php 
+    <?php 
     // This foreach loop runs 15,000 times, so performance and bandwidth is key
     // Because of this, some unconventional code may be used
     foreach ($lands as $land) {
