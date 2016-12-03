@@ -228,9 +228,7 @@ function initMap()
 
   // Prepare land form view
   function prepare_land_form_view(coord_slug, world_key, d) {
-    if () {
-      $('#land_block').fadeIn(100);
-    }
+    $('#land_block').fadeIn(100);
 
     // Scroll to top and close open dropdowns
     $('#land_block').scrollTop(0);
