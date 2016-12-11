@@ -483,8 +483,6 @@
 <div id="info_tag">
     <strong>
     Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5g02bb/snipe_and_entitlements_fix_update_12012016/" target="_blank">Snipe and Entitlements Fix Update</a>
-    |
-    <a href="https://www.reddit.com/r/LandGrab/comments/5g0hh4/winning_update/" target="_blank">Winning Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5hqo3x/reset_tweak_update/" target="_blank">Reset Tweak Update</a>
     </strong>
 </div>

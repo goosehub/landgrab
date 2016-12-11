@@ -783,11 +783,11 @@ class Game extends CI_Controller {
 
     public function next_reset_dictionary()
     {
-        $next_reset[1] = '1st of every Month at 8PM ET';
-        $next_reset[2] = '1st and 15th o every month at 9PM ET';
-        $next_reset[3] = 'every Day at 10PM ET';
-        $next_reset[4] = 'at Midnight and Noon';
-        $next_reset[5] = 'Every hour on the hour';
+        $next_reset[1] = '1st and 15th of every Month at 8PM ET';
+        $next_reset[2] = '10th, 20th, and 30th of every month at 8PM ET';
+        $next_reset[3] = '5th, 10th, 15th, 20th, 25th, 30th of every month at 10PM ET';
+        $next_reset[4] = 'Every even numbered day at 8PM ET';
+        $next_reset[5] = 'Every day at 8PM ET';
         return $next_reset;
     }
 
