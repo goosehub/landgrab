@@ -176,6 +176,8 @@ CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(126) NOT NULL,
   `land_size` int(4) NOT NULL,
+  `last_winner_account_key` int(10) unsigned NOT NULL,
+  `last_winner_land_count` int(10) unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
