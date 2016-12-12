@@ -76,6 +76,7 @@
       <li><a class="about_button btn btn-info">About LandGrab</a></li>
       <!-- <li><a class="faq_button btn btn-primary">FAQ</a></li> -->
       <li><a class="btn btn-primary" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
+      <li><a class="btn btn-success" href="http://gleamplay.com/" target="_blank">GleamPlay</a></li>
       <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
       <li><a class="report_bugs_button btn btn-warning">Report Bugs</a></li>
       <li><a class="report_bugs_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>

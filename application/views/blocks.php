@@ -289,7 +289,7 @@
     <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
     <br>
     <br>
-    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>
+    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="http://gleamplay.com/" target="_blank">GleamPlay</a>, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>
     <a href="http://ithare.com/" target="_blank">itHare</a>, EllisLabs and British Columbia Institute of Technology for providing CodeIgniter, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
     the rest of the Beta Testers, and all my users. Thank you!</p>
 </div>
@@ -484,6 +484,6 @@
 <div id="info_tag">
     <strong>
     Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5hqo3x/reset_tweak_update/" target="_blank">Reset Tweak Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5i0339/landgrab_is_now_featured_on_gleamplay/" target="_blank">LandGrab is now Featured on GleamPlay</a>
     </strong>
 </div>
