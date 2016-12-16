@@ -20,7 +20,7 @@
             <div><strong>Unclaimed Land</strong></div>
             <br>
             <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">
-                Claim <span class="war_weariness_outer_span">(+1 War Weariness)</span>
+                Claim <span class="war_weariness_outer_span">(+<span class="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
             </button>
             <button type="button" id="land_form_submit_claim_tutorial" value="claim" class="submit_land_form btn btn-action land_block_toggle">
                 Build your Capitol Here
@@ -46,7 +46,7 @@
             <div class="text-purple">Population of <span id="land_population_label"></span><small>K</small></div>
             <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
-                Attack  <span class="war_weariness_outer_span">(+<span id="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
+                Attack  <span class="war_weariness_outer_span">(+<span class="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
             </button>
             <button type="button" id="land_form_submit_attack_tutorial" value="attack" class="submit_land_form btn btn-action land_block_toggle">
                 Build your Capitol Here

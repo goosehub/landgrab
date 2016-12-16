@@ -39,6 +39,20 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">War Weariness: </strong>
+                        <strong class="law_info_value text-danger">
+                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>%
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Political Support: </strong>
+                        <strong class="law_info_value text-default">
+                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%
+                        </strong><br>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Tax Revenue: </strong>
                         <strong class="law_info_value text-success">
                             <span class="tax_income_span"><?php echo $account['stats']['tax_income']; ?></span>M
@@ -50,8 +64,6 @@
                             <span class="corruption_rate_span"><?php echo $account['stats']['corruption_total']; ?></span>M
                         </strong><br>
                     </span>
-                </div>
-                <div class="col-md-6">
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Military: </strong>
                         <strong class="law_info_value text-danger">
@@ -65,21 +77,15 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Leftover Revenue: </strong>
-                        <strong class="law_info_value text-yellow">
-                            $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
-                        </strong><br>
-                    </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">War Weariness: </strong>
+                        <strong class="law_info_item_label">Building Maintenance: </strong>
                         <strong class="law_info_value text-danger">
-                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>%
+                            $<span class="building_maintenance_span"><?php echo $account['stats']['building_maintenance']; ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Political Support: </strong>
-                        <strong class="law_info_value text-default">
-                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%
+                        <strong class="law_info_item_label">Leftover Revenue: </strong>
+                        <strong class="law_info_value text-primary">
+                            $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
                         </strong><br>
                     </span>
                 </div>
@@ -145,6 +151,7 @@
                 <li>Corruption Eats at your Tax Income</li>
                 <li>Entitlments give you more Political Support</li>
                 <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
+                <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
                 <li>War Weariness decreases your Political Support</li>
                 <li>War Weariness decreases by 5% every minute</li>
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
@@ -484,6 +491,6 @@
 <div id="info_tag">
     <strong>
     Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5i0339/landgrab_is_now_featured_on_gleamplay/" target="_blank">LandGrab is now Featured on GleamPlay</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5illak/super_country_nerf_update/" target="_blank">Super Country Nerf Update</a>
     </strong>
 </div>

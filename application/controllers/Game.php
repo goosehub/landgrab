@@ -16,6 +16,8 @@ class Game extends CI_Controller {
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
 
+    protected $war_weariness_increase_land_count = 10;
+
 	function __construct() {
 	    parent::__construct();
         $this->load->model('game_model', '', TRUE);
@@ -75,6 +77,8 @@ class Game extends CI_Controller {
 
         $next_reset_dictionary = $this->next_reset_dictionary();
         $data['next_reset'] = $next_reset_dictionary[$world['id']];
+
+        $data['war_weariness_increase_land_count'] = $this->war_weariness_increase_land_count;
 
 
         // Get world leaderboards
@@ -155,10 +159,14 @@ class Game extends CI_Controller {
         else if ($account['government'] == $this->autocracy_key) {
             $account['stats']['corruption_rate'] = 30;
         }
+
         $tax_unpopularity = 2;
         $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
         $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
+        if ($account['stats']['corruption_rate'] === 0) {
+            $account['stats']['corruption_total'] = 0;
+        }
         $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
         $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
@@ -167,6 +175,7 @@ class Game extends CI_Controller {
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
         $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
+        $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
         // See if functioning
         $account['functioning'] = true;
@@ -627,44 +636,48 @@ class Game extends CI_Controller {
             $this->game_model->update_account_active_state($account['id'], 1);
         }
 
+        // Start at 1
+        $war_weariness = 1;
+
+        // Increase war weariness on larger players
+        $war_weariness += floor($account['land_count'] / $this->war_weariness_increase_land_count);
+
         // If unclaimed, just 1 war weariness
         if ($defender_account == 0) {
-            $war_weariness = 1;
             return $war_weariness;
         }
 
         // Get accounts
         $defender_account = $this->user_model->get_account_by_id($defender_account);
         if (!$defender_account) {
-            $war_weariness = 1;
             return $war_weariness;
         }
         $defender_account = $this->get_full_account($defender_account);
 
         // War Weariness Military Algorithm
         if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * 2) {
-            $war_weariness = 1;
+            $war_weariness += 1;
         }
         else if ($account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
-            $war_weariness = 2;
+            $war_weariness += 2;
         }
         else if ($account['stats']['military_after'] * 2 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 3;
+            $war_weariness += 3;
         }
         else if ($account['stats']['military_after'] * 2 * 2 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 4;
+            $war_weariness += 4;
         }
         else if ($account['stats']['military_after'] * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 5;
+            $war_weariness += 5;
         }
         else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 6;
+            $war_weariness += 6;
         }
         else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
-            $war_weariness = 7;
+            $war_weariness += 7;
         }
         else {
-            $war_weariness = 8;
+            $war_weariness += 8;
         }
         // War Weariness Defense Bonus
         $modify_effect_dictionary = $this->game_model->get_all_modify_effects();
@@ -676,6 +689,7 @@ class Game extends CI_Controller {
                 $war_weariness = $war_weariness * $effect['defense'];
             }
         }
+
         return $war_weariness;
     }
 
@@ -785,7 +799,7 @@ class Game extends CI_Controller {
     {
         $next_reset[1] = '1st and 15th of every Month at 8PM ET';
         $next_reset[2] = '10th, 20th, and 30th of every month at 8PM ET';
-        $next_reset[3] = '5th, 10th, 15th, 20th, 25th, 30th of every month at 10PM ET';
+        $next_reset[3] = '5th, 10th, 15th, 20th, 25th, 30th of every month at 8PM ET';
         $next_reset[4] = 'Every even numbered day at 8PM ET';
         $next_reset[5] = 'Every day at 8PM ET';
         return $next_reset;

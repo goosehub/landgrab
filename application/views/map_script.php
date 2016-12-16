@@ -424,7 +424,7 @@ function initMap()
     $('#input_land_name').val(d['land_name']);
     $('#input_content').val(d['content']);
 
-    $('#war_weariness_attack_span').html(d['war_weariness']);
+    $('.war_weariness_attack_span').html(d['war_weariness']);
   }
 
   function prepare_land_form_more_info(coord_slug, world_key, d) {
@@ -729,6 +729,7 @@ function initMap()
     $('.tax_income_span_span').html(number_format(account['stats']['tax_income_span']) );
     $('.population_span').html(number_format(account['stats']['population']) );
     $('.gdp_span').html(number_format(account['stats']['gdp']) );
+    $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
     $('.treasury_span').html(number_format(account['stats']['treasury_after']) );
     $('.military_span').html(number_format(account['stats']['military_after']) );
     $('.entitlements_span').html(number_format(account['stats']['entitlements']) );
