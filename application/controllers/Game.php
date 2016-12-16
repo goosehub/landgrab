@@ -16,7 +16,7 @@ class Game extends CI_Controller {
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
 
-    protected $war_weariness_increase_land_count = 10;
+    protected $war_weariness_increase_land_count = 300;
 
 	function __construct() {
 	    parent::__construct();
