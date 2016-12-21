@@ -542,10 +542,15 @@ class Game extends CI_Controller {
         else if ($form_type === 'attack' && $land_square['account_key'] === $active_account_key) {
             echo '{"status": "fail", "message": "This land is already yours"}';
             return false;
-        } 
+        }
         // Attacking or claiming land that is not in range
         else if ( ($form_type === 'claim' || $form_type === 'attack') && !$in_range) {
             echo '{"status": "fail", "message": "This land is not in range"}';
+            return false;
+        }
+        // Attacking or claiming land that is not in range
+        else if ( is_numeric($form_type) && $land_square['account_key'] != $active_account_key) {
+            echo '{"status": "fail", "message": "This land has been bought and is no longer yours"}';
             return false;
         }
 
