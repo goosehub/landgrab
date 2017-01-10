@@ -491,6 +491,6 @@
 <div id="info_tag">
     <strong>
     Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5illak/super_country_nerf_update/" target="_blank">Super Country Nerf Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5n2ta1/war_weariness_bug_fixed/" target="_blank">War Weariness Bug Fix</a>
     </strong>
 </div>
