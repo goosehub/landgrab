@@ -490,7 +490,7 @@
 
 <div id="info_tag">
     <strong>
-    Latest Updates: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5n2ta1/war_weariness_bug_fixed/" target="_blank">War Weariness Bug Fix</a>
+    Please beta test my next project: 
+    <a href="http://smallcrowd.us/" target="_blank">Small Crowd</a>
     </strong>
 </div>
