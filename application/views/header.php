@@ -10,6 +10,9 @@
     <!-- Page Title -->
     <title>Landgrab</title>
 
+    <!-- Google please read this -->
+    <meta name="description" content="Landgrab.xyz is a massive multiplayer online nation building game built using Google Maps">
+
     <!-- Link to Favicon -->
     <link rel="icon" href="<?=base_url()?>resources/icon.ico">
 
