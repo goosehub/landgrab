@@ -491,7 +491,7 @@
 
 <div id="info_tag">
     <strong>
-    Please beta test my next project: 
-    <a href="http://smallcrowd.us/" target="_blank">Small Crowd</a>
+    New Update: 
+    <a href="https://www.reddit.com/r/LandGrab/comments/5qraj7/attack_shortcut_and_faster_refresh_update/" target="_blank">Attack Shortcut and Faster Refresh</a>
     </strong>
 </div>
