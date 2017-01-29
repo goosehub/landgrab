@@ -100,7 +100,7 @@ class Game extends CI_Controller {
         }
 
         // Get all lands
-        $server_update_timespan = 60;
+        $server_update_timespan = 30;
         $data['update_timespan'] = ($server_update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $server_update_timespan);

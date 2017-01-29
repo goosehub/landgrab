@@ -34,7 +34,8 @@
 
   // Set user variables
   var log_check = false;
-  var account = false <?php if ($log_check) { ?>
+  var account = false;
+  <?php if ($log_check) { ?>
   var log_check = true;
   var user_id = <?php echo $user_id + ''; ?>;
   var account_id = <?php echo $account['id'] + ''; ?>;
@@ -47,6 +48,21 @@
   var map_update_interval = <?php echo $update_timespan; ?>;
   var infoWindow = false;
   var boxes = [];
+
+// Key Press Tracker
+var attack_key_pressed = false;
+var keys = new Array();
+keys['a'] = 65;
+$(document).keydown(function(e) {
+  if (event.which == keys['a']) {
+    attack_key_pressed = true;
+  }
+});
+$(document).keyup(function(e) {
+  if (event.which == keys['a']) {
+    attack_key_pressed = false;
+  }
+});
 
   // Start initMap callback called from google maps script
   function initMap() {
@@ -182,6 +198,23 @@
       var coord_slug = lat + ',' + lng;
 
       // 
+      // If ctrl is active, just try to take it
+      // 
+
+      if (attack_key_pressed) {
+        blind_land_attack(coord_slug, world_key, 'attack', function(response) {
+          // If attack didn't work, try claim
+          d = JSON.parse(response);
+          if (d['error']) {
+            blind_claim_land(coord_slug, world_key, 'claim', function(response) {
+            });
+          }
+
+        });
+        return true;
+      }
+
+      // 
       // Create land infoWindow
       // 
 
@@ -216,6 +249,23 @@
 
         return true;
 
+      });
+    }
+
+    function blind_land_attack(coord_slug, world_key, type, callback) {
+      $.ajax({
+        url: "<?=base_url()?>land_form",
+        type: "POST",
+        data: {
+          coord_slug_input: coord_slug,
+          world_key_input: world_key,
+          form_type_input: type
+        },
+        cache: false,
+        success: function(data) {
+          callback(data);
+          return true;
+        }
       });
     }
 
@@ -497,8 +547,7 @@
             if (form_type === 'claim' || form_type === 'attack') {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                village ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['village']; ?>',
                 fillColor: account['color'],
                 fillOpacity: 0.4
               });
@@ -507,8 +556,7 @@
             else if (form_type == land_type_key_dictionary['capitol']) {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                capitol ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['capitol']; ?>',
                 fillOpacity: 0.8
               });
             }
@@ -516,8 +564,7 @@
             else if (form_type == land_type_key_dictionary['town']) {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                town ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['town']; ?>',
                 fillOpacity: 0.4
               });
             }
@@ -525,8 +572,7 @@
             else if (form_type == land_type_key_dictionary['city']) {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                city ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['city']; ?>',
                 fillOpacity: 0.4
               });
             }
@@ -534,8 +580,7 @@
             else if (form_type == land_type_key_dictionary['metropolis']) {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                metropolis ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
                 fillOpacity: 0.4
               });
             }
@@ -543,8 +588,7 @@
             else if (form_type == land_type_key_dictionary['fortification']) {
               boxes[d['id']].setOptions({
                 strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['
-                fortification ']; ?>',
+                strokeColor: '<?php echo $stroke_color_dictionary['fortification']; ?>',
                 fillOpacity: 0.4
               });
             }
@@ -698,30 +742,24 @@
           fill_opacity = 0.4;
         }
         if (log_check && land['account_key'] == account_id) {
-          stroke_color = '<?php echo $stroke_color_dictionary['
-          village ']; ?>';
+          stroke_color = '<?php echo $stroke_color_dictionary['village']; ?>';
         }
         if (land['capitol'] == 1) {
           stroke_weight = 2;
           fill_opacity = '0.8';
-          stroke_color = '<?php echo $stroke_color_dictionary['
-          capitol ']; ?>';
+          stroke_color = '<?php echo $stroke_color_dictionary['capitol']; ?>';
         } else if (land['land_type'] == land_type_key_dictionary['town']) {
           stroke_weight = 2;
-          stroke_color = '<?php echo $stroke_color_dictionary['
-          town ']; ?>';
+          stroke_color = '<?php echo $stroke_color_dictionary['town']; ?>';
         } else if (land['land_type'] == land_type_key_dictionary['city']) {
           stroke_weight = 2;
-          stroke_color = '<?php echo $stroke_color_dictionary['
-          city ']; ?>';
+          stroke_color = '<?php echo $stroke_color_dictionary['city']; ?>';
         } else if (land['land_type'] == land_type_key_dictionary['metropolis']) {
           stroke_weight = 2;
-          stroke_color = '<?php echo $stroke_color_dictionary['
-          metropolis ']; ?>';
+          stroke_color = '<?php echo $stroke_color_dictionary['metropolis']; ?>';
         } else if (land['land_type'] == land_type_key_dictionary['fortification']) {
           $stroke_weight = 2;
-          $stroke_color = '<?php echo $stroke_color_dictionary['
-          fortification ']; ?>';
+          $stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
         }
         if (log_check && land['account_key'] == account_id) {
           stroke_weight = 3;

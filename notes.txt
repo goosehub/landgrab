@@ -4,7 +4,6 @@
 
 Todo
     FEATURE: Leaderboards ajax
-    FEATURE: Ctrl click to attack
     BUG: Capitol stopped being a capitol (Can't replciate)
     BUG: Reports of new users spawning on metropolises (Can't replicate)
 
