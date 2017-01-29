@@ -16,6 +16,7 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
+    BUG: Capturing (maybe updating) land breaks & and maybe other characters
     BUG: Chat URLs don't always turn into links
     BEHAVIOR: Capitol when getting first land
     REFACTOR: Remove query_action and query_result
