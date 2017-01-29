@@ -460,12 +460,12 @@
             <tr>
                 <td>
                     <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: <?php echo $leader['color']; ?>"> </span>
-                    <strong><?php echo $leader['username']; ?></strong>
+                    <strong class="leaderboard_username"><?php echo $leader['username']; ?></strong>
                     <br>
                     <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>">
                 </td>
                 <td>
-                    <strong><?php echo $leader['nation_name']; ?></strong>
+                    <strong class="leaderboard_nation_name"><?php echo $leader['nation_name']; ?></strong>
                     <br>
                     <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $leader['nation_flag']; ?>">
                 </td>

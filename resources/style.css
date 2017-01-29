@@ -217,6 +217,9 @@ html, body {
   max-width: 75px;
   max-height: 75px;
 }
+.leaderboard_username, .leaderboard_nation_name {
+  word-break: break-all;
+}
 #leaderboard_table {
   width: 100% !important;
 }
