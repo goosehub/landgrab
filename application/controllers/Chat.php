@@ -14,22 +14,23 @@ class Chat extends CI_Controller {
 	public function load()
 	{
         // Set parameters
-        $world_key = $_POST['world_key'];
-        $limit = 12;
+        $world_key = $this->input->post('world_key');
+        $last_message_id = $this->input->post('last_message_id');
+        $inital_load = $this->input->post('inital_load') === 'true' ? true : false;
+        $limit = 50;
 
         // Get chats and reverse array
-        $chats = $this->chat_model->load_chat_by_limit($world_key, $limit);
-        $chats = array_reverse($chats);
 
-        // Verify everything is okay
-        echo '<div id="chat_check"></div>';
-
-        // Echo out chats
-        foreach ($chats as $chat) {
-            echo '<div class="chat_message"><span class="glyphicon glyphicon-user" style="color: ' . $chat['color'] . '""></span>' 
-            . $chat['username'] . ': ' . $chat['message'] . '</div>';
+        // Get messages
+        if ($inital_load) {
+            $chats = $this->chat_model->load_chat_by_limit($world_key, $limit);
+            $chats = array_reverse($chats);
         }
-        return true;
+        else {
+            $chats = $this->chat_model->load_message_by_last_message_id($world_key, $last_message_id);
+        }
+
+        echo json_encode($chats);
     }
 
     // For new chats

@@ -118,6 +118,7 @@ $('.jquery-datatable').dataTable({
         { "asSorting": [ "desc", "asc" ] },
         { "asSorting": [ "desc", "asc" ] },
         { "asSorting": [ "desc", "asc" ] },
+        { "asSorting": [ "desc", "asc" ] },
     ],
     // Do not interpret numeric commas as decimals for sorting
     // "aoColumnDefs": [

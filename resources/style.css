@@ -327,6 +327,21 @@ html body .land_content_div, html body .land_content_div[style] {
 #chat_messages_box {
   background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
+  height: 25vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/* Custom Chat Scroll Bar */
+#chat_messages_box::-webkit-scrollbar {
+  width: 12px;
+}
+#chat_messages_box::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  border-radius: 10px;
+}
+#chat_messages_box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(256,256,256,0.5); 
 }
 #chat_input_parent {
   height: 35px;

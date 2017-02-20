@@ -446,18 +446,21 @@
     <table id="leaderboard_table" class="table table-bordered table-hover table-condensed jquery-datatable" style="width=100%;">
         <thead>
             <tr>
-                <td>Leader</td>
-                <td>Nation</td>
-                <td>Territories</td>
-                <td>Population</td>
-                <td>GDP</td>
-                <td>Military</td>
+                <th>Rank</th>
+                <th>Leader</th>
+                <th>Nation</th>
+                <th>Territories</th>
+                <th>Population</th>
+                <th>GDP</th>
+                <th>Military</th>
             </tr>    
         </thead>
         <tbody>
             <?php if (!empty($leaderboards)) { ?>
+            <?php $rank = 1; ?>
             <?php foreach ($leaderboards as $leader) { ?>
             <tr>
+                <td><strong><?php echo $rank; ?></strong></td>
                 <td>
                     <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: <?php echo $leader['color']; ?>"> </span>
                     <strong class="leaderboard_username"><?php echo $leader['username']; ?></strong>
@@ -483,6 +486,7 @@
                     <strong class="text-danger">$<?php echo number_format($leader['stats']['military_after']); ?></strong><span class="text-danger">,000,000</span>
                 </td>
             </tr>
+            <?php $rank++; ?>
             <?php } ?>
             <?php } ?>
         </tbody>
@@ -491,7 +495,6 @@
 
 <div id="info_tag">
     <strong>
-    New Update: 
-    <a href="https://www.reddit.com/r/LandGrab/comments/5qraj7/attack_shortcut_and_faster_refresh_update/" target="_blank">Attack Shortcut and Faster Refresh</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/5v2lbr/the_big_chat_update/" target="_blank">The Big Chat Update</a>
     </strong>
 </div>

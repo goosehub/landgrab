@@ -18,6 +18,17 @@ Class chat_model extends CI_Model
     $result = $query->result_array();
     return $result;
   }
+  // Load chats by last chat
+  function load_message_by_last_message_id($world_key, $last_message_id)
+  {
+      $this->db->select('*');
+      $this->db->from('chat');
+      $this->db->where('world_key', $world_key);
+      $this->db->where('id >', $last_message_id);
+      $query = $this->db->get();
+      $result = $query->result_array();
+      return $result;
+  }
   // Insert new chat
   function new_chat($user_key, $username, $color, $message, $world_key)
   {

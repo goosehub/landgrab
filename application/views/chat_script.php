@@ -21,27 +21,51 @@
 <script>
 
   var world_key = <?php echo $world['id']; ?>;
+  var last_message_id = 0;
 
   //Chat Load
-  function chat_load() {
+  function chat_load(inital_load) {
     $.ajax(
     {
         url: "<?=base_url()?>chat/load",
         type: "POST",
-        data: { world_key: world_key },
+        data: {
+          world_key: world_key,
+          inital_load: inital_load,
+          last_message_id: last_message_id
+        },
         cache: false,
-        success: function(html)
+        success: function(response)
         {
-            if (!html.startsWith('<div id="chat_check"></div>')) {
-              return false;
+          // Parse
+          messages = JSON.parse(response);
+          if (!messages) {
+            return false;
+          }
+
+          // Loop through to create html
+          html = '';
+          $.each(messages, function(i, message) {
+            // Skip if we already have this message, although we really shouldn't
+            if (parseInt(message.id) <= parseInt(last_message_id)) {
+              return true;
             }
-            html = replaceURLWithHTMLLinks(html)
-            $("#chat_messages_box").html(html);
-            $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
+            // Update latest message id
+            last_message_id = message.id;
+            html += '<div class="chat_message"><span class="glyphicon glyphicon-user" style="color: ' + message.color + '""></span>' ;
+            html += message.username + ': ' + message.message + '</div>';
+          });
+        // Append to div
+        html = replaceURLWithHTMLLinks(html)
+        if (inital_load) {
+          $("#chat_messages_box").html('');
+        }
+        $("#chat_messages_box").append(html);
+        $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
         }
     });
   }
-  chat_load();
+  chat_load(true);
 
   // Chat Loop
   chat_interval = 3 * 1000;
