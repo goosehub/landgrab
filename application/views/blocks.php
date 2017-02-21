@@ -157,6 +157,7 @@
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
+                <li>If you get stuck in debt, consider downgrading your land to villages</li>
                 <li>Explore the other worlds in the Worlds tab</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
                 <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion on this game</li>
