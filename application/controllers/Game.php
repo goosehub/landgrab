@@ -23,6 +23,11 @@ class Game extends CI_Controller {
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
 	    $this->load->model('leaderboard_model', '', TRUE);
+
+        // Force ssl
+        if (!is_dev()) {
+            force_ssl();
+        }
 	}
 
 	// Game view and update json
