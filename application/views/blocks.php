@@ -495,7 +495,8 @@
 </div>
 
 <div id="info_tag">
+    My new game is in open beta: 
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/5v2lbr/the_big_chat_update/" target="_blank">The Big Chat Update</a>
+    <a href="https://banhammer.site/" target="_blank">BanHammer.site</a>
     </strong>
 </div>
