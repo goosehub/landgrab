@@ -22,6 +22,16 @@
 
   var world_key = <?php echo $world['id']; ?>;
   var last_message_id = 0;
+  var at_bottom = true;
+
+  // Detect if user is at bottom
+  var text_to_bottom_css = true;
+  $('#chat_messages_box').scroll(function() {
+    at_bottom = false;
+    if ($('#chat_messages_box').prop('scrollHeight') - $('#chat_messages_box').scrollTop() <= Math.ceil($('#chat_messages_box').height())) {
+      at_bottom = true;
+    }
+  });
 
   //Chat Load
   function chat_load(inital_load) {
@@ -61,7 +71,11 @@
           $("#chat_messages_box").html('');
         }
         $("#chat_messages_box").append(html);
-        $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
+
+        // Scrool to bottom
+        if (at_bottom || inital_load) {
+          $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
+        }
         }
     });
   }
