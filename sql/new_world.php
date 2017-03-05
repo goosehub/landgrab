@@ -1,5 +1,7 @@
 <?php
 
+// This is for creating new worlds
+// If you just want an instance of landgrab, use existing worlds in worlds folder
 // Just set parameters, run, copy, and replace last comma with semicolon
 
 // 

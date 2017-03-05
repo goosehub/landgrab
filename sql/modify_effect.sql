@@ -15,7 +15,3 @@ INSERT INTO `modify_effect` (`id`, `name`, `sort_order`, `is_land_upgrade`, `pop
 (14, 'hospital', 7, 0, 500, 0, -10, 0, 0, 1, '2016-11-08 10:33:05'),
 (15, 'military_base', 6, 0, 0, 0, -25, 0, 10, 0, '2016-11-08 10:34:10'),
 (16, 'school', 8, 0, 100, 10, -20, 0, 0, 2, '2016-11-08 10:35:48');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
