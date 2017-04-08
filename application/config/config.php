@@ -1,6 +1,13 @@
 <?php  
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/* 
+Bug fix for issue found on production 2017/04/08 
+http://stackoverflow.com/questions/31042456/session-error-in-codeigniter
+*/
+
+$config['sess_save_path'] = sys_get_temp_dir();
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
