@@ -40,7 +40,7 @@
   var user_id = <?php echo $user_id + ''; ?>;
   var account_id = <?php echo $account['id'] + ''; ?>;
   var username = "<?php echo $user['username']; ?>";
-  var account = JSON.parse('<?php echo json_encode($account); ?>');
+  var account = JSON.parse('<?php echo addslashes(json_encode($account)); ?>');
   var player_land_count = <?php echo $account['land_count']; ?>;
   <?php } ?>
 
