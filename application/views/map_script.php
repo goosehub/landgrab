@@ -716,7 +716,7 @@ $(document).keyup(function(e) {
           }
 
           update_lands(data['lands']);
-          // update_leaderboards(data['leaderboards']);
+          update_leaderboards(data['leaderboards']);
           if (log_check) {
             update_stats(data['account']);
           }
@@ -794,6 +794,38 @@ $(document).keyup(function(e) {
     }
 
     function update_leaderboards(leaderboards) {
+      var rank = 1;
+      var html = '';
+      $(leaderboards).each(function(key, value){
+        html += '';
+        html += '<tr>';
+        html += '<td><strong>' + rank + '</strong></td>';
+        html += '<td>';
+        html += '<span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + value.color + '"> </span>';
+        html += '<strong class="leaderboard_username">' + value.username + '</strong>';
+        html += '<br>';
+        html += '<img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/' + value.leader_portrait + '">';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="leaderboard_nation_name">' + value.nation_name + '</strong>';
+        html += '<br>';
+        html += '<img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/' + value.nation_flag + '">';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="text-success">' + number_format(value.land_count) + '</strong>';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="text-purple">' + number_format(value.stats.population) + '</strong><span class="text-purple">,000</span>';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="text-action">' + number_format(value.stats.gdp) + '</strong><span class="text-action">,000,000</span>';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="text-danger">' + number_format(value.stats.military_after) + '</strong><span class="text-danger">,000,000</span>';
+        html += '</td>';
+        rank++;
+      });
+      $('#leaderboard_table tbody').html(html);
       return true;
     }
 

@@ -87,9 +87,7 @@ class Game extends CI_Controller {
 
 
         // Get world leaderboards
-        if (!isset($_GET['json'])) {
-            $data['leaderboards'] = $this->leaderboards($world);
-        }
+        $data['leaderboards'] = $this->leaderboards($world);
 
         // Get all worlds
         if (!isset($_GET['json'])) {
