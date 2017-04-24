@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `color` varchar(8) NOT NULL,
   `last_load` varchar(32) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL,
+  `modified` varchar(512) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(256) NOT NULL,
   `ip` varchar(64) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL,
+  `modified` varchar(512) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
