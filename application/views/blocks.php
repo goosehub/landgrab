@@ -456,6 +456,7 @@
                 <th>Military</th>
             </tr>    
         </thead>
+        <!-- Changes in this html should also be reflected in update_leaderboards() -->
         <tbody>
             <?php if (!empty($leaderboards)) { ?>
             <?php $rank = 1; ?>

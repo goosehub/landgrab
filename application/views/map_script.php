@@ -796,6 +796,7 @@ $(document).keyup(function(e) {
     function update_leaderboards(leaderboards) {
       var rank = 1;
       var html = '';
+      // Changes in this html should also be reflected in #leaderboard_table tbody
       $(leaderboards).each(function(key, value){
         html += '';
         html += '<tr>';
