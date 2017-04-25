@@ -55,7 +55,7 @@
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Tax Revenue: </strong>
                         <strong class="law_info_value text-success">
-                            <span class="tax_income_span"><?php echo $account['stats']['tax_income']; ?></span>M
+                            <span class="tax_income_span"><?php echo number_format($account['stats']['tax_income']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">

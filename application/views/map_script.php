@@ -781,7 +781,7 @@ $(document).keyup(function(e) {
     function update_stats(account) {
       $('.land_count_span').html(number_format(account['land_count']));
       $('.tax_rate_span').html(account['tax_rate']);
-      $('.tax_income_span_span').html(number_format(account['stats']['tax_income_span']));
+      $('.tax_income_span').html(number_format(account['stats']['tax_income']));
       $('.population_span').html(number_format(account['stats']['population']));
       $('.gdp_span').html(number_format(account['stats']['gdp']));
       $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
