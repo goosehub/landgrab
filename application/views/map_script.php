@@ -46,6 +46,7 @@
 
   // Set maps variables
   var map_update_interval = <?php echo $update_timespan; ?>;
+  var leaderboard_update_interval = <?php echo $leaderboard_update_interval_minutes; ?> * 60 * 1000;
   var infoWindow = false;
   var boxes = [];
 
@@ -696,6 +697,11 @@ $(document).keyup(function(e) {
       get_map_update(world_key);
     }, map_update_interval);
 
+    setInterval(function() {
+      update_leaderboard_call();
+    }, leaderboard_update_interval);
+
+
     // Get single land ajax
     function get_map_update(world_key) {
       $.ajax({
@@ -716,12 +722,26 @@ $(document).keyup(function(e) {
           }
 
           update_lands(data['lands']);
-          update_leaderboards(data['leaderboards']);
           if (log_check) {
             update_stats(data['account']);
           }
 
           console.log('update');
+        }
+      });
+    }
+
+    function update_leaderboard_call() {
+      $.ajax({
+        url: "<?=base_url()?>world/leaderboards/" + world_key,
+        type: "GET",
+        data: {
+          json: "true"
+        },
+        cache: false,
+        success: function(data) {
+          data = JSON.parse(data);
+          update_leaderboards(data);
         }
       });
     }

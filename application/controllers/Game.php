@@ -87,7 +87,9 @@ class Game extends CI_Controller {
 
 
         // Get world leaderboards
-        $data['leaderboards'] = $this->leaderboards($world);
+        if (!isset($_GET['json'])) {
+            $data['leaderboards'] = $this->leaderboards($world);
+        }
 
         // Get all worlds
         if (!isset($_GET['json'])) {
@@ -103,6 +105,7 @@ class Game extends CI_Controller {
         }
 
         // Get all lands
+        $data['leaderboard_update_interval_minutes'] = 5;
         $server_update_timespan = 30;
         $data['update_timespan'] = ($server_update_timespan / 2) * 1000;
         if (isset($_GET['json'])) {
@@ -754,6 +757,9 @@ class Game extends CI_Controller {
     // Get leaderboards
     public function leaderboards($world)
     {
+        if (isset($_GET['json'])) {
+            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world);
+        }
         // This is accounts to get, number shown is determined with use of CSS
         $limit = 1000;
         $land_leaders = $this->leaderboard_model->leaderboard_land_owned($world['id'], $limit);
@@ -767,6 +773,10 @@ class Game extends CI_Controller {
             $leader_user = $this->user_model->get_user($this_leader['user_key']);
             $this_leader['username'] = $leader_user['username'];
             $leaders[] = $this_leader;
+        }
+        if (isset($_GET['json'])) {
+            echo json_encode($leaders);
+            return true;
         }
         return $leaders;
     }

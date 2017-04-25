@@ -16,6 +16,7 @@ $route['world/webgames'] = "game/index/1/webgames";
 
 // World load
 $route['world/(:any)'] = "game/index/$1";
+$route['world/leaderboards/(:any)'] = "game/leaderboards/$1";
 
 // Game functions
 $route['get_single_land'] = "game/get_single_land";
