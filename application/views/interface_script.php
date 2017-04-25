@@ -101,6 +101,12 @@ $('#leaderboard_dropdown').click(function(){
     $('.center_block').hide();
     $('#leaderboard_block').show();
 });
+$('#worlds_dropdown').click(function(){
+    $('.center_block').hide();
+});
+$('#site_dropdown').click(function(){
+    $('.center_block').hide();
+});
 
 // jQuery DataTables
 $('.jquery-datatable').dataTable({
