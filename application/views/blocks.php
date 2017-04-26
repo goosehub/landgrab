@@ -151,6 +151,7 @@
                 <li>Corruption Eats at your Tax Income</li>
                 <li>Entitlments give you more Political Support</li>
                 <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
+                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
                 <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
                 <li>War Weariness decreases your Political Support</li>
                 <li>War Weariness decreases by 5% every minute</li>
@@ -498,6 +499,6 @@
 <div id="info_tag">
     New Update
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/67cx3m/auto_update_leaderboard_update/" target="_blank">Leaderboard Auto Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/67kmtg/metro_sniper_nerf_update/" target="_blank">Metro Sniper Nerf Update</a>
     </strong>
 </div>

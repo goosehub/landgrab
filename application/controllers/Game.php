@@ -17,6 +17,7 @@ class Game extends CI_Controller {
     protected $autocracy_key = 3;
 
     protected $war_weariness_increase_land_count = 300;
+    protected $sniper_land_minimum = 100;
 
 	function __construct() {
 	    parent::__construct();
@@ -84,6 +85,7 @@ class Game extends CI_Controller {
         $data['next_reset'] = $next_reset_dictionary[$world['id']];
 
         $data['war_weariness_increase_land_count'] = $this->war_weariness_increase_land_count;
+        $data['sniper_land_minimum'] = $this->sniper_land_minimum;
 
 
         // Get world leaderboards
@@ -421,6 +423,13 @@ class Game extends CI_Controller {
             return false;
         }
 
+        // Prevent new players from taking towns or larger
+        if ($account['land_count'] < $this->sniper_land_minimum && $land_square['land_type'] >= $this->metropolis_key) {
+            echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
+            return false;
+        }
+
+        // Prevemt attacking without political support
         if ($action_type != 'update' && !$account['functioning'] && $account['tutorial'] >= 2 && $form_type != $this->village_key) {
             echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
             return false;
