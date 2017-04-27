@@ -66,7 +66,7 @@
             html += message.username + ': ' + message.message + '</div>';
           });
         // Append to div
-        html = replaceURLWithHTMLLinks(html)
+        html = convert_general_url(html)
         if (inital_load) {
           $("#chat_messages_box").html('');
         }
@@ -117,9 +117,14 @@
     return false;
   }
 
-  function replaceURLWithHTMLLinks(text) {
-      var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
-      return text.replace(exp,"<a target='_blank' style='color: #CCCCFF' href='$1'>$1</a>"); 
+  function convert_general_url(input) {
+    // Ignore " to not conflict with other converts
+    var pattern = /(?!.*")([-a-zA-Z0-9@:%_\+.~#?&//=;]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=;]*))/gi;
+    if (pattern.test(input)) {
+      var replacement = '<a href="$1" target="_blank" class="message_link message_content">$1</a>';
+      var input = input.replace(pattern, replacement);
+    }
+    return input;
   }
 
 </script>
