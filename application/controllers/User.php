@@ -244,11 +244,11 @@ class User extends CI_Controller {
         // Set account
         $account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $account_key = $account['id'];
-        $query_action = $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_portrait);
+        $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_portrait);
 
         // Progress Tutorial
         if ($account['tutorial'] < 1) {
-            $query_action = $this->user_model->update_account_tutorial($account_key, 1);
+            $this->user_model->update_account_tutorial($account_key, 1);
         }
 
         // Redirect to game
@@ -291,11 +291,11 @@ class User extends CI_Controller {
             // Set account
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $account_key = $account['id'];
-            $query_action = $this->user_model->update_account_laws($account_key, $government, $tax_rate, $military_budget, $entitlements_budget);
+            $this->user_model->update_account_laws($account_key, $government, $tax_rate, $military_budget, $entitlements_budget);
 
             // Progress Tutorial
             if ($account['tutorial'] < 3) {
-                $query_action = $this->user_model->update_account_tutorial($account_key, 3);
+                $this->user_model->update_account_tutorial($account_key, 3);
             }
 
             // Redirect to game

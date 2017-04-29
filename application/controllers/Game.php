@@ -31,6 +31,9 @@ class Game extends CI_Controller {
     protected $tax_nerf = 2;
     protected $entitlments_nerf = 30;
 
+    // Shared data
+    protected $effects;
+    
     // Server Pooling Constants
     protected $leaderboard_update_interval = 5 * 60;
     protected $map_update_interval = 10;
@@ -45,6 +48,8 @@ class Game extends CI_Controller {
         if (!is_dev()) {
             force_ssl();
         }
+
+        $this->effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
 	}
 
 	// Game view and update json
@@ -126,7 +131,7 @@ class Game extends CI_Controller {
             $data['government_dictionary'] = $this->government_dictionary();
             $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
             $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
-            $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+            $data['modify_effect_dictionary'] = $this->effects;
             $data['embassy_effect'] = $this->game_model->get_embassy_effect();
         }
 
@@ -226,7 +231,7 @@ class Game extends CI_Controller {
         $account['username'] = $user['username'];
 
         // Record account as loaded
-        $query_action = $this->user_model->account_loaded($account['id']);
+        $this->user_model->account_loaded($account['id']);
 
         // Return account
         return $account;
@@ -254,7 +259,11 @@ class Game extends CI_Controller {
         $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
-        $land_square['embassy_list'] = $this->game_model->get_embassys_of_land($land_square['id']);
+        $land_square['embassy_list'] = false;
+        if ($land_square['capitol']) {
+            $land_square['embassy_list'] = $this->game_model->get_embassys_of_land($land_square['id']);
+        }
+        $account = false;
         if ($land_square['account_key'] != 0) {
             $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
             // This shouldn't happen, but it does
@@ -266,14 +275,10 @@ class Game extends CI_Controller {
                 $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
                 $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
                 $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
-                $query_action = $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
-                $account = false;
+                $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
             } else {
                 $account = $land_square['account'] = $this->get_full_account($account);
             }
-        } 
-        else {
-            $account = false;
         }
 
         // War Weariness
@@ -283,7 +288,7 @@ class Game extends CI_Controller {
             $user_id = $session_data['id'];
             $requester_account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $requester_account = $this->get_full_account($requester_account);
-            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square['account_key'], $land_square);
+            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square, $account);
             $land_square['valid_upgrades'] = $this->account_valid_upgrades($requester_account['id']);
         }
 
@@ -294,7 +299,7 @@ class Game extends CI_Controller {
         $land_square['username'] = '';
         if ($account) {
             $owner = $this->user_model->get_user($account['user_key']);
-            if ( isset($owner['username']) && isset($land_square['land_name']) ) {
+            if (isset($owner['username']) && isset($land_square['land_name'])) {
                 $land_square['username'] = $owner['username'];
             }
         }
@@ -311,8 +316,6 @@ class Game extends CI_Controller {
             // Check if land is in range
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
                 $world['land_size'], $land_square['lat'], $land_square['lng'], false);
-            $land_square['range_check'] = $this->check_if_land_is_in_range($world_key, $land_square['account_key'], 20, 
-                $world['land_size'], $land_square['lat'], $land_square['lng'], true);
         }
 
         // Echo data to client to be parsed
@@ -379,23 +382,31 @@ class Game extends CI_Controller {
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
-        
-		// Validation
+
+		// Basic Validation
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|max_length[32]|callback_land_form_validation');
+        $this->form_validation->set_rules('form_type_input', 'Form Type Input', 'trim|required|max_length[32]');
         $this->form_validation->set_rules('coord_slug_input', 'Coord Key Input', 'trim|required|max_length[8]');
         $this->form_validation->set_rules('world_key_input', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
-
+        
         // Fail
-	    if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
             return false;
-        } 
+        }
 
-		// Account
+        // User Information
+        if (!$this->session->userdata('logged_in')) {
+            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            return false;
+        }
+
+        // Account
         $session_data = $this->session->userdata('logged_in');
         $user_id = $data['user_id'] = $session_data['id'];
 
@@ -403,7 +414,6 @@ class Game extends CI_Controller {
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
         $form_type = $this->input->post('form_type_input');
-        $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_key = $land_square['id'];
@@ -415,6 +425,16 @@ class Game extends CI_Controller {
         $account_key = $account['id'];
         $color = $account['color'];
         $content = $this->input->post('content');
+
+        // Advance Validation
+        $land_form_validation = $this->land_form_validation($land_square, $account);
+        
+        // Fail
+        if (!$land_form_validation) {
+            $this->session->set_flashdata('failed_form', 'error_block');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            return false;
+        }
 
         // Content
         // $content = $this->sanitize_html($content);
@@ -476,7 +496,7 @@ class Game extends CI_Controller {
         }
 
         // Upgrade Logic
-        $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+        $effects = $data['modify_effect_dictionary'] = $this->effects;
         if ($action_type === 'build') {
             $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
             if (!$result) {
@@ -489,18 +509,18 @@ class Game extends CI_Controller {
 
         // Do war weariness logic
         if ($action_type === 'attack' || $action_type === 'claim') {
-            $war_weariness = $this->war_weariness_calculate($account, $land_square['account_key'], $land_square);
+            $war_weariness = $this->war_weariness_calculate($account, $land_square, false);
             $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
         }
 
         // Make capitol if tutorial
         if ($account['tutorial'] < 2) {
             $land_type = $this->town_key;
-            $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
-            $query_action = $this->user_model->update_account_tutorial($account_key, 2);
-            $query_action = $this->game_model->remove_modifiers_from_land($land_key);
-            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->town_key);
-            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
+            $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
+            $this->user_model->update_account_tutorial($account_key, 2);
+            $this->game_model->remove_modifiers_from_land($land_key);
+            $this->game_model->add_modifier_to_land($land_key, $this->town_key);
+            $this->game_model->add_modifier_to_land($land_key, $this->capitol_key);
             // Add town to square
         }
         // Update
@@ -513,36 +533,36 @@ class Game extends CI_Controller {
             $land_name = $account['nation_name'];
             $content = '';
             if ($land_square['capitol']) {
-                $query_action = $this->game_model->remove_all_embassy_of_land($land_key);
-                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
+                $this->game_model->remove_all_embassy_of_land($land_key);
+                $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
             }
             if ($land_square['land_type'] != $this->unclaimed_key || $land_square['land_type'] != $this->village_key) {
-                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+                $this->game_model->remove_modifiers_from_land($land_key);
             }
-            $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
+            $this->game_model->add_modifier_to_land($land_key, $this->village_key);
         }
 
         // Tutorial progress for update or build
         if ($account['tutorial'] === '3' && ($action_type === 'update' || $action_type === 'build') ) {
-            $query_action = $this->user_model->update_account_tutorial($account_key, 4);
+            $this->user_model->update_account_tutorial($account_key, 4);
         }
         // Tutorial progress for additional attack or claim
         else if ($account['tutorial'] === '4' && ($action_type === 'attack' || $action_type === 'claim') ) {
-            $query_action = $this->user_model->update_account_tutorial($account_key, 5);
+            $this->user_model->update_account_tutorial($account_key, 5);
         }
 
         // Update land
         if ($action_type != 'build_embassy' && $action_type != 'remove_embassy') {
-            $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
+            $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
         }
 
         // Reset War Weariness if attacked player has no land now
-        $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
+        // Disabled to nerf "snipers" and for better performance
+        /* $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
         if ($defender_new_land_count['count'] == 0) {
-            // Disabled to nerf "snipers"
-            // $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
-        }
-        
+            $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
+        } */
+
         // Attack response
         if ($action_type === 'attack') {
             echo '{"status": "success", "result": true, "message": "Captured"}';
@@ -566,7 +586,7 @@ class Game extends CI_Controller {
 	}
 
 	// Validate Land Form Callback
-	public function land_form_validation($form_type_input)
+	public function land_form_validation($land_square, $active_account)
 	{
         // User Information
         if (!$this->session->userdata('logged_in')) {
@@ -581,14 +601,10 @@ class Game extends CI_Controller {
         $coord_slug = $this->input->post('coord_slug_input');
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-        $active_account = $this->user_model->get_account_by_keys($user_id, $world_key);
-        $active_account['land_count'] = $this->user_model->get_count_of_account_land($active_account['id']);
         $active_account_key = $active_account['id'];
         $active_user = $this->user_model->get_user($active_account_key);
-        $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
-        $passive_user = $this->user_model->get_user($passive_account_key);
         $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
 
         // Town, City, Metro, Capitol check
@@ -651,60 +667,60 @@ class Game extends CI_Controller {
             $land_type_effect_keys = array($this->unclaimed_key, $this->village_key, $this->town_key, $this->city_key, $this->metropolis_key, $this->fortification_key);
             // Capitol
             if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_capitol_from_account($account_key);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
+                $this->game_model->remove_capitol_from_account($account_key);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
                 break;
             }
             // Village
             else if ($effect['name'] === 'village' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
-                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->upgrade_land_type($land_key, $this->village_key);
+                $this->game_model->remove_modifiers_from_land($land_key);
+                $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->upgrade_land_type($land_key, $this->village_key);
                 break;
             }
             // Town
             else if ($effect['name'] === 'town' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->upgrade_land_type($land_key, $this->town_key);
+                $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->upgrade_land_type($land_key, $this->town_key);
                 break;
             }
             // City
             else if ($effect['name'] === 'city' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->upgrade_land_type($land_key, $this->city_key);
+                $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->upgrade_land_type($land_key, $this->city_key);
                 break;
             }
             // Metropolis
             else if ($effect['name'] === 'metropolis' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->upgrade_land_type($land_key, $this->metropolis_key);
+                $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->upgrade_land_type($land_key, $this->metropolis_key);
                 break;
             }
             // Fortification
             else if ($effect['name'] === 'fortification' && $form_type === $effect['id']) {
-                $query_action = $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
-                $query_action = $this->game_model->upgrade_land_type($land_key, $this->fortification_key);
+                $this->game_model->remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->upgrade_land_type($land_key, $this->fortification_key);
                 break;
             }
             // Regular Upgrades
             else if ($form_type === $effect['id']) {
-                $query_action = $this->game_model->add_modifier_to_land($land_key, $effect['id']);
+                $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 break;
             }
         }
         return true;
     }
 
-    public function war_weariness_calculate($account, $defender_account, $land_square)
+    public function war_weariness_calculate($account, $land_square, $defender_account = false)
     {
-        // Used to make cron more effecient
-        if ( !$account['active_account'] ) {
+        // Used to keep track of which accounts are active
+        if (!$account['active_account']) {
             // Mark account as active
             $this->game_model->update_account_active_state($account['id'], 1);
         }
@@ -716,16 +732,18 @@ class Game extends CI_Controller {
         $war_weariness += floor($account['land_count'] / $this->war_weariness_increase_land_count);
 
         // If unclaimed, just 1 war weariness
-        if ($defender_account == 0) {
+        if ($land_square['account_key'] == 0) {
             return $war_weariness;
         }
 
         // Get accounts
-        $defender_account = $this->user_model->get_account_by_id($defender_account);
+        if (!$defender_account) {
+            $defender_account = $this->user_model->get_account_by_id($land_square['account_key']);
+            $defender_account = $this->get_full_account($defender_account);
+        }
         if (!$defender_account) {
             return $war_weariness;
         }
-        $defender_account = $this->get_full_account($defender_account);
 
         // War Weariness Military Algorithm
         $ww_multiplier = 3;
@@ -754,7 +772,7 @@ class Game extends CI_Controller {
             $war_weariness += 8;
         }
         // War Weariness Defense Bonus
-        $modify_effect_dictionary = $this->game_model->get_all_modify_effects();
+        $modify_effect_dictionary = $this->effects;
         foreach ($modify_effect_dictionary as $effect) {
             if ($land_square['land_type'] == $effect['id'] && $effect['defense'] > 0) {
                 $war_weariness = $war_weariness * $effect['defense'];
