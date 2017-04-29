@@ -4,6 +4,7 @@ date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
 
+    // Land Key Constants
     protected $unclaimed_key = 1;
     protected $village_key = 2;
     protected $town_key = 3;
@@ -12,12 +13,26 @@ class Game extends CI_Controller {
     protected $fortification_key = 6;
     protected $capitol_key = 10;
 
+    // Government Key Constants
     protected $democracy_key = 1;
     protected $oligarchy_key = 2;
     protected $autocracy_key = 3;
 
-    protected $war_weariness_increase_land_count = 300;
+    // Balance Constants
+    protected $democracy_min_support = 50;
+    protected $democracy_corruption_rate = 0;
+    protected $oligarchy_min_support = 10;
+    protected $oligarchy_corruption_rate = 10;
+    protected $autocracy_min_support = 0;
+    protected $autocracy_corruption_rate = 30;
+    protected $war_weariness_increase_land_count = 200;
     protected $sniper_land_minimum = 100;
+    protected $tax_nerf = 2;
+    protected $entitlments_nerf = 30;
+
+    // Server Pooling Constants
+    protected $leaderboard_update_interval = 5 * 60;
+    protected $map_update_interval = 10;
 
 	function __construct() {
 	    parent::__construct();
@@ -84,6 +99,13 @@ class Game extends CI_Controller {
         $next_reset_dictionary = $this->next_reset_dictionary();
         $data['next_reset'] = $next_reset_dictionary[$world['id']];
 
+        // Set public constants
+        $data['democracy_min_support'] = $this->democracy_min_support;
+        $data['democracy_corruption_rate'] = $this->democracy_corruption_rate;
+        $data['oligarchy_min_support'] = $this->oligarchy_min_support;
+        $data['oligarchy_corruption_rate'] = $this->oligarchy_corruption_rate;
+        $data['autocracy_min_support'] = $this->autocracy_min_support;
+        $data['autocracy_corruption_rate'] = $this->autocracy_corruption_rate;
         $data['war_weariness_increase_land_count'] = $this->war_weariness_increase_land_count;
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
 
@@ -107,9 +129,9 @@ class Game extends CI_Controller {
         }
 
         // Get all lands
-        $data['leaderboard_update_interval_minutes'] = 5;
-        $server_update_timespan = 30;
-        $data['update_timespan'] = floor($server_update_timespan / 2) * 1000;
+        $data['leaderboard_update_interval'] = $this->leaderboard_update_interval;
+        $data['update_timespan'] = $this->map_update_interval * 1000;
+        $server_update_timespan = $this->map_update_interval * 2;
         if (isset($_GET['json'])) {
             $data['lands'] = $this->game_model->get_all_lands_in_world_recently_updated($world['id'], $server_update_timespan);
         }
@@ -157,18 +179,17 @@ class Game extends CI_Controller {
         // Democracy Taxes
         $account['stats']['corruption_rate'] = 100;
         if ($account['government'] == $this->democracy_key) {
-            $account['stats']['corruption_rate'] = 0;
+            $account['stats']['corruption_rate'] = $this->democracy_corruption_rate;
         }
         // Oligarchy Taxes
         else if ($account['government'] == $this->oligarchy_key) {
-            $account['stats']['corruption_rate'] = 10;
+            $account['stats']['corruption_rate'] = $this->oligarchy_corruption_rate;
         }
         // Autocracy Taxes
         else if ($account['government'] == $this->autocracy_key) {
-            $account['stats']['corruption_rate'] = 30;
+            $account['stats']['corruption_rate'] = $this->autocracy_corruption_rate;
         }
 
-        $tax_unpopularity = 2;
         $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
         $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
         $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
@@ -178,22 +199,22 @@ class Game extends CI_Controller {
         $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
         $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $entitlments_nerf = 30;
-        $account['stats']['entitlements_effect'] = ceil( ($account['effective_tax_rate'] * $account['entitlements_budget']) / $entitlments_nerf);
+        $account['stats']['entitlements_effect'] = ceil( ($account['effective_tax_rate'] * $account['entitlements_budget']) / $this->entitlments_nerf);
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
-        $account['stats']['support'] = 100 - $account['war_weariness'] - ($account['tax_rate'] * $tax_unpopularity) + $account['stats']['entitlements_effect'] + $account['stats']['support'];
+        $tax_popularity_hit = floor(pow($account['tax_rate'], $this->tax_nerf) / pow($this->tax_nerf * $this->tax_nerf, $this->tax_nerf));
+        $account['stats']['support'] = 100 - $account['war_weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
         // See if functioning
         $account['functioning'] = true;
-        if ($account['government'] == $this->democracy_key && $account['stats']['support'] < 50) {
+        if ($account['government'] == $this->democracy_key && $account['stats']['support'] < $this->democracy_min_support) {
             $account['functioning'] = false;
         }
-        else if ($account['government'] == $this->oligarchy_key && $account['stats']['support'] < 30) {
+        else if ($account['government'] == $this->oligarchy_key && $account['stats']['support'] < $this->oligarchy_min_support) {
             $account['functioning'] = false;
         }
-        else if ($account['government'] == $this->autocracy_key && $account['stats']['support'] < 10) {
+        else if ($account['government'] == $this->autocracy_key && $account['stats']['support'] < $this->autocracy_min_support) {
             $account['functioning'] = false;
         }
 
@@ -675,25 +696,26 @@ class Game extends CI_Controller {
         $defender_account = $this->get_full_account($defender_account);
 
         // War Weariness Military Algorithm
-        if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * 2) {
+        $ww_multiplier = 3;
+        if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * $ww_multiplier) {
             $war_weariness += 1;
         }
         else if ($account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
             $war_weariness += 2;
         }
-        else if ($account['stats']['military_after'] * 2 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * $ww_multiplier >= $defender_account['stats']['military_after']) {
             $war_weariness += 3;
         }
-        else if ($account['stats']['military_after'] * 2 * 2 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
             $war_weariness += 4;
         }
-        else if ($account['stats']['military_after'] * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
             $war_weariness += 5;
         }
-        else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
             $war_weariness += 6;
         }
-        else if ($account['stats']['military_after'] * 2 * 2 * 2 * 2 * 2 >= $defender_account['stats']['military_after']) {
+        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
             $war_weariness += 7;
         }
         else {

@@ -41,13 +41,13 @@
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">War Weariness: </strong>
                         <strong class="law_info_value text-danger">
-                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>%
+                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Political Support: </strong>
                         <strong class="law_info_value text-default">
-                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>%
+                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>
                         </strong><br>
                     </span>
                 </div>
@@ -103,13 +103,13 @@
                             <select class="form-control" id="input_government" name="input_government" value="<?php echo $account['government']; ?>">
                                 <option value="<?php echo $account['government']; ?>"><?php echo $government_dictionary[$account['government']]; ?></option>
                                 <?php if ($account['government'] != 1) { ?>
-                                <option value="1">Democracy (Minimum Political Support at 50%)</option>
+                                <option value="1">Democracy (<?php echo $democracy_corruption_rate ?>% Corruption, Min Support at <?php echo $democracy_min_support; ?>)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 2) { ?>
-                                <option value="2">Oligarchy (10% Corruption, Min Support at 30%)</option>
+                                <option value="2">Oligarchy (<?php echo $oligarchy_corruption_rate ?>% Corruption, Min Support at <?php echo $oligarchy_min_support; ?>)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 3) { ?>
-                                <option value="3">Autocracy (30% Corruption, Min Support at 10%)</option>
+                                <option value="3">Autocracy (<?php echo $autocracy_corruption_rate ?>% Corruption, Min Support at <?php echo $autocracy_min_support; ?>)</option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -154,7 +154,7 @@
                 <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
                 <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
                 <li>War Weariness decreases your Political Support</li>
-                <li>War Weariness decreases by 5% every minute</li>
+                <li>War Weariness decreases by 5 every minute</li>
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>

@@ -46,7 +46,7 @@
 
   // Set maps variables
   var map_update_interval = <?php echo $update_timespan; ?>;
-  var leaderboard_update_interval = <?php echo $leaderboard_update_interval_minutes; ?> * 60 * 1000;
+  var leaderboard_update_interval = <?php echo $leaderboard_update_interval; ?> * 1000;
   var infoWindow = false;
   var boxes = [];
 

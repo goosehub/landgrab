@@ -170,7 +170,7 @@
                                 <div class="effect_pair">
                                     <span class="effect_label text-default">Support: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
-                                        <?php echo $effect['support']; ?>%
+                                        <?php echo $effect['support']; ?>
                                     </span>
                                 </div> 
                             </div>
