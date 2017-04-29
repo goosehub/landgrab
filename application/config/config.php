@@ -25,9 +25,10 @@ $config['sess_save_path'] = sys_get_temp_dir();
 
 $allowed_domains = array(
     'localhost/landgrab',
+    'localhost/landgrab.xyz',
     'landgrab.xyz'
     );
-$default_domain  = 'localhost/landgrab';
+$default_domain  = 'localhost/landgrab.xyz';
 
 if (in_array($_SERVER['HTTP_HOST'], $allowed_domains, TRUE)) {
     $domain = $_SERVER['HTTP_HOST'];
