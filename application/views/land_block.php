@@ -62,9 +62,14 @@
         </span>
 
         <button id="button_expand_info" class="expand_land_form btn btn-primary land_block_toggle" type="button" data-toggle="collapse" data-target="#land_info_dropdown" aria-expanded="false" aria-controls="land_info_dropdown">
-            More Info
+            Buildings
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
         </button>
+
+        <div id="embassy_list_dropdown_button" class="btn btn-info" type="button" data-toggle="collapse" data-target="#embassy_list_dropdown" aria-expanded="false" aria-controls="embassy_list_dropdown">
+            Embassies
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </div>
 
         <button id="button_expand_upgrade" class="expand_land_form btn btn-success land_block_toggle" type="button" data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">
             Build
@@ -76,6 +81,11 @@
         </button>
 
         <br> <br>
+
+        <div id="embassy_list_dropdown" class="info_details_parent collapse">
+            <div id="embassy_list" class="well">
+            </div>
+        </div>
 
         <div id="land_form_more_info_parent" class="land_block_toggle">
             <div id="land_info_dropdown" class="collapse">
@@ -93,6 +103,7 @@
                 <div class="form-group">
                     <div class="row">
                     <?php foreach ($modify_effect_dictionary as $effect) { ?>
+                        <?php if ($effect['is_embassy']) { continue; } ?>
                         <?php $button_color = $effect['id'] <= 10 ? 'action' : 'success' ?>
                         <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
                             <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
@@ -180,6 +191,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="embassy_parent">
+
+            <button type="button" value="build_embassy" id="build_embassy" class="btn btn-success">Build Embassy</button>
+            <button type="button" value="remove_embassy" id="remove_embassy" class="btn btn-danger">Remove Embassy</button>
+            <div id="embassy_info_dropdown_button" class="btn btn-info" type="button" data-toggle="collapse" data-target="#embassy_info_dropdown" aria-expanded="false" aria-controls="embassy_info_dropdown">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </div>
+            <div id="embassy_info_dropdown" class="info_details_parent collapse">
+                <div class="well">
+                    <p class="lead">
+                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boasts this players GDP by $<?php echo $embassy_effect['gdp'] ?> Million, boasts their Military by $<?php echo $embassy_effect['military'] ?> Million, and increases their Support by <?php echo $embassy_effect['support'] ?>.
+                    </p>
+                </div>
+            </div>
+        </div> 
 
         <div id="join_to_play_button" class="land_block_toggle">
             <a class="register_to_play btn btn-default" href="<?=base_url()?>world/1?register">Join to Play!</a>

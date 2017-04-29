@@ -12,6 +12,7 @@ class Game extends CI_Controller {
     protected $metropolis_key = 5;
     protected $fortification_key = 6;
     protected $capitol_key = 10;
+    protected $embassy_key = 17;
 
     // Government Key Constants
     protected $democracy_key = 1;
@@ -126,6 +127,7 @@ class Game extends CI_Controller {
             $data['stroke_color_dictionary'] = $this->stroke_color_dictionary();
             $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
             $modify_effect_dictionary = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
+            $data['embassy_effect'] = $this->game_model->get_embassy_effect();
         }
 
         // Get all lands
@@ -252,6 +254,7 @@ class Game extends CI_Controller {
         $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
+        $land_square['embassy_list'] = $this->game_model->get_embassys_of_land($land_square['id']);
         if ($land_square['account_key'] != 0) {
             $account = $land_square['account'] = $this->user_model->get_account_by_id($land_square['account_key']);
             // This shouldn't happen, but it does
@@ -371,13 +374,8 @@ class Game extends CI_Controller {
 	// Land form
 	public function land_form()
     {
-        // Authentication
-        if ($this->session->userdata('logged_in')) {
-            $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
-        }
         // If user not logged in, return with fail
-        else {
+        if (!$this->session->userdata('logged_in')) {
             echo '{"status": "fail", "message": "User not logged in"}';
             return false;
         }
@@ -396,7 +394,10 @@ class Game extends CI_Controller {
             $this->session->set_flashdata('validation_errors', validation_errors());
             return false;
         } 
-		// Success
+
+		// Account
+        $session_data = $this->session->userdata('logged_in');
+        $user_id = $data['user_id'] = $session_data['id'];
 
         // Set inputs
         $coord_slug = $this->input->post('coord_slug_input');
@@ -419,10 +420,28 @@ class Game extends CI_Controller {
         // $content = $this->sanitize_html($content);
         $content = $content;
 
-        if ( is_numeric($form_type) ) {
+        if ($form_type === 'build_embassy') {
+            $action_type = $form_type;
+            $player_has_embassy = $this->game_model->get_embassy_by_player($account_key);
+            if ($player_has_embassy) {
+                echo '{"status": "fail", "message": "You already have an embassy here."}';
+                return false;
+            }
+            $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);
+        }
+        else if ($form_type === 'remove_embassy') {
+            $action_type = $form_type;
+            $player_has_embassy = $this->game_model->get_embassy_by_player($account_key);
+            if (!$player_has_embassy) {
+                echo '{"status": "fail", "message": "You don\'t have an embassy here."}';
+                return false;
+            }
+            $this->game_model->remove_player_embassy($account_key, $land_key, $this->embassy_key);
+        }
+        else if ( is_numeric($form_type) ) {
             $action_type = 'build';
         }
-        else if ($land_square['land_type'] === $this->unclaimed_key) {
+        else if ($land_square['land_type'] == $this->unclaimed_key) {
             $action_type = 'claim';
         }
         else if ($account['id'] === $land_square['account_key']) {
@@ -450,7 +469,7 @@ class Game extends CI_Controller {
             return false;
         }
 
-        // Prevemt attacking without political support
+        // Prevent attacking without political support
         if ($action_type != 'update' && !$account['functioning'] && $account['tutorial'] >= 2 && $form_type != $this->village_key) {
             echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
             return false;
@@ -458,7 +477,7 @@ class Game extends CI_Controller {
 
         // Upgrade Logic
         $effects = $data['modify_effect_dictionary'] = $this->game_model->get_all_modify_effects();
-        if ( $action_type === 'build' ) {
+        if ($action_type === 'build') {
             $result = $this->land_form_upgrade($effects, $form_type, $world_key, $account_key, $land_key, $coord_slug);
             if (!$result) {
                 echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
@@ -489,13 +508,18 @@ class Game extends CI_Controller {
             $land_type = $land_square['land_type'];
         // Attack or claim
         } 
-        else {
+        else if ($action_type === 'attack' || $action_type === 'claim') {
             $land_type = $this->village_key;
             $land_name = $account['nation_name'];
             $content = '';
-            $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+            if ($land_square['capitol']) {
+                $query_action = $this->game_model->remove_all_embassy_of_land($land_key);
+                $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
+            }
+            if ($land_square['land_type'] != $this->unclaimed_key || $land_square['land_type'] != $this->village_key) {
+                $query_action = $this->game_model->remove_modifiers_from_land($land_key);
+            }
             $query_action = $this->game_model->add_modifier_to_land($land_key, $this->village_key);
-            $query_action = $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
         }
 
         // Tutorial progress for update or build
@@ -508,7 +532,9 @@ class Game extends CI_Controller {
         }
 
         // Update land
-        $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
+        if ($action_type != 'build_embassy' && $action_type != 'remove_embassy') {
+            $query_action = $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
+        }
 
         // Reset War Weariness if attacked player has no land now
         $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
@@ -526,8 +552,14 @@ class Game extends CI_Controller {
             echo '{"status": "success", "result": true, "message": "Claimed"}';
         } 
         // Update response
-        else {
+        else if ($action_type === 'update') {
             echo '{"status": "success", "result": true, "message": "Updated"}';
+        }
+        else if ($action_type === 'build_embassy') {
+            echo '{"status": "success", "result": true, "message": "Embassy Built"}';
+        }
+        else if ($action_type === 'remove_embassy') {
+            echo '{"status": "success", "result": true, "message": "Embassy Removed"}';
         }
 
         return true;

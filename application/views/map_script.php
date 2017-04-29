@@ -237,11 +237,13 @@ $(document).keyup(function(e) {
         prepare_land_form_data(coord_slug, world_key, d);
 
         // Unbind the last click handler from get_single_land 
-        $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').off('click');
-        $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade').click(function() {
+        $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy').off('click');
+
+        $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy').click(function() {
 
           // Submit land ajax
           var form_type = $(this).val();
+          console.log(form_type);
           land_form_ajax(form_type);
 
           // Do tutorial progression
@@ -298,6 +300,10 @@ $(document).keyup(function(e) {
 
       // Start by hiding everything
       $('.land_block_toggle').hide();
+      $('#embassy_info_dropdown_button').hide();
+      $('#build_embassy').hide();
+      $('#remove_embassy').hide();
+      $('#embassy_list_dropdown_button').hide();
 
       // Not logged in
       if (!log_check) {
@@ -322,6 +328,21 @@ $(document).keyup(function(e) {
         $('.war_weariness_outer_span').hide();
       } else {
         $('.war_weariness_outer_span').show();
+      }
+
+      // Embassy List
+      if (d['capitol'] === '1') {
+        var player_has_embassy_here = false;
+        var embassy_list_length = d['embassy_list'].length;
+        $('#embassy_list').html('');
+        for (var i = 0; i < embassy_list_length; i++) {
+          $('#embassy_list_dropdown_button').show();
+          $('#embassy_list').append('<p>Embassy of ' + d['embassy_list'][i].nation_name + ' - Consulate of ' + d['embassy_list'][i].username + '</p>');
+          if (d['embassy_list'][i].account_key === account['id']) {
+            player_has_embassy_here = true;
+          }
+          // Show embassy list
+        }
       }
 
       // Own
@@ -414,6 +435,18 @@ $(document).keyup(function(e) {
         }
         // Do not own
       } else if (log_check) {
+
+        // Embassy Logic
+        if (d['capitol'] === '1') {
+          $('#embassy_info_dropdown_button').show();
+          if (player_has_embassy_here) {
+            $('#remove_embassy').show();
+          }
+          else {
+            $('#build_embassy').show();
+          }
+        }
+
         // In range
         if (d['in_range']) {
           // And unclaimed
@@ -514,101 +547,107 @@ $(document).keyup(function(e) {
         cache: false,
         success: function(data) {
           // Return data
+          // console.log(data);
           response = JSON.parse(data);
+          land_form_response(response, form_type);
+        }
+      });
+    }
 
-          if (response['error']) {
-            // Bug here
-            // $('#land_form_result').show();
-            // $('#land_form_result_message').html(response['error']);
-            alert(response['error']);
-            return false;
-          }
-          if (response['status'] === 'fail') {
-            // Bug here
-            // $('#land_form_result').show();
-            // $('#land_form_result_message').html(response['message']);
-            alert(response['message']);
-            return false;
-          }
+    function land_form_response(response, form_type) {
+      if (response['error']) {
+        // Bug here
+        // $('#land_form_result').show();
+        // $('#land_form_result_message').html(response['error']);
+        alert(response['error']);
+        return false;
+      }
+      if (response['status'] === 'fail') {
+        // Bug here
+        // $('#land_form_result').show();
+        // $('#land_form_result_message').html(response['message']);
+        alert(response['message']);
+        return false;
+      }
 
-          // If success
-          if (response['status'] === 'success') {
+      // If success
+      if (response['status'] === 'success') {
+        // Pass information to user
+        // $('#land_form_result_message').html(response['message']);
+        $('.center_block').fadeOut(300);
 
-            // Pass information to user
-            // $('#land_form_result_message').html(response['message']);
-            $('.center_block').fadeOut(300);
+        // Update player variables and displays
+        // player_land_count = player_land_count + 1;
+        // $('#owned_lands_span').html( number_format(player_land_count) );
 
-            // Update player variables and displays
-            // player_land_count = player_land_count + 1;
-            // $('#owned_lands_span').html( number_format(player_land_count) );
+        // Update Land Style
+        if (form_type === 'build_embassy' || form_type === 'remove_embassy') {
+          return;
+        }
 
-            // Update Land Style
+        // Claim or attack
+        if (form_type === 'claim' || form_type === 'attack') {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['village']; ?>',
+            fillColor: account['color'],
+            fillOpacity: 0.4
+          });
+        }
+        // Capitol
+        else if (form_type == land_type_key_dictionary['capitol']) {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['capitol']; ?>',
+            fillOpacity: 0.8
+          });
+        }
+        // Town
+        else if (form_type == land_type_key_dictionary['town']) {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['town']; ?>',
+            fillOpacity: 0.4
+          });
+        }
+        // City
+        else if (form_type == land_type_key_dictionary['city']) {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['city']; ?>',
+            fillOpacity: 0.4
+          });
+        }
+        // Metroplis
+        else if (form_type == land_type_key_dictionary['metropolis']) {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
+            fillOpacity: 0.4
+          });
+        }
+        // Fortification
+        else if (form_type == land_type_key_dictionary['fortification']) {
+          boxes[d['id']].setOptions({
+            strokeWeight: 3,
+            strokeColor: '<?php echo $stroke_color_dictionary['fortification']; ?>',
+            fillOpacity: 0.4
+          });
+        }
 
-            // Claim or attack
-            if (form_type === 'claim' || form_type === 'attack') {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['village']; ?>',
-                fillColor: account['color'],
-                fillOpacity: 0.4
-              });
-            }
-            // Capitol
-            else if (form_type == land_type_key_dictionary['capitol']) {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['capitol']; ?>',
-                fillOpacity: 0.8
-              });
-            }
-            // Town
-            else if (form_type == land_type_key_dictionary['town']) {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['town']; ?>',
-                fillOpacity: 0.4
-              });
-            }
-            // City
-            else if (form_type == land_type_key_dictionary['city']) {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['city']; ?>',
-                fillOpacity: 0.4
-              });
-            }
-            // Metroplis
-            else if (form_type == land_type_key_dictionary['metropolis']) {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
-                fillOpacity: 0.4
-              });
-            }
-            // Fortification
-            else if (form_type == land_type_key_dictionary['fortification']) {
-              boxes[d['id']].setOptions({
-                strokeWeight: 3,
-                strokeColor: '<?php echo $stroke_color_dictionary['fortification']; ?>',
-                fillOpacity: 0.4
-              });
-            }
+        // Tutorial Rule
+        if (account && account['tutorial'] < 2) {
+          $('#tutorial_block').fadeOut(1000, function() {
+            $('#tutorial_block').fadeIn();
+            $('#tutorial_title').html('We The People');
+            $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+            $('.stat_dropdown').click();
+            account['tutorial'] = 2;
+          });
+        }
 
-            // Tutorial Rule
-            if (account && account['tutorial'] < 2) {
-              $('#tutorial_block').fadeOut(1000, function() {
-                $('#tutorial_block').fadeIn();
-                $('#tutorial_title').html('We The People');
-                $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
-                $('.stat_dropdown').click();
-                account['tutorial'] = 2;
-              });
-            }
-
-            return true;
-          }
-        } // End land form ajax success
-      }); // End land form ajax
+        return true;
+      }
     }
 
     function land_form_tutorial(land_form_type) {

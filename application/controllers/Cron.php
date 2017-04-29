@@ -31,6 +31,7 @@ class Cron extends CI_Controller {
       $this->game_model->universal_decrease_war_weariness($war_weariness_decrease);
 
       // Resets
+      // $world_reset_frequency[1] = '* * * * *';
       $world_reset_frequency[1] = '0 20 1,15 * *';
       $world_reset_frequency[2] = '0 20 10,20,30 * *';
       $world_reset_frequency[3] = '0 20 5,10,15,20,25,30 * *';
@@ -57,6 +58,7 @@ class Cron extends CI_Controller {
         $last_winner_land_count = $leader['total'];
         $this->game_model->update_world_with_last_winner($world['id'], $last_winner_account_key, $last_winner_land_count);
         $this->game_model->update_all_lands_in_world($world['id'], $account_key = 0, $land_name = '', $content = '', $land_type = 1, $color = '#000000', $capitol = 0);
+        $this->game_model->remove_all_embassy_of_world($world['id']);
         $this->game_model->world_set_war_weariness($world['id'], $war_weariness = 0);
       }
 
