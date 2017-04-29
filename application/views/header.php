@@ -48,7 +48,7 @@
   </head>
   <body>
   <!-- Facebook like code -->
-<!--   <div id="fb-root"></div>
+  <div id="fb-root"></div>
   <script>
     window.fbAsyncInit = function() {
       FB.init({
@@ -65,14 +65,17 @@
     js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=523758294469574";
     fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-   </script> -->
+   </script>
 
   <div class="top_left_block">
-    <!-- <div class="fb-like" data-href="http://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div> -->
+    <!-- <div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div> -->
   </div>
 
   <!-- Image for crawlers -->
-  <img id="crawler_image" src="<?=base_url()?>resources/logos/hero.jpg" alt="Landgrab" style="display: none;"/>
+  <h1 style="display: none;">Landgrab - Google Maps Web Game</h1>
+  <h2 style="display: none;">
+    <img id="crawler_image" src="<?=base_url()?>resources/logos/hero.jpg" alt="Landgrab"/>
+  </h2>
 
   <!-- Map Element -->
   <div id="map"></div>

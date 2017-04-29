@@ -37,8 +37,12 @@
             <div id="username" class="text-success">Led by <span id="username_label"></span></div>
 
             <div id="capitol_info" class="land_block_toggle">
-                <img id="land_leader_portrait_image" src="<?=base_url()?>uploads/default_leader_portrait.png"/>
-                <img id="land_nation_flag_image" src="<?=base_url()?>uploads/default_nation_flag.png"/>
+                <a class="land_leader_portrait_image_link" href="<?=base_url()?>uploads/default_leader_portrait.png" target="_blank">
+                    <img class="land_leader_portrait_image" src="<?=base_url()?>uploads/default_leader_portrait.png"/>
+                </a>
+                <a class="land_nation_flag_image_link" href="<?=base_url()?>uploads/default_leader_portrait.png" target="_blank">
+                    <img class="land_nation_flag_image" src="<?=base_url()?>uploads/default_nation_flag.png"/>
+                </a>
                 <div id="capitol_label"><span class="text-red">Capitol</span> of the <span id="government_label" class="text-warning"></span> of <span id="nation_label" class="text-warning"></span></div>
             </div>
 
@@ -113,6 +117,19 @@
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </div>
                             <div id="<?php echo $effect['name']; ?>_info_dropdown" class="info_details_parent collapse">
+                                <?php if ($effect['treasury'] > 0) {
+                                    $this_class = 'success';
+                                } else if ($effect['treasury'] < 0) {
+                                    $this_class = 'danger';
+                                } else {
+                                    $this_class = 'primary';
+                                } ?>
+                                <div class="effect_pair">
+                                    <span class="effect_label text-danger">Revenue: </span>
+                                    <span class="effect_value pull-right text-<?php echo $this_class; ?>">
+                                        <?php echo $effect['treasury']; ?>M
+                                    </span>
+                                </div>
                                 <?php if ($effect['gdp'] > 0) {
                                     $this_class = 'success';
                                 } else if ($effect['gdp'] < 0) {
@@ -124,19 +141,6 @@
                                     <span class="effect_label text-action">GDP: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
                                         <?php echo $effect['gdp']; ?>M
-                                    </span>
-                                </div>
-                                <?php if ($effect['treasury'] > 0) {
-                                    $this_class = 'success';
-                                } else if ($effect['treasury'] < 0) {
-                                    $this_class = 'danger';
-                                } else {
-                                    $this_class = 'primary';
-                                } ?>
-                                <div class="effect_pair">
-                                    <span class="effect_label text-warning">Revenue: </span>
-                                    <span class="effect_value pull-right text-<?php echo $this_class; ?>">
-                                        <?php echo $effect['treasury']; ?>M
                                     </span>
                                 </div>
                                 <?php if ($effect['population'] > 0) {
@@ -154,13 +158,13 @@
                                 </div>
                                 <?php if ($effect['military'] > 0) {
                                 $this_class = 'success';
-                                } else if ($effect['military'] <0) {
+                                } else if ($effect['military'] < 0) {
                                 $this_class = 'danger';
                                 } else {
                                 $this_class = 'primary';
                                 } ?>
                                 <div class="effect_pair">
-                                    <span class="effect_label text-danger">Military: </span>
+                                    <span class="effect_label text-warning">Military: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
                                         <?php echo $effect['military']; ?>M
                                     </span>

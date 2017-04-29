@@ -37,6 +37,7 @@ class Game extends CI_Controller {
     // Server Pooling Constants
     protected $leaderboard_update_interval = 5 * 60;
     protected $map_update_interval = 10;
+    protected $maintenance_flag = false;
 
 	function __construct() {
 	    parent::__construct();
@@ -55,6 +56,19 @@ class Game extends CI_Controller {
 	// Game view and update json
 	public function index($world_slug = 1, $marketing_slug = false)
 	{
+        // Send refresh signal to clients when true
+        if ($this->maintenance_flag) {
+            if (isset($_GET['json'])) {
+                $data['refresh'] = $this->maintenance_flag;
+                echo json_encode($data);
+            }
+            else {
+                echo '<h1>Landgrab is being updated. This will only take a minute or two. This page will refresh automatically.</h1>';
+                echo '<script>window.setTimeout(function(){ window.location.href = "' . base_url() . '"; }, 5000);</script>';
+            }
+            return false;
+        }
+
         // Record marketing slug into analytics table
         if ($marketing_slug) {
             $this->user_model->record_marketing_hit($marketing_slug);
@@ -153,9 +167,6 @@ class Game extends CI_Controller {
 
         // If data request, encode data in json and deliver
         if (isset($_GET['json'])) {
-            // Send refresh signal to clients when true
-            $data['refresh'] = false;
-
             // Encode and send data
             function filter(&$value) {
               $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));

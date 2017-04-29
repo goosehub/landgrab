@@ -54,12 +54,12 @@
 var attack_key_pressed = false;
 var keys = new Array();
 keys['a'] = 65;
-$(document).keydown(function(e) {
+$(document).keydown(function(event) {
   if (event.which == keys['a']) {
     attack_key_pressed = true;
   }
 });
-$(document).keyup(function(e) {
+$(document).keyup(function(event) {
   if (event.which == keys['a']) {
     attack_key_pressed = false;
   }
@@ -243,7 +243,6 @@ $(document).keyup(function(e) {
 
           // Submit land ajax
           var form_type = $(this).val();
-          console.log(form_type);
           land_form_ajax(form_type);
 
           // Do tutorial progression
@@ -474,8 +473,10 @@ $(document).keyup(function(e) {
       // Capitol
       if (d['capitol'] === '1') {
         $('#capitol_info').show();
-        $('#land_leader_portrait_image').prop('src', '<?=base_url()?>uploads/' + d['account']['leader_portrait']);
-        $('#land_nation_flag_image').prop('src', '<?=base_url()?>uploads/' + d['account']['nation_flag']);
+        $('.land_leader_portrait_image').prop('src', '<?=base_url()?>uploads/' + d['account']['leader_portrait']);
+        $('.land_leader_portrait_image_link').prop('href', '<?=base_url()?>uploads/' + d['account']['leader_portrait']);
+        $('.land_nation_flag_image').prop('src', '<?=base_url()?>uploads/' + d['account']['nation_flag']);
+        $('.land_nation_flag_image_link').prop('href', '<?=base_url()?>uploads/' + d['account']['nation_flag']);
         $('#capitol_info_parent').hide();
       }
 
@@ -525,7 +526,7 @@ $(document).keyup(function(e) {
       var more_info_string = '';
       for (var i = 0; i < d['sum_modifiers'].length; i++) {
         // Skip if land type
-        if (d['sum_modifiers'][i]['id'] <= 10) {
+        if (d['sum_modifiers'][i]['id'] <= 10 && d['sum_modifiers'][i]['id'] != land_type_key_dictionary['capitol']) {
           continue;
         }
         var modifier_name = ucwords(d['sum_modifiers'][i]['name'].replace(/_/g, ' '));
@@ -864,12 +865,16 @@ $(document).keyup(function(e) {
         html += '<span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ' + value.color + '"> </span>';
         html += '<strong class="leaderboard_username">' + value.username + '</strong>';
         html += '<br>';
+        html += '<a href="<?=base_url()?>uploads/' + value.leader_portrait + '">';
         html += '<img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/' + value.leader_portrait + '">';
+        html += '</a>';
         html += '</td>';
         html += '<td>';
         html += '<strong class="leaderboard_nation_name">' + value.nation_name + '</strong>';
         html += '<br>';
+        html += '<a href="<?=base_url()?>uploads/' + value.nation_flag + '">';
         html += '<img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/' + value.nation_flag + '">';
+        html += '</a>';
         html += '</td>';
         html += '<td>';
         html += '<strong class="text-success">' + number_format(value.land_count) + '</strong>';

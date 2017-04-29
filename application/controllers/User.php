@@ -215,7 +215,7 @@ class User extends CI_Controller {
         $nation_flag = $this->input->post('existing_nation_flag');
         if ( $_FILES['nation_flag']['name'] && !$this->upload->do_upload('nation_flag') ) {
             $this->session->set_flashdata('validation_errors', $this->upload->display_errors());
-            redirect('world/' . $world_key, 'refresh');
+            echo $this->upload->display_errors();
             return false;
         }
         else if ($_FILES['nation_flag']['name']) {

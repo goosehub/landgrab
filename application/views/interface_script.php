@@ -15,16 +15,10 @@ loading();
 <?php if ($failed_form === 'error_block') { ?>
     $('#error_block').show();
 <?php } ?>
-
-// Show how to play after registering
-<?php if ($just_registered) { ?>
-// $('#how_to_play_block').show();
-<?php } ?>
-
 // Show register form if not logged in and not failed to log in
 <?php if ($failed_form != 'login') { ?>
   if (!log_check) {
-    // $('#register_block').show();
+    $('#register_block').show();
   }
 <?php } ?>
 
@@ -70,10 +64,6 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('.center_block').hide();
     $('#register_block').show();
-});
-$('.how_to_play_button').click(function(){
-    $('.center_block').hide();
-    $('#how_to_play_block').show();
 });
 $('.update_info_button').click(function(){
     $('.center_block').hide();

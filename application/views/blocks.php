@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Tax Revenue: </strong>
+                        <strong class="law_info_item_label">Gross Tax Revenue: </strong>
                         <strong class="law_info_value text-success">
                             <span class="tax_income_span"><?php echo number_format($account['stats']['tax_income']); ?></span>M
                         </strong><br>
@@ -199,7 +199,9 @@
                     <label for="input_nation_flag">National Flag:</label>
                 </div>
                 <div class="col-md-2">
-                    <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
+                    <a href="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>" target="_blank">
+                        <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
+                    </a>
                 </div>
                 <div class="col-md-6">
                     <input type="hidden" name="existing_nation_flag" value="<?php echo $account['nation_flag']; ?>">
@@ -223,7 +225,9 @@
                     <label for="input_leader_portrait">Leader Portrait:</label>
                 </div>
                 <div class="col-md-2">
-                    <img id="account_leader_portrait_image" src="<?=base_url()?>uploads/<?php echo $account['leader_portrait']; ?>"/>
+                    <a href="<?=base_url()?>uploads/<?php echo $account['leader_portrait']; ?>" target="_blank">
+                        <img id="account_leader_portrait_image" src="<?=base_url()?>uploads/<?php echo $account['leader_portrait']; ?>"/>
+                    </a>
                 </div>
                 <div class="col-md-6">
                     <input type="hidden" name="existing_leader_portrait" value="<?php echo $account['leader_portrait']; ?>">
@@ -238,35 +242,6 @@
     </form>
 </div>
 <?php } ?>
-
-<!-- How To Play Block -->
-<div id="how_to_play_block" class="center_block">
-    <strong>How To Play</strong>
-
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    </button>
-    <hr>
-    <p>
-        <strong>Landgrab is a game of fighting for control of the world.</strong>
-    </p>
-    <blockquote>
-        The world is yours.
-    </blockquote>
-
-    <hr>
-
-    <div class="row">
-        <div class="col-md-6">
-            <p>
-                This game is in beta, so feel free to point out bugs or give suggestions.
-                Contact me at <a href="mailto:goosepostbox@gmail.com" target="_blank">goosepostbox@gmail.com </a>.
-            </p>
-        </div>
-        <div class="col-md-6">
-        </div>
-    </div>
-</div>
 
 <!-- Update Block -->
 <div id="update_info_block" class="center_block">
@@ -429,7 +404,7 @@
 </div>
 
 <div id="leaderboard_block" class="leaderboard_block center_block">
-    <strong>Player Leaderboard</strong> <small> - Updates every <?php echo $leaderboard_update_interval_minutes; ?> minutes</small>
+    <strong>Player Leaderboard</strong> <small> - Updates every <?php echo $leaderboard_update_interval; ?> minutes</small>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -441,8 +416,12 @@
         </p>
         <p class="lead">
             Last Winner with <strong class="text-success"><?php echo number_format($world['last_winner_land_count']); ?></strong> Territories - <strong class="text-primary"><?php echo $last_winner_account['username']; ?></strong>
-            <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $last_winner_account['leader_portrait']; ?>">
-            <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $last_winner_account['nation_flag']; ?>">
+            <a href="<?=base_url()?>uploads/<?php echo $last_winner_account['leader_portrait']; ?>" target="_blank">
+                <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $last_winner_account['leader_portrait']; ?>">
+            </a>
+            <a href="<?=base_url()?>uploads/<?php echo $last_winner_account['nation_flag']; ?>" target="_blank">
+                <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $last_winner_account['nation_flag']; ?>">
+            </a>
         </p>
     </div>
 
@@ -469,12 +448,16 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: <?php echo $leader['color']; ?>"> </span>
                     <strong class="leaderboard_username"><?php echo $leader['username']; ?></strong>
                     <br>
-                    <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>">
+                    <a href="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>" target="_blank">
+                        <img class="leaderboard_leader_portrait" src="<?=base_url()?>uploads/<?php echo $leader['leader_portrait']; ?>">
+                    </a>
                 </td>
                 <td>
                     <strong class="leaderboard_nation_name"><?php echo $leader['nation_name']; ?></strong>
                     <br>
-                    <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $leader['nation_flag']; ?>">
+                    <a href="<?=base_url()?>uploads/<?php echo $leader['nation_flag']; ?>" target="_blank">
+                        <img class="leaderboard_nation_flag" src="<?=base_url()?>uploads/<?php echo $leader['nation_flag']; ?>">
+                    </a>
                 </td>
                 <td>
                     <?php // First instance for jquery datatables sorting ?>
