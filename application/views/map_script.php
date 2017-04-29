@@ -529,8 +529,13 @@ $(document).keyup(function(event) {
         if (d['sum_modifiers'][i]['id'] <= 10 && d['sum_modifiers'][i]['id'] != land_type_key_dictionary['capitol']) {
           continue;
         }
-        var modifier_name = ucwords(d['sum_modifiers'][i]['name'].replace(/_/g, ' '));
-        more_info_string = more_info_string + '<p>' + modifier_name + 's: ' + d['sum_modifiers'][i]['count'] + '</p>';
+        var name_with_s = d['sum_modifiers'][i]['name'] + 's';
+        var modifier_name = ucwords(name_with_s.replace(/ys/g, 'ies').replace(/_/g, ' '));
+        // Simple hardcoded fix for ys in middle of this word
+        if (modifier_name === 'Skiescrapers') {
+          modifier_name = 'Skyscrapers';
+        }
+        more_info_string = more_info_string + '<p>' + modifier_name + ': ' + d['sum_modifiers'][i]['count'] + '</p>';
       }
       $('#land_info_div').html(more_info_string);
     }

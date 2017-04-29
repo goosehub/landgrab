@@ -26,7 +26,7 @@ class Game extends CI_Controller {
     protected $oligarchy_corruption_rate = 10;
     protected $autocracy_min_support = 0;
     protected $autocracy_corruption_rate = 30;
-    protected $war_weariness_increase_land_count = 200;
+    protected $war_weariness_increase_land_count = 100;
     protected $sniper_land_minimum = 100;
     protected $tax_nerf = 2;
     protected $entitlments_nerf = 30;
@@ -483,7 +483,8 @@ class Game extends CI_Controller {
         }
 
         // Prevent building when no treasury
-        if ($action_type === 'build' && $account['stats']['treasury_after'] < 0 && $form_type != $this->village_key) {
+        $building_minimum = 30;
+        if ($action_type === 'build' && $account['stats']['treasury_after'] <= $building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->metropolis_key) {
             echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes."}';
             return false;
         }

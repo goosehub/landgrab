@@ -12,10 +12,11 @@
     <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
       <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
       | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['land_count']); ?></span></strong>
-      | Tax Rate: <strong class="text-success"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
+      | Tax Rate: <strong class="text-yellow"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
       <!-- | Pop: <strong class="text-purple"><span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K</strong> -->
       | GDP: <strong class="text-action">$<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M</strong>
-      | Revenue: <strong class="text-yellow">$<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M</strong>
+      | Military: <strong class="text-danger">$<span class="military_span"><?php echo number_format($account['stats']['military_after']); ?></span>M</strong>
+      | Revenue: <strong class="text-success">$<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M</strong>
       | Support: <strong class="text-default"><span class="political_support_span"><?php echo $account['stats']['support']; ?></span></strong>
 
       <span class="caret"></span>

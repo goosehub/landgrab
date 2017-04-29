@@ -152,14 +152,14 @@
                 <li>Entitlments give you more Political Support</li>
                 <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
                 <li>Form alliances and build Embassies on other players Capitols to help them against shared enemies.</li>
-                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
-                <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
                 <li>War Weariness decreases your Political Support</li>
                 <li>War Weariness decreases by 5 every minute</li>
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
                 <li>If you get stuck in debt, consider downgrading your lands to villages</li>
+                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
+                <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
                 <li>Explore the other worlds in the Worlds tab</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
                 <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion on this game</li>

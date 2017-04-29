@@ -82,7 +82,7 @@ html, body {
 }
 @media only screen 
   and (max-device-width: 600px) {
-  body #stat_dropdown, body .leaderboard_parent, body .main_menu_parent {
+  body #stat_dropdown, body .main_menu_parent {
     display: none;
   }
   body #mobile_stat_dropdown {
