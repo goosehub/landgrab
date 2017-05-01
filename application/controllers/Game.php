@@ -29,14 +29,15 @@ class Game extends CI_Controller {
     protected $war_weariness_increase_land_count = 100;
     protected $sniper_land_minimum = 100;
     protected $tax_nerf = 2;
-    protected $entitlments_nerf = 30;
+    protected $entitlments_nerf = 40;
+    protected $base_support = 100;
 
     // Shared data
     protected $effects;
     
     // Server Pooling Constants
     protected $leaderboard_update_interval = 5 * 60;
-    protected $map_update_interval = 10;
+    protected $map_update_interval = 4;
     protected $maintenance_flag = false;
 
 	function __construct() {
@@ -217,10 +218,10 @@ class Game extends CI_Controller {
         $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
         $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $account['stats']['entitlements_effect'] = ceil( ($account['effective_tax_rate'] * $account['entitlements_budget']) / $this->entitlments_nerf);
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
-        $tax_popularity_hit = floor(pow($account['tax_rate'], $this->tax_nerf) / pow($this->tax_nerf * $this->tax_nerf, $this->tax_nerf));
-        $account['stats']['support'] = 100 - $account['war_weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
+        $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
+        $tax_popularity_hit = $this->increasing_returns_algorithm($account['tax_rate'], $this->tax_nerf);
+        $account['stats']['support'] = $this->base_support - $account['war_weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['war_weariness'] = $account['war_weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
@@ -484,7 +485,7 @@ class Game extends CI_Controller {
 
         // Prevent building when no treasury
         $building_minimum = 30;
-        if ($action_type === 'build' && $account['stats']['treasury_after'] <= $building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->metropolis_key) {
+        if ($action_type === 'build' && $account['stats']['treasury_after'] <= $building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->capitol_key) {
             echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes."}';
             return false;
         }
@@ -496,8 +497,8 @@ class Game extends CI_Controller {
         }
 
         // Prevent new players from taking towns or larger
-        if ($account['land_count'] < $this->sniper_land_minimum && $land_square['land_type'] >= $this->metropolis_key) {
-            echo '{"status": "fail", "message": "You must have at least ' . $this->sniper_land_minimum. ' lands to take a Metropolis"}';
+        if ($action_type === 'attack' && $account['land_count'] < $this->sniper_land_minimum && $land_square['land_type'] >= $this->metropolis_key) {
+            echo '{"status": "fail", "message": "You must have at least ' . $this->sniper_land_minimum . ' lands to take a Metropolis"}';
             return false;
         }
 
@@ -874,6 +875,21 @@ class Game extends CI_Controller {
         return $leaders;
     }
 
+    public function simple_nerf_algorithm($value, $nerf)
+    {
+        $value = $value === 0 ? 1 : $value;
+        $nerf = $nerf === 0 ? 1 : $nerf;
+        return floor($value / $nerf);
+    }
+
+    // Creates expodential returns
+    public function increasing_returns_algorithm($value, $nerf)
+    {
+        $value = $value === 0 ? 1 : $value;
+        $nerf = $nerf === 0 ? 1 : $nerf;
+        return floor(pow($value, $nerf) / pow($nerf * $nerf, $nerf));
+    }
+
     // Land dictionary for reference
     public function government_dictionary()
     {
@@ -908,11 +924,11 @@ class Game extends CI_Controller {
 
     public function next_reset_dictionary()
     {
-        $next_reset[1] = '1st and 15th of every Month at 8PM ET';
-        $next_reset[2] = '10th, 20th, and 30th of every month at 8PM ET';
-        $next_reset[3] = '5th, 10th, 15th, 20th, 25th, 30th of every month at 8PM ET';
-        $next_reset[4] = 'Every even numbered day at 8PM ET';
-        $next_reset[5] = 'Every day at 8PM ET';
+        $next_reset[1] = 'Every Saturday at 8 PM ET';
+        $next_reset[2] = 'Every month on the first at 8PM ET';
+        $next_reset[3] = 'Every Sunday at 8 PM ET';
+        $next_reset[4] = 'Every day at 8PM ET';
+        $next_reset[5] = 'Every 4 Hours';
         return $next_reset;
     }
 
