@@ -2,20 +2,8 @@
     Notes
 ==========================================================================================
 
-Rebalance Update
-    support is no longer percent
-    war weariness calculate now * 3
-    war_weariness_increase_land_count reduce from 300 to 200
-    government rebalance
-        oligarchy corruption reduce from 10 to 5
-        oligarchy support floor reduce from 30 to 15
-        autocracy corruption reduce from 30 to 15
-        autocracy support floor reduce from 10 to 0
-    rebalance buildings
-    control shift q q for nukes
-
 Todo
-    FEATURE: Embassy
+    BUG: Bad color inputs
     BUG: Capitol stopped being a capitol (Can't replciate)
     BUG: Reports of new users spawning on metropolises (Can't replicate)
 

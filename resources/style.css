@@ -346,6 +346,9 @@ html body .land_content_div, html body .land_content_div[style] {
 #chat_input_parent {
   height: 35px;
 }
+a.message_link {
+  color: #C1C10C;
+}
 @media only screen 
   and (max-device-width: 600px) {
   .chat_message:nth-child(-n+9) {

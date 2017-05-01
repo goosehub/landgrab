@@ -483,6 +483,6 @@
 <div id="info_tag">
     New Update
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/67kmtg/metro_sniper_nerf_update/" target="_blank">Metro Sniper Nerf Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/68p6wm/the_embassy_update/" target="_blank">The Embassy Update</a>
     </strong>
 </div>
