@@ -37,7 +37,7 @@ class Game extends CI_Controller {
     
     // Server Pooling Constants
     protected $leaderboard_update_interval = 5 * 60;
-    protected $map_update_interval = 4;
+    protected $map_update_interval = 10;
     protected $maintenance_flag = false;
 
 	function __construct() {
@@ -454,8 +454,8 @@ class Game extends CI_Controller {
 
         if ($form_type === 'build_embassy') {
             $action_type = $form_type;
-            $player_has_embassy = $this->game_model->get_embassy_by_player($account_key);
-            if ($player_has_embassy) {
+            $player_has_embassy = $this->game_model->get_embassy_by_player_and_land($account_key, $land_key);
+            if (!empty($player_has_embassy)) {
                 echo '{"status": "fail", "message": "You already have an embassy here."}';
                 return false;
             }
@@ -463,8 +463,8 @@ class Game extends CI_Controller {
         }
         else if ($form_type === 'remove_embassy') {
             $action_type = $form_type;
-            $player_has_embassy = $this->game_model->get_embassy_by_player($account_key);
-            if (!$player_has_embassy) {
+            $player_has_embassy = $this->game_model->get_embassy_by_player_and_land($account_key, $land_key);
+            if (empty($player_has_embassy)) {
                 echo '{"status": "fail", "message": "You don\'t have an embassy here."}';
                 return false;
             }

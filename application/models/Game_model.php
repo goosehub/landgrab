@@ -333,11 +333,12 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return $result;
  }
- function get_embassy_by_player($account_key)
+ function get_embassy_by_player_and_land($account_key, $land_key)
  {
     $this->db->select('*');
     $this->db->from('embassy');
     $this->db->where('account_key', $account_key);
+    $this->db->where('land_key', $land_key);
     $query = $this->db->get();
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
