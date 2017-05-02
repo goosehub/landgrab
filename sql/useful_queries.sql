@@ -12,3 +12,9 @@ FROM  `account`
 WHERE `tutorial` > 4
 GROUP BY `government`
 ORDER BY count DESC 
+
+-- Land modifiers that are not land types
+SELECT *
+FROM `land_modifier`
+WHERE modify_effect_key NOT IN (1, 2, 3, 4, 5, 6)
+ORDER BY `created` DESC
