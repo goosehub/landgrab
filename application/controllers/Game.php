@@ -36,7 +36,7 @@ class Game extends CI_Controller {
     protected $effects;
     
     // Server Pooling Constants
-    protected $leaderboard_update_interval = 5 * 60;
+    protected $leaderboard_update_interval_minutes = 5;
     protected $map_update_interval = 10;
     protected $maintenance_flag = false;
 
@@ -151,7 +151,7 @@ class Game extends CI_Controller {
         }
 
         // Get all lands
-        $data['leaderboard_update_interval'] = $this->leaderboard_update_interval;
+        $data['leaderboard_update_interval_minutes'] = $this->leaderboard_update_interval_minutes;
         $data['update_timespan'] = $this->map_update_interval * 1000;
         $server_update_timespan = $this->map_update_interval * 2;
         if (isset($_GET['json'])) {
