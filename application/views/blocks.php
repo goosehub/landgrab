@@ -481,8 +481,7 @@
 </div>
 
 <div id="info_tag">
-    New Update
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/68p6wm/the_embassy_update/" target="_blank">The Embassy Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/69434k/stadium_and_courthouse_update/" target="_blank">The Courthouse and Stadium Update</a>
     </strong>
 </div>

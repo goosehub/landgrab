@@ -486,7 +486,7 @@ class Game extends CI_Controller {
         // Prevent building when no treasury
         $building_minimum = 30;
         if ($action_type === 'build' && $account['stats']['treasury_after'] <= $building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->capitol_key) {
-            echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes."}';
+            echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes or downgrading land with too many buildings."}';
             return false;
         }
 
@@ -924,7 +924,7 @@ class Game extends CI_Controller {
 
     public function next_reset_dictionary()
     {
-        $next_reset[1] = 'Every Saturday at 8 PM ET';
+        $next_reset[1] = '1st and 15th of the month at 8 PM ET';
         $next_reset[2] = 'Every month on the first at 8PM ET';
         $next_reset[3] = 'Every Sunday at 8 PM ET';
         $next_reset[4] = 'Every day at 8PM ET';
