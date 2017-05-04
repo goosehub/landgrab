@@ -15,6 +15,9 @@ loading();
 <?php if ($failed_form === 'error_block') { ?>
     $('#error_block').show();
 <?php } ?>
+<?php if ($failed_form === 'register') { ?>
+    $('#register_block').show();
+<?php } ?>
 // Show register form if not logged in and not failed to log in
 <?php if ($failed_form != 'login') { ?>
   if (!log_check) {
