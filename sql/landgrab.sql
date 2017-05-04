@@ -170,6 +170,7 @@ CREATE TABLE `user` (
   `facebook_id` int(16) NOT NULL,
   `email` varchar(256) NOT NULL,
   `ip` varchar(64) NOT NULL,
+  `ab_test` timestamp NOT NULL DEFAULT '',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

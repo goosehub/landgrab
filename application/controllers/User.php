@@ -111,6 +111,7 @@ class User extends CI_Controller {
         // Set parameters
         $email = 'placeholder@gmail.com';
         $username = $this->input->post('username');
+        $ab_test = $this->input->post('ab_test');
         // Email Validation
         $this->load->helper('email');
         if (!valid_email($email)) {
@@ -121,7 +122,7 @@ class User extends CI_Controller {
         $facebook_id = 0;
         $ip = $_SERVER['REMOTE_ADDR'];
         $ip_frequency_register = 4;
-        $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register);
+        $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register, $ab_test);
         // Fail
         if ($user_id === 'ip_fail') {
             $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');

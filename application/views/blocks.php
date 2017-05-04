@@ -372,6 +372,7 @@
     <?php echo form_open('user/register'); ?>
       <div class="form-group">
         <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+        <input type="hidden" name="ab_test" id="ab_test" value="">
         <label for="input_username">Username</label>
         <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
       </div>

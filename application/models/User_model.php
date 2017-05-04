@@ -79,7 +79,7 @@ Class user_model extends CI_Model
     }
  }
  // Register
- function register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register)
+ function register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register, $ab_test)
  {
     // Check for excessive IPs registers
     $this->db->select('username');
@@ -109,7 +109,8 @@ Class user_model extends CI_Model
         'password' => password_hash($password, PASSWORD_BCRYPT),
         'email' => $email,
         'facebook_id' => $facebook_id,
-        'ip' => $ip
+        'ip' => $ip,
+        'ab_test' => $ab_test
         );
         $this->db->insert('user', $data);
 
