@@ -34,6 +34,9 @@ class Game extends CI_Controller {
 
     // Shared data
     protected $effects;
+
+    // Files
+    protected $leaderboard_filepath = 'json/leaderboard_';
     
     // Server Pooling Constants
     protected $leaderboard_update_interval_minutes = 5;
@@ -784,7 +787,8 @@ class Game extends CI_Controller {
         else {
             $war_weariness += 8;
         }
-        // War Weariness Defense Bonus
+
+        // War Weariness Land Type Defense Bonus
         $modify_effect_dictionary = $this->effects;
         foreach ($modify_effect_dictionary as $effect) {
             if ($land_square['land_type'] == $effect['id'] && $effect['defense'] > 0) {
@@ -795,7 +799,35 @@ class Game extends CI_Controller {
             }
         }
 
+        // Get Leaderboard Cached in JSON
+        $leaderboard = json_decode(file_get_contents($this->leaderboard_filepath . $land_square['world_key'] . '.json'), true);
+
+        // Population Defence Bonus
+        $highest_population_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'population');
+        if ($defender_account['id'] === $highest_population_account_key) {
+            $war_weariness = $war_weariness * 2;
+        }
+
+        // Culture Attack Bonus
+        $highest_culture_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'culture');
+        if ($account['id'] === $highest_culture_account_key) {
+            $war_weariness = floor($war_weariness / 2);
+        }
+
         return $war_weariness;
+    }
+
+    public function get_highest_account_key_from_leaderboard_stat($leaders, $key)
+    {
+        $highest_account_key = 0;
+        $highest_of_value = 0;
+        foreach ($leaders as $leader) {
+            if ($leader['stats']['population'] >= $highest_of_value) {
+                $highest_of_value = $leader['stats']['population'];
+                $highest_account_key = $leader['id'];
+            }
+        }
+        return $highest_account_key;
     }
 
     // Check if land is in range for account
@@ -868,8 +900,13 @@ class Game extends CI_Controller {
             $this_leader['username'] = $leader_user['username'];
             $leaders[] = $this_leader;
         }
+
+        // Record into file as json as simple form of caching
+        $json_leaderboard = json_encode($leaders);
+        file_put_contents($this->leaderboard_filepath . $world['id'] . '.json', $json_leaderboard);
+
         if (isset($_GET['json'])) {
-            echo json_encode($leaders);
+            echo $json_leaderboard;
             return true;
         }
         return $leaders;
