@@ -245,6 +245,7 @@ Class game_model extends CI_Model
     $query = $this->db->query("
         SELECT 
         SUM(modify_effect.population) as population,
+        SUM(modify_effect.culture) as culture,
         SUM(modify_effect.gdp) as gdp,
         SUM(modify_effect.treasury) as treasury,
         SUM(modify_effect.military) as military,
@@ -288,6 +289,7 @@ Class game_model extends CI_Model
     $query = $this->db->query("
         SELECT 
         SUM(modify_effect.population) as population,
+        SUM(modify_effect.culture) as culture,
         SUM(modify_effect.gdp) as gdp,
         SUM(modify_effect.treasury) as treasury,
         SUM(modify_effect.military) as military,

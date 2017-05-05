@@ -33,6 +33,12 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Culture: </strong>
+                        <strong class="law_info_value text-purple">
+                            <span class="culture_span"><?php echo $account['stats']['culture']; ?></span>
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
                         <strong class="law_info_item_label">GDP: </strong>
                         <strong class="law_info_value text-action">
                             $<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M
@@ -440,6 +446,7 @@
                 <th>Nation</th>
                 <th>Territories</th>
                 <th>Population</th>
+                <th>Culture</th>
                 <th>GDP</th>
                 <th>Military</th>
             </tr>    
@@ -472,6 +479,9 @@
                 </td>
                 <td>
                     <strong class="text-purple"><?php echo number_format($leader['stats']['population']); ?></strong><span class="text-purple">,000</span>
+                </td>
+                <td>
+                    <strong class="text-purple"><?php echo number_format($leader['stats']['culture']); ?></strong>
                 </td>
                 <td>
                     <strong class="text-action">$<?php echo number_format($leader['stats']['gdp']); ?></strong><span class="text-action">,000,000</span>

@@ -156,6 +156,19 @@
                                         <?php echo $effect['population']; ?>K
                                     </span>
                                 </div>
+                                <?php if ($effect['culture'] > 0) {
+                                    $this_class = 'success';
+                                } else if ($effect['culture'] < 0) {
+                                    $this_class = 'danger';
+                                } else {
+                                    $this_class = 'primary';
+                                } ?>
+                                <div class="effect_pair">
+                                    <span class="effect_label text-purple">Culture: </span>
+                                    <span class="effect_value pull-right text-<?php echo $this_class; ?>">
+                                        <?php echo $effect['culture']; ?>
+                                    </span>
+                                </div>
                                 <?php if ($effect['military'] > 0) {
                                 $this_class = 'success';
                                 } else if ($effect['military'] < 0) {

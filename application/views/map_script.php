@@ -848,6 +848,7 @@ $(document).keyup(function(event) {
       $('.tax_rate_span').html(account['tax_rate']);
       $('.tax_income_span').html(number_format(account['stats']['tax_income']));
       $('.population_span').html(number_format(account['stats']['population']));
+      $('.culture_span').html(number_format(account['stats']['culture']));
       $('.gdp_span').html(number_format(account['stats']['gdp']));
       $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
       $('.treasury_span').html(number_format(account['stats']['treasury_after']));
@@ -886,6 +887,9 @@ $(document).keyup(function(event) {
         html += '</td>';
         html += '<td>';
         html += '<strong class="text-purple">' + number_format(value.stats.population) + '</strong><span class="text-purple">,000</span>';
+        html += '</td>';
+        html += '<td>';
+        html += '<strong class="text-purple">' + number_format(value.stats.culture) + '</strong>';
         html += '</td>';
         html += '<td>';
         html += '<strong class="text-action">' + number_format(value.stats.gdp) + '</strong><span class="text-action">,000,000</span>';
