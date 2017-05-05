@@ -147,7 +147,7 @@ CREATE TABLE `modify_effect` (
   `name` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NOT NULL,
   `is_land_upgrade` int(1) NOT NULL,
-  `is_embassy` int(1) NOT NULL DEFAULT '0',
+  `is_embassy` int(1) NOT NULL,
   `population` int(11) NOT NULL,
   `gdp` int(11) NOT NULL,
   `treasury` int(11) NOT NULL,
