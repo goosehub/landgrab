@@ -166,6 +166,8 @@
                 <li>If you get stuck in debt, consider downgrading your lands to villages</li>
                 <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
                 <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
+                <li>The player with the largest population gets a 2X Defensive Bonus</li>
+                <li>The player with the most culture gets a 2X Offensive Bonus</li>
                 <li>Explore the other worlds in the Worlds tab</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
                 <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion on this game</li>

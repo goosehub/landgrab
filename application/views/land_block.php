@@ -219,7 +219,7 @@
             <div id="embassy_info_dropdown" class="info_details_parent collapse">
                 <div class="well">
                     <p class="lead">
-                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boasts this players GDP by $<?php echo $embassy_effect['gdp'] ?> Million, boasts their Military by $<?php echo $embassy_effect['military'] ?> Million, and increases their Support by <?php echo $embassy_effect['support'] ?>.
+                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boasts this players Population by $<?php echo $embassy_effect['population'] ?>K, Culture by $<?php echo $embassy_effect['culture'] ?>, GDP by $<?php echo $embassy_effect['gdp'] ?>M, Military by $<?php echo $embassy_effect['military'] ?>M, and Support by <?php echo $embassy_effect['support'] ?>.
                     </p>
                 </div>
             </div>
