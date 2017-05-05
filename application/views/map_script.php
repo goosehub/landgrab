@@ -324,9 +324,9 @@ $(document).keyup(function(event) {
       }
 
       if (account && account['tutorial'] < 2) {
-        $('.war_weariness_outer_span').hide();
+        $('.weariness_outer_span').hide();
       } else {
-        $('.war_weariness_outer_span').show();
+        $('.weariness_outer_span').show();
       }
 
       // Embassy List
@@ -518,7 +518,7 @@ $(document).keyup(function(event) {
       $('#input_land_name').val(d['land_name']);
       $('#input_content').val(d['content']);
 
-      $('.war_weariness_attack_span').html(d['war_weariness']);
+      $('.weariness_attack_span').html(d['weariness']);
     }
 
     function prepare_land_form_more_info(coord_slug, world_key, d) {
@@ -854,7 +854,7 @@ $(document).keyup(function(event) {
       $('.treasury_span').html(number_format(account['stats']['treasury_after']));
       $('.military_span').html(number_format(account['stats']['military_after']));
       $('.entitlements_span').html(number_format(account['stats']['entitlements']));
-      $('.war_weariness_span').html(account['stats']['war_weariness']);
+      $('.weariness_span').html(account['stats']['weariness']);
       $('.political_support_span').html(account['stats']['support']);
       return true;
     }

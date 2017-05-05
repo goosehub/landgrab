@@ -20,7 +20,7 @@
             <div><strong>Unclaimed Land</strong></div>
             <br>
             <button type="button" id="land_form_submit_claim" value="claim" class="submit_land_form btn btn-action land_block_toggle">
-                Claim <span class="war_weariness_outer_span">(+<span class="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
+                Claim <span class="weariness_outer_span">(+<span class="weariness_attack_span" class="text-danger">0</span> weariness)</span>
             </button>
             <button type="button" id="land_form_submit_claim_tutorial" value="claim" class="submit_land_form btn btn-action land_block_toggle">
                 Build your Capitol Here
@@ -50,7 +50,7 @@
             <div class="text-purple">Population of <span id="land_population_label"></span><small>K</small></div>
             <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
-                Attack  <span class="war_weariness_outer_span">(+<span class="war_weariness_attack_span" class="text-danger">0</span> War Weariness)</span>
+                Attack  <span class="weariness_outer_span">(+<span class="weariness_attack_span" class="text-danger">0</span> weariness)</span>
             </button>
             <button type="button" id="land_form_submit_attack_tutorial" value="attack" class="submit_land_form btn btn-action land_block_toggle">
                 Build your Capitol Here
@@ -219,7 +219,7 @@
             <div id="embassy_info_dropdown" class="info_details_parent collapse">
                 <div class="well">
                     <p class="lead">
-                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boasts this players Population by $<?php echo $embassy_effect['population'] ?>K, Culture by $<?php echo $embassy_effect['culture'] ?>, GDP by $<?php echo $embassy_effect['gdp'] ?>M, Military by $<?php echo $embassy_effect['military'] ?>M, and Support by <?php echo $embassy_effect['support'] ?>.
+                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boosts this players Population by <?php echo $embassy_effect['population'] ?>K, Culture by <?php echo $embassy_effect['culture'] ?>, GDP by $<?php echo $embassy_effect['gdp'] ?>M, Military by $<?php echo $embassy_effect['military'] ?>M, and Support by <?php echo $embassy_effect['support'] ?>.
                     </p>
                 </div>
             </div>

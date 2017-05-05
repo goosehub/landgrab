@@ -26,7 +26,7 @@ class Game extends CI_Controller {
     protected $oligarchy_corruption_rate = 10;
     protected $autocracy_min_support = 0;
     protected $autocracy_corruption_rate = 30;
-    protected $war_weariness_increase_land_count = 200;
+    protected $weariness_increase_land_count = 200;
     protected $sniper_land_minimum = 100;
     protected $tax_nerf = 2;
     protected $entitlments_nerf = 40;
@@ -130,7 +130,7 @@ class Game extends CI_Controller {
         $data['oligarchy_corruption_rate'] = $this->oligarchy_corruption_rate;
         $data['autocracy_min_support'] = $this->autocracy_min_support;
         $data['autocracy_corruption_rate'] = $this->autocracy_corruption_rate;
-        $data['war_weariness_increase_land_count'] = $this->war_weariness_increase_land_count;
+        $data['weariness_increase_land_count'] = $this->weariness_increase_land_count;
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
 
 
@@ -224,8 +224,8 @@ class Game extends CI_Controller {
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
         $tax_popularity_hit = $this->increasing_returns_algorithm($account['tax_rate'], $this->tax_nerf);
-        $account['stats']['support'] = $this->base_support - $account['war_weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
-        $account['stats']['war_weariness'] = $account['war_weariness'];
+        $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
+        $account['stats']['weariness'] = $account['weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
         // See if functioning
@@ -296,14 +296,14 @@ class Game extends CI_Controller {
             }
         }
 
-        // War Weariness
-        $land_square['war_weariness'] = 0;
+        // weariness
+        $land_square['weariness'] = 0;
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
             $user_id = $session_data['id'];
             $requester_account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $requester_account = $this->get_full_account($requester_account);
-            $land_square['war_weariness'] = $this->war_weariness_calculate($requester_account, $land_square, $account);
+            $land_square['weariness'] = $this->weariness_calculate($requester_account, $land_square, $account);
             $land_square['valid_upgrades'] = $this->account_valid_upgrades($requester_account['id']);
         }
 
@@ -523,10 +523,10 @@ class Game extends CI_Controller {
             return true;
         }
 
-        // Do war weariness logic
+        // Do weariness logic
         if ($action_type === 'attack' || $action_type === 'claim') {
-            $war_weariness = $this->war_weariness_calculate($account, $land_square, false);
-            $this->game_model->add_war_weariness_to_account($account['id'], $war_weariness);
+            $weariness = $this->weariness_calculate($account, $land_square, false);
+            $this->game_model->add_weariness_to_account($account['id'], $weariness);
         }
 
         // Make capitol if tutorial
@@ -572,11 +572,11 @@ class Game extends CI_Controller {
             $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
         }
 
-        // Reset War Weariness if attacked player has no land now
+        // Reset weariness if attacked player has no land now
         // Disabled to nerf "snipers" and for better performance
         /* $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
         if ($defender_new_land_count['count'] == 0) {
-            $this->game_model->set_war_weariness_from_account($land_square['account_key'], 0);
+            $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
         } */
 
         // Attack response
@@ -733,23 +733,23 @@ class Game extends CI_Controller {
         return true;
     }
 
-    public function war_weariness_calculate($account, $land_square, $defender_account = false)
+    public function weariness_calculate($attacking_account, $land_square, $defender_account = false)
     {
         // Used to keep track of which accounts are active
-        if (!$account['active_account']) {
+        if (!$attacking_account['active_account']) {
             // Mark account as active
-            $this->game_model->update_account_active_state($account['id'], 1);
+            $this->game_model->update_account_active_state($attacking_account['id'], 1);
         }
 
         // Start at 1
-        $war_weariness = 1;
+        $weariness = 1;
 
-        // Increase war weariness on larger players
-        $war_weariness += floor($account['land_count'] / $this->war_weariness_increase_land_count);
+        // Increase weariness on larger players
+        $weariness += floor($attacking_account['land_count'] / $this->weariness_increase_land_count);
 
-        // If unclaimed, just 1 war weariness
+        // If unclaimed, just 1 weariness
         if ($land_square['account_key'] == 0) {
-            return $war_weariness;
+            return $weariness;
         }
 
         // Get accounts
@@ -758,44 +758,44 @@ class Game extends CI_Controller {
             $defender_account = $this->get_full_account($defender_account);
         }
         if (!$defender_account) {
-            return $war_weariness;
+            return $weariness;
         }
 
-        // War Weariness Military Algorithm
+        // weariness Military Algorithm
         $ww_multiplier = 3;
-        if ($account['stats']['military_after'] >= $defender_account['stats']['military_after'] * $ww_multiplier) {
-            $war_weariness += 1;
+        if ($attacking_account['stats']['military_after'] >= $defender_account['stats']['military_after'] * $ww_multiplier) {
+            $weariness += 1;
         }
-        else if ($account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
-            $war_weariness += 2;
+        else if ($attacking_account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
+            $weariness += 2;
         }
-        else if ($account['stats']['military_after'] * $ww_multiplier >= $defender_account['stats']['military_after']) {
-            $war_weariness += 3;
+        else if ($attacking_account['stats']['military_after'] * $ww_multiplier >= $defender_account['stats']['military_after']) {
+            $weariness += 3;
         }
-        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
-            $war_weariness += 4;
+        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+            $weariness += 4;
         }
-        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
-            $war_weariness += 5;
+        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+            $weariness += 5;
         }
-        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
-            $war_weariness += 6;
+        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+            $weariness += 6;
         }
-        else if ($account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
-            $war_weariness += 7;
+        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+            $weariness += 7;
         }
         else {
-            $war_weariness += 8;
+            $weariness += 8;
         }
 
-        // War Weariness Land Type Defense Bonus
+        // weariness Land Type Defense Bonus
         $modify_effect_dictionary = $this->effects;
         foreach ($modify_effect_dictionary as $effect) {
             if ($land_square['land_type'] == $effect['id'] && $effect['defense'] > 0) {
-                $war_weariness = $war_weariness * $effect['defense'];
+                $weariness = $weariness * $effect['defense'];
             }
             if ($effect['name'] === 'capitol' && $land_square['capitol'] == 1) {
-                $war_weariness = $war_weariness * $effect['defense'];
+                $weariness = $weariness * $effect['defense'];
             }
         }
 
@@ -805,16 +805,16 @@ class Game extends CI_Controller {
         // Population Defence Bonus
         $highest_population_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'population');
         if ($defender_account['id'] === $highest_population_account_key) {
-            $war_weariness = $war_weariness * 2;
+            $weariness = $weariness * 2;
         }
 
         // Culture Attack Bonus
         $highest_culture_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'culture');
-        if ($account['id'] === $highest_culture_account_key) {
-            $war_weariness = floor($war_weariness / 2);
+        if ($attacking_account['id'] === $highest_culture_account_key) {
+            $weariness = floor($weariness / 2);
         }
 
-        return $war_weariness;
+        return $weariness;
     }
 
     public function get_highest_account_key_from_leaderboard_stat($leaders, $key)
@@ -822,8 +822,8 @@ class Game extends CI_Controller {
         $highest_account_key = 0;
         $highest_of_value = 0;
         foreach ($leaders as $leader) {
-            if ($leader['stats']['population'] >= $highest_of_value) {
-                $highest_of_value = $leader['stats']['population'];
+            if ($leader['stats'][$key] >= $highest_of_value) {
+                $highest_of_value = $leader['stats'][$key];
                 $highest_account_key = $leader['id'];
             }
         }

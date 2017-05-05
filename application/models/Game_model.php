@@ -215,9 +215,9 @@ Class game_model extends CI_Model
     $this->db->update('world', $data);
     return true;
  }
- function world_set_war_weariness($world_key, $war_weariness_decrease)
+ function world_set_weariness($world_key, $weariness_decrease)
  {
-    $this->db->set('war_weariness', $war_weariness_decrease);
+    $this->db->set('weariness', $weariness_decrease);
     $this->db->where('world_key', $world_key);
     $this->db->update('account');
  }
@@ -434,34 +434,34 @@ Class game_model extends CI_Model
     $this->db->delete('land_modifier');
  }
 
- function add_war_weariness_to_account($account_id, $war_weariness)
+ function add_weariness_to_account($account_id, $weariness)
  {
     $this->db->where('id', $account_id);
-    $this->db->set('war_weariness', 'war_weariness+' . $war_weariness, FALSE);
+    $this->db->set('weariness', 'weariness+' . $weariness, FALSE);
     $this->db->update('account');
  }
 
- function subtract_war_weariness_from_account($account_id, $war_weariness)
+ function subtract_weariness_from_account($account_id, $weariness)
  {
     $this->db->where('id', $account_id);
-    $this->db->set('war_weariness', 'war_weariness-' . $war_weariness, FALSE);
+    $this->db->set('weariness', 'weariness-' . $weariness, FALSE);
     $this->db->update('account');
  }
 
- function set_war_weariness_from_account($account_id, $war_weariness)
+ function set_weariness_from_account($account_id, $weariness)
  {
     $this->db->where('id', $account_id);
-    $this->db->set('war_weariness', $war_weariness);
+    $this->db->set('weariness', $weariness);
     $this->db->update('account');
  }
- function universal_decrease_war_weariness($war_weariness_decrease)
+ function universal_decrease_weariness($weariness_decrease)
  {
-    $this->db->where('war_weariness >=', $war_weariness_decrease);
-    $this->db->set('war_weariness', 'war_weariness-' . $war_weariness_decrease, FALSE);
+    $this->db->where('weariness >=', $weariness_decrease);
+    $this->db->set('weariness', 'weariness-' . $weariness_decrease, FALSE);
     $this->db->update('account');
 
-    $this->db->where('war_weariness <=', $war_weariness_decrease);
-    $this->db->set('war_weariness', 0);
+    $this->db->where('weariness <=', $weariness_decrease);
+    $this->db->set('weariness', 0);
     $this->db->update('account');
  }
  function truncate_modifiers()

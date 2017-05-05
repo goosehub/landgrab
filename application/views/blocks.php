@@ -45,9 +45,9 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">War Weariness: </strong>
+                        <strong class="law_info_item_label">Weariness: </strong>
                         <strong class="law_info_value text-danger">
-                            <span class="war_weariness_span"><?php echo $account['stats']['war_weariness']; ?></span>
+                            <span class="weariness_span"><?php echo $account['stats']['weariness']; ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
@@ -156,16 +156,16 @@
                 <li>Taxes allow you to increase your budgets and build on your lands</li>
                 <li>Corruption Eats at your Tax Income</li>
                 <li>Entitlments give you more Political Support</li>
-                <li>A larger Military means a smaller War Weariness penalty on attacking and more War Weariness on those who attack you</li>
+                <li>A larger Military means a smaller weariness penalty on attacking and more weariness on those who attack you</li>
                 <li>Form alliances and build Embassies on other players Capitols to help them against shared enemies.</li>
-                <li>War Weariness decreases your Political Support</li>
-                <li>War Weariness decreases by 5 every minute</li>
+                <li>weariness decreases your Political Support</li>
+                <li>weariness decreases by 5 every minute</li>
                 <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
                 <li>If you get stuck in debt, consider downgrading your lands to villages</li>
                 <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
-                <li>For every <?php echo $war_weariness_increase_land_count; ?> lands you own, war weariness increases by 1 for each attack</li>
+                <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
                 <li>The player with the largest population gets a 2X Defensive Bonus</li>
                 <li>The player with the most culture gets a 2X Offensive Bonus</li>
                 <li>Explore the other worlds in the Worlds tab</li>
@@ -501,6 +501,6 @@
 
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/69434k/stadium_and_courthouse_update/" target="_blank">The Courthouse and Stadium Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/69hrtu/culture_and_population_update/" target="_blank">The Culture and Population Update</a>
     </strong>
 </div>

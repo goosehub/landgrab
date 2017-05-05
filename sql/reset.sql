@@ -3,7 +3,7 @@ TRUNCATE `ip_request`;
 -- TRUNCATE `account`;
 
 UPDATE `account` 
-SET `tutorial`= 0, `government`= 0, `tax_rate`= 0, `military_budget`= 0, `entitlements_budget`= 0, `war_weariness`= 0
+SET `tutorial`= 0, `government`= 0, `tax_rate`= 0, `military_budget`= 0, `entitlements_budget`= 0, `weariness`= 0
 WHERE 1;
 
 UPDATE `land` 
@@ -17,7 +17,7 @@ DELETE FROM `land_modifier` WHERE `modify_effect_key` > 10;
 DELETE FROM `land_modifier` WHERE `modify_effect_key` = 6;
 
 UPDATE `account` 
-SET `war_weariness`= 0
+SET `weariness`= 0
 WHERE 1;
 
 TRUNCATE `land_modifier`;

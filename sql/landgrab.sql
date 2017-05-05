@@ -40,7 +40,7 @@ CREATE TABLE `account` (
   `tax_rate` int(10) UNSIGNED NOT NULL,
   `military_budget` int(10) UNSIGNED NOT NULL,
   `entitlements_budget` int(10) UNSIGNED NOT NULL,
-  `war_weariness` int(10) UNSIGNED NOT NULL,
+  `weariness` int(10) UNSIGNED NOT NULL,
   `color` varchar(8) NOT NULL,
   `last_load` varchar(32) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -141,7 +141,7 @@ Class user_model extends CI_Model
     'tax_rate' => 0,
     'military_budget' => 0,
     'entitlements_budget' => 0,
-    'war_weariness' => 0,
+    'weariness' => 0,
     );
     $this->db->insert('account', $data);
 
