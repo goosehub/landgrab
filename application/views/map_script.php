@@ -55,6 +55,7 @@ var attack_key_pressed = false;
 var keys = new Array();
 keys['a'] = 65;
 $(document).keydown(function(event) {
+  // Attack shortcut
   if (event.which == keys['a']) {
     attack_key_pressed = true;
   }

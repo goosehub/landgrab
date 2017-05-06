@@ -325,11 +325,17 @@ html body .land_content_div, html body .land_content_div[style] {
   overflow: hidden;
 }
 #chat_messages_box {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   color: #ffffff;
   height: 25vh;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+#chat_messages_box.expanded {
+  height: 80vh;
+}
+#chat_expand_button {
+  opacity: 0.5;
 }
 /* Custom Chat Scroll Bar */
 #chat_messages_box::-webkit-scrollbar {

@@ -1,5 +1,6 @@
 <!-- Chat HTML -->
 <div id="chat_parent">
+  <div id="chat_expand_button" class="btn btn-sm btn-default">Expand</div>
   <div id="chat_messages_parent">
     <div id="chat_messages_box">
       Loading...
@@ -30,6 +31,29 @@
     at_bottom = false;
     if ($('#chat_messages_box').prop('scrollHeight') - $('#chat_messages_box').scrollTop() <= Math.ceil($('#chat_messages_box').height())) {
       at_bottom = true;
+    }
+  });
+
+  // Chat Shortcut
+  var keys = new Array();
+  keys['t'] = 84;
+  $(document).keydown(function(event) {
+    if (event.which == keys['t']) {
+      if (!$('#chat_input').is(':focus')) {
+        $('#chat_input').focus();
+        event.preventDefault();
+      }
+    }
+  });
+
+  // Chat expand
+  $('#chat_expand_button').click(function(){
+    if ($('#chat_messages_box').hasClass('expanded')) {
+      $('#chat_messages_box').removeClass('expanded');
+    }
+    else {
+      $('#chat_messages_box').addClass('expanded');
+
     }
   });
 
