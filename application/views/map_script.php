@@ -895,7 +895,7 @@ $(document).keyup(function(event) {
         html += '<strong class="text-success">' + number_format(value.land_count) + '</strong>';
         html += '</td>';
         html += '<td>';
-        html += '<strong class="text-purple">' + number_format(value.stats.population) + '</strong><span class="text-purple">,000</span>';
+        html += '<strong class="text-info">' + number_format(value.stats.population) + '</strong><span class="text-info">,000</span>';
         html += '</td>';
         html += '<td>';
         html += '<strong class="text-purple">' + number_format(value.stats.culture) + '</strong>';

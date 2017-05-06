@@ -28,7 +28,7 @@
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Population: </strong>
-                        <strong class="law_info_value text-purple">
+                        <strong class="law_info_value text-info">
                             <span class="population_span"><?php echo $account['stats']['population']; ?></span>K
                         </strong><br>
                     </span>
@@ -480,7 +480,7 @@
                     <strong class="text-success"><?php echo number_format($leader['land_count']); ?></strong>
                 </td>
                 <td>
-                    <strong class="text-purple"><?php echo number_format($leader['stats']['population']); ?></strong><span class="text-purple">,000</span>
+                    <strong class="text-info"><?php echo number_format($leader['stats']['population']); ?></strong><span class="text-info">,000</span>
                 </td>
                 <td>
                     <strong class="text-purple"><?php echo number_format($leader['stats']['culture']); ?></strong>

@@ -47,7 +47,7 @@
             </div>
 
             <div><span id="land_type_label" class="text-primary"></span></div>
-            <div class="text-purple">Population of <span id="land_population_label"></span><small>K</small></div>
+            <div class="text-info">Population of <span id="land_population_label"></span><small>K</small></div>
             <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
                 Attack  <span class="weariness_outer_span">(+<span class="weariness_attack_span" class="text-danger">0</span> weariness)</span>
@@ -151,7 +151,7 @@
                                     $this_class = 'primary';
                                 } ?>
                                 <div class="effect_pair">
-                                    <span class="effect_label text-purple">Population: </span>
+                                    <span class="effect_label text-info">Population: </span>
                                     <span class="effect_value pull-right text-<?php echo $this_class; ?>">
                                         <?php echo $effect['population']; ?>K
                                     </span>
