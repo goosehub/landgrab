@@ -141,14 +141,19 @@
     return false;
   }
 
-  function convert_general_url(input) {
-    // Ignore " to not conflict with other converts
-    var pattern = /(?!.*")([-a-zA-Z0-9@:%_\+.~#?&//=;]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=;]*))/gi;
-    if (pattern.test(input)) {
-      var replacement = '<a href="$1" target="_blank" class="message_link message_content">$1</a>';
-      var input = input.replace(pattern, replacement);
-    }
-    return input;
-  }
+  // http://stackoverflow.com/a/3890175/3774582
+  function convert_general_url(inputText) {
+    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(replacePattern1, '<a href="$1" class="message_link message_content" target="_blank">$1</a>');
+
+    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" class="message_link message_content" target="_blank">$2</a>');
+
+    return replacedText;
+}
 
 </script>
