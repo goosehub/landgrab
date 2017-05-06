@@ -39,7 +39,7 @@ class Chat extends CI_Controller {
         // Validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]|callback_new_chat_validation');
-        $this->form_validation->set_rules('chat_input', 'Chat Message', 'trim|required|max_length[300]');
+        $this->form_validation->set_rules('chat_input', 'Chat Message', 'trim|required|max_length[250]');
         // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
         if ($this->form_validation->run() == FALSE) {

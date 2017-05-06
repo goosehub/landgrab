@@ -50,6 +50,7 @@
   $('#chat_expand_button').click(function(){
     if ($('#chat_messages_box').hasClass('expanded')) {
       $('#chat_messages_box').removeClass('expanded');
+      $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
     }
     else {
       $('#chat_messages_box').addClass('expanded');
