@@ -21,16 +21,18 @@ loading();
 // Show register form if not logged in and not failed to log in
 <?php if ($failed_form != 'login') { ?>
   if (!log_check) {
-    coin = (Math.floor(Math.random() * 2) == 0);
-    console.log(coin);
-    if (coin) {
-        $('#ab_test').val('default_register_block');
-        $('#register_block').show();
-    } else {
-        $('#ab_test').val('default_no_register_block');
-    }
+    $('#ab_test').val('default_register_block');
+    $('#register_block').show();
   }
 <?php } ?>
+
+// AB testing
+coin = (Math.floor(Math.random() * 2) == 0);
+if (coin) {
+    // $('#ab_test').val('default_register_block');
+} else {
+    // $('#ab_test').val('default_no_register_block');
+}
 
 // Validation errors shown on page load if exist
 <?php if ($failed_form === 'login') { ?>
