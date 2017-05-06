@@ -60,13 +60,14 @@ $(document).keydown(function(event) {
   if (event.which == keys['a']) {
     attack_key_pressed = true;
   }
-  // Chat shortcut
+  // Disabled because of bugs
+/*  // Chat shortcut
   if (event.which == keys['t']) {
     if (!$('#chat_input').is(':focus')) {
       $('#chat_input').focus();
       event.preventDefault();
     }
-  }
+  }*/
 });
 $(document).keyup(function(event) {
   if (event.which == keys['a']) {

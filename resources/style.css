@@ -80,8 +80,7 @@ html, body {
 #mobile_stat_dropdown {
   display: none;
 }
-@media only screen 
-  and (max-device-width: 600px) {
+@media only screen and (max-device-width: 600px) {
   body #stat_dropdown, body .main_menu_parent {
     display: none;
   }
@@ -104,6 +103,24 @@ html, body {
   }
   #info_tag {
     display: none;
+  }
+  #leaderboard_table thead tr th:nth-child(1),
+  #leaderboard_table thead tr th:nth-child(3),
+  #leaderboard_table thead tr th:nth-child(5),
+  #leaderboard_table thead tr th:nth-child(6),
+  #leaderboard_table thead tr th:nth-child(7),
+  #leaderboard_table thead tr th:nth-child(8),
+  #leaderboard_table tbody tr td:nth-child(1),
+  #leaderboard_table tbody tr td:nth-child(3),
+  #leaderboard_table tbody tr td:nth-child(5),
+  #leaderboard_table tbody tr td:nth-child(6),
+  #leaderboard_table tbody tr td:nth-child(7),
+  #leaderboard_table tbody tr td:nth-child(8)
+  {
+      display: none;
+  }
+  #leaderboard_table thead tr th:nth-child(0) {
+    width: 10vw;
   }
 }
 .stats_listing li {
@@ -186,8 +203,7 @@ html, body {
   border-radius: 1em;
   z-index: 10;
 }
-@media only screen 
-  and (max-device-width: 600px) {
+@media only screen and (max-device-width: 600px) {
   .center_block {
     left: 5%;
     width: 90%;   
@@ -300,8 +316,7 @@ html body .land_content_div, html body .land_content_div[style] {
   overflow: auto !important;
   width: 350px;
 }
-@media only screen 
-  and (max-device-width: 600px) {
+@media only screen and (max-device-width: 600px) {
   html body .land_block img, .land_block img[style] {
     max-height: 25vh !important;
     max-width: 25vw !important;
@@ -333,6 +348,11 @@ html body .land_content_div, html body .land_content_div[style] {
 }
 #chat_messages_box.expanded {
   height: 80vh;
+}
+@media only screen and (max-device-width: 600px) {
+  #chat_messages_box.expanded {
+    height: 60vh;
+  }
 }
 #chat_expand_button {
   opacity: 0.5;
