@@ -54,10 +54,18 @@
 var attack_key_pressed = false;
 var keys = new Array();
 keys['a'] = 65;
+keys['t'] = 84;
 $(document).keydown(function(event) {
   // Attack shortcut
   if (event.which == keys['a']) {
     attack_key_pressed = true;
+  }
+  // Chat shortcut
+  if (event.which == keys['t']) {
+    if (!$('#chat_input').is(':focus')) {
+      $('#chat_input').focus();
+      event.preventDefault();
+    }
   }
 });
 $(document).keyup(function(event) {

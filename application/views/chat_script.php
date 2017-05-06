@@ -34,18 +34,6 @@
     }
   });
 
-  // Chat Shortcut
-  var keys = new Array();
-  keys['t'] = 84;
-  $(document).keydown(function(event) {
-    if (event.which == keys['t']) {
-      if (!$('#chat_input').is(':focus')) {
-        $('#chat_input').focus();
-        event.preventDefault();
-      }
-    }
-  });
-
   // Chat expand
   $('#chat_expand_button').click(function(){
     if ($('#chat_messages_box').hasClass('expanded')) {
