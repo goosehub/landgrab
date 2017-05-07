@@ -243,13 +243,22 @@ class User extends CI_Controller {
         $nation_color = $this->input->post('nation_color');
         $nation_name = $this->input->post('nation_name');
 
-        // Add hash to color
-        $color = '#' . $nation_color;
+        // Add hash to color if needed
+        if (0 !== strpos($nation_color, '#')) {
+            $nation_color = '#' . $nation_color;
+        }
+
+        // Validate color
+        // http://stackoverflow.com/a/13392880/3774582
+        if ( !preg_match('/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/', $nation_color) ) {
+            echo $nation_color . ' is not a valid hex color';
+            return false;
+        }
 
         // Set account
         $account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $account_key = $account['id'];
-        $this->user_model->update_account_info($account_key, $color, $nation_name, $nation_flag, $leader_portrait);
+        $this->user_model->update_account_info($account_key, $nation_color, $nation_name, $nation_flag, $leader_portrait);
 
         // Progress Tutorial
         if ($account['tutorial'] < 1) {

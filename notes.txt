@@ -2,10 +2,6 @@
     Notes
 ==========================================================================================
 
-Todo
-    FEATURE: Remove buildings
-    FEATURE: Private chat with @
-
 ==========================================================================================
     Goals
 ==========================================================================================
@@ -14,7 +10,7 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
-    BUG: Bad color inputs
+    FEATURE: Private chat with @
     BUG: Capitol stopped being a capitol (Can't replciate)
     BUG: Reports of new users spawning on metropolises (Can't replicate)
     BUG: Capturing (maybe updating) land breaks & and maybe other characters
