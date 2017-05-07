@@ -247,9 +247,9 @@ function initMap() {
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy').off('click');
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').off('click');
 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy').click(function() {
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').click(function() {
 
         // Submit land ajax
         var form_type = $(this).val();
@@ -534,23 +534,36 @@ function initMap() {
   function prepare_land_form_more_info(coord_slug, world_key, d) {
     $('#land_info_div').html();
     var more_info_string = '';
+    var building_line = '';
+    var building_label = '';
+    var building_count = '';
     var removeLink = '';
+    var removeGlyphicon = '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
     for (var i = 0; i < d['sum_modifiers'].length; i++) {
-      removeLink = '';
       // Skip if land type
       if (d['sum_modifiers'][i]['id'] <= 10 && d['sum_modifiers'][i]['id'] != land_type_key_dictionary['capitol']) {
         continue;
       }
+
+      // Format names
       var name_with_s = d['sum_modifiers'][i]['name'] + 's';
       var modifier_name = ucwords(name_with_s.replace(/ys/g, 'ies').replace(/_/g, ' '));
       // Simple hardcoded fix for ys in middle of this word
       if (modifier_name === 'Skiescrapers') {
         modifier_name = 'Skyscrapers';
       }
-      if (d['account_key'] === account_key) {
-        removeLink = ' - Remove this land';
+
+      // Remove link
+      removeLink = '';
+      if (log_check && d['sum_modifiers'][i]['name'] != 'capitol' && d['sum_modifiers'][i]['name'] != 'embassy' && d['account_key'] == account_id) {
+        removeLink = ' ' + '<button type="button" class="remove_building btn btn-sm btn-danger" value="' + '-' + d['sum_modifiers'][i]['id'] + '">' + removeGlyphicon + '</button>';
       }
-      more_info_string = more_info_string + '<p>' + modifier_name + ': ' + d['sum_modifiers'][i]['count'] + removeLink + '</p>';
+
+      // Build HTML
+      building_label = '<span class="building_name">' + modifier_name + '</span>';
+      building_count = '<span>' + d['sum_modifiers'][i]['count'] + removeLink + '</span>';
+      building_line = '<div class="building_item">' + building_label + ': ' + building_count + '</div><br>';
+      more_info_string = more_info_string + building_line;
     }
     $('#land_info_div').html(more_info_string);
   }

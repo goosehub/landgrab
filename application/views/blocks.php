@@ -501,6 +501,6 @@
 
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/69m67r/the_bigger_chat_update/" target="_blank">The Bigger Chat Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/69p1uc/the_demolish_update/" target="_blank">The Demolish Update</a>
     </strong>
 </div>

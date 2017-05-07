@@ -473,6 +473,9 @@ class Game extends CI_Controller {
             }
             $this->game_model->remove_player_embassy($account_key, $land_key, $this->embassy_key);
         }
+        else if ( is_numeric($form_type) && $form_type < 0 ) {
+            $action_type = 'demolish';
+        }
         else if ( is_numeric($form_type) ) {
             $action_type = 'build';
         }
@@ -484,6 +487,13 @@ class Game extends CI_Controller {
         }
         else {
             $action_type = 'attack';
+        }
+
+        // Demolish
+        if ($action_type === 'demolish') {
+            $this->game_model->remove_modifier_from_land($land_square['id'], abs($form_type), 1);
+            echo '{"status": "success", "result": true, "message": "Building Demolished"}';
+            return;
         }
 
         // Prevent building when no treasury

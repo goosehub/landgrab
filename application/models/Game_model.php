@@ -417,6 +417,13 @@ Class game_model extends CI_Model
     $this->db->insert('land_modifier', $data);
     return true;
  }
+ function remove_modifier_from_land($land_key, $modify_effect_key, $limit)
+ {
+    $this->db->where('land_key', $land_key);
+    $this->db->where('modify_effect_key', $modify_effect_key);
+    $this->db->limit($limit);
+    $this->db->delete('land_modifier');
+}
  // Remove all modifiers from land
  function remove_modifiers_from_land($land_key)
  {

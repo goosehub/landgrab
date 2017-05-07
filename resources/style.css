@@ -302,8 +302,13 @@ html, body {
 .effect_pair {
   font-weight: bold;
 }
-#land_info_div p {
+#land_info_div {
   font-weight: bold;
+}
+.remove_building {
+  border-radius: 10em;
+  font-size: 0.5em;
+  opacity: 0.9;
 }
 /* Prevent user HTML input from screwing up view */
 /* Specificity rules are very specific here */
