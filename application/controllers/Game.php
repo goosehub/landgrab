@@ -23,9 +23,9 @@ class Game extends CI_Controller {
     protected $democracy_min_support = 50;
     protected $democracy_corruption_rate = 0;
     protected $oligarchy_min_support = 10;
-    protected $oligarchy_corruption_rate = 10;
+    protected $oligarchy_corruption_rate = 5;
     protected $autocracy_min_support = 0;
-    protected $autocracy_corruption_rate = 30;
+    protected $autocracy_corruption_rate = 20;
     protected $weariness_increase_land_count = 300;
     protected $sniper_land_minimum = 100;
     protected $tax_nerf = 2;
