@@ -21,7 +21,6 @@ loading();
 // Show register form if not logged in and not failed to log in
 <?php if ($failed_form != 'login') { ?>
   if (!log_check) {
-    $('#ab_test').val('default_register_block');
     $('#register_block').show();
   }
 <?php } ?>
