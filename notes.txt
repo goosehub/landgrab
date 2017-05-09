@@ -10,6 +10,7 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
+    BUG: Client detect expired session
     FEATURE: Private chat with @
     BUG: Capitol stopped being a capitol (Can't replciate)
     BUG: Reports of new users spawning on metropolises (Can't replicate)
