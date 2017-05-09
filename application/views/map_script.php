@@ -212,8 +212,8 @@ function initMap() {
       data: $('#law_form').serialize(),
       success: function(data) {
         // Handle error
-        if (d['error']) {
-          alert(d['error']);
+        if (data['error']) {
+          alert(data['error']);
           return false;
         }
         // Do update
