@@ -9,15 +9,14 @@
 <!-- Law Block -->
 <?php if ($log_check) { ?>
 <div id="law_block" class="center_block">
-    <strong>State of the State</strong>
-
+    <strong>Government and Budget</strong>
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="row">
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
@@ -99,7 +98,7 @@
 
             <hr>
             <!-- Form -->
-            <?php echo form_open('user/law_form'); ?>
+            <?php echo form_open('user/law_form', array('id' => 'law_form', 'method' => 'post')); ?>
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                     <div class="row">
                         <div class="col-md-6">
@@ -145,33 +144,36 @@
                         </div>
                     </div>
                 <hr>
-                <button id="pass_new_laws_button" type="submit" class="btn btn-primary form-control">Pass New Laws</button>
+                <div class="row">
+                    <div class="col-md-6 col-md-push-6">
+                        <div id="pass_new_laws_button" class="btn btn-action form-control">Apply New Budget</div>
+                    </div>
+                </div>
             </form>
         </div>
-        <div class="col-md-4">
-            <h3>Useful Information</h3>
+        <div class="col-md-5">
+            <strong>Useful Information</strong>
             <ul id="useful_info_list">
-                <li>Building Towns and Cities and Metropolises are the best way to get more money</li>
                 <li>For every 5 villages, you can build a Town, every 5 Towns a City, and every 5 Cities a Metropolis</li>
                 <li>Taxes allow you to increase your budgets and build on your lands</li>
                 <li>Corruption Eats at your Tax Income</li>
-                <li>Entitlments give you more Political Support</li>
+                <li>Entitlments give you more Support</li>
+                <li>Weariness decreases your Support</li>
+                <li>Weariness decreases by 5 every minute</li>
+                <li>When you have no Support left, your government can no longer function</li>
                 <li>A larger Military means a smaller weariness penalty on attacking and more weariness on those who attack you</li>
                 <li>Form alliances and build Embassies on other players Capitols to help them against shared enemies.</li>
-                <li>weariness decreases your Political Support</li>
-                <li>weariness decreases by 5 every minute</li>
-                <li>When you reach your minimum Political Support, your government can no longer function</li>
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
-                <li>If you get stuck in debt, consider downgrading your lands to villages</li>
-                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
-                <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
+                <li>If you get stuck in debt or in low support, consider adjusting your taxes or removing buildings</li>
                 <li>The player with the largest population gets a 2X Defensive Bonus</li>
                 <li>The player with the most culture gets a 2X Offensive Bonus</li>
-                <li>Explore the other worlds in the Worlds tab</li>
+                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
+                <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
-                <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion on this game</li>
+                <li>Explore the other worlds in the Worlds tab</li>
                 <li>Try turning on Satellite Mode</li>
+                <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion and updates</li>
             </ul>
         </div>
     </div>

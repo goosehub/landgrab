@@ -291,12 +291,11 @@ class User extends CI_Controller {
 
         // Fail
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
-
+            echo '{"error": "' + validation_errors() + '"}';
+            return false;
+        }
         // Success
-        } else {
+        else {
             $government = $this->input->post('input_government');
             $tax_rate = $this->input->post('input_tax_rate');
             $military_budget = $this->input->post('input_military_budget');
@@ -312,8 +311,8 @@ class User extends CI_Controller {
                 $this->user_model->update_account_tutorial($account_key, 3);
             }
 
-            // Redirect to game
-            redirect('world/' . $world_key, 'refresh');
+            // Success
+            echo '{"status": "success", "result": true, "message": "Laws Updated"}';
         }
 
     }

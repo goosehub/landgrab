@@ -200,6 +200,28 @@ function initMap() {
     boxes[land_key] = box;
   }
 
+  // 
+  // Apply new laws
+  // 
+  
+  $('#pass_new_laws_button').click(function(event) {
+    $.ajax({
+      url: "<?=base_url()?>user/law_form",
+      type: 'POST',
+      dataType: 'json',
+      data: $('#law_form').serialize(),
+      success: function(data) {
+        // Handle error
+        if (d['error']) {
+          alert(d['error']);
+          return false;
+        }
+        // Do update
+        get_map_update(world_key);
+      }
+    });
+  });
+
   // Set land window
   function set_window(event) {
     // Set Parameters
