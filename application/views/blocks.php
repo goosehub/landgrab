@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Gross Tax Revenue: </strong>
+                        <strong class="law_info_item_label">Tax Income: </strong>
                         <strong class="law_info_value text-success">
                             <span class="tax_income_span">$<?php echo number_format($account['stats']['tax_income']); ?></span>M
                         </strong><br>
@@ -89,7 +89,7 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Leftover Revenue: </strong>
+                        <strong class="law_info_item_label">Available Revenue: </strong>
                         <strong class="law_info_value text-primary">
                             $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
                         </strong><br>
@@ -109,13 +109,13 @@
                             <select class="form-control" id="input_government" name="input_government" value="<?php echo $account['government']; ?>">
                                 <option value="<?php echo $account['government']; ?>"><?php echo $government_dictionary[$account['government']]; ?></option>
                                 <?php if ($account['government'] != 1) { ?>
-                                <option value="1">Democracy (<?php echo $democracy_corruption_rate ?>% Corruption, Min Support at <?php echo $democracy_min_support; ?>)</option>
+                                <option value="1">Democracy (High Tax Weariness, <?php echo $democracy_corruption_rate ?>% Corruption)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 2) { ?>
-                                <option value="2">Oligarchy (<?php echo $oligarchy_corruption_rate ?>% Corruption, Min Support at <?php echo $oligarchy_min_support; ?>)</option>
+                                <option value="2">Oligarchy (Low Tax Weariness, <?php echo $oligarchy_corruption_rate ?>% Corruption)</option>
                                 <?php } ?>
                                 <?php if ($account['government'] != 3) { ?>
-                                <option value="3">Autocracy (<?php echo $autocracy_corruption_rate ?>% Corruption, Min Support at <?php echo $autocracy_min_support; ?>)</option>
+                                <option value="3">Autocracy (No Tax Weariness, <?php echo $autocracy_corruption_rate ?>% Corruption)</option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -501,6 +501,6 @@
 
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/69p1uc/the_demolish_update/" target="_blank">The Demolish Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/6a25nu/the_government_update/" target="_blank">The Government Update</a>
     </strong>
 </div>

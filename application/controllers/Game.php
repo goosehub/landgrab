@@ -20,15 +20,17 @@ class Game extends CI_Controller {
     protected $autocracy_key = 3;
 
     // Balance Constants
-    protected $democracy_min_support = 50;
-    protected $democracy_corruption_rate = 0;
-    protected $oligarchy_min_support = 15;
-    protected $oligarchy_corruption_rate = 5;
+    protected $democracy_min_support = 0;
+    protected $democracy_tax_nerf = 3;
+    protected $democracy_corruption_rate = 5;
+    protected $oligarchy_min_support = 0;
+    protected $oligarchy_tax_nerf = 2;
+    protected $oligarchy_corruption_rate = 25;
     protected $autocracy_min_support = 0;
-    protected $autocracy_corruption_rate = 20;
+    protected $autocracy_tax_nerf = 1;
+    protected $autocracy_corruption_rate = 60;
     protected $weariness_increase_land_count = 300;
     protected $sniper_land_minimum = 100;
-    protected $tax_nerf = 2;
     protected $entitlments_nerf = 40;
     protected $base_support = 100;
 
@@ -223,8 +225,18 @@ class Game extends CI_Controller {
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
-        $tax_popularity_hit = $this->increasing_returns_algorithm($account['tax_rate'], $this->tax_nerf);
-        $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_popularity_hit + $account['stats']['entitlements_effect'] + $account['stats']['support'];
+
+        if ($account['government'] == $this->democracy_key) {
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_nerf);
+        }
+        else if ($account['government'] == $this->oligarchy_key) {
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_nerf);
+        }
+        else if ($account['government'] == $this->autocracy_key) {
+            $tax_weariness = $this->autocracy_tax_nerf;
+        }
+
+        $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_weariness + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['weariness'] = $account['weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
