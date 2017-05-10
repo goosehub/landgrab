@@ -491,6 +491,19 @@
                     <strong class="text-action">$<?php echo number_format($leader['stats']['gdp']); ?></strong><span class="text-action">,000,000</span>
                 </td>
                 <td>
+                    <?php
+                    // Emergency Debug
+                    $emergency_debug = false;
+                    if ($emergency_debug && $leader['username'] === $emergency_debug) {
+                    echo
+                    ' ~ ' . $leader['stats']['tax_income_total'] . 
+                    ' ~ ' . $leader['stats']['corruption_total'] . 
+                    ' ~ ' . $leader['stats']['tax_income'] . 
+                    ' ~ ' . $leader['military_budget'] . 
+                    ' ~ ' . $leader['stats']['military'] . 
+                    ' ~ ' . $leader['stats']['military_spending'] . 
+                    ' ~ ' . $leader['stats']['military_after'] . 
+                    ' ~ '; } ?>
                     <strong class="text-danger">$<?php echo number_format($leader['stats']['military_after']); ?></strong><span class="text-danger">,000,000</span>
                 </td>
             </tr>
