@@ -187,6 +187,8 @@ class Game extends CI_Controller {
         // Load view
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
+        $this->load->view('budget', $data);
+        $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
         $this->load->view('land_block', $data);
         $this->load->view('map_script', $data);
