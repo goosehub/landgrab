@@ -909,6 +909,7 @@ function initMap() {
     $('.land_count_span').html(number_format(account['land_count']));
     $('.tax_rate_span').html(account['tax_rate']);
     $('.tax_income_span').html(number_format(account['stats']['tax_income']));
+    $('.corruption_rate_span').html(number_format(account['stats']['corruption_total']));
     $('.population_span').html(number_format(account['stats']['population']));
     $('.culture_span').html(number_format(account['stats']['culture']));
     $('.gdp_span').html(number_format(account['stats']['gdp']));

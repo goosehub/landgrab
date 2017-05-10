@@ -22,37 +22,37 @@
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Territories: </strong>
                         <strong class="law_info_value text-primary">
-                            <span class="land_count_span"><?php echo $account['land_count']; ?></span>
+                            <span class="land_count_span"><?php echo number_format($account['land_count']); ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Population: </strong>
                         <strong class="law_info_value text-info">
-                            <span class="population_span"><?php echo $account['stats']['population']; ?></span>K
+                            <span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Culture: </strong>
                         <strong class="law_info_value text-purple">
-                            <span class="culture_span"><?php echo $account['stats']['culture']; ?></span>
+                            <span class="culture_span"><?php echo number_format($account['stats']['culture']); ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">GDP: </strong>
                         <strong class="law_info_value text-action">
-                            $<span class="gdp_span"><?php echo $account['stats']['gdp']; ?></span>M
+                            $<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Weariness: </strong>
                         <strong class="law_info_value text-danger">
-                            <span class="weariness_span"><?php echo $account['stats']['weariness']; ?></span>
+                            <span class="weariness_span"><?php echo number_format($account['stats']['weariness']); ?></span>
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Political Support: </strong>
                         <strong class="law_info_value text-default">
-                            <span class="political_support_span"><?php echo $account['stats']['support']; ?></span>
+                            <span class="political_support_span"><?php echo number_format($account['stats']['support']); ?></span>
                         </strong><br>
                     </span>
                 </div>
@@ -60,37 +60,37 @@
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Tax Income: </strong>
                         <strong class="law_info_value text-success">
-                            <span class="tax_income_span">$<?php echo number_format($account['stats']['tax_income']); ?></span>M
+                            $<span class="tax_income_span"><?php echo number_format($account['stats']['tax_income']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Corruption: </strong>
                         <strong class="law_info_value text-red">
-                            <span class="corruption_rate_span">$<?php echo $account['stats']['corruption_total']; ?></span>M
+                            $<span class="corruption_rate_span"><?php echo number_format($account['stats']['corruption_total']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Military: </strong>
                         <strong class="law_info_value text-danger">
-                            $<span class="military_span"><?php echo $account['stats']['military_after']; ?></span>M
+                            $<span class="military_span"><?php echo number_format($account['stats']['military_after']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Entitlements: </strong>
                         <strong class="law_info_value text-success">
-                            $<span class="entitlements_span"><?php echo $account['stats']['entitlements']; ?></span>M
+                            $<span class="entitlements_span"><?php echo number_format($account['stats']['entitlements']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Building Maintenance: </strong>
                         <strong class="law_info_value text-danger">
-                            $<span class="building_maintenance_span"><?php echo $account['stats']['building_maintenance']; ?></span>M
+                            $<span class="building_maintenance_span"><?php echo number_format($account['stats']['building_maintenance']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Available Revenue: </strong>
                         <strong class="law_info_value text-primary">
-                            $<span class="treasury_span"><?php echo $account['stats']['treasury_after']; ?></span>M
+                            $<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M
                         </strong><br>
                     </span>
                 </div>
@@ -248,7 +248,7 @@
         <hr>
         <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update Nation</button>
         <br> <br>
-        <a class="report_bugs_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
+        <a class="logout_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
     </form>
 </div>
 <?php } ?>
