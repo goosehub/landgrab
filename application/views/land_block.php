@@ -27,10 +27,6 @@
             </button>
         </div>
 
-        <div id="not_in_range" class="land_block_toggle">
-            <button disabled class="btn btn-default">This land is not in range</button>
-        </div>
-
         <span id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
@@ -57,6 +53,14 @@
             </button>
         </span>
 
+        <button id="land_form_support_too_low" class="submit_land_form btn btn-danger land_block_toggle disabled">
+            Support too low to attack
+        </button>
+
+        <div id="not_in_range" class="land_block_toggle">
+            <p class="text-warning">Land not in range</p>
+        </div>
+
         <span id="land_form_update_parent" class="land_block_toggle">
             <br>
             <input type="text" class="form-control" id="input_land_name" name="land_name" placeholder="Land Name" value="">
@@ -80,10 +84,6 @@
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
         </button>
 
-        <button id="land_form_low_treasury" class="expand_land_form btn btn-danger land_block_toggle disabled">
-            Revenue too low to build
-        </button>
-
         <br> <br>
 
         <div id="embassy_list_dropdown" class="info_details_parent collapse">
@@ -102,6 +102,7 @@
         </div>
 
         <div id="land_form_upgrade_parent" class="land_block_toggle">
+            <p id="land_form_low_treasury" class="land_block_toggle text-warning">Revenue too low to build</p>
             <p id="lands_needed_for_upgrade" class="land_block_toggle"></p>
             <div id="upgrade_dropdown" class="collapse">
                 <div class="form-group">

@@ -46,6 +46,7 @@ var player_land_count = <?php echo $account['land_count']; ?>;
 
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
+var building_minimum = <?php echo $building_minimum; ?>;
 var leaderboard_update_interval_minutes = <?php echo $leaderboard_update_interval_minutes; ?> * 60 * 1000;
 var infoWindow = false;
 var boxes = [];
@@ -341,6 +342,7 @@ function initMap() {
     $('#build_embassy').hide();
     $('#remove_embassy').hide();
     $('#embassy_list_dropdown_button').hide();
+    $('#land_form_support_too_low').hide();
 
     // Not logged in
     if (!log_check) {
@@ -461,7 +463,7 @@ function initMap() {
         $('#lands_needed_for_upgrade').show();
       }
 
-      if (d['account']['stats'].treasury_after < 0) {
+      if (d['account']['stats'].treasury_after <= building_minimum) {
         $('#land_form_low_treasury').show();
         $('.effect_info_item').hide();
         if (d['land_type'] == land_type_key_dictionary['village']) {
@@ -490,15 +492,24 @@ function initMap() {
         if (d['land_type'] == land_type_key_dictionary['unclaimed']) {
           if (account['tutorial'] < 2) {
             $('#land_form_submit_claim_tutorial').show();
-          } else {
+          }
+          else if (account['stats']['support'] <= 0) {
+            $('#land_form_support_too_low').show();
+          }
+          else {
             $('#land_form_submit_claim').show();
           }
         }
         // And claimed
         else {
+          console.log(account);
           if (account['tutorial'] < 2) {
             $('#land_form_submit_attack_tutorial').show();
-          } else {
+          }
+          else if (account['stats']['support'] <= 0) {
+            $('#land_form_support_too_low').show();
+          }
+          else {
             $('#land_form_submit_attack').show();
           }
         }
@@ -777,16 +788,14 @@ function initMap() {
         $stroke_weight = 2;
         $stroke_color = $stroke_color_dictionary['fortification'];
       }
-      ?>
-  z(<?php echo 
+      ?> z(<?php echo
           $land['id'] . ',' .
           $land['lat'] . ',' .
           $land['lng'] . ',' .
           $stroke_weight . ',' .
           '"' . $stroke_color . '"' . ',' .
           '"' . $fill_color . '"' . ',' .
-          $fill_opacity; ?>);
-  <?php // Open and close immediately to avoid whitespace eating bandwidth
+          $fill_opacity; ?>); <?php // Open and close immediately to avoid whitespace eating bandwidth
   } ?>
 
   // 
@@ -830,6 +839,7 @@ function initMap() {
 
         update_lands(data['lands']);
         if (log_check) {
+          account = data['account'];
           update_stats(data['account']);
         }
 
@@ -885,8 +895,8 @@ function initMap() {
         stroke_weight = 2;
         stroke_color = '<?php echo $stroke_color_dictionary['metropolis']; ?>';
       } else if (land['land_type'] == land_type_key_dictionary['fortification']) {
-        $stroke_weight = 2;
-        $stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
+        stroke_weight = 2;
+        stroke_color = '<?php echo $stroke_color_dictionary['fortification']; ?>';
       }
       if (log_check && land['account_key'] == account_id) {
         stroke_weight = 3;
@@ -908,15 +918,15 @@ function initMap() {
   function update_stats(account) {
     $('.land_count_span').html(number_format(account['land_count']));
     $('.tax_rate_span').html(account['tax_rate']);
-    $('.tax_income_span').html(number_format(account['stats']['tax_income']));
+    $('.tax_income_span').html(number_format(account['stats']['tax_income_total']));
     $('.corruption_rate_span').html(number_format(account['stats']['corruption_total']));
     $('.population_span').html(number_format(account['stats']['population']));
     $('.culture_span').html(number_format(account['stats']['culture']));
     $('.gdp_span').html(number_format(account['stats']['gdp']));
     $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
-    $('.treasury_span').html(number_format(account['stats']['treasury_after']));
-    $('.military_span').html(number_format(account['stats']['military_after']));
+    $('.military_span').html(number_format(account['stats']['military_spending']));
     $('.entitlements_span').html(number_format(account['stats']['entitlements']));
+    $('.treasury_span').html(number_format(account['stats']['treasury_after']));
     $('.weariness_span').html(account['stats']['weariness']);
     $('.political_support_span').html(account['stats']['support']);
     return true;

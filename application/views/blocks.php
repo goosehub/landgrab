@@ -38,14 +38,8 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">GDP: </strong>
-                        <strong class="law_info_value text-action">
-                            $<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M
-                        </strong><br>
-                    </span>
-                    <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Weariness: </strong>
-                        <strong class="law_info_value text-danger">
+                        <strong class="law_info_value text-red">
                             <span class="weariness_span"><?php echo number_format($account['stats']['weariness']); ?></span>
                         </strong><br>
                     </span>
@@ -58,33 +52,39 @@
                 </div>
                 <div class="col-md-6">
                     <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">GDP: </strong>
+                        <strong class="law_info_value text-action">
+                            $<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Tax Income: </strong>
                         <strong class="law_info_value text-success">
-                            $<span class="tax_income_span"><?php echo number_format($account['stats']['tax_income']); ?></span>M
+                            $<span class="tax_income_span"><?php echo number_format($account['stats']['tax_income_total']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Corruption: </strong>
                         <strong class="law_info_value text-red">
-                            $<span class="corruption_rate_span"><?php echo number_format($account['stats']['corruption_total']); ?></span>M
+                            -$<span class="corruption_rate_span"><?php echo number_format($account['stats']['corruption_total']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Military: </strong>
+                        <strong class="law_info_item_label">Military Spending: </strong>
                         <strong class="law_info_value text-danger">
-                            $<span class="military_span"><?php echo number_format($account['stats']['military_after']); ?></span>M
+                            -$<span class="military_span"><?php echo number_format($account['stats']['military_spending']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Entitlements: </strong>
-                        <strong class="law_info_value text-success">
-                            $<span class="entitlements_span"><?php echo number_format($account['stats']['entitlements']); ?></span>M
+                        <strong class="law_info_value text-info">
+                            -$<span class="entitlements_span"><?php echo number_format($account['stats']['entitlements']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Building Maintenance: </strong>
-                        <strong class="law_info_value text-danger">
-                            $<span class="building_maintenance_span"><?php echo number_format($account['stats']['building_maintenance']); ?></span>M
+                        <strong class="law_info_value text-warning">
+                            -$<span class="building_maintenance_span"><?php echo number_format($account['stats']['building_maintenance']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">

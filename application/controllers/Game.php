@@ -33,6 +33,7 @@ class Game extends CI_Controller {
     protected $sniper_land_minimum = 100;
     protected $entitlments_nerf = 40;
     protected $base_support = 100;
+    protected $building_minimum = 30;
 
     // Shared data
     protected $effects;
@@ -134,6 +135,7 @@ class Game extends CI_Controller {
         $data['autocracy_corruption_rate'] = $this->autocracy_corruption_rate;
         $data['weariness_increase_land_count'] = $this->weariness_increase_land_count;
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
+        $data['building_minimum'] = $this->building_minimum;
 
 
         // Get world leaderboards
@@ -214,17 +216,18 @@ class Game extends CI_Controller {
             $account['stats']['corruption_rate'] = $this->autocracy_corruption_rate;
         }
 
-        $account['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
-        $account['stats']['tax_income'] = ceil( $account['stats']['gdp'] * ($account['effective_tax_rate'] / 100) );
-        $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
+        $account['stats']['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
+        $account['stats']['tax_income_total'] = ceil( $account['stats']['gdp'] * ($account['stats']['effective_tax_rate'] / 100) );
+        $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income_total'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
         if ($account['stats']['corruption_rate'] === 0) {
             $account['stats']['corruption_total'] = 0;
         }
+        $account['stats']['tax_income'] = $account['stats']['tax_income_total'] - $account['stats']['corruption_total'];
         $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
         $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
         $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
         $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
-        $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
+        $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
 
         if ($account['government'] == $this->democracy_key) {
             $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_nerf);
@@ -509,9 +512,8 @@ class Game extends CI_Controller {
         }
 
         // Prevent building when no treasury
-        $building_minimum = 30;
-        if ($action_type === 'build' && $account['stats']['treasury_after'] <= $building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->capitol_key) {
-            echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes or downgrading land with too many buildings."}';
+        if ($action_type === 'build' && $account['stats']['treasury_after'] <= $this->building_minimum && $form_type != $this->village_key && $form_type != $this->town_key && $form_type != $this->city_key && $form_type != $this->capitol_key) {
+            echo '{"status": "fail", "message": "Your revenue is too low to build. Try raising taxes or demolishing buildings."}';
             return false;
         }
 
