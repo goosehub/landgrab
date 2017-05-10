@@ -477,6 +477,8 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);
+            echo '{"status": "success", "result": true, "message": "Embassy Built"}';
+            return true;
         }
         else if ($form_type === 'remove_embassy') {
             $action_type = $form_type;
@@ -486,6 +488,8 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->remove_player_embassy($account_key, $land_key, $this->embassy_key);
+            echo '{"status": "success", "result": true, "message": "Embassy Removed"}';
+            return true;
         }
         else if ( is_numeric($form_type) && $form_type < 0 ) {
             $action_type = 'demolish';
@@ -507,7 +511,7 @@ class Game extends CI_Controller {
         if ($action_type === 'demolish') {
             $this->game_model->remove_modifier_from_land($land_square['id'], abs($form_type), 1);
             echo '{"status": "success", "result": true, "message": "Building Demolished"}';
-            return;
+            return true;
         }
 
         // Prevent building when no treasury
@@ -591,9 +595,7 @@ class Game extends CI_Controller {
         }
 
         // Update land
-        if ($action_type != 'build_embassy' && $action_type != 'remove_embassy') {
-            $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
-        }
+        $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
 
         // Reset weariness if attacked player has no land now
         // Disabled to nerf "snipers" and for better performance
@@ -613,12 +615,6 @@ class Game extends CI_Controller {
         // Update response
         else if ($action_type === 'update') {
             echo '{"status": "success", "result": true, "message": "Updated"}';
-        }
-        else if ($action_type === 'build_embassy') {
-            echo '{"status": "success", "result": true, "message": "Embassy Built"}';
-        }
-        else if ($action_type === 'remove_embassy') {
-            echo '{"status": "success", "result": true, "message": "Embassy Removed"}';
         }
 
         return true;
