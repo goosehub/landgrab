@@ -216,6 +216,12 @@ function initMap() {
           alert(data['error']);
           return false;
         }
+        if (account && account['tutorial'] < 3) {
+          $('#tutorial_block').fadeIn();
+          $('#tutorial_title').html('Manifest Destiny');
+          $('#tutorial_text').html('Conquer the world');
+          account['tutorial'] = 3;
+        }
         // Do update
         get_map_update(world_key);
       }
@@ -814,6 +820,12 @@ function initMap() {
         if (data['refresh']) {
           alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
           window.location.reload();
+        }
+
+        if (log_check && !data['account']) {
+          alert('You were away too long and you\'re session has expired, please log back in.');
+          window.location.href = '<?php echo base_url(); ?>world/' + world_key + '?login';
+          return false;
         }
 
         update_lands(data['lands']);

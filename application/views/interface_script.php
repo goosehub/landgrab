@@ -18,8 +18,16 @@ loading();
 <?php if ($failed_form === 'register') { ?>
     $('#register_block').show();
 <?php } ?>
-// Show register form if not logged in and not failed to log in
-<?php if ($failed_form != 'login') { ?>
+<?php if ($failed_form === 'login') { ?>
+  // Show login form if not logged in and not failed to log in
+  if (!log_check) {
+    $('#login_block').show();
+  }
+<?php } else if (isset($_GET['login'])) { ?>
+  // Show login form if URL calls for it
+  $('#login_block').show();
+<?php } else { ?>
+  // Show register block rest of the time
   if (!log_check) {
     $('#register_block').show();
   }
@@ -39,11 +47,6 @@ $('#login_block').show();
 <?php } else if ($failed_form === 'register') { ?> 
 $('#register_block').show();
 <?php } ?>
-
-// Show register if server passes register to url
-if (window.location.href.indexOf('register') >= 0) {
-    $('#register_block').show();
-}
 
 // Validation State of the State screen
 $('#pass_new_laws_button').click(function(){

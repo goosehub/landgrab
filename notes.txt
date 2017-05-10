@@ -10,26 +10,16 @@ High Priority
     See Notes Todo Above
 
 Moderate Priority
-    BUG: Client detect expired session
-    FEATURE: Private chat with @
-    BUG: Capitol stopped being a capitol (Can't replciate)
-    BUG: Reports of new users spawning on metropolises (Can't replicate)
-    BUG: Capturing (maybe updating) land breaks & and maybe other characters
-    BUG: Chat URLs don't always turn into links
+    FEATURE: Private chat
     BEHAVIOR: Capitol when getting first land
-    REFACTOR: Remove query_action and query_result
     REFACTOR: Database Performance
     REFACTOR: Less requests
     BUG: Some lands get account key that doesn't exist, most likely account_key changed on an update, workaround exists
     FEATURE: Suicide Button
     FEATURE: UI Prevent Attack when insufficient support (Having difficulty)
     BEHAVIOR: First land is unnamed
-    BUG: Tutorial update laws before capitol skips step
-    Tab autocomplete for name in chat
-    After Make Capitol Visual Que not there
-    Build with plus signs
-    Account tax and budget interactive UI
-    Ocean Reporting
+    BUG: After Make Capitol Visual Que not there
+    FEATURE: Ocean Reporting
 
 Low Priority
     Feature
