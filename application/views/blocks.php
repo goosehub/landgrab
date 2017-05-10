@@ -503,6 +503,6 @@
 
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/6a25nu/the_government_update/" target="_blank">The Government Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/6acj7p/balance_tweak/" target="_blank">Balance Tweak</a>
     </strong>
 </div>
