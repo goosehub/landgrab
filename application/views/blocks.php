@@ -497,6 +497,7 @@
                     if ($emergency_debug && $leader['username'] === $emergency_debug) {
                     echo
                     ' ~ ' . $leader['stats']['tax_income_total'] . 
+                    ' ~ ' . $leader['stats']['corruption_rate'] . 
                     ' ~ ' . $leader['stats']['corruption_total'] . 
                     ' ~ ' . $leader['stats']['tax_income'] . 
                     ' ~ ' . $leader['military_budget'] . 

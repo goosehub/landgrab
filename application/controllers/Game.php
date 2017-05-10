@@ -216,17 +216,14 @@ class Game extends CI_Controller {
             $account['stats']['corruption_rate'] = $this->autocracy_corruption_rate;
         }
 
-        $account['stats']['tax_income_total'] = ceil( $account['stats']['gdp'] * ($account['tax_rate'] / 100) );
-        $account['stats']['corruption_total'] = abs(ceil($account['stats']['tax_income_total'] - $account['stats']['gdp'] * ($account['tax_rate'] / 100) ) );
-        if ($account['stats']['corruption_rate'] === 0) {
-            $account['stats']['corruption_total'] = 0;
-        }
+        $account['stats']['tax_income_total'] = $this->get_percent_of($account['stats']['gdp'], $account['tax_rate']);
+        $account['stats']['corruption_total'] = $this->get_percent_of($account['stats']['tax_income_total'], $account['stats']['corruption_rate']);
+        $account['stats']['effective_tax_rate'] = $account['tax_rate'] - $account['stats']['corruption_rate'];
         $account['stats']['tax_income'] = $account['stats']['tax_income_total'] - $account['stats']['corruption_total'];
-        $account['stats']['military_spending'] = $account['stats']['tax_income'] * ($account['military_budget'] / 100);
-        $account['stats']['military_after'] = ceil($account['stats']['military'] + $account['stats']['military_spending'] + $account['stats']['military']);
-        $account['stats']['effective_tax_rate'] = ceil($account['tax_rate'] * (100 - $account['stats']['corruption_rate']) / 100 );
-        $account['stats']['entitlements'] = ceil($account['stats']['tax_income'] * ($account['entitlements_budget'] / 100) );
-        $account['stats']['treasury_after'] = ceil($account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury']);
+        $account['stats']['military_spending'] = $this->get_percent_of($account['stats']['tax_income'], $account['military_budget']);
+        $account['stats']['military_after'] = $account['stats']['military_spending'] + $account['stats']['military'];
+        $account['stats']['entitlements'] = $this->get_percent_of($account['stats']['tax_income'], $account['entitlements_budget']);
+        $account['stats']['treasury_after'] = $account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury'];
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
 
         if ($account['government'] == $this->democracy_key) {
@@ -949,6 +946,10 @@ class Game extends CI_Controller {
         $value = $value === 0 ? 1 : $value;
         $nerf = $nerf === 0 ? 1 : $nerf;
         return floor(pow($value, $nerf) / pow($nerf * $nerf, $nerf));
+    }
+
+    public function get_percent_of($number, $percentage) {
+        return ceil( $number * ($percentage / 100) );
     }
 
     // Land dictionary for reference
