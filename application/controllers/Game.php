@@ -33,7 +33,7 @@ class Game extends CI_Controller {
     protected $sniper_land_minimum = 100;
     protected $entitlments_nerf = 40;
     protected $base_support = 100;
-    protected $building_minimum = 30;
+    protected $building_minimum = 0;
 
     // Shared data
     protected $effects;
