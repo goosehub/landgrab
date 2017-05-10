@@ -32,6 +32,12 @@
                         </strong><br>
                     </span>
                     <span class="law_info_item_parent">
+                        <strong class="law_info_item_label">Military Total: </strong>
+                        <strong class="law_info_value text-danger">
+                            $<span class="military_total_span"><?php echo number_format($account['stats']['military_total']); ?></span>M
+                        </strong><br>
+                    </span>
+                    <span class="law_info_item_parent">
                         <strong class="law_info_item_label">Culture: </strong>
                         <strong class="law_info_value text-purple">
                             <span class="culture_span"><?php echo number_format($account['stats']['culture']); ?></span>
@@ -503,9 +509,9 @@
                     ' ~ ' . $leader['military_budget'] . 
                     ' ~ ' . $leader['stats']['military'] . 
                     ' ~ ' . $leader['stats']['military_spending'] . 
-                    ' ~ ' . $leader['stats']['military_after'] . 
+                    ' ~ ' . $leader['stats']['military_total'] . 
                     ' ~ '; } ?>
-                    <strong class="text-danger">$<?php echo number_format($leader['stats']['military_after']); ?></strong><span class="text-danger">,000,000</span>
+                    <strong class="text-danger">$<?php echo number_format($leader['stats']['military_total']); ?></strong><span class="text-danger">,000,000</span>
                 </td>
             </tr>
             <?php $rank++; ?>

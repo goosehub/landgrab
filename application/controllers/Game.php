@@ -221,7 +221,7 @@ class Game extends CI_Controller {
         $account['stats']['effective_tax_rate'] = $account['tax_rate'] - $account['stats']['corruption_rate'];
         $account['stats']['tax_income'] = $account['stats']['tax_income_total'] - $account['stats']['corruption_total'];
         $account['stats']['military_spending'] = $this->get_percent_of($account['stats']['tax_income'], $account['military_budget']);
-        $account['stats']['military_after'] = $account['stats']['military_spending'] + $account['stats']['military'];
+        $account['stats']['military_total'] = $account['stats']['military_spending'] + $account['stats']['military'];
         $account['stats']['entitlements'] = $this->get_percent_of($account['stats']['tax_income'], $account['entitlements_budget']);
         $account['stats']['treasury_after'] = $account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury'];
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
@@ -784,25 +784,25 @@ class Game extends CI_Controller {
 
         // weariness Military Algorithm
         $ww_multiplier = 3;
-        if ($attacking_account['stats']['military_after'] >= $defender_account['stats']['military_after'] * $ww_multiplier) {
+        if ($attacking_account['stats']['military_total'] >= $defender_account['stats']['military_total'] * $ww_multiplier) {
             $weariness += 1;
         }
-        else if ($attacking_account['stats']['military_after'] >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] >= $defender_account['stats']['military_total']) {
             $weariness += 2;
         }
-        else if ($attacking_account['stats']['military_after'] * $ww_multiplier >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] * $ww_multiplier >= $defender_account['stats']['military_total']) {
             $weariness += 3;
         }
-        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
             $weariness += 4;
         }
-        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
             $weariness += 5;
         }
-        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
             $weariness += 6;
         }
-        else if ($attacking_account['stats']['military_after'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_after']) {
+        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
             $weariness += 7;
         }
         else {

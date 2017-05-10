@@ -924,7 +924,8 @@ function initMap() {
     $('.culture_span').html(number_format(account['stats']['culture']));
     $('.gdp_span').html(number_format(account['stats']['gdp']));
     $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
-    $('.military_span').html(number_format(account['stats']['military_spending']));
+    $('.military_spending_span').html(number_format(account['stats']['military_spending']));
+    $('.military_total_span').html(number_format(account['stats']['military_total']));
     $('.entitlements_span').html(number_format(account['stats']['entitlements']));
     $('.treasury_span').html(number_format(account['stats']['treasury_after']));
     $('.weariness_span').html(account['stats']['weariness']);
@@ -969,7 +970,7 @@ function initMap() {
       html += '<strong class="text-action">' + number_format(value.stats.gdp) + '</strong><span class="text-action">,000,000</span>';
       html += '</td>';
       html += '<td>';
-      html += '<strong class="text-danger">' + number_format(value.stats.military_after) + '</strong><span class="text-danger">,000,000</span>';
+      html += '<strong class="text-danger">' + number_format(value.stats.military_total) + '</strong><span class="text-danger">,000,000</span>';
       html += '</td>';
       rank++;
     });
