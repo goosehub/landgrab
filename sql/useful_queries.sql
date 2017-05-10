@@ -3,7 +3,7 @@ SELECT me.name, COUNT(*) AS count
 FROM  `land_modifier` as lm
 LEFT JOIN `modify_effect` as me
 	on `modify_effect_key`  = me.`id`
-WHERE lm.created >= ( CURDATE() - INTERVAL 365 DAY )
+WHERE lm.created >= ( CURDATE() - INTERVAL 3 DAY )
 GROUP BY `modify_effect_key`
 ORDER BY count DESC 
 

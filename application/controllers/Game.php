@@ -21,13 +21,13 @@ class Game extends CI_Controller {
 
     // Balance Constants
     protected $democracy_min_support = 0;
-    protected $democracy_tax_nerf = 3;
+    protected $democracy_tax_weariness_nerf = 2;
     protected $democracy_corruption_rate = 5;
     protected $oligarchy_min_support = 0;
-    protected $oligarchy_tax_nerf = 2;
+    protected $oligarchy_tax_weariness_nerf = 3;
     protected $oligarchy_corruption_rate = 25;
     protected $autocracy_min_support = 0;
-    protected $autocracy_tax_nerf = 1;
+    protected $autocracy_tax_weariness_nerf = 0;
     protected $autocracy_corruption_rate = 60;
     protected $weariness_increase_land_count = 300;
     protected $sniper_land_minimum = 100;
@@ -230,13 +230,13 @@ class Game extends CI_Controller {
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
 
         if ($account['government'] == $this->democracy_key) {
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_nerf);
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_weariness_nerf);
         }
         else if ($account['government'] == $this->oligarchy_key) {
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_nerf);
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_weariness_nerf);
         }
         else if ($account['government'] == $this->autocracy_key) {
-            $tax_weariness = $this->autocracy_tax_nerf;
+            $tax_weariness = $this->autocracy_tax_weariness_nerf;
         }
 
         $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_weariness + $account['stats']['entitlements_effect'] + $account['stats']['support'];
