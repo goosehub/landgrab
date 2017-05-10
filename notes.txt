@@ -16,7 +16,7 @@ Moderate Priority
     REFACTOR: Less requests
     BUG: Some lands get account key that doesn't exist, most likely account_key changed on an update, workaround exists
     FEATURE: Suicide Button
-    FEATURE: UI Prevent Attack when insufficient support (Having difficulty)
+    FEATURE: North south wormhole
     BEHAVIOR: First land is unnamed
     BUG: After Make Capitol Visual Que not there
     FEATURE: Ocean Reporting

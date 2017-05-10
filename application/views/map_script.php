@@ -929,6 +929,7 @@ function initMap() {
     $('.treasury_span').html(number_format(account['stats']['treasury_after']));
     $('.weariness_span').html(account['stats']['weariness']);
     $('.political_support_span').html(account['stats']['support']);
+    $('.government_span').html(government_dictionary[account['government']]);
     return true;
   }
 
