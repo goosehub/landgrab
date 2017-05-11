@@ -24,7 +24,7 @@
 
 
     <button id="mobile_stat_dropdown" class="stat_dropdown menu_element btn btn-action" type="button">
-      Laws
+      Budget
     </button>
   <?php } ?>
 

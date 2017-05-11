@@ -58,6 +58,20 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
+ // Update account budget
+ function update_account_budget($account_id, $government, $tax_rate, $military_budget, $entitlements_budget)
+ {
+    // Update account
+    $data = array(
+    'government' => $government,
+    'tax_rate' => $tax_rate,
+    'military_budget' => $military_budget,
+    'entitlements_budget' => $entitlements_budget
+    );
+    $this->db->where('id', $account_id);
+    $this->db->update('account', $data);
+    return true;
+ }
  // Update land data
  function update_land_data($land_id, $account_key, $land_name, $content, $land_type, $color)
  {

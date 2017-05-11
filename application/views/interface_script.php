@@ -49,7 +49,7 @@ $('#register_block').show();
 <?php } ?>
 
 // Validation State of the State screen
-$('#pass_new_laws_button').click(function(){
+$('#pass_new_budget_button').click(function(){
     if ( parseInt($('#military_budget').val()) + parseInt($('#entitlements_budget').val()) > 100) {
         alert('You\'re military budget plus your entitlements budget can not exceed 100%');
         return false;
@@ -65,7 +65,7 @@ $('.exit_center_block').click(function(){
 });
 $('.stat_dropdown').click(function(){
     $('.center_block').hide();
-    $('#law_block').fadeIn();
+    $('#budget_block').fadeIn();
 });
 $('.user_button').click(function(){
     $('.center_block').hide();

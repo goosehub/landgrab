@@ -23,10 +23,10 @@ $route['get_single_land'] = "game/get_single_land";
 $route['land_form'] = "game/land_form";
 $route['land_upgrade_form'] = "game/land_upgrade_form";
 $route['land_capitol_form'] = "game/land_capitol_form";
+$route['budget_form'] = "game/budget_form";
 
 // Account functions
 $route['user/update_account_info'] = "user/update_account_info";
-$route['user/law_form'] = "user/law_form";
 
 // User functions
 $route['user/login'] = "user/login";

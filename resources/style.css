@@ -95,7 +95,7 @@ html, body {
     float: right;
     clear: both;
   }
-  body #land_block, body #law_block, body #account_update_block {
+  body #land_block, body #budget_block, body #account_update_block {
     width: 95vw;
     left: 2vw;
     top: 2vh;
@@ -209,17 +209,17 @@ html, body {
     width: 90%;   
   }
 }
-#law_block {
+#budget_block {
   left: 5%;
   width: 90%;
   top: 10vh;
   height: 80vh;
 }
-.law_info_value {
+.budget_info_value {
   float: right;
   clear: both;
 }
-.law_info_desc_highlight {
+.budget_info_desc_highlight {
   font-weight: 400;
   color: #31708f;
 }

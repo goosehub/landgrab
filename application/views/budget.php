@@ -1,6 +1,6 @@
-<!-- Law Block -->
+<!-- Budget Block -->
 <?php if ($log_check) { ?>
-<div id="law_block" class="center_block">
+<div id="budget_block" class="center_block">
     <strong>Government and Budget</strong>
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -11,83 +11,83 @@
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-6">
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Territories: </strong>
-                        <strong class="law_info_value text-primary">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Territories: </strong>
+                        <strong class="budget_info_value text-primary">
                             <span class="land_count_span"><?php echo number_format($account['land_count']); ?></span>
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Population: </strong>
-                        <strong class="law_info_value text-info">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Population: </strong>
+                        <strong class="budget_info_value text-info">
                             <span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Culture: </strong>
-                        <strong class="law_info_value text-purple">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Culture: </strong>
+                        <strong class="budget_info_value text-purple">
                             <span class="culture_span"><?php echo number_format($account['stats']['culture']); ?></span>
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Military From Buildings: </strong>
-                        <strong class="law_info_value text-danger">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Military From Buildings: </strong>
+                        <strong class="budget_info_value text-danger">
                             $<span class="military_stats_span"><?php echo number_format($account['stats']['military']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Weariness: </strong>
-                        <strong class="law_info_value text-red">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Weariness: </strong>
+                        <strong class="budget_info_value text-red">
                             <span class="weariness_span"><?php echo number_format($account['stats']['weariness']); ?></span>
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Political Support: </strong>
-                        <strong class="law_info_value text-default">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Political Support: </strong>
+                        <strong class="budget_info_value text-default">
                             <span class="political_support_span"><?php echo number_format($account['stats']['support']); ?></span>
                         </strong><br>
                     </span>
                 </div>
                 <div class="col-md-6">
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">GDP: </strong>
-                        <strong class="law_info_value text-action">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">GDP: </strong>
+                        <strong class="budget_info_value text-action">
                             $<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Tax Income: </strong>
-                        <strong class="law_info_value text-success">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Tax Income: </strong>
+                        <strong class="budget_info_value text-success">
                             $<span class="tax_income_span"><?php echo number_format($account['stats']['tax_income_total']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Corruption: </strong>
-                        <strong class="law_info_value text-red">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Corruption: </strong>
+                        <strong class="budget_info_value text-red">
                             $<span class="corruption_rate_span"><?php echo number_format($account['stats']['corruption_total']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Military Spending: </strong>
-                        <strong class="law_info_value text-danger">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Military Spending: </strong>
+                        <strong class="budget_info_value text-danger">
                             $<span class="military_spending_span"><?php echo number_format($account['stats']['military_spending']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Entitlements: </strong>
-                        <strong class="law_info_value text-info">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Entitlements: </strong>
+                        <strong class="budget_info_value text-info">
                             $<span class="entitlements_span"><?php echo number_format($account['stats']['entitlements']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Building Maintenance: </strong>
-                        <strong class="law_info_value text-warning">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Building Maintenance: </strong>
+                        <strong class="budget_info_value text-warning">
                             $<span class="building_maintenance_span"><?php echo number_format($account['stats']['building_maintenance']); ?></span>M
                         </strong><br>
                     </span>
-                    <span class="law_info_item_parent">
-                        <strong class="law_info_item_label">Available Revenue: </strong>
-                        <strong class="law_info_value text-default">
+                    <span class="budget_info_item_parent">
+                        <strong class="budget_info_item_label">Available Revenue: </strong>
+                        <strong class="budget_info_value text-default">
                             $<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M
                         </strong><br>
                     </span>
@@ -96,7 +96,7 @@
 
             <hr>
             <!-- Form -->
-            <?php echo form_open('user/law_form', array('id' => 'law_form', 'method' => 'post')); ?>
+            <?php echo form_open('budget_form', array('id' => 'budget_form', 'method' => 'post')); ?>
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                     <div class="row">
                         <div class="col-md-6">
@@ -137,7 +137,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6 col-md-push-6">
-                        <div id="pass_new_laws_button" class="btn btn-action form-control">Apply New Budget</div>
+                        <div id="pass_new_budget_button" class="btn btn-action form-control">Apply New Budget</div>
                     </div>
                 </div>
             </form>

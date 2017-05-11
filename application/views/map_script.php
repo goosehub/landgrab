@@ -201,15 +201,15 @@ function initMap() {
   }
 
   // 
-  // Apply new laws
+  // Apply new budget
   // 
   
-  $('#pass_new_laws_button').click(function(event) {
+  $('#pass_new_budget_button').click(function(event) {
     $.ajax({
-      url: "<?=base_url()?>user/law_form",
+      url: "<?=base_url()?>budget_form",
       type: 'POST',
       dataType: 'json',
-      data: $('#law_form').serialize(),
+      data: $('#budget_form').serialize(),
       success: function(data) {
         // Handle error
         if (data['error']) {
