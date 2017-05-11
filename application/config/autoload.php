@@ -12,7 +12,7 @@ $autoload['model'] = array();
 
 // Return if this is dev
 function is_dev() {
-    if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === 'dev.foobar.com/landgrab') {
+    if ($_SERVER['HTTP_HOST'] === 'localhost') {
         return true;
     }
     return false;
