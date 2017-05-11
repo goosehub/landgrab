@@ -20,13 +20,10 @@ class Game extends CI_Controller {
     protected $autocracy_key = 3;
 
     // Balance Constants
-    protected $democracy_min_support = 0;
     protected $democracy_tax_weariness_nerf = 2;
     protected $democracy_corruption_rate = 5;
-    protected $oligarchy_min_support = 0;
     protected $oligarchy_tax_weariness_nerf = 3;
     protected $oligarchy_corruption_rate = 25;
-    protected $autocracy_min_support = 0;
     protected $autocracy_tax_weariness_nerf = 0;
     protected $autocracy_corruption_rate = 60;
     protected $weariness_increase_land_count = 300;
@@ -127,11 +124,8 @@ class Game extends CI_Controller {
         $data['next_reset'] = $next_reset_dictionary[$world['id']];
 
         // Set public constants
-        $data['democracy_min_support'] = $this->democracy_min_support;
         $data['democracy_corruption_rate'] = $this->democracy_corruption_rate;
-        $data['oligarchy_min_support'] = $this->oligarchy_min_support;
         $data['oligarchy_corruption_rate'] = $this->oligarchy_corruption_rate;
-        $data['autocracy_min_support'] = $this->autocracy_min_support;
         $data['autocracy_corruption_rate'] = $this->autocracy_corruption_rate;
         $data['weariness_increase_land_count'] = $this->weariness_increase_land_count;
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
@@ -208,16 +202,20 @@ class Game extends CI_Controller {
         $account['stats']['corruption_rate'] = 100;
         if ($account['government'] == $this->democracy_key) {
             $account['stats']['corruption_rate'] = $this->democracy_corruption_rate;
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_weariness_nerf);
         }
         // Oligarchy Taxes
         else if ($account['government'] == $this->oligarchy_key) {
             $account['stats']['corruption_rate'] = $this->oligarchy_corruption_rate;
+            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_weariness_nerf);
         }
         // Autocracy Taxes
         else if ($account['government'] == $this->autocracy_key) {
             $account['stats']['corruption_rate'] = $this->autocracy_corruption_rate;
+            $tax_weariness = $this->autocracy_tax_weariness_nerf;
         }
 
+        // Calculated Stats
         $account['stats']['tax_income_total'] = $this->get_percent_of($account['stats']['gdp'], $account['tax_rate']);
         $account['stats']['corruption_total'] = $this->get_percent_of($account['stats']['tax_income_total'], $account['stats']['corruption_rate']);
         $account['stats']['effective_tax_rate'] = $account['tax_rate'] - $account['stats']['corruption_rate'];
@@ -227,35 +225,17 @@ class Game extends CI_Controller {
         $account['stats']['entitlements'] = $this->get_percent_of($account['stats']['tax_income'], $account['entitlements_budget']);
         $account['stats']['treasury_after'] = $account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury'];
         $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
-
-        if ($account['government'] == $this->democracy_key) {
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_weariness_nerf);
-        }
-        else if ($account['government'] == $this->oligarchy_key) {
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_weariness_nerf);
-        }
-        else if ($account['government'] == $this->autocracy_key) {
-            $tax_weariness = $this->autocracy_tax_weariness_nerf;
-        }
-
         $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_weariness + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['weariness'] = $account['weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
 
         // See if functioning
         $account['functioning'] = true;
-        if ($account['government'] == $this->democracy_key && $account['stats']['support'] < $this->democracy_min_support) {
-            $account['functioning'] = false;
-        }
-        else if ($account['government'] == $this->oligarchy_key && $account['stats']['support'] < $this->oligarchy_min_support) {
-            $account['functioning'] = false;
-        }
-        else if ($account['government'] == $this->autocracy_key && $account['stats']['support'] < $this->autocracy_min_support) {
+        if ($account['stats']['support'] < 0) {
             $account['functioning'] = false;
         }
 
         // Get Username
-
         $user = $this->user_model->get_user($account['user_key']);
         $account['username'] = $user['username'];
 
@@ -310,7 +290,7 @@ class Game extends CI_Controller {
             }
         }
 
-        // weariness
+        // Weariness
         $land_square['weariness'] = 0;
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
@@ -450,7 +430,6 @@ class Game extends CI_Controller {
         $land_type = $this->input->post('land_type');
         $account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $account = $this->get_full_account($account);
-        $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
         $account_key = $account['id'];
         $color = $account['color'];
         $content = $this->input->post('content');
@@ -533,7 +512,7 @@ class Game extends CI_Controller {
         }
 
         // Prevent attacking without political support
-        if ($action_type != 'update' && !$account['functioning'] && $account['tutorial'] >= 2 && $form_type != $this->village_key) {
+        if ($action_type != 'update' && $account['stats']['support'] < 0 && $account['tutorial'] >= 2 && $form_type != $this->village_key) {
             echo '{"status": "fail", "message": "Your political support is too low for your government to function."}';
             return false;
         }

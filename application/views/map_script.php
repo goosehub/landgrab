@@ -84,17 +84,16 @@ function initMap() {
 
   var map = new google.maps.Map(document.getElementById('map'), {
     // Zoom on land if set as parameter
-    <?php if ( isset($_GET['land']) ) { 
-      $land_coords_split = explode(',', $_GET['land']); ?>
+    <?php if ( isset($_GET['land']) ) { $land_coords_split = explode(',', $_GET['land']); ?>
 
-    // Logic to center isn't  understand, but results in correct behavior in all 4 corners
+    // Logic to center isn't understood, but results in correct behavior in all 4 corners
     center: {
       lat: <?php echo $land_coords_split[0] + ($world['land_size'] / 2); ?>,
       lng: <?php echo $land_coords_split[1] - ($world['land_size'] / 2); ?>
     },
 
     // Zoom should be adjusted based on box size
-    zoom: 7,
+    zoom: 6,
     <?php } else { ?>
 
     // Map center is slightly north centric
@@ -924,6 +923,8 @@ function initMap() {
     $('.culture_span').html(number_format(account['stats']['culture']));
     $('.gdp_span').html(number_format(account['stats']['gdp']));
     $('.building_maintenance_span').html(number_format(account['stats']['building_maintenance']));
+    $('.military_span').html(number_format(account['military']));
+    $('.military_stats_span').html(number_format(account['stats']['military']));
     $('.military_spending_span').html(number_format(account['stats']['military_spending']));
     $('.military_total_span').html(number_format(account['stats']['military_total']));
     $('.entitlements_span').html(number_format(account['stats']['entitlements']));
