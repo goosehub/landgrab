@@ -42,6 +42,9 @@
     <link rel="image_src" href="<?=base_url()?>resources/logos/hero.jpg" / >
     <meta property='og:image' content='<?=base_url()?>resources/logos/hero.jpg'/>
 
+    <!-- Thumbnail -->
+    <meta property="og:image" content="<?=base_url()?>resources/img/original.png" />
+
   <!-- Local Style -->
   <link href="<?=base_url()?>resources/style.css?<?php echo time(); ?>" rel="stylesheet" type="text/css">
 
@@ -74,7 +77,7 @@
   <!-- Image for crawlers -->
   <h1 style="display: none;">Landgrab - Google Maps Web Game</h1>
   <h2 style="display: none;">
-    <img id="crawler_image" src="<?=base_url()?>resources/logos/hero.jpg" alt="Landgrab"/>
+    <img id="crawler_image" src="<?=base_url()?>resources/logos/original.jpg" alt="Landgrab"/>
   </h2>
 
   <!-- Map Element -->
