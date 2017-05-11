@@ -462,7 +462,7 @@ function initMap() {
         $('#lands_needed_for_upgrade').show();
       }
 
-      if (d['account']['stats'].treasury_after <= building_minimum) {
+      if (d['account']['stats'].treasury_after < building_minimum) {
         $('#land_form_low_treasury').show();
         $('.effect_info_item').hide();
         if (d['land_type'] == land_type_key_dictionary['village']) {
