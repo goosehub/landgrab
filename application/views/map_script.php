@@ -501,7 +501,6 @@ function initMap() {
         }
         // And claimed
         else {
-          console.log(account);
           if (account['tutorial'] < 2) {
             $('#land_form_submit_attack_tutorial').show();
           }

@@ -1,3 +1,10 @@
+<!-- Info tag -->
+<div id="info_tag">
+    <strong>
+    <a href="https://www.reddit.com/r/LandGrab/comments/6ah9s7/balance_patch_20170510/" target="_blank">Balance Patch 2017-05-10</a>
+    </strong>
+</div>
+
 <!-- Tutorial Block -->
 <div id="tutorial_block">
     <span class="exit_tutorial glyphicon glyphicon-remove-sign pull-right" aria-hidden="true"></span>
@@ -244,10 +251,4 @@
             <button class="login_button btn btn-info form-control">Login</button>
         </div>
     </div>
-</div>
-
-<div id="info_tag">
-    <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/6acj7p/balance_tweak/" target="_blank">Balance Tweak</a>
-    </strong>
 </div>

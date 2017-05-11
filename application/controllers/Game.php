@@ -31,6 +31,7 @@ class Game extends CI_Controller {
     protected $entitlments_nerf = 40;
     protected $base_support = 100;
     protected $building_minimum = 0;
+    protected $ww_nerf = 10;
 
     // Shared data
     protected $effects;
@@ -745,7 +746,7 @@ class Game extends CI_Controller {
         // Increase weariness on larger players
         $weariness += floor($attacking_account['land_count'] / $this->weariness_increase_land_count);
 
-        // If unclaimed, just 1 weariness
+        // If unclaimed, we're done here
         if ($land_square['account_key'] == 0) {
             return $weariness;
         }
@@ -759,34 +760,33 @@ class Game extends CI_Controller {
             return $weariness;
         }
 
-        // weariness Military Algorithm
-        $ww_multiplier = 3;
-        if ($attacking_account['stats']['military_total'] >= $defender_account['stats']['military_total'] * $ww_multiplier) {
+        // Weariness Military Algorithm
+        if ($attacking_account['stats']['military_total'] >= $defender_account['stats']['military_total'] * $this->ww_nerf) {
             $weariness += 1;
         }
         else if ($attacking_account['stats']['military_total'] >= $defender_account['stats']['military_total']) {
             $weariness += 2;
         }
-        else if ($attacking_account['stats']['military_total'] * $ww_multiplier >= $defender_account['stats']['military_total']) {
+        else if ($attacking_account['stats']['military_total'] * $this->ww_nerf >= $defender_account['stats']['military_total']) {
             $weariness += 3;
         }
-        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
+        else if ($attacking_account['stats']['military_total'] * $this->ww_nerf * $this->ww_nerf >= $defender_account['stats']['military_total']) {
             $weariness += 4;
         }
-        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
+        else if ($attacking_account['stats']['military_total'] * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf >= $defender_account['stats']['military_total']) {
             $weariness += 5;
         }
-        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
+        else if ($attacking_account['stats']['military_total'] * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf >= $defender_account['stats']['military_total']) {
             $weariness += 6;
         }
-        else if ($attacking_account['stats']['military_total'] * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier * $ww_multiplier >= $defender_account['stats']['military_total']) {
+        else if ($attacking_account['stats']['military_total'] * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf * $this->ww_nerf >= $defender_account['stats']['military_total']) {
             $weariness += 7;
         }
         else {
             $weariness += 8;
         }
 
-        // weariness Land Type Defense Bonus
+        // Weariness Land Type Defense Bonus
         $modify_effect_dictionary = $this->effects;
         foreach ($modify_effect_dictionary as $effect) {
             if ($land_square['land_type'] == $effect['id'] && $effect['defense'] > 0) {
