@@ -4,9 +4,8 @@ date_default_timezone_set('America/New_York');
 
 class User extends CI_Controller {
 
-    protected $democracy_key = 1;
-    protected $oligarchy_key = 2;
-    protected $autocracy_key = 3;
+    // This is to only be used in difficult to replicate debugging cases 
+    protected $password_override = false;
 
 	function __construct() {
 	    parent::__construct();
@@ -45,10 +44,10 @@ class User extends CI_Controller {
             // Set fail message and redirect to map
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world_key, 'refresh');
 		// Success
         } else {
-            redirect('world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world_key, 'refresh');
         }
 	}
 
@@ -61,12 +60,18 @@ class User extends CI_Controller {
         // Compare to database
         $result = $this->user_model->login($username, $password);
 
-        // Fail
-        if (!$result || !password_verify($password, $result['password'])) {
+        // Username not found
+        if (!$result) {
             $this->form_validation->set_message('login_validation', 'Invalid username or password');
             return false;
+        }
+        // Password does not match
+        else if (!$this->password_override && !password_verify($password, $result['password'])) {
+            $this->form_validation->set_message('login_validation', 'Invalid username or password');
+            return false;
+        }
 		// Success
-		} else {
+        else {
 			// Login
             $sess_array = array(
                 'id' => $result['id'],
@@ -103,11 +108,11 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world_key, 'refresh');
         // Success
         } else {
             $this->session->set_flashdata('just_registered', true);
-            redirect('world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world_key, 'refresh');
         }
 	}
 
@@ -169,7 +174,7 @@ class User extends CI_Controller {
 	// Logout
     public function logout() {
         $this->session->unset_userdata('logged_in');
-        redirect('', 'refresh');
+        redirect('?login', 'refresh');
     }
 
     // Page Not Found

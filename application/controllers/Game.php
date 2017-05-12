@@ -507,7 +507,7 @@ class Game extends CI_Controller {
         }
 
         // Prevent new players from taking towns or larger
-        if ($action_type === 'attack' && $account['land_count'] < $this->sniper_land_minimum && $land_square['land_type'] >= $this->metropolis_key) {
+        if ($action_type === 'attack' && $account['land_count'] < $this->sniper_land_minimum && (int) $land_square['land_type'] === $this->metropolis_key) {
             echo '{"status": "fail", "message": "You must have at least ' . $this->sniper_land_minimum . ' lands to take a Metropolis"}';
             return false;
         }
