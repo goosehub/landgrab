@@ -157,8 +157,8 @@
                 <li>Revenue is what's left over from your budgets and buildings</li>
                 <li>Revenue doesn't increase over time, but is instead a static number</li>
                 <li>If you get stuck in debt or in low support, consider adjusting your taxes or removing buildings</li>
-                <li>The player with the largest population gets a 2X Defensive Bonus</li>
-                <li>The player with the most culture gets a 2X Offensive Bonus</li>
+                <li>The player with the largest population gets a 50% Defensive Bonus</li>
+                <li>The player with the most culture gets a 50% Offensive Bonus</li>
                 <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
                 <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>

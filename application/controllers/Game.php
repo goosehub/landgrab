@@ -33,6 +33,8 @@ class Game extends CI_Controller {
     protected $base_support = 100;
     protected $building_minimum = 0;
     protected $ww_nerf = 10;
+    protected $defence_bonus = 1.5;
+    protected $attack_bonus = 1.5;
 
     // Shared data
     protected $effects;
@@ -796,13 +798,13 @@ class Game extends CI_Controller {
         // Population Defence Bonus
         $highest_population_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'population');
         if ($defender_account['id'] === $highest_population_account_key) {
-            $weariness = $weariness * 2;
+            $weariness = floor($weariness * $this->defence_bonus);
         }
 
         // Culture Attack Bonus
         $highest_culture_account_key = $this->get_highest_account_key_from_leaderboard_stat($leaderboard, 'culture');
         if ($attacking_account['id'] === $highest_culture_account_key) {
-            $weariness = floor($weariness / 2);
+            $weariness = floor($weariness / $this->attack_bonus);
         }
 
         return $weariness;
