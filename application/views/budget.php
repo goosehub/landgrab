@@ -30,13 +30,13 @@
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">
-                        <strong class="budget_info_item_label">Military From Buildings: </strong>
+                        <strong class="budget_info_item_label">Military Bonus: </strong>
                         <strong class="budget_info_value text-danger">
                             $<span class="military_stats_span"><?php echo number_format($account['stats']['military']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">
-                        <strong class="budget_info_item_label">Weariness: </strong>
+                        <strong class="budget_info_item_label">War Weariness: </strong>
                         <strong class="budget_info_value text-red">
                             <span class="weariness_span"><?php echo number_format($account['stats']['weariness']); ?></span>
                         </strong><br>

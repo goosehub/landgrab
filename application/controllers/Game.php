@@ -20,13 +20,14 @@ class Game extends CI_Controller {
     protected $autocracy_key = 3;
 
     // Balance Constants
-    protected $democracy_tax_weariness_nerf = 2;
+    protected $democracy_tax_weariness_nerf = 3;
     protected $democracy_corruption_rate = 5;
-    protected $oligarchy_tax_weariness_nerf = 3;
-    protected $oligarchy_corruption_rate = 25;
+    protected $oligarchy_tax_weariness_nerf = 2;
+    protected $oligarchy_corruption_rate = 20;
     protected $autocracy_tax_weariness_nerf = 0;
-    protected $autocracy_corruption_rate = 60;
+    protected $autocracy_corruption_rate = 50;
     protected $weariness_increase_land_count = 300;
+    protected $tax_weariness_nerf = 2;
     protected $sniper_land_minimum = 100;
     protected $entitlments_nerf = 40;
     protected $base_support = 100;
@@ -112,13 +113,15 @@ class Game extends CI_Controller {
         }
 
         // Get last winner
-        $data['last_winner_account'] = $this->user_model->get_account_by_id($world['last_winner_account_key']);
-        if (!$data['last_winner_account']) {
-            $data['last_winner_account']['username'] = 'No Winner';
-            $data['last_winner_account']['leader_portrait'] = 'default_leader_portrait.png';
-            $data['last_winner_account']['nation_flag'] = 'default_nation_flag.png';
-        } else {
-            $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
+        if (!isset($_GET['json'])) {
+            $data['last_winner_account'] = $this->user_model->get_account_by_id($world['last_winner_account_key']);
+            if (!$data['last_winner_account']) {
+                $data['last_winner_account']['username'] = 'No Winner';
+                $data['last_winner_account']['leader_portrait'] = 'default_leader_portrait.png';
+                $data['last_winner_account']['nation_flag'] = 'default_nation_flag.png';
+            } else {
+                $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
+            }
         }
 
         $next_reset_dictionary = $this->next_reset_dictionary();
@@ -201,17 +204,17 @@ class Game extends CI_Controller {
 
         // Democracy Taxes
         $account['stats']['corruption_rate'] = 100;
-        if ($account['government'] == $this->democracy_key) {
+        if ((int)$account['government'] === $this->democracy_key) {
             $account['stats']['corruption_rate'] = $this->democracy_corruption_rate;
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->democracy_tax_weariness_nerf);
+            $tax_weariness = $this->tax_weariness_calculate($account['tax_rate'], $this->democracy_tax_weariness_nerf);
         }
         // Oligarchy Taxes
-        else if ($account['government'] == $this->oligarchy_key) {
+        else if ((int)$account['government'] === $this->oligarchy_key) {
             $account['stats']['corruption_rate'] = $this->oligarchy_corruption_rate;
-            $tax_weariness = $this->increasing_returns_algorithm($account['tax_rate'], $this->oligarchy_tax_weariness_nerf);
+            $tax_weariness = $this->tax_weariness_calculate($account['tax_rate'], $this->oligarchy_tax_weariness_nerf);
         }
         // Autocracy Taxes
-        else if ($account['government'] == $this->autocracy_key) {
+        else if ((int)$account['government'] === $this->autocracy_key) {
             $account['stats']['corruption_rate'] = $this->autocracy_corruption_rate;
             $tax_weariness = $this->autocracy_tax_weariness_nerf;
         }
@@ -225,7 +228,7 @@ class Game extends CI_Controller {
         $account['stats']['military_total'] = $account['stats']['military_spending'] + $account['stats']['military'];
         $account['stats']['entitlements'] = $this->get_percent_of($account['stats']['tax_income'], $account['entitlements_budget']);
         $account['stats']['treasury_after'] = $account['stats']['tax_income'] - $account['stats']['military_spending'] - $account['stats']['entitlements'] + $account['stats']['treasury'];
-        $account['stats']['entitlements_effect'] = $this->simple_nerf_algorithm($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
+        $account['stats']['entitlements_effect'] = $this->entitlements_effect_calculate($account['stats']['effective_tax_rate'] * $account['entitlements_budget'], $this->entitlments_nerf);
         $account['stats']['support'] = $this->base_support - $account['weariness'] - $tax_weariness + $account['stats']['entitlements_effect'] + $account['stats']['support'];
         $account['stats']['weariness'] = $account['weariness'];
         $account['stats']['building_maintenance'] = abs($account['stats']['treasury']);
@@ -952,7 +955,7 @@ class Game extends CI_Controller {
         return $leaders;
     }
 
-    public function simple_nerf_algorithm($value, $nerf)
+    public function entitlements_effect_calculate($value, $nerf)
     {
         $value = $value === 0 ? 1 : $value;
         $nerf = $nerf === 0 ? 1 : $nerf;
@@ -960,11 +963,16 @@ class Game extends CI_Controller {
     }
 
     // Creates expodential returns
-    public function increasing_returns_algorithm($value, $nerf)
+    public function tax_weariness_calculate($value, $boost)
     {
+        // This complicated algo ensures a few things
+        // That higher value always causes a higher result
+        // That higher boost always causes a higher result
+        // That values of 20-60 cause reasonable amounts of weariness depending on boost between 1-4
         $value = $value === 0 ? 1 : $value;
-        $nerf = $nerf === 0 ? 1 : $nerf;
-        return floor(pow($value, $nerf) / pow($nerf * $nerf, $nerf));
+        $boost = $boost === 0 ? 1 : $boost;
+        $original_algo = floor( pow($value, $boost) / pow( $boost * $boost, $boost ) );
+        return floor( ($original_algo + ($value * $boost) ) / $this->tax_weariness_nerf );
     }
 
     public function get_percent_of($number, $percentage) {
