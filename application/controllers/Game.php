@@ -389,7 +389,7 @@ class Game extends CI_Controller {
     {
         // If user not logged in, return with fail
         if (!$this->session->userdata('logged_in')) {
-            echo '{"status": "fail", "message": "User not logged in"}';
+            echo '{error": "User not logged in"}';
             return false;
         }
 
@@ -401,18 +401,9 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('land_name', 'Land Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('content', 'Content', 'trim|max_length[1000]');
         
-        // Fail
+        // Fail Basic Validation
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
-            return false;
-        }
-
-        // User Information
-        if (!$this->session->userdata('logged_in')) {
-            $this->form_validation->set_message('land_form_validation', 'You are not currently logged in. Please log in again.');
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
+            echo '{"error": "' . trim(strip_tags(validation_errors())) . '"}';
             return false;
         }
 
@@ -440,8 +431,7 @@ class Game extends CI_Controller {
         
         // Fail
         if (!$land_form_validation) {
-            $this->session->set_flashdata('failed_form', 'error_block');
-            $this->session->set_flashdata('validation_errors', validation_errors());
+            // Error message echoed by above function
             return false;
         }
 

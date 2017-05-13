@@ -40,21 +40,24 @@ class Chat extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key', 'trim|required|integer|max_length[10]|callback_new_chat_validation');
         $this->form_validation->set_rules('chat_input', 'Chat Message', 'trim|required|max_length[250]');
-        // $this->form_validation->set_rules('token', 'Token', 'trim|max_length[1000]');
 
+        // Fail Validation
         if ($this->form_validation->run() == FALSE) {
+            echo trim(strip_tags(validation_errors()));
             return false;
         }
+
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;
         if (!$this->session->userdata('logged_in')) {
+            echo 'You are not logged in';
             return false;
         }
         $log_check = $data['log_check'] = true;
         $session_data = $this->session->userdata('logged_in');
         $user_id = $data['user_id'] = $session_data['id'];
         $data['user'] = $this->user_model->get_user($user_id);
-        if (! isset($data['user']['username']) ) {
+        if (!isset($data['user']['username']) ) {
             redirect('user/logout', 'refresh');
             return false;
         }
@@ -80,9 +83,11 @@ class Chat extends CI_Controller {
             $log_check = $data['log_check'] = true;
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];
-        } else {
+        }
+        else {
             return false;
         }
+        
         // Limit number of new chats in a timespan
         $chat_limit_amount = 8;
         $chat_limit_length = 60;
