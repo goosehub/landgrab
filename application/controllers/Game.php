@@ -544,14 +544,15 @@ class Game extends CI_Controller {
         // Update
         else if ($action_type === 'update') {
             $land_type = $land_square['land_type'];
-        // Attack or claim
         } 
+        // Attack or claim
         else if ($action_type === 'attack' || $action_type === 'claim') {
             $land_type = $this->village_key;
             $land_name = $account['nation_name'];
             $content = '';
             if ($land_square['capitol']) {
                 $this->game_model->remove_all_embassy_of_land($land_key);
+                $this->game_model->remove_modifier_from_land($land_key, $this->embassy_key, 9999);
                 $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
             }
             if ($land_square['land_type'] != $this->unclaimed_key || $land_square['land_type'] != $this->village_key) {
@@ -866,6 +867,9 @@ class Game extends CI_Controller {
     {
         $highest_account_key = 0;
         $highest_of_value = 0;
+        if (empty($leaders)) {
+            return 0;
+        }
         foreach ($leaders as $leader) {
             if ($leader['stats'][$key] >= $highest_of_value) {
                 $highest_of_value = $leader['stats'][$key];

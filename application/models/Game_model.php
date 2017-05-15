@@ -437,7 +437,7 @@ Class game_model extends CI_Model
     $this->db->where('modify_effect_key', $modify_effect_key);
     $this->db->limit($limit);
     $this->db->delete('land_modifier');
-}
+ }
  // Remove all modifiers from land
  function remove_modifiers_from_land($land_key)
  {

@@ -34,7 +34,7 @@ class Cron extends CI_Controller {
       // $world_reset_frequency[1] = '* * * * *';
       $world_reset_frequency[1] = '0 20 1,15 * *';
       $world_reset_frequency[2] = '0 20 1 * *';
-      $world_reset_frequency[3] = '* 20 * * 0';
+      $world_reset_frequency[3] = '0 20 * * 0';
       $world_reset_frequency[4] = '0 20 * * *';
       $world_reset_frequency[5] = '0 */4 * * *';
 
