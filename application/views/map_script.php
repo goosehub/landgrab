@@ -47,7 +47,7 @@ var player_land_count = <?php echo $account['land_count']; ?>;
 // Set maps variables
 var map_update_interval = <?php echo $update_timespan; ?>;
 var building_minimum = <?php echo $building_minimum; ?>;
-var leaderboard_update_interval_minutes = <?php echo $leaderboard_update_interval_minutes; ?> * 60 * 1000;
+var leaderboard_update_interval = <?php echo $leaderboard_update_interval_minutes; ?> * 60 * 1000;
 var infoWindow = false;
 var boxes = [];
 
@@ -808,8 +808,7 @@ function initMap() {
   leaderboard_bonus_text();
   setInterval(function() {
     update_leaderboard_call();
-    leaderboard_bonus_text();
-  }, leaderboard_update_interval_minutes);
+  }, leaderboard_update_interval);
 
   function leaderboard_bonus_text() {
     // Population defensive bonus
@@ -825,7 +824,6 @@ function initMap() {
       }
     });
     if (pop_leader) {
-      console.log('marco');
       pop_leader.html(pop_leader.html() + '<br><small class="text-info">50% Defensive Bonus</small>');
     }
 
@@ -1011,6 +1009,7 @@ function initMap() {
       rank++;
     });
     $('#leaderboard_table tbody').html(html);
+    leaderboard_bonus_text();
     return true;
   }
 
