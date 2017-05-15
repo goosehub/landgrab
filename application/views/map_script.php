@@ -817,7 +817,7 @@ function initMap() {
     var pop_leader = false;
     var this_value = 0;
     $('#leaderboard_table tbody tr td:nth-child(' + pop_column + ')').each(function(){
-      this_value = parseInt($(this).text().replace(',', ''));
+      this_value = parseInt($(this).text().replace(/,/g, ''));
       if (this_value >= highest_pop) {
         highest_pop = this_value;
         pop_leader = $(this);
@@ -833,7 +833,7 @@ function initMap() {
     var culture_leader = false;
     var this_value = 0;
     $('#leaderboard_table tbody tr td:nth-child(' + culture_column + ')').each(function(){
-      this_value = parseInt($(this).text().replace(',', ''));
+      this_value = parseInt($(this).text().replace(/,/g, ''));
       if (this_value >= highest_culture) {
         highest_culture = this_value;
         culture_leader = $(this);
