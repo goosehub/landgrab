@@ -805,10 +805,46 @@ function initMap() {
     get_map_update(world_key);
   }, map_update_interval);
 
+  leaderboard_bonus_text();
   setInterval(function() {
     update_leaderboard_call();
+    leaderboard_bonus_text();
   }, leaderboard_update_interval_minutes);
 
+  function leaderboard_bonus_text() {
+    // Population defensive bonus
+    var pop_column = 5;
+    var highest_pop = 0;
+    var pop_leader = false;
+    var this_value = 0;
+    $('#leaderboard_table tbody tr td:nth-child(' + pop_column + ')').each(function(){
+      this_value = parseInt($(this).text().replace(',', ''));
+      if (this_value >= highest_pop) {
+        highest_pop = this_value;
+        pop_leader = $(this);
+      }
+    });
+    if (pop_leader) {
+      console.log('marco');
+      pop_leader.html(pop_leader.html() + '<br><small class="text-info">50% Defensive Bonus</small>');
+    }
+
+    // Culture Attacking bonus
+    var culture_column = 6;
+    var highest_culture = 0;
+    var culture_leader = false;
+    var this_value = 0;
+    $('#leaderboard_table tbody tr td:nth-child(' + culture_column + ')').each(function(){
+      this_value = parseInt($(this).text().replace(',', ''));
+      if (this_value >= highest_culture) {
+        highest_culture = this_value;
+        culture_leader = $(this);
+      }
+    });
+    if (culture_leader) {
+      culture_leader.html(culture_leader.html() + '<br><small class="text-purple">50% Attacking Bonus</small>');
+    }
+  }
 
   // Get single land ajax
   function get_map_update(world_key) {
