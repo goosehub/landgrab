@@ -138,9 +138,9 @@ Class user_model extends CI_Model
     'last_load' => date('Y-m-d H:i:s'),
     'active_account' => 1,
     'tutorial' => 0,
-    'tax_rate' => 0,
-    'military_budget' => 0,
-    'entitlements_budget' => 0,
+    'tax_rate' => 15,
+    'military_budget' => 15,
+    'entitlements_budget' => 15,
     'weariness' => 0,
     );
     $this->db->insert('account', $data);

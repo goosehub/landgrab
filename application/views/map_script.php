@@ -219,7 +219,7 @@ function initMap() {
         if (account && account['tutorial'] < 3) {
           $('#tutorial_block').fadeIn();
           $('#tutorial_title').html('Manifest Destiny');
-          $('#tutorial_text').html('Conquer the world');
+          $('#tutorial_text').html('Conquer the world. War Weariness will accumulate as you acquire territory and will go down over time.');
           account['tutorial'] = 3;
         }
         // Do update
@@ -711,7 +711,7 @@ function initMap() {
         $('#tutorial_block').fadeOut(1000, function() {
           $('#tutorial_block').fadeIn();
           $('#tutorial_title').html('We The People');
-          $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget');
+          $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget. Read the useful info section to learn gameplay mechanics.');
           $('.stat_dropdown').click();
           account['tutorial'] = 2;
         });
@@ -731,7 +731,7 @@ function initMap() {
       $('#tutorial_block').fadeOut(1000, function() {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('Manifest Destiny');
-        $('#tutorial_text').html('Conquer the world');
+        $('#tutorial_text').html('Conquer the world. War Weariness will accumulate as you acquire territory and will go down over time.');
       });
     }
     if (account['tutorial'] === '4' && (land_form_type === 'attack' || land_form_type === 'claim')) {

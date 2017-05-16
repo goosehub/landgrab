@@ -7,7 +7,8 @@
 ==========================================================================================
 
 High Priority
-    See Notes Todo Above
+    FEATURE: Better tutorial
+    BUG: Embassy on non Capitol
 
 Moderate Priority
     FEATURE: Private chat
