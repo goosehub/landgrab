@@ -12,7 +12,7 @@ $autoload['model'] = array();
 
 // Return if this is dev
 function is_dev() {
-    if ($_SERVER['HTTP_HOST'] === 'localhost') {
+    if (isset($_SERVER['SERVER_ADDR']) && ($_SERVER['SERVER_ADDR'] === '127.0.0.1' || $_SERVER['SERVER_ADDR'] === '::1') ) {
         return true;
     }
     return false;

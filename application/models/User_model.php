@@ -110,7 +110,8 @@ Class user_model extends CI_Model
         'email' => $email,
         'facebook_id' => $facebook_id,
         'ip' => $ip,
-        'ab_test' => $ab_test
+        'ab_test' => $ab_test,
+        'modified' => date('Y-m-d H:i:s', time()),
         );
         $this->db->insert('user', $data);
 
@@ -142,6 +143,7 @@ Class user_model extends CI_Model
     'military_budget' => 15,
     'entitlements_budget' => 15,
     'weariness' => 0,
+    'modified' => date('Y-m-d H:i:s', time()),
     );
     $this->db->insert('account', $data);
 

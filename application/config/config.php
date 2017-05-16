@@ -26,7 +26,8 @@ $config['sess_save_path'] = sys_get_temp_dir();
 $allowed_domains = array(
     'localhost/landgrab',
     'localhost/landgrab.xyz',
-    'landgrab.xyz'
+    'landgrab.xyz',
+    'dev.foobar.com',
     );
 $default_domain  = 'localhost/landgrab.xyz';
 
@@ -40,6 +41,7 @@ if ( ! empty($_SERVER['HTTPS'])) {
 } else {
     $config['base_url'] = 'http://'.$domain;
 }
+$config['base_url'] = 'http://dev.foobar.com/personal/landgrab';
 
 /*
 |--------------------------------------------------------------------------

@@ -149,6 +149,7 @@ CREATE TABLE `modify_effect` (
   `is_land_upgrade` int(1) NOT NULL,
   `is_embassy` int(1) NOT NULL,
   `population` int(11) NOT NULL,
+  `culture` int(11) NOT NULL,
   `gdp` int(11) NOT NULL,
   `treasury` int(11) NOT NULL,
   `defense` int(11) NOT NULL,
@@ -170,7 +171,7 @@ CREATE TABLE `user` (
   `facebook_id` int(16) NOT NULL,
   `email` varchar(256) NOT NULL,
   `ip` varchar(64) NOT NULL,
-  `ab_test` timestamp NOT NULL DEFAULT '',
+  `ab_test` varchar(256) NOT NULL DEFAULT '',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
