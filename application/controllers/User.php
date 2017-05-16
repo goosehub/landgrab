@@ -7,6 +7,9 @@ class User extends CI_Controller {
     // This is to only be used in difficult to replicate debugging cases 
     protected $password_override = false;
 
+    // Makes it so passwords will be generated if left empty
+    protected $password_optional = true;
+
 	function __construct() {
 	    parent::__construct();
 	    $this->load->model('user_model', '', TRUE);
@@ -87,9 +90,7 @@ class User extends CI_Controller {
 	{
         // Optional password
         $matches = 'matches[confirm]|';
-
-        $password_optional = false;
-        if ($password_optional) {
+        if ($this->password_optional) {
             if (!isset($_POST['password']) || $_POST['password'] === '') {
                 $random_password = mt_rand(10000000,99999999); ;
                 $_POST['password'] = $random_password;

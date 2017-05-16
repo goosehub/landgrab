@@ -219,12 +219,13 @@
         <label for="input_username">Username</label>
         <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
       </div>
+      <p class="text-center">Password only needed to save progress</p>
       <div class="row">
           <div class="col-md-6">
               <div class="form-group">
                 <label for="input_password">
                     Password
-                    <!-- <small>(Optional)</small> -->
+                    <small>(Optional)</small>
                 </label>
                 <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
               </div>
@@ -233,7 +234,6 @@
               <div class="form-group">
                 <label for="input_confirm">
                     Confirm
-                    <!-- <small>(Optional)</small> -->
                 </label>
                 <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
               </div>
