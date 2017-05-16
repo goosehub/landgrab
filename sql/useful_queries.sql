@@ -7,6 +7,10 @@ WHERE lm.created >= ( CURDATE() - INTERVAL 3 DAY )
 GROUP BY `modify_effect_key`
 ORDER BY count DESC 
 
+-- Users currently on
+SELECT * FROM `account`
+WHERE `last_load` > DATE_SUB(NOW(), INTERVAL 3 MINUTE);
+
 -- Most common government
 SELECT `government` , COUNT(*) AS count
 FROM  `account`

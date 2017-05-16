@@ -343,10 +343,11 @@ class Game extends CI_Controller {
                 // Filter tags except img with src only
                 function filter(&$value) {
                   // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-                  $value = strip_tags($value, '<img>');
+                  // $value = strip_tags($value, '<img>');
                   // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
-                  $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
-                  $value = nl2br($value);
+                  // $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
+                    $value = strip_tags($value);
+                    $value = nl2br($value);
                 }
                 array_walk_recursive($land_square, "filter");
                 echo json_encode($land_square);

@@ -26,7 +26,7 @@ class Cron extends CI_Controller {
       echo 'Running Cron - ';
 
       // Decrement weariness
-      echo 'Decrementing Universal weariness - ';
+      echo 'Decrementing Universal Weariness - ';
       $weariness_decrease = 5;
       $this->game_model->universal_decrease_weariness($weariness_decrease);
 

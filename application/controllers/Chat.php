@@ -29,7 +29,7 @@ class Chat extends CI_Controller {
         else {
             $chats = $this->chat_model->load_message_by_last_message_id($world_key, $last_message_id);
         }
-
+        
         echo json_encode($chats);
     }
 
