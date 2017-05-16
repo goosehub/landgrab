@@ -99,22 +99,33 @@ Class game_model extends CI_Model
     return true;
  }
  // Remove capitol from account
- function remove_capitol_from_account($account_key)
+ function remove_capitol_from_account($account_key, $capitol_key, $embassy_key)
  {
-    // Find capitol effect
+    // Find capitol square
     $this->db->select('id');
     $this->db->from('land');
     $this->db->where('account_key', $account_key);
     $this->db->where('capitol', 1);
     $query = $this->db->get();
     $capitol_land = $query->result_array();
+
     if ( isset($capitol_land[0]) ) {
         // Remove capitol effect
-        $capitol_key = 10;
         $this->db->where('land_key', $capitol_land[0]['id']);
         $this->db->where('modify_effect_key', $capitol_key);
         $this->db->delete('land_modifier');
+
+        // Remove embassy effect
+        $this->db->where('land_key', $capitol_land[0]['id']);
+        $this->db->where('modify_effect_key', $embassy_key);
+        $this->db->delete('land_modifier');
     }
+
+    // Remove embassy lookup
+    $data = array(
+        'account_key' => $account_key,
+    );
+    $this->db->delete('embassy', $data);
 
     // Remove capitol flag
     $data = array(
@@ -123,6 +134,7 @@ Class game_model extends CI_Model
     );
     $this->db->where('account_key', $account_key);
     $this->db->update('land', $data);
+
     return true;
  }
  // Check if any immediate squares belong to current account

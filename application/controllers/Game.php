@@ -679,7 +679,7 @@ class Game extends CI_Controller {
             $land_type_effect_keys = array($this->unclaimed_key, $this->village_key, $this->town_key, $this->city_key, $this->metropolis_key, $this->fortification_key);
             // Capitol
             if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
-                $this->game_model->remove_capitol_from_account($account_key);
+                $this->game_model->remove_capitol_from_account($account_key, $this->capitol_key, $this->embassy_key);
                 $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
                 break;
