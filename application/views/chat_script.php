@@ -95,7 +95,7 @@
   chat_load(true);
 
   // Chat Loop
-  chat_interval = 3 * 1000;
+  chat_interval = 5 * 1000;
   if (document.location.hostname == "localhost") {
     chat_interval = 10 * 1000;
   }

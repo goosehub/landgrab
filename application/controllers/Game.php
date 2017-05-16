@@ -44,7 +44,7 @@ class Game extends CI_Controller {
     
     // Server Pooling Constants
     protected $leaderboard_update_interval_minutes = 5;
-    protected $map_update_interval = 10;
+    protected $map_update_interval = 60;
     protected $maintenance_flag = false;
 
 	function __construct() {
