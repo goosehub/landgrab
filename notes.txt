@@ -8,6 +8,7 @@
 
 High Priority
     FEATURE: Better tutorial
+    FEATURE: Update leaderboard on view
     BUG: Embassy on non Capitol
 
 Moderate Priority

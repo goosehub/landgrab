@@ -10,6 +10,13 @@ class User extends CI_Controller {
     // Makes it so passwords will be generated if left empty
     protected $password_optional = true;
 
+    // Limits
+    protected $login_limit_window = 20;
+    protected $login_limit = 10;
+
+    // Minutes between registering
+    protected $ip_frequency_register = 30;
+
 	function __construct() {
 	    parent::__construct();
 	    $this->load->model('user_model', '', TRUE);
@@ -25,10 +32,9 @@ class User extends CI_Controller {
 	{
         // Check if this is ip has failed login too many times
         $ip = $_SERVER['REMOTE_ADDR'];
-        $timestamp = date('Y-m-d H:i:s', time() - 20 * 60);
+        $timestamp = date('Y-m-d H:i:s', time() - $this->login_limit_window * 60);
         $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
-        $login_limit = 10;
-        if (count($ip_fails) > $login_limit && !is_dev()) {
+        if (count($ip_fails) > $this->login_limit && !is_dev()) {
             echo 'Too many login attempts from this IP. Please wait 20 minutes.';
             die();
         }
@@ -132,11 +138,10 @@ class User extends CI_Controller {
         // Attempt new user register
         $facebook_id = 0;
         $ip = $_SERVER['REMOTE_ADDR'];
-        $ip_frequency_register = 4;
-        $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register, $ab_test);
+        $user_id = $this->user_model->register($username, $password, $email, $facebook_id, $ip, $this->ip_frequency_register, $ab_test);
         // Fail
         if ($user_id === 'ip_fail') {
-            $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $ip_frequency_register . ' hours');
+            $this->form_validation->set_message('register_validation', 'This IP has already registered in the last ' . $this->ip_frequency_register . ' minutes');
             return false;
         }
         if (!$user_id) {

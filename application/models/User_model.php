@@ -85,7 +85,7 @@ Class user_model extends CI_Model
     $this->db->select('username');
     $this->db->from('user');
     $this->db->where('ip', $ip);
-    $this->db->where('created > NOW() - INTERVAL ' . $ip_frequency_register . ' HOUR');
+    $this->db->where('created > NOW() - INTERVAL ' . $ip_frequency_register . ' MINUTE');
     $this->db->limit(1);
     $query = $this->db->get();
 
