@@ -242,10 +242,6 @@ class Game extends CI_Controller {
             $account['functioning'] = false;
         }
 
-        // Get Username
-        $user = $this->user_model->get_user($account['user_key']);
-        $account['username'] = $user['username'];
-
         // Record account as loaded
         $this->user_model->account_loaded($account['id']);
 
@@ -272,7 +268,6 @@ class Game extends CI_Controller {
 
 	    // Get Land Square
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $land_square['embassy_list'] = false;
@@ -288,7 +283,6 @@ class Game extends CI_Controller {
                 // Unclaim land
                 $this->game_model->update_land_data($land_square['id'], 0, '', '', 1, '#000000');
                 $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-                $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
                 $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
                 $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
                 $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
@@ -315,10 +309,7 @@ class Game extends CI_Controller {
         // Add username to array
         $land_square['username'] = '';
         if ($account) {
-            $owner = $this->user_model->get_user($account['user_key']);
-            if (isset($owner['username']) && isset($land_square['land_name'])) {
-                $land_square['username'] = $owner['username'];
-            }
+            $land_square['username'] = $account['username'];
         }
 
         // Get account
@@ -616,7 +607,6 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account_key = $active_account['id'];
-        $active_user = $this->user_model->get_user($active_account_key);
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
         $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
@@ -948,8 +938,6 @@ class Game extends CI_Controller {
             }
             $leader_account = $this->user_model->get_account_by_id($leader['account_key']);
             $this_leader = $this->get_full_account($leader_account);
-            $leader_user = $this->user_model->get_user($this_leader['user_key']);
-            $this_leader['username'] = $leader_user['username'];
             $leaders[] = $this_leader;
         }
 

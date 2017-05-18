@@ -247,24 +247,7 @@ Class game_model extends CI_Model
     $this->db->where('world_key', $world_key);
     $this->db->update('account');
  }
-
-
-
-
  // Get all modify effects
- function get_effects_of_land($land_key)
- {
-    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
-    $query = $this->db->query("
-        SELECT  *
-        FROM modify_effect
-        LEFT JOIN land_modifier
-        ON modify_effect.id = land_modifier.modify_effect_key
-        WHERE land_modifier.land_key = " . $land_key . ";
-    ");
-    $result = $query->result_array();
-    return $result;
- }
  function get_sum_effects_of_land($land_key)
  {
     $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
