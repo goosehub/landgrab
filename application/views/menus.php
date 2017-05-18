@@ -11,7 +11,7 @@
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
       <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
-      | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['land_count']); ?></span></strong>
+      | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['stats']['land_count']); ?></span></strong>
       | Tax Rate: <strong class="text-yellow"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
       <!-- | Pop: <strong class="text-info"><span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K</strong> -->
       | GDP: <strong class="text-action">$<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M</strong>

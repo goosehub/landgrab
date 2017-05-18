@@ -202,7 +202,6 @@ class Game extends CI_Controller {
     public function get_full_account($account)
     {
         // Get account
-        $account['land_count'] = $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
         $account['stats'] = $this->game_model->get_sum_effects_for_account($account['id']);
 
         // Democracy Taxes
@@ -316,43 +315,42 @@ class Game extends CI_Controller {
         $log_check = false;
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
+            $user_id = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+            $world = $this->game_model->get_world_by_slug_or_id($world_key);
+            $account['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
             $log_check = true;
             // Check if land is in range
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
                 $world['land_size'], $land_square['lat'], $land_square['lng'], false);
         }
 
-        // Echo data to client to be parsed
-	    if (isset($land_square['land_name'])) {
-            // Strip html entities from all untrusted columns, except content as it's stripped on insert
-            $land_square['land_name'] = htmlspecialchars($land_square['land_name']);
-            $land_square['color'] = htmlspecialchars($land_square['color']);
-            $land_square['username'] = htmlspecialchars($land_square['username']);
-            if ($json_output) {
-                // Filter tags except img with src only
-                function filter(&$value) {
-                  // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-                  // $value = strip_tags($value, '<img>');
-                  // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
-                  // $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
-                    $value = strip_tags($value);
-                    $value = nl2br($value);
-                }
-                array_walk_recursive($land_square, "filter");
-                echo json_encode($land_square);
-            }
-            else {
-                return $land_square;
-            }
+        // If none found, default to this
+        if (!isset($land_square['land_name'])) {
+            echo '{"error": "Land not found"}';
+            return false;
         }
-	    // If none found, default to this
+        
+        // Strip html entities from all untrusted columns, except content as it's stripped on insert
+        $land_square['land_name'] = htmlspecialchars($land_square['land_name']);
+        $land_square['color'] = htmlspecialchars($land_square['color']);
+        $land_square['username'] = htmlspecialchars($land_square['username']);
+        if ($json_output) {
+            // Filter tags except img with src only
+            function filter(&$value) {
+                // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                // $value = strip_tags($value, '<img>');
+                // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
+                // $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
+                $value = strip_tags($value);
+                $value = nl2br($value);
+            }
+            array_walk_recursive($land_square, "filter");
+            echo json_encode($land_square);
+        }
         else {
-	        echo '{"error": "Land not found"}';
-	    }
+            return $land_square;
+        }
 	}
 
     // Find which land upgrades are valid
@@ -490,13 +488,13 @@ class Game extends CI_Controller {
         }
 
         // Prevent new players from taking towns or larger
-        if ($account['land_count'] < 1 && $land_square['land_type'] >= $this->town_key) {
+        if ($account['stats']['land_count'] < 1 && $land_square['land_type'] >= $this->town_key) {
             echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
             return false;
         }
 
         // Prevent new players from taking towns or larger
-        if ($action_type === 'attack' && $account['land_count'] < $this->sniper_land_minimum && (int) $land_square['land_type'] === $this->metropolis_key) {
+        if ($action_type === 'attack' && $account['stats']['land_count'] < $this->sniper_land_minimum && (int) $land_square['land_type'] === $this->metropolis_key) {
             echo '{"status": "fail", "message": "You must have at least ' . $this->sniper_land_minimum . ' lands to take a Metropolis"}';
             return false;
         }
@@ -609,7 +607,7 @@ class Game extends CI_Controller {
         $active_account_key = $active_account['id'];
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
-        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
+        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['stats']['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
 
         // Town, City, Metro, Capitol check
 
@@ -733,7 +731,7 @@ class Game extends CI_Controller {
         $weariness = 1;
 
         // Increase weariness on larger players
-        $weariness += floor($attacking_account['land_count'] / $this->weariness_increase_land_count);
+        $weariness += floor($attacking_account['stats']['land_count'] / $this->weariness_increase_land_count);
 
         // If unclaimed, we're done here
         if ($land_square['account_key'] == 0) {

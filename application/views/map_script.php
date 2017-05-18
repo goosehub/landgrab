@@ -41,7 +41,7 @@ var user_id = <?php echo $user_id + ''; ?>;
 var account_id = <?php echo $account['id'] + ''; ?>;
 var username = "<?php echo $user['username']; ?>";
 var account = JSON.parse('<?php echo addslashes(json_encode($account)); ?>');
-var player_land_count = <?php echo $account['land_count']; ?>;
+var player_land_count = <?php echo $account['stats']['land_count']; ?>;
 <?php } ?>
 
 // Set maps variables
@@ -948,7 +948,7 @@ function initMap() {
   }
 
   function update_stats(account) {
-    $('.land_count_span').html(number_format(account['land_count']));
+    $('.land_count_span').html(number_format(account['stats']['land_count']));
     $('.tax_rate_span').html(account['tax_rate']);
     $('.tax_income_span').html(number_format(account['stats']['tax_income_total']));
     $('.corruption_rate_span').html(number_format(account['stats']['corruption_total']));
@@ -992,7 +992,7 @@ function initMap() {
       html += '</a>';
       html += '</td>';
       html += '<td>';
-      html += '<strong class="text-success">' + number_format(value.land_count) + '</strong>';
+      html += '<strong class="text-success">' + number_format(value.stats.land_count) + '</strong>';
       html += '</td>';
       html += '<td>';
       html += '<strong class="text-info">' + number_format(value.stats.population) + '</strong><span class="text-info">,000</span>';
