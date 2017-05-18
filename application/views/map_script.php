@@ -218,8 +218,8 @@ function initMap() {
         }
         if (account && account['tutorial'] < 3) {
           $('#tutorial_block').fadeIn();
-          $('#tutorial_title').html('Manifest Destiny');
-          $('#tutorial_text').html('Conquer the world. War Weariness will accumulate as you acquire territory and will go down over time.');
+          $('#tutorial_title').html('Building for the Future');
+          $('#tutorial_text').html('Click on your Capitol, view what you can build, try to trade embassies with other players.');
           account['tutorial'] = 3;
         }
         // Do update

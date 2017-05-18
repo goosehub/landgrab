@@ -28,7 +28,7 @@ if (log_check && account['tutorial'] < 5) {
     } else if (account['tutorial'] == 3) {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('Building for the Future');
-        $('#tutorial_text').html('Click on your Capitol, name it, see your options.');
+        $('#tutorial_text').html('Click on your Capitol, view what you can build, try to trade embassies with other players.');
     } else if (account['tutorial'] == 4) {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('Manifest Destiny');
