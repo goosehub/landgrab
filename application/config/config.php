@@ -23,25 +23,30 @@ $config['sess_save_path'] = sys_get_temp_dir();
 |
 */
 
+$default_domain = 'localhost/landgrab.xyz';
+
 $allowed_domains = array(
     'localhost/landgrab',
     'localhost/landgrab.xyz',
     'landgrab.xyz',
     'dev.foobar.com',
-    );
-$default_domain  = 'localhost/landgrab.xyz';
+);
 
-if (in_array($_SERVER['HTTP_HOST'], $allowed_domains, TRUE)) {
-    $domain = $_SERVER['HTTP_HOST'];
+if (!empty($_SERVER['HTTPS'])) {
+    $protocol = 'https://';
 } else {
-	$domain = $default_domain;
+    $protocol = 'http://';
 }
-if ( ! empty($_SERVER['HTTPS'])) {
-    $config['base_url'] = 'https://'.$domain;
-} else {
-    $config['base_url'] = 'http://'.$domain;
+
+if ($default_domain) {
+    $config['base_url'] = $protocol . $default_domain;
 }
-$config['base_url'] = 'http://dev.foobar.com/personal/landgrab';
+else if (in_array($_SERVER['HTTP_HOST'], $allowed_domains, TRUE)) {
+    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'];
+}
+else {
+    $config['base_url'] = '';
+}
 
 /*
 |--------------------------------------------------------------------------

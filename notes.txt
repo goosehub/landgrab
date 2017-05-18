@@ -10,6 +10,10 @@ High Priority
     FEATURE: Better tutorial
     FEATURE: Update leaderboard on view
     BUG: Embassy on non Capitol
+    REFACTOR: Consolidate get_full_account queries and merge with account_valid_upgrades
+    REFACTOR: Consolidate get_single_land queries
+    REFACTOR: Remove "This shouldn't happen, but it does"
+    REFACTOR: Maybe we don't need get_effects_of_land
 
 Moderate Priority
     FEATURE: Private chat

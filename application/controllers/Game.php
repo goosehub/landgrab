@@ -121,7 +121,8 @@ class Game extends CI_Controller {
                 $data['last_winner_account']['username'] = 'No Winner';
                 $data['last_winner_account']['leader_portrait'] = 'default_leader_portrait.png';
                 $data['last_winner_account']['nation_flag'] = 'default_nation_flag.png';
-            } else {
+            } 
+            else {
                 $data['last_winner_account'] = $this->get_full_account($data['last_winner_account']);
             }
         }
@@ -291,7 +292,8 @@ class Game extends CI_Controller {
                 $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
                 $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
                 $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
-            } else {
+            } 
+            else {
                 $account = $land_square['account'] = $this->get_full_account($account);
             }
         }
