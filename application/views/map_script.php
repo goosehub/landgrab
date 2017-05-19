@@ -237,7 +237,7 @@ function initMap() {
     var coord_slug = lat + ',' + lng;
 
     // 
-    // If ctrl is active, just try to take it
+    // If attack key is active, just try to take it
     // 
 
     if (attack_key_pressed) {
@@ -246,9 +246,12 @@ function initMap() {
         d = JSON.parse(response);
         if (d['error']) {
           blind_claim_land(coord_slug, world_key, 'claim', function(response) {
+            d = JSON.parse(response);
+            land_form_response(response, 'claim');
           });
+          return true;
         }
-
+        land_form_response(response, 'attack');
       });
       return true;
     }
@@ -616,16 +619,17 @@ function initMap() {
       type: "POST",
       data: post_data,
       cache: false,
-      success: function(data) {
+      success: function(response) {
         // Return data
-        // console.log(data);
-        response = JSON.parse(data);
+        // console.log(response);
         land_form_response(response, form_type);
       }
     });
   }
 
   function land_form_response(response, form_type) {
+    response = JSON.parse(response);
+    var land_key = response['land_key'];
     if (response['error']) {
       // Bug here
       // $('#land_form_result').show();
@@ -658,7 +662,7 @@ function initMap() {
 
       // Claim or attack
       if (form_type === 'claim' || form_type === 'attack') {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['village']; ?>',
           fillColor: account['color'],
@@ -667,7 +671,7 @@ function initMap() {
       }
       // Capitol
       else if (form_type == land_type_key_dictionary['capitol']) {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['capitol']; ?>',
           fillOpacity: 0.8
@@ -675,7 +679,7 @@ function initMap() {
       }
       // Town
       else if (form_type == land_type_key_dictionary['town']) {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['town']; ?>',
           fillOpacity: 0.4
@@ -683,7 +687,7 @@ function initMap() {
       }
       // City
       else if (form_type == land_type_key_dictionary['city']) {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['city']; ?>',
           fillOpacity: 0.4
@@ -691,7 +695,7 @@ function initMap() {
       }
       // Metroplis
       else if (form_type == land_type_key_dictionary['metropolis']) {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['metropolis']; ?>',
           fillOpacity: 0.4
@@ -699,7 +703,7 @@ function initMap() {
       }
       // Fortification
       else if (form_type == land_type_key_dictionary['fortification']) {
-        boxes[d['id']].setOptions({
+        boxes[land_key].setOptions({
           strokeWeight: 3,
           strokeColor: '<?php echo $stroke_color_dictionary['fortification']; ?>',
           fillOpacity: 0.4

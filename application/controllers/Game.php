@@ -444,7 +444,7 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);
-            echo '{"status": "success", "result": true, "message": "Embassy Built"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Embassy Built"}';
             return true;
         }
         else if ($form_type === 'remove_embassy') {
@@ -455,7 +455,7 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->remove_player_embassy($account_key, $land_key, $this->embassy_key);
-            echo '{"status": "success", "result": true, "message": "Embassy Removed"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Embassy Removed"}';
             return true;
         }
         else if ( is_numeric($form_type) && $form_type < 0 ) {
@@ -477,7 +477,7 @@ class Game extends CI_Controller {
         // Demolish
         if ($action_type === 'demolish') {
             $this->game_model->remove_modifier_from_land($land_square['id'], abs($form_type), 1);
-            echo '{"status": "success", "result": true, "message": "Building Demolished"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Building Demolished"}';
             return true;
         }
 
@@ -513,7 +513,7 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
                 return false;
             }
-            echo '{"status": "success", "result": true, "message": "Built"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Built"}';
             return true;
         }
 
@@ -574,15 +574,15 @@ class Game extends CI_Controller {
 
         // Attack response
         if ($action_type === 'attack') {
-            echo '{"status": "success", "result": true, "message": "Captured"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Captured"}';
         }
         // Claim response
         else if ($action_type === 'claim') {
-            echo '{"status": "success", "result": true, "message": "Claimed"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Claimed"}';
         } 
         // Update response
         else if ($action_type === 'update') {
-            echo '{"status": "success", "result": true, "message": "Updated"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Updated"}';
         }
 
         return true;
