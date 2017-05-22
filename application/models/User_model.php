@@ -45,16 +45,6 @@ Class user_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
- // Get count of land by account
- function get_count_of_account_land($account_key)
- {
-    $this->db->select('COUNT(*) as count');
-    $this->db->from('land');
-    $this->db->where('account_key', $account_key);
-    $query = $this->db->get();
-    $result = $query->result_array();
-    return isset($result[0]['count']) ? $result[0]['count'] : 0;
- }
  // Get all worlds
  function get_all_worlds()
  {

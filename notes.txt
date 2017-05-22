@@ -14,6 +14,9 @@ High Priority
     REFACTOR: Consolidate get_single_land queries
     REFACTOR: Remove "This shouldn't happen, but it does"
     REFACTOR: Maybe we don't need get_effects_of_land
+    FEATURE: Confirm when moving capitol
+    FEATURE: Embassies move with capitol
+    FEATURE: Only have embassy when you have land
 
 Moderate Priority
     FEATURE: Private chat

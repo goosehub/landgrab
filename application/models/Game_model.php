@@ -58,6 +58,16 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
+ // Get count of land by account
+ function get_count_of_account_land($account_key)
+ {
+    $this->db->select('COUNT(*) as count');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_key);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]['count']) ? $result[0]['count'] : 0;
+ }
  // Update account budget
  function update_account_budget($account_id, $government, $tax_rate, $military_budget, $entitlements_budget)
  {
@@ -121,11 +131,8 @@ Class game_model extends CI_Model
         $this->db->delete('land_modifier');
     }
 
-    // Remove embassy lookup
-    $data = array(
-        'account_key' => $account_key,
-    );
-    $this->db->delete('embassy', $data);
+    // Remove embassy listings
+    $this->remove_all_embassy_of_land($capitol_land[0]['id']);
 
     // Remove capitol flag
     $data = array(

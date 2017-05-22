@@ -202,7 +202,7 @@ class Game extends CI_Controller {
     public function get_full_account($account)
     {
         // Get account
-        $account['land_count'] = $account['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+        $account['land_count'] = $account['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
         $account['stats'] = $this->game_model->get_sum_effects_for_account($account['id']);
 
         // Democracy Taxes
@@ -328,7 +328,7 @@ class Game extends CI_Controller {
             $user_id = $data['user_id'] = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
             $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->user_model->get_count_of_account_land($account['id']);
+            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
             $log_check = true;
             // Check if land is in range
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
