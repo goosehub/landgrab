@@ -11,7 +11,7 @@
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
       <strong class="text-default"><span class="government_span"><?php echo $government_dictionary[$account['government']]; ?></span></strong>
-      | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['land_count']); ?></span></strong>
+      | Territories: <strong class="text-primary"><span class="land_count_span"><?php echo number_format($account['stats']['land_count']); ?></span></strong>
       | Tax Rate: <strong class="text-yellow"><span class="tax_rate_span"><?php echo $account['tax_rate']; ?></span></strong>%
       <!-- | Pop: <strong class="text-info"><span class="population_span"><?php echo number_format($account['stats']['population']); ?></span>K</strong> -->
       | GDP: <strong class="text-action">$<span class="gdp_span"><?php echo number_format($account['stats']['gdp']); ?></span>M</strong>
@@ -79,6 +79,7 @@
       <li><a class="btn btn-primary" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
       <li><a class="btn btn-success" href="http://gleamplay.com/" target="_blank">GleamPlay</a></li>
       <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
+      <li><a class="btn btn-success" href="https://gooseweb.io/" target="_blank">GooseWeb</a></li>
       <li><a class="report_bugs_button btn btn-warning">Report Bugs</a></li>
       <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>
       <li><small>Get your friends playing</small><div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-="recommend" data-show-faces="false" data-share="true"></div></li>

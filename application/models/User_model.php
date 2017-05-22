@@ -25,10 +25,11 @@ Class user_model extends CI_Model
  // Get account by keys
  function get_account_by_keys($user_key, $world_key)
  {
-    $this->db->select('*');
+    $this->db->select('account.*, user.username');
     $this->db->from('account');
-    $this->db->where('user_key', $user_key);
-    $this->db->where('world_key', $world_key);
+    $this->db->join('user', 'user.id = account.user_key', 'left');
+    $this->db->where('account.user_key', $user_key);
+    $this->db->where('account.world_key', $world_key);
     $this->db->limit(1);
     $query = $this->db->get();
     $result = $query->result_array();
@@ -37,9 +38,10 @@ Class user_model extends CI_Model
  // Get account by keys
  function get_account_by_id($account_id)
  {
-    $this->db->select('*');
+    $this->db->select('account.*, user.username');
     $this->db->from('account');
-    $this->db->where('id', $account_id);
+    $this->db->join('user', 'user.id = account.user_key', 'left');
+    $this->db->where('account.id', $account_id);
     $this->db->limit(1);
     $query = $this->db->get();
     $result = $query->result_array();

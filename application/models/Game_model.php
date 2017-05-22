@@ -58,16 +58,6 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
- // Get count of land by account
- function get_count_of_account_land($account_key)
- {
-    $this->db->select('COUNT(*) as count');
-    $this->db->from('land');
-    $this->db->where('account_key', $account_key);
-    $query = $this->db->get();
-    $result = $query->result_array();
-    return isset($result[0]['count']) ? $result[0]['count'] : 0;
- }
  // Update account budget
  function update_account_budget($account_id, $government, $tax_rate, $military_budget, $entitlements_budget)
  {
@@ -254,24 +244,17 @@ Class game_model extends CI_Model
     $this->db->where('world_key', $world_key);
     $this->db->update('account');
  }
-
-
-
-
- // Get all modify effects
- function get_effects_of_land($land_key)
+ // Get count of land by account
+ function get_count_of_account_land($account_key)
  {
-    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
-    $query = $this->db->query("
-        SELECT  *
-        FROM modify_effect
-        LEFT JOIN land_modifier
-        ON modify_effect.id = land_modifier.modify_effect_key
-        WHERE land_modifier.land_key = " . $land_key . ";
-    ");
+    $this->db->select('COUNT(*) as count');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_key);
+    $query = $this->db->get();
     $result = $query->result_array();
-    return $result;
+    return isset($result[0]['count']) ? $result[0]['count'] : 0;
  }
+ // Get all modify effects
  function get_sum_effects_of_land($land_key)
  {
     $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
@@ -326,10 +309,15 @@ Class game_model extends CI_Model
         SUM(modify_effect.gdp) as gdp,
         SUM(modify_effect.treasury) as treasury,
         SUM(modify_effect.military) as military,
-        SUM(modify_effect.support) as support 
+        SUM(modify_effect.support) as support, 
+        (
+            SELECT COUNT(*) as land_count
+            FROM land
+            WHERE account_key = " . $account_key . "
+        ) as land_count
         FROM modify_effect 
             LEFT JOIN land_modifier 
-            ON modify_effect.id = land_modifier.modify_effect_key 
+            ON modify_effect.id = land_modifier.modify_effect_key
         WHERE land_modifier.land_key IN 
         (
             SELECT id

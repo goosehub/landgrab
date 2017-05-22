@@ -57,7 +57,7 @@
                 </td>
                 <td>
                     <?php // First instance for jquery datatables sorting ?>
-                    <strong class="text-success"><?php echo number_format($leader['land_count']); ?></strong>
+                    <strong class="text-success"><?php echo number_format($leader['stats']['land_count']); ?></strong>
                 </td>
                 <td>
                     <strong class="text-info"><?php echo number_format($leader['stats']['population']); ?></strong><span class="text-info">,000</span>

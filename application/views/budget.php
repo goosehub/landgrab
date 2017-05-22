@@ -14,7 +14,7 @@
                     <span class="budget_info_item_parent">
                         <strong class="budget_info_item_label">Territories: </strong>
                         <strong class="budget_info_value text-primary">
-                            <span class="land_count_span"><?php echo number_format($account['land_count']); ?></span>
+                            <span class="land_count_span"><?php echo number_format($account['stats']['land_count']); ?></span>
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">

@@ -201,8 +201,6 @@ class Game extends CI_Controller {
 
     public function get_full_account($account)
     {
-        // Get account
-        $account['land_count'] = $account['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
         $account['stats'] = $this->game_model->get_sum_effects_for_account($account['id']);
 
         // Democracy Taxes
@@ -242,10 +240,6 @@ class Game extends CI_Controller {
             $account['functioning'] = false;
         }
 
-        // Get Username
-        $user = $this->user_model->get_user($account['user_key']);
-        $account['username'] = $user['username'];
-
         // Record account as loaded
         $this->user_model->account_loaded($account['id']);
 
@@ -272,7 +266,6 @@ class Game extends CI_Controller {
 
 	    // Get Land Square
         $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-        $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $land_square['embassy_list'] = false;
@@ -288,7 +281,6 @@ class Game extends CI_Controller {
                 // Unclaim land
                 $this->game_model->update_land_data($land_square['id'], 0, '', '', 1, '#000000');
                 $land_square = $this->game_model->get_single_land($world_key, $coord_slug);
-                $land_square['effects'] = $this->game_model->get_effects_of_land($land_square['id']);
                 $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
                 $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
                 $this->game_model->update_land_capitol_status($land_square['id'], $capitol = 0);
@@ -315,53 +307,49 @@ class Game extends CI_Controller {
         // Add username to array
         $land_square['username'] = '';
         if ($account) {
-            $owner = $this->user_model->get_user($account['user_key']);
-            if (isset($owner['username']) && isset($land_square['land_name'])) {
-                $land_square['username'] = $owner['username'];
-            }
+            $land_square['username'] = $account['username'];
         }
 
         // Get account
         $log_check = false;
         if ($this->session->userdata('logged_in')) {
             $session_data = $this->session->userdata('logged_in');
-            $user_id = $data['user_id'] = $session_data['id'];
+            $user_id = $session_data['id'];
             $account = $this->user_model->get_account_by_keys($user_id, $world_key);
-            $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
-            $account['land_count'] = $data['account']['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
+            $world = $this->game_model->get_world_by_slug_or_id($world_key);
+            $account['land_count'] = $this->game_model->get_count_of_account_land($account['id']);
             $log_check = true;
             // Check if land is in range
             $land_square['in_range'] = $this->check_if_land_is_in_range($world_key, $account['id'], $account['land_count'], 
                 $world['land_size'], $land_square['lat'], $land_square['lng'], false);
         }
 
-        // Echo data to client to be parsed
-	    if (isset($land_square['land_name'])) {
-            // Strip html entities from all untrusted columns, except content as it's stripped on insert
-            $land_square['land_name'] = htmlspecialchars($land_square['land_name']);
-            $land_square['color'] = htmlspecialchars($land_square['color']);
-            $land_square['username'] = htmlspecialchars($land_square['username']);
-            if ($json_output) {
-                // Filter tags except img with src only
-                function filter(&$value) {
-                  // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-                  // $value = strip_tags($value, '<img>');
-                  // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
-                  // $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
-                    $value = strip_tags($value);
-                    $value = nl2br($value);
-                }
-                array_walk_recursive($land_square, "filter");
-                echo json_encode($land_square);
-            }
-            else {
-                return $land_square;
-            }
+        // If none found, default to this
+        if (!isset($land_square['land_name'])) {
+            echo '{"error": "Land not found"}';
+            return false;
         }
-	    // If none found, default to this
+        
+        // Strip html entities from all untrusted columns, except content as it's stripped on insert
+        $land_square['land_name'] = htmlspecialchars($land_square['land_name']);
+        $land_square['color'] = htmlspecialchars($land_square['color']);
+        $land_square['username'] = htmlspecialchars($land_square['username']);
+        if ($json_output) {
+            // Filter tags except img with src only
+            function filter(&$value) {
+                // $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                // $value = strip_tags($value, '<img>');
+                // $value = preg_replace('#&lt;(/?(?:img))&gt;#', '<\1>', $value);
+                // $value = preg_replace("/<([a-z][a-z0-9]*)(?:[^>]*(\ssrc=['\"][^'\"]*['\"]))?[^>]*?(\/?)>/i",'<$1$2$3>', $value);
+                $value = strip_tags($value);
+                $value = nl2br($value);
+            }
+            array_walk_recursive($land_square, "filter");
+            echo json_encode($land_square);
+        }
         else {
-	        echo '{"error": "Land not found"}';
-	    }
+            return $land_square;
+        }
 	}
 
     // Find which land upgrades are valid
@@ -455,7 +443,7 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);
-            echo '{"status": "success", "result": true, "message": "Embassy Built"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Embassy Built"}';
             return true;
         }
         else if ($form_type === 'remove_embassy') {
@@ -466,7 +454,7 @@ class Game extends CI_Controller {
                 return false;
             }
             $this->game_model->remove_player_embassy($account_key, $land_key, $this->embassy_key);
-            echo '{"status": "success", "result": true, "message": "Embassy Removed"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Embassy Removed"}';
             return true;
         }
         else if ( is_numeric($form_type) && $form_type < 0 ) {
@@ -488,7 +476,7 @@ class Game extends CI_Controller {
         // Demolish
         if ($action_type === 'demolish') {
             $this->game_model->remove_modifier_from_land($land_square['id'], abs($form_type), 1);
-            echo '{"status": "success", "result": true, "message": "Building Demolished"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Building Demolished"}';
             return true;
         }
 
@@ -499,13 +487,13 @@ class Game extends CI_Controller {
         }
 
         // Prevent new players from taking towns or larger
-        if ($account['land_count'] < 1 && $land_square['land_type'] >= $this->town_key) {
+        if ($account['stats']['land_count'] < 1 && $land_square['land_type'] >= $this->town_key) {
             echo '{"status": "fail", "message": "You must begin your nation at a village or unclaimed land"}';
             return false;
         }
 
         // Prevent new players from taking towns or larger
-        if ($action_type === 'attack' && $account['land_count'] < $this->sniper_land_minimum && (int) $land_square['land_type'] === $this->metropolis_key) {
+        if ($action_type === 'attack' && $account['stats']['land_count'] < $this->sniper_land_minimum && (int) $land_square['land_type'] === $this->metropolis_key) {
             echo '{"status": "fail", "message": "You must have at least ' . $this->sniper_land_minimum . ' lands to take a Metropolis"}';
             return false;
         }
@@ -524,7 +512,7 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "Unable to build on your land. Please report this bug using top right menu."}';
                 return false;
             }
-            echo '{"status": "success", "result": true, "message": "Built"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Built"}';
             return true;
         }
 
@@ -585,15 +573,15 @@ class Game extends CI_Controller {
 
         // Attack response
         if ($action_type === 'attack') {
-            echo '{"status": "success", "result": true, "message": "Captured"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Captured"}';
         }
         // Claim response
         else if ($action_type === 'claim') {
-            echo '{"status": "success", "result": true, "message": "Claimed"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Claimed"}';
         } 
         // Update response
         else if ($action_type === 'update') {
-            echo '{"status": "success", "result": true, "message": "Updated"}';
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Updated"}';
         }
 
         return true;
@@ -616,10 +604,9 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key_input');
         $world = $data['world'] = $this->game_model->get_world_by_slug_or_id($world_key);
         $active_account_key = $active_account['id'];
-        $active_user = $this->user_model->get_user($active_account_key);
         $name_at_action = $land_square['land_name'];
         $passive_account_key = $land_square['account_key'];
-        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
+        $in_range = $this->check_if_land_is_in_range($world_key, $active_account_key, $active_account['stats']['land_count'], $world['land_size'], $land_square['lat'], $land_square['lng'], false);
 
         // Town, City, Metro, Capitol check
 
@@ -743,7 +730,7 @@ class Game extends CI_Controller {
         $weariness = 1;
 
         // Increase weariness on larger players
-        $weariness += floor($attacking_account['land_count'] / $this->weariness_increase_land_count);
+        $weariness += floor($attacking_account['stats']['land_count'] / $this->weariness_increase_land_count);
 
         // If unclaimed, we're done here
         if ($land_square['account_key'] == 0) {
@@ -948,8 +935,6 @@ class Game extends CI_Controller {
             }
             $leader_account = $this->user_model->get_account_by_id($leader['account_key']);
             $this_leader = $this->get_full_account($leader_account);
-            $leader_user = $this->user_model->get_user($this_leader['user_key']);
-            $this_leader['username'] = $leader_user['username'];
             $leaders[] = $this_leader;
         }
 

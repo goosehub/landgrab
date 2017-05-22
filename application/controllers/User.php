@@ -11,11 +11,11 @@ class User extends CI_Controller {
     protected $password_optional = true;
 
     // Limits
-    protected $login_limit_window = 20;
+    protected $login_limit_window = 30;
     protected $login_limit = 10;
 
     // Minutes between registering
-    protected $ip_frequency_register = 30;
+    protected $ip_frequency_register = 60;
 
 	function __construct() {
 	    parent::__construct();
@@ -35,7 +35,7 @@ class User extends CI_Controller {
         $timestamp = date('Y-m-d H:i:s', time() - $this->login_limit_window * 60);
         $ip_fails = $this->user_model->check_ip_request_since_timestamp($ip, 'login', $timestamp);
         if (count($ip_fails) > $this->login_limit && !is_dev()) {
-            echo 'Too many login attempts from this IP. Please wait 20 minutes.';
+            echo 'Too many login attempts from this IP. Please wait ' . $this->login_limit_window . ' minutes.';
             die();
         }
 

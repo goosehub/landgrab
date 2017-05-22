@@ -10,6 +10,15 @@ $autoload['config'] = array();
 $autoload['language'] = array();
 $autoload['model'] = array();
 
+// Temp Banned IPs
+$ip = $_SERVER['REMOTE_ADDR'];
+// Don't allow IPs in source control
+$temp_banned_ips = array();
+if (in_array($ip, $temp_banned_ips)) {
+    echo "You are temp banned, most likely for using multiple accounts. Please email me a handdrawn picture of a dinosaur to goosepostbox@gmail.com to reactivate your account. After your account is reactivated I will monitor your behavior and will permaban on continued abuse.";
+    die();
+}
+
 // Return if this is dev
 function is_dev() {
     if (isset($_SERVER['SERVER_ADDR']) && ($_SERVER['SERVER_ADDR'] === '127.0.0.1' || $_SERVER['SERVER_ADDR'] === '::1') ) {
