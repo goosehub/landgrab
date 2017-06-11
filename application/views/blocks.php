@@ -86,6 +86,49 @@
 </div>
 <?php } ?>
 
+<!-- Account Update -->
+<?php if ($log_check) { ?>
+<div id="update_password_block" class="center_block">
+    <strong>Update Password</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <!-- Validation Errors -->
+    <?php if ($failed_form === 'update_password') { echo $validation_errors; } ?>
+    <!-- Form -->
+    <?php echo form_open('user/update_password'); ?>
+      <p class="text-center">Password only needed to save progress</p>
+      <div class="form-group">
+        <label for="input_password">
+            Current Password
+        </label>
+        <input type="password" class="form-control" id="update_password_current" name="current_password" placeholder="Password">
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+                <label for="input_password">
+                    New Password
+                </label>
+                <input type="password" class="form-control" id="update_password_new" name="new_password" placeholder="Password">
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                <label for="input_confirm">
+                    Confirm
+                </label>
+                <input type="password" class="form-control" id="update_password_confirm" name="confirm" placeholder="Confirm">
+              </div>
+          </div>
+      </div>
+      <button type="submit" class="btn btn-action form-control">Update Password</button>
+    </form>
+</div>
+<?php } ?>
+
 <!-- Update Block -->
 <div id="update_info_block" class="center_block">
     <strong>Recent Updates</strong>

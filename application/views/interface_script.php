@@ -111,6 +111,10 @@ $('#worlds_dropdown').click(function(){
 $('#site_dropdown').click(function(){
     $('.center_block').hide();
 });
+$('.update_password_button').click(function(){
+    $('.center_block').hide();
+    $('#update_password_block').show();
+});
 
 // jQuery DataTables
 $('.jquery-datatable').dataTable({

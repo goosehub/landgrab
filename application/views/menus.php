@@ -81,6 +81,7 @@
       <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
       <li><a class="btn btn-success" href="https://gooseweb.io/" target="_blank">GooseWeb</a></li>
       <li><a class="report_bugs_button btn btn-warning">Report Bugs</a></li>
+      <li><a class="update_password_button btn btn-danger">Update Password</a></li>
       <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>
       <li><small>Get your friends playing</small><div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-="recommend" data-show-faces="false" data-share="true"></div></li>
     </ul>

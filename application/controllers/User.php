@@ -194,6 +194,7 @@ class User extends CI_Controller {
     {
         // User Information
         if (!$this->session->userdata('logged_in')) {
+            echo 'You must be logged in.';
             return false;
         }
         $session_data = $this->session->userdata('logged_in');
@@ -279,5 +280,38 @@ class User extends CI_Controller {
 
         // Redirect to game
         redirect('world/' . $world_key, 'refresh');
+    }
+
+    public function update_password()
+    {
+        // User Information
+        if (!$this->session->userdata('logged_in')) {
+            echo 'You must be logged in.';
+            return false;
+        }
+
+        // Validation
+        $this->form_validation->set_rules('current_password', 'Current Password', 'trim|required|min_length[6]|max_length[64]');
+        $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|min_length[6]|max_length[64]|matches[confirm]');
+        $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('failed_form', 'update_password');
+            $this->session->set_flashdata('validation_errors', validation_errors());
+            // Just echo for now
+            echo validation_errors();
+            return false;
+            redirect(base_url(), 'refresh');
+        }
+        // Success
+        else {
+            $session_data = $this->session->userdata('logged_in');
+            $user_id = $session_data['id'];
+            $new_password = $this->input->post('new_password');
+            $this->user_model->update_password($user_id, $new_password);
+            redirect(base_url(), 'refresh');
+        }
+
     }
 }

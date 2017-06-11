@@ -148,6 +148,17 @@ Class user_model extends CI_Model
     return $account_id;
  }
  // Update account information
+ function update_password($user_id, $password)
+ {
+    // Update account
+    $data = array(
+        'password' => password_hash($password, PASSWORD_BCRYPT),
+    );
+    $this->db->where('id', $user_id);
+    $this->db->update('user', $data);
+    return true;
+ }
+ // Update account information
  function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
  {
     // Update account
