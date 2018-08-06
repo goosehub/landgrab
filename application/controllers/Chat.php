@@ -6,6 +6,9 @@ class Chat extends CI_Controller {
 
 	function __construct() {
 	    parent::__construct();
+
+        // force_ssl();
+        
         $this->load->model('chat_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
 	}

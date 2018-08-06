@@ -75,7 +75,7 @@
             }
             // Update latest message id
             last_message_id = message.id;
-            html += '<div class="chat_message"><span class="glyphicon glyphicon-user" style="color: ' + message.color + '""></span>' ;
+            html += '<div class="chat_message" title="' + message.timestamp + ' ET"><span class="glyphicon glyphicon-user" style="color: ' + message.color + '""></span>' ;
             html += message.username + ': ' + message.message + '</div>';
           });
         // Append to div

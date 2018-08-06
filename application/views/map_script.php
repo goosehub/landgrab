@@ -278,9 +278,9 @@ function initMap() {
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').off('click');
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').off('click');
 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, #land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').click(function() {
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').click(function() {
 
         // Submit land ajax
         var form_type = $(this).val();

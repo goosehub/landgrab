@@ -18,6 +18,11 @@ if (in_array($ip, $temp_banned_ips)) {
     echo "You are temp banned, most likely for using multiple accounts. Please email me a handdrawn picture of a dinosaur to goosepostbox@gmail.com to reactivate your account. After your account is reactivated I will monitor your behavior and will permaban on continued abuse.";
     die();
 }
+$perm_banned_ips = array();
+if (in_array($ip, $perm_banned_ips)) {
+    echo "You are perm banned.";
+    die();
+}
 
 // Return if this is dev
 function is_dev() {

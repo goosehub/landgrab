@@ -111,7 +111,7 @@
                         <?php if ($effect['is_embassy']) { continue; } ?>
                         <?php $button_color = $effect['id'] <= 10 ? 'action' : 'success' ?>
                         <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
-                            <button type="button" id="land_form_submit_upgrade" class="upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
+                            <button type="button" class="land_form_submit_upgrade upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
                                 <?php echo ucwords(str_replace('_', ' ', $effect['name'])); ?>
                             </button>
                             <div class="expand_land_type_info btn btn-info" type="button" data-toggle="collapse" data-target="#<?php echo $effect['name']; ?>_info_dropdown" aria-expanded="false" aria-controls="<?php echo $effect['name']; ?>_info_dropdown">
