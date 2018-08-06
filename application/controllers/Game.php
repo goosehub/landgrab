@@ -35,6 +35,7 @@ class Game extends CI_Controller {
     protected $ww_nerf = 10;
     protected $defence_bonus = 1.5;
     protected $attack_bonus = 1.5;
+    protected $minimum_lands_to_build_embassy = 100;
 
     // Shared data
     protected $effects;
@@ -440,6 +441,10 @@ class Game extends CI_Controller {
             $player_has_embassy = $this->game_model->get_embassy_by_player_and_land($account_key, $land_key);
             if (!empty($player_has_embassy)) {
                 echo '{"status": "fail", "message": "You already have an embassy here."}';
+                return false;
+            }
+            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_embassy) {
+                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_embassy . ' lands to build an embassy."}';
                 return false;
             }
             $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);

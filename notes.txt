@@ -6,9 +6,9 @@ Current Changelog
         Done
     Hover on chat avatar icon will show time of that message
     Stadium nerf
+    Minimum for Embassy
         Todo
     Sanctions
-    Minimum for Embassy
     New buildings?
 
 ==========================================================================================
