@@ -2,6 +2,15 @@
     Notes
 ==========================================================================================
 
+Current Changelog
+        Done
+    Hover on chat avatar icon will show time of that message
+    Stadium nerf
+        Todo
+    Sanctions
+    Minimum for Embassy
+    New buildings?
+
 ==========================================================================================
     Goals
 ==========================================================================================
