@@ -247,7 +247,7 @@
             <div id="sanctions_info_dropdown" class="info_details_parent collapse">
                 <div class="well">
                     <p class="">
-                        You can impose sanctions on your enemies to hamper their economy. Sanctions will decrease a nations GDP by <?php echo abs($sanctions_effect['culture']) ?> and reduce their support by <?php echo abs($sanctions_effect['support']) ?>. But the consequence of imposing sanctions is that is will cause 100 weariness to yourself.
+                        You can impose sanctions on your enemies to hamper their economy. Sanctions will decrease a nations GDP by <?php echo abs($sanctions_effect['culture']) ?> and reduce their support by <?php echo abs($sanctions_effect['support']) ?>. But the consequence of imposing sanctions is that is will cause <?php echo $weariness_from_building_sanctions; ?> weariness to yourself.
                     </p>
                 </div>
             </div>
