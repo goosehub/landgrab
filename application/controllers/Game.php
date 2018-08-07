@@ -28,7 +28,7 @@ class Game extends CI_Controller {
     protected $autocracy_tax_weariness_nerf = 0;
     protected $autocracy_corruption_rate = 50;
     protected $weariness_increase_land_count = 300;
-    protected $tax_weariness_nerf = 2;
+    protected $tax_weariness_nerf = 1.8;
     protected $sniper_land_minimum = 100;
     protected $entitlments_nerf = 40;
     protected $base_support = 100;

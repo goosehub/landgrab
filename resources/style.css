@@ -53,6 +53,9 @@ html, body {
 .text-red {
   color: #E60006;
 }
+.text-is-bold {
+  font-weight: bold;
+}
 
 /* Map */
 #map {

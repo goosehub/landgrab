@@ -8,7 +8,7 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6">
                     <span class="budget_info_item_parent">
@@ -69,25 +69,25 @@
                     </span>
                     <span class="budget_info_item_parent">
                         <strong class="budget_info_item_label">Military Spending: </strong>
-                        <strong class="budget_info_value text-danger">
+                        <strong class="budget_info_value text-red">
                             $<span class="military_spending_span"><?php echo number_format($account['stats']['military_spending']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">
                         <strong class="budget_info_item_label">Entitlements: </strong>
-                        <strong class="budget_info_value text-info">
+                        <strong class="budget_info_value text-red">
                             $<span class="entitlements_span"><?php echo number_format($account['stats']['entitlements']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">
                         <strong class="budget_info_item_label">Building Maintenance: </strong>
-                        <strong class="budget_info_value text-warning">
+                        <strong class="budget_info_value text-red">
                             $<span class="building_maintenance_span"><?php echo number_format($account['stats']['building_maintenance']); ?></span>M
                         </strong><br>
                     </span>
                     <span class="budget_info_item_parent">
                         <strong class="budget_info_item_label">Available Revenue: </strong>
-                        <strong class="budget_info_value text-default">
+                        <strong class="budget_info_value text-info">
                             $<span class="treasury_span"><?php echo number_format($account['stats']['treasury_after']); ?></span>M
                         </strong><br>
                     </span>
@@ -137,34 +137,29 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6 col-md-push-6">
-                        <div id="pass_new_budget_button" class="btn btn-action form-control">Apply New Budget</div>
+                        <div id="pass_new_budget_button" class="btn btn-action form-control text-is-bold">Apply New Budget</div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-5">
-            <strong>Useful Information</strong>
+        <div class="col-md-4">
+            <strong>Gameplay Guide</strong>
             <ul id="useful_info_list">
-                <li>For every 5 villages, you can build a Town, every 5 Towns a City, and every 5 Cities a Metropolis</li>
                 <li>Taxes allow you to increase your budgets and build on your lands</li>
-                <li>Corruption Eats at your Tax Income</li>
+                <li>Revenue is what's left over from your budgets and buildings</li>
+                <li>Corruption eats at your Tax Income</li>
                 <li>Entitlments give you more Support</li>
+                <li>Military makes it easier to attack and defend</li>
                 <li>Weariness decreases your Support</li>
                 <li>Weariness decreases by 5 every minute</li>
-                <li>When you have no Support left, your government can no longer function</li>
-                <li>A larger Military means a smaller weariness penalty on attacking and more weariness on those who attack you</li>
-                <li>Form alliances and build Embassies on other players Capitols to help them against shared enemies.</li>
-                <li>Revenue is what's left over from your budgets and buildings</li>
-                <li>Revenue doesn't increase over time, but is instead a static number</li>
+                <li>You need the support of your people to do most actions</li>
                 <li>If you get stuck in debt or in low support, consider adjusting your taxes or removing buildings</li>
+                <li>For every 5 Villages, you can build a Town, every 5 Towns a City, and every 5 Cities a Metropolis</li>
+                <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
                 <li>The player with the largest population gets a 50% Defensive Bonus</li>
                 <li>The player with the most culture gets a 50% Offensive Bonus</li>
-                <li>You need to own at least <?php echo $sniper_land_minimum; ?> lands to destroy a Metropolis</li>
-                <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
+                <li>Form alliances, build Embassies with your allies and impose Sanctions on your enemies.</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
-                <li>Explore the other worlds in the Worlds tab</li>
-                <li>Try turning on Satellite Mode</li>
-                <li>Check out <a href="https://www.reddit.com/r/LandGrab/" target="_blank">/r/LandGrab</a> for discussion and updates</li>
             </ul>
         </div>
     </div>

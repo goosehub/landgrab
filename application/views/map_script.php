@@ -632,7 +632,7 @@ function initMap() {
       // Build HTML
       building_label = '<span class="building_name">' + modifier_name + '</span>';
       building_count = '<span>' + d['sum_modifiers'][i]['count'] + removeLink + '</span>';
-      building_line = '<div class="building_item">' + building_label + ': ' + building_count + '</div><br>';
+      building_line = '<p class="building_item">' + building_label + ': ' + building_count + '</p>';
       more_info_string = more_info_string + building_line;
     }
     $('#land_info_div').html(more_info_string);
@@ -748,7 +748,7 @@ function initMap() {
         $('#tutorial_block').fadeOut(1000, function() {
           $('#tutorial_block').fadeIn();
           $('#tutorial_title').html('We The People');
-          $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget. Read the useful info section to learn gameplay mechanics.');
+          $('#tutorial_text').html('Pick a form of Government, set a tax rate, and balance your budget. Read the Gameplay Guide to learn advanced gameplay mechanics.');
           $('.stat_dropdown').click();
           account['tutorial'] = 2;
         });
@@ -768,7 +768,10 @@ function initMap() {
       $('#tutorial_block').fadeOut(1000, function() {
         $('#tutorial_block').fadeIn();
         $('#tutorial_title').html('Manifest Destiny');
-        $('#tutorial_text').html('Conquer the world. War Weariness will accumulate as you acquire territory and will go down over time.');
+        $('#tutorial_text').html('Conquer the world. War Weariness will accumulate as you acquire territory and will go back down over time.');
+        setTimeout(function(){
+          $('#tutorial_block').fadeOut(1000);
+        }, 30 * 1000);
       });
     }
     if (account['tutorial'] === '4' && (land_form_type === 'attack' || land_form_type === 'claim')) {

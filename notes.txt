@@ -8,7 +8,8 @@ Current Changelog
     Stadium nerf
     Minimum for Embassy
     Sanctions
-    Style tweaks
+    UI improvements
+    Taxes cause a bit more weariness
         Todo
     New buildings?
 

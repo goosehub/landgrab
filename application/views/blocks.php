@@ -1,7 +1,7 @@
 <!-- Info tag -->
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/6cqrpc/defense_buff_update/" target="_blank">The Defense Buff Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/" target="_blank">The Sanctions Update</a>
     </strong>
 </div>
 
@@ -99,7 +99,6 @@
     <?php if ($failed_form === 'update_password') { echo $validation_errors; } ?>
     <!-- Form -->
     <?php echo form_open('user/update_password'); ?>
-      <p class="text-center">Password only needed to save progress</p>
       <div class="form-group">
         <label for="input_password">
             Current Password
@@ -139,7 +138,7 @@
 
     <hr>
 
-    <small>Version 4.0.0</small>
+    <small>Version 4.1.0</small>
     <ul>
         <li></li>
     </ul>
@@ -235,9 +234,9 @@
     </form>
     <hr>
     <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col-md-4">
-            <p class="lead">Not registered?</p>
+        <div class="col-md-3"></div>
+        <div class="col-md-7">
+            <p>Not registered?</p>
         </div>
         <div class="col-md-2">
             <button class="register_button btn btn-success form-control">Join</button>
@@ -248,7 +247,7 @@
 <!-- Join Block -->
 <div id="register_block" class="center_block">
     <strong>Start Playing</strong>
-
+    <br><br>
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
@@ -260,17 +259,16 @@
         <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
         <input type="hidden" name="ab_test" id="ab_test" value="">
         <label for="input_username">Username</label>
-        <input type="username" class="form-control" id="register_input_username" name="username" placeholder="Username">
+        <input type="username" class="form-control" id="register_input_username" name="username">
       </div>
-      <p class="text-center">Password only needed to save progress</p>
       <div class="row">
           <div class="col-md-6">
               <div class="form-group">
                 <label for="input_password">
                     Password
-                    <small>(Optional)</small>
+                    <small class="text-primary">(Optional, but needed to save progress)</small>
                 </label>
-                <input type="password" class="form-control" id="register_input_password" name="password" placeholder="Password">
+                <input type="password" class="form-control" id="register_input_password" name="password">
               </div>
           </div>
           <div class="col-md-6">
@@ -278,17 +276,17 @@
                 <label for="input_confirm">
                     Confirm
                 </label>
-                <input type="password" class="form-control" id="register_input_confirm" name="confirm" placeholder="Confirm">
+                <input type="password" class="form-control" id="register_input_confirm" name="confirm">
               </div>
           </div>
       </div>
-      <button type="submit" class="btn btn-action form-control">Start Playing</button>
+      <button type="submit" class="btn btn-action form-control text-is-bold">Start Playing</button>
     </form>
     <hr>
     <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col-md-4">
-            <p class="lead">Already a user?</p>
+        <div class="col-md-7"></div>
+        <div class="col-md-3    ">
+            <p>Already a user?</p>
         </div>
         <div class="col-md-2">
             <button class="login_button btn btn-info form-control">Login</button>
