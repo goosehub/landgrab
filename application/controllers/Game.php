@@ -161,7 +161,7 @@ class Game extends CI_Controller {
             $data['modify_effect_dictionary'] = $this->effects;
             $data['embassy_effect'] = $this->game_model->get_embassy_effect();
             $data['sanctions_effect'] = $this->game_model->get_sanctions_effect();
-            $data['weariness_from_building_sanctions'] $this->weariness_from_building_sanctions;
+            $data['weariness_from_building_sanctions'] = $this->weariness_from_building_sanctions;
         }
 
         // Get all lands
