@@ -99,7 +99,7 @@ Class game_model extends CI_Model
     return true;
  }
  // Remove capitol from account
- function remove_capitol_from_account($account_key, $capitol_key, $embassy_key)
+ function remove_capitol_from_account($account_key, $capitol_key, $embassy_key, $sanctions_key)
  {
     // Find capitol square
     $this->db->select('id');
@@ -119,10 +119,18 @@ Class game_model extends CI_Model
         $this->db->where('land_key', $capitol_land[0]['id']);
         $this->db->where('modify_effect_key', $embassy_key);
         $this->db->delete('land_modifier');
+
+        // Remove sanctions effect
+        $this->db->where('land_key', $capitol_land[0]['id']);
+        $this->db->where('modify_effect_key', $sanctions_key);
+        $this->db->delete('land_modifier');
     }
 
     // Remove embassy listings
     $this->remove_all_embassy_of_land($capitol_land[0]['id']);
+
+    // Remove sanctions listings
+    $this->remove_all_sanctions_of_land($capitol_land[0]['id']);
 
     // Remove capitol flag
     $data = array(
@@ -356,10 +364,35 @@ Class game_model extends CI_Model
     $result = $query->result_array();
     return $result;
  }
+ // Get sanctions of land
+ function get_sanctions_of_land($land_key)
+ {
+    $land_key = mysqli_real_escape_string(get_mysqli(), $land_key);
+    $query = $this->db->query("
+        SELECT e.`account_key`, a.`nation_name`, u.`username`
+        FROM `sanctions` as e
+            LEFT JOIN
+                `account` as a on account_key = a.`id`
+                LEFT JOIN
+                    `user` as u on user_key = u.`id`
+        WHERE e.`land_key` = '" . $land_key . "';");
+    $result = $query->result_array();
+    return $result;
+ }
  function get_embassy_by_player_and_land($account_key, $land_key)
  {
     $this->db->select('*');
     $this->db->from('embassy');
+    $this->db->where('account_key', $account_key);
+    $this->db->where('land_key', $land_key);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return isset($result[0]) ? $result[0] : false;
+ }
+ function get_sanctions_by_player_and_land($account_key, $land_key)
+ {
+    $this->db->select('*');
+    $this->db->from('sanctions');
     $this->db->where('account_key', $account_key);
     $this->db->where('land_key', $land_key);
     $query = $this->db->get();
@@ -383,6 +416,23 @@ Class game_model extends CI_Model
     );
     $this->db->delete('land_modifier', $data, 1);
  }
+ // Remove player sanctions
+ function remove_player_sanctions($account_key, $land_key, $sanctions_key)
+ {
+    // Remove sanctions
+    $data = array(
+    'account_key' => $account_key,
+    'land_key' => $land_key,
+    );
+    $this->db->delete('sanctions', $data);
+
+    // Remove effect with limit 1
+    $data = array(
+    'land_key' => $land_key,
+    'modify_effect_key' => $sanctions_key,
+    );
+    $this->db->delete('land_modifier', $data, 1);
+ }
  // Add player embassy
  function add_player_embassy($account_key, $land_key, $world_key, $embassy_key)
  {
@@ -402,12 +452,41 @@ Class game_model extends CI_Model
     $this->db->insert('land_modifier', $data);
     return true;
  }
+ // Add player sanctions
+ function add_player_sanctions($account_key, $land_key, $world_key, $sanctions_key)
+ {
+    // Insert sanctions
+    $data = array(
+    'account_key' => $account_key,
+    'land_key' => $land_key,
+    'world_key' => $world_key,
+    );
+    $this->db->insert('sanctions', $data);
+
+    // Insert land effect
+    $data = array(
+    'land_key' => $land_key,
+    'modify_effect_key' => $sanctions_key,
+    );
+    $this->db->insert('land_modifier', $data);
+    return true;
+ }
  // Get effect of embassy
  function get_embassy_effect()
  {
     $this->db->select('*');
     $this->db->from('modify_effect');
     $this->db->where('is_embassy', 1);
+    $query = $this->db->get();
+    $result = $query->result_array();
+    return $result[0];
+ }
+ // Get effect of sanctions
+ function get_sanctions_effect()
+ {
+    $this->db->select('*');
+    $this->db->from('modify_effect');
+    $this->db->where('is_sanctions', 1);
     $query = $this->db->get();
     $result = $query->result_array();
     return $result[0];
@@ -421,12 +500,28 @@ Class game_model extends CI_Model
     $this->db->delete('embassy', $data);
  }
  // Remove all embassies of world for reset
+ function remove_all_sanctions_of_land($land_key)
+ {
+    $data = array(
+    'land_key' => $land_key,
+    );
+    $this->db->delete('sanctions', $data);
+ }
+ // Remove all embassies of world for reset
  function remove_all_embassy_of_world($world_key)
  {
     $data = array(
     'world_key' => $world_key,
     );
     $this->db->delete('embassy', $data);
+ }
+ // Remove all embassies of world for reset
+ function remove_all_sanctions_of_world($world_key)
+ {
+    $data = array(
+    'world_key' => $world_key,
+    );
+    $this->db->delete('sanctions', $data);
  }
  // Add modifier to land
  function add_modifier_to_land($land_key, $modify_effect_key)
@@ -453,6 +548,9 @@ Class game_model extends CI_Model
 
     $this->db->where('land_key', $land_key);
     $this->db->delete('embassy');
+
+    $this->db->where('land_key', $land_key);
+    $this->db->delete('sanctions');
  }
  // Remove all modifiers from land
  function remove_land_type_modifiers_from_land($land_key, $land_type_effect_keys)

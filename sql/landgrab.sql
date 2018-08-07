@@ -92,6 +92,20 @@ CREATE TABLE `embassy` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sanctions`
+--
+
+CREATE TABLE `sanctions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `land_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NOT NULL,
+  `world_key` int(10) UNSIGNED NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ip_request`
 --
 
@@ -148,6 +162,7 @@ CREATE TABLE `modify_effect` (
   `sort_order` int(10) UNSIGNED NOT NULL,
   `is_land_upgrade` int(1) NOT NULL,
   `is_embassy` int(1) NOT NULL,
+  `is_sanctions` int(1) NOT NULL,
   `population` int(11) NOT NULL,
   `culture` int(11) NOT NULL,
   `gdp` int(11) NOT NULL,

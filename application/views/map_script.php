@@ -278,9 +278,9 @@ function initMap() {
       prepare_land_form_data(coord_slug, world_key, d);
 
       // Unbind the last click handler from get_single_land 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').off('click');
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, #build_sanctions, #remove_sanctions, .remove_building').off('click');
 
-      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, .remove_building').click(function() {
+      $('#land_form_submit_claim, #land_form_submit_claim_tutorial, #land_form_submit_attack, #land_form_submit_attack_tutorial, #land_form_submit_update, .land_form_submit_upgrade, #build_embassy, #remove_embassy, #build_sanctions, #remove_sanctions, .remove_building').click(function() {
 
         // Submit land ajax
         var form_type = $(this).val();
@@ -344,6 +344,10 @@ function initMap() {
     $('#build_embassy').hide();
     $('#remove_embassy').hide();
     $('#embassy_list_dropdown_button').hide();
+    $('#sanctions_info_dropdown_button').hide();
+    $('#build_sanctions').hide();
+    $('#remove_sanctions').hide();
+    $('#sanctions_list_dropdown_button').hide();
     $('#land_form_support_too_low').hide();
 
     // Not logged in
@@ -383,6 +387,21 @@ function initMap() {
           player_has_embassy_here = true;
         }
         // Show embassy list
+      }
+    }
+
+    // Sanctions List
+    if (d['capitol'] === '1') {
+      var player_has_sanctions_here = false;
+      var sanctions_list_length = d['sanctions_list'].length;
+      $('#sanctions_list').html('');
+      for (var i = 0; i < sanctions_list_length; i++) {
+        $('#sanctions_list_dropdown_button').show();
+        $('#sanctions_list').append('<p>Sanctions imposed by ' + d['sanctions_list'][i].nation_name + ' - Consulate of ' + d['sanctions_list'][i].username + '</p>');
+        if (d['sanctions_list'][i].account_key === account['id']) {
+          player_has_sanctions_here = true;
+        }
+        // Show sanctions list
       }
     }
 
@@ -485,6 +504,17 @@ function initMap() {
         }
         else {
           $('#build_embassy').show();
+        }
+      }
+
+      // Sanctions Logic
+      if (d['capitol'] === '1') {
+        $('#sanctions_info_dropdown_button').show();
+        if (player_has_sanctions_here) {
+          $('#remove_sanctions').show();
+        }
+        else {
+          $('#build_sanctions').show();
         }
       }
 
@@ -595,7 +625,7 @@ function initMap() {
 
       // Remove link
       removeLink = '';
-      if (log_check && d['sum_modifiers'][i]['name'] != 'capitol' && d['sum_modifiers'][i]['name'] != 'embassy' && d['account_key'] == account_id) {
+      if (log_check && d['sum_modifiers'][i]['name'] != 'capitol' && d['sum_modifiers'][i]['name'] != 'embassy' && d['sum_modifiers'][i]['name'] != 'sanctions' && d['account_key'] == account_id) {
         removeLink = ' ' + '<button type="button" class="remove_building btn btn-sm btn-danger" value="' + '-' + d['sum_modifiers'][i]['id'] + '">' + removeGlyphicon + '</button>';
       }
 
@@ -657,6 +687,9 @@ function initMap() {
 
       // Update Land Style
       if (form_type === 'build_embassy' || form_type === 'remove_embassy') {
+        return;
+      }
+      if (form_type === 'build_sanctions' || form_type === 'remove_sanctions') {
         return;
       }
 

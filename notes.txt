@@ -7,9 +7,23 @@ Current Changelog
     Hover on chat avatar icon will show time of that message
     Stadium nerf
     Minimum for Embassy
-        Todo
     Sanctions
+    Style tweaks
+        Todo
     New buildings?
+
+
+Queries to run
+
+-- Drop and re-create modify effects
+
+CREATE TABLE `sanctions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `land_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NOT NULL,
+  `world_key` int(10) UNSIGNED NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ==========================================================================================
     Goals

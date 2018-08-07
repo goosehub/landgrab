@@ -79,6 +79,11 @@
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
         </div>
 
+        <div id="sanctions_list_dropdown_button" class="btn btn-info" type="button" data-toggle="collapse" data-target="#sanctions_list_dropdown" aria-expanded="false" aria-controls="sanctions_list_dropdown">
+            Sanctions
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </div>
+
         <button id="button_expand_upgrade" class="expand_land_form btn btn-success land_block_toggle" type="button" data-toggle="collapse" data-target="#upgrade_dropdown" aria-expanded="false" aria-controls="upgrade_dropdown">
             Build
             <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
@@ -88,6 +93,11 @@
 
         <div id="embassy_list_dropdown" class="info_details_parent collapse">
             <div id="embassy_list" class="well">
+            </div>
+        </div>
+
+        <div id="sanctions_list_dropdown" class="info_details_parent collapse">
+            <div id="sanctions_list" class="well">
             </div>
         </div>
 
@@ -109,6 +119,7 @@
                     <div class="row">
                     <?php foreach ($modify_effect_dictionary as $effect) { ?>
                         <?php if ($effect['is_embassy']) { continue; } ?>
+                        <?php if ($effect['is_sanctions']) { continue; } ?>
                         <?php $button_color = $effect['id'] <= 10 ? 'action' : 'success' ?>
                         <div id="<?php echo $effect['name']; ?>_info_parent" class="effect_info_item col-md-6 land_block_toggle">
                             <button type="button" class="land_form_submit_upgrade upgrade_submit submit_land_form btn btn-<?php echo $button_color; ?>" value="<?php echo $effect['id']; ?>">
@@ -219,8 +230,24 @@
             </div>
             <div id="embassy_info_dropdown" class="info_details_parent collapse">
                 <div class="well">
-                    <p class="lead">
-                        You can build an Embassy on another player's Capitol to altruistically (or strategically) assist another player. An Embassy boosts this players Population by <?php echo $embassy_effect['population'] ?>K, Culture by <?php echo $embassy_effect['culture'] ?>, GDP by $<?php echo $embassy_effect['gdp'] ?>M, Military by $<?php echo $embassy_effect['military'] ?>M, and Support by <?php echo $embassy_effect['support'] ?>.
+                    <p class="">
+                        You can build an Embassy on another nations Capitol to altruistically (or strategically) assist another nation. An Embassy boosts this nations Population by <?php echo $embassy_effect['population'] ?>K, Culture by <?php echo $embassy_effect['culture'] ?>, GDP by $<?php echo $embassy_effect['gdp'] ?>M, Military by $<?php echo $embassy_effect['military'] ?>M, and Support by <?php echo $embassy_effect['support'] ?>.
+                    </p>
+                </div>
+            </div>
+        </div> 
+
+        <div class="sanctions_parent">
+
+            <button type="button" value="build_sanctions" id="build_sanctions" class="btn btn-danger">Impose Sanctions</button>
+            <button type="button" value="remove_sanctions" id="remove_sanctions" class="btn btn-danger">Remove Sanctions</button>
+            <div id="sanctions_info_dropdown_button" class="btn btn-info" type="button" data-toggle="collapse" data-target="#sanctions_info_dropdown" aria-expanded="false" aria-controls="sanctions_info_dropdown">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </div>
+            <div id="sanctions_info_dropdown" class="info_details_parent collapse">
+                <div class="well">
+                    <p class="">
+                        You can impose sanctions on your enemies to hamper their economy. Sanctions will decrease a nations GDP by <?php echo abs($sanctions_effect['culture']) ?> and reduce their support by <?php echo abs($sanctions_effect['support']) ?>. But the consequence of imposing sanctions is that is will cause 100 weariness to yourself.
                     </p>
                 </div>
             </div>

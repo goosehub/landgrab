@@ -13,6 +13,7 @@ class Game extends CI_Controller {
     protected $fortification_key = 6;
     protected $capitol_key = 10;
     protected $embassy_key = 17;
+    protected $sanctions_key = 21;
 
     // Government Key Constants
     protected $democracy_key = 1;
@@ -36,6 +37,8 @@ class Game extends CI_Controller {
     protected $defence_bonus = 1.5;
     protected $attack_bonus = 1.5;
     protected $minimum_lands_to_build_embassy = 100;
+    protected $minimum_lands_to_build_sanctions = 100;
+    protected $weariness_from_building_sanctions = 100;
 
     // Shared data
     protected $effects;
@@ -157,6 +160,7 @@ class Game extends CI_Controller {
             $data['land_type_key_dictionary'] = $this->land_type_key_dictionary();
             $data['modify_effect_dictionary'] = $this->effects;
             $data['embassy_effect'] = $this->game_model->get_embassy_effect();
+            $data['sanctions_effect'] = $this->game_model->get_sanctions_effect();
         }
 
         // Get all lands
@@ -270,8 +274,10 @@ class Game extends CI_Controller {
         $land_square['sum_effects'] = $this->game_model->get_sum_effects_of_land($land_square['id']);
         $land_square['sum_modifiers'] = $this->game_model->get_sum_modifiers_for_land($land_square['id']);
         $land_square['embassy_list'] = false;
+        $land_square['sanctions_list'] = false;
         if ($land_square['capitol']) {
             $land_square['embassy_list'] = $this->game_model->get_embassys_of_land($land_square['id']);
+            $land_square['sanctions_list'] = $this->game_model->get_sanctions_of_land($land_square['id']);
         }
         $account = false;
         if ($land_square['account_key'] != 0) {
@@ -462,6 +468,33 @@ class Game extends CI_Controller {
             echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Embassy Removed"}';
             return true;
         }
+        if ($form_type === 'build_sanctions') {
+            $action_type = $form_type;
+            $player_has_sanctions = $this->game_model->get_sanctions_by_player_and_land($account_key, $land_key);
+            if (!empty($player_has_sanctions)) {
+                echo '{"status": "fail", "message": "You already have sanctions here."}';
+                return false;
+            }
+            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_sanctions) {
+                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_sanctions . ' lands to build sanctions."}';
+                return false;
+            }
+            $this->game_model->add_player_sanctions($account_key, $land_key, $world_key, $this->sanctions_key);
+            $this->game_model->add_weariness_to_account($account_key, $this->weariness_from_building_sanctions);
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Sanctions Built"}';
+            return true;
+        }
+        else if ($form_type === 'remove_sanctions') {
+            $action_type = $form_type;
+            $player_has_sanctions = $this->game_model->get_sanctions_by_player_and_land($account_key, $land_key);
+            if (empty($player_has_sanctions)) {
+                echo '{"status": "fail", "message": "You don\'t have sanctions here."}';
+                return false;
+            }
+            $this->game_model->remove_player_sanctions($account_key, $land_key, $this->sanctions_key);
+            echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Sanctions Removed"}';
+            return true;
+        }
         else if ( is_numeric($form_type) && $form_type < 0 ) {
             $action_type = 'demolish';
         }
@@ -548,7 +581,9 @@ class Game extends CI_Controller {
             $content = '';
             if ($land_square['capitol']) {
                 $this->game_model->remove_all_embassy_of_land($land_key);
+                $this->game_model->remove_all_sanctions_of_land($land_key);
                 $this->game_model->remove_modifier_from_land($land_key, $this->embassy_key, 9999);
+                $this->game_model->remove_modifier_from_land($land_key, $this->sanctions_key, 9999);
                 $this->game_model->update_land_capitol_status($land_key, $capitol = 0);
             }
             if ($land_square['land_type'] != $this->unclaimed_key || $land_square['land_type'] != $this->village_key) {
@@ -673,7 +708,7 @@ class Game extends CI_Controller {
             $land_type_effect_keys = array($this->unclaimed_key, $this->village_key, $this->town_key, $this->city_key, $this->metropolis_key, $this->fortification_key);
             // Capitol
             if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
-                $this->game_model->remove_capitol_from_account($account_key, $this->capitol_key, $this->embassy_key);
+                $this->game_model->remove_capitol_from_account($account_key, $this->capitol_key, $this->embassy_key, $this->sanctions_key);
                 $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $this->game_model->update_land_capitol_status($land_key, $capitol = 1);
                 break;
