@@ -240,7 +240,7 @@
         <div class="sanctions_parent">
 
             <button type="button" value="build_sanctions" id="build_sanctions" class="btn btn-danger">Impose Sanctions</button>
-            <button type="button" value="remove_sanctions" id="remove_sanctions" class="btn btn-danger">Remove Sanctions</button>
+            <button type="button" value="remove_sanctions" id="remove_sanctions" class="btn btn-success">Remove Sanctions</button>
             <div id="sanctions_info_dropdown_button" class="btn btn-info" type="button" data-toggle="collapse" data-target="#sanctions_info_dropdown" aria-expanded="false" aria-controls="sanctions_info_dropdown">
                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             </div>
