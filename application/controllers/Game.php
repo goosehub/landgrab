@@ -606,12 +606,16 @@ class Game extends CI_Controller {
         // Update land
         $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
 
-        // Reset weariness if attacked player has no land now
-        // Disabled to nerf "snipers" and for better performance
-        /* $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
+        // If player being attacked now has no land
+        $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
         if ($defender_new_land_count['count'] == 0) {
-            $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
-        } */
+            // Reset weariness if attacked player has no land now
+            // Disabled to nerf "snipers"
+            // $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
+
+            // Remove embassey and sanctions built by player
+            $this->game_model->remove_all_embassys_and_sanctions_built_by_player($land_square['account_key'], $this->embassy_key, $this->sanctions_key);
+        } 
 
         
         $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);

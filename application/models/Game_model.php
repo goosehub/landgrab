@@ -160,7 +160,40 @@ Class game_model extends CI_Model
     // Update sanctions listing
     $this->db->where('land_key', $old_land_key);
     $this->db->update('sanctions', $data);
-
+ }
+ // Remove all embassys and sanctions built by player
+ function remove_all_embassys_and_sanctions_built_by_player($account_key, $embassy_key, $sanctions_key)
+ {
+    // Get land key for every embassy by player
+    $this->db->select('*');
+    $this->db->from('embassy');
+    $this->db->where('account_key', $account_key);
+    $query = $this->db->get();
+    $embasseys = $query->result_array();
+    // Get land key for every embassy by player
+    $this->db->select('*');
+    $this->db->from('sanctions');
+    $this->db->where('account_key', $account_key);
+    $query = $this->db->get();
+    $sanctions = $query->result_array();
+    // Delete Embassy and Sanction listing
+    $this->db->where('account_key', $account_key);
+    $this->db->delete('embassy');
+    $this->db->where('account_key', $account_key);
+    $this->db->delete('sanctions');
+    // I should use a where_in but I'm lazy. This should rarely run and even more rarely involve a large loop
+    // Delete All Effects of Embassys
+    foreach ($embasseys as $embassey) {
+        $this->db->where('modify_effect_key', $embassy_key);
+        $this->db->where('land_key', $embassey['land_key']);
+        $this->db->delete('land_modifier');
+    }
+    // Delete All Effects of Sanctions
+    foreach ($sanctions as $sanction) {
+        $this->db->where('modify_effect_key', $sanctions_key);
+        $this->db->where('land_key', $sanction['land_key']);
+        $this->db->delete('land_modifier');
+    }
  }
  // Check if any immediate squares belong to current account
  function land_range_check($world_key, $account_key, $coord_array)
