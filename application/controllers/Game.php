@@ -34,8 +34,8 @@ class Game extends CI_Controller {
     protected $base_support = 100;
     protected $building_minimum = 0;
     protected $ww_nerf = 10;
-    protected $defence_bonus = 1.5;
-    protected $attack_bonus = 1.5;
+    protected $defence_bonus = 1.25;
+    protected $attack_bonus = 1.25;
     protected $minimum_lands_to_build_embassy = 100;
     protected $minimum_lands_to_build_sanctions = 100;
     protected $weariness_from_building_sanctions = 100;

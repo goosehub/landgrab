@@ -156,8 +156,8 @@
                 <li>If you get stuck in debt or in low support, consider adjusting your taxes or removing buildings</li>
                 <li>For every 5 Villages, you can build a Town, every 5 Towns a City, and every 5 Cities a Metropolis</li>
                 <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
-                <li>The player with the largest population gets a 50% Defensive Bonus</li>
-                <li>The player with the most culture gets a 50% Offensive Bonus</li>
+                <li>The player with the largest population gets a 25% Defensive Bonus</li>
+                <li>The player with the most culture gets a 25% Offensive Bonus</li>
                 <li>Form alliances, build Embassies with your allies and impose Sanctions on your enemies.</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
             </ul>

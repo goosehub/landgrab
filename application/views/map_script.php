@@ -867,7 +867,7 @@ function initMap() {
       }
     });
     if (pop_leader) {
-      pop_leader.html(pop_leader.html() + '<br><small class="text-info">50% Defensive Bonus</small>');
+      pop_leader.html(pop_leader.html() + '<br><small class="text-info">25% Defensive Bonus</small>');
     }
 
     // Culture Attacking bonus
@@ -883,7 +883,7 @@ function initMap() {
       }
     });
     if (culture_leader) {
-      culture_leader.html(culture_leader.html() + '<br><small class="text-purple">50% Attacking Bonus</small>');
+      culture_leader.html(culture_leader.html() + '<br><small class="text-purple">25% Attacking Bonus</small>');
     }
   }
 
