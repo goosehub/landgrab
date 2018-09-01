@@ -211,6 +211,7 @@ class Game extends CI_Controller {
 
         // Democracy Taxes
         $account['stats']['corruption_rate'] = 100;
+        $tax_weariness = 0;
         if ((int)$account['government'] === $this->democracy_key) {
             $account['stats']['corruption_rate'] = $this->democracy_corruption_rate;
             $tax_weariness = $this->tax_weariness_calculate($account['tax_rate'], $this->democracy_tax_weariness_nerf);
@@ -612,6 +613,12 @@ class Game extends CI_Controller {
             $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
         } */
 
+        
+        $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
+        if ($defender_new_land_count['count'] == 0) {
+            $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
+        } 
+
         // Attack response
         if ($action_type === 'attack') {
             echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Captured"}';
@@ -709,6 +716,8 @@ class Game extends CI_Controller {
             $land_type_effect_keys = array($this->unclaimed_key, $this->village_key, $this->town_key, $this->city_key, $this->metropolis_key, $this->fortification_key);
             // Capitol
             if ($effect['name'] === 'capitol' && $form_type === $effect['id']) {
+                // update_embassey_and_sanction_effects_to_new_land() must be run first
+                $this->game_model->update_embassey_and_sanction_effects_to_new_land($land_key, $account_key, $this->embassy_key, $this->sanctions_key);
                 $this->game_model->remove_capitol_from_account($account_key, $this->capitol_key, $this->embassy_key, $this->sanctions_key);
                 $this->game_model->add_modifier_to_land($land_key, $effect['id']);
                 $this->game_model->update_land_capitol_status($land_key, $capitol = 1);

@@ -114,23 +114,7 @@ Class game_model extends CI_Model
         $this->db->where('land_key', $capitol_land[0]['id']);
         $this->db->where('modify_effect_key', $capitol_key);
         $this->db->delete('land_modifier');
-
-        // Remove embassy effect
-        $this->db->where('land_key', $capitol_land[0]['id']);
-        $this->db->where('modify_effect_key', $embassy_key);
-        $this->db->delete('land_modifier');
-
-        // Remove sanctions effect
-        $this->db->where('land_key', $capitol_land[0]['id']);
-        $this->db->where('modify_effect_key', $sanctions_key);
-        $this->db->delete('land_modifier');
     }
-
-    // Remove embassy listings
-    $this->remove_all_embassy_of_land($capitol_land[0]['id']);
-
-    // Remove sanctions listings
-    $this->remove_all_sanctions_of_land($capitol_land[0]['id']);
 
     // Remove capitol flag
     $data = array(
@@ -141,6 +125,42 @@ Class game_model extends CI_Model
     $this->db->update('land', $data);
 
     return true;
+ }
+ // Update embassey and sanctions effects
+ function update_embassey_and_sanction_effects_to_new_land($land_key, $account_key, $embassy_key, $sanctions_key)
+ {
+    // Find current capitol square
+    $this->db->select('id');
+    $this->db->from('land');
+    $this->db->where('account_key', $account_key);
+    $this->db->where('capitol', 1);
+    $query = $this->db->get();
+    $capitol_land = $query->result_array();
+    $old_land_key = $capitol_land[0]['id'];
+
+    // This data will be used for all 4 updates
+    $data = array(
+        'land_key' => $land_key,
+    );
+
+    // Update embassy effect to new land
+    $this->db->where('land_key', $old_land_key);
+    $this->db->where('modify_effect_key', $embassy_key);    
+    $this->db->update('land_modifier', $data);
+
+    // Update sanctions effect to new land
+    $this->db->where('land_key', $old_land_key);
+    $this->db->where('modify_effect_key', $sanctions_key);
+    $this->db->update('land_modifier', $data);
+
+    // Update embassy listing
+    $this->db->where('land_key', $old_land_key);
+    $this->db->update('embassy', $data);
+
+    // Update sanctions listing
+    $this->db->where('land_key', $old_land_key);
+    $this->db->update('sanctions', $data);
+
  }
  // Check if any immediate squares belong to current account
  function land_range_check($world_key, $account_key, $coord_array)

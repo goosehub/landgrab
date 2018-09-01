@@ -30,7 +30,7 @@
         <span id="land_form_info_parent" class="land_block_toggle">
             <strong id="land_name_label"></strong>
             <div id="land_content_label"></div>
-            <div id="username" class="text-success">Led by <span id="username_label"></span></div>
+            <div id="username" class="text-primary">Led by <span id="username_label"></span></div>
 
             <div id="capitol_info" class="land_block_toggle">
                 <a class="land_leader_portrait_image_link" href="<?=base_url()?>uploads/default_leader_portrait.png" target="_blank">
@@ -44,7 +44,7 @@
 
             <div><span id="land_type_label" class="text-primary"></span></div>
             <div class="text-info">Population of <span id="land_population_label"></span><small>K</small></div>
-            <div class="text-action">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
+            <div class="text-success">GDP: $<span id="land_gdp_label"></span><small>M</small></div>
             <button type="button" id="land_form_submit_attack" value="attack" class="submit_land_form btn btn-action land_block_toggle">
                 Attack  <span class="weariness_outer_span">(+<span class="weariness_attack_span" class="text-danger">0</span> weariness)</span>
             </button>

@@ -622,6 +622,9 @@ function initMap() {
       if (modifier_name === 'Skiescrapers') {
         modifier_name = 'Skyscrapers';
       }
+      if (modifier_name === 'Sanctionss') {
+        modifier_name = 'Sanctions';
+      }
 
       // Remove link
       removeLink = '';
