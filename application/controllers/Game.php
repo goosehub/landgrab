@@ -39,6 +39,7 @@ class Game extends CI_Controller {
     protected $minimum_lands_to_build_embassy = 100;
     protected $minimum_lands_to_build_sanctions = 100;
     protected $weariness_from_building_sanctions = 100;
+    protected $weariness_from_removing_building = 5;
 
     // Shared data
     protected $effects;
@@ -141,6 +142,7 @@ class Game extends CI_Controller {
         $data['weariness_increase_land_count'] = $this->weariness_increase_land_count;
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
         $data['building_minimum'] = $this->building_minimum;
+        $data['weariness_from_removing_building'] = $this->weariness_from_removing_building;
 
 
         // Get world leaderboards
@@ -516,6 +518,7 @@ class Game extends CI_Controller {
         // Demolish
         if ($action_type === 'demolish') {
             $this->game_model->remove_modifier_from_land($land_square['id'], abs($form_type), 1);
+            $this->game_model->add_weariness_to_account($account_key, $this->weariness_from_removing_building);
             echo '{"status": "success", "result": true, "land_key": "' . $land_square['id'] . '", "message": "Building Demolished"}';
             return true;
         }

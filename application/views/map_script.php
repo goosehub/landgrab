@@ -609,6 +609,12 @@ function initMap() {
     var building_count = '';
     var removeLink = '';
     var removeGlyphicon = '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+
+
+    if (log_check && d['account_key'] == account_id) {
+      more_info_string += '<p class="text-warning">Removing a building causes <?php echo $weariness_from_removing_building; ?> weariness</p>';
+    }
+
     for (var i = 0; i < d['sum_modifiers'].length; i++) {
       // Skip if land type
       if (d['sum_modifiers'][i]['id'] <= 10 && d['sum_modifiers'][i]['id'] != land_type_key_dictionary['capitol']) {
