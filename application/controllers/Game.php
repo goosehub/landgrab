@@ -36,8 +36,8 @@ class Game extends CI_Controller {
     protected $ww_nerf = 10;
     protected $defence_bonus = 1.25;
     protected $attack_bonus = 1.25;
-    protected $minimum_lands_to_build_embassy = 100;
-    protected $minimum_lands_to_build_sanctions = 100;
+    protected $minimum_lands_to_build_embassy_or_sanctions = 300;
+    protected $minimum_lands_to_keep_embassy_or_sanctions = 100; // Performance concerns if this is too large
     protected $weariness_from_building_sanctions = 100;
     protected $weariness_from_removing_building = 5;
 
@@ -143,6 +143,8 @@ class Game extends CI_Controller {
         $data['sniper_land_minimum'] = $this->sniper_land_minimum;
         $data['building_minimum'] = $this->building_minimum;
         $data['weariness_from_removing_building'] = $this->weariness_from_removing_building;
+        $data['minimum_lands_to_build_embassy_or_sanctions'] = $this->minimum_lands_to_build_embassy_or_sanctions;
+        $data['minimum_lands_to_keep_embassy_or_sanctions'] = $this->minimum_lands_to_keep_embassy_or_sanctions;
 
 
         // Get world leaderboards
@@ -453,8 +455,8 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "You already have an embassy here."}';
                 return false;
             }
-            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_embassy) {
-                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_embassy . ' lands to build an embassy."}';
+            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_embassy_or_sanctions) {
+                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_embassy_or_sanctions . ' lands to build an embassy."}';
                 return false;
             }
             $this->game_model->add_player_embassy($account_key, $land_key, $world_key, $this->embassy_key);
@@ -479,8 +481,8 @@ class Game extends CI_Controller {
                 echo '{"status": "fail", "message": "You already have sanctions here."}';
                 return false;
             }
-            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_sanctions) {
-                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_sanctions . ' lands to build sanctions."}';
+            if ($account['stats']['land_count'] < $this->minimum_lands_to_build_embassy_or_sanctions) {
+                echo '{"status": "fail", "message": "You must have ' . $this->minimum_lands_to_build_embassy_or_sanctions . ' lands to build sanctions."}';
                 return false;
             }
             $this->game_model->add_player_sanctions($account_key, $land_key, $world_key, $this->sanctions_key);
@@ -609,20 +611,20 @@ class Game extends CI_Controller {
         // Update land
         $this->game_model->update_land_data($land_square['id'], $account_key, $land_name, $content, $land_type, $color);
 
-        // If player being attacked now has no land
+        // Get count of defending player lands
         $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
+
+        // If player being attacked now has no land
+        if ($defender_new_land_count['count'] < $this->minimum_lands_to_keep_embassy_or_sanctions) {
+            // Remove embassey and sanctions built by player
+            $this->game_model->remove_all_embassys_and_sanctions_built_by_player($land_square['account_key'], $this->embassy_key, $this->sanctions_key);
+        }
+
         if ($defender_new_land_count['count'] == 0) {
             // Reset weariness if attacked player has no land now
             // Disabled to nerf "snipers"
             // $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
 
-            // Remove embassey and sanctions built by player
-            $this->game_model->remove_all_embassys_and_sanctions_built_by_player($land_square['account_key'], $this->embassy_key, $this->sanctions_key);
-        } 
-
-        
-        $defender_new_land_count = $this->game_model->count_lands_of_account($land_square['account_key']);
-        if ($defender_new_land_count['count'] == 0) {
             $this->game_model->set_weariness_from_account($land_square['account_key'], 0);
         } 
 

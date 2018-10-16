@@ -158,6 +158,7 @@
                 <li>For every <?php echo $weariness_increase_land_count; ?> lands you own, weariness increases by 1 for each attack</li>
                 <li>The player with the largest population gets a 25% Defensive Bonus</li>
                 <li>The player with the most culture gets a 25% Offensive Bonus</li>
+                <li>Embassy and Sanctions can be built when you have <?php echo $minimum_lands_to_build_embassy_or_sanctions; ?> lands, and will be removed when you fall under <?php echo $minimum_lands_to_keep_embassy_or_sanctions; ?> lands</li>
                 <li>Form alliances, build Embassies with your allies and impose Sanctions on your enemies.</li>
                 <li>To conquest quicker, hold the <kbd>a</kbd> key on click to blindly attack without launching a window</li>
             </ul>

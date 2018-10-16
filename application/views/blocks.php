@@ -1,7 +1,7 @@
 <!-- Info tag -->
 <div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/9g6jqm/rubberband_balance_update/?" target="_blank">The Rubberband Update</a>
+    <a href="https://www.reddit.com/r/LandGrab/comments/9oicbv/the_embassy_limiting_update/?" target="_blank">The Embassy Limit Update</a>
     </strong>
 </div>
 
