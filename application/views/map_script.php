@@ -130,6 +130,22 @@ function initMap() {
   map.mapTypes.set('map_style', styled_map);
   map.setMapTypeId('map_style');
 
+  // Example Icon
+  var myLatLng = {lat: -1, lng: 1};
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'Hello World!',
+    // draggable:true,
+    icon: {
+      url: 'https://images.vexels.com/media/users/3/128926/isolated/preview/c60c97eba10a56280114b19063d04655-plane-airport-round-icon-by-vexels.png',
+      scaledSize: new google.maps.Size(20, 20), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(10,10) // anchor
+    }
+  });
+  marker.setMap(map);
+
   // 
   // Minor Functions
   // 

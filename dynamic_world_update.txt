@@ -1,0 +1,191 @@
+================================
+Lists
+================================
+
+Terrian
+	Fertile
+	Barren
+	Mountain
+	Desert
+	Tundra
+	Coastal
+	Ocean
+
+Crop Resources
+	Grain
+	Fruit
+	Vegetable
+	Livestock
+	Fish
+
+Harvested Resources
+	Timber
+	Fiber
+	Ore
+	Cash Crops
+
+Energy Resources
+	Biofuel
+	Solar
+	Wind
+	Coal
+	Oil
+	Gas
+	Uranium
+
+Cash Resources
+	Silver
+	Gold
+	Platinum
+	Gemstones
+
+Energy Sources
+	Coal
+	Oil
+	Gas
+	Solar
+	Wind
+	Uranium
+
+Alloy Sources
+	Iron
+	Copper
+	Zinc
+	Aluminum
+	Nickle
+	Titanium
+
+Settlements
+	Town (1 of any crop)
+	City (3 different crops, 1 Merchandise, 1 Energy)
+	Metropolis (5 of each crop, 5 Merchandise, 5 Energy, 1 Construction)
+
+Special Industries
+	Capital (Cash) = Support, can spawn military units, unique building
+	Federal (Cash) = Support
+	Base (Cash) = Can spawn military units
+Cash Crop Industries
+	Pharmaceuticals (Cash Crops)
+	Coffee (Cash Crops)
+	Tea (Cash Crops)
+	Marijuana (Cash Crops)
+	Alcohol (Cash Crops)
+	Tobacco (Cash Crops)
+Raw Material Industries
+	Manufacturing (Ore|Timber|Fiber) = Merchandise
+	Energy (Coal|Gas|Oil|Nuclear|Biofuel) = Energy
+	Textile (Fiber) = Cash
+	Chemicals (Coal|Gas|Oil) = Chemicals
+	Steel (Iron) = Steel
+	Electronics (Copper) = Electronics
+Advanced Industries
+	Construction (Steel)
+	Telecommunications (Copper,IT)
+	Healthcare (Pharmaceuticals) = Population
+	Shipping Port (Coast,City,Steel)
+	Machinery (Zinc,Steel,Electronics,IT)
+	Automotive (City,Aluminum,Steel,Chemicals,Engineering)
+	Aerospace (City,Aluminum,Nickle,Titanium,Steel,Chemicals,Engineering,IT)
+Service Industries
+	Resort Tourism (Mountain) = Cash
+	Leisure Tourism (Coastal) = Cash
+	Gambling Tourism (Support) = Cash
+Knowledge Industries
+	University (Cash) = Education
+	IT (City,Education) = IT
+	Healthcare (City,Education,Pharmaceuticals) = Population
+Metro Industries
+	Financial and Banking (Metro) = Cash
+	Entertainment And Media (Metro) = Support
+	Engineering and Design (Metro) = Engineering
+Core Resources
+	Territories (Used to Win)
+	Population (Is a base for a settlements GDP)
+	GDP (Used for Taxes)
+	Units (Used to take land)
+	Cash (Used to purchase and trade)
+	Food (Used to build towns, cities, and metros)
+	Energy (Used to build cities and metros)
+	Merchendize (Used to build cities and metros)
+	Support (Must be at a minimum to get tax incomes)
+
+Army Units
+	Infantry (Medium Cash) = Moves 1 Tile 4 directions, Beats Commandos 80%, Can Take Land or Settlements, Great for Attacks
+	Guerrilla (Small Cash) = Moves 1 Tile 8 directions, Beats Infantry 70%, Can Take Land, Great Defense
+	Commandos (Large Cash) = Moves 2 Tile 8 directions, Beats Guerrilla 90%, Can Not Take Land, Great Infantry Compliment
+
+Attacks
+	Spy (Cash) = reveals all stats of other player
+	Bombing (Cash,Base) = reduces size of settlement
+	Nuclear (Cash,Aerospace,Uranium) = removes settlment
+
+Governments
+	Democracy (Low corruption, needs 50% support)
+	Oligarchy (moderate corruption, needs 25% support)
+	Autocracy (high corruption, needs 5% support)
+	Anarchy (full corruption, needs no support)
+
+Budget Rates
+	Tax (Support) = Cash as Percent of GDP
+
+Financial
+	+GDP
+	%Tax Income
+	-Corruption
+	=Available Revenue
+
+===================================
+
+anarchy for x hours when switching governments
+land types defensive bonuses
+can always expand to available coastal square/island
+Cron each method separately
+Attack uses support
+
+===================================
+
+Ore maps
+	https://en.wikipedia.org/wiki/Ore#/media/File:Simplified_world_mining_map_1.png
+	https://upload.wikimedia.org/wikipedia/commons/5/53/Simplified_world_mining_map_2.png
+
+Population maps
+	https://en.wikipedia.org/wiki/Population_density#/media/File:World_population_density_1994_-_with_equator.png
+
+Industry breakdown
+	https://en.wikipedia.org/wiki/Outline_of_industry
+
+Common Metals
+	https://www.quora.com/What-are-five-of-the-most-commonly-used-metals
+
+===================================
+
+Terrian
+	fertile land
+		settle
+		grain
+		fruit
+		vegetable
+		beans
+		livestock
+		timber
+		fiber
+		cash crops
+		biofuel
+		solar
+		wind
+	barren land
+		settle
+		livestock
+		solar
+		wind
+	mountainous land
+		settle
+		ore
+		wind
+	coastal
+		settle
+		fish
+	desert/tundra
+		base only
+	ocean
+		can not interact with

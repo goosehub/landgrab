@@ -6,65 +6,18 @@
     Goals
 ==========================================================================================
 
-High Priority
-    FEATURE: Better tutorial
-    FEATURE: Update leaderboard on view
-    BUG: Embassy on non Capitol
-    REFACTOR: Consolidate get_full_account queries and merge with account_valid_upgrades
-    REFACTOR: Consolidate get_single_land queries
-    REFACTOR: Remove "This shouldn't happen, but it does"
-    REFACTOR: Maybe we don't need get_effects_of_land
-    FEATURE: Confirm when moving capitol
-
-Moderate Priority
-    FEATURE: Private chat
-    REFACTOR: Database Performance
-    REFACTOR: Less requests
-    BUG: Some lands get account key that doesn't exist, most likely account_key changed on an update, workaround exists
-    FEATURE: Suicide Button
-    FEATURE: North south wormhole
-    BEHAVIOR: First land is unnamed
-    BUG: After Make Capitol Visual Que not there
-    FEATURE: Ocean Reporting
-
-Low Priority
-    Feature
-        FAQ
-        Remember map or satallite
-    Bug
-        Sometimes land isn't updated after buy right during update
-        White edit text (confirmed on chrome on mac)
-        Apostrophy in default land name encoding bug needs a real fix
-    Security/Cheating/Manipulation Prevention
-        General Security
-    Performance
-        Tax cron optimization
-    Infrastructure
-        Move hosting to LiquidWeb
-    Refactor
-        Refactor ajax calls to have less brackets
-        Reduce dependence on break tag
-    Misc
-        License
-        Hats (Why the fuck did I write hats?)
-
-No Priority
-    Speed optimization
-    Net Worth Leaderboard
-    Reimplement tokens for ajax land forms to prevent blind forms for bot prevention
-    Hide google maps saved places
-    Figure out what to do with players on cash leaderboard with no land
-    Figure out method to create accounts of old users for newly created worlds
-    Update all owned lands at once
-    Land link zoom based off box size
-    Make blocks ajax to improve page speed load
-    Better loading screen
-    Zoom to land on link click
-    API world
-    Password Resets
-    Reset account manually
-    International Language Support
-    Facebook login
+HIGH PRIORITY
+    finish todo
+    db schema
+    map world terrian
+MEDIUM PRIORITY
+    prototype unit movement
+    prototype new map ui
+    prototype new menu uis
+    prototype highlighting squares
+    prototype hourly crons
+LOW PRIORITY
+NO PRIORITY
 
 ==========================================================================================
     Documentation
@@ -77,25 +30,6 @@ Live Server Instance
     Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
     Set a cron for 
         0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
-
-Marketing Reserach
-    http://www.indiegamegirl.com/no-budget-marketing/
-    http://gamedevelopment.tutsplus.com/articles/marketing-your-indie-game-the-single-most-important-thing-that-no-one-knows-how-to-do--gamedev-7157
-
-Promote
-    /v/
-    /s4s/
-    /b/
-    /int/
-    /pol/
-    minecraft friends
-    https://www.reddit.com/r/iama
-    https://www.reddit.com/r/indiegaming
-    https://www.reddit.com/r/webgames
-    https://www.gorillatrenchshotgun.com/hey-prs-and-developers/
-    http://www.bytejacker.com/
-    https://www.facebook.com/
-    http://www.addictinggames.com/game/upload.jsp#submitFlashGame
 
 coord_slug
     coord_slug is top right corner of box
