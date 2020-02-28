@@ -1,47 +1,69 @@
+-- Database sql
+DROP TABLE IF EXISTS world;
+DROP TABLE IF EXISTS tile;
+DROP TABLE IF EXISTS unit_type;
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS trade_request;
+DROP TABLE IF EXISTS supply_account_lookup;
+DROP TABLE IF EXISTS supply_account_trade_lookup;
+DROP TABLE IF EXISTS supply;
+DROP TABLE IF EXISTS terrian;
+DROP TABLE IF EXISTS resource;
+DROP TABLE IF EXISTS settlement;
+DROP TABLE IF EXISTS industry;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS chat;
+DROP TABLE IF EXISTS analytics;
+DROP TABLE IF EXISTS ip_request;
+
 CREATE TABLE `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(126) NOT NULL,
   `tile_size` int(4) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `world` ADD PRIMARY KEY (`id`);
+ALTER TABLE `world` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `tile` (
   `id` int(10) UNSIGNED NOT NULL,
   `lat` int(4) NOT NULL,
   `lng` int(4) NOT NULL,
   `world_key` int(10) UNSIGNED NOT NULL,
-  `owner_account_key` int(10) UNSIGNED NOT NULL,
+  `owner_account_key` int(10) UNSIGNED NULL,
   `terrian_key` int(10) UNSIGNED NOT NULL,
-  `resource_key` int(10) UNSIGNED NOT NULL,
-  `settlement_key` int(10) UNSIGNED NOT NULL,
-  `industry_key` int(10) UNSIGNED NOT NULL,
+  `resource_key` int(10) UNSIGNED NULL,
+  `settlement_key` int(10) UNSIGNED NULL,
+  `industry_key` int(10) UNSIGNED NULL,
   `army_unit_key` int(10) UNSIGNED NULL, -- Infantry, Guerrilla, Commandos, none as null
-  `army_unit_owner_key` int(10) UNSIGNED NOT NULL,
+  `army_unit_owner_key` int(10) UNSIGNED NULL,
   `is_capitol` int(1) NOT NULL,
-  `tile_name` varchar(512) NOT NULL,
-  `tile_desc` varchar(1024) NOT NULL,
-  `color` varchar(8) NOT NULL,
+  `tile_name` varchar(512) NULL,
+  `tile_desc` varchar(1024) NULL,
+  `color` varchar(8) NULL,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
+ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `unit_type` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(126) NOT NULL,
   `strength_against_key` int(10) UNSIGNED NOT NULL,
   `cost_base` int(4) NOT NULL,
-  `support_base` int(4) NOT NULL,
   `can_take_tiles` int(1) NOT NULL,
   `can_take_towns` int(1) NOT NULL,
   `can_take_cities` int(1) NOT NULL,
-  `can_take_metros` int(1) NOT NULL
-  `desc` varchar(256) NOT NULL,
+  `can_take_metros` int(1) NOT NULL,
+  `desc` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `unit_type` ADD PRIMARY KEY (`id`);
+ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `support_base`, `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
-(1, 'Infantry', 3, 100, 3, TRUE, TRUE, TRUE, TRUE),
-(2, 'Guerrilla', 1, 50, 1, TRUE, TRUE, FALSE, FALSE, ''),
-(3, 'Commandos', 2, 200, 2, TRUE, FALSE, FALSE, FALSE, '');
+INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
+(1, 'Infantry', 3, 100, TRUE, TRUE, TRUE, TRUE, ''),
+(2, 'Guerrilla', 1, 50, TRUE, TRUE, FALSE, FALSE, ''),
+(3, 'Commandos', 2, 200, TRUE, FALSE, FALSE, FALSE, '');
 
 CREATE TABLE `account` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -64,6 +86,8 @@ CREATE TABLE `account` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `account` ADD PRIMARY KEY (`id`);
+ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `trade_request` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -74,6 +98,8 @@ CREATE TABLE `trade_request` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
+ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -81,6 +107,8 @@ CREATE TABLE `supply_account_lookup` (
   `supply_key` int(10) UNSIGNED NOT NULL,
   `amount` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `supply_account_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `supply_account_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -88,6 +116,8 @@ CREATE TABLE `supply_account_trade_lookup` (
   `trade_key` int(10) UNSIGNED NOT NULL,
   `amount` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `supply_account_trade_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `supply_account_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `supply` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -97,6 +127,8 @@ CREATE TABLE `supply` (
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
+ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 -- core
@@ -112,11 +144,11 @@ INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 ('livestock', 'livestock', TRUE, ''),
 ('fish', 'fish', TRUE, ''),
 -- cash_crops
-('coffee', 'coffee', TRUE, TRUE, 1, ''),
-('tea', 'tea', TRUE, TRUE, 1, ''),
-('cannabis', 'cannabis', TRUE, TRUE, 1, ''),
-('alcohol', 'alcohol', TRUE, TRUE, 1, ''),
-('tobacco', 'tobacco', TRUE, TRUE, 1, ''),
+('coffee', 'coffee', TRUE, ''), -- cash_crop
+('tea', 'tea', TRUE, ''), -- cash_crop
+('cannabis', 'cannabis', TRUE, ''), -- cash_crop
+('alcohol', 'alcohol', TRUE, ''), -- cash_crop
+('tobacco', 'tobacco', TRUE, ''), -- cash_crop
 -- harvested supplies
 ('timber', 'timber', TRUE, ''),
 ('fiber', 'fiber', TRUE, ''),
@@ -130,10 +162,10 @@ INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 ('gas', 'gas', TRUE, ''),
 ('oil', 'oil', TRUE, ''),
 ('uranium', 'uranium', TRUE, ''),
-('silver', 'silver', TRUE, TRUE, 1, ''),
-('gold', 'gold', TRUE, TRUE, 1, ''),
-('platinum', 'platinum', TRUE, TRUE, 1, ''),
-('gemstones', 'gemstones', TRUE, TRUE, 1, ''),
+('silver', 'silver', TRUE, ''), -- cash_crop
+('gold', 'gold', TRUE, ''), -- cash_crop
+('platinum', 'platinum', TRUE, ''), -- cash_crop
+('gemstones', 'gemstones', TRUE, ''), -- cash_crop
 ('iron', 'iron', TRUE, ''),
 ('copper', 'copper', TRUE, ''),
 ('zinc', 'zinc', TRUE, ''),
@@ -166,6 +198,8 @@ CREATE TABLE `terrian` (
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `terrian` ADD PRIMARY KEY (`id`);
+ALTER TABLE `terrian` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `terrian` (`label`, `slug`, `meta`) VALUES
 ('Fertile', 'fertile', 1),
@@ -183,6 +217,8 @@ CREATE TABLE `resource` (
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
+ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `resource` (`label`, `slug`, `frequency_per_world`) VALUES
 -- Valuables
@@ -222,6 +258,8 @@ CREATE TABLE `settlement` (
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `settlement` ADD PRIMARY KEY (`id`);
+ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `settlement` (`label`, `slug`, `is_settlement`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`, `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `base_population`, `defense_bonus`, `input_desc`, `output_desc`) VALUES
 -- settlement
@@ -246,11 +284,11 @@ INSERT INTO `settlement` (`label`, `slug`, `is_settlement`, `is_food`, `is_mater
 ('solar', 'solar', FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, 10, 1, '', ''),
 ('wind', 'wind', FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, 10, 1, '', ''),
 -- cash_crops
-('coffee', 'coffee', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
-('tea', 'tea', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
-('cannabis', 'cannabis', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
-('alcohol', 'alcohol', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
-('tobacco', 'tobacco', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', '');
+('coffee', 'coffee', FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
+('tea', 'tea', FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
+('cannabis', 'cannabis', FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
+('alcohol', 'alcohol', FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', ''),
+('tobacco', 'tobacco', FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, 10, 1, '', '');
 
 CREATE TABLE `industry` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -266,6 +304,8 @@ CREATE TABLE `industry` (
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `industry` ADD PRIMARY KEY (`id`);
+ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `industry` (`category_id`, `label`, `slug`, `input_slug`, `output_desc`, `output_supply_key`, `output_supply_amount`, `gdp`, `meta`) VALUES
 -- federal
@@ -313,6 +353,9 @@ CREATE TABLE `user` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `user` ADD PRIMARY KEY (`id`);
+ALTER TABLE `user` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `chat` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
@@ -322,14 +365,22 @@ CREATE TABLE `chat` (
   `world_key` int(10) UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `chat` ADD PRIMARY KEY (`id`);
+ALTER TABLE `chat` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `analytics` (
   `id` int(10) UNSIGNED NOT NULL,
   `marketing_slug` varchar(64) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `analytics` ADD PRIMARY KEY (`id`);
+ALTER TABLE `analytics` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `ip_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `ip` varchar(64) NOT NULL,
   `request` varchar(64) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `ip_request` ADD PRIMARY KEY (`id`);
+ALTER TABLE `ip_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
