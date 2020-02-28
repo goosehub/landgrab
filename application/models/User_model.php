@@ -171,13 +171,13 @@ Class user_model extends CI_Model
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
 
-    // Update lands
+    // Update tiles
     $data = array(
         'color' => $color,
         'modified' => date('Y-m-d H:i:s', time())
     );
     $this->db->where('account_key', $account_id);
-    $this->db->update('land', $data);
+    $this->db->update('tile', $data);
     return true;
  }
  // Progress Tutorial
