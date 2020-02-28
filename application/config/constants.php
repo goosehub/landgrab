@@ -5,6 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Cron Token, for verifying cron actions
 // 
 
+// Polling
+define('MAP_UPDATE_INTERVAL_MS', 1 * 60 * 1000);
+define('SERVER_MAP_UPDATE_INTERVAL_MS', 2 * 60 * 1000);
+
+// Use for emergencies
+define('MAINTENANCE', false);
+
 // This variable to be changed for live version
 define('CRON_TOKEN', '1234');
 

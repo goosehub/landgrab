@@ -3,7 +3,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class user_model extends CI_Model
 {
- // Get all users
+ function get_user_and_account($world_id)
+ {
+    if (!$this->session->userdata('user')) {
+        return false;
+    }
+    $user_id = $this->session->userdata('user')['id'];
+    $user = $this->get_user_from_db($user_id);
+    if (!$user) {
+        return false;
+    }
+    $user['account'] = $this->get_account_by_keys($user['id'], $world_id);
+    if (!$user['account']) {
+        return false;
+    }
+    return $user;
+ }
+ function get_user($user_id = false)
+ {
+    $user = false;
+    if ($this->session->userdata('user')) {
+        $user_id = $this->session->userdata('user')['id'];
+    }
+    return $this->get_user_from_db($user_id);
+ }
  function get_all_users()
  {
     $this->db->select('id, username, created');
@@ -11,8 +34,7 @@ Class user_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
- // Get user
- function get_user($user_id)
+ function get_user_from_db($user_id)
  {
     $this->db->select('id, username, created');
     $this->db->from('user');
@@ -22,7 +44,6 @@ Class user_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
- // Get account by keys
  function get_account_by_keys($user_key, $world_key)
  {
     $this->db->select('account.*, user.username');
@@ -35,7 +56,6 @@ Class user_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
- // Get account by keys
  function get_account_by_id($account_id)
  {
     $this->db->select('account.*, user.username');
@@ -47,7 +67,6 @@ Class user_model extends CI_Model
     $result = $query->result_array();
     return isset($result[0]) ? $result[0] : false;
  }
- // Get all worlds
  function get_all_worlds()
  {
     $this->db->select('*');
@@ -55,7 +74,6 @@ Class user_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
- // Login
  function login($username, $password)
  {
     $this->db->select('*');
@@ -70,10 +88,8 @@ Class user_model extends CI_Model
         return false;
     }
  }
- // Register
  function register($username, $password, $email, $facebook_id, $ip, $ip_frequency_register, $ab_test)
  {
-    // Check for excessive IPs registers
     $this->db->select('username');
     $this->db->from('user');
     $this->db->where('ip', $ip);
@@ -81,7 +97,6 @@ Class user_model extends CI_Model
     $this->db->limit(1);
     $query = $this->db->get();
 
-    // Disabled for now
     if ($query->num_rows() > 0 && !is_dev()) {
         return 'ip_fail';
     }
@@ -95,7 +110,6 @@ Class user_model extends CI_Model
     if ($query->num_rows() > 0) {
         return false;
     } else {
-        // Insert user into user
         $data = array(
         'username' => $username,
         'password' => password_hash($password, PASSWORD_BCRYPT),
@@ -107,7 +121,6 @@ Class user_model extends CI_Model
         );
         $this->db->insert('user', $data);
 
-        // Find user id
         $this->db->select_max('id');
         $this->db->from('user');
         $this->db->limit(1);
@@ -116,10 +129,8 @@ Class user_model extends CI_Model
         return $user_id;
     }
  }
- // Create player account
  function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_portrait, $government)
  {
-    // Insert user into user
     $data = array(
     'world_key' => $world_key,
     'user_key' => $user_key,
@@ -139,7 +150,6 @@ Class user_model extends CI_Model
     );
     $this->db->insert('account', $data);
 
-    // Find account id
     $this->db->select_max('id');
     $this->db->from('account');
     $this->db->limit(1);
@@ -147,10 +157,8 @@ Class user_model extends CI_Model
     $account_id = $query->id;
     return $account_id;
  }
- // Update account information
  function update_password($user_id, $password)
  {
-    // Update account
     $data = array(
         'password' => password_hash($password, PASSWORD_BCRYPT),
     );
@@ -158,10 +166,8 @@ Class user_model extends CI_Model
     $this->db->update('user', $data);
     return true;
  }
- // Update account information
  function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
  {
-    // Update account
     $data = array(
         'color' => $color,
         'nation_name' => $nation_name,
@@ -171,7 +177,6 @@ Class user_model extends CI_Model
     $this->db->where('id', $account_id);
     $this->db->update('account', $data);
 
-    // Update tiles
     $data = array(
         'color' => $color,
         'modified' => date('Y-m-d H:i:s', time())
@@ -180,10 +185,8 @@ Class user_model extends CI_Model
     $this->db->update('tile', $data);
     return true;
  }
- // Progress Tutorial
  function update_account_tutorial($account_id, $tutorial)
  {
-    // Update account
     $data = array(
         'tutorial' => $tutorial
     );
@@ -191,10 +194,8 @@ Class user_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
- // Mark account as loaded
  function account_loaded($account_id)
  {
-    // Update account
     $data = array(
         'last_load' => date('Y-m-d H:i:s')
     );
@@ -202,17 +203,14 @@ Class user_model extends CI_Model
     $this->db->update('account', $data);
     return true;
  }
- // Create player account
  function record_ip_request($ip, $request)
  {
-    // Insert user into user
     $data = array(
     'ip' => $ip,
     'request' => $request
     );
     $this->db->insert('ip_request', $data);
  }
- // Create player account
  function check_ip_request_since_timestamp($ip, $request, $timestamp)
  {
     $this->db->select('*');
@@ -223,16 +221,16 @@ Class user_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
  }
- // Record marketing slug hits
  function record_marketing_hit($marketing_slug)
  {
-    // Insert user into user
+    if (!$marketing_slug) {
+        return;
+    }
     $data = array(
     'marketing_slug' => $marketing_slug
     );
     $this->db->insert('analytics', $data);
  }
- // Update last government switch
  function update_government_switch($account_id)
  {
     $this->db->where('id', $account_id);
