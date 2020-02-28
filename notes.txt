@@ -2,22 +2,172 @@
     Notes
 ==========================================================================================
 
+anarchy for x hours when switching governments
+land types defensive bonuses
+can always expand to available coastal square/island
+Cron each method separately
+Attack uses support
+all resources generated in barren and mountains
+icons paths based on slug db field
+cash crops and money resources have prices that vary based on gameplay
+how to limit unit movements
+capital has inherit federal administrative, and military bases
+healthcare population is just +10 to population UI and GDP UI and GDP budget math
+growing capital increases support
+
+constants
+    education
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
     finish todo
-    db schema
+    db insert
+    indexes
+    update world generator
+    make terrian data entry tool
     map world terrian
 MEDIUM PRIORITY
-    prototype unit movement
-    prototype new map ui
-    prototype new menu uis
-    prototype highlighting squares
-    prototype hourly crons
+    unit movement
+    unit attacks
+    unit into navy
+    new map ui
+    new menu uis
+    highlighting squares
+    hourly crons
+    selling cash crop and cash resources
+    industry
+    resource generation
+    handle industry without resources needed
+    trade interface
+    budget
+    corruption
 LOW PRIORITY
+    being attacked feedback
+    wiki
+    score
+    json leaderboard for every stat / supply
+    commission and implement icons
+    reset
+    score
 NO PRIORITY
+    nuke
+    spy
+    bombing
+
+==========================================================================================
+    Constants
+==========================================================================================
+
+anarchy_hours
+strength_amount
+
+==========================================================================================
+    Code
+==========================================================================================
+
+
+
+==========================================================================================
+    Mechanics
+==========================================================================================
+
+Score
+    (tiles * 1000) + (pop in thousands) + (cash)
+
+Corruption
+    Each n land tiles increases corruption by 1 percent
+
+Governments
+    Democracy (half corruption, double support costs) Good for economic defensive player
+    Oligarchy (standard corruption, standard support costs) Good for flexible play
+    Autocracy (double corruption, half support costs) Good for early game and wars
+    Anarchy (full corruption, zero support)
+
+Army Units
+    Infantry, Medium Cash, High Support Cost, Strong against Commandos, Can Take Land or Settlements up to Metro, Great for Attacks
+    Guerrilla, Small Cash, Medium Support Cost, Strong against Infantry, Can Take Land and Settlements up to Town, Great Defense
+    Commandos, Large Cash, Low Support Cost, Strong against Guerrilla, Can Only Take Land, Great Infantry Compliment
+
+Military Mechanics
+    Infantry < Guerrilla < Commandos < Infantry
+    On Ocean, all units become Navy with equal fighting chances
+    Moves 1 tile in 4 directions, each attack costs 5 support, 50% chance of victory on sea square, 10% chance of victory taking a coast
+
+Support
+    Maxes out at 100
+    Following does not stack
+    Moving is 2 support
+    Claiming tile is 4 support
+    Attacking tile is 6 support
+    Attacking unit is 8 support
+    Attacking town is 10 support, defending units get 2 times defensive bonus
+    Attacking city is 20 support, defending units get 3 times defensive bonus
+    Attacking metro is 30 support, defending units get 4 times defensive bonus
+
+Budget Rates
+    Tax (Support) = Cash as Percent of GDP
+
+==========================================================================================
+    UI
+==========================================================================================
+
+Tagline
+    Harvest, Trade, and War
+
+UI
+    Main
+        Map
+        Google UI
+        Chat
+        Landgrab
+        Gov Manage Menu
+        User
+        Worlds
+        Leader List
+    Leader List
+        Leaderboard
+        Trade
+    Trade
+        Your supplies with qty
+        Their supplies with qty
+        Submit/Accept/Reject
+    Government
+        Government
+        Tax Rate
+        Financial Breakdown
+        Supply Breakdown
+        Tips
+    Land
+        ...
+
+Core Nav UI Stats
+    Land (Used to Win)
+    Pop (Is a base for a settlements GDP)
+    Units (Used to take land)
+    Cash (Used to purchase and trade)
+    Support (Must be at a minimum to get tax incomes)
+
+Financial
+    +GDP
+    %Tax Income
+    -Corruption
+    -Federal Administrative
+    -Military Bases
+    -University Education
+    -Subsidized Healthcare
+    =Available Revenue
+
+==========================================================================================
+    Closet
+==========================================================================================
+
+Attacks
+    Spy (Cash) = reveals all stats of other players, or maybe something cooler???
+    Bombing (Cash,Base) = reduces size of settlement
+    Nuclear (Cash,Aerospace,Uranium) = removes settlment
 
 ==========================================================================================
     Documentation
@@ -43,3 +193,21 @@ Map Size
 
 Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
+
+
+==========================================================================================
+    Links
+==========================================================================================
+
+Ore maps
+    https://en.wikipedia.org/wiki/Ore#/media/File:Simplified_world_mining_map_1.png
+    https://upload.wikimedia.org/wikipedia/commons/5/53/Simplified_world_mining_map_2.png
+
+Population maps
+    https://en.wikipedia.org/wiki/Population_density#/media/File:World_population_density_1994_-_with_equator.png
+
+Industry breakdown
+    https://en.wikipedia.org/wiki/Outline_of_industry
+
+Common Metals
+    https://www.quora.com/What-are-five-of-the-most-commonly-used-metals
