@@ -109,4 +109,14 @@ Class game_model extends CI_Model
 		$this->db->update('tile', $data);
 		return true;
 	}
+	function update_account_laws($account_id, $government, $tax_rate)
+	{
+		$data = array(
+			'government' => $government,
+			'tax_rate' => $tax_rate,
+		);
+		$this->db->where('id', $account_id);
+		$this->db->update('account', $data);
+		return true;
+	}
 }

@@ -16,7 +16,7 @@ $route['get_single_tile'] = "game/get_single_tile";
 $route['tile_form'] = "game/tile_form";
 $route['tile_upgrade_form'] = "game/tile_upgrade_form";
 $route['tile_capitol_form'] = "game/tile_capitol_form";
-$route['budget_form'] = "game/budget_form";
+$route['laws_form'] = "game/laws_form";
 
 // Account functions
 $route['user/update_account_info'] = "user/update_account_info";

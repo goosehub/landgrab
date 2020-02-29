@@ -29,7 +29,6 @@ $allowed_domains = array(
     'localhost/landgrab',
     'localhost/landgrab.xyz',
     'landgrab.xyz',
-    'dev.foobar.com',
 );
 
 if (!empty($_SERVER['HTTPS'])) {

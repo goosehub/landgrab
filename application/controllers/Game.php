@@ -52,7 +52,7 @@ class Game extends CI_Controller {
         // Load view
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
-        // $this->load->view('budget', $data);
+        $this->load->view('laws', $data);
         // $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
         $this->load->view('tile_block', $data);
@@ -93,6 +93,32 @@ class Game extends CI_Controller {
         $tile['color'] = htmlspecialchars($tile['color']);
         $tile['username'] = htmlspecialchars($tile['username']);
         return api_response($tile);
+    }
+
+    public function laws_form()
+    {        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
+        $this->form_validation->set_rules('input_government', 'Form of Government', 'trim|required|integer|max_length[1]');
+        $this->form_validation->set_rules('input_tax_rate', 'Tax Rate', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
+
+        $world_key = $this->input->post('world_key');
+        $account = $this->user_model->this_account($world_key);
+
+        // Fail
+        if ($this->form_validation->run() == FALSE) {
+            echo '{"error": "' + validation_errors() + '"}';
+            return false;
+        }
+        $government = $this->input->post('input_government');
+        $tax_rate = $this->input->post('input_tax_rate');
+
+        // Set account
+        $account_key = $account['id'];
+        $this->game_model->update_account_laws($account_key, $government, $tax_rate);
+
+        // Success
+        echo '{"status": "success", "result": true, "message": "Laws Updated"}';
     }
 
     public function leaderboards($world_id)

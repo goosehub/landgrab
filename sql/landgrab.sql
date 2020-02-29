@@ -310,8 +310,8 @@ ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 INSERT INTO `industry` (`category_id`, `label`, `slug`, `input_slug`, `output_desc`, `output_supply_key`, `output_supply_amount`, `gdp`, `meta`) VALUES
 -- federal
 (1, 'capital', 'capital', 'cash', 'support,spawn', null, 25, 1, 'Acts as federal and base.'),
-(1, 'federal', 'federal', 'cash', 'support', null, 10, 1, ''),
-(1, 'base', 'base', 'cash', 'spawn', null, 1, 1, 'Allows units to be spawned in and flown to this tile'),
+(1, 'federal', 'federal', 'cash', 'support, corruption', null, 10, 1, 'Adds political support, but also increases corruption'),
+(1, 'base', 'base', 'cash', 'spawn', null, 1, 1, 'Allows units to be spawned in and flown in to this tile'),
 -- raw/secondary
 (1, 'manufacturing', 'manufacturing', 'ore|timber|fiber', 'merchandise', null, 1, 1, ''),
 (1, 'energy', 'energy', 'coal|gas|oil|nuclear|biofuel', 'energy', null, 1, 1, ''),

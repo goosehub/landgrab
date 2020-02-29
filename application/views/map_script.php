@@ -1,19 +1,32 @@
 <script>
+  pass_new_laws();
+  attack_key_listen();
 
-  let attack_key_pressed = false;
-  let keys = new Array();
-  keys['a'] = 65;
-  $(document).keydown(function(event) {
-    // Attack shortcut
-    if (event.which == keys['a']) {
-      attack_key_pressed = true;
-    }
-  });
-  $(document).keyup(function(event) {
-    if (event.which == keys['a']) {
-      attack_key_pressed = false;
-    }
-  });
+  setInterval(function() {
+    get_map_update();
+  }, map_update_interval_ms);
+
+  function initMap() {
+    set_map();
+    remove_overlay();
+    // example_marker();
+    generate_tiles();
+  }
+
+  function attack_key_listen() {
+    keys['a'] = 65;
+    $(document).keydown(function(event) {
+      // Attack shortcut
+      if (event.which == keys['a']) {
+        attack_key_pressed = true;
+      }
+    });
+    $(document).keyup(function(event) {
+      if (event.which == keys['a']) {
+        attack_key_pressed = false;
+      }
+    });
+  }
 
   function set_map() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -87,13 +100,6 @@
       }
     });
     marker.setMap(map);
-  }
-
-  function initMap() {
-    set_map();
-    remove_overlay();
-    // example_marker();
-    generate_tiles();
   }
 
   function generate_tiles() {
@@ -172,10 +178,6 @@
     tiles[tile_key] = polygon;
   }
 
-  setInterval(function() {
-    get_map_update();
-  }, map_update_interval_ms);
-
   function get_map_update() {
     $.ajax({
       url: "<?=base_url()?>world/" + world_key,
@@ -205,6 +207,26 @@
           update_stats(data['account']);
         }
       }
+    });
+  }
+
+  function pass_new_laws() {
+    $('#pass_new_laws_button').click(function(event) {
+      $.ajax({
+        url: "<?=base_url()?>laws_form",
+        type: 'POST',
+        dataType: 'json',
+        data: $('#laws_form').serialize(),
+        success: function(data) {
+          // Handle error
+          if (data['error']) {
+            alert(data['error']);
+            return false;
+          }
+          // Do update, don't think this is needed though?
+          // get_map_update(world_key);
+        }
+      });
     });
   }
 

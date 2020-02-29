@@ -1,9 +1,5 @@
 <!-- Interface Script -->
 <script>
-// 
-// Loading Overlay
-// 
-
 // Removed in mapInit callback in map_script
 loading = function() {
     var over = '<div id="overlay"><p>Loading...</p></div>';
@@ -44,14 +40,6 @@ $('#login_block').show();
 $('#register_block').show();
 <?php } ?>
 
-// Validation State of the State screen
-$('#pass_new_budget_button').click(function(){
-    if ( parseInt($('#military_budget').val()) + parseInt($('#entitlements_budget').val()) > 100) {
-        alert('You\'re military budget plus your entitlements budget can not exceed 100%');
-        return false;
-    }
-});
-
 // 
 // Center block hide and show logic
 // 
@@ -61,7 +49,7 @@ $('.exit_center_block').click(function(){
 });
 $('.stat_dropdown').click(function(){
     $('.center_block').hide();
-    $('#budget_block').fadeIn();
+    $('#laws_block').fadeIn();
 });
 $('.user_button').click(function(){
     $('.center_block').hide();

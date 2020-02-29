@@ -5,4 +5,6 @@
 	let account = <?php echo json_encode($account); ?>;
 	let tiles = [];
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
+	let attack_key_pressed = false;
+	let keys = new Array();
 </script>

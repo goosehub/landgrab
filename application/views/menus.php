@@ -10,13 +10,13 @@
   <?php if ($account) { ?>
   <!-- Stat Dropdown -->
     <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
-      foobar
+      Laws
       <span class="caret"></span>
     </button>
 
 
     <button id="mobile_stat_dropdown" class="stat_dropdown menu_element btn btn-action" type="button">
-      Budget
+      Laws
     </button>
   <?php } ?>
 

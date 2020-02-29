@@ -15,6 +15,10 @@ capital has inherit federal administrative, and military bases
 healthcare population is just +10 to population UI and GDP UI and GDP budget math
 growing capital increases support
 
+safety net checkbox law
+only pass new laws while you have political support
+button pressed feedback
+
 constants
     education
 
@@ -43,13 +47,14 @@ MEDIUM PRIORITY
     corruption
 LOW PRIORITY
     being attacked feedback
-    wiki
-    score
     json leaderboard for every stat / supply
     commission and implement icons
+    anarchy for gov switch
+    todo list based tutorial
+NO PRIORITY
     reset
     score
-NO PRIORITY
+    wiki
     nuke
     spy
     bombing
