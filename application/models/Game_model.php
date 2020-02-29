@@ -107,16 +107,16 @@ Class game_model extends CI_Model
 		$this->db->where('lat', $lat);
 		$this->db->where('lng', $lng);
 		$this->db->update('tile', $data);
-		return true;
 	}
-	function update_account_laws($account_id, $government, $tax_rate)
+	function update_account_laws($account_id, $government, $tax_rate, $ideology)
 	{
 		$data = array(
 			'government' => $government,
 			'tax_rate' => $tax_rate,
+			'ideology' => $ideology,
+        	'last_law_change' => date('Y-m-d H:i:s', time())
 		);
 		$this->db->where('id', $account_id);
 		$this->db->update('account', $data);
-		return true;
 	}
 }

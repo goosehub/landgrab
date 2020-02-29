@@ -98,7 +98,7 @@ html, body {
     float: right;
     clear: both;
   }
-  body #tile_block, body #laws_block, body #account_update_block {
+  body #tile_block, body #government_block, body #account_update_block {
     width: 95vw;
     left: 2vw;
     top: 2vh;
@@ -212,7 +212,7 @@ html, body {
     width: 90%;   
   }
 }
-#laws_block {
+#government_block {
   left: 5%;
   width: 90%;
   top: 10vh;

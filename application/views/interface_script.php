@@ -49,7 +49,7 @@ $('.exit_center_block').click(function(){
 });
 $('.stat_dropdown').click(function(){
     $('.center_block').hide();
-    $('#laws_block').fadeIn();
+    $('#government_block').fadeIn();
 });
 $('.user_button').click(function(){
     $('.center_block').hide();

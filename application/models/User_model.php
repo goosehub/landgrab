@@ -121,6 +121,7 @@
             'nation_flag' => $nation_flag,
             'leader_portrait' => $leader_portrait,
             'government' => $government,
+            'ideology' => $ideology,
             'last_load' => date('Y-m-d H:i:s'),
             'is_active' => 1,
             'tutorial' => 0,
@@ -209,12 +210,6 @@
             'marketing_slug' => $marketing_slug
         );
         $this->db->insert('analytics', $data);
-    }
-    function update_government_switch($account_id)
-    {
-        $this->db->where('id', $account_id);
-        $this->db->set('last_government_switch', date('Y-m-d H:i:s', time() ) );
-        $this->db->update('account');
     }
 }
 ?>

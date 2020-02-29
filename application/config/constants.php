@@ -11,6 +11,8 @@ define('DEMOCRACY_KEY', 1);
 define('OLIGARCHY_KEY', 2);
 define('AUTOCRACY_KEY', 3);
 define('ANARCHY_KEY', 4);
+define('FREE_MARKET_KEY', 1);
+define('SOCIALISM_KEY', 2);
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 30 * 1000);

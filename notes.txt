@@ -4,7 +4,6 @@
 
 anarchy for x hours when switching governments
 land types defensive bonuses
-can always expand to available coastal square/island
 Cron each method separately
 Attack uses support
 all resources generated in barren and mountains
@@ -45,11 +44,12 @@ MEDIUM PRIORITY
     trade interface
     budget
     corruption
+    socialism
 LOW PRIORITY
     being attacked feedback
     json leaderboard for every stat / supply
     commission and implement icons
-    anarchy for gov switch
+    anarchy for gov switch?
     todo list based tutorial
 NO PRIORITY
     reset
@@ -58,13 +58,6 @@ NO PRIORITY
     nuke
     spy
     bombing
-
-==========================================================================================
-    Constants
-==========================================================================================
-
-anarchy_hours
-strength_amount
 
 ==========================================================================================
     Code
@@ -76,17 +69,14 @@ UPDATE tile SET terrian_key = 6;
     Mechanics
 ==========================================================================================
 
+Ideology
+    Socialism = No profit allowed, max support of 200?
+
 Score
     (tiles * 1000) + (pop in thousands) + (cash)
 
 Corruption
     Each n land tiles increases corruption by 1 percent
-
-Governments
-    Democracy (half corruption, double support costs) Good for economic defensive player
-    Oligarchy (standard corruption, standard support costs) Good for flexible play
-    Autocracy (double corruption, half support costs) Good for early game and wars
-    Anarchy (full corruption, zero support)
 
 Army Units
     Infantry, Medium Cash, High Support Cost, Strong against Commandos, Can Take Land or Settlements up to Metro, Great for Attacks
@@ -151,16 +141,6 @@ Core Nav UI Stats
     Units (Used to take land)
     Cash (Used to purchase and trade)
     Support (Must be at a minimum to get tax incomes)
-
-Financial
-    +GDP
-    %Tax Income
-    -Corruption
-    -Federal Administrative
-    -Military Bases
-    -University Education
-    -Subsidized Healthcare
-    =Available Revenue
 
 ==========================================================================================
     Closet
