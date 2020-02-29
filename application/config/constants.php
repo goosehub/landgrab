@@ -7,12 +7,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 // Keys
+// Governments
 define('DEMOCRACY_KEY', 1);
 define('OLIGARCHY_KEY', 2);
 define('AUTOCRACY_KEY', 3);
 define('ANARCHY_KEY', 4);
+// Ideology
 define('FREE_MARKET_KEY', 1);
 define('SOCIALISM_KEY', 2);
+// Terrain
+DEFINE('FERTILE_KEY', 1);
+DEFINE('BARREN_KEY', 2);
+DEFINE('MOUNTAIN_KEY', 3);
+DEFINE('TUNDRA_KEY', 4);
+DEFINE('COASTAL_KEY', 5);
+DEFINE('OCEAN_KEY', 6);
+
 
 // Account Defaults
 define('DEFAULT_GOVERNMENT', 2);

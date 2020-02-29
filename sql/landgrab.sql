@@ -203,12 +203,12 @@ ALTER TABLE `terrain` ADD PRIMARY KEY (`id`);
 ALTER TABLE `terrain` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `terrain` (`id`, `label`, `slug`, `meta`) VALUES
-(1, 'Fertile', 'fertile', 1),
-(2, 'Barren', 'barren', 1),
-(3, 'Mountain', 'mountain', 1),
-(4, 'Tundra', 'tundra', 1),
-(5, 'Coastal', 'coastal', 1),
-(6, 'Ocean', 'ocean', 1);
+(1, 'Fertile', 'fertile', ''),
+(2, 'Barren', 'barren', ''),
+(3, 'Mountain', 'mountain', ''),
+(4, 'Tundra', 'tundra', ''),
+(5, 'Coastal', 'coastal', ''),
+(6, 'Ocean', 'ocean', '');
 
 CREATE TABLE `resource` (
   `id` int(10) UNSIGNED NOT NULL,
