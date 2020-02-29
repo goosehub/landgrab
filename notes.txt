@@ -24,10 +24,7 @@ constants
 
 HIGH PRIORITY
     finish todo
-    db insert
     indexes
-    update world generator
-    make terrian data entry tool
     map world terrian
 MEDIUM PRIORITY
     unit movement
@@ -68,7 +65,7 @@ strength_amount
     Code
 ==========================================================================================
 
-
+UPDATE tile SET terrian_key = 6;
 
 ==========================================================================================
     Mechanics

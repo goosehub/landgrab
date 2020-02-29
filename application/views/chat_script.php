@@ -20,8 +20,6 @@
 
 <!-- Chat Script -->
 <script>
-
-  var world_key = <?php echo $world['id']; ?>;
   var last_message_id = 0;
   var at_bottom = true;
 

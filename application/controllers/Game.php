@@ -25,7 +25,7 @@ class Game extends CI_Controller {
 
         $this->user_model->record_marketing_hit($marketing_slug);
 
-        $data['world'] = $this->game_model->get_world_by_slug_or_id($world_slug);
+        $data['world'] = $this->game_model->get_world_by_slug($world_slug);
         if (!$data['world']) {
             return $this->load->view('errors/page_not_found', $data);
         }
@@ -37,17 +37,15 @@ class Game extends CI_Controller {
         }
         else {
             $data['worlds'] = $this->game_model->get_all_worlds();
-	        $data['leaderboards'] = $this->leaderboards($data['world']['id']);
+            $data['leaderboards'] = $this->leaderboards($data['world']['id']);
             $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
-	        $data['validation_errors'] = $this->session->flashdata('validation_errors');
-	        $data['failed_form'] = $this->session->flashdata('failed_form');
-	        $data['just_registered'] = $this->session->flashdata('just_registered');
+            $data['validation_errors'] = $this->session->flashdata('validation_errors');
+            $data['failed_form'] = $this->session->flashdata('failed_form');
+            $data['just_registered'] = $this->session->flashdata('just_registered');
         }
 
         if (isset($_GET['json'])) {
-            array_walk_recursive($data, "escape_quotes");
-            echo json_encode($data);
-            return true;
+            return api_response($data);
         }
 
         // Load view
@@ -56,7 +54,9 @@ class Game extends CI_Controller {
         // $this->load->view('budget', $data);
         // $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
-        // $this->load->view('land_block', $data);
+        $this->load->view('tile_block', $data);
+        $this->load->view('variables', $data);
+        $this->load->view('shared', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
         // $this->load->view('tutorial_script', $data);
@@ -64,9 +64,39 @@ class Game extends CI_Controller {
         $this->load->view('footer', $data);
     }
 
+    // Get infomation on single land
+    public function get_single_tile()
+    {
+        $world_key = $_GET['world_key'];
+        $lat = $_GET['lat'];
+        $lng = $_GET['lng'];
+        $tile = $this->game_model->get_single_tile($lng, $lat, $world_key);
+        if (!$tile) {
+            echo '{"error": "tile not found"}';
+            return false;
+        }
+        $tile['account'] = $tile['account_key'] ? $this->user_model->get_account_by_id($tile['account_key']) : false;
+
+        $tile['username'] = $tile['account'] ? $tile['account']['username'] : '';
+
+        $account = $this->user_model->this_account($world_key);
+        $tile['in_range'] = false;
+        if ($account) {
+            $world = $this->game_model->get_world_by_id($world_key);
+            $account['tile_count'] = $this->game_model->get_count_of_account_tile($account['id']);
+            $tile['in_range'] = $this->check_if_tile_is_in_range($world_key, $account['id'], $account['tile_count'], $world['tile_size'], $tile['lat'], $tile['lng']);
+        }
+        
+        // Strip html entities from all untrusted columns, except content as it's stripped on insert
+        $tile['tile_name'] = htmlspecialchars($tile['tile_name']);
+        $tile['color'] = htmlspecialchars($tile['color']);
+        $tile['username'] = htmlspecialchars($tile['username']);
+        return api_response($tile);
+    }
+
     public function leaderboards($world_id)
     {
-    	return;
+        return;
     }
 
     public function maintenance()
@@ -81,6 +111,47 @@ class Game extends CI_Controller {
             echo '<script>window.setTimeout(function(){ window.location.href = "' . base_url() . '"; }, 5000);</script>';
         }
         return false;
+    }
+
+    public function check_if_tile_is_in_range($world_key, $account_key, $tile_count, $tile_size, $lat, $lng)
+    {
+        // All tile in range if no tile
+        if ($tile_count < 1) {
+            return true;
+        }
+        // Check surrounding tiles
+        $coords = array(
+            array(
+                'lat' => $lat + $tile_size,
+                'lng' => $lng,
+            ),
+            array(
+                'lat' => $lat,
+                'lng' => $lng + $tile_size === 182 ? 180 : $lng + $tile_size,
+            ),
+            array(
+                'lat' => $lat - $tile_size,
+                'lng' => $lng,
+            ),
+            array(
+                'lat' => $lat,
+                'lng' => $lng - $tile_size === 182 ? 180 : $lng - $tile_size,
+            ),
+        );
+        $coord_matches = $this->game_model->tile_range_check($world_key, $account_key, $coords);
+        if (!empty($coord_matches) ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function tile_form()
+    {
+        $world_key = $_POST['world_key'];
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
+        $terrain_key = 1;
+        $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
     }
 
 }

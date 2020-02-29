@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS trade_request;
 DROP TABLE IF EXISTS supply_account_lookup;
 DROP TABLE IF EXISTS supply_account_trade_lookup;
 DROP TABLE IF EXISTS supply;
-DROP TABLE IF EXISTS terrian;
+DROP TABLE IF EXISTS terrain;
 DROP TABLE IF EXISTS resource;
 DROP TABLE IF EXISTS settlement;
 DROP TABLE IF EXISTS industry;
@@ -30,8 +30,8 @@ CREATE TABLE `tile` (
   `lat` int(4) NOT NULL,
   `lng` int(4) NOT NULL,
   `world_key` int(10) UNSIGNED NOT NULL,
-  `owner_account_key` int(10) UNSIGNED NULL,
-  `terrian_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NULL,
+  `terrain_key` int(10) UNSIGNED NOT NULL,
   `resource_key` int(10) UNSIGNED NULL,
   `settlement_key` int(10) UNSIGNED NULL,
   `industry_key` int(10) UNSIGNED NULL,
@@ -191,23 +191,23 @@ INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 ('healthcare', 'healthcare', TRUE, ''),
 ('engineering', 'engineering', TRUE, '');
 
-CREATE TABLE `terrian` (
+CREATE TABLE `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ALTER TABLE `terrian` ADD PRIMARY KEY (`id`);
-ALTER TABLE `terrian` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `terrain` ADD PRIMARY KEY (`id`);
+ALTER TABLE `terrain` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `terrian` (`label`, `slug`, `meta`) VALUES
-('Fertile', 'fertile', 1),
-('Barren', 'barren', 1),
-('Mountain', 'mountain', 1),
-('Tundra', 'tundra', 1),
-('Coastal', 'coastal', 1),
-('Ocean', 'ocean', 1);
+INSERT INTO `terrain` (`id`, `label`, `slug`, `meta`) VALUES
+(1, 'Fertile', 'fertile', 1),
+(2, 'Barren', 'barren', 1),
+(3, 'Mountain', 'mountain', 1),
+(4, 'Tundra', 'tundra', 1),
+(5, 'Coastal', 'coastal', 1),
+(6, 'Ocean', 'ocean', 1);
 
 CREATE TABLE `resource` (
   `id` int(10) UNSIGNED NOT NULL,

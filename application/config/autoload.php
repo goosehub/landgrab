@@ -32,6 +32,11 @@ function is_dev() {
     return false;
 }
 
+function api_response($data) {
+    array_walk_recursive($data, "escape_quotes");
+    echo json_encode($data);
+}
+
 // Random color function for generating primary color
 function random_color_part() {
     return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
