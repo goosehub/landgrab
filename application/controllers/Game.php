@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
+// 
     function __construct() {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
@@ -29,38 +30,38 @@ class Game extends CI_Controller {
             return $this->load->view('errors/page_not_found', $data);
         }
 
-        $data['user'] = $this->user_model->get_user_and_account($data['world']['id']);
+        $data['account'] = $this->user_model->this_account($data['world']['id']);
 
         if (isset($_GET['json'])) {
             $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], SERVER_MAP_UPDATE_INTERVAL_MS);
         }
         else {
+            $data['worlds'] = $this->game_model->get_all_worlds();
 	        $data['leaderboards'] = $this->leaderboards($data['world']['id']);
             $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
+	        $data['validation_errors'] = $this->session->flashdata('validation_errors');
+	        $data['failed_form'] = $this->session->flashdata('failed_form');
+	        $data['just_registered'] = $this->session->flashdata('just_registered');
         }
 
-        // if (isset($_GET['json'])) {
-            // Encode and send data
-            function filter(&$value) {
-              $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
-            }
-            array_walk_recursive($data, "filter");
+        if (isset($_GET['json'])) {
+            array_walk_recursive($data, "escape_quotes");
             echo json_encode($data);
             return true;
-        // }
+        }
 
         // Load view
-        // $this->load->view('header', $data);
-        // $this->load->view('menus', $data);
+        $this->load->view('header', $data);
+        $this->load->view('menus', $data);
         // $this->load->view('budget', $data);
         // $this->load->view('leaderboard', $data);
-        // $this->load->view('blocks', $data);
+        $this->load->view('blocks', $data);
         // $this->load->view('land_block', $data);
-        // $this->load->view('map_script', $data);
-        // $this->load->view('interface_script', $data);
+        $this->load->view('map_script', $data);
+        $this->load->view('interface_script', $data);
         // $this->load->view('tutorial_script', $data);
-        // $this->load->view('chat_script', $data);
-        // $this->load->view('footer', $data);
+        $this->load->view('chat_script', $data);
+        $this->load->view('footer', $data);
     }
 
     public function leaderboards($world_id)

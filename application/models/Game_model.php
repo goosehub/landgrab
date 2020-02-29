@@ -23,6 +23,14 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]) ? $result[0] : false;
 	}
+    function get_all_worlds()
+    {
+        $this->db->select('*');
+        $this->db->from('world');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 	function get_all_tiles_in_world($world_key)
 	{
 		$this->db->select('*');

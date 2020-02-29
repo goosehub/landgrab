@@ -7,7 +7,7 @@
     </div>
   </div>
 
-  <?php if ($log_check) { ?>
+  <?php if ($account) { ?>
   <div id="chat_input_parent">
     <form name="new_chat" id="new_chat" onsubmit="return chat_submit_function()">
       <input type="text" name="chat_input" class="form-control" id="chat_input" autocomplete="off" value="" placeholder="chat" />
@@ -116,7 +116,7 @@
         cache: false,
         success: function(html)
         {
-          if (html) {
+          if (html.trim()) {
             alert(html);
           }
         }

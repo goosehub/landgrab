@@ -19,7 +19,8 @@ class User extends CI_Controller {
 
 	function __construct() {
 	    parent::__construct();
-	    $this->load->model('user_model', '', TRUE);
+        $this->load->model('user_model', '', TRUE);
+	    $this->load->model('game_model', '', TRUE);
 	}
 
 	// Unused index action
@@ -86,7 +87,7 @@ class User extends CI_Controller {
                 'id' => $result['id'],
                 'username' => $result['username']
             );
-            $this->session->set_userdata('logged_in', $sess_array);
+            $this->session->set_userdata('user', $sess_array);
             return TRUE;
         }
 	}
@@ -150,7 +151,7 @@ class User extends CI_Controller {
         }
         // Success
         // Set variables
-        $worlds = $this->user_model->get_all_worlds();
+        $worlds = $this->game_model->get_all_worlds();
         
         // Create account for each world
         foreach ($worlds as $world)
@@ -173,13 +174,13 @@ class User extends CI_Controller {
             'id' => $user_id,
             'username' => $username
         );
-        $this->session->set_userdata('logged_in', $sess_array);
+        $this->session->set_userdata('user', $sess_array);
         return true;
     }
 
 	// Logout
     public function logout() {
-        $this->session->unset_userdata('logged_in');
+        $this->session->unset_userdata('user');
         redirect('?login', 'refresh');
     }
 
@@ -193,12 +194,13 @@ class User extends CI_Controller {
     public function update_account_info()
     {
         // User Information
-        if (!$this->session->userdata('logged_in')) {
+        if (!$this->session->userdata('user')) {
             echo 'You must be logged in.';
             return false;
         }
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
+
+        $world_key = $this->input->post('world_key');
+        $account = $this->user_model->this_account($world_key);
         
         // Validation
         $this->load->library('form_validation');
@@ -209,8 +211,6 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('leader_portrait', 'Leader Portrait', 'trim|max_length[500]');
         $this->form_validation->set_rules('existing_nation_flag', 'Existing Nation Flag', 'trim|max_length[500]');
         $this->form_validation->set_rules('existing_leader_portrait', 'Existing Leader Portrait', 'trim|max_length[500]');
-
-        $world_key = $this->input->post('world_key');
 
         // Form Validation Fail
         if ($this->form_validation->run() == FALSE) {
@@ -269,7 +269,6 @@ class User extends CI_Controller {
         }
 
         // Set account
-        $account = $this->user_model->get_account_by_keys($user_id, $world_key);
         $account_key = $account['id'];
         $this->user_model->update_account_info($account_key, $nation_color, $nation_name, $nation_flag, $leader_portrait);
 
@@ -285,7 +284,7 @@ class User extends CI_Controller {
     public function update_password()
     {
         // User Information
-        if (!$this->session->userdata('logged_in')) {
+        if (!$this->session->userdata('user')) {
             echo 'You must be logged in.';
             return false;
         }
@@ -306,7 +305,7 @@ class User extends CI_Controller {
         }
         // Success
         else {
-            $session_data = $this->session->userdata('logged_in');
+            $session_data = $this->session->userdata('user');
             $user_id = $session_data['id'];
             $new_password = $this->input->post('new_password');
             $this->user_model->update_password($user_id, $new_password);

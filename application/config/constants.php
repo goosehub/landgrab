@@ -9,6 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 define('MAP_UPDATE_INTERVAL_MS', 1 * 60 * 1000);
 define('SERVER_MAP_UPDATE_INTERVAL_MS', 2 * 60 * 1000);
 
+// Marketing
+define('ENABLE_FACEBOOK', false);
+
 // Use for emergencies
 define('MAINTENANCE', false);
 

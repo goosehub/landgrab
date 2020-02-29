@@ -50,6 +50,7 @@
 
   </head>
   <body>
+  <?php if (ENABLE_FACEBOOK) { ?>
   <!-- Facebook like code -->
   <div id="fb-root"></div>
   <script>
@@ -73,6 +74,7 @@
   <div class="top_left_block">
     <!-- <div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-action="recommend" data-show-faces="false" data-share="true"></div> -->
   </div>
+  <?php } ?>
 
   <!-- Image for crawlers -->
   <h1 style="display: none;">Landgrab - Google Maps Web Game</h1>

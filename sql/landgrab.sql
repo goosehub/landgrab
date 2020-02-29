@@ -41,7 +41,7 @@ CREATE TABLE `tile` (
   `tile_name` varchar(512) NULL,
   `tile_desc` varchar(1024) NULL,
   `color` varchar(8) NULL,
-  `modified` varchar(512) NOT NULL
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
 ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -82,9 +82,9 @@ CREATE TABLE `account` (
   `last_government_switch` timestamp NOT NULL,
   `tax_rate` int(10) UNSIGNED NOT NULL,
   -- meta
-  `last_load` varchar(32) NOT NULL,
+  `last_load` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `account` ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -96,7 +96,7 @@ CREATE TABLE `trade_request` (
   `status` int(1) UNSIGNED NULL,
   `message` varchar(256) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -351,7 +351,7 @@ CREATE TABLE `user` (
   `ip` varchar(64) NOT NULL,
   `ab_test` varchar(256) NOT NULL DEFAULT '',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` varchar(512) NOT NULL
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `user` ADD PRIMARY KEY (`id`);
 ALTER TABLE `user` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;

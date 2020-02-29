@@ -50,31 +50,15 @@ class Chat extends CI_Controller {
             return false;
         }
 
-        // Authentication
-        $log_check = $data['log_check'] = $data['user_id'] = false;
-        if (!$this->session->userdata('logged_in')) {
-            echo 'You are not logged in';
-            return false;
-        }
-        $log_check = $data['log_check'] = true;
-        $session_data = $this->session->userdata('logged_in');
-        $user_id = $data['user_id'] = $session_data['id'];
-        $data['user'] = $this->user_model->get_user($user_id);
-        if (!isset($data['user']['username']) ) {
-            redirect('user/logout', 'refresh');
-            return false;
-        }
-
         // Set variables
         $world_key = $_POST['world_key'];
-        $username = $data['user']['username'];
-        $account = $this->user_model->get_account_by_keys($data['user']['id'], $world_key);
+        $account = $this->user_model->this_account($world_key);
+        $username = $account['username'];
         $color = $account['color'];
         $message = htmlspecialchars($_POST['chat_input']);
 
         // Insert chat
-        $result = $this->chat_model->new_chat($user_id, $username, $color, $message, $world_key);
-        return true;
+        $this->chat_model->new_chat($account['user_id'], $username, $color, $message, $world_key);
     }
 
     // New Chat Callback
