@@ -107,27 +107,27 @@
       $fill_opacity = '0';
       if ($tile['terrain_key'] === '1') {
         $fill_color = '#00FF00'; // Fertile
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       if ($tile['terrain_key'] === '2') {
         $fill_color = '#666666'; // Barren
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       if ($tile['terrain_key'] === '3') {
         $fill_color = '#000000'; // Mountain
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       if ($tile['terrain_key'] === '4') {
         $fill_color = '#BBBBBB'; // Tundra
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       if ($tile['terrain_key'] === '5') {
         $fill_color = '#ECF492'; // Coastal
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       if ($tile['terrain_key'] === '6') {
         $fill_color = '#0000FF'; // Ocean
-        $fill_opacity = '0.4';
+        $fill_opacity = '0.2';
       }
       ?>z(<?php echo
         $tile['id'] . ',' .
@@ -142,7 +142,7 @@
 
   // Declare square called by performance sensitive loop
   function z(tile_key, tile_lat, tile_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
-    shape = [{
+    let shape = [{
         lat: tile_lat,
         lng: tile_lng
       },
@@ -159,7 +159,7 @@
         lng: tile_lng - tile_size
       }
     ];
-    box = new google.maps.Polygon({
+    let polygon = new google.maps.Polygon({
       map: map,
       paths: shape,
       strokeWeight: stroke_weight,
@@ -167,9 +167,98 @@
       fillColor: fill_color,
       fillOpacity: fill_opacity,
     });
-    box.setMap(map);
-    box.addListener('click', set_window);
-    tiles[tile_key] = box;
+    polygon.setMap(map);
+    polygon.addListener('click', set_window);
+    tiles[tile_key] = polygon;
+  }
+
+  setInterval(function() {
+    get_map_update();
+  }, map_update_interval_ms);
+
+  function get_map_update() {
+    $.ajax({
+      url: "<?=base_url()?>world/" + world_key,
+      type: "GET",
+      data: {
+        json: "true"
+      },
+      cache: false,
+      success: function(response) {
+        data = JSON.parse(response);
+
+        // Check for refresh signal from server 
+        if (data['refresh']) {
+          alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
+          window.location.reload();
+        }
+
+        if (account && !data['account']) {
+          alert('You were away too long and you\'re session has expired, please log back in.');
+          window.location.href = '<?php echo base_url(); ?>world/' + world_key + '?login';
+          return false;
+        }
+
+        update_tiles(data['tiles']);
+        if (account) {
+          account = data['account'];
+          update_stats(data['account']);
+        }
+      }
+    });
+  }
+
+  function update_tiles(new_tiles) {
+    // Loop through tiles
+    // This loop may run up to 15,000 times, so focus is performance
+    number_of_tiles = new_tiles.length;
+    for (i = 0; i < number_of_tiles; i++) {
+      // Set variables
+      new_tile = new_tiles[i];
+      stroke_weight = 0.2;
+      stroke_color = '#222222';
+      fill_color = "#0000ff";
+      fill_opacity = 0;
+      if (new_tile['terrain_key'] === '1') {
+        fill_color = '#00FF00'; // Fertile
+        fill_opacity = '0.2';
+      }
+      if (new_tile['terrain_key'] === '2') {
+        fill_color = '#666666'; // Barren
+        fill_opacity = '0.2';
+      }
+      if (new_tile['terrain_key'] === '3') {
+        fill_color = '#000000'; // Mountain
+        fill_opacity = '0.2';
+      }
+      if (new_tile['terrain_key'] === '4') {
+        fill_color = '#BBBBBB'; // Tundra
+        fill_opacity = '0.2';
+      }
+      if (new_tile['terrain_key'] === '5') {
+        fill_color = '#ECF492'; // Coastal
+        fill_opacity = '0.2';
+      }
+      if (new_tile['terrain_key'] === '6') {
+        fill_color = '#0000FF'; // Ocean
+        fill_opacity = '0.2';
+      }
+
+      // Apply variables to box
+      tiles[new_tile['id']].setOptions({
+        strokeWeight: stroke_weight,
+        strokeColor: stroke_color,
+        fillColor: fill_color,
+        fillOpacity: fill_opacity
+      });
+
+    }
+
+    return true;
+  }
+
+  function update_stats() {
+
   }
 
   function blind_land_attack(lng, lat, world_key, type, callback) {
@@ -195,7 +284,9 @@
     var lng = round_down(event.latLng.lng());
 
     if (attack_key_pressed) {
-      blind_land_attack(lng, lat, world_key, 'attack', function(response) {});
+      blind_land_attack(lng, lat, world_key, 'attack', function(response) {
+        get_map_update()
+      });
       return true;
     }
 
