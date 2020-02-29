@@ -50,7 +50,8 @@ LOW PRIORITY
     json leaderboard for every stat / supply
     commission and implement icons
     anarchy for gov switch?
-    todo list based tutorial
+    tutorial based on todo list
+    reddit update post
 NO PRIORITY
     reset
     score

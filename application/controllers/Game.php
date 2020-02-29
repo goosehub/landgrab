@@ -95,8 +95,15 @@ class Game extends CI_Controller {
         return api_response($tile);
     }
 
+    public function get_this_full_account($world_key)
+    {
+        $account = $this->user_model->this_account($world_key);
+        $account['supplies'] = $this->game_model->get_account_supplies($account['id']);
+        return api_response($account);
+    }
+
     public function laws_form()
-    {        
+    {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('input_government', 'Form of Government', 'trim|required|integer|max_length[1]');

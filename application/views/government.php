@@ -1,7 +1,6 @@
-<!-- laws Block -->
+<?php if ($account) { ?>
 <div id="government_block" class="center_block">
     <strong>Government Overview</strong>
-        <?php if ($account) { ?>
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
@@ -112,7 +111,6 @@
             </span> -->
             <span class="laws_info_item_parent">
                 <strong class="laws_info_item_label">Hourly Profit: </strong>
-                    </span>
                 <strong class="laws_info_value text-info">
                     ...
                 </strong><br>
@@ -120,11 +118,7 @@
         </div>
         <div class="col-md-4 government_card">
             <h3 class="text-center text-primary">Supplies</h3>
-            <p class="supply_line">Cash: <span class="supply_cash">42</span></p>
-            <p class="supply_line">Political Support: <span class="supply_support">42</span></p>
-            <p class="supply_line">Land Territories: <span class="supply_land">42</span></p>
-            <p class="supply_line">Ocean Control: <span class="supply_ocean">42</span></p>
-            <p class="supply_line">Population: <span class="supply_pop">42</span></p>
+            <div id="account_supply_list"></div>
         </div>
     </div>
 </div>

@@ -41,7 +41,6 @@ Class game_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
-
 	function get_all_tiles_in_world($world_key)
 	{
 		$this->db->select('*');
@@ -118,5 +117,14 @@ Class game_model extends CI_Model
 		);
 		$this->db->where('id', $account_id);
 		$this->db->update('account', $data);
+	}
+	function get_account_supplies($account)
+	{
+        $this->db->select('*');
+        $this->db->from('supply');
+        $this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
+        $this->db->where('supply_account_lookup.account_key', $account);
+        $query = $this->db->get();
+        return $query->result_array();
 	}
 }

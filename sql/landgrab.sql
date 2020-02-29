@@ -79,9 +79,9 @@ CREATE TABLE `account` (
   `color` varchar(8) NOT NULL,
   -- Government Settings
   `government` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy as null
+  `tax_rate` int(10) UNSIGNED NOT NULL,
   `ideology` int(10) UNSIGNED NULL, -- Socialism, Free Market
   `last_law_change` timestamp NOT NULL,
-  `tax_rate` int(10) UNSIGNED NOT NULL,
   -- meta
   `last_load` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -14,8 +14,14 @@ define('ANARCHY_KEY', 4);
 define('FREE_MARKET_KEY', 1);
 define('SOCIALISM_KEY', 2);
 
+// Account Defaults
+define('DEFAULT_GOVERNMENT', 2);
+define('DEFAULT_TAX_RATE', 15);
+define('DEFAULT_IDEOLOGY', 1);
+
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 30 * 1000);
+define('ACCOUNT_UPDATE_INTERVAL_MS', 60 * 1000);
 
 // Marketing
 define('ENABLE_FACEBOOK', false);

@@ -2,6 +2,13 @@
   pass_new_laws();
   attack_key_listen();
 
+  if (account) {
+    get_account_update();
+    setInterval(function() {
+      get_account_update();
+    }, account_update_interval_ms);
+  }
+
   setInterval(function() {
     get_map_update();
   }, map_update_interval_ms);
@@ -178,6 +185,32 @@
     tiles[tile_key] = polygon;
   }
 
+  function get_account_update() {
+    $.ajax({
+      url: "<?=base_url()?>game/get_this_full_account/" + world_key,
+      type: "GET",
+      data: {
+        json: "true"
+      },
+      cache: false,
+      success: function(response) {
+        account = JSON.parse(response);
+        update_supplies(account.supplies);
+      }
+    });
+  }
+
+  function update_supplies(supplies) {
+    console.log('marco');
+    console.log(supplies);
+    let html = '';
+    for (let i = 0; i < supplies.length; i++) {
+      let supply = supplies[i];
+      html += '<p class="lead">' + ucwords(supply['label']) + ': ' + supply['amount'] + '</p>';
+    }
+    $('#account_supply_list').html(html);
+  }
+
   function get_map_update() {
     $.ajax({
       url: "<?=base_url()?>world/" + world_key,
@@ -202,10 +235,6 @@
         }
 
         update_tiles(data['tiles']);
-        if (account) {
-          account = data['account'];
-          update_stats(data['account']);
-        }
       }
     });
   }
@@ -277,10 +306,6 @@
     }
 
     return true;
-  }
-
-  function update_stats() {
-
   }
 
   function blind_land_attack(lng, lat, world_key, type, callback) {
