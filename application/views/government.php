@@ -44,7 +44,7 @@
                             <input type="radio" class="form-control" id="free_market" name="input_ideology" value="<?php echo FREE_MARKET_KEY; ?>" <?php echo $account['ideology'] == FREE_MARKET_KEY ? 'checked' : ''; ?> >
                         </div>
                         <div class="col-md-3">
-                            <label for="input_ideology" class="pull-right text-danger">Socialism</label>
+                            <label for="input_ideology" class="pull-right text-danger">Full Socialism</label>
                         </div>
                         <div class="col-md-3">
                             <input type="radio" class="form-control" id="socialism" name="input_ideology" value="<?php echo SOCIALISM_KEY; ?>" <?php echo $account['ideology'] == SOCIALISM_KEY ? 'checked' : ''; ?> >
@@ -118,7 +118,7 @@
         </div>
         <div class="col-md-4 government_card">
             <h3 class="text-center text-primary">Supplies</h3>
-            <div id="account_supply_list"></div>
+            <div id="account_supply_list" class="row"></div>
         </div>
     </div>
 </div>

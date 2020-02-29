@@ -120,27 +120,27 @@
       $fill_opacity = '0';
       if ($tile['terrain_key'] === '1') {
         $fill_color = '#00FF00'; // Fertile
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       if ($tile['terrain_key'] === '2') {
         $fill_color = '#666666'; // Barren
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       if ($tile['terrain_key'] === '3') {
         $fill_color = '#000000'; // Mountain
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       if ($tile['terrain_key'] === '4') {
         $fill_color = '#BBBBBB'; // Tundra
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       if ($tile['terrain_key'] === '5') {
         $fill_color = '#ECF492'; // Coastal
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       if ($tile['terrain_key'] === '6') {
         $fill_color = '#0000FF'; // Ocean
-        $fill_opacity = '0.2';
+        $fill_opacity = '0.1';
       }
       ?>z(<?php echo
         $tile['id'] . ',' .
@@ -201,12 +201,10 @@
   }
 
   function update_supplies(supplies) {
-    console.log('marco');
-    console.log(supplies);
     let html = '';
     for (let i = 0; i < supplies.length; i++) {
       let supply = supplies[i];
-      html += '<p class="lead">' + ucwords(supply['label']) + ': ' + supply['amount'] + '</p>';
+      html += `<div class="col-md-4"><label>${ucwords(supply['label'])}</label>: <span class="supply_${supply['slug']}">${supply['amount']}</span></div>`;
     }
     $('#account_supply_list').html(html);
   }
@@ -272,27 +270,27 @@
       fill_opacity = 0;
       if (new_tile['terrain_key'] === '1') {
         fill_color = '#00FF00'; // Fertile
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
       if (new_tile['terrain_key'] === '2') {
         fill_color = '#666666'; // Barren
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
       if (new_tile['terrain_key'] === '3') {
         fill_color = '#000000'; // Mountain
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
       if (new_tile['terrain_key'] === '4') {
         fill_color = '#BBBBBB'; // Tundra
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
       if (new_tile['terrain_key'] === '5') {
         fill_color = '#ECF492'; // Coastal
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
       if (new_tile['terrain_key'] === '6') {
         fill_color = '#0000FF'; // Ocean
-        fill_opacity = '0.2';
+        fill_opacity = '0.1';
       }
 
       // Apply variables to box

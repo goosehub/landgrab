@@ -98,7 +98,11 @@ class Game extends CI_Controller {
     public function get_this_full_account($world_key)
     {
         $account = $this->user_model->this_account($world_key);
-        $account['supplies'] = $this->game_model->get_account_supplies($account['id']);
+        $account['supplies'] = array();
+        $supplies = $this->game_model->get_account_supplies($account['id']);
+        foreach ($supplies as $key => $supply) {
+            $account['supplies'][$supply['slug']] = $supply;
+        }
         return api_response($account);
     }
 
