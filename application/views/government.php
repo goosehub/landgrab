@@ -18,8 +18,11 @@
                     <div class="col-md-8">
                         <select class="form-control" id="input_government" name="input_government" value="<?php echo $account['government']; ?>">
                             <option value="1" <?php if ((int)$account['government'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy (Difficult Support, Ordinary Corruption)</option>
+                            <!-- Great for economic growth -->
                             <option value="2" <?php if ((int)$account['government'] === OLIGARCHY_KEY) { echo 'selected'; } ?>>Oligarchy (Moderate Support, Harsh Corruption)</option>
+                            <!-- Great for flexibility -->
                             <option value="3" <?php if ((int)$account['government'] === AUTOCRACY_KEY) { echo 'selected'; } ?>>Autocracy (Easy Support, Severe Corruption)</option>
+                            <!-- Great for early expansion and war -->
                         </select>
                     </div>
                 </div>
@@ -46,6 +49,7 @@
                         <div class="col-md-3">
                             <label for="input_ideology" class="pull-right text-danger">Full Socialism</label>
                         </div>
+                        <!-- Socialism eliminates all profit, units cost support instead of money -->
                         <div class="col-md-3">
                             <input type="radio" class="form-control" id="socialism" name="input_ideology" value="<?php echo SOCIALISM_KEY; ?>" <?php echo $account['ideology'] == SOCIALISM_KEY ? 'checked' : ''; ?> >
                         </div>

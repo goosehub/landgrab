@@ -2,33 +2,7 @@
     Notes
 ==========================================================================================
 
-ui toggle
-terrain - nation - units - none - satellite - paper
-
-custom google map color styling
-
-tundra limited to towns
-
-settlements consume, and when not enough to consume, lose support
-
-anarchy for x hours when switching governments
-land types defensive bonuses
-Cron each method separately
-Attack uses support
-all resources generated in barren and mountains
-icons paths based on slug db field
-cash crops and money resources have prices that vary based on gameplay
-how to limit unit movements
-capital has inherit federal administrative, and military bases
-healthcare population is just +10 to population UI and GDP UI and GDP budget math
-growing capital increases support
-
-safety net checkbox law
-only pass new laws while you have political support
-button pressed feedback
-
-constants
-    education
+...
 
 ==========================================================================================
     Goals
@@ -36,33 +10,53 @@ constants
 
 HIGH PRIORITY
     finish todo
-    indexes
-    map world terrian
-MEDIUM PRIORITY
-    toggling views
-    unit movement
-    unit attacks
-    unit into navy
-    new map ui
-    new menu uis
-    highlighting squares
-    hourly crons
-    selling cash crop and cash resources
-    industry
     resource generation
-    handle industry without resources needed
-    trade interface
-    budget
-    corruption
-    socialism
+    claiming
+    settling
+    new main interface UI element
+    map ui terrain/border toggles
+MEDIUM PRIORITY
+    population
+    tooltips
+    unit system
+        spawning
+        movement
+        attacks
+        flying
+        navy
+        highlighting or dragging
+    industry system
+        selection
+        crons
+        cities without food,merchendize, energy, lose support and size
+        industry without supply
+        industry
+        selling cash crop and cash resources
+    trade
+        supplies
+        war/peace/passage
+        messages
+        notices
+    government
+        support
+        corruption
+        socialism
+        require support to pass laws
+    beta
 LOW PRIORITY
-    being attacked feedback
-    json leaderboard for every stat / supply
-    commission and implement icons
-    anarchy for gov switch?
+    DB indexes
+    ui for pressed buttons
+    feedback when being attacked
+    json leaderboard for every supply
+    commission icons
+    implement icons
     tutorial based on todo list
-    reddit update post
+    growing capital increases support
+    social
+        reddit update post
 NO PRIORITY
+    custom google map color styling
+    map ui element toggles
     reset
     score
     wiki
@@ -80,14 +74,11 @@ UPDATE tile SET terrian_key = 6;
     Mechanics
 ==========================================================================================
 
-Ideology
-    Socialism = No profit allowed, max support of 200?
-
-Score
-    (tiles * 1000) + (pop in thousands) + (cash)
+Trade
+    war/peace/passage (war doesn't require acceptance, peace is not enforced, passage is unless war)
 
 Corruption
-    Each n land tiles increases corruption by 1 percent
+    Each n land tiles increases corruption by 1 percent, or something
 
 Army Units
     Infantry, Medium Cash, High Support Cost, Strong against Commandos, Can Take Land or Settlements up to Metro, Great for Attacks
@@ -109,6 +100,7 @@ Support
     Attacking town is 10 support, defending units get 2 times defensive bonus
     Attacking city is 20 support, defending units get 3 times defensive bonus
     Attacking metro is 30 support, defending units get 4 times defensive bonus
+    If socialism, spawning units cost 50 support
 
 Budget Rates
     Tax (Support) = Cash as Percent of GDP
@@ -116,6 +108,18 @@ Budget Rates
 ==========================================================================================
     UI
 ==========================================================================================
+
+Map Elements
+    Resources
+    Units
+    Capitals
+    Metros
+    Cities
+    Towns
+
+Map Filters
+    Terrain 
+    Borders
 
 Tagline
     Harvest, Trade, and War

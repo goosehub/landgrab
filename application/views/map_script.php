@@ -196,10 +196,10 @@
 
   function update_supplies(supplies) {
     let html = '';
-    for (let i = 0; i < supplies.length; i++) {
-      let supply = supplies[i];
+    Object.keys(supplies).forEach(function(key) {
+      let supply = supplies[key];
       html += `<div class="col-md-4"><label>${ucwords(supply['label'])}</label>: <span class="supply_${supply['slug']}">${supply['amount']}</span></div>`;
-    }
+    });
     $('#account_supply_list').html(html);
   }
 

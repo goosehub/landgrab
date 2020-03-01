@@ -71,7 +71,7 @@ class Game extends CI_Controller {
         $world_key = $_GET['world_key'];
         $lat = $_GET['lat'];
         $lng = $_GET['lng'];
-        $tile = $this->game_model->get_single_tile($lng, $lat, $world_key);
+        $tile = $this->game_model->get_single_tile($lat, $lng, $world_key);
         if (!$tile) {
             echo '{"error": "tile not found"}';
             return false;
