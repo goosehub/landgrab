@@ -114,33 +114,27 @@
     // This foreach loop runs 15,000 times, so performance and bandwidth is key
     // Because of this, some unconventional code may be used
     foreach ($tiles as $tile) {
-      $stroke_weight = 0.2; 
+      $stroke_weight = 0.5; 
       $stroke_color = '#222222';
       $fill_color = "#FFFFFF";
-      $fill_opacity = '0';
-      if ($tile['terrain_key'] === '1') {
-        $fill_color = '#00FF00'; // Fertile
-        $fill_opacity = '0.1';
+      $fill_opacity = '0.5';
+      if ($tile['terrain_key'] == FERTILE_KEY) {
+        $fill_color = FERTILE_COLOR;
       }
-      if ($tile['terrain_key'] === '2') {
-        $fill_color = '#666666'; // Barren
-        $fill_opacity = '0.1';
+      if ($tile['terrain_key'] == BARREN_KEY) {
+        $fill_color = BARREN_COLOR;
       }
-      if ($tile['terrain_key'] === '3') {
-        $fill_color = '#000000'; // Mountain
-        $fill_opacity = '0.1';
+      if ($tile['terrain_key'] == MOUNTAIN_KEY) {
+        $fill_color = MOUNTAIN_COLOR;
       }
-      if ($tile['terrain_key'] === '4') {
-        $fill_color = '#BBBBBB'; // Tundra
-        $fill_opacity = '0.1';
+      if ($tile['terrain_key'] == TUNDRA_KEY) {
+        $fill_color = TUNDRA_COLOR;
       }
-      if ($tile['terrain_key'] === '5') {
-        $fill_color = '#ECF492'; // Coastal
-        $fill_opacity = '0.1';
+      if ($tile['terrain_key'] == COASTAL_KEY) {
+        $fill_color = COASTAL_COLOR;
       }
-      if ($tile['terrain_key'] === '6') {
-        $fill_color = '#0000FF'; // Ocean
-        $fill_opacity = '0.1';
+      if ($tile['terrain_key'] == OCEAN_KEY) {
+        $fill_color = OCEAN_COLOR;
       }
       ?>z(<?php echo
         $tile['id'] . ',' .
@@ -264,33 +258,27 @@
     for (i = 0; i < number_of_tiles; i++) {
       // Set variables
       new_tile = new_tiles[i];
-      stroke_weight = 0.2;
+      stroke_weight = 0.5;
       stroke_color = '#222222';
       fill_color = "#0000ff";
-      fill_opacity = 0;
-      if (new_tile['terrain_key'] === '1') {
-        fill_color = '#00FF00'; // Fertile
-        fill_opacity = '0.1';
+      fill_opacity = '0.5';
+      if (new_tile['terrain_key'] == <?php echo FERTILE_KEY; ?>) {
+        fill_color = '<?php echo FERTILE_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] === '2') {
-        fill_color = '#666666'; // Barren
-        fill_opacity = '0.1';
+      if (new_tile['terrain_key'] == <?php echo BARREN_KEY; ?>) {
+        fill_color = '<?php echo BARREN_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] === '3') {
-        fill_color = '#000000'; // Mountain
-        fill_opacity = '0.1';
+      if (new_tile['terrain_key'] == <?php echo MOUNTAIN_KEY; ?>) {
+        fill_color = '<?php echo MOUNTAIN_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] === '4') {
-        fill_color = '#BBBBBB'; // Tundra
-        fill_opacity = '0.1';
+      if (new_tile['terrain_key'] == <?php echo TUNDRA_KEY; ?>) {
+        fill_color = '<?php echo TUNDRA_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] === '5') {
-        fill_color = '#ECF492'; // Coastal
-        fill_opacity = '0.1';
+      if (new_tile['terrain_key'] == <?php echo COASTAL_KEY; ?>) {
+        fill_color = '<?php echo COASTAL_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] === '6') {
-        fill_color = '#0000FF'; // Ocean
-        fill_opacity = '0.1';
+      if (new_tile['terrain_key'] == <?php echo OCEAN_KEY; ?>) {
+        fill_color = '<?php echo OCEAN_COLOR; ?>';
       }
 
       // Apply variables to box
@@ -330,7 +318,7 @@
 
     if (attack_key_pressed) {
       blind_land_attack(lng, lat, world_key, 'attack', function(response) {
-        get_map_update()
+        get_map_update();
       });
       return true;
     }

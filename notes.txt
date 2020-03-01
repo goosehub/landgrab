@@ -2,6 +2,15 @@
     Notes
 ==========================================================================================
 
+ui toggle
+terrain - nation - units - none - satellite - paper
+
+custom google map color styling
+
+tundra limited to towns
+
+settlements consume, and when not enough to consume, lose support
+
 anarchy for x hours when switching governments
 land types defensive bonuses
 Cron each method separately
@@ -30,6 +39,7 @@ HIGH PRIORITY
     indexes
     map world terrian
 MEDIUM PRIORITY
+    toggling views
     unit movement
     unit attacks
     unit into navy
@@ -194,3 +204,6 @@ Industry breakdown
 
 Common Metals
     https://www.quora.com/What-are-five-of-the-most-commonly-used-metals
+
+Farming Map
+    https://www.fastcompany.com/3042106/the-most-detailed-map-ever-of-the-worlds-cropland-so-we-can-decide-where-to-grow-more-food
