@@ -1,7 +1,8 @@
 <!-- Info tag -->
-<div id="info_tag" style="display: none;">
+<div id="info_tag">
     <strong>
-    <a href="https://www.reddit.com/r/LandGrab/comments/9oicbv/the_embassy_limiting_update/?" target="_blank">The Embassy Limit Update</a>
+    <!-- <a href="https://www.reddit.com/r/LandGrab/comments/9oicbv/the_embassy_limiting_update/?" target="_blank">The Embassy Limit Update</a> -->
+    Industry Update - ALPHA
     </strong>
 </div>
 

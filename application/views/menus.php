@@ -7,6 +7,19 @@
         <span class="glyphicon glyphicon-asterisk"></span>
     </button> -->
 
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-default dropdown-toggle" type="button" id="views_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Views
+      <span class="caret"></span>
+    </button>
+    <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
+      <li class="text-center"><strong class="text-default">Terrain and Resources</strong></li>
+      <li class="text-center"><strong class="text-default">Borders and Cities</strong></li>
+      <li class="text-center"><strong class="text-default">Empty Map</strong></li>
+    </ul>
+    </ul>
+  </div>
+
   <?php if ($account) { ?>
     <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button">
       Diplomacy <small class="text-primary">(5)</small>

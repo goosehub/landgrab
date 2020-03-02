@@ -2,7 +2,8 @@
     Notes
 ==========================================================================================
 
-...
+some sort of auto defense?
+temporary allow landgrab without war when starting new and little land is available
 
 ==========================================================================================
     Goals
@@ -56,6 +57,7 @@ LOW PRIORITY
     social
         reddit update post
 NO PRIORITY
+    pollution mechanic
     custom google map color styling
     map ui element toggles
     reset
@@ -163,9 +165,9 @@ Core Nav UI Stats
 ==========================================================================================
 
 Attacks
-    Spy (Cash) = reveals all stats of other players, or maybe something cooler???
-    Bombing (Cash,Base) = reduces size of settlement
-    Nuclear (Cash,Aerospace,Uranium) = removes settlment
+    Spy (Cash) = reveals all units of other player
+    Bombing (Cash,Base,Aerospace) = removes unit
+    Nuclear (Cash,Base,Aerospace,Uranium) = removes settlment
 
 ==========================================================================================
     Documentation
@@ -195,13 +197,12 @@ Map Size
     3x3 = 7,000
     2x2 = 15,000
 
-Polygons
-    https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
-
-
 ==========================================================================================
     Links
 ==========================================================================================
+
+Google Maps Polygons
+    https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
 
 Ore maps
     https://en.wikipedia.org/wiki/Ore#/media/File:Simplified_world_mining_map_1.png
@@ -215,6 +216,7 @@ Industry breakdown
 
 Common Metals
     https://www.quora.com/What-are-five-of-the-most-commonly-used-metals
+    https://www.visualcapitalist.com/all-the-worlds-metals-and-minerals-in-one-visualization/
 
 Farming Map
     https://www.fastcompany.com/3042106/the-most-detailed-map-ever-of-the-worlds-cropland-so-we-can-decide-where-to-grow-more-food
