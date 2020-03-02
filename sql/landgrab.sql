@@ -102,6 +102,43 @@ CREATE TABLE `trade_request` (
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+CREATE TABLE `trade_request` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `request_account_key` int(10) UNSIGNED NOT NULL,
+  `receive_account_key` int(10) UNSIGNED NOT NULL,
+  `request_message` text NOT NULL,
+  `response_message` text NOT NULL,
+  `request_seen` int(1) UNSIGNED NOT NULL,
+  `response_seen` int(1) UNSIGNED NOT NULL,
+  `is_accepted` int(1) UNSIGNED NOT NULL,
+  `is_rejected` int(1) UNSIGNED NOT NULL,
+  `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
+ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+CREATE TABLE `agreement_lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `a_account_key` int(10) UNSIGNED NOT NULL,
+  `b_account_key` int(10) UNSIGNED NOT NULL,
+  `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+CREATE TABLE `supply_trade_lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `trade_key` int(10) UNSIGNED NOT NULL,
+  `supply_key` int(10) UNSIGNED NOT NULL,
+  `amount` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_key` int(10) UNSIGNED NOT NULL,
