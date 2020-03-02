@@ -8,4 +8,5 @@
 	let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
 	let attack_key_pressed = false;
 	let keys = new Array();
+	let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
 </script>

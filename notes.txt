@@ -16,6 +16,7 @@ HIGH PRIORITY
     new main interface UI element
     map ui terrain/border toggles
 MEDIUM PRIORITY
+    settlement insufficient supply UI
     population
     tooltips
     unit system

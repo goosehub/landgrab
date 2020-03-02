@@ -16,7 +16,6 @@
   function initMap() {
     set_map();
     remove_overlay();
-    // example_marker();
     generate_tiles();
   }
 
@@ -92,21 +91,25 @@
     });
   }
 
-  function example_marker() {
-    var myLatLng = {lat: -1, lng: 1};
+  function set_resource_icon(resource_id, lat, lng) {
+    var myLatLng = {
+      lat: lat + 1,
+      lng: lng - 1
+    };
     var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      title: 'Hello World!',
+      // title: slug,
       // draggable:true,
       icon: {
-        url: 'https://images.vexels.com/media/users/3/128926/isolated/preview/c60c97eba10a56280114b19063d04655-plane-airport-round-icon-by-vexels.png',
+        url: `../resources/icons/natural_resources/${resource_id}.png`,
         scaledSize: new google.maps.Size(20, 20), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(10,10) // anchor
       }
     });
     marker.setMap(map);
+    marker.addListener('click', set_window);
   }
 
   function generate_tiles() {
@@ -135,6 +138,9 @@
       }
       if ($tile['terrain_key'] == OCEAN_KEY) {
         $fill_color = OCEAN_COLOR;
+      }
+      if ($tile['resource_key']) {
+        echo 'set_resource_icon(' . $tile['resource_key'] . ',' . $tile['lat'] . ',' . $tile['lng'] . ');';
       }
       ?>z(<?php echo
         $tile['id'] . ',' .
@@ -346,9 +352,18 @@
   }
 
   function populate_tile_window(d) {
+
     $('#tile_block').show();
     $('#coord_link').prop('href', '<?=base_url()?>world/' + d['world_key'] + '?lng=' + d['lng'] + '&lat=' + d['lat']);
     $('#coord_link').html(d['lng'] + ',' + d['lat']);
+
+    // Resources
+    $('#tile_resource,#tile_resource_icon').hide();
+    if (d['resource_key']) {
+      $('#tile_resource,#tile_resource_icon').show();
+      $('#tile_resource').html(resources[d['resource_key'] - 1]['label']);
+      $('#tile_resource_icon').attr('src', `../resources/icons/natural_resources/${d['resource_key']}.png`);
+    }
   }
 
   function get_single_tile(lat, lng, world_key, callback) {

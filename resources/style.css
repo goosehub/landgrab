@@ -80,14 +80,14 @@ html, body {
 #top_right_block ul li:first-child {
   margin-top: -0.5em !important;
 }
-#mobile_stat_dropdown {
+#mobile_government_dropdown {
   display: none;
 }
 @media only screen and (max-device-width: 600px) {
-  body #stat_dropdown, body .main_menu_parent {
+  body #government_dropdown, body .main_menu_parent {
     display: none;
   }
-  body #mobile_stat_dropdown {
+  body #mobile_government_dropdown {
     display: inline;
   }
   #top_right_block {
@@ -103,6 +103,10 @@ html, body {
     left: 2vw;
     top: 2vh;
     min-height: 95vh;
+  }
+  #tile_resource_icon {
+    height: 48px;
+    width: auto;
   }
   #info_tag {
     display: none;

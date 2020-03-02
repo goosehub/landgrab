@@ -10,5 +10,7 @@
         </div>
 
         <div class="coord_label pull-right">Coordinates: <a id="coord_link" href=""></a></div>
+        <br>
+        <div class="tile_resource_label pull-right">Resource: <p id="tile_resource"></p> <img id="tile_resource_icon" src=""/></div>
     </form>
 </div>

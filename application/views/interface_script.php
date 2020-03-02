@@ -47,9 +47,13 @@ $('#register_block').show();
 $('.exit_center_block').click(function(){
   $('.center_block').hide();
 });
-$('.stat_dropdown').click(function(){
+$('.government_dropdown').click(function(){
     $('.center_block').hide();
     $('#government_block').fadeIn();
+});
+$('.diplomacy_dropdown').click(function(){
+    $('.center_block').hide();
+    $('#diplomacy_block').fadeIn();
 });
 $('.user_button').click(function(){
     $('.center_block').hide();

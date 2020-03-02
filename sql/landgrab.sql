@@ -223,60 +223,60 @@ CREATE TABLE `resource` (
 ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
 ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `resource` (`label`, `slug`, `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`) VALUES
+INSERT INTO `resource` (`id`, `label`, `slug`, `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`) VALUES
 -- Valuables
 (
-  'Silver', 'silver', 15,
+  1, 'Silver', 'silver', 15,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Gold', 'gold', 5,
+  2, 'Gold', 'gold', 5,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Platinum', 'platinum', 3,
+  3, 'Platinum', 'platinum', 3,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Gemstones', 'gemstones', 2,
+  4, 'Gemstones', 'gemstones', 2,
   TRUE, TRUE, TRUE, FALSE
 ),
 -- Energy
 (
-  'Coal', 'coal', 25,
+  5, 'Coal', 'coal', 25,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Gas', 'gas', 10,
+  6, 'Gas', 'gas', 10,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Oil', 'oil', 10,
+  7, 'Oil', 'oil', 10,
   TRUE, TRUE, TRUE, TRUE
 ),
 (
-  'Uranium', 'uranium', 5,
+  8, 'Uranium', 'uranium', 5,
   TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
-  'Iron', 'iron', 30,
+  9, 'Iron', 'iron', 30,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Copper', 'copper',5,
+  10, 'Copper', 'copper',5,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Zinc', 'zinc', 5,
+  11, 'Zinc', 'zinc', 5,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Aluminum', 'aluminum', 5,
+  12, 'Aluminum', 'aluminum', 5,
   TRUE, TRUE, TRUE, FALSE
 ),
 (
-  'Nickle', 'nickle', 5,
+  13, 'Nickle', 'nickle', 5,
   TRUE, TRUE, TRUE, FALSE
 );
 
@@ -327,94 +327,94 @@ INSERT INTO `settlement` (
 ('city', 'city',
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, 3, '3 kinds of food, 2 kinds of cash crops, 1 energy, 1 merchandise', ''),
+  1000, 3, '3 kinds of food, 3 kinds, 3 energy, 1 merchandise, 1 cash crop', ''),
 ('metro', 'metro',
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, 4, '5 kinds of food, 3 kinds of cash crops, 3 energy, 3 merchandise', ''),
+  10000, 4, '5 kinds of food, 10 energy, 5 merchandise, 3 kinds of cash crop', ''),
 -- food
 ('grain', 'grain',
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'grain'
 ),
 ('fruit', 'fruit',
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'fruit'
 ),
 ('vegetable', 'vegetable',
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'vegetable'
 ),
 ('livestock', 'livestock',
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'livestock'
 ),
 ('fish', 'fish',
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'fish'
 ),
 -- materials
 ('timber', 'timber',
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'timber'
 ),
 ('fiber', 'fiber',
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'fiber'
 ),
 ('ore', 'ore',
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'ore'
 ),
 -- energy
 ('biofuel', 'biofuel',
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'biofuel'
 ),
 ('solar', 'solar',
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'solar'
 ),
 ('wind', 'wind',
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'wind'
 ),
 -- cash_crops
 ('coffee', 'coffee',
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'coffee'
 ),
 ('tea', 'tea',
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'tea'
 ),
 ('cannabis', 'cannabis',
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'cannabis'
 ),
 ('alcohol', 'alcohol',
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'alcohol'
 ),
 ('tobacco', 'tobacco',
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', ''
+  10, 1, '', 'tobacco'
 );
 
 CREATE TABLE `industry` (

@@ -3,12 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
-// 
+
+    public $resources;
+
     function __construct() {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
+
+        $this->resources = $this->game_model->get_all_resources();
 
         // Force ssl
         if (!is_dev()) {
@@ -53,7 +57,8 @@ class Game extends CI_Controller {
         $this->load->view('header', $data);
         $this->load->view('menus', $data);
         $this->load->view('government', $data);
-        // $this->load->view('leaderboard', $data);
+        $this->load->view('diplomacy', $data);
+        $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
         $this->load->view('tile_block', $data);
         $this->load->view('variables', $data);

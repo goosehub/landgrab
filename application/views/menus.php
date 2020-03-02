@@ -8,14 +8,15 @@
     </button> -->
 
   <?php if ($account) { ?>
-  <!-- Stat Dropdown -->
-    <button id="stat_dropdown" class="stat_dropdown menu_element btn btn-default" type="button">
+    <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button">
+      Diplomacy <small class="text-primary">(5)</small>
+      <span class="caret"></span>
+    </button>
+    <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button">
       Laws
       <span class="caret"></span>
     </button>
-
-
-    <button id="mobile_stat_dropdown" class="stat_dropdown menu_element btn btn-action" type="button">
+    <button id="mobile_government_dropdown" class="government_dropdown menu_element btn btn-action" type="button">
       Laws
     </button>
   <?php } ?>

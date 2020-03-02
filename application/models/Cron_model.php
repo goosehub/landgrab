@@ -4,10 +4,18 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
-	function regenerate_resources($world_key)
+	function reset_resources($world_key)
+	{
+		$data = array(
+			'resource_key' => null,
+		);
+		$this->db->update('tile', $data);
+	}
+	function generate_resources($world_key)
 	{
 		$resources = $this->game_model->get_all_resources();
 		foreach ($resources as $resource) {
+			$this->db->group_start();
 			if ($resource['spawns_in_barren']) {
 				$this->db->where('terrain_key', BARREN_KEY);
 			}
@@ -20,10 +28,10 @@ Class cron_model extends CI_Model
 			if ($resource['spawns_in_coastal']) {
 				$this->db->or_where('terrain_key', COASTAL_KEY);
 			}
+			$this->db->group_end();
+			$this->db->where('lat > ', LOWEST_LAT_RESOURCE_GEN);
 			$this->db->order_by('RAND()');
 			$this->db->limit($resource['frequency_per_world']);
-			// var_dump($resource['id']);
-			// die();
 			$data = array(
 				'resource_key' => $resource['id'],
 			);
