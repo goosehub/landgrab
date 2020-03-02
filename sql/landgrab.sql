@@ -213,6 +213,10 @@ CREATE TABLE `resource` (
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
   `frequency_per_world` int(10) UNSIGNED NOT NULL,
+  `spawns_in_barren` int(1) UNSIGNED NOT NULL,
+  `spawns_in_mountain` int(1) UNSIGNED NOT NULL,
+  `spawns_in_tundra` int(1) UNSIGNED NOT NULL,
+  `spawns_in_coastal` int(1) UNSIGNED NOT NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

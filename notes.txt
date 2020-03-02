@@ -170,6 +170,12 @@ Attacks
     Documentation
 ==========================================================================================
 
+Tile considerations
+    How it looks in street views (Avoiding incorrect labeling)
+    How it looks from afar when most players use it (Avoiding line terrain tiles)
+    Population density (Considering max settlement for the square)
+    Overlap between other tiles (coastal mountain, do I want to allow farming on this square?)
+
 Live Server Instance
     Change database connection in config/database.php
     Change encryption_key in config/config.php

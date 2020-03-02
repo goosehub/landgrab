@@ -8,6 +8,7 @@ class Cron extends CI_Controller {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
+        $this->load->model('cron_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
     }
 
@@ -25,42 +26,29 @@ class Cron extends CI_Controller {
       }
       echo 'Running Cron - ';
 
-      // Decrement weariness
-      echo 'Decrementing Universal Weariness - ';
-      $weariness_decrease = 5;
-      $this->game_model->universal_decrease_weariness($weariness_decrease);
-
       // Resets
-      // $world_reset_frequency[1] = '* * * * *';
-      $world_reset_frequency[1] = '0 20 1,15 * *';
-      $world_reset_frequency[2] = '0 20 1 * *';
-      $world_reset_frequency[3] = '0 20 * * 0';
-      $world_reset_frequency[4] = '0 20 * * *';
-      $world_reset_frequency[5] = '0 */4 * * *';
+      $world_reset_frequency[1] = '* * * * *';
+      // $world_reset_frequency[1] = '0 20 1,15 * *';
+      // $world_reset_frequency[1] = '0 20 1,15 * *';
+      // $world_reset_frequency[2] = '0 20 1 * *';
+      // $world_reset_frequency[3] = '0 20 * * 0';
+      // $world_reset_frequency[4] = '0 20 * * *';
+      // $world_reset_frequency[5] = '0 */4 * * *';
 
       $now = date('Y-m-d H:i:s');
-      $worlds = $this->user_model->get_all_worlds();
+      $worlds = $this->game_model->get_all_worlds();
       foreach ($worlds as $world) {
         // Check if it's time to run
         $time_to_reset = parse_crontab($now, $world_reset_frequency[$world['id']]);
         if (!$time_to_reset) {
           continue;
         }
-        echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
-        $limit = 1;
-        $leader = $this->leaderboard_model->leaderboard_land_owned($world['id'], $limit);
-        if ( empty($leader) ) {
-          echo ' - No leader found - ';
-          return false;
-        }
-        $leader = $leader[0];
-        $last_winner_account_key = $leader['account_key'];
-        $last_winner_land_count = $leader['total'];
-        $this->game_model->update_world_with_last_winner($world['id'], $last_winner_account_key, $last_winner_land_count);
-        $this->game_model->update_all_lands_in_world($world['id'], $account_key = 0, $land_name = '', $content = '', $land_type = 1, $color = '#000000', $capitol = 0);
-        $this->game_model->remove_all_embassy_of_world($world['id']);
-        $this->game_model->remove_all_sanctions_of_world($world['id']);
-        $this->game_model->world_set_weariness($world['id'], $weariness = 0);
+        echo 'Running for world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
+        // $this->game_model->backup();
+        // $this->game_model->reset_tiles();
+        // $this->game_model->reset_trades();
+        // $this->game_model->reset_accounts();
+        $this->cron_model->regenerate_resources($world['id']);
       }
 
 
@@ -76,23 +64,6 @@ class Cron extends CI_Controller {
         $this->user_model->create_player_account($user['id'], 2, $color, $nation_name, $nation_flag, $leader_portrait, $government);
       }
 */
-
-      // Fix to reset only land type modifiers
-/*
-      $lands = $this->game_model->get_all_lands_in_world(1);
-
-      $this->game_model->truncate_modifiers();
-      foreach ($lands as $l) {
-        $this->game_model->add_modifier_to_land($l['id'], $l['land_type']);
-      }
-*/
-      // Stopwatch end
-      // echo 'end: ' . time() . ' - ';
-
-      // Taxes complete, good job! echo for cron email. time() keeps email from going to spam as exact duplicate
-      // echo 'Cron Successful. Timestamp: ' . time();
-
-    // Generic Page Not Found on fail
     }
 
 }

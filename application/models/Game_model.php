@@ -41,6 +41,13 @@ Class game_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+    function get_all_resources()
+    {
+        $this->db->select('*');
+        $this->db->from('resource');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 	function get_all_tiles_in_world($world_key)
 	{
 		$this->db->select('*');
