@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Cron Token, for verifying cron actions
 // 
 
-
 // Keys
 // Governments
 define('DEMOCRACY_KEY', 1);
@@ -37,6 +36,11 @@ DEFINE('MOUNTAIN_COLOR', '#F26419');
 DEFINE('TUNDRA_COLOR', '#FFFFFF');
 DEFINE('COASTAL_COLOR', '#A5FFD6');
 DEFINE('OCEAN_COLOR', '#33658A');
+
+// Map
+DEFINE('TILE_OPACITY', 0.5);
+DEFINE('STROKE_WEIGHT', 0.3);
+DEFINE('STROKE_COLOR', '#222222');
 
 // Account Defaults
 define('DEFAULT_GOVERNMENT', 2);

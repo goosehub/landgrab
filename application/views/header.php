@@ -39,7 +39,7 @@
     <link href="//fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
 
     <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/e749aaf82c.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e749aaf82c.js" crossorigin="anonymous" SameSite="none Secure"></script>
 
     <!-- Define as share image -->
     <link rel="image_src" href="<?=base_url()?>resources/logos/hero.jpg" / >

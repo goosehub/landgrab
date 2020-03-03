@@ -1,6 +1,7 @@
 <script>
   pass_new_laws();
   attack_key_listen();
+  map_toggle_listen();
 
   if (account) {
     get_account_update();
@@ -34,6 +35,65 @@
     });
   }
 
+  function map_toggle_listen() {
+    $('#terrain_toggle').click(function(event) {
+      current_map_type = 'terrain';
+      tiles_to_terrain();
+      set_marker_set_visibility(resource_markers, true);
+      set_marker_set_visibility(border_markers, false);
+    });
+    $('#borders_toggle').click(function(event) {
+      current_map_type = 'borders';
+      tiles_to_borders();
+      set_marker_set_visibility(resource_markers, false);
+      set_marker_set_visibility(border_markers, true);
+    });
+    $('#empty_toggle').click(function(event) {
+      current_map_type = 'empty';
+      tiles_to_empty();
+      set_marker_set_visibility(resource_markers, false);
+      set_marker_set_visibility(border_markers, false);
+    });
+  }
+
+  function tiles_to_terrain() {
+    Object.keys(tiles).forEach(function(key) {
+      tiles[key].setOptions({
+        fillColor: tiles[key].terrain_fillColor,
+        fillOpacity: tiles[key].terrain_fillOpacity,
+        strokeWeight: <?php echo STROKE_WEIGHT; ?>,
+        strokeColor: '<?php echo STROKE_COLOR; ?>',
+      });
+    });
+  }
+
+  function tiles_to_borders() {
+    Object.keys(tiles).forEach(function(key) {
+      tiles[key].setOptions({
+        fillColor: tiles[key].borders_fillColor,
+        fillOpacity: tiles[key].borders_fillOpacity,
+        strokeWeight: <?php echo STROKE_WEIGHT; ?>,
+        strokeColor: '<?php echo STROKE_COLOR; ?>',
+      });
+    });
+  }
+
+  function tiles_to_empty() {
+    Object.keys(tiles).forEach(function(key) {
+      tiles[key].setOptions({
+        fillOpacity: 0,
+        strokeWeight: 0,
+        strokeColor: 0,
+      });
+    });
+}
+
+  function set_marker_set_visibility(marker_set, visible) {
+    for (i = 0; i < marker_set.length; i++) {
+      marker_set[i].setVisible(visible);
+    }
+  }
+
   function set_map() {
     map = new google.maps.Map(document.getElementById('map'), {
       // Zoom on tile if set as parameter
@@ -61,27 +121,18 @@
       minZoom: 2,
       // Prevent excesssive zoom
       // maxZoom: 10,
-      // Map type
-      // mapTypeId: google.maps.MapTypeId.TERRAIN
-      // mapTypeId: google.maps.MapTypeId.HYBRID
-      mapTypeId: google.maps.MapTypeId.SATELLITE
+      mapTypeControlOptions: {
+        mapTypeIds: ['satellite', 'hybrid', 'terrain', 'paper_map']
+      }
     });
 
-    // Map Styling
-    var styles = [{
-      featureType: "poi.business",
-      elementType: "labels",
-      stylers: [{
-        visibility: "off"
-      }]
-    }];
+    styled_map_type = new google.maps.StyledMapType(map_pirate, {name: 'Paper'});
+    map.mapTypes.set('paper_map', styled_map_type);
 
-    // Apply map styling
-    var styled_map = new google.maps.StyledMapType(styles, {
-      name: "Styled Map"
-    });
-    map.mapTypes.set('map_style', styled_map);
-    map.setMapTypeId('map_style');
+    map.setMapTypeId('hybrid');
+    // map.setMapTypeId('satellite');
+    // map.setMapTypeId('terrain');
+    // map.setMapTypeId('paper_map');
   }
 
   function remove_overlay() {
@@ -110,6 +161,7 @@
     });
     marker.setMap(map);
     marker.addListener('click', set_window);
+    return marker;
   }
 
   function generate_tiles() {
@@ -117,10 +169,10 @@
     // This foreach loop runs 15,000 times, so performance and bandwidth is key
     // Because of this, some unconventional code may be used
     foreach ($tiles as $tile) {
-      $stroke_weight = 0.5; 
-      $stroke_color = '#222222';
+      $fill_opacity = TILE_OPACITY;
+      $stroke_weight = STROKE_WEIGHT; 
+      $stroke_color = STROKE_COLOR;
       $fill_color = "#FFFFFF";
-      $fill_opacity = '0.5';
       if ($tile['terrain_key'] == FERTILE_KEY) {
         $fill_color = FERTILE_COLOR;
       }
@@ -139,9 +191,9 @@
       if ($tile['terrain_key'] == OCEAN_KEY) {
         $fill_color = OCEAN_COLOR;
       }
-      if ($tile['resource_key']) {
-        echo 'set_resource_icon(' . $tile['resource_key'] . ',' . $tile['lat'] . ',' . $tile['lng'] . ');';
-      }
+      if ($tile['resource_key']) { ?>
+        resource_markers.push(set_resource_icon(<?php echo $tile['resource_key']; ?>,<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+      <?php }
       ?>z(<?php echo
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
@@ -175,10 +227,12 @@
     let polygon = new google.maps.Polygon({
       map: map,
       paths: shape,
-      strokeWeight: stroke_weight,
-      strokeColor: stroke_color,
+      strokeWeight: <?php echo STROKE_WEIGHT; ?>,
+      strokeColor: '<?php echo STROKE_COLOR; ?>',
+      fillOpacity: <?php echo TILE_OPACITY; ?>,
       fillColor: fill_color,
-      fillOpacity: fill_opacity,
+      terrain_fillColor: fill_color,
+      borders_fillColor: '#FFFFFF',
     });
     polygon.setMap(map);
     polygon.addListener('click', set_window);
@@ -264,10 +318,8 @@
     for (i = 0; i < number_of_tiles; i++) {
       // Set variables
       new_tile = new_tiles[i];
-      stroke_weight = 0.5;
-      stroke_color = '#222222';
+      fill_opacity = 0.5;
       fill_color = "#0000ff";
-      fill_opacity = '0.5';
       if (new_tile['terrain_key'] == <?php echo FERTILE_KEY; ?>) {
         fill_color = '<?php echo FERTILE_COLOR; ?>';
       }
@@ -289,8 +341,6 @@
 
       // Apply variables to box
       tiles[new_tile['id']].setOptions({
-        strokeWeight: stroke_weight,
-        strokeColor: stroke_color,
         fillColor: fill_color,
         fillOpacity: fill_opacity
       });

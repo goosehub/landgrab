@@ -13,9 +13,9 @@
       <span class="caret"></span>
     </button>
     <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-      <li class="text-center"><strong class="text-default">Terrain and Resources</strong></li>
-      <li class="text-center"><strong class="text-default">Borders and Cities</strong></li>
-      <li class="text-center"><strong class="text-default">Empty Map</strong></li>
+      <li class="text-center"><strong class="text-default" id="terrain_toggle"><a href="#">Terrain and Resources</a></strong></li>
+      <li class="text-center"><strong class="text-default" id="borders_toggle"><a href="#">Borders and Cities</a></strong></li>
+      <li class="text-center"><strong class="text-default" id="empty_toggle"><a href="#">Empty Map</a></strong></li>
     </ul>
     </ul>
   </div>
