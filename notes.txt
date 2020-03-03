@@ -54,9 +54,11 @@ LOW PRIORITY
     implement icons
     tutorial based on todo list
     growing capital increases support
+    handle troops inside opp. tile at start of war
+    5 worlds
+    account migration
     social
         reddit update post
-    handle troops inside opp. tile at start of war
 NO PRIORITY
     list of current wars
     pollution mechanic

@@ -213,7 +213,7 @@ INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 ('nickle', 'nickle', TRUE, ''),
 -- light industry
 ('merchandise', 'merchandise', TRUE, ''),
-('energy', 'energy', TRUE, ''),
+('energy', 'energy', FALSE, ''),
 ('chemicals', 'chemicals', TRUE, ''),
 ('steel', 'steel', TRUE, ''),
 ('electronics', 'electronics', TRUE, ''),
@@ -225,7 +225,7 @@ INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
 -- service industry
 ('education', 'education', FALSE, ''),
 ('it', 'it', TRUE, ''),
-('healthcare', 'healthcare', TRUE, ''),
+('healthcare', 'healthcare', FALSE, ''),
 ('engineering', 'engineering', TRUE, '');
 
 CREATE TABLE `terrain` (
@@ -521,39 +521,39 @@ INSERT INTO `industry` (
   null, 1, 2, 1, TRUE, ''
 ),
 (2, 'coal', 'coal', 'coal', 'energy',
-  null, 1, 3, 1, TRUE, ''
+  null, 1, 2, 1, TRUE, ''
 ),
 (2, 'gas', 'gas', 'gas', 'energy',
   null, 1, 3, 1, TRUE, ''
 ),
 (2, 'petroleum', 'petroleum', 'oil', 'energy',
-  null, 1, 5, 1, TRUE, ''
+  null, 1, 6, 1, TRUE, ''
 ),
 (2, 'nuclear', 'nuclear', 'uranium', 'energy',
-  null, 1, 10, 1, TRUE, ''
+  null, 1, 8, 1, TRUE, ''
 ),
 -- other light industry
 (2, 'chemicals', 'chemicals', 'energy', 'chemicals',
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 3, 1, TRUE, ''
 ),
 (2, 'steel', 'steel', 'iron', 'steel',
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 3, 1, TRUE, ''
 ),
 (2, 'electronics', 'electronics', 'copper', 'electronics',
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 3, 1, TRUE, ''
 ),
 -- heavy industry
 (3, 'port', 'port', 'steel', 'port',
   null, 1, 1, 1, FALSE, 'Must be a coastal tile. Must be size at least city. Having a port doubles GDP'
 ),
 (3, 'machinery', 'machinery', 'zinc,steel,electronics,it', 'machinery',
-  null, 1, 1, 1, FALSE, ''
+  null, 1, 3, 1, FALSE, ''
 ),
 (3, 'automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive',
-  null, 1, 1, 1, FALSE, ''
+  null, 1, 3, 1, FALSE, ''
 ),
 (3, 'aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,it', 'aerospace',
-  null, 1, 1, 1, FALSE, ''
+  null, 1, 3, 1, FALSE, ''
 ),
 -- tourism
 (4, 'leisure', 'leisure', '', '',
@@ -570,7 +570,7 @@ INSERT INTO `industry` (
   null, 5, 1, 1, FALSE, ''
 ),
 (5, 'it', 'it', 'education', 'it',
-  null, 1, 1, 1, FALSE, 'Must be a city'
+  null, 1, 3, 1, FALSE, 'Must be a city'
 ),
 (5, 'healthcare', 'healthcare', 'city,education', 'support',
   null, 1, 10, 1, FALSE, 'Also increases population by 25%'
@@ -583,7 +583,7 @@ INSERT INTO `industry` (
   null, 1, 20, 1, FALSE, ''
 ),
 (6, 'engineering_design', 'engineering_design', 'metro', 'engineering',
-  null, 1, 1, 1, FALSE, ''
+  null, 1, 3, 1, FALSE, ''
 );
 
 -- 

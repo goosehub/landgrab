@@ -35,7 +35,8 @@ Class cron_model extends CI_Model
 		if ($resource['spawns_in_mountain']) {
 			$this->db->or_where('terrain_key', MOUNTAIN_KEY);
 		}
-		if ($resource['spawns_in_tundra']) {
+		// Bias against tundra
+		if ($resource['spawns_in_tundra'] && mt_rand(0,10) > 3) {
 			$this->db->or_where('terrain_key', TUNDRA_KEY);
 		}
 		if ($resource['spawns_in_coastal']) {
