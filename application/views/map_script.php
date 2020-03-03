@@ -261,6 +261,8 @@
       html += `<div class="col-md-4"><label>${ucwords(supply['label'])}</label>: <span class="supply_${supply['slug']}">${supply['amount']}</span></div>`;
     });
     $('#account_supply_list').html(html);
+    $('#their_trade_supply_list').html(html);
+    $('#my_trade_supply_list').html(html);
   }
 
   function get_map_update() {
@@ -424,6 +426,7 @@
     $('#tile_block').show();
     $('#coord_link').prop('href', '<?=base_url()?>world/' + d['world_key'] + '?lng=' + d['lng'] + '&lat=' + d['lat']);
     $('#coord_link').html(d['lng'] + ',' + d['lat']);
+    $('#tile_terrain').html(terrains[d['terrain_key'] - 1]['label']);
 
     // Resources
     $('#tile_resource,#tile_resource_icon').hide();

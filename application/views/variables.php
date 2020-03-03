@@ -11,7 +11,8 @@
 	let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
 	let attack_key_pressed = false;
 	let keys = new Array();
-	let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
+    let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
+	let terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
 	let styledMapType = {};
     let default_map_style = [{
       featureType: "poi.business",

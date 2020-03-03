@@ -112,6 +112,7 @@ CREATE TABLE `trade_request` (
   `response_seen` int(1) UNSIGNED NOT NULL,
   `is_accepted` int(1) UNSIGNED NOT NULL,
   `is_rejected` int(1) UNSIGNED NOT NULL,
+  `is_declared` int(1) UNSIGNED NOT NULL,
   `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

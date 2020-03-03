@@ -13,6 +13,8 @@ class Game extends CI_Controller {
         $this->load->model('leaderboard_model', '', TRUE);
 
         $this->resources = $this->game_model->get_all_resources();
+        $this->terrains = $this->game_model->get_all_terrains();
+        $this->unit_types = $this->game_model->get_all_unit_types();
 
         // Force ssl
         if (!is_dev()) {
@@ -61,10 +63,12 @@ class Game extends CI_Controller {
         $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
         $this->load->view('tile_block', $data);
+        $this->load->view('trade_block', $data);
         $this->load->view('variables', $data);
         $this->load->view('shared', $data);
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
+        $this->load->view('trade_script', $data);
         // $this->load->view('tutorial_script', $data);
         $this->load->view('chat_script', $data);
         $this->load->view('footer', $data);
@@ -198,7 +202,7 @@ class Game extends CI_Controller {
         $terrain_key = FERTILE_KEY;
         // $terrain_key = BARREN_KEY;
         // $terrain_key = MOUNTAIN_KEY;
-        $terrain_key = TUNDRA_KEY;
+        // $terrain_key = TUNDRA_KEY;
         // $terrain_key = COASTAL_KEY;
         // $terrain_key = OCEAN_KEY;
         $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);

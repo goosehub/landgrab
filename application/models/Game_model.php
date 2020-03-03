@@ -48,6 +48,20 @@ Class game_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+    function get_all_terrains()
+    {
+        $this->db->select('*');
+        $this->db->from('terrain');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    function get_all_unit_types()
+    {
+        $this->db->select('*');
+        $this->db->from('unit_type');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 	function get_all_tiles_in_world($world_key)
 	{
 		$this->db->select('*');

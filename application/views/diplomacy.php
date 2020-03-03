@@ -4,7 +4,28 @@
     <button type="button" class="exit_center_block btn btn-default btn-sm">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
+
     <hr>
+
+    <div class="row">
+        <div class="col-md-9">
+            <select class="form-control" id="input_agreement" name="input_agreement"">
+                <option value="1">Thatcher</option>
+                <option value="2">Modi</option>
+                <option value="3">Elizabeth</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="open_trade_request btn btn-action" trade-id="0">
+                <i class="fas fa-plus"></i>
+                Start Diplomacy
+            </button>
+        </div>
+    </div>
+
+    <hr>
+
+    <p class="lead">Unread</p>
     <div class="row">
         <div class="col-md-3">
             Request by Thatcher to You
@@ -16,7 +37,7 @@
             <span class="text-warning">Pending</span>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-default">
+            <button class="open_trade_request btn btn-primary" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
@@ -34,7 +55,7 @@
             <span class="text-danger">Rejected</span>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-default">
+            <button class="open_trade_request btn btn-primary" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
@@ -52,13 +73,14 @@
             <span class="text-danger">Declared</span>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-default">
+            <button class="open_trade_request btn btn-primary" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
         </div>
     </div>
     <hr>
+    <p class="lead">Read</p>
     <div class="row">
         <div class="col-md-3">
             Request by You to Trudo
@@ -67,10 +89,10 @@
             <span class="text-primary">Rights of Passge</span>
         </div>
         <div class="col-md-3">
-            <span class="text-success">Approved</span>
+            <span class="text-success">Accepted</span>
         </div>
         <div class="col-md-3">
-            <button class="btn btn-default">
+            <button class="open_trade_request btn btn-primary" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>

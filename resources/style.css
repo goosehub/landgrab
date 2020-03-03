@@ -83,6 +83,13 @@ html, body {
 #mobile_government_dropdown {
   display: none;
 }
+.menu_element {
+    box-shadow: 2px 2px 2px #666;
+}
+#tile_resource_icon {
+  height: 24px;
+  width: auto;
+}
 @media only screen and (max-device-width: 600px) {
   body #government_dropdown, body .main_menu_parent {
     display: none;
@@ -103,10 +110,6 @@ html, body {
     left: 2vw;
     top: 2vh;
     min-height: 95vh;
-  }
-  #tile_resource_icon {
-    height: 48px;
-    width: auto;
   }
   #info_tag {
     display: none;
@@ -216,7 +219,7 @@ html, body {
     width: 90%;   
   }
 }
-#government_block {
+#government_block, #trade_block {
   left: 2.5%;
   width: 95%;
   top: 10vh;
@@ -248,9 +251,6 @@ html, body {
 }
 .center_block strong {
   font-size: 1.4em;
-}
-.exit_center_block {
-  float: right;
 }
 .register_to_play {
   color: #444488;

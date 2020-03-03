@@ -11,11 +11,9 @@ temporary allow landgrab without war when starting new and little land is availa
 
 HIGH PRIORITY
     finish todo
-    resource generation
     claiming
     settling
-    new main interface UI element
-    map ui terrain/border toggles
+    settlement/industry select ui
 MEDIUM PRIORITY
     settlement insufficient supply UI
     population
@@ -47,6 +45,7 @@ MEDIUM PRIORITY
     hide resources in responses before discovered
     beta
 LOW PRIORITY
+    chat message for diplomacy changes
     DB indexes
     ui for pressed buttons
     feedback when being attacked
@@ -57,7 +56,9 @@ LOW PRIORITY
     growing capital increases support
     social
         reddit update post
+    handle troops inside opp. tile at start of war
 NO PRIORITY
+    list of current wars
     pollution mechanic
     custom google map color styling
     map ui element toggles
