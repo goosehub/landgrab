@@ -44,6 +44,7 @@ MEDIUM PRIORITY
         corruption
         socialism
         require support to pass laws
+    hide resources in responses before discovered
     beta
 LOW PRIORITY
     DB indexes

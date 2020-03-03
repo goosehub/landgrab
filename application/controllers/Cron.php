@@ -48,8 +48,7 @@ class Cron extends CI_Controller {
         // $this->game_model->reset_tiles();
         // $this->game_model->reset_trades();
         // $this->game_model->reset_accounts();
-        $this->cron_model->reset_resources($world['id']);
-        $this->cron_model->generate_resources($world['id']);
+        $this->cron_model->regenerate_resources($world['id']);
       }
 
 

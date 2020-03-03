@@ -317,13 +317,31 @@
     });
   }
 
+  function update_tile_terrain(lng, lat, world_key, type, callback) {
+    $.ajax({
+      url: "<?=base_url()?>tile_form",
+      type: "POST",
+      data: {
+        lng: lng,
+        lat: lat,
+        world_key: world_key,
+      },
+      cache: false,
+      success: function(data) {
+        callback(data);
+        return true;
+      }
+    });
+  }
+
   function set_window(event) {
     // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     var lat = round_down(event.latLng.lat()) - tile_size;
     var lng = round_down(event.latLng.lng());
 
     if (attack_key_pressed) {
-      blind_land_attack(lng, lat, world_key, 'attack', function(response) {
+      update_tile_terrain(lng, lat, world_key, 'attack', function(response) {
+      // blind_land_attack(lng, lat, world_key, 'attack', function(response) {
         get_map_update();
       });
       return true;

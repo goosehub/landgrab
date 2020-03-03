@@ -249,6 +249,9 @@ CREATE TABLE `resource` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
+  `is_value_resource` int(1) UNSIGNED NOT NULL,
+  `is_energy_resource` int(1) UNSIGNED NOT NULL,
+  `is_metal_resource` int(1) UNSIGNED NOT NULL,
   `frequency_per_world` int(10) UNSIGNED NOT NULL,
   `spawns_in_barren` int(1) UNSIGNED NOT NULL,
   `spawns_in_mountain` int(1) UNSIGNED NOT NULL,
@@ -260,61 +263,77 @@ CREATE TABLE `resource` (
 ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
 ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `resource` (`id`, `label`, `slug`, `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`) VALUES
--- Valuables
+INSERT INTO `resource` (`id`, `label`, `slug`,
+  `is_value_resource`, `is_energy_resource`, `is_metal_resource`,
+  `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`
+) VALUES
+-- value
 (
-  1, 'Silver', 'silver', 15,
-  TRUE, TRUE, TRUE, FALSE
+  1, 'Silver', 'silver',
+  TRUE, FALSE, FALSE,
+  15, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  2, 'Gold', 'gold', 5,
-  TRUE, TRUE, TRUE, FALSE
+  2, 'Gold', 'gold',
+  TRUE, FALSE, FALSE,
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  3, 'Platinum', 'platinum', 3,
-  TRUE, TRUE, TRUE, FALSE
+  3, 'Platinum', 'platinum',
+  TRUE, FALSE, FALSE,
+  3, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  4, 'Gemstones', 'gemstones', 2,
-  TRUE, TRUE, TRUE, FALSE
+  4, 'Gemstones', 'gemstones',
+  TRUE, FALSE, FALSE,
+  2, TRUE, TRUE, TRUE, FALSE
 ),
 -- Energy
 (
-  5, 'Coal', 'coal', 25,
-  TRUE, TRUE, TRUE, FALSE
+  5, 'Coal', 'coal',
+  FALSE, TRUE, FALSE,
+  25, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  6, 'Gas', 'gas', 10,
-  TRUE, TRUE, TRUE, FALSE
+  6, 'Gas', 'gas',
+  FALSE, TRUE, FALSE,
+  10, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  7, 'Oil', 'oil', 10,
-  TRUE, TRUE, TRUE, TRUE
+  7, 'Oil', 'oil',
+  FALSE, TRUE, FALSE,
+  10, TRUE, FALSE, TRUE, TRUE
 ),
 (
-  8, 'Uranium', 'uranium', 5,
-  TRUE, TRUE, TRUE, FALSE
+  8, 'Uranium', 'uranium',
+  FALSE, TRUE, FALSE,
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
-  9, 'Iron', 'iron', 30,
-  TRUE, TRUE, TRUE, FALSE
+  9, 'Iron', 'iron',
+  FALSE, FALSE, TRUE,
+  30, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  10, 'Copper', 'copper',5,
-  TRUE, TRUE, TRUE, FALSE
+  10, 'Copper', 'copper',
+  FALSE, FALSE, TRUE,
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  11, 'Zinc', 'zinc', 5,
-  TRUE, TRUE, TRUE, FALSE
+  11, 'Zinc', 'zinc',
+  FALSE, FALSE, TRUE,
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  12, 'Aluminum', 'aluminum', 5,
-  TRUE, TRUE, TRUE, FALSE
+  12, 'Aluminum', 'aluminum',
+  FALSE, FALSE, TRUE,
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  13, 'Nickle', 'nickle', 5,
-  TRUE, TRUE, TRUE, FALSE
+  13, 'Nickle', 'nickle',
+  FALSE, FALSE, TRUE,
+  5, TRUE, TRUE, TRUE, FALSE
 );
 
 CREATE TABLE `settlement` (

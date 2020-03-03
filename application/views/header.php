@@ -38,6 +38,9 @@
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
 
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/e749aaf82c.js" crossorigin="anonymous"></script>
+
     <!-- Define as share image -->
     <link rel="image_src" href="<?=base_url()?>resources/logos/hero.jpg" / >
     <meta property='og:image' content='<?=base_url()?>resources/logos/hero.jpg'/>

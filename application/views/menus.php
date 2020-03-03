@@ -22,7 +22,7 @@
 
   <?php if ($account) { ?>
     <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button">
-      Diplomacy <small class="text-primary">(5)</small>
+      Diplomacy <small class="text-primary">(3)</small>
       <span class="caret"></span>
     </button>
     <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button">
