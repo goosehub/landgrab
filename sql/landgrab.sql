@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS agreement_lookup;
 DROP TABLE IF EXISTS supply_account_lookup;
 DROP TABLE IF EXISTS supply_account_trade_lookup;
 DROP TABLE IF EXISTS supply_trade_lookup;
+DROP TABLE IF EXISTS supply_industry_lookup;
 DROP TABLE IF EXISTS supply;
 DROP TABLE IF EXISTS terrain;
 DROP TABLE IF EXISTS resource;
@@ -130,6 +131,50 @@ CREATE TABLE `supply_trade_lookup` (
 ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+CREATE TABLE `supply_industry_lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `industry_key` int(10) UNSIGNED NOT NULL,
+  `supply_key` int(10) UNSIGNED NOT NULL,
+  `amount` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `supply_industry_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
+(4, 7, 1), -- Manufacturing
+(5, 5, 1), -- Timber
+(6, 6, 1), -- Textile
+(7, 14, 1), -- Biofuel
+(8, 15, 1), -- Coal
+(9, 16, 1), -- Gas
+(10, 17, 1), -- Petroleum
+(11, 18, 1), -- Nuclear
+(12, 13, 1), -- Chemicals
+(13, 28, 1), -- Steel
+(14, 29, 1), -- Electronics
+(15, 39, 1), -- Port
+(16, 30, 1), -- Machinery
+(16, 39, 1), -- Machinery
+(16, 40, 1), -- Machinery
+(16, 36, 1), -- Machinery
+(16, 38, 1), -- Machinery
+(17, 31, 1), -- Automotive
+(17, 39, 1), -- Automotive
+(17, 40, 1), -- Automotive
+(17, 38, 1), -- Automotive
+(17, 36, 1), -- Automotive
+(18, 31, 1), -- Aerospace
+(18, 32, 1), -- Aerospace
+(18, 39, 1), -- Aerospace
+(18, 40, 1), -- Aerospace
+(18, 38, 1), -- Aerospace
+(18, 34, 1), -- Aerospace
+(18, 36, 1), -- Aerospace
+(21, 2, 1), -- Gambling
+(22, 1, 10), -- University
+(23, 33, 1), -- Software
+(24, 1, 10); -- Healthcare
+
 CREATE TABLE `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_key` int(10) UNSIGNED NOT NULL,
@@ -162,51 +207,51 @@ CREATE TABLE `supply` (
 ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `supply` (`category_id`, `label`, `slug`, `suffix`, `can_trade`, `can_sell`, `meta`) VALUES
-(1, 'Cash', 'cash', 'M', TRUE, FALSE, ''),
-(1, 'Support', 'support', '%', FALSE, FALSE, ''),
-(1, 'Population', 'population', 'K', FALSE, FALSE, ''),
-(1, 'Territories', 'tiles', '', FALSE, FALSE, ''),
-(2, 'Timber', 'timber', 'Ton', TRUE, FALSE, ''),
-(2, 'Fiber', 'fiber', 'Ton', TRUE, FALSE, ''),
-(2, 'Ore', 'ore', 'Ton', TRUE, FALSE, ''),
-(3, 'Grain', 'grain', 'Ton', TRUE, FALSE, ''),
-(3, 'Fruit', 'fruit', 'Ton', TRUE, FALSE, ''),
-(3, 'Vegetables', 'vegetables', 'Ton', TRUE, FALSE, ''),
-(3, 'Livestock', 'livestock', 'Ton', TRUE, FALSE, ''),
-(3, 'Fish', 'fish', 'Ton', TRUE, FALSE, ''),
-(4, 'Energy', 'energy', 'MW', FALSE, FALSE, ''),
-(4, 'Biofuel', 'biofuel', 'Ton', TRUE, FALSE, ''),
-(4, 'Coal', 'coal', 'Ton', TRUE, FALSE, ''),
-(4, 'Gas', 'gas', 'Tcf', TRUE, FALSE, ''),
-(4, 'Oil', 'oil', 'MMb/d', TRUE, FALSE, ''),
-(4, 'Uranium', 'uranium', 'Ton', TRUE, FALSE, ''),
-(5, 'Silver', 'silver', 'Ton', TRUE, TRUE, ''),
-(5, 'Gold', 'gold', 'Ton', TRUE, TRUE, ''),
-(5, 'Platinum', 'platinum', 'Ton', TRUE, TRUE, ''),
-(5, 'Gemstones', 'gemstones', 'CT', TRUE, TRUE, ''),
-(6, 'Coffee', 'coffee', 'Ton', TRUE, TRUE, ''),
-(6, 'Tea', 'tea', 'Ton', TRUE, TRUE, ''),
-(6, 'Cannabis', 'cannabis', 'Ton', TRUE, TRUE, ''),
-(6, 'Alcohol', 'alcohol', 'Ton', TRUE, TRUE, ''),
-(6, 'Tobacco', 'tobacco', 'Ton', TRUE, TRUE, ''),
-(7, 'Iron', 'iron', 'Ton', TRUE, FALSE, ''),
-(7, 'Copper', 'copper', 'Ton', TRUE, FALSE, ''),
-(7, 'Zinc', 'zinc', 'Ton', TRUE, FALSE, ''),
-(7, 'Aluminum', 'aluminum', 'Ton', TRUE, FALSE, ''),
-(7, 'Nickle', 'nickle', 'Ton', TRUE, FALSE, ''),
-(8, 'Education', 'education', '', FALSE, FALSE, ''),
-(8, 'Software', 'software', '', TRUE, FALSE, ''),
-(8, 'Healthcare', 'healthcare', '', FALSE, FALSE, ''),
-(8, 'Engineering', 'engineering', '', TRUE, FALSE, ''),
-(9, 'Merchandise', 'merchandise', ' Shipments', TRUE, FALSE, ''),
-(9, 'Chemicals', 'chemicals', 'Kl', TRUE, FALSE, ''),
-(9, 'Steel', 'steel', 'Ton', TRUE, FALSE, ''),
-(9, 'Electronics', 'electronics', ' Shipments', TRUE, FALSE, ''),
-(10, 'Shipping Ports', 'port', '', FALSE, FALSE, ''),
-(10, 'Machinery', 'machinery', ' Shipments', TRUE, FALSE, ''),
-(10, 'Automotive', 'automotive', ' Shipments', TRUE, FALSE, ''),
-(10, 'Aerospace', 'aerospace', ' Shipments', TRUE, FALSE, '');
+INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `can_sell`, `meta`) VALUES
+(1, 1, 'Cash', 'cash', 'M', TRUE, FALSE, ''),
+(2, 1, 'Support', 'support', '%', FALSE, FALSE, ''),
+(3, 1, 'Population', 'population', 'K', FALSE, FALSE, ''),
+(4, 1, 'Territories', 'tiles', '', FALSE, FALSE, ''),
+(5, 2, 'Timber', 'timber', 'Ton', TRUE, FALSE, ''),
+(6, 2, 'Fiber', 'fiber', 'Ton', TRUE, FALSE, ''),
+(7, 2, 'Ore', 'ore', 'Ton', TRUE, FALSE, ''),
+(8, 3, 'Grain', 'grain', 'Ton', TRUE, FALSE, ''),
+(9, 3, 'Fruit', 'fruit', 'Ton', TRUE, FALSE, ''),
+(10, 3, 'Vegetables', 'vegetables', 'Ton', TRUE, FALSE, ''),
+(11, 3, 'Livestock', 'livestock', 'Ton', TRUE, FALSE, ''),
+(12, 3, 'Fish', 'fish', 'Ton', TRUE, FALSE, ''),
+(13, 4, 'Energy', 'energy', 'MW', FALSE, FALSE, ''),
+(14, 4, 'Biofuel', 'biofuel', 'Ton', TRUE, FALSE, ''),
+(15, 4, 'Coal', 'coal', 'Ton', TRUE, FALSE, ''),
+(16, 4, 'Gas', 'gas', 'Tcf', TRUE, FALSE, ''),
+(17, 4, 'Oil', 'oil', 'MMb/d', TRUE, FALSE, ''),
+(18, 4, 'Uranium', 'uranium', 'Ton', TRUE, FALSE, ''),
+(19, 5, 'Silver', 'silver', 'Ton', TRUE, TRUE, ''),
+(20, 5, 'Gold', 'gold', 'Ton', TRUE, TRUE, ''),
+(21, 5, 'Platinum', 'platinum', 'Ton', TRUE, TRUE, ''),
+(22, 5, 'Gemstones', 'gemstones', 'CT', TRUE, TRUE, ''),
+(23, 6, 'Coffee', 'coffee', 'Ton', TRUE, TRUE, ''),
+(24, 6, 'Tea', 'tea', 'Ton', TRUE, TRUE, ''),
+(25, 6, 'Cannabis', 'cannabis', 'Ton', TRUE, TRUE, ''),
+(26, 6, 'Alcohol', 'alcohol', 'Ton', TRUE, TRUE, ''),
+(27, 6, 'Tobacco', 'tobacco', 'Ton', TRUE, TRUE, ''),
+(28, 7, 'Iron', 'iron', 'Ton', TRUE, FALSE, ''),
+(29, 7, 'Copper', 'copper', 'Ton', TRUE, FALSE, ''),
+(30, 7, 'Zinc', 'zinc', 'Ton', TRUE, FALSE, ''),
+(31, 7, 'Aluminum', 'aluminum', 'Ton', TRUE, FALSE, ''),
+(32, 7, 'Nickle', 'nickle', 'Ton', TRUE, FALSE, ''),
+(33, 8, 'Education', 'education', '', FALSE, FALSE, ''),
+(34, 8, 'Software', 'software', '', TRUE, FALSE, ''),
+(35, 8, 'Healthcare', 'healthcare', '', FALSE, FALSE, ''),
+(36, 8, 'Engineering', 'engineering', '', TRUE, FALSE, ''),
+(37, 9, 'Merchandise', 'merchandise', ' Shipments', TRUE, FALSE, ''),
+(38, 9, 'Chemicals', 'chemicals', 'Kl', TRUE, FALSE, ''),
+(39, 9, 'Steel', 'steel', 'Ton', TRUE, FALSE, ''),
+(40, 9, 'Electronics', 'electronics', ' Shipments', TRUE, FALSE, ''),
+(41, 10, 'Shipping Ports', 'port', '', FALSE, FALSE, ''),
+(42, 10, 'Machinery', 'machinery', ' Shipments', TRUE, FALSE, ''),
+(43, 10, 'Automotive', 'automotive', ' Shipments', TRUE, FALSE, ''),
+(44, 10, 'Aerospace', 'aerospace', ' Shipments', TRUE, FALSE, '');
 
 CREATE TABLE `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -336,6 +381,7 @@ CREATE TABLE `settlement` (
   `defense_bonus` int(10) UNSIGNED NOT NULL,
   `input_desc` varchar(256) NOT NULL,
   `output_desc` varchar(256) NOT NULL,
+  `output_supply_key` int(10) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -346,108 +392,111 @@ INSERT INTO `settlement` (
   `label`, `slug`, `category_id`,
   `is_incorporated`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
-  `base_population`, `defense_bonus`, `input_desc`, `output_desc`) VALUES
+  `base_population`, `defense_bonus`, `input_desc`, `output_desc`, `output_supply_key`) VALUES
 ('Unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, 1, '', ''
+  100, 1, '', '', NULL
 ),
 ('Uninhabited', 'uninhabited', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, 1, '', ''
+  100, 1, '', '', NULL
 ),
 ('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, 2, '1 food', 'Industry'),
+  100, 2, '1 food', 'Industry', NULL
+),
 ('City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, 3, '3 food, 3 energy, 1 merchandise, 1 cash crop', 'Industry'),
+  1000, 3, '3 food, 3 energy, 1 merchandise, 1 cash crop', 'Industry', NULL
+),
 ('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, 4, 'grain, fruit, vegetables, livestock, fish, 10 energy, 5 merchandise, 5 cash crop', 'Industry'),
+  10000, 4, 'grain, fruit, vegetables, livestock, fish, 10 energy, 5 merchandise, 5 cash crop', 'Industry', NULL
+),
 ('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'grain'
+  10, 1, '', 'grain', 8
 ),
 ('Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'fruit'
+  10, 1, '', 'fruit', 9
 ),
 ('Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'vegetables'
+  10, 1, '', 'vegetables', 10
 ),
 ('Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'livestock'
+  10, 1, '', 'livestock', 11
 ),
 ('Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'fish'
+  10, 1, '', 'fish', 12
 ),
 ('Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'timber'
+  10, 1, '', 'timber', 5
 ),
 ('Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'fiber'
+  10, 1, '', 'fiber', 6
 ),
 ('Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, 1, '', 'ore'
+  10, 1, '', 'ore', 7
 ),
 ('Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'biofuel'
+  10, 1, '', 'biofuel', 14
 ),
 ('Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, 1, '', 'solar'
+  10, 1, '', 'energy', 13
 ),
 ('Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, 1, '', 'wind'
+  10, 1, '', 'energy', 13
 ),
 ('Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'coffee'
+  10, 1, '', 'coffee', 23
 ),
 ('Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'tea'
+  10, 1, '', 'tea', 24
 ),
 ('Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'cannabis'
+  10, 1, '', 'cannabis', 25
 ),
 ('Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'alcohol'
+  10, 1, '', 'alcohol', 26
 ),
 ('Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'tobacco'
+  10, 1, '', 'tobacco', 27
 );
 
 CREATE TABLE `industry` (
@@ -461,6 +510,8 @@ CREATE TABLE `industry` (
   `output_supply_key` int(10) UNSIGNED NULL,
   `input_supply_amount` int(10) UNSIGNED NULL,
   `output_supply_amount` int(10) UNSIGNED NULL,
+  `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
+  `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,
   `is_stackable` int(1) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
@@ -470,95 +521,95 @@ ALTER TABLE `industry` ADD PRIMARY KEY (`id`);
 ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `industry` (
-  `category_id`, `label`, `slug`, `input_slug`, `output_desc`,
+  `id`, `category_id`, `label`, `slug`, `input_slug`, `output_desc`, `minimum_settlement_size`, `required_terrain_key`,
   `output_supply_key`, `input_supply_amount`, `output_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
 -- government
-(1, 'Capitol', 'capitol', 'cash', 'support',
+(1, 1, 'Capitol', 'capitol', 'cash', 'support', NULL, NULL,
   null, 10, 25, 1, FALSE, 'Can spawn units, add political support, creates corruption'
 ),
-(1, 'Federal', 'federal', 'cash', 'support',
+(2, 1, 'Federal', 'federal', 'cash', 'support', NULL, NULL,
   null, 10, 10, 1, FALSE, 'Add political support, creates corruption'
 ),
-(1, 'Base', 'base', 'cash', '',
+(3, 1, 'Base', 'base', 'cash', '', NULL, NULL,
   null, 10, 1, 1, TRUE, 'Can spawn units'
 ),
 -- merchandise
-(2, 'Manufacturing', 'manufacturing', 'ore', 'merchandise',
+(4, 2, 'Manufacturing', 'manufacturing', 'ore', 'merchandise', NULL, NULL,
   null, 1, 1, 1, TRUE, ''
 ),
-(2, 'Timber', 'timber', 'timber', 'merchandise',
+(5, 2, 'Timber', 'timber', 'timber', 'merchandise', NULL, NULL,
   null, 1, 1, 1, TRUE, ''
 ),
-(2, 'Textile', 'textile', 'fiber', 'merchandise',
+(6, 2, 'Textile', 'textile', 'fiber', 'merchandise', NULL, NULL,
   null, 1, 1, 1, TRUE, ''
 ),
 -- energy
-(3, 'Biofuel', 'biofuel', 'biofuel', 'energy',
+(7, 3, 'Biofuel', 'biofuel', 'biofuel', 'energy', NULL, NULL,
   null, 1, 2, 1, TRUE, ''
 ),
-(3, 'Coal', 'coal', 'coal', 'energy',
+(8, 3, 'Coal', 'coal', 'coal', 'energy', NULL, NULL,
   null, 1, 2, 1, TRUE, ''
 ),
-(3, 'Gas', 'gas', 'gas', 'energy',
+(9, 3, 'Gas', 'gas', 'gas', 'energy', NULL, NULL,
   null, 1, 3, 1, TRUE, ''
 ),
-(3, 'Petroleum', 'petroleum', 'oil', 'energy',
+(10, 3, 'Petroleum', 'petroleum', 'oil', 'energy', NULL, NULL,
   null, 1, 6, 1, TRUE, ''
 ),
-(3, 'Nuclear', 'nuclear', 'uranium', 'energy',
+(11, 3, 'Nuclear', 'nuclear', 'uranium', 'energy', NULL, NULL,
   null, 1, 8, 1, TRUE, ''
 ),
 -- light industry
-(4, 'Chemicals', 'chemicals', 'energy', 'chemicals',
+(12, 4, 'Chemicals', 'chemicals', 'energy', 'chemicals', NULL, NULL,
   null, 1, 3, 1, TRUE, ''
 ),
-(4, 'Steel', 'steel', 'iron', 'steel',
+(13, 4, 'Steel', 'steel', 'iron', 'steel', NULL, NULL,
   null, 1, 3, 1, TRUE, ''
 ),
-(4, 'Electronics', 'electronics', 'copper', 'electronics',
+(14, 4, 'Electronics', 'electronics', 'copper', 'electronics', NULL, NULL,
   null, 1, 3, 1, TRUE, ''
 ),
 -- heavy industry
-(5, 'Shipping Port', 'port', 'steel', 'port',
+(15, 5, 'Shipping Port', 'port', 'steel', 'port', 2, 5,
   null, 1, 1, 1, FALSE, 'Must be a coastal tile. Must be size at least city. Having a port doubles GDP'
 ),
-(5, 'Machinery', 'machinery', 'zinc,steel,electronics,software', 'machinery',
+(16, 5, 'Machinery', 'machinery', 'zinc,steel,electronics,software', 'machinery', NULL, NULL,
   null, 1, 3, 1, FALSE, ''
 ),
-(5, 'Automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive',
+(17, 5, 'Automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive', 2, NULL,
   null, 1, 3, 1, FALSE, ''
 ),
-(5, 'Aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,software', 'aerospace',
+(18, 5, 'Aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,software', 'aerospace', 2, NULL,
   null, 1, 3, 1, FALSE, ''
 ),
 -- tourism
-(6, 'Leisure', 'leisure', '', '',
+(19, 6, 'Leisure', 'leisure', '', '', NULL, 5,
   null, 1, 1, 1, FALSE, 'tile must be coastal'
 ),
-(6, 'Resort', 'resort', '', '',
+(20, 6, 'Resort', 'resort', '', '', NULL, 3,
   null, 1, 1, 1, FALSE, 'tile must be mountain'
 ),
-(6, 'Gambling', 'gambling', 'support', '',
+(21, 6, 'Gambling', 'gambling', 'support', '', 2, NULL,
   null, 5, 1, 1, FALSE, ''
 ),
 -- knowledge/quaternary
-(7, 'University', 'university', 'cash', 'education',
+(22, 7, 'University', 'university', 'cash', 'education', NULL, NULL,
   null, 5, 1, 1, FALSE, ''
 ),
-(7, 'Software', 'software', 'education', 'software',
+(23, 7, 'Software', 'software', 'education', 'software', 2, NULL,
   null, 1, 3, 1, FALSE, 'Must be a city'
 ),
-(7, 'Healthcare', 'healthcare', 'city,education', 'support',
+(24, 7, 'Healthcare', 'healthcare', 'city,education', 'support', 2, NULL,
   null, 1, 10, 1, FALSE, 'Also increases population by 25%'
 ),
 -- metro
-(8, 'Financial & Banking', 'financial_banking', 'metro', '',
+(25, 8, 'Financial & Banking', 'financial_banking', 'metro', '', 3, NULL,
   null, 1, 1, 1, FALSE, ''
 ),
-(8, 'Entertainment & Media', 'entertainment_media', 'metro', 'support',
+(26, 8, 'Entertainment & Media', 'entertainment_media', 'metro', 'support', 3, NULL,
   null, 1, 20, 1, FALSE, ''
 ),
-(8, 'Engineering & Design', 'engineering_design', 'metro', 'engineering',
+(27, 8, 'Engineering & Design', 'engineering_design', 'metro', 'engineering', 3, NULL,
   null, 1, 3, 1, FALSE, ''
 );
 
