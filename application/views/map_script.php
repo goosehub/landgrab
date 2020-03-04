@@ -129,10 +129,7 @@
     styled_map_type = new google.maps.StyledMapType(map_pirate, {name: 'Paper'});
     map.mapTypes.set('paper_map', styled_map_type);
 
-    map.setMapTypeId('hybrid');
-    // map.setMapTypeId('satellite');
-    // map.setMapTypeId('terrain');
-    // map.setMapTypeId('paper_map');
+    map.setMapTypeId('<?php echo DEFAULT_MAP; ?>');
   }
 
   function remove_overlay() {

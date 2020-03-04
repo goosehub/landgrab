@@ -107,6 +107,7 @@ Support
     Attacking town is 10 support, defending units get 2 times defensive bonus
     Attacking city is 20 support, defending units get 3 times defensive bonus
     Attacking metro is 30 support, defending units get 4 times defensive bonus
+    Declaring war costs 50 support
     If socialism, spawning units cost 50 support
 
 Budget Rates

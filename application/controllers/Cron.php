@@ -36,7 +36,7 @@ class Cron extends CI_Controller {
       // $world_reset_frequency[5] = '0 */4 * * *';
 
       $now = date('Y-m-d H:i:s');
-      $worlds = $this->game_model->get_all_worlds();
+      $worlds = $this->game_model->get_all('world');
       foreach ($worlds as $world) {
         // Check if it's time to run
         $time_to_reset = parse_crontab($now, $world_reset_frequency[$world['id']]);

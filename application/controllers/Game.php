@@ -4,17 +4,18 @@ date_default_timezone_set('America/New_York');
 
 class Game extends CI_Controller {
 
-    public $resources;
-
     function __construct() {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
 
-        $this->resources = $this->game_model->get_all_resources();
-        $this->terrains = $this->game_model->get_all_terrains();
-        $this->unit_types = $this->game_model->get_all_unit_types();
+        $this->resources = $this->game_model->get_all('resource');
+        $this->terrains = $this->game_model->get_all('terrain');
+        $this->unit_types = $this->game_model->get_all('unit_type');
+        $this->settlements = $this->game_model->get_all('settlement');
+        $this->industries = $this->game_model->get_all('industry');
+        $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];
 
         // Force ssl
         if (!is_dev()) {
@@ -43,7 +44,7 @@ class Game extends CI_Controller {
             $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], $server_map_update_interval_s);
         }
         else {
-            $data['worlds'] = $this->game_model->get_all_worlds();
+            $data['worlds'] = $this->game_model->get_all('world');
             $data['leaderboards'] = $this->leaderboards($data['world']['id']);
             $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
             $data['validation_errors'] = $this->session->flashdata('validation_errors');

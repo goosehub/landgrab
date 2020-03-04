@@ -341,7 +341,8 @@ CREATE TABLE `settlement` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
-  `is_settlement` int(1) NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL, -- incorporated, food, materials, energy, cash_crops,
+  `is_incorporated` int(1) NOT NULL,
   `is_food` int(1) NOT NULL,
   `is_material` int(1) NOT NULL,
   `is_energy` int(1) NOT NULL,
@@ -350,6 +351,7 @@ CREATE TABLE `settlement` (
   `is_allowed_on_coastal` int(1) NOT NULL,
   `is_allowed_on_barren` int(1) NOT NULL,
   `is_allowed_on_mountain` int(1) NOT NULL,
+  `is_allowed_on_tundra` int(1) NOT NULL,
   `base_population` int(10) UNSIGNED NOT NULL,
   `defense_bonus` int(10) UNSIGNED NOT NULL,
   `input_desc` varchar(256) NOT NULL,
@@ -361,114 +363,108 @@ ALTER TABLE `settlement` ADD PRIMARY KEY (`id`);
 ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `settlement` (
-  `label`, `slug`,
-  `is_settlement`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
+  `label`, `slug`, `category_id`,
+  `is_incorporated`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
   `base_population`, `defense_bonus`, `input_desc`, `output_desc`) VALUES
--- settlement
--- foods, cash crops, merch, energy, small settlements
-('unclaimed', 'unclaimed',
+('unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 1, '', ''
 ),
-('default', 'default',
+('default', 'default', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 1, '', ''
 ),
-('town', 'town',
+('town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 2, '1 food', ''),
-('city', 'city',
+('city', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   1000, 3, '3 kinds of food, 3 kinds, 3 energy, 1 merchandise, 1 cash crop', ''),
-('metro', 'metro',
+('metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10000, 4, '5 kinds of food, 10 energy, 5 merchandise, 3 kinds of cash crop', ''),
--- food
-('grain', 'grain',
+('grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'grain'
 ),
-('fruit', 'fruit',
+('fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fruit'
 ),
-('vegetable', 'vegetable',
+('vegetable', 'vegetable', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'vegetable'
 ),
-('livestock', 'livestock',
+('livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'livestock'
 ),
-('fish', 'fish',
+('fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fish'
 ),
--- materials
-('timber', 'timber',
+('timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'timber'
 ),
-('fiber', 'fiber',
+('fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fiber'
 ),
-('ore', 'ore',
+('ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
   10, 1, '', 'ore'
 ),
--- energy
-('biofuel', 'biofuel',
+('biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'biofuel'
 ),
-('solar', 'solar',
+('solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, 1, '', 'solar'
 ),
-('wind', 'wind',
+('wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, 1, '', 'wind'
 ),
--- cash_crops
-('coffee', 'coffee',
+('coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'coffee'
 ),
-('tea', 'tea',
+('tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'tea'
 ),
-('cannabis', 'cannabis',
+('cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'cannabis'
 ),
-('alcohol', 'alcohol',
+('alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'alcohol'
 ),
-('tobacco', 'tobacco',
+('tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'tobacco'

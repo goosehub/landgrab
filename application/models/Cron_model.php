@@ -7,7 +7,7 @@ Class cron_model extends CI_Model
 	function regenerate_resources($world_key)
 	{
 		$this->reset_resources($world_key);
-		$resources = $this->game_model->get_all_resources();
+		$resources = $this->game_model->get_all('resource');
 		foreach ($resources as $resource) {
 			$this->resource_distribute($resource);
 			$this->db->where('lat > ', LOWEST_LAT_RESOURCE_GEN);
