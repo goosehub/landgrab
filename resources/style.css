@@ -226,7 +226,7 @@ html, body {
   left: 2.5%;
   width: 95%;
   top: 10vh;
-  height: 80vh;
+  height: 90vh;
 }
 .budget_info_value {
   float: right;
@@ -261,15 +261,10 @@ a.sell_resource {
 }
 
 /* Trade */
-.trade_supplies_parent {
+.trade_supplies_parent, .government_supplies_parent {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 50vh;
-}
-.government_supplies_parent {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 50vh;
+  height: 60vh;
 }
 
 /* Beta */

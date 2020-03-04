@@ -317,7 +317,7 @@
     for (i = 0; i < number_of_tiles; i++) {
       // Set variables
       new_tile = new_tiles[i];
-      fill_opacity = 0.5;
+      fill_opacity = <?php echo TILE_OPACITY; ?>;
       fill_color = "#0000ff";
       if (new_tile['terrain_key'] == <?php echo FERTILE_KEY; ?>) {
         fill_color = '<?php echo FERTILE_COLOR; ?>';
