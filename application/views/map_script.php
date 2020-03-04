@@ -426,7 +426,8 @@
     $('#tile_terrain').html(terrains[d['terrain_key'] - 1]['label']);
 
     // Resources
-    $('#tile_resource,#tile_resource_icon').hide();
+    $('#tile_resource_icon').hide();
+    $('#tile_resource').html('None');
     if (d['resource_key']) {
       $('#tile_resource,#tile_resource_icon').show();
       $('#tile_resource').html(resources[d['resource_key'] - 1]['label']);

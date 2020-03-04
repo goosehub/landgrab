@@ -29,7 +29,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="input_tax_rate" class="pull-right text-success">Tax Rate: (%)</label>
+                        <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
                     </div>
                     <div class="col-md-8">
                         <input type="number" min="0" max="100" required class="form-control" id="tax_rate" name="input_tax_rate" value="<?php echo $account['tax_rate']; ?>">
@@ -115,7 +115,7 @@
                 </strong><br>
             </span> -->
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Hourly Profit: </strong>
+                <strong class="budget_info_item_label">Hourly Earnings: </strong>
                 <strong class="budget_info_value text-success">
                     $<span id="foobar">670</span> Million
                 </strong><br>
@@ -141,15 +141,30 @@
                 } ?>
 
                 <div class="government_supply parent">
-                    <label class="text-primary"><?php echo $supply['label']; ?></label>
-                    <span id="government_supply_<?php echo $supply['slug']; ?>" class="pull-right"></span>
+                    <label class="text-primary">
+                        <?php echo $supply['label']; ?>
+                        <?php if ($supply['can_sell']) { ?>
+                        <span class="text-success">
+                            ($<?php echo mt_rand(1, 6); ?>M)
+                        </span>
+                        <?php } ?>
+                    </label>
+                    <span class="pull-right">
+                        <?php if ($supply['can_sell']) { ?>
+                        <a href="" class="sell_resource">
+                            (Sell)
+                        </a>
+                        <?php } ?>
+                        <span id="government_supply_<?php echo $supply['slug']; ?>"></span>
+                        <?php echo $supply['suffix']; ?>
+                    </span>
                     <br>
                 </div>
 
-                    <?php if (!isset($this->supplies[$key + 1]) || $current_category_id !== $this->supplies[$key + 1]['category_id']) {
-                        ?>
-                        </div>
-                        <?php 
+                <?php if (!isset($this->supplies[$key + 1]) || $current_category_id !== $this->supplies[$key + 1]['category_id']) {
+                    ?>
+                    </div>
+                    <?php 
                     }
                 ?>
             <?php } ?>

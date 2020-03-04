@@ -21,7 +21,10 @@
             </p>
             <p class="tile_block_info_line">
                 <labe>Resource:</labe>
-                <span id="tile_resource" class="text-warning pull-right"></span> <img id="tile_resource_icon" src=""/>
+                <span class="pull-right">
+                    <img id="tile_resource_icon" src=""/>
+                    <span id="tile_resource" class="text-warning"></span>
+                </span>
             </p>
             <p class="tile_block_info_line">
                 <labe>Settlement:</labe>
@@ -54,8 +57,10 @@
             if ($current_category_id !== $settlement['category_id']) {
                 $current_category_id = $settlement['category_id'];
                 ?>
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <label><?php echo $this->settlement_category_labels[$settlement['category_id']]; ?></label>
+                </div>
+                <div class="col-md-9">
                 <?php 
             } ?>
             <button id="set_tile_as_<?php echo $settlement['slug']; ?>" class="set_settlement_button btn btn btn-default">
@@ -70,15 +75,17 @@
         <?php } ?>
     </div>
     <hr>
-    <h3>Select Industry Type</h3>
+    <h3>Select Industry</h3>
     <div class="row">
         <?php $current_category_id = 0;
         foreach ($this->industries as $key => $industry) {
             if ($current_category_id !== $industry['category_id']) {
                 $current_category_id = $industry['category_id'];
                 ?>
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <label><?php echo $this->industry_category_labels[$industry['category_id']]; ?></label>
+                </div>
+                <div class="col-md-9">
                 <?php 
             } ?>
             <button id="set_tile_as_<?php echo $industry['slug']; ?>" class="set_industry_button btn btn btn-default">

@@ -255,6 +255,11 @@ html, body {
   font-weight: bold;
 }
 
+/* Government */
+a.sell_resource {
+  color: #758E4F;
+}
+
 /* Trade */
 .trade_supplies_parent {
   overflow-y: scroll;

@@ -17,7 +17,7 @@
 <!-- Account Update -->
 <?php if ($account) { ?>
 <div id="account_update_block" class="center_block">
-    <strong>Nation Settings</strong>
+    <strong>National Charter</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -80,7 +80,7 @@
             </div>
         </div>
         <hr>
-        <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update Nation</button>
+        <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update National Charter</button>
         <br> <br>
         <a class="logout_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
     </form>
