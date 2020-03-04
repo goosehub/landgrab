@@ -1,7 +1,7 @@
 <?php if ($account) { ?>
 <div id="diplomacy_block" class="center_block">
     <strong>Diplomacy</strong>
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
 
@@ -16,7 +16,7 @@
             </select>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-action" trade-id="0">
+            <button class="open_trade_request btn btn-action form-control" trade-id="0">
                 <i class="fas fa-plus"></i>
                 Start Diplomacy
             </button>
@@ -37,7 +37,7 @@
             <span class="text-warning">Pending</span>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary" trade-id="0">
+            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
@@ -55,7 +55,7 @@
             <span class="text-danger">Rejected</span>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary" trade-id="0">
+            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
@@ -73,7 +73,7 @@
             <span class="text-danger">Declared</span>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary" trade-id="0">
+            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>
@@ -92,7 +92,7 @@
             <span class="text-success">Accepted</span>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary" trade-id="0">
+            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
                 <i class="fas fa-sign-out-alt"></i>
                 Open
             </button>

@@ -18,6 +18,9 @@
 
     <!-- Bootstrap -->
     <link href="<?=base_url()?>resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Bulma -->
+    <!-- <link href="<?=base_url()?>resources/bulma/bulma.min.css" rel="stylesheet" type="text/css"> -->
     
     <!-- jQuery DataTables -->
     <link href="<?=base_url()?>resources/datatables/datatables.min.css" rel="stylesheet" type="text/css">

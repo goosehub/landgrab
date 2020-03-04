@@ -47,6 +47,7 @@
         </div>
     </div>
     <hr>
+    <h3>Select Setttlement</h3>
     <div class="row">
         <?php $current_category_id = 0;
         foreach ($this->settlements as $key => $settlement) {
@@ -54,13 +55,36 @@
                 $current_category_id = $settlement['category_id'];
                 ?>
                 <div class="col-md-12">
-                    <p class="lead"><?php echo $this->settlement_category_labels[$settlement['category_id']]; ?></p>
+                    <label><?php echo $this->settlement_category_labels[$settlement['category_id']]; ?></label>
                 <?php 
             } ?>
-            <button class="set_tile_as_<?php echo $settlement['slug']; ?> btn bnt-default">
+            <button id="set_tile_as_<?php echo $settlement['slug']; ?>" class="set_settlement_button btn btn btn-default">
                 <?php echo $settlement['label']; ?>
             </button>
             <?php if (!isset($this->settlements[$key + 1]) || $current_category_id !== $this->settlements[$key + 1]['category_id']) {
+                ?>
+                </div>
+                <?php 
+            }
+        ?>
+        <?php } ?>
+    </div>
+    <hr>
+    <h3>Select Industry Type</h3>
+    <div class="row">
+        <?php $current_category_id = 0;
+        foreach ($this->industries as $key => $industry) {
+            if ($current_category_id !== $industry['category_id']) {
+                $current_category_id = $industry['category_id'];
+                ?>
+                <div class="col-md-12">
+                    <label><?php echo $this->industry_category_labels[$industry['category_id']]; ?></label>
+                <?php 
+            } ?>
+            <button id="set_tile_as_<?php echo $industry['slug']; ?>" class="set_industry_button btn btn btn-default">
+                <?php echo $industry['label']; ?>
+            </button>
+            <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {
                 ?>
                 </div>
                 <?php 

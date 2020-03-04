@@ -151,7 +151,7 @@ class User extends CI_Controller {
         }
         // Success
         // Set variables
-        $worlds = $this->game_model->get_all_worlds();
+        $worlds = $this->game_model->get_all('world');
         
         // Create account for each world
         foreach ($worlds as $world)

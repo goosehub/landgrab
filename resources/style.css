@@ -41,6 +41,9 @@ html, body {
 .btn {
   border-radius: 0;
 }
+.btn-full {
+  width: 100%;
+}
 .text-action {
   color: #FF7C00;
 }
@@ -219,25 +222,19 @@ html, body {
     width: 90%;   
   }
 }
-#government_block, #trade_block {
+#government_block, #trade_block, #diplomacy_block, #leaderboard_block {
   left: 2.5%;
   width: 95%;
   top: 10vh;
   height: 80vh;
 }
-.laws_info_value {
+.budget_info_value {
   float: right;
   clear: both;
 }
-.laws_info_desc_highlight {
+.budget_info_desc_highlight {
   font-weight: 400;
   color: #31708f;
-}
-.leaderboard_block {
-  top: 10vh;
-  max-height: 85vh;
-  width: 80vw;
-  left: 10vw;
 }
 .leaderboard_leader_portrait, .leaderboard_nation_flag {
   max-width: 75px;
@@ -256,6 +253,18 @@ html, body {
   color: #444488;
   background: #FFC31E;
   font-weight: bold;
+}
+
+/* Trade */
+.trade_supplies_parent {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 50vh;
+}
+.government_supplies_parent {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 50vh;
 }
 
 /* Beta */

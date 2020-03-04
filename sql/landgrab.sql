@@ -4,8 +4,10 @@ DROP TABLE IF EXISTS tile;
 DROP TABLE IF EXISTS unit_type;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS trade_request;
+DROP TABLE IF EXISTS agreement_lookup;
 DROP TABLE IF EXISTS supply_account_lookup;
 DROP TABLE IF EXISTS supply_account_trade_lookup;
+DROP TABLE IF EXISTS supply_trade_lookup;
 DROP TABLE IF EXISTS supply;
 DROP TABLE IF EXISTS terrain;
 DROP TABLE IF EXISTS resource;
@@ -41,7 +43,7 @@ CREATE TABLE `tile` (
   `tile_name` varchar(512) NULL,
   `tile_desc` varchar(1024) NULL,
   `color` varchar(8) NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
 ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -85,22 +87,10 @@ CREATE TABLE `account` (
   -- meta
   `last_load` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `account` ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
-
-CREATE TABLE `trade_request` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `request_account_key` int(10) UNSIGNED NOT NULL,
-  `requested_account_key` int(10) UNSIGNED NOT NULL,
-  `status` int(1) UNSIGNED NULL,
-  `message` varchar(256) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
-ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `trade_request` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -115,7 +105,7 @@ CREATE TABLE `trade_request` (
   `is_declared` int(1) UNSIGNED NOT NULL,
   `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -126,7 +116,7 @@ CREATE TABLE `agreement_lookup` (
   `b_account_key` int(10) UNSIGNED NOT NULL,
   `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -162,6 +152,7 @@ CREATE TABLE `supply` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL, -- core,food,cash_crops,materials,energy,valuables,metals,light,heavy,knowledge
   `can_trade` int(1) UNSIGNED NOT NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
@@ -169,64 +160,51 @@ CREATE TABLE `supply` (
 ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `supply` (`label`, `slug`, `can_trade`, `meta`) VALUES
--- core
-('cash', 'cash', TRUE, ''),
-('support', 'support', FALSE, ''),
-('population', 'population', FALSE, ''),
-('land_tiles', 'land_tiles', FALSE, ''),
-('ocean_tiles', 'ocean_tiles', FALSE, ''),
--- food
-('grain', 'grain', TRUE, ''),
-('fruit', 'fruit', TRUE, ''),
-('vegetable', 'vegetable', TRUE, ''),
-('livestock', 'livestock', TRUE, ''),
-('fish', 'fish', TRUE, ''),
--- cash_crops
-('coffee', 'coffee', TRUE, ''), -- cash_crop
-('tea', 'tea', TRUE, ''), -- cash_crop
-('cannabis', 'cannabis', TRUE, ''), -- cash_crop
-('alcohol', 'alcohol', TRUE, ''), -- cash_crop
-('tobacco', 'tobacco', TRUE, ''), -- cash_crop
--- harvested supplies
-('timber', 'timber', TRUE, ''),
-('fiber', 'fiber', TRUE, ''),
-('ore', 'ore', TRUE, ''),
--- energy
-('biofuel', 'biofuel', TRUE, ''),
-('solar', 'solar', FALSE, ''),
-('wind', 'wind', FALSE, ''),
-('coal', 'coal', TRUE, ''),
-('gas', 'gas', TRUE, ''),
-('oil', 'oil', TRUE, ''),
-('uranium', 'uranium', TRUE, ''),
--- valuables
-('silver', 'silver', TRUE, ''), -- cash_crop
-('gold', 'gold', TRUE, ''), -- cash_crop
-('platinum', 'platinum', TRUE, ''), -- cash_crop
-('gemstones', 'gemstones', TRUE, ''), -- cash_crop
--- metals
-('iron', 'iron', TRUE, ''),
-('copper', 'copper', TRUE, ''),
-('zinc', 'zinc', TRUE, ''),
-('aluminum', 'aluminum', TRUE, ''),
-('nickle', 'nickle', TRUE, ''),
--- light industry
-('merchandise', 'merchandise', TRUE, ''),
-('energy', 'energy', FALSE, ''),
-('chemicals', 'chemicals', TRUE, ''),
-('steel', 'steel', TRUE, ''),
-('electronics', 'electronics', TRUE, ''),
--- heavy industry
-('port', 'port', TRUE, ''),
-('machinery', 'machinery', TRUE, ''),
-('automotive', 'automotive', TRUE, ''),
-('aerospace', 'aerospace', TRUE, ''),
--- service industry
-('education', 'education', FALSE, ''),
-('it', 'it', TRUE, ''),
-('healthcare', 'healthcare', FALSE, ''),
-('engineering', 'engineering', TRUE, '');
+INSERT INTO `supply` (`category_id`, `label`, `slug`, `can_trade`, `meta`) VALUES
+(1, 'Cash', 'cash', TRUE, ''),
+(1, 'Support', 'support', FALSE, ''),
+(1, 'Population', 'population', FALSE, ''),
+(1, 'Tiles', 'tiles', FALSE, ''),
+(2, 'Grain', 'grain', TRUE, ''),
+(2, 'Fruit', 'fruit', TRUE, ''),
+(2, 'Vegetables', 'vegetables', TRUE, ''),
+(2, 'Livestock', 'livestock', TRUE, ''),
+(2, 'Fish', 'fish', TRUE, ''),
+(3, 'Coffee', 'coffee', TRUE, ''),
+(3, 'Tea', 'tea', TRUE, ''),
+(3, 'Cannabis', 'cannabis', TRUE, ''),
+(3, 'Alcohol', 'alcohol', TRUE, ''),
+(3, 'Tobacco', 'tobacco', TRUE, ''),
+(4, 'Timber', 'timber', TRUE, ''),
+(4, 'Fiber', 'fiber', TRUE, ''),
+(4, 'Ore', 'ore', TRUE, ''),
+(5, 'Biofuel', 'biofuel', TRUE, ''),
+(5, 'Energy', 'energy', FALSE, ''),
+(5, 'Coal', 'coal', TRUE, ''),
+(5, 'Gas', 'gas', TRUE, ''),
+(5, 'Oil', 'oil', TRUE, ''),
+(5, 'Uranium', 'uranium', TRUE, ''),
+(6, 'Silver', 'silver', TRUE, ''),
+(6, 'Gold', 'gold', TRUE, ''),
+(6, 'Platinum', 'platinum', TRUE, ''),
+(6, 'Gemstones', 'gemstones', TRUE, ''),
+(7, 'Iron', 'iron', TRUE, ''),
+(7, 'Copper', 'copper', TRUE, ''),
+(7, 'Zinc', 'zinc', TRUE, ''),
+(7, 'Aluminum', 'aluminum', TRUE, ''),
+(7, 'Nickle', 'nickle', TRUE, ''),
+(8, 'Merchandise', 'merchandise', TRUE, ''),
+(8, 'Chemicals', 'chemicals', TRUE, ''),
+(8, 'Steel', 'steel', TRUE, ''),
+(8, 'Electronics', 'electronics', TRUE, ''),
+(9, 'Port', 'port', TRUE, ''),
+(9, 'Machinery', 'machinery', TRUE, ''),
+(9, 'Automotive', 'automotive', TRUE, ''),
+(9, 'Aerospace', 'aerospace', TRUE, ''),
+(10, 'Education', 'education', FALSE, ''),
+(10, 'Software', 'software', TRUE, ''),
+(10, 'Healthcare', 'healthcare', FALSE, ''),
+(10, 'Engineering', 'engineering', TRUE, '');
 
 CREATE TABLE `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -367,104 +345,104 @@ INSERT INTO `settlement` (
   `is_incorporated`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
   `base_population`, `defense_bonus`, `input_desc`, `output_desc`) VALUES
-('unclaimed', 'unclaimed', 1,
+('Unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 1, '', ''
 ),
-('default', 'default', 1,
+('Default', 'default', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 1, '', ''
 ),
-('town', 'town', 1,
+('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, 2, '1 food', ''),
-('city', 'city', 1,
+('City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   1000, 3, '3 kinds of food, 3 kinds, 3 energy, 1 merchandise, 1 cash crop', ''),
-('metro', 'metro', 1,
+('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10000, 4, '5 kinds of food, 10 energy, 5 merchandise, 3 kinds of cash crop', ''),
-('grain', 'grain', 2,
+('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'grain'
 ),
-('fruit', 'fruit', 2,
+('Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fruit'
 ),
-('vegetable', 'vegetable', 2,
+('Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, 1, '', 'vegetable'
+  10, 1, '', 'vegetables'
 ),
-('livestock', 'livestock', 2,
+('Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'livestock'
 ),
-('fish', 'fish', 2,
+('Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fish'
 ),
-('timber', 'timber', 3,
+('Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'timber'
 ),
-('fiber', 'fiber', 3,
+('Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'fiber'
 ),
-('ore', 'ore', 3,
+('Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
   10, 1, '', 'ore'
 ),
-('biofuel', 'biofuel', 4,
+('Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'biofuel'
 ),
-('solar', 'solar', 4,
+('Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, 1, '', 'solar'
 ),
-('wind', 'wind', 4,
+('Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, 1, '', 'wind'
 ),
-('coffee', 'coffee', 5,
+('Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'coffee'
 ),
-('tea', 'tea', 5,
+('Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'tea'
 ),
-('cannabis', 'cannabis', 5,
+('Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'cannabis'
 ),
-('alcohol', 'alcohol', 5,
+('Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'alcohol'
 ),
-('tobacco', 'tobacco', 5,
+('Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, 1, '', 'tobacco'
@@ -472,7 +450,7 @@ INSERT INTO `settlement` (
 
 CREATE TABLE `industry` (
   `id` int(10) UNSIGNED NOT NULL,
-  `category_id` int(10) UNSIGNED NOT NULL, -- Special, CashCrop, Material, Advanced, Service, Knowledge, Metro
+  `category_id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
   `input_slug` varchar(256) NOT NULL,
@@ -492,93 +470,93 @@ ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 INSERT INTO `industry` (
   `category_id`, `label`, `slug`, `input_slug`, `output_desc`,
   `output_supply_key`, `input_supply_amount`, `output_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
--- federal
-(1, 'capital', 'capital', 'cash', 'support',
-  null, 10, 25, 1, FALSE, 'Acts as federal and base.'
+-- government
+(1, 'Capitol', 'capitol', 'cash', 'support',
+  null, 10, 25, 1, FALSE, 'Can spawn units, add political support, creates corruption'
 ),
-(1, 'federal', 'federal', 'cash', 'support',
-  null, 10, 10, 1, FALSE, 'Adds political support, but also increases corruption'
+(1, 'Federal', 'federal', 'cash', 'support',
+  null, 10, 10, 1, FALSE, 'Add political support, creates corruption'
 ),
-(1, 'base', 'base', 'cash', '',
-  null, 10, 1, 1, TRUE, 'Allows units to be spawned in and flown in to this tile'
+(1, 'Base', 'base', 'cash', '',
+  null, 10, 1, 1, TRUE, 'Can spawn units'
 ),
 -- merchandise
-(2, 'manufacturing', 'manufacturing', 'ore', 'merchandise',
+(2, 'Manufacturing', 'manufacturing', 'ore', 'merchandise',
   null, 1, 1, 1, TRUE, ''
 ),
-(2, 'timber', 'timber', 'timber', 'merchandise',
+(2, 'Timber', 'timber', 'timber', 'merchandise',
   null, 1, 1, 1, TRUE, ''
 ),
-(2, 'textile', 'textile', 'fiber', 'merchandise',
+(2, 'Textile', 'textile', 'fiber', 'merchandise',
   null, 1, 1, 1, TRUE, ''
 ),
 -- energy
-(2, 'biofuel', 'biofuel', 'biofuel', 'energy',
+(3, 'Biofuel', 'biofuel', 'biofuel', 'energy',
   null, 1, 2, 1, TRUE, ''
 ),
-(2, 'coal', 'coal', 'coal', 'energy',
+(3, 'Coal', 'coal', 'coal', 'energy',
   null, 1, 2, 1, TRUE, ''
 ),
-(2, 'gas', 'gas', 'gas', 'energy',
+(3, 'Gas', 'gas', 'gas', 'energy',
   null, 1, 3, 1, TRUE, ''
 ),
-(2, 'petroleum', 'petroleum', 'oil', 'energy',
+(3, 'Petroleum', 'petroleum', 'oil', 'energy',
   null, 1, 6, 1, TRUE, ''
 ),
-(2, 'nuclear', 'nuclear', 'uranium', 'energy',
+(3, 'Nuclear', 'nuclear', 'uranium', 'energy',
   null, 1, 8, 1, TRUE, ''
 ),
--- other light industry
-(2, 'chemicals', 'chemicals', 'energy', 'chemicals',
+-- light industry
+(4, 'Chemicals', 'chemicals', 'energy', 'chemicals',
   null, 1, 3, 1, TRUE, ''
 ),
-(2, 'steel', 'steel', 'iron', 'steel',
+(4, 'Steel', 'steel', 'iron', 'steel',
   null, 1, 3, 1, TRUE, ''
 ),
-(2, 'electronics', 'electronics', 'copper', 'electronics',
+(4, 'Electronics', 'electronics', 'copper', 'electronics',
   null, 1, 3, 1, TRUE, ''
 ),
 -- heavy industry
-(3, 'port', 'port', 'steel', 'port',
+(5, 'Port', 'port', 'steel', 'port',
   null, 1, 1, 1, FALSE, 'Must be a coastal tile. Must be size at least city. Having a port doubles GDP'
 ),
-(3, 'machinery', 'machinery', 'zinc,steel,electronics,it', 'machinery',
+(5, 'Machinery', 'machinery', 'zinc,steel,electronics,software', 'machinery',
   null, 1, 3, 1, FALSE, ''
 ),
-(3, 'automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive',
+(5, 'Automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive',
   null, 1, 3, 1, FALSE, ''
 ),
-(3, 'aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,it', 'aerospace',
+(5, 'Aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,software', 'aerospace',
   null, 1, 3, 1, FALSE, ''
 ),
 -- tourism
-(4, 'leisure', 'leisure', '', '',
+(6, 'Leisure', 'leisure', '', '',
   null, 1, 1, 1, FALSE, 'tile must be coastal'
 ),
-(4, 'resort', 'resort', '', '',
+(6, 'Resort', 'resort', '', '',
   null, 1, 1, 1, FALSE, 'tile must be mountain'
 ),
-(4, 'gambling', 'gambling', 'support', '',
+(6, 'Gambling', 'gambling', 'support', '',
   null, 5, 1, 1, FALSE, ''
 ),
 -- knowledge/quaternary
-(5, 'university', 'university', 'cash', 'education',
+(7, 'University', 'university', 'cash', 'education',
   null, 5, 1, 1, FALSE, ''
 ),
-(5, 'it', 'it', 'education', 'it',
+(7, 'Software', 'software', 'education', 'software',
   null, 1, 3, 1, FALSE, 'Must be a city'
 ),
-(5, 'healthcare', 'healthcare', 'city,education', 'support',
+(7, 'Healthcare', 'healthcare', 'city,education', 'support',
   null, 1, 10, 1, FALSE, 'Also increases population by 25%'
 ),
 -- metro
-(6, 'financial_banking', 'financial_banking', 'metro', '',
+(8, 'Financial & Banking', 'financial_banking', 'metro', '',
   null, 1, 1, 1, FALSE, ''
 ),
-(6, 'entertainment_media', 'entertainment_media', 'metro', 'support',
+(8, 'Entertainment & Media', 'entertainment_media', 'metro', 'support',
   null, 1, 20, 1, FALSE, ''
 ),
-(6, 'engineering_design', 'engineering_design', 'metro', 'engineering',
+(8, 'Engineering & Design', 'engineering_design', 'metro', 'engineering',
   null, 1, 3, 1, FALSE, ''
 );
 
@@ -595,7 +573,7 @@ CREATE TABLE `user` (
   `ip` varchar(64) NOT NULL,
   `ab_test` varchar(256) NOT NULL DEFAULT '',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `user` ADD PRIMARY KEY (`id`);
 ALTER TABLE `user` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;

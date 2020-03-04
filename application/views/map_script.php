@@ -252,14 +252,14 @@
   }
 
   function update_supplies(supplies) {
-    let html = '';
     Object.keys(supplies).forEach(function(key) {
       let supply = supplies[key];
-      html += `<div class="col-md-4"><label>${ucwords(supply['label'])}</label>: <span class="supply_${supply['slug']}">${supply['amount']}</span></div>`;
+      $('#government_supply_' + supply['slug']).html(supply['amount']);
+      $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
+      // $('#their_trade_supply_offer_' + supply['slug']).val(supply['amount']);
+      $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
+      // $('#our_trade_supply_offer_' + supply['slug']).val(supply['amount']);
     });
-    $('#account_supply_list').html(html);
-    $('#their_trade_supply_list').html(html);
-    $('#my_trade_supply_list').html(html);
   }
 
   function get_map_update() {

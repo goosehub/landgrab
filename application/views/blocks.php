@@ -19,7 +19,7 @@
 <div id="account_update_block" class="center_block">
     <strong>Nation Settings</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
@@ -92,7 +92,7 @@
 <div id="update_password_block" class="center_block">
     <strong>Update Password</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
@@ -133,7 +133,7 @@
 <div id="update_info_block" class="center_block">
     <strong>Recent Updates</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
 
@@ -149,7 +149,7 @@
 <div id="about_block" class="center_block">
     <strong>About LandGrab</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
@@ -170,7 +170,7 @@
 <div id="faq_block" class="center_block">
     <strong>Frequently Asked Questions</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
@@ -188,7 +188,7 @@
 <div id="report_bugs_block" class="center_block">
     <strong>Report Bugs</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>
@@ -204,7 +204,7 @@
 <div id="error_block" class="center_block">
     <strong>There was an issue</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <!-- Validation Errors -->
@@ -215,7 +215,7 @@
 <div id="login_block" class="center_block">
     <strong>Login</strong>
 
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <!-- Validation Errors -->
@@ -249,7 +249,7 @@
 <div id="register_block" class="center_block">
     <strong>Start Playing</strong>
     <br><br>
-    <button type="button" class="exit_center_block btn btn-default btn-sm">
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <!-- Validation Errors -->

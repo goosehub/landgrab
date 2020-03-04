@@ -1,24 +1,36 @@
 <div id="trade_block" class="center_block">
     <form id="trade_form" action="<?=base_url()?>trade_form" method="post">
 
-        <button type="button" class="exit_center_block btn btn-default btn-sm">
+        <strong>Trade Proposal</strong>
+        <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
-
-        <div id="trade_form_result" class="trade_block_toggle">
-            <br><div class="alert alert-wide alert-error"><strong id="trade_form_result_message"></strong></div>
-        </div>
+        <hr>
 
         <div class="row">
             <div class="col-md-4">
                 <h3 class="text-center text-primary">Thatcher's Supplies</h3>
-                <div id="their_trade_supply_list" class="row"></div>
+                <div class="trade_supplies_parent">
+                <?php foreach ($this->supplies as $supply) { ?>
+                    <div class="trade_supply_parent row">
+                        <div class="col-md-5 col-md-push-1">
+                            <label><?php echo $supply['label']; ?></label>
+                        </div>
+                        <div class="col-md-3">
+                            <strong id="their_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                        </div>
+                        <div class="col-md-3">
+                            <input value="0" id="their_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
+                        </div>
+                    </div>
+                <?php } ?>
+                </div>
             </div>
             <div class="col-md-4">
                 <h2>Proposed Agreement</h2>
                 <p class="lead">
                     Current Diplomatic Agreement:
-                    <strong id="current_agreement" class="text-danger">War!</strong>
+                    <strong id="current_agreement" class="text-danger">War</strong>
                 </p>
                 <p class="lead">Proposed Diplomatic Agreement</p>
                 <select class="form-control" id="input_agreement" name="input_agreement">
@@ -57,7 +69,21 @@
             </div>
             <div class="col-md-4">
                 <h3 class="text-center text-primary">Your Supplies</h3>
-                <div id="my_trade_supply_list" class="row"></div>
+                <div class="trade_supplies_parent">
+                <?php foreach ($this->supplies as $supply) { ?>
+                    <div class="trade_supply_parent row">
+                        <div class="col-md-5 col-md-push-1">
+                            <label><?php echo $supply['label']; ?></label>
+                        </div>
+                        <div class="col-md-3">
+                            <strong id="our_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                        </div>
+                        <div class="col-md-3">
+                            <input value="0" id="our_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
+                        </div>
+                    </div>
+                <?php } ?>
+                </div>
             </div>
         </div>
 
