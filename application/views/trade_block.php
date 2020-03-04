@@ -12,6 +12,7 @@
                 <h3 class="text-center text-primary">Thatcher's Supplies</h3>
                 <div class="trade_supplies_parent">
                 <?php foreach ($this->supplies as $supply) { ?>
+                    <?php if (!$supply['can_trade']) { continue; } ?>
                     <div class="trade_supply_parent row">
                         <div class="col-md-5 col-md-push-1">
                             <label><?php echo $supply['label']; ?></label>
@@ -71,6 +72,7 @@
                 <h3 class="text-center text-primary">Your Supplies</h3>
                 <div class="trade_supplies_parent">
                 <?php foreach ($this->supplies as $supply) { ?>
+                    <?php if (!$supply['can_trade']) { continue; } ?>
                     <div class="trade_supply_parent row">
                         <div class="col-md-5 col-md-push-1">
                             <label><?php echo $supply['label']; ?></label>

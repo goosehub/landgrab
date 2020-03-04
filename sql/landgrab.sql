@@ -203,7 +203,7 @@ INSERT INTO `supply` (`category_id`, `label`, `slug`, `suffix`, `can_trade`, `ca
 (9, 'Chemicals', 'chemicals', 'Kl', TRUE, FALSE, ''),
 (9, 'Steel', 'steel', 'Ton', TRUE, FALSE, ''),
 (9, 'Electronics', 'electronics', ' Shipments', TRUE, FALSE, ''),
-(10, 'Shipping Ports', 'port', '', TRUE, FALSE, ''),
+(10, 'Shipping Ports', 'port', '', FALSE, FALSE, ''),
 (10, 'Machinery', 'machinery', ' Shipments', TRUE, FALSE, ''),
 (10, 'Automotive', 'automotive', ' Shipments', TRUE, FALSE, ''),
 (10, 'Aerospace', 'aerospace', ' Shipments', TRUE, FALSE, '');
