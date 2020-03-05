@@ -42,7 +42,7 @@ CREATE TABLE `tile` (
   `army_unit_owner_key` int(10) UNSIGNED NULL,
   `is_capitol` int(1) NOT NULL,
   `tile_name` varchar(512) NULL,
-  `tile_desc` varchar(1024) NULL,
+  `tile_desc` text NULL,
   `color` varchar(8) NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

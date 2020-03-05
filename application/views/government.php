@@ -48,7 +48,7 @@
                             <input type="radio" class="form-control" id="free_market" name="input_ideology" value="<?php echo FREE_MARKET_KEY; ?>" <?php echo $account['ideology'] == FREE_MARKET_KEY ? 'checked' : ''; ?> >
                         </div>
                         <div class="col-md-3">
-                            <label for="input_ideology" class="pull-right text-danger">Full Socialism</label>
+                            <label for="input_ideology" class="pull-right text-danger">Marxist Socialism</label>
                         </div>
                         <!-- Socialism eliminates all profit, units cost support instead of money -->
                         <div class="col-md-3">

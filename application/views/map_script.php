@@ -97,14 +97,12 @@
   function set_map() {
     map = new google.maps.Map(document.getElementById('map'), {
       // Zoom on tile if set as parameter
-      <?php if ( isset($_GET['tile']) ) { $tile_coords_split = explode(',', $_GET['tile']); ?>
-
+      <?php if ( isset($_GET['lng']) ) { ?>
       // Logic to center isn't understood, but results in correct behavior in all 4 corners
       center: {
-        lat: <?php echo $tile_coords_split[0] + ($world['tile_size'] / 2); ?>,
-        lng: <?php echo $tile_coords_split[1] - ($world['tile_size'] / 2); ?>
+        lat: <?php echo $_GET['lat'] + ($world['tile_size'] / 2); ?>,
+        lng: <?php echo $_GET['lng'] - ($world['tile_size'] / 2); ?>
       },
-
       // Zoom should be adjusted based on box size
       zoom: 6,
       <?php } else { ?>
@@ -419,19 +417,26 @@
   }
 
   function populate_tile_window(d) {
-
     $('#tile_block').show();
-    $('#coord_link').prop('href', '<?=base_url()?>world/' + d['world_key'] + '?lng=' + d['lng'] + '&lat=' + d['lat']);
-    $('#coord_link').html(d['lng'] + ',' + d['lat']);
-    $('#tile_terrain').html(terrains[d['terrain_key'] - 1]['label']);
 
-    // Resources
-    $('#tile_resource_icon').hide();
-    $('#tile_resource').html('None');
-    if (d['resource_key']) {
-      $('#tile_resource,#tile_resource_icon').show();
-      $('#tile_resource').html(resources[d['resource_key'] - 1]['label']);
-      $('#tile_resource_icon').attr('src', `../resources/icons/natural_resources/${d['resource_key']}.png`);
+    tile_name(d);
+    tile_desc(d);
+    tile_coord_link(d);
+    tile_owner_info(d);
+    tile_owner_username(d);
+    tile_owner_country_name(d);
+    tile_terrain(d);
+    tile_resource_icon(d);
+    tile_resource(d);
+    tile_settlement_label(d);
+    tile_industry_label(d);
+    tile_population(d);
+    tile_gdp(d);
+    settlement_select(d);
+    industry_select(d);
+
+    if (!account['supplies']['tiles'] || d['account_key'] === account['id']) {
+      $('#settlement_select').show();
     }
   }
 
