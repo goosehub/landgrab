@@ -40,19 +40,19 @@
       current_map_type = 'terrain';
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
-      set_marker_set_visibility(border_markers, false);
+      set_marker_set_visibility(capitol_markers, false);
     });
     $('#borders_toggle').click(function(event) {
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(border_markers, true);
+      set_marker_set_visibility(capitol_markers, true);
     });
     $('#empty_toggle').click(function(event) {
       current_map_type = 'empty';
       tiles_to_empty();
       set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(border_markers, false);
+      set_marker_set_visibility(capitol_markers, false);
     });
   }
 
@@ -159,49 +159,61 @@
     return marker;
   }
 
+  function set_capitol_icon(lat, lng) {
+    var myLatLng = {
+      lat: lat + 1,
+      lng: lng - 1
+    };
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      // title: slug,
+      // draggable:true,
+      icon: {
+        url: `../resources/icons/capitol.png`,
+        scaledSize: new google.maps.Size(20, 20), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(10,10) // anchor
+      }
+    });
+    marker.setMap(map);
+    marker.addListener('click', set_window);
+    return marker;
+  }
+
   function generate_tiles() {
     <?php 
     // This foreach loop runs 15,000 times, so performance and bandwidth is key
     // Because of this, some unconventional code may be used
     foreach ($tiles as $tile) {
-      $fill_opacity = TILE_OPACITY;
-      $stroke_weight = STROKE_WEIGHT; 
-      $stroke_color = STROKE_COLOR;
-      $fill_color = "#FFFFFF";
-      if ($tile['terrain_key'] == FERTILE_KEY) {
-        $fill_color = FERTILE_COLOR;
-      }
-      if ($tile['terrain_key'] == BARREN_KEY) {
-        $fill_color = BARREN_COLOR;
-      }
-      if ($tile['terrain_key'] == MOUNTAIN_KEY) {
-        $fill_color = MOUNTAIN_COLOR;
-      }
-      if ($tile['terrain_key'] == TUNDRA_KEY) {
-        $fill_color = TUNDRA_COLOR;
-      }
-      if ($tile['terrain_key'] == COASTAL_KEY) {
-        $fill_color = COASTAL_COLOR;
-      }
-      if ($tile['terrain_key'] == OCEAN_KEY) {
-        $fill_color = OCEAN_COLOR;
-      }
+      $terrain_color = $this->game_model->get_tile_terrain_color($tile);
+      $border_color = $this->game_model->get_tile_border_color($tile);
       if ($tile['resource_key']) { ?>
         resource_markers.push(set_resource_icon(<?php echo $tile['resource_key']; ?>,<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+      <?php }
+      if ($tile['is_capitol']) { ?>
+        capitol_markers.push(set_capitol_icon(<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
       <?php }
       ?>z(<?php echo
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
         $tile['lng'] . ',' .
-        $stroke_weight . ',' .
-        '"' . $stroke_color . '"' . ',' .
-        '"' . $fill_color . '"' . ',' .
-        $fill_opacity; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
+        '"' . $terrain_color . '",' .
+        '"' . $border_color . '"'
+      ; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
     } ?>
+
+    if (use_borders) {
+      set_marker_set_visibility(resource_markers, false);
+    }
+    if (!use_borders) {
+      set_marker_set_visibility(capitol_markers, false);
+    }
   }
 
   // Declare square called by performance sensitive loop
-  function z(tile_key, tile_lat, tile_lng, stroke_weight, stroke_color, fill_color, fill_opacity) {
+  function z(tile_key, tile_lat, tile_lng, terrain_fill_color, border_fill_color) {
+    let current_fill_color = use_borders ? border_fill_color : terrain_fill_color;
     let shape = [{
         lat: tile_lat,
         lng: tile_lng
@@ -222,12 +234,12 @@
     let polygon = new google.maps.Polygon({
       map: map,
       paths: shape,
+      fillOpacity: <?php echo $tile['terrain_key'] === OCEAN_KEY ? 0 : TILE_OPACITY; ?>,
       strokeWeight: <?php echo STROKE_WEIGHT; ?>,
       strokeColor: '<?php echo STROKE_COLOR; ?>',
-      fillOpacity: <?php echo TILE_OPACITY; ?>,
-      fillColor: fill_color,
-      terrain_fillColor: fill_color,
-      borders_fillColor: '#FFFFFF',
+      fillColor: current_fill_color,
+      terrain_fillColor: terrain_fill_color,
+      borders_fillColor: border_fill_color,
     });
     polygon.setMap(map);
     polygon.addListener('click', set_window);

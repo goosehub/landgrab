@@ -121,6 +121,7 @@ Class game_model extends CI_Model
 			'is_capitol' => 1,
 			'tile_name' => 'Capitol of ' . $account['nation_name'],
 			'tile_desc' => '',
+			'color' => $account['color'],
 		);
 		$this->db->where('lat', $tile['lat']);
 		$this->db->where('lng', $tile['lng']);
@@ -138,4 +139,35 @@ Class game_model extends CI_Model
 		$this->db->where('supply_key', $supply_key);
 		$this->db->update('supply_account_lookup');
 	}
+    function get_tile_border_color($tile)
+    {
+        $fill_color = "#FFFFFF";
+        if ($tile['account_key']) {
+        	$fill_color = $tile['color'];
+        }
+        return $fill_color;
+    }
+    function get_tile_terrain_color($tile)
+    {
+        $fill_color = "#FFFFFF";
+        if ($tile['terrain_key'] == FERTILE_KEY) {
+            $fill_color = FERTILE_COLOR;
+        }
+        if ($tile['terrain_key'] == BARREN_KEY) {
+            $fill_color = BARREN_COLOR;
+        }
+        if ($tile['terrain_key'] == MOUNTAIN_KEY) {
+            $fill_color = MOUNTAIN_COLOR;
+        }
+        if ($tile['terrain_key'] == TUNDRA_KEY) {
+            $fill_color = TUNDRA_COLOR;
+        }
+        if ($tile['terrain_key'] == COASTAL_KEY) {
+            $fill_color = COASTAL_COLOR;
+        }
+        if ($tile['terrain_key'] == OCEAN_KEY) {
+            $fill_color = OCEAN_COLOR;
+        }
+        return $fill_color;
+    }
 }
