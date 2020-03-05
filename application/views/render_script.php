@@ -41,20 +41,19 @@
     }
     function tile_resource(d)
     {
+        $('#tile_resource_with').hide();
+        $('#tile_resource').hide();
         if (d['resource_key']) {
-            $('#tile_resource').html(resources[d['resource_key'] - 1]['label'] || '--');
+            $('#tile_resource_with').show();
+            $('#tile_resource').html(resources[d['resource_key'] - 1]['label']);
         }
         else {
-            $('#tile_resource').html('--');
         }
     }
     function tile_settlement_label(d)
     {
-        if (d['is_capitol']) {
-            $('#tile_settlement_label').html('Capitol');
-        }
-        else if (d['settlement_key']) {
-            $('#tile_settlement_label').html(settlements[d['settlement_key']  - 1]['label'] || '--');
+        if (d['settlement_key']) {
+            $('#tile_settlement_label').html(settlements[d['settlement_key']  - 1]['label']);
         }
         else {
             $('#tile_settlement_label').html('--');
@@ -63,7 +62,7 @@
     function tile_industry_label(d)
     {
         if (d['industry_key']) {
-            $('#tile_industry_label').html(industries[d['industry_key']  - 1]['label'] || '--');
+            $('#tile_industry_label').html(industries[d['industry_key']  - 1]['label']);
         }
         else {
             $('#tile_industry_label').html('--');
@@ -71,22 +70,39 @@
     }
     function tile_population(d)
     {
-        $('#tile_population').html(d['industry_key'] || '--');
+        if (d['settlement_key']) {
+            $('#tile_population').html(settlements[d['settlement_key']  - 1]['base_population'] + 'K');
+        }
+        else {
+            $('#tile_population').html('--');
+        }
     }
     function tile_gdp(d)
     {
-        $('#tile_gdp').html(d['gdp'] || '--');
+        if (d['industry_key']) {
+            $('#tile_gdp').html('$' + industries[d['industry_key']  - 1]['gdp'] + 'M');
+        }
+        else {
+            $('#tile_gdp').html('--');
+        }
     }
     function settlement_select(d)
     {
         $('#settlement_select').hide();
-        if (d['account_key'] === account['id']) {
+        $('.set_settlement_button').addClass('btn-default').removeClass('btn-primary');
+        if (account && d['account_key'] === account['id']) {
             $('#settlement_select').show();
+            $('.set_settlement_button[data-id=' + d['settlement_key'] + ']').addClass('btn-default').addClass('btn-primary');
         }
     }
     function industry_select(d)
     {
         $('#industry_select').hide();
+        $('.set_industry_button').addClass('btn-default').removeClass('btn-primary');
+        if (account && d['account_key'] === account['id'] && settlement_is_incorporated(d['settlement_key'])) {
+            $('#industry_select').show();
+            $('.set_industry_button[data-id=' + d['industry_key'] + ']').removeClass('btn-default').addClass('btn-primary');
+        }
     }
     function tile_register_plea(d)
     {

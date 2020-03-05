@@ -156,7 +156,7 @@
                         </a>
                         <?php } ?>
                         <span id="government_supply_<?php echo $supply['slug']; ?>"></span>
-                        <?php // echo $supply['suffix']; ?>
+                        <?php echo $supply['suffix']; ?>
                     </span>
                     <br>
                 </div>

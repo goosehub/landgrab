@@ -7,7 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Keys
 // Settlements
-define('TOWN_KEY', 3);
 define('UNCLAIMED_KEY', 1);
 define('TOWN_KEY', 3);
 define('CITY_KEY', 4);
@@ -32,8 +31,11 @@ DEFINE('WAR_KEY', 1);
 DEFINE('PEACE_KEY', 2);
 DEFINE('PASSAGE_KEY', 3);
 // Supply
+define('SUPPORT_KEY', 2);
+DEFINE('POPULATION_KEY', 3);
 DEFINE('TILES_KEY', 4);
-
+// Industry
+DEFINE('CAPITOL_INDUSTRY_KEY', 1);
 
 // Unit types
 DEFINE('INFANTRY_KEY', 1);

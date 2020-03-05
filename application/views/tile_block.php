@@ -13,34 +13,30 @@
         <div class="col-md-6">
             <p id="tile_owner_info" class="tile_block_info_line">
                 <labe>Led by:</labe>
-                <span class="text-info pull-right"><span id="tile_owner_username">Elizabeth</span> of <span id="tile_owner_country_name">France</span></span>
+                <span class="text-info pull-right"><span id="tile_owner_username"></span> of <span id="tile_owner_country_name"></span></span>
             </p>
             <p class="tile_block_info_line">
                 <labe>Terrain:</labe>
                 <span id="tile_terrain" class="text-warning pull-right"></span>
-            </p>
-            <p class="tile_block_info_line">
-                <labe>Resource:</labe>
-                <span class="pull-right">
-                    <img id="tile_resource_icon" src=""/>
-                    <span id="tile_resource" class="text-warning"></span>
-                </span>
+                <span id="tile_resource_with" class="text-warning">with</span>
+                <span id="tile_resource" class="text-success"></span>
+                <!-- <img id="tile_resource_icon" src=""/> -->
             </p>
             <p class="tile_block_info_line">
                 <labe>Settlement:</labe>
-                <span id="tile_settlement_label" class="text-primary pull-right">City</span>
+                <span id="tile_settlement_label" class="text-primary pull-right"></span>
             </p>
             <p class="tile_block_info_line">
                 <labe>Industry:</labe>
-                <span id="tile_industry_label" class="text-primary pull-right">Automotive</span>
+                <span id="tile_industry_label" class="text-primary pull-right"></span>
             </p>
             <p class="tile_block_info_line">
                 <labe>Population:</labe>
-                <span id="tile_population" class="text-purple pull-right">8,200K</span>
+                <span id="tile_population" class="text-purple pull-right"></span>
             </p>
             <p class="tile_block_info_line">
                 <labe>GDP:</labe>
-                <span id="tile_gdp" class="text-success pull-right">$560M</span>
+                <span id="tile_gdp" class="text-success pull-right"></span>
             </p>
         </div>
         <div class="col-md-6">
@@ -88,6 +84,9 @@
         <div class="row">
             <?php $current_category_id = 0;
             foreach ($this->settlements as $key => $settlement) {
+                if ($settlement['id'] == UNCLAIMED_KEY) {
+                    continue;
+                }
                 if ($current_category_id !== $settlement['category_id']) {
                     $current_category_id = $settlement['category_id'];
                     ?>
@@ -124,7 +123,7 @@
                     <div class="col-md-9">
                     <?php 
                 } ?>
-                <button id="set_tile_as_<?php echo $industry['slug']; ?>" class="set_industry_button btn btn btn-default">
+                <button id="set_tile_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
                     <?php echo $industry['label']; ?>
                 </button>
                 <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {

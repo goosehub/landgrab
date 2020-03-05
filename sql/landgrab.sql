@@ -396,12 +396,12 @@ INSERT INTO `settlement` (
 ('Unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, 1, '', '', NULL
+  0, 1, '', '', NULL
 ),
 ('Uninhabited', 'uninhabited', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, 1, '', '', NULL
+  0, 1, '', '', NULL
 ),
 ('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
@@ -525,23 +525,23 @@ INSERT INTO `industry` (
   `output_supply_key`, `input_supply_amount`, `output_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', 'cash', 'support', NULL, NULL,
-  null, 10, 25, 1, FALSE, 'Can spawn units, add political support, creates corruption'
+  null, 10, 25, 10, FALSE, 'Can spawn units, add political support, creates corruption'
 ),
 (2, 1, 'Federal', 'federal', 'cash', 'support', NULL, NULL,
-  null, 10, 10, 1, FALSE, 'Add political support, creates corruption'
+  null, 10, 10, 5, FALSE, 'Add political support, creates corruption'
 ),
 (3, 1, 'Base', 'base', 'cash', '', NULL, NULL,
-  null, 10, 1, 1, TRUE, 'Can spawn units'
+  null, 10, 1, 3, TRUE, 'Can spawn units'
 ),
 -- merchandise
 (4, 2, 'Manufacturing', 'manufacturing', 'ore', 'merchandise', NULL, NULL,
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 1, 4, TRUE, ''
 ),
 (5, 2, 'Timber', 'timber', 'timber', 'merchandise', NULL, NULL,
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 1, 6, TRUE, ''
 ),
 (6, 2, 'Textile', 'textile', 'fiber', 'merchandise', NULL, NULL,
-  null, 1, 1, 1, TRUE, ''
+  null, 1, 1, 6, TRUE, ''
 ),
 -- energy
 (7, 3, 'Biofuel', 'biofuel', 'biofuel', 'energy', NULL, NULL,
@@ -551,66 +551,66 @@ INSERT INTO `industry` (
   null, 1, 2, 1, TRUE, ''
 ),
 (9, 3, 'Gas', 'gas', 'gas', 'energy', NULL, NULL,
-  null, 1, 3, 1, TRUE, ''
+  null, 1, 3, 2, TRUE, ''
 ),
 (10, 3, 'Petroleum', 'petroleum', 'oil', 'energy', NULL, NULL,
-  null, 1, 6, 1, TRUE, ''
+  null, 1, 6, 5, TRUE, ''
 ),
 (11, 3, 'Nuclear', 'nuclear', 'uranium', 'energy', NULL, NULL,
-  null, 1, 8, 1, TRUE, ''
+  null, 1, 8, 5, TRUE, ''
 ),
 -- light industry
 (12, 4, 'Chemicals', 'chemicals', 'energy', 'chemicals', NULL, NULL,
-  null, 1, 3, 1, TRUE, ''
+  null, 1, 3, 5, TRUE, ''
 ),
 (13, 4, 'Steel', 'steel', 'iron', 'steel', NULL, NULL,
-  null, 1, 3, 1, TRUE, ''
+  null, 1, 3, 3, TRUE, ''
 ),
 (14, 4, 'Electronics', 'electronics', 'copper', 'electronics', NULL, NULL,
-  null, 1, 3, 1, TRUE, ''
+  null, 1, 3, 10, TRUE, ''
 ),
 -- heavy industry
 (15, 5, 'Shipping Port', 'port', 'steel', 'port', 2, 5,
-  null, 1, 1, 1, FALSE, 'Must be a coastal tile. Must be size at least city. Having a port doubles GDP'
+  null, 1, 1, 50, FALSE, 'Must be a coastal tile. Must be size at least city. Having a port doubles GDP'
 ),
 (16, 5, 'Machinery', 'machinery', 'zinc,steel,electronics,software', 'machinery', NULL, NULL,
-  null, 1, 3, 1, FALSE, ''
+  null, 1, 3, 25, FALSE, ''
 ),
 (17, 5, 'Automotive', 'automotive', 'city,aluminum,steel,electronics,chemicals,engineering', 'automotive', 2, NULL,
-  null, 1, 3, 1, FALSE, ''
+  null, 1, 3, 50, FALSE, ''
 ),
 (18, 5, 'Aerospace', 'aerospace', 'city,aluminum,nickle,steel,electronics,chemicals,engineering,software', 'aerospace', 2, NULL,
-  null, 1, 3, 1, FALSE, ''
+  null, 1, 3, 100, FALSE, ''
 ),
 -- tourism
 (19, 6, 'Leisure', 'leisure', '', '', NULL, 5,
-  null, 1, 1, 1, FALSE, 'tile must be coastal'
+  null, 1, 1, 10, FALSE, 'tile must be coastal'
 ),
 (20, 6, 'Resort', 'resort', '', '', NULL, 3,
-  null, 1, 1, 1, FALSE, 'tile must be mountain'
+  null, 1, 1, 5, FALSE, 'tile must be mountain'
 ),
 (21, 6, 'Gambling', 'gambling', 'support', '', 2, NULL,
-  null, 5, 1, 1, FALSE, ''
+  null, 5, 1, 5, FALSE, ''
 ),
 -- knowledge/quaternary
 (22, 7, 'University', 'university', 'cash', 'education', NULL, NULL,
-  null, 5, 1, 1, FALSE, ''
+  null, 5, 1, 3, FALSE, ''
 ),
 (23, 7, 'Software', 'software', 'education', 'software', 2, NULL,
-  null, 1, 3, 1, FALSE, 'Must be a city'
+  null, 1, 3, 8, FALSE, 'Must be a city'
 ),
 (24, 7, 'Healthcare', 'healthcare', 'city,education', 'support', 2, NULL,
-  null, 1, 10, 1, FALSE, 'Also increases population by 25%'
+  null, 1, 10, 6, FALSE, 'Also increases population by 25%'
 ),
 -- metro
 (25, 8, 'Financial & Banking', 'financial_banking', 'metro', '', 3, NULL,
-  null, 1, 1, 1, FALSE, ''
+  null, 1, 1, 500, FALSE, ''
 ),
 (26, 8, 'Entertainment & Media', 'entertainment_media', 'metro', 'support', 3, NULL,
-  null, 1, 20, 1, FALSE, ''
+  null, 1, 20, 100, FALSE, ''
 ),
 (27, 8, 'Engineering & Design', 'engineering_design', 'metro', 'engineering', 3, NULL,
-  null, 1, 3, 1, FALSE, ''
+  null, 1, 3, 200, FALSE, ''
 );
 
 -- 

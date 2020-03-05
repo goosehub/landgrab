@@ -115,6 +115,7 @@ Class game_model extends CI_Model
 		$data = array(
 			'account_key' => $account['id'],
 			'settlement_key' => TOWN_KEY,
+			'industry_key' => CAPITOL_INDUSTRY_KEY,
 			'army_unit_key' => INFANTRY_COST,
 			'army_unit_owner_key' => $account['id'],
 			'is_capitol' => 1,
@@ -125,14 +126,14 @@ Class game_model extends CI_Model
 		$this->db->where('lng', $tile['lng']);
 		$this->db->update('tile', $data);
 	}
-	function increment_account_supply($account_key, $supply_key) {
-		$this->db->set('amount', 'amount + 1', FALSE);
+	function increment_account_supply($account_key, $supply_key, $amount = 1) {
+		$this->db->set('amount', 'amount + ' . $amount, FALSE);
 		$this->db->where('account_key', $account_key);
 		$this->db->where('supply_key', $supply_key);
 		$this->db->update('supply_account_lookup');
 	}
-	function decrement_account_supply($account_key, $supply_key) {
-		$this->db->set('amount', 'amount + 1', FALSE);
+	function decrement_account_supply($account_key, $supply_key, $amount = 1) {
+		$this->db->set('amount', 'amount - ' . $amount, FALSE);
 		$this->db->where('account_key', $account_key);
 		$this->db->where('supply_key', $supply_key);
 		$this->db->update('supply_account_lookup');
