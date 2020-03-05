@@ -4,13 +4,13 @@ defined('BASEPATH')
 
 Class game_model extends CI_Model
 {
-    function get_all($table)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
+	function get_all($table)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function get_world($world_id)
 	{
 		$this->db->select('*');
@@ -78,26 +78,6 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]['count']) ? $result[0]['count'] : 0;
 	}
-	function tile_range_check($world_key, $account_key, $coords)
-	{
-		$this->db->select('id');
-		$this->db->from('tile');
-		$where = "(
-			(lat=".$coords[0]['lat']." AND lng=".$coords[0]['lng'].")
-		 OR (lat=".$coords[1]['lat']." AND lng=".$coords[1]['lng'].")
-		 OR (lat=".$coords[2]['lat']." AND lng=".$coords[2]['lng'].")
-		 OR (lat=".$coords[3]['lat']." AND lng=".$coords[3]['lng'].")
-		)";
-		$this->db->where($where);
-		$this->db->where('account_key', $account_key);
-		$this->db->where(function(){
-
-		});
-		$this->db->where_in('coord_slug', $coord_array);
-		$query = $this->db->get();
-		$result = $query->result_array();
-		return isset($result[0]) ? $result[0] : false;
-	}
 	function update_tile_terrain($lng, $lat, $terrain_key)
 	{
 		$data = array(
@@ -113,22 +93,48 @@ Class game_model extends CI_Model
 			'government' => $government,
 			'tax_rate' => $tax_rate,
 			'ideology' => $ideology,
-        	'last_law_change' => date('Y-m-d H:i:s', time())
+			'last_law_change' => date('Y-m-d H:i:s', time())
 		);
 		$this->db->where('id', $account_id);
 		$this->db->update('account', $data);
 	}
 	function get_account_supplies($account)
 	{
-        $this->db->select('*');
-        $this->db->from('supply');
-        $this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
-        $this->db->where('supply_account_lookup.account_key', $account);
-        $query = $this->db->get();
-        return $query->result_array();
+		$this->db->select('*');
+		$this->db->from('supply');
+		$this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
+		$this->db->where('supply_account_lookup.account_key', $account);
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 	function tile_is_incorporated($settlement_key)
 	{
 		return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
+	}
+	function first_claim($tile,$account) {
+		$data = array(
+			'account_key' => $account['id'],
+			'settlement_key' => TOWN_KEY,
+			'army_unit_key' => INFANTRY_COST,
+			'army_unit_owner_key' => $account['id'],
+			'is_capitol' => 1,
+			'tile_name' => 'Capitol of ' . $account['nation_name'],
+			'tile_desc' => '',
+		);
+		$this->db->where('lat', $tile['lat']);
+		$this->db->where('lng', $tile['lng']);
+		$this->db->update('tile', $data);
+	}
+	function increment_account_supply($account_key, $supply_key) {
+		$this->db->set('amount', 'amount + 1', FALSE);
+		$this->db->where('account_key', $account_key);
+		$this->db->where('supply_key', $supply_key);
+		$this->db->update('supply_account_lookup');
+	}
+	function decrement_account_supply($account_key, $supply_key) {
+		$this->db->set('amount', 'amount + 1', FALSE);
+		$this->db->where('account_key', $account_key);
+		$this->db->where('supply_key', $supply_key);
+		$this->db->update('supply_account_lookup');
 	}
 }

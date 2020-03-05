@@ -1,7 +1,7 @@
 <script>
     $('#do_first_claim').click(function(){
         do_first_claim(function(){
-            console.log('marco');
+            get_map_update();
         });
     });
 

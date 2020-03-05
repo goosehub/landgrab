@@ -100,7 +100,6 @@ class Game extends CI_Controller {
         if ($account) {
             $world = $this->game_model->get_world_by_id($world_key);
             $account['tile_count'] = $this->game_model->get_count_of_account_tile($account['id']);
-            $tile['in_range'] = $this->check_if_tile_is_in_range($world_key, $account['id'], $account['tile_count'], $world['tile_size'], $tile['lat'], $tile['lng']);
         }
         
         // Strip html entities from all untrusted columns, except content as it's stripped on insert
@@ -171,38 +170,6 @@ class Game extends CI_Controller {
         return false;
     }
 
-    public function check_if_tile_is_in_range($world_key, $account_key, $tile_count, $tile_size, $lat, $lng)
-    {
-        // All tile in range if no tile
-        if ($tile_count < 1) {
-            return true;
-        }
-        // Check surrounding tiles
-        $coords = array(
-            array(
-                'lat' => $lat + $tile_size,
-                'lng' => $lng,
-            ),
-            array(
-                'lat' => $lat,
-                'lng' => $lng + $tile_size === 182 ? 180 : $lng + $tile_size,
-            ),
-            array(
-                'lat' => $lat - $tile_size,
-                'lng' => $lng,
-            ),
-            array(
-                'lat' => $lat,
-                'lng' => $lng - $tile_size === 182 ? 180 : $lng - $tile_size,
-            ),
-        );
-        $coord_matches = $this->game_model->tile_range_check($world_key, $account_key, $coords);
-        if (!empty($coord_matches) ) {
-            return true;
-        }
-        return false;
-    }
-
     public function tile_form()
     {
         $world_key = $_POST['world_key'];
@@ -243,7 +210,8 @@ class Game extends CI_Controller {
         if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) {
             return false;
         }
-        return true;
+        $this->game_model->first_claim($tile, $account);
+        $this->game_model->increment_account_supply($account['id'], TILES_KEY);
     }
 
 }

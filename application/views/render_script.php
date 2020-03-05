@@ -45,16 +45,29 @@
             $('#tile_resource').html(resources[d['resource_key'] - 1]['label'] || '--');
         }
         else {
-            $('#tile_resource').html('None');
+            $('#tile_resource').html('--');
         }
     }
     function tile_settlement_label(d)
     {
-        $('#tile_settlement_label').html(d['settlement_key'] || '--');
+        if (d['is_capitol']) {
+            $('#tile_settlement_label').html('Capitol');
+        }
+        else if (d['settlement_key']) {
+            $('#tile_settlement_label').html(settlements[d['settlement_key']  - 1]['label'] || '--');
+        }
+        else {
+            $('#tile_settlement_label').html('--');
+        }
     }
     function tile_industry_label(d)
     {
-        $('#tile_industry_label').html(d['industry_key'] || '--');
+        if (d['industry_key']) {
+            $('#tile_industry_label').html(industries[d['industry_key']  - 1]['label'] || '--');
+        }
+        else {
+            $('#tile_industry_label').html('--');
+        }
     }
     function tile_population(d)
     {

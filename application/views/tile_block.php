@@ -51,7 +51,7 @@
     <div id="tile_register_plea">
         <p>
             <strong class="text-action">
-                Register Now To Claim Your Land
+                <button class="register_button btn btn-action form-control">Start Playing</button>
             </strong>
         </p>
     </div>

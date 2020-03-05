@@ -22,7 +22,7 @@ loading();
   $('#login_block').show();
 <?php } else if (!$account) { ?>
   // Show register block rest of the time
-  $('#register_block').show();
+  // $('#register_block').show();
 <?php } ?>
 
 // AB testing

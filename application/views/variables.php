@@ -14,6 +14,8 @@
 	let keys = new Array();
     let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
 	let terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
+    let settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
+    let industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
 	let styledMapType = {};
     let default_map_style = [{
       featureType: "poi.business",
