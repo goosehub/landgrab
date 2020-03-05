@@ -121,7 +121,7 @@
     }
     function tile_first_claim_invalid_ocean(D)
     {
-        if (account && account['supplies']['tiles']['amount'] < 1 && d['terrain_key'] == <?php echo OCEAN_KEY ?>) {
+        if (account && account['supplies']['tiles']['amount'] < 1 && d['terrain_key'] == <?= OCEAN_KEY ?>) {
             $('#tile_first_claim_invalid_ocean').show();
             return true;
         }
@@ -152,6 +152,6 @@
     }
     function settlement_is_incorporated(settlement_key)
     {
-        return settlement_key == <?php echo TOWN_KEY; ?> || settlement_key == <?php echo CITY_KEY; ?> || settlement_key == <?php echo METRO_KEY; ?>
+        return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
     }
 </script>

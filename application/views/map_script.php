@@ -64,8 +64,8 @@
       tiles[key].setOptions({
         fillColor: tiles[key].terrain_fillColor,
         fillOpacity: tiles[key].terrain_fillOpacity,
-        strokeWeight: <?php echo STROKE_WEIGHT; ?>,
-        strokeColor: '<?php echo STROKE_COLOR; ?>',
+        strokeWeight: <?= STROKE_WEIGHT; ?>,
+        strokeColor: '<?= STROKE_COLOR; ?>',
       });
     });
   }
@@ -75,8 +75,8 @@
       tiles[key].setOptions({
         fillColor: tiles[key].borders_fillColor,
         fillOpacity: tiles[key].borders_fillOpacity,
-        strokeWeight: <?php echo STROKE_WEIGHT; ?>,
-        strokeColor: '<?php echo STROKE_COLOR; ?>',
+        strokeWeight: <?= STROKE_WEIGHT; ?>,
+        strokeColor: '<?= STROKE_COLOR; ?>',
       });
     });
   }
@@ -110,8 +110,8 @@
       <?php if ( isset($_GET['lng']) ) { ?>
       // Logic to center isn't understood, but results in correct behavior in all 4 corners
       center: {
-        lat: <?php echo $_GET['lat'] + ($world['tile_size'] / 2); ?>,
-        lng: <?php echo $_GET['lng'] - ($world['tile_size'] / 2); ?>
+        lat: <?= $_GET['lat'] + ($world['tile_size'] / 2); ?>,
+        lng: <?= $_GET['lng'] - ($world['tile_size'] / 2); ?>
       },
       // Zoom should be adjusted based on box size
       zoom: 6,
@@ -137,7 +137,7 @@
     styled_map_type = new google.maps.StyledMapType(map_pirate, {name: 'Paper'});
     map.mapTypes.set('paper_map', styled_map_type);
 
-    map.setMapTypeId('<?php echo DEFAULT_MAP; ?>');
+    map.setMapTypeId('<?= DEFAULT_MAP; ?>');
   }
 
   function remove_overlay() {
@@ -196,15 +196,15 @@
       $terrain_color = $this->game_model->get_tile_terrain_color($tile);
       $border_color = $this->game_model->get_tile_border_color($tile);
       if ($tile['resource_key']) { ?>
-        resource_markers.push(set_resource_icon(<?php echo $tile['resource_key']; ?>,<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+        resource_markers.push(set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) { ?>
-        settlement_markers.push(set_settlement_icon(<?php echo $tile['settlement_key']; ?>, <?php echo $tile['is_capitol'] ? '1' : '0'; ?>, <?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+        settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers.push(set_unit_icon(<?php echo $tile['unit_key']; ?>, <?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
-      ?>z(<?php echo
+      ?>z(<?=
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
         $tile['lng'] . ',' .
@@ -245,9 +245,9 @@
     let polygon = new google.maps.Polygon({
       map: map,
       paths: shape,
-      fillOpacity: <?php echo $tile['terrain_key'] === OCEAN_KEY ? 0 : TILE_OPACITY; ?>,
-      strokeWeight: <?php echo STROKE_WEIGHT; ?>,
-      strokeColor: '<?php echo STROKE_COLOR; ?>',
+      fillOpacity: <?= $tile['terrain_key'] === OCEAN_KEY ? 0 : TILE_OPACITY; ?>,
+      strokeWeight: <?= STROKE_WEIGHT; ?>,
+      strokeColor: '<?= STROKE_COLOR; ?>',
       fillColor: current_fill_color,
       terrain_fillColor: terrain_fill_color,
       borders_fillColor: border_fill_color,
@@ -302,7 +302,7 @@
 
         if (account && !data['account']) {
           alert('You were away too long and you\'re session has expired, please log back in.');
-          window.location.href = '<?php echo base_url(); ?>world/' + world_key + '?login';
+          window.location.href = '<?= base_url(); ?>world/' + world_key + '?login';
           return false;
         }
 
@@ -338,25 +338,25 @@
     for (i = 0; i < number_of_tiles; i++) {
       // Set variables
       new_tile = new_tiles[i];
-      fill_opacity = <?php echo TILE_OPACITY; ?>;
+      fill_opacity = <?= TILE_OPACITY; ?>;
       fill_color = "#0000ff";
-      if (new_tile['terrain_key'] == <?php echo FERTILE_KEY; ?>) {
-        fill_color = '<?php echo FERTILE_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= FERTILE_KEY; ?>) {
+        fill_color = '<?= FERTILE_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] == <?php echo BARREN_KEY; ?>) {
-        fill_color = '<?php echo BARREN_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= BARREN_KEY; ?>) {
+        fill_color = '<?= BARREN_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] == <?php echo MOUNTAIN_KEY; ?>) {
-        fill_color = '<?php echo MOUNTAIN_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= MOUNTAIN_KEY; ?>) {
+        fill_color = '<?= MOUNTAIN_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] == <?php echo TUNDRA_KEY; ?>) {
-        fill_color = '<?php echo TUNDRA_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= TUNDRA_KEY; ?>) {
+        fill_color = '<?= TUNDRA_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] == <?php echo COASTAL_KEY; ?>) {
-        fill_color = '<?php echo COASTAL_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= COASTAL_KEY; ?>) {
+        fill_color = '<?= COASTAL_COLOR; ?>';
       }
-      if (new_tile['terrain_key'] == <?php echo OCEAN_KEY; ?>) {
-        fill_color = '<?php echo OCEAN_COLOR; ?>';
+      if (new_tile['terrain_key'] == <?= OCEAN_KEY; ?>) {
+        fill_color = '<?= OCEAN_COLOR; ?>';
       }
 
       // Apply variables to box
