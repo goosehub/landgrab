@@ -40,6 +40,7 @@ CREATE TABLE `tile` (
   `industry_key` int(10) UNSIGNED NULL,
   `unit_key` int(10) UNSIGNED NULL, -- Infantry, Guerrilla, Commandos, none as null
   `unit_owner_key` int(10) UNSIGNED NULL,
+  `unit_owner_color` varchar(8) NULL,
   `is_capitol` int(1) NOT NULL,
   `tile_name` varchar(512) NULL,
   `tile_desc` text NULL,

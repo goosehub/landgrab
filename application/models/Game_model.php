@@ -119,6 +119,7 @@ Class game_model extends CI_Model
 			'industry_key' => CAPITOL_INDUSTRY_KEY,
 			'unit_key' => INFANTRY_KEY,
 			'unit_owner_key' => $account['id'],
+			'unit_owner_color' => $account['color'],
 			'is_capitol' => 1,
 			'tile_name' => 'Capitol of ' . $account['nation_name'],
 			'tile_desc' => '',

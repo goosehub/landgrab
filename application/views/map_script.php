@@ -148,25 +148,56 @@
   }
 
   function set_resource_icon(resource_id, lat, lng) {
-    return set_marker_icon(`natural_resources/${resource_id}.png`, lat, lng);
+    return set_marker_icon(`../resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
   }
 
   function set_capitol_icon(lat, lng) {
-    return set_marker_icon(`capitol.png`, lat, lng);
+    return set_marker_icon(`../resources/icons/capitol.png`, lat, lng, false);
   }
 
   function set_settlement_icon(settlement_id, is_capitol, lat, lng) {
     if (is_capitol) {
       return set_capitol_icon(lat, lng);
     }
-    return set_marker_icon(`settlements/${settlement_id}.png`, lat, lng);
+    return set_marker_icon(`../resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
   }
 
-  function set_unit_icon(unit_id, lat, lng) {
-    return set_marker_icon(`units/${unit_id}.png`, lat, lng);
+  function set_unit_icon(unit_id, unit_owner_color, lat, lng) {
+    unit_owner_color = unit_owner_color.replace('#', '');
+    if (unit_id === <?= INFANTRY_KEY; ?>) {
+      unit_color = '<?= INFANTRY_COLOR; ?>';
+      character = '<?= INFANTRY_CHARACTER; ?>';
+    }
+    if (unit_id === <?= GUERRILLA_KEY; ?>) {
+      unit_color = '<?= GUERRILLA_COLOR; ?>';
+      character = '<?= GUERRILLA_CHARACTER; ?>';
+    }
+    if (unit_id === <?= COMMANDOS_KEY; ?>) {
+      unit_color = '<?= COMMANDOS_COLOR; ?>';
+      character = '<?= COMMANDOS_CHARACTER; ?>';
+    }
+    // http://www.googlemapsmarkers.com/
+    // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
+    // Becomes
+    // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
+    let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${unit_color}/${unit_color}/`;
+    return set_marker_icon(path, lat, lng, true);
   }
 
-  function set_marker_icon(path, lat, lng) {
+  function set_marker_icon(path, lat, lng, is_unit) {
+    if (is_unit) {
+      var this_icon = {
+        url: path,
+      };
+    }
+    else {
+      var this_icon = {
+        url: path,
+        scaledSize: new google.maps.Size(20, 20), // scaled size
+        origin: new google.maps.Point(0,0), // origin
+        anchor: new google.maps.Point(10,10) // anchor
+      };
+    }
     let myLatLng = {
       lat: lat + 1,
       lng: lng - 1
@@ -176,12 +207,7 @@
       map: map,
       // title: slug,
       // draggable:true,
-      icon: {
-        url: `../resources/icons/${path}`,
-        scaledSize: new google.maps.Size(20, 20), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(10,10) // anchor
-      }
+      icon: this_icon
     });
     marker.setMap(map);
     marker.addListener('click', set_window);
@@ -202,7 +228,7 @@
         settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       ?>z(<?=
         $tile['id'] . ',' .
