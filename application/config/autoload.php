@@ -24,6 +24,11 @@ if (in_array($ip, $perm_banned_ips)) {
     die();
 }
 
+function dd($value) {
+    var_dump($value);
+    die();
+}
+
 // Return if this is dev
 function is_dev() {
     if (isset($_SERVER['SERVER_ADDR']) && ($_SERVER['SERVER_ADDR'] === '127.0.0.1' || $_SERVER['SERVER_ADDR'] === '::1') ) {

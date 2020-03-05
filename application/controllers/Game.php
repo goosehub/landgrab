@@ -73,6 +73,7 @@ class Game extends CI_Controller {
         $this->load->view('map_script', $data);
         $this->load->view('interface_script', $data);
         $this->load->view('render_script', $data);
+        $this->load->view('tile_script', $data);
         $this->load->view('trade_script', $data);
         // $this->load->view('tutorial_script', $data);
         $this->load->view('chat_script', $data);
@@ -109,13 +110,16 @@ class Game extends CI_Controller {
         return api_response($tile);
     }
 
-    public function get_this_full_account($world_key)
+    public function get_this_full_account($world_key, $raw = false)
     {
         $account = $this->user_model->this_account($world_key);
         $account['supplies'] = array();
         $supplies = $this->game_model->get_account_supplies($account['id']);
         foreach ($supplies as $key => $supply) {
             $account['supplies'][$supply['slug']] = $supply;
+        }
+        if ($raw) {
+            return $account;
         }
         return api_response($account);
     }
@@ -211,6 +215,35 @@ class Game extends CI_Controller {
         // $terrain_key = COASTAL_KEY;
         // $terrain_key = OCEAN_KEY;
         $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
+    }
+
+    public function do_first_claim()
+    {
+        if (!isset($_POST['tile'])) {
+            return false;
+        }
+        $tile = $_POST['tile'];
+        $account = $this->get_this_full_account($tile['world_key'], true);
+        if (!$this->first_claim_validation($account, $tile)) {
+            return false;
+        }
+        dd('marco');
+    }
+    public function first_claim_validation($account, $tile)
+    {
+        if (!$account) {
+            return false;
+        }
+        if ($tile['terrain_key'] === OCEAN_KEY) {
+            return false;
+        }
+        if ($account['supplies']['tiles']['amount'] > 0) {
+            return false;
+        }
+        if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) {
+            return false;
+        }
+        return true;
     }
 
 }

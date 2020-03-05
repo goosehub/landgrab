@@ -127,4 +127,8 @@ Class game_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
 	}
+	function tile_is_incorporated($settlement_key)
+	{
+		return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
+	}
 }

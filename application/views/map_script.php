@@ -404,15 +404,8 @@
         return false;
       }
 
+      current_tile = d;
       populate_tile_window(d);
-
-      // Unbind the last click handler from get_single_land 
-      $('#submit').off('click');
-
-      $('#submit').click(function() {
-        var form_type = $(this).val();
-        // land_form_ajax(form_type);
-      });
     });
   }
 

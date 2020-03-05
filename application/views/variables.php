@@ -3,7 +3,8 @@
 	let world_key = <?php echo $world['id']; ?>;
 	let tile_size = <?php echo $world['tile_size']; ?>;
 	let account = <?php echo json_encode($account); ?>;
-	let tiles = [];
+    let tiles = [];
+	let current_tile = false;
 	let resource_markers = [];
 	let border_markers = [];
 	let current_map_type = 'terrain';
