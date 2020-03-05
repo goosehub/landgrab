@@ -11,9 +11,6 @@ temporary allow landgrab without war when starting new and little land is availa
 
 HIGH PRIORITY
     finish todo
-    claiming
-    settling
-    settlement/industry select ui
 MEDIUM PRIORITY
     settlement insufficient supply UI
     population
@@ -25,27 +22,30 @@ MEDIUM PRIORITY
         flying
         navy
         highlighting or dragging
+    settlement system
+        selection
+        crons
+        without supplies, lose support and size
     industry system
         selection
         crons
-        cities without food,merchendize, energy, lose support and size
+        without supplies, no produciton, UI
         industry without supply
-        industry
-        selling cash crop and cash resources
     trade
         supplies
         war/peace/passage
         messages
         notices
+        chat message for diplomacy changes
     government
         support
         corruption
         socialism
         require support to pass laws
+    selling cash crop and cash resources
     hide resources in responses before discovered
     beta
 LOW PRIORITY
-    chat message for diplomacy changes
     DB indexes
     ui for pressed buttons
     feedback when being attacked

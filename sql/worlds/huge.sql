@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `tile` (
   `resource_key` int(10) unsigned DEFAULT NULL,
   `settlement_key` int(10) unsigned DEFAULT NULL,
   `industry_key` int(10) unsigned DEFAULT NULL,
-  `army_unit_key` int(10) unsigned DEFAULT NULL,
-  `army_unit_owner_key` int(10) unsigned DEFAULT NULL,
+  `unit_key` int(10) unsigned DEFAULT NULL,
+  `unit_owner_key` int(10) unsigned DEFAULT NULL,
   `is_capitol` int(1) NOT NULL,
   `tile_name` varchar(512) DEFAULT NULL,
   `tile_desc` varchar(1024) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `tile` (
 -- Dumping data for table `tile`
 --
 
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (1, -84, -178, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:22'),
 (2, -82, -178, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:13'),
 (3, -80, -178, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:37'),
@@ -523,7 +523,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (489, 52, -168, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:43:51'),
 (490, 54, -168, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (491, 56, -168, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:06:07');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (492, 58, -168, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (493, 60, -168, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (494, 62, -168, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:35:03'),
@@ -1014,7 +1014,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (979, 24, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (980, 26, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (981, 28, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (982, 30, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (983, 32, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (984, 34, -156, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
@@ -1501,7 +1501,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (1465, -12, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1466, -10, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1467, -8, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (1468, -6, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1469, -4, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1470, -2, -144, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
@@ -1988,7 +1988,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (1951, -48, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1952, -46, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1953, -44, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (1954, -42, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1955, -40, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (1956, -38, -132, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
@@ -2475,7 +2475,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (2437, -84, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:22'),
 (2438, -82, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:13'),
 (2439, -80, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 05:28:33');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (2440, -78, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:49'),
 (2441, -76, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:53'),
 (2442, -74, -120, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:27:23'),
@@ -2961,7 +2961,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (2922, 46, -110, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 05:07:58'),
 (2923, 48, -110, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 05:08:00'),
 (2924, 50, -110, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:05:12');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (2925, 52, -110, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:05:20'),
 (2926, 54, -110, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:05:26'),
 (2927, 56, -110, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:33'),
@@ -3448,7 +3448,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (3408, 10, -98, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3409, 12, -98, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3410, 14, -98, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (3411, 16, -98, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 06:02:02'),
 (3412, 18, -98, 1, NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 05:40:13'),
 (3413, 20, -98, 1, NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:36:50'),
@@ -3939,7 +3939,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (3898, -18, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3899, -16, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3900, -14, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (3901, -12, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3902, -10, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
 (3903, -8, -86, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:55'),
@@ -4430,7 +4430,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (4388, -46, -74, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:33:34'),
 (4389, -44, -74, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 02:17:22'),
 (4390, -42, -74, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (4391, -40, -74, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (4392, -38, -74, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (4393, -36, -74, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:33'),
@@ -4921,7 +4921,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (4878, -74, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:27:23'),
 (4879, -72, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:30:08'),
 (4880, -70, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:30:07');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (4881, -68, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:30:14'),
 (4882, -66, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:30:17'),
 (4883, -64, -62, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:30:20'),
@@ -5412,7 +5412,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (5368, 66, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:08:47'),
 (5369, 68, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 05:50:00'),
 (5370, 70, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 06:33:49');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (5371, 72, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:52:19'),
 (5372, 74, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 07:16:25'),
 (5373, 76, -52, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:48:53'),
@@ -5903,7 +5903,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (5858, 38, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (5859, 40, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (5860, 42, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (5861, 44, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (5862, 46, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (5863, 48, -40, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -6394,7 +6394,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (6348, 10, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6349, 12, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6350, 14, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (6351, 16, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6352, 18, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6353, 20, -28, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -6885,7 +6885,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (6838, -18, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6839, -16, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6840, -14, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (6841, -12, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6842, -10, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (6843, -8, -16, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -7378,7 +7378,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (7330, -42, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7331, -40, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7332, -38, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (7333, -36, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7334, -34, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7335, -32, -4, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -7878,7 +7878,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (7829, -52, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7830, -50, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7831, -48, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:33');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (7832, -46, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:33'),
 (7833, -44, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (7834, -42, 8, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -8375,7 +8375,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (8325, -68, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (8326, -66, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (8327, -64, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (8328, -62, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (8329, -60, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (8330, -58, 20, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -8871,7 +8871,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (8820, 82, 30, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (8821, -84, 32, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:22'),
 (8822, -82, 32, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 05:37:15');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (8823, -80, 32, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:37'),
 (8824, -78, 32, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:49'),
 (8825, -76, 32, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:53'),
@@ -9367,7 +9367,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (9315, 64, 42, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:01:10'),
 (9316, 66, 42, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:03:16'),
 (9317, 68, 42, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 05:40:36');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (9318, 70, 42, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (9319, 72, 42, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
 (9320, 74, 42, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:56'),
@@ -9863,7 +9863,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (9810, 46, 54, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 04:25:49'),
 (9811, 48, 54, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 05:36:03'),
 (9812, 50, 54, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:52:36');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (9813, 52, 54, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:40:23'),
 (9814, 54, 54, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:40:35'),
 (9815, 56, 54, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:40:55'),
@@ -10356,7 +10356,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (10302, 22, 66, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (10303, 24, 66, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 07:53:53'),
 (10304, 26, 66, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 22:26:19');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (10305, 28, 66, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 04:25:49'),
 (10306, 30, 66, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 04:25:49'),
 (10307, 32, 66, 1, NULL, 3, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:58'),
@@ -10847,7 +10847,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (10792, -6, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (10793, -4, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (10794, -2, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (10795, 0, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (10796, 2, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (10797, 4, 78, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
@@ -11338,7 +11338,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (11282, -34, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11283, -32, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11284, -30, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (11285, -28, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11286, -26, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11287, -24, 90, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
@@ -11828,7 +11828,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (11771, -64, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11772, -62, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11773, -60, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (11774, -58, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11775, -56, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (11776, -54, 102, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
@@ -12315,7 +12315,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (12257, 68, 112, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 05:40:36'),
 (12258, 70, 112, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:39:58'),
 (12259, 72, 112, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 22:26:37');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (12260, 74, 112, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:45:47'),
 (12261, 76, 112, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:35:03'),
 (12262, 78, 112, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
@@ -12801,7 +12801,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (12742, 30, 124, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:27:29'),
 (12743, 32, 124, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (12744, 34, 124, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (12745, 36, 124, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:27:36'),
 (12746, 38, 124, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 07:13:11'),
 (12747, 40, 124, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:32:27'),
@@ -13287,7 +13287,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (13227, -8, 136, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:25:39'),
 (13228, -6, 136, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:25:40'),
 (13229, -4, 136, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:23:51');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (13230, -2, 136, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 09:23:51'),
 (13231, 0, 136, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (13232, 2, 136, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
@@ -13774,7 +13774,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (13713, -44, 148, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:30:02'),
 (13714, -42, 148, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:30:00'),
 (13715, -40, 148, 1, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:29:58');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (13716, -38, 148, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:32:16'),
 (13717, -36, 148, 1, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 08:32:17'),
 (13718, -34, 148, 1, NULL, 2, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 06:33:49'),
@@ -14261,7 +14261,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (14199, -80, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:37'),
 (14200, -78, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:49'),
 (14201, -76, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:26:53');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (14202, -74, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 05:28:45'),
 (14203, -72, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-02 05:28:33'),
 (14204, -70, 160, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-01 10:29:36'),
@@ -14747,7 +14747,7 @@ INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key
 (14684, 50, 170, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (14685, 52, 170, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (14686, 54, 170, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57');
-INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `army_unit_key`, `army_unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
+INSERT INTO `tile` (`id`, `lat`, `lng`, `world_key`, `account_key`, `terrain_key`, `resource_key`, `settlement_key`, `industry_key`, `unit_key`, `unit_owner_key`, `is_capitol`, `tile_name`, `tile_desc`, `color`, `modified`) VALUES
 (14687, 56, 170, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (14688, 58, 170, 1, NULL, 6, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-02-29 11:09:57'),
 (14689, 60, 170, 1, NULL, 4, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2020-03-03 01:52:06'),

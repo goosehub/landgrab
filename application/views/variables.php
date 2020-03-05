@@ -6,7 +6,8 @@
     let tiles = [];
 	let current_tile = false;
 	let resource_markers = [];
-	let capitol_markers = [];
+	let unit_markers = [];
+    let settlement_markers = [];
 	let current_map_type = 'terrain';
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;

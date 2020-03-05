@@ -38,8 +38,8 @@ CREATE TABLE `tile` (
   `resource_key` int(10) UNSIGNED NULL,
   `settlement_key` int(10) UNSIGNED NULL,
   `industry_key` int(10) UNSIGNED NULL,
-  `army_unit_key` int(10) UNSIGNED NULL, -- Infantry, Guerrilla, Commandos, none as null
-  `army_unit_owner_key` int(10) UNSIGNED NULL,
+  `unit_key` int(10) UNSIGNED NULL, -- Infantry, Guerrilla, Commandos, none as null
+  `unit_owner_key` int(10) UNSIGNED NULL,
   `is_capitol` int(1) NOT NULL,
   `tile_name` varchar(512) NULL,
   `tile_desc` text NULL,

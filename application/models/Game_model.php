@@ -109,6 +109,7 @@ Class game_model extends CI_Model
 	}
 	function tile_is_incorporated($settlement_key)
 	{
+		$settlement_key = (int)$settlement_key;
 		return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
 	}
 	function first_claim($tile,$account) {
@@ -116,8 +117,8 @@ Class game_model extends CI_Model
 			'account_key' => $account['id'],
 			'settlement_key' => TOWN_KEY,
 			'industry_key' => CAPITOL_INDUSTRY_KEY,
-			'army_unit_key' => INFANTRY_KEY,
-			'army_unit_owner_key' => $account['id'],
+			'unit_key' => INFANTRY_KEY,
+			'unit_owner_key' => $account['id'],
 			'is_capitol' => 1,
 			'tile_name' => 'Capitol of ' . $account['nation_name'],
 			'tile_desc' => '',

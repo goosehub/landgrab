@@ -37,9 +37,9 @@
                 <labe>GDP:</labe>
                 <span id="tile_gdp" class="text-success pull-right"></span>
             </p>
-            <p id="tile_army_unit_parent" class="tile_block_info_line">
+            <p id="tile_unit_parent" class="tile_block_info_line">
                 <labe>Army:</labe>
-                <span id="tile_army_unit" class="text-primary pull-right"></span>
+                <span id="tile_unit" class="text-primary pull-right"></span>
             </p>
         </div>
         <div class="col-md-6">

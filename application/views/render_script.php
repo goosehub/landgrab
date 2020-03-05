@@ -83,12 +83,12 @@
             $('#tile_gdp').html('--');
         }
     }
-    function tile_army_unit(d)
+    function tile_unit(d)
     {
-        $('#tile_army_unit_parent').hide();
-        if (d['army_unit_key']) {
-            $('#tile_army_unit').html(unit_labels[d['army_unit_key']]);
-            $('#tile_army_unit_parent').show();
+        $('#tile_unit_parent').hide();
+        if (d['unit_key']) {
+            $('#tile_unit').html(unit_labels[d['unit_key']]);
+            $('#tile_unit_parent').show();
         }
         else {
             $('#tile_population').html('--');

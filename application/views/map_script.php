@@ -40,19 +40,22 @@
       current_map_type = 'terrain';
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
-      // set_marker_set_visibility(capitol_markers, false);
+      set_marker_set_visibility(settlement_markers, false);
+      set_marker_set_visibility(unit_markers, false);
     });
     $('#borders_toggle').click(function(event) {
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
-      // set_marker_set_visibility(capitol_markers, true);
+      set_marker_set_visibility(settlement_markers, true);
+      set_marker_set_visibility(unit_markers, true);
     });
     $('#empty_toggle').click(function(event) {
       current_map_type = 'empty';
       tiles_to_empty();
       set_marker_set_visibility(resource_markers, false);
-      // set_marker_set_visibility(capitol_markers, false);
+      set_marker_set_visibility(settlement_markers, false);
+      set_marker_set_visibility(unit_markers, false);
     });
   }
 
@@ -145,28 +148,25 @@
   }
 
   function set_resource_icon(resource_id, lat, lng) {
-    let myLatLng = {
-      lat: lat + 1,
-      lng: lng - 1
-    };
-    let marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      // title: slug,
-      // draggable:true,
-      icon: {
-        url: `../resources/icons/natural_resources/${resource_id}.png`,
-        scaledSize: new google.maps.Size(20, 20), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(10,10) // anchor
-      }
-    });
-    marker.setMap(map);
-    marker.addListener('click', set_window);
-    return marker;
+    return set_marker_icon(`natural_resources/${resource_id}.png`, lat, lng);
   }
 
   function set_capitol_icon(lat, lng) {
+    return set_marker_icon(`capitol.png`, lat, lng);
+  }
+
+  function set_settlement_icon(settlement_id, is_capitol, lat, lng) {
+    if (is_capitol) {
+      return set_capitol_icon(lat, lng);
+    }
+    return set_marker_icon(`settlements/${settlement_id}.png`, lat, lng);
+  }
+
+  function set_unit_icon(unit_id, lat, lng) {
+    return set_marker_icon(`units/${unit_id}.png`, lat, lng);
+  }
+
+  function set_marker_icon(path, lat, lng) {
     let myLatLng = {
       lat: lat + 1,
       lng: lng - 1
@@ -177,7 +177,7 @@
       // title: slug,
       // draggable:true,
       icon: {
-        url: `../resources/icons/capitol.png`,
+        url: `../resources/icons/${path}`,
         scaledSize: new google.maps.Size(20, 20), // scaled size
         origin: new google.maps.Point(0,0), // origin
         anchor: new google.maps.Point(10,10) // anchor
@@ -198,11 +198,12 @@
       if ($tile['resource_key']) { ?>
         resource_markers.push(set_resource_icon(<?php echo $tile['resource_key']; ?>,<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
       <?php }
-      if ($tile['is_capitol']) { ?>
-        capitol_markers.push(set_capitol_icon(<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+      if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) { ?>
+        settlement_markers.push(set_settlement_icon(<?php echo $tile['settlement_key']; ?>, <?php echo $tile['is_capitol'] ? '1' : '0'; ?>, <?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
       <?php }
-      ?>
-      <?php
+      if ($tile['unit_key']) { ?>
+        unit_markers.push(set_unit_icon(<?php echo $tile['unit_key']; ?>, <?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
+      <?php }
       ?>z(<?php echo
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
@@ -216,7 +217,8 @@
       set_marker_set_visibility(resource_markers, false);
     }
     else {
-      // set_marker_set_visibility(capitol_markers, false);
+      set_marker_set_visibility(settlement_markers, false);
+      set_marker_set_visibility(unit_markers, false);
     }
   }
 
@@ -448,7 +450,7 @@
     tile_gdp(d);
     tile_register_plea(d);
     tile_first_claim(d);
-    tile_army_unit(d);
+    tile_unit(d);
     settlement_select(d);
     industry_select(d);
   }
