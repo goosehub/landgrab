@@ -40,19 +40,19 @@
       current_map_type = 'terrain';
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
-      set_marker_set_visibility(capitol_markers, false);
+      // set_marker_set_visibility(capitol_markers, false);
     });
     $('#borders_toggle').click(function(event) {
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(capitol_markers, true);
+      // set_marker_set_visibility(capitol_markers, true);
     });
     $('#empty_toggle').click(function(event) {
       current_map_type = 'empty';
       tiles_to_empty();
       set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(capitol_markers, false);
+      // set_marker_set_visibility(capitol_markers, false);
     });
   }
 
@@ -86,12 +86,19 @@
         strokeColor: 0,
       });
     });
-}
+  }
 
   function set_marker_set_visibility(marker_set, visible) {
     for (i = 0; i < marker_set.length; i++) {
-      marker_set[i].setVisible(visible);
+      set_marker_visibility(marker_set[i], visible);
     }
+  }
+
+  function set_marker_visibility(marker, visible) {
+    if (!marker) {
+      return;
+    }
+    marker.setVisible(visible);
   }
 
   function set_map() {
@@ -138,11 +145,11 @@
   }
 
   function set_resource_icon(resource_id, lat, lng) {
-    var myLatLng = {
+    let myLatLng = {
       lat: lat + 1,
       lng: lng - 1
     };
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
       // title: slug,
@@ -160,11 +167,11 @@
   }
 
   function set_capitol_icon(lat, lng) {
-    var myLatLng = {
+    let myLatLng = {
       lat: lat + 1,
       lng: lng - 1
     };
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
       // title: slug,
@@ -194,6 +201,8 @@
       if ($tile['is_capitol']) { ?>
         capitol_markers.push(set_capitol_icon(<?php echo $tile['lat']; ?>, <?php echo $tile['lng']; ?>));
       <?php }
+      ?>
+      <?php
       ?>z(<?php echo
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
@@ -206,8 +215,8 @@
     if (use_borders) {
       set_marker_set_visibility(resource_markers, false);
     }
-    if (!use_borders) {
-      set_marker_set_visibility(capitol_markers, false);
+    else {
+      // set_marker_set_visibility(capitol_markers, false);
     }
   }
 
@@ -439,6 +448,7 @@
     tile_gdp(d);
     tile_register_plea(d);
     tile_first_claim(d);
+    tile_army_unit(d);
     settlement_select(d);
     industry_select(d);
   }

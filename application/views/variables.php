@@ -10,13 +10,14 @@
 	let current_map_type = 'terrain';
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
-	let use_borders = <?php echo USE_BORDERS; ?>;
+	let use_borders = <?php echo USE_BORDERS ? 'true' : 'false'; ?>;
 	let attack_key_pressed = false;
 	let keys = new Array();
     let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
 	let terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
     let settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
     let industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
+    let unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
 	let styledMapType = {};
     let default_map_style = [{
       featureType: "poi.business",

@@ -18,8 +18,7 @@
             <p class="tile_block_info_line">
                 <labe>Terrain:</labe>
                 <span id="tile_terrain" class="text-warning pull-right"></span>
-                <span id="tile_resource_with" class="text-warning">with</span>
-                <span id="tile_resource" class="text-success"></span>
+                <span id="tile_resource" class="text-success pull-right"></span>
                 <!-- <img id="tile_resource_icon" src=""/> -->
             </p>
             <p class="tile_block_info_line">
@@ -37,6 +36,10 @@
             <p class="tile_block_info_line">
                 <labe>GDP:</labe>
                 <span id="tile_gdp" class="text-success pull-right"></span>
+            </p>
+            <p id="tile_army_unit_parent" class="tile_block_info_line">
+                <labe>Army:</labe>
+                <span id="tile_army_unit" class="text-primary pull-right"></span>
             </p>
         </div>
         <div class="col-md-6">

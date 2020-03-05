@@ -93,6 +93,10 @@ html, body {
   height: 24px;
   width: auto;
 }
+#tile_resource {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
 @media only screen and (max-device-width: 600px) {
   body #government_dropdown, body .main_menu_parent {
     display: none;

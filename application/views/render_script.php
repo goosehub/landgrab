@@ -41,13 +41,10 @@
     }
     function tile_resource(d)
     {
-        $('#tile_resource_with').hide();
         $('#tile_resource').hide();
         if (d['resource_key']) {
-            $('#tile_resource_with').show();
-            $('#tile_resource').html(resources[d['resource_key'] - 1]['label']);
-        }
-        else {
+            $('#tile_resource').html('(' + resources[d['resource_key'] - 1]['label'] + ')');
+            $('#tile_resource').show();
         }
     }
     function tile_settlement_label(d)
@@ -84,6 +81,17 @@
         }
         else {
             $('#tile_gdp').html('--');
+        }
+    }
+    function tile_army_unit(d)
+    {
+        $('#tile_army_unit_parent').hide();
+        if (d['army_unit_key']) {
+            $('#tile_army_unit').html(unit_labels[d['army_unit_key']]);
+            $('#tile_army_unit_parent').show();
+        }
+        else {
+            $('#tile_population').html('--');
         }
     }
     function settlement_select(d)
