@@ -6,6 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // 
 
 // Keys
+// Settlements
+define('TOWN_KEY', 3);
+define('CITY_KEY', 4);
+define('METRO_KEY', 5);
 // Governments
 define('DEMOCRACY_KEY', 1);
 define('OLIGARCHY_KEY', 2);

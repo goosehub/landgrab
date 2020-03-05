@@ -432,12 +432,10 @@
     tile_industry_label(d);
     tile_population(d);
     tile_gdp(d);
+    tile_register_plea(d);
+    tile_first_claim(d);
     settlement_select(d);
     industry_select(d);
-
-    if (!account['supplies']['tiles'] || d['account_key'] === account['id']) {
-      $('#settlement_select').show();
-    }
   }
 
   function get_single_tile(lat, lng, world_key, callback) {

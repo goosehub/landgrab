@@ -45,9 +45,42 @@
         </div>
         <div class="col-md-6">
             <p id="tile_desc">
-                Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
             </p>
         </div>
+    </div>
+    <div id="tile_register_plea">
+        <p>
+            <strong class="text-action">
+                Register Now To Claim Your Land
+            </strong>
+        </p>
+    </div>
+    <div id="tile_first_claim_invalid_ocean">
+        <hr>
+        <p>
+            <strong class="text-danger">
+                You can not claim ocean tiles.
+            </strong>
+        </p>
+    </div>
+    <div id="tile_first_claim_invalid_incorporated">
+        <hr>
+        <p>
+            <strong class="text-danger">
+                You can not claim towns, cities, or metros.
+            </strong>
+        </p>
+    </div>
+    <div id="tile_first_claim">
+        <hr>
+        <button class="btn btn-action form-control" id="do_first_claim">
+            Claim
+        </button>
+        <p class="text-center">
+            <strong class="text-action">
+                Make this the Capitol of your new nation!
+            </strong>
+        </p>
     </div>
     <div id="settlement_select">
         <hr>
