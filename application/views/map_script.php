@@ -41,21 +41,22 @@
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
       set_marker_set_visibility(settlement_markers, false);
-      set_marker_set_visibility(unit_markers, false);
     });
     $('#borders_toggle').click(function(event) {
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
       set_marker_set_visibility(settlement_markers, true);
-      set_marker_set_visibility(unit_markers, true);
     });
     $('#empty_toggle').click(function(event) {
       current_map_type = 'empty';
       tiles_to_empty();
       set_marker_set_visibility(resource_markers, false);
       set_marker_set_visibility(settlement_markers, false);
-      set_marker_set_visibility(unit_markers, false);
+    });
+    $('#unit_toggle').click(function(event) {
+      unit_toggle = !unit_toggle;
+      set_marker_set_visibility(unit_markers, unit_toggle);
     });
   }
 
@@ -63,7 +64,6 @@
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
         fillColor: tiles[key].terrain_fillColor,
-        fillOpacity: tiles[key].terrain_fillOpacity,
         strokeWeight: <?= STROKE_WEIGHT; ?>,
         strokeColor: '<?= STROKE_COLOR; ?>',
       });
@@ -74,7 +74,6 @@
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
         fillColor: tiles[key].borders_fillColor,
-        fillOpacity: tiles[key].borders_fillOpacity,
         strokeWeight: <?= STROKE_WEIGHT; ?>,
         strokeColor: '<?= STROKE_COLOR; ?>',
       });
@@ -84,7 +83,6 @@
   function tiles_to_empty() {
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
-        fillOpacity: 0,
         strokeWeight: 0,
         strokeColor: 0,
       });
@@ -176,6 +174,7 @@
 
   function set_marker_icon(path, lat, lng, is_unit) {
     if (is_unit) {
+      lat = lat - 0.5;
       var this_icon = {
         url: path,
       };
@@ -183,9 +182,9 @@
     else {
       var this_icon = {
         url: path,
-        scaledSize: new google.maps.Size(20, 20), // scaled size
-        origin: new google.maps.Point(0,0), // origin
-        anchor: new google.maps.Point(10,10) // anchor
+        scaledSize: new google.maps.Size(20, 20),
+        origin: new google.maps.Point(0,0),
+        anchor: new google.maps.Point(10,10)
       };
     }
     let myLatLng = {
@@ -235,7 +234,7 @@
     else {
       set_marker_set_visibility(settlement_markers, false);
     }
-    if (default_units_toggle) {
+    if (unit_toggle) {
 
     }
     else {
