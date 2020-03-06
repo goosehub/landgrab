@@ -184,6 +184,7 @@
 
         $data = array(
             'color' => $color,
+            'unit_owner_color' => $color,
             'modified' => date('Y-m-d H:i:s', time())
         );
         $this->db->where('account_key', $account_id);

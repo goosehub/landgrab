@@ -146,18 +146,18 @@
   }
 
   function set_resource_icon(resource_id, lat, lng) {
-    return set_marker_icon(`../resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
+    return set_marker_icon(`${base_url}/resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
   }
 
   function set_capitol_icon(lat, lng) {
-    return set_marker_icon(`../resources/icons/capitol.png`, lat, lng, false);
+    return set_marker_icon(`${base_url}/resources/icons/capitol.png`, lat, lng, false);
   }
 
   function set_settlement_icon(settlement_id, is_capitol, lat, lng) {
     if (is_capitol) {
       return set_capitol_icon(lat, lng);
     }
-    return set_marker_icon(`../resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
+    return set_marker_icon(`${base_url}/resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
   }
 
   // Uses http://www.googlemapsmarkers.com/
@@ -168,18 +168,20 @@
     unit_owner_color = unit_owner_color.replace('#', '');
     unit_color = unit_types[unit_id - 1].color;
     character = unit_types[unit_id - 1].character;
-    let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${unit_color}/${unit_color}/`;
+    let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${stroke_color}/${stroke_color}`;
     return set_marker_icon(path, lat, lng, true);
   }
 
   function set_marker_icon(path, lat, lng, is_unit) {
     if (is_unit) {
-      lat = lat - 0.5;
+      var draggable = true;
+      lat = lat - (tile_size / 4);
       var this_icon = {
         url: path,
       };
     }
     else {
+      var draggable = false;
       var this_icon = {
         url: path,
         scaledSize: new google.maps.Size(20, 20),
@@ -188,18 +190,25 @@
       };
     }
     let myLatLng = {
-      lat: lat + 1,
-      lng: lng - 1
+      lat: lat + (tile_size / 2),
+      lng: lng - (tile_size / 2)
     };
     let marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      // title: slug,
-      // draggable:true,
+      draggable:draggable,
       icon: this_icon
     });
     marker.setMap(map);
-    marker.addListener('click', set_window);
+    if (draggable) {
+      marker.addListener('dragstart', function(event){
+        start_drag_unit(event, marker);
+      });
+      marker.addListener('dragend', function(event){
+        end_drag_unit(event, marker);
+      });
+    }
+    marker.addListener('click', open_tile);
     return marker;
   }
 
@@ -273,7 +282,7 @@
       borders_fillColor: border_fill_color,
     });
     polygon.setMap(map);
-    polygon.addListener('click', set_window);
+    polygon.addListener('click', open_tile);
     tiles[tile_key] = polygon;
   }
 
@@ -424,7 +433,72 @@
     });
   }
 
-  function set_window(event) {
+  function start_drag_unit(event, marker) {
+    // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
+    start_lat = round_down(event.latLng.lat()) - tile_size;
+    start_lng = round_down(event.latLng.lng());
+  }
+
+
+  function end_drag_unit(event, marker) {
+    // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
+    let end_lat = round_down(event.latLng.lat()) - tile_size;
+    let end_lng = round_down(event.latLng.lng());
+    move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
+  }
+
+  function move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
+    let allowed_move_to_new_position = false;
+    if (tile_in_range(start_lat, start_lng, end_lat, end_lng)) {
+      lat = end_lat;
+      lng = end_lng;
+      allowed_move_to_new_position = true;
+    }
+    else {
+     lat = start_lat;
+     lng = start_lng; 
+    }
+    lat = lat - (tile_size / 4);
+    lat = lat + (tile_size / 2);
+    lng = lng - (tile_size / 2);
+    let position = new google.maps.LatLng(lat, lng);
+    marker.setPosition(position);
+    start_lat = start_lng = null;
+    return allowed_move_to_new_position;
+  }
+
+  function tile_in_range(start_lat, start_lng, end_lat, end_lng) {
+    // Ignore if ending same place we started
+    if (start_lat === end_lat && start_lng === end_lng) {
+      return false;
+    }
+    // Check if one is changed by 1, and other is the same
+    allowed_lats = [start_lat, start_lat + tile_size, start_lat - tile_size];
+    allowed_lngs = [start_lng, start_lng + tile_size, start_lng - tile_size];
+    if (
+      (allowed_lats.includes(end_lat) && start_lng === end_lng) || 
+      (allowed_lngs.includes(end_lng) && start_lat === end_lat)
+      ) {
+      return true;
+    }
+    return false;
+  }
+
+  function tile_in_range_diagonal(start_lat, start_lng, end_lat, end_lng) {
+    // Ignore if ending same place we started
+    if (start_lat === end_lat && start_lng === end_lng) {
+      return false;
+    }
+    // Check that nothing is more than 1 tile size away from standard
+    allowed_lats = [start_lat, start_lat + tile_size, start_lat - tile_size];
+    allowed_lngs = [start_lng, start_lng + tile_size, start_lng - tile_size];
+    if (allowed_lats.includes(end_lat) && allowed_lngs.includes(end_lng)) {
+      return true;
+    }
+    return false;
+  }
+
+  function open_tile(event) {
     // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     var lat = round_down(event.latLng.lat()) - tile_size;
     var lng = round_down(event.latLng.lng());

@@ -12,12 +12,11 @@ temporary allow landgrab without war when starting new and little land is availa
 HIGH PRIORITY
     finish todo
 MEDIUM PRIORITY
-    settlement insufficient supply UI
+    land desc update
     population
     tooltips
     unit system
         spawning
-        movement
         attacks
         flying
         navy

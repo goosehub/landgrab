@@ -1,4 +1,5 @@
 <script>
+    let base_url = '<?= base_url(); ?>';
 	let map = null;
 	let world_key = <?php echo $world['id']; ?>;
 	let tile_size = <?php echo $world['tile_size']; ?>;
@@ -13,6 +14,7 @@
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let use_borders = <?php echo USE_BORDERS ? 'true' : 'false'; ?>;
 	let unit_toggle = <?php echo DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
+    let stroke_color = '<?= STROKE_COLOR; ?>';
 	let attack_key_pressed = false;
 	let keys = new Array();
     let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
@@ -21,6 +23,8 @@
     let industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
     let unit_types = JSON.parse('<?php echo json_encode($this->unit_types); ?>');
     let unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
+    let start_drag_lat = null;
+    let start_drag_lng = null;
 	let styledMapType = {};
     let default_map_style = [{
       featureType: "poi.business",
