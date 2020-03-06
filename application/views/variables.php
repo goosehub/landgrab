@@ -18,6 +18,7 @@
 	let terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
     let settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
     let industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
+    let unit_types = JSON.parse('<?php echo json_encode($this->unit_types); ?>');
     let unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
 	let styledMapType = {};
     let default_map_style = [{

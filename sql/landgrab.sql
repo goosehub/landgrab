@@ -55,6 +55,8 @@ CREATE TABLE `unit_type` (
   `slug` varchar(126) NOT NULL,
   `strength_against_key` int(10) UNSIGNED NOT NULL,
   `cost_base` int(4) NOT NULL,
+  `color` varchar(8) NULL,
+  `character` varchar(8) NULL,
   `can_take_tiles` int(1) NOT NULL,
   `can_take_towns` int(1) NOT NULL,
   `can_take_cities` int(1) NOT NULL,
@@ -64,10 +66,14 @@ CREATE TABLE `unit_type` (
 ALTER TABLE `unit_type` ADD PRIMARY KEY (`id`);
 ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
-(1, 'Infantry', 3, 100, TRUE, TRUE, TRUE, TRUE, ''),
-(2, 'Guerrilla', 1, 50, TRUE, TRUE, FALSE, FALSE, ''),
-(3, 'Commandos', 2, 200, TRUE, FALSE, FALSE, FALSE, '');
+INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
+  `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
+(1, 'Infantry', 3, 100, 'AA3939', 'X'
+  TRUE, TRUE, TRUE, TRUE, ''),
+(2, 'Guerrilla', 1, 50, '228B22', '=',
+  TRUE, TRUE, FALSE, FALSE, ''),
+(3, 'Commandos', 2, 200, 'FFA500', '*',
+  TRUE, FALSE, FALSE, FALSE, '');
 
 CREATE TABLE `account` (
   `id` int(10) UNSIGNED NOT NULL,

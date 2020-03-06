@@ -162,25 +162,16 @@
     return set_marker_icon(`../resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
   }
 
+  // Uses http://www.googlemapsmarkers.com/
+  // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
+  // Becomes
+  // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
   function set_unit_icon(unit_id, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
-    if (unit_id === <?= INFANTRY_KEY; ?>) {
-      unit_color = '<?= INFANTRY_COLOR; ?>';
-      character = '<?= INFANTRY_CHARACTER; ?>';
-    }
-    if (unit_id === <?= GUERRILLA_KEY; ?>) {
-      unit_color = '<?= GUERRILLA_COLOR; ?>';
-      character = '<?= GUERRILLA_CHARACTER; ?>';
-    }
-    if (unit_id === <?= COMMANDOS_KEY; ?>) {
-      unit_color = '<?= COMMANDOS_COLOR; ?>';
-      character = '<?= COMMANDOS_CHARACTER; ?>';
-    }
-    // http://www.googlemapsmarkers.com/
-    // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
-    // Becomes
-    // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
+    unit_color = unit_types[unit_id - 1].color;
+    character = unit_types[unit_id - 1].character;
     let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${unit_color}/${unit_color}/`;
+    console.log(path);
     return set_marker_icon(path, lat, lng, true);
   }
 
