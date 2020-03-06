@@ -177,7 +177,7 @@ class Game extends CI_Controller {
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
         $terrain_key = FERTILE_KEY;
-        // $terrain_key = BARREN_KEY;
+        $terrain_key = BARREN_KEY;
         // $terrain_key = MOUNTAIN_KEY;
         // $terrain_key = TUNDRA_KEY;
         // $terrain_key = COASTAL_KEY;
@@ -195,7 +195,6 @@ class Game extends CI_Controller {
         if (!$this->first_claim_validation($account, $tile)) {
             return false;
         }
-        dd('marco');
     }
     public function first_claim_validation($account, $tile)
     {
