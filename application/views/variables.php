@@ -11,7 +11,8 @@
 	let current_map_type = 'terrain';
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
-	let use_borders = <?php echo USE_BORDERS ? 'true' : 'false'; ?>;
+    let use_borders = <?php echo USE_BORDERS ? 'true' : 'false'; ?>;
+	let default_units_toggle = <?php echo DEFAULT_UNITS_TOGGLE ? 'true' : 'false'; ?>;
 	let attack_key_pressed = false;
 	let keys = new Array();
     let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');

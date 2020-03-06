@@ -171,7 +171,6 @@
     unit_color = unit_types[unit_id - 1].color;
     character = unit_types[unit_id - 1].character;
     let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${unit_color}/${unit_color}/`;
-    console.log(path);
     return set_marker_icon(path, lat, lng, true);
   }
 
@@ -235,6 +234,11 @@
     }
     else {
       set_marker_set_visibility(settlement_markers, false);
+    }
+    if (default_units_toggle) {
+
+    }
+    else {
       set_marker_set_visibility(unit_markers, false);
     }
   }

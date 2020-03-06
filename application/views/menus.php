@@ -34,7 +34,11 @@
       <span class="fa fa-map" title="Map Only"></span>
     </button>
   </div>
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-danger dropdown-toggle" type="button" id="empty_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-map" title="Toggle Units"></span>
     </button>
+  </div>
 
   <?php if ($account) { ?>
     <div class="government_parent menu_element btn-group">
