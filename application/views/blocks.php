@@ -161,7 +161,7 @@
     <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
     <br>
     <br>
-    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="http://gleamplay.com/" target="_blank">GleamPlay</a>, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>
+    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="http://gleamplay.com/" target="_blank">GleamPlay</a>, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>, <a href="https://www.youtube.com/watch?v=dUnM3lPMb1Q" target="_blank">Yahtzee's Dev Diary Series</a>
     <a href="http://ithare.com/" target="_blank">itHare</a>, EllisLabs and British Columbia Institute of Technology for providing CodeIgniter, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
     the rest of the Beta Testers, and all my users. Thank you!</p>
 </div>

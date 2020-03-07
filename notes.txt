@@ -2,6 +2,8 @@
     Notes
 ==========================================================================================
 
+ask internet how to do a sell mechanic
+
 some sort of auto defense?
 temporary allow landgrab without war when starting new and little land is available
 mechanic for new players to take claimed land without selecting it, making it feel fair to players losing land, and preventing alt snipping
@@ -21,9 +23,7 @@ MEDIUM PRIORITY
     unit system
         spawning
         attacks
-        flying
         navy
-        highlighting or dragging
     settlement system
         selection
         crons
@@ -45,7 +45,8 @@ MEDIUM PRIORITY
         corruption
         socialism
         require support to pass laws
-    selling cash crop and cash resources
+    selling
+        the whole system
     hide resources in responses before discovered
     beta
 LOW PRIORITY
@@ -68,7 +69,6 @@ NO PRIORITY
     list of current wars
     pollution mechanic
     custom google map color styling
-    map ui element toggles
     reset
     score
     wiki
@@ -98,17 +98,25 @@ Military Mechanics
     Moves 1 tile in 4 directions, each attack costs 5 support, 50% chance of victory on sea square, 10% chance of victory taking a coast
 
 Support
-    Maxes out at 100
+    Maxes out at 100(200 for socialism)
     Following does not stack
-    Moving is 2 support
-    Claiming tile is 4 support
-    Attacking tile is 6 support
-    Attacking unit is 8 support
-    Attacking town is 10 support, defending units get 2 times defensive bonus
-    Attacking city is 20 support, defending units get 3 times defensive bonus
-    Attacking metro is 30 support, defending units get 4 times defensive bonus
-    Declaring war costs 50 support
-    If socialism, spawning units cost 50 support
+    Moving: 1 Support
+    Landgrab: 4 support
+    Attack Unit: 8 support
+    Capture Town: 10 support
+    Capture City: 30 support
+    Capture Metro: 30 support
+    Socialism Spawn Unit: 40 support
+    Declare War: 50 support
+
+Unit Battle Logic
+    Infantry have 3/4 chance of victory against Commandos
+    Commandos have 3/4 chance of victory against Tanks
+    Tanks have 3/4 chance of victory against Infantry
+    When on ocean, all units becomes Navy and have equal chances
+    Towns get double defensive bonus
+    Cities get triple defensive bonus
+    Metros get quadruple defensive bonus
 
 Budget Rates
     Tax (Support) = Cash as Percent of GDP

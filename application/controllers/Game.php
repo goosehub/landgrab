@@ -97,7 +97,6 @@ class Game extends CI_Controller {
         $tile['username'] = $tile['account'] ? $tile['account']['username'] : '';
 
         $account = $this->user_model->this_account($world_key);
-        $tile['in_range'] = false;
         if ($account) {
             $world = $this->game_model->get_world_by_id($world_key);
             $account['tile_count'] = $this->game_model->get_count_of_account_tile($account['id']);
@@ -232,10 +231,14 @@ class Game extends CI_Controller {
         $start_lng = $this->input->post('start_lng');
         $end_lat = $this->input->post('end_lat');
         $end_lng = $this->input->post('end_lng');
+        $account = $this->user_model->this_account($world_key);
         $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
         $previous_tile = $this->game_model->get_single_tile($start_lat, $start_lng, $world_key);
         if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
-            dd('not adjacent');
+            dd('error: tiles_are_adjacent');
+        }
+        if ($previous_tile['unit_owner_key'] != $account['id']) {
+            dd('error: unit_belongs_to_account');
         }
         // Keep remove before add, makes dupe bugs less likely
         $account = $this->get_this_full_account($tile['world_key'], true);

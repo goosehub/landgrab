@@ -7,13 +7,13 @@
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-primary dropdown-toggle <?= DEFAULT_SETTLEMENT_TOGGLE ? 'active' : ''; ?>" type="button" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-city" title="Cities"></span>
+    <button class="info_button btn btn-success dropdown-toggle <?= DEFAULT_RESOURCE_TOGGLE ? '' : 'active'; ?>" type="button" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-mountain" title="Resources"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-success dropdown-toggle <?= DEFAULT_RESOURCE_TOGGLE ? '' : 'active'; ?>" type="button" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-mountain" title="Resources"></span>
+    <button class="info_button btn btn-primary dropdown-toggle <?= DEFAULT_SETTLEMENT_TOGGLE ? 'active' : ''; ?>" type="button" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-city" title="Cities"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">

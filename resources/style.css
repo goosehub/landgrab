@@ -212,28 +212,16 @@ html, body {
 .center_block {
   display: none;
   position: absolute;
-  top: 15vh;
-  max-height: 75vh;
+  top: 10vh;
+  max-height: 85vh;
   overflow-y: auto;
   overflow-x: hidden;
-  left: 30%;
-  width: 40%;
+  left: 2.5%;
+  width: 95%;
   background: #fff;
   padding: 1em;
   border-radius: 1em;
   z-index: 10;
-}
-@media only screen and (max-device-width: 600px) {
-  .center_block {
-    left: 5%;
-    width: 90%;   
-  }
-}
-#government_block, #trade_block, #diplomacy_block, #leaderboard_block {
-  left: 2.5%;
-  width: 95%;
-  top: 10vh;
-  height: 90vh;
 }
 .budget_info_value {
   float: right;
