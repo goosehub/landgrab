@@ -17,11 +17,12 @@
 	let resource_markers = [];
 	let unit_markers = [];
     let settlement_markers = [];
-	let current_map_type = '<?= DEFAULT_MAP; ?>';
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?php echo UNIT_VALID_SQUARE_COLOR; ?>';
-    let borders_toggle = <?php echo BORDERS_TOGGLE ? 'true' : 'false'; ?>;
+    let border_toggle = <?php echo DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
+    let resource_toggle = <?php echo DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
+    let settlement_toggle = <?php echo DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;
     let unit_toggle = <?php echo DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
 	let grid_toggle = <?php echo DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
     let stroke_color = '<?= STROKE_COLOR; ?>';

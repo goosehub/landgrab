@@ -36,34 +36,34 @@
   }
 
   function map_toggle_listen() {
-    $('#terrain_toggle').click(function(event) {
-      $('#borders_toggle').removeClass('active');
-      $('#terrain_toggle').addClass('active');
-      borders_toggle = false;
-      current_map_type = 'terrain';
-      tiles_to_terrain();
-      set_marker_set_visibility(resource_markers, true);
-      set_marker_set_visibility(settlement_markers, false);
-    });
-    $('#borders_toggle').click(function(event) {
-      $('#terrain_toggle').removeClass('active');
-      $('#borders_toggle').addClass('active');
-      borders_toggle = true;
-      current_map_type = 'borders';
-      tiles_to_borders();
-      set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(settlement_markers, true);
-    });
-    $('#grid_toggle').click(function(event) {
-      $('#grid_toggle').removeClass('active');
-      grid_toggle = !grid_toggle;
-      if (grid_toggle) {
-        $('#grid_toggle').addClass('active');
-        tiles_without_grid();
+    $('#border_toggle').click(function(event) {
+      $('#border_toggle').removeClass('active');
+      border_toggle = !border_toggle;
+      if (border_toggle) {
+        $('#border_toggle').addClass('active');
+      }
+      if (border_toggle) {
+        tiles_to_borders();
       }
       else {
-        tiles_with_grid();
+        tiles_to_terrain();
       }
+    });
+    $('#settlement_toggle').click(function(event) {
+      $('#settlement_toggle').removeClass('active');
+      settlement_toggle = !settlement_toggle;
+      if (settlement_toggle) {
+        $('#settlement_toggle').addClass('active');
+      }
+      set_marker_set_visibility(settlement_markers, settlement_toggle);
+    });
+    $('#resource_toggle').click(function(event) {
+      $('#resource_toggle').removeClass('active');
+      resource_toggle = !resource_toggle;
+      if (resource_toggle) {
+        $('#resource_toggle').addClass('active');
+      }
+      set_marker_set_visibility(resource_markers, resource_toggle);
     });
     $('#unit_toggle').click(function(event) {
       $('#unit_toggle').removeClass('active');
@@ -72,6 +72,17 @@
         $('#unit_toggle').addClass('active');
       }
       set_marker_set_visibility(unit_markers, unit_toggle);
+    });
+    $('#grid_toggle').click(function(event) {
+      $('#grid_toggle').removeClass('active');
+      grid_toggle = !grid_toggle;
+      if (grid_toggle) {
+        $('#grid_toggle').addClass('active');
+        tiles_with_grid();
+      }
+      else {
+        tiles_without_grid();
+      }
     });
   }
 
@@ -257,23 +268,14 @@
       ; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
     } ?>
 
-    if (borders_toggle) {
-      set_marker_set_visibility(resource_markers, false);
-    }
-    else {
-      set_marker_set_visibility(settlement_markers, false);
-    }
-    if (unit_toggle) {
-
-    }
-    else {
-      set_marker_set_visibility(unit_markers, false);
-    }
+    set_marker_set_visibility(resource_markers, resource_toggle);
+    set_marker_set_visibility(settlement_markers, settlement_toggle);
+    set_marker_set_visibility(unit_markers, unit_toggle);
   }
 
   // Declare square called by performance sensitive loop
   function z(tile_key, tile_lat, tile_lng, terrain_color, border_color) {
-    let current_fill_color = borders_toggle ? border_color : terrain_color;
+    let current_fill_color = border_toggle ? border_color : terrain_color;
     let shape = [{
         lat: tile_lat,
         lng: tile_lng
@@ -388,7 +390,7 @@
     for (i = 0; i < number_of_tiles; i++) {
       let new_tile = new_tiles[i];
       border_color = get_tile_border_color(new_tile);
-      fill_color = borders_toggle ? border_color : tiles[new_tile['id']].fillColor;
+      fill_color = border_toggle ? border_color : tiles[new_tile['id']].fillColor;
       // Update settlement markers
       // Update unit markers
       tiles[new_tile['id']].setOptions({
@@ -501,7 +503,7 @@
 
   function unhighlight_valid_squares() {
     highlighted_tiles = [];
-    if (borders_toggle) {
+    if (border_toggle) {
       tiles_to_borders();
     }
     else {

@@ -1,42 +1,29 @@
 <!-- Top Right Block -->
 <div id="top_right_block">
 
-  <!-- Update Dropdown -->
-<!--     <button class="update_info_button menu_element btn btn-danger">
-        The ___ Update
-        <span class="glyphicon glyphicon-asterisk"></span>
-    </button> -->
-
-<!--   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-default dropdown-toggle" type="button" id="views_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Views
-      <span class="caret"></span>
-    </button>
-    <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-      <li class="text-center"><a href="#"><strong class="text-default" id="terrain_toggle">Terrain and Resources</strong></a></li>
-      <li class="text-center"><a href="#"><strong class="text-default" id="borders_toggle">Borders and Cities</strong></a></li>
-      <li class="text-center"><a href="#"><strong class="text-default" id="grid_toggle">Empty Map</strong></a></li>
-    </ul>
-  </div> -->
-
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-success dropdown-toggle <?= BORDERS_TOGGLE ? '' : 'active'; ?>" type="button" id="terrain_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-mountain" title="Terrain and Resources"></span>
+    <button class="info_button btn btn-warning dropdown-toggle <?= DEFAULT_BORDER_TOGGLE ? '' : 'active'; ?>" type="button" id="border_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-map" title="Terrain/Borders"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-info dropdown-toggle <?= BORDERS_TOGGLE ? 'active' : ''; ?>" type="button" id="borders_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-city" title="Borders and Cities"></span>
+    <button class="info_button btn btn-primary dropdown-toggle <?= DEFAULT_SETTLEMENT_TOGGLE ? 'active' : ''; ?>" type="button" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-city" title="Cities"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-warning dropdown-toggle <?= DEFAULT_GRID_TOGGLE ? 'active' : '' ?>" type="button" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-map" title="Map Only"></span>
+    <button class="info_button btn btn-success dropdown-toggle <?= DEFAULT_RESOURCE_TOGGLE ? '' : 'active'; ?>" type="button" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-mountain" title="Resources"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
     <button class="info_button btn btn-danger dropdown-toggle <?= DEFAULT_UNIT_TOGGLE ? 'active' : '' ?>" type="button" id="unit_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-fist-raised" title="Toggle Units"></span>
+      <span class="fa fa-fist-raised" title="Units"></span>
+    </button>
+  </div>
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-info dropdown-toggle <?= DEFAULT_GRID_TOGGLE ? 'active' : '' ?>" type="button" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-crop" title="Grid"></span>
     </button>
   </div>
 
