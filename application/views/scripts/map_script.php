@@ -518,7 +518,7 @@
 
   function correct_lng(lng) {
     if (lng === 182) {
-      lng = -178
+      lng = -178;
     }
     if (lng === -180) {
       lng = 180;

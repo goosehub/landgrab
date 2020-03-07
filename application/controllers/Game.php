@@ -183,7 +183,7 @@ class Game extends CI_Controller {
         }
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+        // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
     }
 
     public function first_claim_validation($account, $tile)
@@ -208,13 +208,20 @@ class Game extends CI_Controller {
         if (!$account) {
             return false;
         }
-        if ($tile['terrain_key'] === OCEAN_KEY) {
+        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return false;
         }
         if ($tile['account_key']) {
             return false;
         }
         return true;
+    }
+
+    function can_move_to($account, $tile)
+    {
+        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
+            return true;
+        }
     }
 
     function unit_move_to_land()
@@ -227,12 +234,18 @@ class Game extends CI_Controller {
         // Keep remove before add, makes dupe bugs less likely
         $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
         $previous_tile = $this->game_model->get_single_tile($start_lat, $start_lng, $world_key);
+        if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
+            dd('not adjacent');
+        }
         $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if ($this->can_claim($account, $tile)) {
             $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
             $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-            $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+            // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+        }
+        else if ($this->can_move_to($account, $tile)) {
+            $this->game_model->unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
     }
 

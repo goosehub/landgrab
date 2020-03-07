@@ -63,6 +63,7 @@ LOW PRIORITY
     social
         reddit update post
 NO PRIORITY
+    fix correct_lng for non 2 tile size worlds
     list of current wars
     pollution mechanic
     custom google map color styling

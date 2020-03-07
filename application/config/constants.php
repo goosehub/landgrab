@@ -44,6 +44,7 @@ DEFINE('COMMANDOS_KEY', 3);
 
 // World generation
 DEFINE('LOWEST_LAT_RESOURCE_GEN', -60);
+DEFINE('TILE_SIZE', 2);
 
 // Terrain Colors
 DEFINE('FERTILE_COLOR', '#758E4F');
