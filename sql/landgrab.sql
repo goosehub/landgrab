@@ -330,7 +330,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
 (
   6, 'Gas', 'gas',
   FALSE, TRUE, FALSE,
-  10, TRUE, TRUE, TRUE, FALSE
+  12, TRUE, TRUE, TRUE, FALSE
 ),
 (
   7, 'Oil', 'oil',
@@ -340,7 +340,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
 (
   8, 'Uranium', 'uranium',
   FALSE, TRUE, FALSE,
-  5, TRUE, TRUE, TRUE, FALSE
+  3, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (

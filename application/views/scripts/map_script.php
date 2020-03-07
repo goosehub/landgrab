@@ -39,7 +39,7 @@
     $('#terrain_toggle').click(function(event) {
       $('#borders_toggle').removeClass('active');
       $('#terrain_toggle').addClass('active');
-      use_borders = false;
+      borders_toggle = false;
       current_map_type = 'terrain';
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
@@ -48,7 +48,7 @@
     $('#borders_toggle').click(function(event) {
       $('#terrain_toggle').removeClass('active');
       $('#borders_toggle').addClass('active');
-      use_borders = true;
+      borders_toggle = true;
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
@@ -257,7 +257,7 @@
       ; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
     } ?>
 
-    if (use_borders) {
+    if (borders_toggle) {
       set_marker_set_visibility(resource_markers, false);
     }
     else {
@@ -272,8 +272,8 @@
   }
 
   // Declare square called by performance sensitive loop
-  function z(tile_key, tile_lat, tile_lng, terrain_fill_color, border_fill_color) {
-    let current_fill_color = use_borders ? border_fill_color : terrain_fill_color;
+  function z(tile_key, tile_lat, tile_lng, terrain_color, border_color) {
+    let current_fill_color = borders_toggle ? border_color : terrain_color;
     let shape = [{
         lat: tile_lat,
         lng: tile_lng
@@ -299,8 +299,8 @@
       strokeWeight: <?= STROKE_WEIGHT; ?>,
       strokeColor: '<?= STROKE_COLOR; ?>',
       fillColor: current_fill_color,
-      terrain_fillColor: terrain_fill_color,
-      borders_fillColor: border_fill_color,
+      terrain_fillColor: terrain_color,
+      borders_fillColor: border_color,
     });
     polygon.setMap(map);
     polygon.addListener('click', open_tile);
@@ -383,59 +383,53 @@
   }
 
   function update_tiles(new_tiles) {
-    // Loop through tiles
-    // This loop may run up to 15,000 times, so focus is performance
+    // This loop may rarely run up to 15,000 times, so focus is a performance
     number_of_tiles = new_tiles.length;
     for (i = 0; i < number_of_tiles; i++) {
-      // Set variables
-      new_tile = new_tiles[i];
-      fill_opacity = <?= TILE_OPACITY; ?>;
-      fill_color = "#0000ff";
-      if (new_tile['terrain_key'] == <?= FERTILE_KEY; ?>) {
-        fill_color = '<?= FERTILE_COLOR; ?>';
-      }
-      if (new_tile['terrain_key'] == <?= BARREN_KEY; ?>) {
-        fill_color = '<?= BARREN_COLOR; ?>';
-      }
-      if (new_tile['terrain_key'] == <?= MOUNTAIN_KEY; ?>) {
-        fill_color = '<?= MOUNTAIN_COLOR; ?>';
-      }
-      if (new_tile['terrain_key'] == <?= TUNDRA_KEY; ?>) {
-        fill_color = '<?= TUNDRA_COLOR; ?>';
-      }
-      if (new_tile['terrain_key'] == <?= COASTAL_KEY; ?>) {
-        fill_color = '<?= COASTAL_COLOR; ?>';
-      }
-      if (new_tile['terrain_key'] == <?= OCEAN_KEY; ?>) {
-        fill_color = '<?= OCEAN_COLOR; ?>';
-      }
-
-      // Apply variables to box
+      let new_tile = new_tiles[i];
+      terrain_color = get_tile_terrain_color(new_tile);
+      border_color = get_tile_border_color(new_tile);
+      fill_color = borders_toggle ? border_color : terrain_color;
+      // Update settlement markers
+      // Update unit markers
       tiles[new_tile['id']].setOptions({
         fillColor: fill_color,
-        fillOpacity: fill_opacity
+        terrain_fillColor: terrain_color,
+        borders_fillColor: border_color,
       });
-
     }
-
     return true;
   }
 
-  function blind_land_attack(lng, lat, world_key, type, callback) {
-    $.ajax({
-      url: "<?=base_url()?>tile_form",
-      type: "POST",
-      data: {
-        lng: lng,
-        lat: lat,
-        world_key: world_key,
-      },
-      cache: false,
-      success: function(data) {
-        callback(data);
-        return true;
-      }
-    });
+  function get_tile_border_color(tile) {
+    let fill_color = "#FFFFFF";
+    if (tile['account_key']) {
+      fill_color = tile['color'];
+    }
+    return fill_color;
+  }
+
+  function get_tile_terrain_color(terrain_key) {
+    let terrain_color = false;
+    if (terrain_key == <?= FERTILE_KEY; ?>) {
+      terrain_color = '<?= FERTILE_COLOR; ?>';
+    }
+    if (terrain_key == <?= BARREN_KEY; ?>) {
+      terrain_color = '<?= BARREN_COLOR; ?>';
+    }
+    if (terrain_key == <?= MOUNTAIN_KEY; ?>) {
+      terrain_color = '<?= MOUNTAIN_COLOR; ?>';
+    }
+    if (terrain_key == <?= TUNDRA_KEY; ?>) {
+      terrain_color = '<?= TUNDRA_COLOR; ?>';
+    }
+    if (terrain_key == <?= COASTAL_KEY; ?>) {
+      terrain_color = '<?= COASTAL_COLOR; ?>';
+    }
+    if (terrain_key == <?= OCEAN_KEY; ?>) {
+      terrain_color = '<?= OCEAN_COLOR; ?>';
+    }
+    return terrain_color;
   }
 
   function update_tile_terrain(lng, lat, world_key, type, callback) {
@@ -508,7 +502,7 @@
   }
 
   function unhighlight_valid_squares() {
-    if (use_borders) {
+    if (borders_toggle) {
       tiles_to_borders();
     }
     else {
@@ -585,7 +579,6 @@
 
     if (attack_key_pressed) {
       update_tile_terrain(lng, lat, world_key, 'attack', function(response) {
-      // blind_land_attack(lng, lat, world_key, 'attack', function(response) {
         get_map_update();
       });
       return true;

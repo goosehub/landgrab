@@ -20,12 +20,12 @@
   </div> -->
 
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-success dropdown-toggle <?= USE_BORDERS ? '' : 'active'; ?>" type="button" id="terrain_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-success dropdown-toggle <?= BORDERS_TOGGLE ? '' : 'active'; ?>" type="button" id="terrain_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-mountain" title="Terrain and Resources"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-info dropdown-toggle <?= USE_BORDERS ? 'active' : ''; ?>" type="button" id="borders_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-info dropdown-toggle <?= BORDERS_TOGGLE ? 'active' : ''; ?>" type="button" id="borders_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-city" title="Borders and Cities"></span>
     </button>
   </div>

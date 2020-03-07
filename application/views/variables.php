@@ -1,8 +1,14 @@
 <script>
-    let base_url = '<?= base_url(); ?>';
+    const base_url = '<?= base_url(); ?>';
+    const resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
+	const terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
+    const settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
+    const industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
+    const unit_types = JSON.parse('<?php echo json_encode($this->unit_types); ?>');
+    const unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
+	const world_key = <?php echo $world['id']; ?>;
+    const tile_size = <?php echo $world['tile_size']; ?>;
 	let map = null;
-	let world_key = <?php echo $world['id']; ?>;
-    let tile_size = <?php echo $world['tile_size']; ?>;
 	let account = <?php echo json_encode($account); ?>;
     let tiles = [];
     let tiles_by_coord = [];
@@ -15,18 +21,12 @@
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?php echo UNIT_VALID_SQUARE_COLOR; ?>';
-    let use_borders = <?php echo USE_BORDERS ? 'true' : 'false'; ?>;
+    let borders_toggle = <?php echo BORDERS_TOGGLE ? 'true' : 'false'; ?>;
     let unit_toggle = <?php echo DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
 	let grid_toggle = <?php echo DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
     let stroke_color = '<?= STROKE_COLOR; ?>';
 	let attack_key_pressed = false;
 	let keys = new Array();
-    let resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
-	let terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
-    let settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
-    let industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
-    let unit_types = JSON.parse('<?php echo json_encode($this->unit_types); ?>');
-    let unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
     let start_drag_lat = null;
     let start_drag_lng = null;
 	let styledMapType = {};
