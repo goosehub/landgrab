@@ -470,6 +470,7 @@
     end_lng = correct_lng(end_lng);
     move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
     unhighlight_valid_squares(start_lat, start_lng);
+    unit_attack(marker, start_lat, start_lng, end_lat, end_lng);
   }
 
   function highlight_valid_squares() {

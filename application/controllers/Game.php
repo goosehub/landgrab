@@ -71,13 +71,13 @@ class Game extends CI_Controller {
         $this->load->view('trade_block', $data);
         $this->load->view('variables', $data);
         $this->load->view('shared', $data);
-        $this->load->view('map_script', $data);
-        $this->load->view('interface_script', $data);
-        $this->load->view('render_script', $data);
-        $this->load->view('tile_script', $data);
-        $this->load->view('trade_script', $data);
-        // $this->load->view('tutorial_script', $data);
-        $this->load->view('chat_script', $data);
+        $this->load->view('scripts/map_script', $data);
+        $this->load->view('scripts/interface_script', $data);
+        $this->load->view('scripts/render_script', $data);
+        $this->load->view('scripts/tile_script', $data);
+        $this->load->view('scripts/trade_script', $data);
+        // $this->load->view('scripts/tutorial_script', $data);
+        $this->load->view('scripts/chat_script', $data);
         $this->load->view('footer', $data);
     }
 
