@@ -180,8 +180,8 @@ class Game extends CI_Controller {
         $terrain_key = BARREN_KEY;
         // $terrain_key = MOUNTAIN_KEY;
         // $terrain_key = TUNDRA_KEY;
-        // $terrain_key = COASTAL_KEY;
-        // $terrain_key = OCEAN_KEY;
+        $terrain_key = COASTAL_KEY;
+        $terrain_key = OCEAN_KEY;
         $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
     }
 

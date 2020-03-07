@@ -87,7 +87,10 @@ html, body {
   display: none;
 }
 .menu_element {
-    box-shadow: 2px 2px 2px #666;
+  box-shadow: 2px 2px 2px #666;
+}
+.menu_element .active {
+  filter: brightness(85%);
 }
 #tile_resource_icon {
   height: 24px;

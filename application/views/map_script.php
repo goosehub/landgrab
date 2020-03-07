@@ -37,25 +37,40 @@
 
   function map_toggle_listen() {
     $('#terrain_toggle').click(function(event) {
+      $('#borders_toggle').removeClass('active');
+      $('#terrain_toggle').addClass('active');
+      use_borders = false;
       current_map_type = 'terrain';
       tiles_to_terrain();
       set_marker_set_visibility(resource_markers, true);
       set_marker_set_visibility(settlement_markers, false);
     });
     $('#borders_toggle').click(function(event) {
+      $('#terrain_toggle').removeClass('active');
+      $('#borders_toggle').addClass('active');
+      use_borders = true;
       current_map_type = 'borders';
       tiles_to_borders();
       set_marker_set_visibility(resource_markers, false);
       set_marker_set_visibility(settlement_markers, true);
     });
-    $('#empty_toggle').click(function(event) {
-      current_map_type = 'empty';
-      tiles_to_empty();
-      set_marker_set_visibility(resource_markers, false);
-      set_marker_set_visibility(settlement_markers, false);
+    $('#grid_toggle').click(function(event) {
+      $('#grid_toggle').removeClass('active');
+      grid_toggle = !grid_toggle;
+      if (grid_toggle) {
+        $('#grid_toggle').addClass('active');
+        tiles_without_grid();
+      }
+      else {
+        tiles_with_grid();
+      }
     });
     $('#unit_toggle').click(function(event) {
+      $('#unit_toggle').removeClass('active');
       unit_toggle = !unit_toggle;
+      if (unit_toggle) {
+        $('#unit_toggle').addClass('active');
+      }
       set_marker_set_visibility(unit_markers, unit_toggle);
     });
   }
@@ -64,8 +79,6 @@
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
         fillColor: tiles[key].terrain_fillColor,
-        strokeWeight: <?= STROKE_WEIGHT; ?>,
-        strokeColor: '<?= STROKE_COLOR; ?>',
       });
     });
   }
@@ -74,17 +87,24 @@
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
         fillColor: tiles[key].borders_fillColor,
-        strokeWeight: <?= STROKE_WEIGHT; ?>,
-        strokeColor: '<?= STROKE_COLOR; ?>',
       });
     });
   }
 
-  function tiles_to_empty() {
+  function tiles_without_grid() {
     Object.keys(tiles).forEach(function(key) {
       tiles[key].setOptions({
         strokeWeight: 0,
         strokeColor: 0,
+      });
+    });
+  }
+
+  function tiles_with_grid() {
+    Object.keys(tiles).forEach(function(key) {
+      tiles[key].setOptions({
+        strokeWeight: <?= STROKE_WEIGHT; ?>,
+        strokeColor: '<?= STROKE_COLOR; ?>',
       });
     });
   }
@@ -274,6 +294,7 @@
     let polygon = new google.maps.Polygon({
       map: map,
       paths: shape,
+      tile_key: tile_key,
       fillOpacity: <?= $tile['terrain_key'] === OCEAN_KEY ? 0 : TILE_OPACITY; ?>,
       strokeWeight: <?= STROKE_WEIGHT; ?>,
       strokeColor: '<?= STROKE_COLOR; ?>',
@@ -284,6 +305,7 @@
     polygon.setMap(map);
     polygon.addListener('click', open_tile);
     tiles[tile_key] = polygon;
+    tiles_by_coord[tile_lat + ',' + tile_lng] = tiles[tile_key];
   }
 
   function get_account_update() {
@@ -437,6 +459,7 @@
     // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     start_lat = round_down(event.latLng.lat()) - tile_size;
     start_lng = round_down(event.latLng.lng());
+    highlight_valid_squares(start_lat, start_lng);
   }
 
 
@@ -444,7 +467,43 @@
     // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     let end_lat = round_down(event.latLng.lat()) - tile_size;
     let end_lng = round_down(event.latLng.lng());
+    end_lng = correct_lng(end_lng);
     move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
+    unhighlight_valid_squares(start_lat, start_lng);
+  }
+
+  function highlight_valid_squares() {
+    highlighted_tiles = [];
+    highlighted_tiles.push(tiles_by_coord['' + (start_lat + tile_size) + ',' + (start_lng)]);
+    highlighted_tiles.push(tiles_by_coord['' + (start_lat) + ',' + (correct_lng(start_lng + tile_size))]);
+    highlighted_tiles.push(tiles_by_coord['' + (start_lat - tile_size) + ',' + (start_lng)]);
+    highlighted_tiles.push(tiles_by_coord['' + (start_lat) + ',' + (correct_lng(start_lng - tile_size))]);
+    for (let i = 0; i < highlighted_tiles.length; i++) {
+      tiles[highlighted_tiles[i].tile_key].setOptions({
+        fillColor: unit_valid_square_color,
+      });;
+    }
+  }
+
+  function unhighlight_valid_squares() {
+    if (use_borders) {
+      tiles_to_borders();
+    }
+    else {
+      tiles_to_terrain();
+    }
+  }
+
+  function correct_lng(lng) {
+    console.log(lng);
+    if (lng === 182) {
+      lng = -178
+    }
+    if (lng === -180) {
+      lng = 180;
+    }
+    console.log(lng);
+    return lng;
   }
 
   function move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
@@ -474,7 +533,7 @@
     }
     // Check if one is changed by 1, and other is the same
     allowed_lats = [start_lat, start_lat + tile_size, start_lat - tile_size];
-    allowed_lngs = [start_lng, start_lng + tile_size, start_lng - tile_size];
+    allowed_lngs = [start_lng, correct_lng(start_lng + tile_size), correct_lng(start_lng - tile_size)];
     if (
       (allowed_lats.includes(end_lat) && start_lng === end_lng) || 
       (allowed_lngs.includes(end_lng) && start_lat === end_lat)
@@ -502,6 +561,7 @@
     // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     var lat = round_down(event.latLng.lat()) - tile_size;
     var lng = round_down(event.latLng.lng());
+    lng = correct_lng(lng);
 
     if (attack_key_pressed) {
       update_tile_terrain(lng, lat, world_key, 'attack', function(response) {
