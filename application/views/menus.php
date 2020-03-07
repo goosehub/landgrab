@@ -60,7 +60,7 @@
       </button>
       <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
         <li class="text-center"><button class="btn btn-success form-control">Infantry ($<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M)</button></li>
-        <li class="text-center"><button class="btn btn-danger form-control">Guerrilla ($<?php echo $this->unit_types[GUERRILLA_KEY - 1]['cost_base']; ?>M)</button></li>
+        <li class="text-center"><button class="btn btn-danger form-control">Tanks ($<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M)</button></li>
         <li class="text-center"><button class="btn btn-warning form-control">Commandos ($<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M)</button></li>
       </ul>
       </ul>

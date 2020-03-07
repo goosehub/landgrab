@@ -184,10 +184,16 @@
 
         $data = array(
             'color' => $color,
-            'unit_owner_color' => $color,
             'modified' => date('Y-m-d H:i:s', time())
         );
         $this->db->where('account_key', $account_id);
+        $this->db->update('tile', $data);
+
+        $data = array(
+            'unit_owner_color' => $color,
+            'modified' => date('Y-m-d H:i:s', time())
+        );
+        $this->db->where('unit_owner_key', $account_id);
         $this->db->update('tile', $data);
         return true;
     }

@@ -14,7 +14,6 @@ mechanic for new players to take claimed land without selecting it, making it fe
 
 HIGH PRIORITY
     finish todo
-    guerrilla replaced with tanks
 MEDIUM PRIORITY
     land name and desc update
     population
@@ -93,13 +92,8 @@ Trade
 Corruption
     Each n land tiles increases corruption by 1 percent, or something
 
-Army Units
-    Infantry, Medium Cash, High Support Cost, Strong against Commandos, Can Take Land or Settlements up to Metro, Great for Attacks
-    Guerrilla, Small Cash, Medium Support Cost, Strong against Infantry, Can Take Land and Settlements up to Town, Great Defense
-    Commandos, Large Cash, Low Support Cost, Strong against Guerrilla, Can Only Take Land, Great Infantry Compliment
-
 Military Mechanics
-    Infantry < Guerrilla < Commandos < Infantry
+    Infantry < Tanks < Commandos < Infantry
     On Ocean, all units become Navy with equal fighting chances
     Moves 1 tile in 4 directions, each attack costs 5 support, 50% chance of victory on sea square, 10% chance of victory taking a coast
 

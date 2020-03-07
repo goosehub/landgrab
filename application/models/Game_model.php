@@ -145,7 +145,7 @@
 			$this->db->where('lng', $tile['lng']);
 			$this->db->update('tile', $data);
 		}
-		function unit_on_square($tile, $account, $unit_key) {
+		function put_unit_on_square($tile, $account, $unit_key) {
 			$data = array(
 				'unit_key' => $unit_key,
 				'unit_owner_key' => $account['id'],

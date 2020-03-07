@@ -38,7 +38,7 @@ CREATE TABLE `tile` (
   `resource_key` int(10) UNSIGNED NULL,
   `settlement_key` int(10) UNSIGNED NULL,
   `industry_key` int(10) UNSIGNED NULL,
-  `unit_key` int(10) UNSIGNED NULL, -- Infantry, Guerrilla, Commandos, none as null
+  `unit_key` int(10) UNSIGNED NULL, -- Infantry, Tanks, Commandos, none as null
   `unit_owner_key` int(10) UNSIGNED NULL,
   `unit_owner_color` varchar(8) NULL,
   `is_capitol` int(1) NOT NULL,
@@ -68,11 +68,11 @@ ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
-(1, 'Infantry', 3, 100, 'AA3939', 'X'
-  TRUE, TRUE, TRUE, TRUE, ''),
-(2, 'Guerrilla', 1, 50, '228B22', '=',
+(1, 'Infantry', 3, 50, 'AA3939', 'IN'
   TRUE, TRUE, FALSE, FALSE, ''),
-(3, 'Commandos', 2, 200, 'FFA500', '*',
+(2, 'Tanks', 1, 150, '228B22', 'T',
+  TRUE, TRUE, TRUE, TRUE, ''),
+(3, 'Commandos', 2, 100, 'FFA500', 'C',
   TRUE, FALSE, FALSE, FALSE, '');
 
 CREATE TABLE `account` (

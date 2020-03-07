@@ -19,7 +19,7 @@ class Game extends CI_Controller {
         $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];
         $this->industries = $this->game_model->get_all('industry');
         $this->industry_category_labels = [0, 'Government', 'Merchandise', 'Energy', 'Light', 'Heavy', 'Tourism', 'Knowledge', 'Metro'];
-        $this->unit_labels = [0, 'Infantry', 'Guerrilla', 'Commandos'];
+        $this->unit_labels = [0, 'Infantry', 'Tanks', 'Commandos'];
 
         // Force ssl
         if (!is_dev()) {
@@ -238,15 +238,16 @@ class Game extends CI_Controller {
             dd('not adjacent');
         }
         // Keep remove before add, makes dupe bugs less likely
-        $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if ($this->can_claim($account, $tile)) {
+            $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
             $this->game_model->increment_account_supply($account['id'], TILES_KEY);
             // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
         }
         else if ($this->can_move_to($account, $tile)) {
-            $this->game_model->unit_on_square($tile, $account, $previous_tile['unit_key']);
+            $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
+            $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
     }
 
