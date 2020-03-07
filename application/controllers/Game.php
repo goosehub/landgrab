@@ -43,7 +43,7 @@ class Game extends CI_Controller {
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
 
-        if (isset($_GET['json'])) {
+        if ($this->input->get('json')) {
             $server_map_update_interval_s = (MAP_UPDATE_INTERVAL_MS / 1000) * 2;
             $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], $server_map_update_interval_s);
         }
@@ -56,7 +56,7 @@ class Game extends CI_Controller {
             $data['just_registered'] = $this->session->flashdata('just_registered');
         }
 
-        if (isset($_GET['json'])) {
+        if ($this->input->get('json')) {
             return api_response($data);
         }
 
@@ -84,9 +84,9 @@ class Game extends CI_Controller {
     // Get infomation on single land
     public function get_single_tile()
     {
-        $world_key = $_GET['world_key'];
-        $lat = $_GET['lat'];
-        $lng = $_GET['lng'];
+        $world_key = $this->input->get('world_key');
+        $lat = $this->input->get('lat');
+        $lng = $this->input->get('lng');
         $tile = $this->game_model->get_single_tile($lat, $lng, $world_key);
         if (!$tile) {
             echo '{"error": "tile not found"}';
@@ -160,7 +160,7 @@ class Game extends CI_Controller {
     public function maintenance()
     {
         // Send refresh signal to clients when true
-        if (isset($_GET['json'])) {
+        if ($this->input->get('json')) {
             $data['refresh'] = $this->maintenance_flag;
             echo json_encode($data);
         }
@@ -171,31 +171,21 @@ class Game extends CI_Controller {
         return false;
     }
 
-    public function tile_form()
-    {
-        $world_key = $_POST['world_key'];
-        $lat = $_POST['lat'];
-        $lng = $_POST['lng'];
-        $terrain_key = FERTILE_KEY;
-        $terrain_key = BARREN_KEY;
-        // $terrain_key = MOUNTAIN_KEY;
-        // $terrain_key = TUNDRA_KEY;
-        $terrain_key = COASTAL_KEY;
-        $terrain_key = OCEAN_KEY;
-        $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
-    }
-
     public function do_first_claim()
     {
-        if (!isset($_POST['tile'])) {
-            return false;
-        }
-        $tile = $_POST['tile'];
+        $world_key = $this->input->post('world_key');
+        $lat = $this->input->post('lat');
+        $lng = $this->input->post('lng');
+        $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if (!$this->first_claim_validation($account, $tile)) {
             return false;
         }
+        $this->game_model->first_claim($tile, $account);
+        $this->game_model->increment_account_supply($account['id'], TILES_KEY);
+        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
     }
+
     public function first_claim_validation($account, $tile)
     {
         if (!$account) {
@@ -210,9 +200,54 @@ class Game extends CI_Controller {
         if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) {
             return false;
         }
-        $this->game_model->first_claim($tile, $account);
-        $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+        return true;
+    }
+
+    public function can_claim($account, $tile)
+    {
+        if (!$account) {
+            return false;
+        }
+        if ($tile['terrain_key'] === OCEAN_KEY) {
+            return false;
+        }
+        if ($tile['account_key']) {
+            return false;
+        }
+        return true;
+    }
+
+    function unit_move_to_land()
+    {
+        $world_key = $this->input->post('world_key');
+        $start_lat = $this->input->post('start_lat');
+        $start_lng = $this->input->post('start_lng');
+        $end_lat = $this->input->post('end_lat');
+        $end_lng = $this->input->post('end_lng');
+        // Keep remove before add, makes dupe bugs less likely
+        $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
+        $previous_tile = $this->game_model->get_single_tile($start_lat, $start_lng, $world_key);
+        $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
+        $account = $this->get_this_full_account($tile['world_key'], true);
+        if ($this->can_claim($account, $tile)) {
+            $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
+            $this->game_model->increment_account_supply($account['id'], TILES_KEY);
+            $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+        }
+    }
+
+    public function tile_form()
+    {
+        $world_key = $this->input->post('world_key');
+        $lat = $this->input->post('world_key');
+        $lng = $this->input->post('world_key');
+        $terrain_key = FERTILE_KEY;
+        $terrain_key = BARREN_KEY;
+        // $terrain_key = MOUNTAIN_KEY;
+        // $terrain_key = TUNDRA_KEY;
+        $terrain_key = COASTAL_KEY;
+        $terrain_key = OCEAN_KEY;
+        $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
     }
 
 }

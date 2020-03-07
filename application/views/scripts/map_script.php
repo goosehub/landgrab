@@ -443,9 +443,9 @@
       url: "<?=base_url()?>tile_form",
       type: "POST",
       data: {
+        world_key: world_key,
         lng: lng,
         lat: lat,
-        world_key: world_key,
       },
       cache: false,
       success: function(data) {
@@ -470,7 +470,28 @@
     end_lng = correct_lng(end_lng);
     move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
     unhighlight_valid_squares(start_lat, start_lng);
-    unit_attack(marker, start_lat, start_lng, end_lat, end_lng);
+    request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(marker){
+      get_map_update();
+    });
+  }
+
+  function request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, callback) {
+    $.ajax({
+      url: "<?=base_url()?>game/unit_move_to_land",
+      type: "POST",
+      data: {
+        world_key: world_key,
+        start_lat: start_lat,
+        start_lng: start_lng,
+        end_lat: end_lat,
+        end_lng: end_lng,
+      },
+      cache: false,
+      success: function(data) {
+        callback(data);
+        return true;
+      }
+    });
   }
 
   function highlight_valid_squares() {
@@ -496,14 +517,12 @@
   }
 
   function correct_lng(lng) {
-    console.log(lng);
     if (lng === 182) {
       lng = -178
     }
     if (lng === -180) {
       lng = 180;
     }
-    console.log(lng);
     return lng;
   }
 

@@ -1,11 +1,11 @@
 <script>
     function tile_name(d)
     {
-        $('#tile_name').html(d['tile_name'] || 'Unclaimed')
+        $('#tile_name').html(d['tile_name'])
     }
     function tile_desc(d)
     {
-        $('#tile_desc').html(d['tile_desc'] || '')
+        $('#tile_desc').html(d['tile_desc'])
     }
     function tile_coord_link(d)
     {

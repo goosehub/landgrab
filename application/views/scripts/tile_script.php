@@ -10,7 +10,9 @@
             url: "<?=base_url()?>game/do_first_claim",
             type: "POST",
             data: {
-                tile: current_tile,
+                world_key: current_tile.world_key,
+                lat: current_tile.lat,
+                lng: current_tile.lng,
             },
             cache: false,
             success: function(data) {

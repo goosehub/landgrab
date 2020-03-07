@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Keys
 // Settlements
 define('UNCLAIMED_KEY', 1);
+define('UNINHABITED_KEY', 2);
 define('TOWN_KEY', 3);
 define('CITY_KEY', 4);
 define('METRO_KEY', 5);

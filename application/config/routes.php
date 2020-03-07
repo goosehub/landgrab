@@ -12,10 +12,8 @@ $route['world/(:any)'] = "game/index/$1";
 $route['world/leaderboards/(:any)'] = "game/leaderboards/$1";
 
 // Game functions
-$route['get_single_tile'] = "game/get_single_tile";
 $route['tile_form'] = "game/tile_form";
-$route['tile_upgrade_form'] = "game/tile_upgrade_form";
-$route['tile_capitol_form'] = "game/tile_capitol_form";
+$route['get_single_tile'] = "game/get_single_tile";
 $route['laws_form'] = "game/laws_form";
 
 // Account functions

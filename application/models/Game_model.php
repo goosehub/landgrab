@@ -122,11 +122,36 @@ Class game_model extends CI_Model
 			'unit_owner_color' => $account['color'],
 			'is_capitol' => 1,
 			'tile_name' => 'Capitol of ' . $account['nation_name'],
-			'tile_desc' => '',
+			'tile_desc' => 'Founded on ' . date('l jS \of F Y h:i A T'),
 			'color' => $account['color'],
 		);
 		$this->db->where('lat', $tile['lat']);
 		$this->db->where('lng', $tile['lng']);
+		$this->db->update('tile', $data);
+	}
+	function claim($tile, $account, $unit_key) {
+		$data = array(
+			'account_key' => $account['id'],
+			'settlement_key' => UNINHABITED_KEY,
+			'industry_key' => NULL,
+			'unit_key' => $unit_key,
+			'unit_owner_key' => $account['id'],
+			'unit_owner_color' => $account['color'],
+			'is_capitol' => 0,
+			'color' => $account['color'],
+		);
+		$this->db->where('lat', $tile['lat']);
+		$this->db->where('lng', $tile['lng']);
+		$this->db->update('tile', $data);
+	}
+	function remove_unit_from_previous_tile($world_key, $lat, $lng) {
+		$data = array(
+			'unit_key' => NULL,
+			'unit_owner_key' => NULL,
+			'unit_owner_color' => NULL,
+		);
+		$this->db->where('lat', $lat);
+		$this->db->where('lng', $lng);
 		$this->db->update('tile', $data);
 	}
 	function increment_account_supply($account_key, $supply_key, $amount = 1) {
