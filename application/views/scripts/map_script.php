@@ -295,7 +295,7 @@
       map: map,
       paths: shape,
       tile_key: tile_key,
-      fillOpacity: <?= $tile['terrain_key'] === OCEAN_KEY ? 0 : TILE_OPACITY; ?>,
+      fillOpacity: <?= TILE_OPACITY; ?>,
       strokeWeight: <?= STROKE_WEIGHT; ?>,
       strokeColor: '<?= STROKE_COLOR; ?>',
       fillColor: current_fill_color,
@@ -387,14 +387,12 @@
     number_of_tiles = new_tiles.length;
     for (i = 0; i < number_of_tiles; i++) {
       let new_tile = new_tiles[i];
-      terrain_color = get_tile_terrain_color(new_tile);
       border_color = get_tile_border_color(new_tile);
-      fill_color = borders_toggle ? border_color : terrain_color;
+      fill_color = borders_toggle ? border_color : tiles[new_tile['id']].fillColor;
       // Update settlement markers
       // Update unit markers
       tiles[new_tile['id']].setOptions({
         fillColor: fill_color,
-        terrain_fillColor: terrain_color,
         borders_fillColor: border_color,
       });
     }
@@ -502,6 +500,7 @@
   }
 
   function unhighlight_valid_squares() {
+    highlighted_tiles = [];
     if (borders_toggle) {
       tiles_to_borders();
     }

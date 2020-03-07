@@ -14,6 +14,7 @@ mechanic for new players to take claimed land without selecting it, making it fe
 
 HIGH PRIORITY
     finish todo
+    guerrilla replaced with tanks
 MEDIUM PRIORITY
     land name and desc update
     population
@@ -49,6 +50,7 @@ MEDIUM PRIORITY
     hide resources in responses before discovered
     beta
 LOW PRIORITY
+    capitol and chat shortcut to diplomacy
     DB indexes
     ui for pressed buttons
     feedback when being attacked

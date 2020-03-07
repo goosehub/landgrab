@@ -222,6 +222,7 @@ class Game extends CI_Controller {
         if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return true;
         }
+        return true;
     }
 
     function unit_move_to_land()
@@ -231,12 +232,12 @@ class Game extends CI_Controller {
         $start_lng = $this->input->post('start_lng');
         $end_lat = $this->input->post('end_lat');
         $end_lng = $this->input->post('end_lng');
-        // Keep remove before add, makes dupe bugs less likely
         $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
         $previous_tile = $this->game_model->get_single_tile($start_lat, $start_lng, $world_key);
         if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
             dd('not adjacent');
         }
+        // Keep remove before add, makes dupe bugs less likely
         $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if ($this->can_claim($account, $tile)) {
@@ -252,15 +253,15 @@ class Game extends CI_Controller {
     public function tile_form()
     {
         $world_key = $this->input->post('world_key');
-        $lat = $this->input->post('world_key');
-        $lng = $this->input->post('world_key');
+        $lat = $this->input->post('lat');
+        $lng = $this->input->post('lng');
         $terrain_key = FERTILE_KEY;
         $terrain_key = BARREN_KEY;
         // $terrain_key = MOUNTAIN_KEY;
         // $terrain_key = TUNDRA_KEY;
         $terrain_key = COASTAL_KEY;
-        $terrain_key = OCEAN_KEY;
-        $this->game_model->update_tile_terrain($lng, $lat, $terrain_key);
+        // $terrain_key = OCEAN_KEY;
+        $this->game_model->update_tile_terrain($world_key, $lng, $lat, $terrain_key);
     }
 
 }

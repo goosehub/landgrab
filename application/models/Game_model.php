@@ -78,11 +78,12 @@
 			$result = $query->result_array();
 			return isset($result[0]['count']) ? $result[0]['count'] : 0;
 		}
-		function update_tile_terrain($lng, $lat, $terrain_key)
+		function update_tile_terrain($world_key, $lng, $lat, $terrain_key)
 		{
 			$data = array(
 				'terrain_key' => $terrain_key,
 			);
+			$this->db->where('world_key', $world_key);
 			$this->db->where('lat', $lat);
 			$this->db->where('lng', $lng);
 			$this->db->update('tile', $data);
