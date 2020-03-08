@@ -154,7 +154,6 @@ class Game extends CI_Controller {
         $this->game_model->update_account_laws($account_key, $government, $tax_rate, $ideology);
         api_response();
     }
-
     public function leaderboards($world_id)
     {
         return;
@@ -267,7 +266,7 @@ class Game extends CI_Controller {
             return;
         }
         $this->game_model->update_tile_name($tile_id, $tile_name);
-        api_response([]);
+        api_response();
     }
 
     public function update_tile_desc()
@@ -286,8 +285,49 @@ class Game extends CI_Controller {
             return;
         }
         $this->game_model->update_tile_desc($tile_id, $tile_desc);
-        api_response([]);
+        api_response();
     }
+
+    public function update_settlement()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('settlement_id', 'settlement_id', 'required');
+        $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            return false;
+        }
+        $settlement_id = $this->input->post('settlement_id');
+        $tile_id = $this->input->post('tile_id');
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        $account = $this->user_model->this_account($tile['world_key']);
+        if ($account['id'] != $tile['account_key']) {
+            return;
+        }
+        $this->game_model->update_tile_settlement($tile_id, $settlement_id);
+        api_response();
+    }
+
+    public function update_industry()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('industry_id', 'industry_id', 'required');
+        $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            return false;
+        }
+        $industry_id = $this->input->post('industry_id');
+        $tile_id = $this->input->post('tile_id');
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        $account = $this->user_model->this_account($tile['world_key']);
+        if ($account['id'] != $tile['account_key']) {
+            return;
+        }
+        $this->game_model->update_tile_industry($tile_id, $industry_id);
+        api_response();
+    }
+
 
     public function tile_form()
     {

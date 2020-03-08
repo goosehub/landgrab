@@ -112,7 +112,7 @@
                     <div class="col-md-9">
                     <?php 
                 } ?>
-                <button id="set_tile_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
+                <button id="set_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
                     <?php echo $settlement['label']; ?>
                 </button>
                 <?php if (!isset($this->settlements[$key + 1]) || $current_category_id !== $this->settlements[$key + 1]['category_id']) {
@@ -139,7 +139,7 @@
                     <div class="col-md-9">
                     <?php 
                 } ?>
-                <button id="set_tile_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
+                <button id="set_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
                     <?php echo $industry['label']; ?>
                 </button>
                 <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {

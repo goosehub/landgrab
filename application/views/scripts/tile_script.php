@@ -2,6 +2,35 @@
 
     handle_edit_tile_meta();
     handle_first_claim();
+    handle_set_settlement();
+    handle_set_industry();
+
+    function handle_set_settlement() {
+        $('.set_settlement_button').click(function(event) {
+            console.log(event);
+            console.log($(this));
+            let data = {
+                settlement_id: $(this).data('id'),
+                tile_id: current_tile.id,
+            };
+            ajax_post('game/update_settlement', data, function(response) {
+                // 
+            });
+        });
+    }
+    function handle_set_industry() {
+        $('.set_industry_button').click(function(event) {
+            console.log(event);
+            console.log($(this));
+            let data = {
+                industry_id: $(this).data('id'),
+                tile_id: current_tile.id,
+            };
+            ajax_post('game/update_industry', data, function(response) {
+                // 
+            });
+        });
+    }
 
     function handle_edit_tile_meta() {
         $('#edit_tile_name').click(function(event) {

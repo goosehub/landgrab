@@ -113,6 +113,22 @@
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
 		}
+		function update_tile_settlement($tile_id, $settlement_key)
+		{
+			$data = array(
+				'settlement_key' => $settlement_key,
+			);
+			$this->db->where('id', $tile_id);
+			$this->db->update('tile', $data);
+		}
+		function update_tile_industry($tile_id, $industry_key)
+		{
+			$data = array(
+				'industry_key' => $industry_key,
+			);
+			$this->db->where('id', $tile_id);
+			$this->db->update('tile', $data);
+		}
 		function update_account_laws($account_id, $government, $tax_rate, $ideology)
 		{
 			$data = array(
