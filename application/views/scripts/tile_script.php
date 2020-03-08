@@ -7,27 +7,29 @@
 
     function handle_set_settlement() {
         $('.set_settlement_button').click(function(event) {
-            console.log(event);
-            console.log($(this));
+            let settlement_key = $(this).data('id');
             let data = {
-                settlement_id: $(this).data('id'),
+                settlement_key: settlement_key,
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_settlement', data, function(response) {
-                // 
+                current_tile.settlement_key = settlement_key;
+                render_tile_window();
+                get_map_update();
             });
         });
     }
     function handle_set_industry() {
         $('.set_industry_button').click(function(event) {
-            console.log(event);
-            console.log($(this));
+            let industry_key = $(this).data('id');
             let data = {
-                industry_id: $(this).data('id'),
+                industry_key: industry_key,
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_industry', data, function(response) {
-                // 
+                current_tile.industry_key = industry_key;
+                render_tile_window();
+                get_map_update();
             });
         });
     }
@@ -47,6 +49,7 @@
                 tile_name: $('#tile_name_input').val(),
             };
             ajax_post('game/update_tile_name', data, function(response) {
+                current_tile.tile_name = nl2br($('#tile_name_input').val());
                 $('#tile_name').html($('#tile_name_input').val());
                 $('#edit_tile_name, #tile_name').show();
                 $('#tile_name_input, #submit_tile_name').hide();
@@ -58,7 +61,9 @@
                 tile_desc: $('#tile_desc_input').val(),
             }
             ajax_post('game/update_tile_desc', data, function(response) {
-                $('#tile_desc').html(nl2br($('#tile_desc_input').val()));
+                current_tile.tile_desc = nl2br($('#tile_desc_input').val());
+                // $('#tile_desc').html(nl2br($('#tile_desc_input').val()));
+                render_tile_window();
                 $('#edit_tile_desc, #tile_desc').show();
                 $('#tile_desc_input, #submit_tile_desc').hide();
             });

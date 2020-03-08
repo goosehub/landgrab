@@ -15,8 +15,6 @@
             data: data,
             dataType: 'json',
             success: function(data) {
-                // console.log(url);
-                // console.log(data);
                 if (data['error']) {
                     alert(data['error_message']);
                     return false;
@@ -41,8 +39,6 @@
             type: 'GET',
             dataType: 'json',
             success: function(data) {
-                // console.log(url);
-                // console.log(data);
                 if (data['error']) {
                     alert(data['error_message']);
                     return false;

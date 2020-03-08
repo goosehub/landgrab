@@ -360,6 +360,12 @@
     number_of_tiles = new_tiles.length;
     for (i = 0; i < number_of_tiles; i++) {
       let new_tile = new_tiles[i];
+      new_tile.lat = parseInt(new_tile.lat);
+      new_tile.lng = parseInt(new_tile.lng);
+      new_tile.is_capitol = parseInt(new_tile.is_capitol);
+      new_tile.resource_key = parseInt(new_tile.resource_key);
+      new_tile.settlement_key = parseInt(new_tile.settlement_key);
+      new_tile.unit_key = parseInt(new_tile.unit_key);
       border_color = get_tile_border_color(new_tile);
       fill_color = border_toggle ? border_color : tiles[new_tile['id']].fillColor;
       // Update settlement markers
@@ -368,6 +374,20 @@
         fillColor: fill_color,
         borders_fillColor: border_color,
       });
+      if (new_tile.resource_key) {
+        resource_markers.push(set_resource_icon(new_tile.resource_key, new_tile.lat, new_tile.lng));
+      }
+      // @TODO Remove settlement_markers logic needed
+      if (new_tile.settlement_key) {
+        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.lat, new_tile.lng));
+      }
+      if (new_tile.is_capitol){
+        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.lat, new_tile.lng));
+      }
+      // @TODO Remove unit_markers logic needed
+      if (new_tile.unit_key) {
+        unit_markers.push(set_unit_icon(new_tile.unit_key, account.color, new_tile.lat, new_tile.lng));
+      }
     }
     return true;
   }
@@ -476,31 +496,8 @@
 
     tile = get_tile(lat, lng, world_key, function(response) {
       current_tile = response;
-      populate_tile_window(response);
+      render_tile_window();
     });
-  }
-
-  function populate_tile_window(d) {
-    $('#tile_block').show();
-
-    tile_name(d);
-    tile_desc(d);
-    tile_coord_link(d);
-    tile_owner_info(d);
-    tile_owner_username(d);
-    tile_owner_country_name(d);
-    tile_terrain(d);
-    tile_resource_icon(d);
-    tile_resource(d);
-    tile_settlement_label(d);
-    tile_industry_label(d);
-    tile_population(d);
-    tile_gdp(d);
-    tile_register_plea(d);
-    tile_first_claim(d);
-    tile_unit(d);
-    settlement_select(d);
-    industry_select(d);
   }
 
   function get_tile(lat, lng, world_key, callback) {
