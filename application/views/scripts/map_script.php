@@ -21,7 +21,6 @@
   }
 
   function attack_key_listen() {
-    keys['a'] = 65;
     $(document).keydown(function(event) {
       // Attack shortcut
       if (event.which == keys['a']) {
@@ -408,7 +407,6 @@
   }
 
   function start_drag_unit(event, marker) {
-    // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     start_lat = round_down(event.latLng.lat()) - tile_size;
     start_lng = round_down(event.latLng.lng());
     highlight_valid_squares(start_lat, start_lng);
@@ -416,7 +414,7 @@
 
 
   function end_drag_unit(event, marker) {
-    // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
+    unhighlight_all_squares(start_lat, start_lng);
     let end_lat = round_down(event.latLng.lat()) - tile_size;
     let end_lng = round_down(event.latLng.lng());
     end_lng = correct_lng(end_lng);
@@ -425,7 +423,6 @@
       return;
     }
     highlighted_tiles = [];
-    unhighlight_all_squares(start_lat, start_lng);
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(marker){
       get_map_update();
     });
@@ -493,7 +490,6 @@
   }
 
   function open_tile(event) {
-    // Not sure why subtracting tile_size on lat makes this work, but results in correct behavior
     var lat = round_down(event.latLng.lat()) - tile_size;
     var lng = round_down(event.latLng.lng());
     lng = correct_lng(lng);

@@ -34,7 +34,7 @@ class Game extends CI_Controller {
             return $this->maintenance();
         }
 
-        $this->user_model->record_marketing_hit($marketing_slug);
+        $this->user_model->record_slug_hit($marketing_slug);
 
         $data['world'] = $this->game_model->get_world_by_slug($world_slug);
         if (!$data['world']) {
@@ -143,7 +143,7 @@ class Game extends CI_Controller {
         $account = $this->user_model->this_account($world_key);
 
         if ($this->form_validation->run() == FALSE) {
-            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $government = $this->input->post('input_government');
         $tax_rate = $this->input->post('input_tax_rate');
@@ -173,7 +173,7 @@ class Game extends CI_Controller {
         $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if (!$this->first_claim_validation($account, $tile)) {
-            return false;
+            api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
         }
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
@@ -254,16 +254,17 @@ class Game extends CI_Controller {
     public function update_tile_name()
     {
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
         $this->form_validation->set_rules('tile_name', 'tile_name', 'trim|max_length[100]');
         if ($this->form_validation->run() == FALSE) {
-            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $tile_id = $this->input->post('tile_id');
         $tile_name = $this->input->post('tile_name');
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $account = $this->user_model->this_account($tile['world_key']);
         if ($account['id'] != $tile['account_key']) {
-            return;
+            api_error_response('auth', 'Tile is not yours');
         }
         $this->game_model->update_tile_name($tile_id, $tile_name);
         api_response();
@@ -272,10 +273,10 @@ class Game extends CI_Controller {
     public function update_tile_desc()
     {
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
         $this->form_validation->set_rules('tile_desc', 'tile_desc', 'trim|max_length[1000]');
         if ($this->form_validation->run() == FALSE) {
-            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
-            return false;
+            api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $tile_id = $this->input->post('tile_id');
         $tile_desc = $this->input->post('tile_desc');
@@ -294,15 +295,14 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('settlement_key', 'settlement_key', 'required');
         $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
         if ($this->form_validation->run() == FALSE) {
-            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
-            return false;
+            api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $settlement_key = $this->input->post('settlement_key');
         $tile_id = $this->input->post('tile_id');
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $account = $this->user_model->this_account($tile['world_key']);
         if ($account['id'] != $tile['account_key']) {
-            return;
+            api_error_response('auth', 'Tile is not yours');
         }
         $this->game_model->update_tile_settlement($tile_id, $settlement_key);
         api_response();
@@ -314,15 +314,14 @@ class Game extends CI_Controller {
         $this->form_validation->set_rules('industry_key', 'industry_key', 'required');
         $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
         if ($this->form_validation->run() == FALSE) {
-            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
-            return false;
+            api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $industry_key = $this->input->post('industry_key');
         $tile_id = $this->input->post('tile_id');
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $account = $this->user_model->this_account($tile['world_key']);
         if ($account['id'] != $tile['account_key']) {
-            return;
+            api_error_response('auth', 'Tile is not yours');
         }
         $this->game_model->update_tile_industry($tile_id, $industry_key);
         api_response();

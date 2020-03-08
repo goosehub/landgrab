@@ -39,36 +39,56 @@
         $('#edit_tile_name').click(function(event) {
             $('#edit_tile_name, #tile_name').hide();
             $('#tile_name_input, #submit_tile_name').show();
+            $('#tile_name_input').focus();
         });
         $('#edit_tile_desc').click(function(event) {
             $('#edit_tile_desc, #tile_desc').hide();
             $('#tile_desc_input, #submit_tile_desc').show();
+            $('#tile_desc_input').focus();
         });
         $('#submit_tile_name').click(function(event) {
-            let data = {
-                tile_id: current_tile.id,
-                tile_name: $('#tile_name_input').val(),
-            };
-            ajax_post('game/update_tile_name', data, function(response) {
-                current_tile.tile_name = nl2br($('#tile_name_input').val());
-                $('#tile_name').html($('#tile_name_input').val());
-                $('#edit_tile_name, #tile_name').show();
-                $('#tile_name_input, #submit_tile_name').hide();
-            });
+            submit_tile_name();
         });
         $('#submit_tile_desc').click(function(event) {
-            let data = {
-                tile_id: current_tile.id,
-                tile_desc: $('#tile_desc_input').val(),
-            }
-            ajax_post('game/update_tile_desc', data, function(response) {
-                current_tile.tile_desc = nl2br($('#tile_desc_input').val());
-                // $('#tile_desc').html(nl2br($('#tile_desc_input').val()));
-                render_tile_window();
-                $('#edit_tile_desc, #tile_desc').show();
-                $('#tile_desc_input, #submit_tile_desc').hide();
-            });
+            submit_tile_desc();
         });
+        $('#tile_name_input').keypress(function(event) {
+            if (event.which == keys['enter']) {
+                submit_tile_name();
+                event.preventDefault();
+            }
+        });
+        $('#tile_desc_input').keypress(function(event) {
+            if (event.which == keys['enter'] && !event.shiftKey) {
+                submit_tile_desc();
+                event.preventDefault();
+            }
+        });
+    }
+    function submit_tile_name() {
+        let data = {
+            tile_id: current_tile.id,
+            tile_name: $('#tile_name_input').val(),
+        };
+        ajax_post('game/update_tile_name', data, function(response) {
+            current_tile.tile_name = nl2br($('#tile_name_input').val());
+            $('#tile_name').html($('#tile_name_input').val());
+            $('#edit_tile_name, #tile_name').show();
+            $('#tile_name_input, #submit_tile_name').hide();
+        });
+    }
+    function submit_tile_desc() {
+        let data = {
+            tile_id: current_tile.id,
+            tile_desc: $('#tile_desc_input').val(),
+        }
+        ajax_post('game/update_tile_desc', data, function(response) {
+            current_tile.tile_desc = nl2br($('#tile_desc_input').val());
+            // $('#tile_desc').html(nl2br($('#tile_desc_input').val()));
+            render_tile_window();
+            $('#edit_tile_desc, #tile_desc').show();
+            $('#tile_desc_input, #submit_tile_desc').hide();
+        });        
     }
 
     function handle_first_claim() {

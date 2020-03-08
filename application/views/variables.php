@@ -29,6 +29,8 @@
     let stroke_color = '<?= STROKE_COLOR; ?>';
 	let attack_key_pressed = false;
 	let keys = new Array();
+    keys['enter'] = 13;
+    keys['a'] = 65;
     let start_drag_lat = null;
     let start_drag_lng = null;
 	let styledMapType = {};

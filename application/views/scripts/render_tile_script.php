@@ -25,14 +25,26 @@
     {
         $('#tile_name').html(current_tile.tile_name);
         $('#tile_name_input').val(current_tile.tile_name);
-        $('#edit_tile_name, #tile_name').show();
+        if (account.id === current_tile.account_key) {
+            $('#edit_tile_name').show();
+        }
+        else {
+            $('#edit_tile_name').hide();
+        }
+        $('#tile_name').show();
         $('#tile_name_input, #submit_tile_name').hide();
     }
     function tile_desc()
     {
         $('#tile_desc').html(current_tile.tile_desc);
         $('#tile_desc_input').html(current_tile.tile_desc);
-        $('#edit_tile_desc, #tile_desc').show();
+        if (account.id === current_tile.account_key) {
+            $('#edit_tile_desc').show();
+        }
+        else {
+            $('#edit_tile_desc').hide();
+        }
+        $('#tile_desc').show();
         $('#tile_desc_input, #submit_tile_desc').hide();
     }
     function tile_coord_link()

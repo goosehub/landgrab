@@ -233,7 +233,7 @@
         $query = $this->db->get();
         return $query->result_array();
     }
-    function record_marketing_hit($marketing_slug)
+    function record_slug_hit($marketing_slug)
     {
         if (!$marketing_slug) {
             return;
