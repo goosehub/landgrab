@@ -311,17 +311,9 @@
   }
 
   function get_account_update() {
-    $.ajax({
-      url: "<?=base_url()?>game/get_this_full_account/" + world_key,
-      type: "GET",
-      data: {
-        json: "true"
-      },
-      cache: false,
-      success: function(response) {
-        account = JSON.parse(response);
-        update_supplies(account.supplies);
-      }
+    ajax_get('game/get_this_full_account/' + world_key, function(response) {
+      account = response;
+      update_supplies(account.supplies);
     });
   }
 
@@ -337,49 +329,28 @@
   }
 
   function get_map_update() {
-    $.ajax({
-      url: "<?=base_url()?>world/" + world_key,
-      type: "GET",
-      data: {
-        json: "true"
-      },
-      cache: false,
-      success: function(response) {
-        data = JSON.parse(response);
-
-        // Check for refresh signal from server 
-        if (data['refresh']) {
-          alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
-          window.location.reload();
-        }
-
-        if (account && !data['account']) {
-          alert('You were away too long and you\'re session has expired, please log back in.');
-          window.location.href = '<?= base_url(); ?>world/' + world_key + '?login';
-          return false;
-        }
-
-        update_tiles(data['tiles']);
+    ajax_get('game/update_world/' + world_key, function(response) {
+      // Check for refresh signal from server 
+      if (response['refresh']) {
+        alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
+        window.location.reload();
       }
+
+      if (account && !response['account']) {
+        alert('You were away too long and you\'re session has expired, please log back in.');
+        window.location.href = '<?= base_url(); ?>world/' + world_key + '?login';
+        return false;
+      }
+
+      update_tiles(response['tiles']);
     });
   }
 
   function pass_new_laws() {
     $('#pass_new_laws_button').click(function(event) {
-      $.ajax({
-        url: "<?=base_url()?>laws_form",
-        type: 'POST',
-        dataType: 'json',
-        data: $('#laws_form').serialize(),
-        success: function(data) {
-          // Handle error
-          if (data['error']) {
-            alert(data['error']);
-            return false;
-          }
-          // Do update, don't think this is needed though?
-          // get_map_update(world_key);
-        }
+      ajax_get('game/laws_form', function(response) {
+        // Do update, don't think this is needed though?
+        // get_map_update();
       });
     });
   }
@@ -433,19 +404,13 @@
   }
 
   function update_tile_terrain(lng, lat, world_key, type, callback) {
-    $.ajax({
-      url: "<?=base_url()?>tile_form",
-      type: "POST",
-      data: {
-        world_key: world_key,
-        lng: lng,
-        lat: lat,
-      },
-      cache: false,
-      success: function(data) {
-        callback(data);
-        return true;
-      }
+    let data = {
+      world_key: world_key,
+      lng: lng,
+      lat: lat,
+    };
+    ajax_post('game/tile_form', data, function(response) {
+      callback(response);
     });
   }
 
@@ -470,21 +435,15 @@
   }
 
   function request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, callback) {
-    $.ajax({
-      url: "<?=base_url()?>game/unit_move_to_land",
-      type: "POST",
-      data: {
-        world_key: world_key,
-        start_lat: start_lat,
-        start_lng: start_lng,
-        end_lat: end_lat,
-        end_lng: end_lng,
-      },
-      cache: false,
-      success: function(data) {
-        callback(data);
-        return true;
-      }
+    let data = {
+      world_key: world_key,
+      start_lat: start_lat,
+      start_lng: start_lng,
+      end_lat: end_lat,
+      end_lng: end_lng,
+    };
+    ajax_post('game/unit_move_to_land', data, function(response) {
+      callback(response);
     });
   }
 
@@ -587,16 +546,9 @@
 
     $('.center_block').fadeOut(100);
 
-    tile = get_single_tile(lat, lng, world_key, function(tile) {
-      d = JSON.parse(tile);
-
-      if (d['error']) {
-        alert(d['error']);
-        return false;
-      }
-
-      current_tile = d;
-      populate_tile_window(d);
+    tile = get_tile(lat, lng, world_key, function(response) {
+      current_tile = response;
+      populate_tile_window(response);
     });
   }
 
@@ -623,19 +575,14 @@
     industry_select(d);
   }
 
-  function get_single_tile(lat, lng, world_key, callback) {
-    $.ajax({
-      url: "<?=base_url()?>get_single_tile",
-      type: "GET",
-      data: {
-        lat: lat,
-        lng: lng,
-        world_key: world_key
-      },
-      cache: false,
-      success: function(data) {
-        callback(data);
-      }
+  function get_tile(lat, lng, world_key, callback) {
+    let data = {
+      lat: lat,
+      lng: lng,
+      world_key: world_key
+    };
+    ajax_post('game/get_tile', data, function(response) {
+      callback(response);
     });
   }
 

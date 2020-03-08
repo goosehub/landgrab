@@ -58,7 +58,7 @@
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		function get_single_tile($lat, $lng, $world_key)
+		function get_tile($lat, $lng, $world_key)
 		{
 			$this->db->select('*');
 			$this->db->from('tile');

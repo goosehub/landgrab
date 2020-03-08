@@ -37,9 +37,19 @@ function is_dev() {
     return false;
 }
 
-function api_response($data) {
-    array_walk_recursive($data, "escape_quotes");
-    echo json_encode($data);
+// Get JSON POST
+function get_json_post($required) {
+    $raw_post = file_get_contents('php://input');
+    if ($required && !$raw_post) {
+        echo api_error_response('no_post', 'POST received was empty.');
+        exit();
+    }
+    $json_post = json_decode($raw_post);
+    if ($required && !$json_post) {
+        echo api_error_response('post_is_not_json', 'POST must be formatted as JSON.');
+        exit();
+    }
+    return $json_post;
 }
 
 // API Error JSON Response
@@ -48,23 +58,25 @@ function api_error_response($error_code, $error_message) {
     $data['error'] = true;
     $data['error_code'] = $error_code;
     $data['error_message'] = $error_message;
-    return json_encode($data);
+    echo json_encode($data);
+    exit();
 }
 
 // API Data JSON Response
-// function api_response($data) {
-//     $data['error'] = false;
-//     $data['success'] = true;
-//     // Encode and send data
-//     function filter(&$value) {
-//         if (is_string($value)) {
-//             $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-//             $value = nl2br($value);
-//         }
-//     }
-//     array_walk_recursive($data, "filter");
-//     return json_encode($data);
-// }
+function api_response($data) {
+    $data['error'] = false;
+    $data['success'] = true;
+    // Encode and send data
+    function filter(&$value) {
+        if (is_string($value)) {
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $value = nl2br($value);
+        }
+    }
+    array_walk_recursive($data, "filter");
+    echo json_encode($data);
+    exit();
+}
 
 // Random color function for generating primary color
 function random_color_part() {

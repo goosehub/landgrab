@@ -27,7 +27,7 @@ class Game extends CI_Controller {
         }
     }
 
-    // Game view and update json
+    // Game view
     public function index($world_slug = 1, $marketing_slug = false)
     {
         if (MAINTENANCE) {
@@ -43,22 +43,12 @@ class Game extends CI_Controller {
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
 
-        if ($this->input->get('json')) {
-            $server_map_update_interval_s = (MAP_UPDATE_INTERVAL_MS / 1000) * 2;
-            $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], $server_map_update_interval_s);
-        }
-        else {
-            $data['worlds'] = $this->game_model->get_all('world');
-            $data['leaderboards'] = $this->leaderboards($data['world']['id']);
-            $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
-            $data['validation_errors'] = $this->session->flashdata('validation_errors');
-            $data['failed_form'] = $this->session->flashdata('failed_form');
-            $data['just_registered'] = $this->session->flashdata('just_registered');
-        }
-
-        if ($this->input->get('json')) {
-            return api_response($data);
-        }
+        $data['worlds'] = $this->game_model->get_all('world');
+        $data['leaderboards'] = $this->leaderboards($data['world']['id']);
+        $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
+        $data['validation_errors'] = $this->session->flashdata('validation_errors');
+        $data['failed_form'] = $this->session->flashdata('failed_form');
+        $data['just_registered'] = $this->session->flashdata('just_registered');
 
         // Load view
         $this->load->view('header', $data);
@@ -71,26 +61,45 @@ class Game extends CI_Controller {
         $this->load->view('trade_block', $data);
         $this->load->view('variables', $data);
         $this->load->view('shared', $data);
+        $this->load->view('scripts/shared_script', $data);
         $this->load->view('scripts/map_script', $data);
         $this->load->view('scripts/interface_script', $data);
         $this->load->view('scripts/render_script', $data);
         $this->load->view('scripts/tile_script', $data);
         $this->load->view('scripts/trade_script', $data);
-        // $this->load->view('scripts/tutorial_script', $data);
+        $this->load->view('scripts/tutorial_script', $data);
         $this->load->view('scripts/chat_script', $data);
         $this->load->view('footer', $data);
     }
 
-    // Get infomation on single land
-    public function get_single_tile()
+    public function update_world($world_key)
     {
-        $world_key = $this->input->get('world_key');
-        $lat = $this->input->get('lat');
-        $lng = $this->input->get('lng');
-        $tile = $this->game_model->get_single_tile($lat, $lng, $world_key);
+        if (MAINTENANCE) {
+            $data['refresh'] = $this->maintenance_flag;
+            api_response($data);
+        }
+
+        $data['world'] = $this->game_model->get_world_by_id($world_key);
+        if (!$data['world']) {
+            api_error_response('world_not_found', 'World Not Found');
+        }
+
+        $data['account'] = $this->user_model->this_account($data['world']['id']);
+
+        $server_map_update_interval_s = (MAP_UPDATE_INTERVAL_MS / 1000) * 2;
+        $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], $server_map_update_interval_s);
+        api_response($data);
+    }
+
+    // Get infomation on single land
+    public function get_tile()
+    {
+        $world_key = $this->input->post('world_key');
+        $lat = $this->input->post('lat');
+        $lng = $this->input->post('lng');
+        $tile = $this->game_model->get_tile($lat, $lng, $world_key);
         if (!$tile) {
-            echo '{"error": "tile not found"}';
-            return false;
+            api_error_response('tile_not_found', 'Tile Not Found');
         }
         $tile['account'] = $tile['account_key'] ? $this->user_model->get_account_by_id($tile['account_key']) : false;
 
@@ -106,7 +115,7 @@ class Game extends CI_Controller {
         $tile['tile_name'] = htmlspecialchars($tile['tile_name']);
         $tile['color'] = htmlspecialchars($tile['color']);
         $tile['username'] = htmlspecialchars($tile['username']);
-        return api_response($tile);
+        api_response($tile);
     }
 
     public function get_this_full_account($world_key, $raw = false)
@@ -120,7 +129,7 @@ class Game extends CI_Controller {
         if ($raw) {
             return $account;
         }
-        return api_response($account);
+        api_response($account);
     }
 
     public function laws_form()
@@ -135,8 +144,7 @@ class Game extends CI_Controller {
         $account = $this->user_model->this_account($world_key);
 
         if ($this->form_validation->run() == FALSE) {
-            echo '{"error": "' + validation_errors() + '"}';
-            return false;
+            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
         }
         $government = $this->input->post('input_government');
         $tax_rate = $this->input->post('input_tax_rate');
@@ -145,9 +153,7 @@ class Game extends CI_Controller {
         // Set account
         $account_key = $account['id'];
         $this->game_model->update_account_laws($account_key, $government, $tax_rate, $ideology);
-
-        // Success
-        echo '{"status": "success", "result": true, "message": "Laws Updated"}';
+        api_response(array());
     }
 
     public function leaderboards($world_id)
@@ -157,16 +163,8 @@ class Game extends CI_Controller {
 
     public function maintenance()
     {
-        // Send refresh signal to clients when true
-        if ($this->input->get('json')) {
-            $data['refresh'] = $this->maintenance_flag;
-            echo json_encode($data);
-        }
-        else {
-            echo '<h1>Landgrab is being updated. This will only take a minute or two. This page will refresh automatically.</h1>';
-            echo '<script>window.setTimeout(function(){ window.location.href = "' . base_url() . '"; }, 5000);</script>';
-        }
-        return false;
+        echo '<h1>Landgrab is being updated. This will only take a minute or two. This page will refresh automatically.</h1>';
+        echo '<script>window.setTimeout(function(){ window.location.href = "' . base_url() . '"; }, 5000);</script>';
     }
 
     public function do_first_claim()
@@ -174,7 +172,7 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
-        $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
+        $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if (!$this->first_claim_validation($account, $tile)) {
             return false;
@@ -182,6 +180,7 @@ class Game extends CI_Controller {
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
+        api_response(array());
     }
 
     public function first_claim_validation($account, $tile)
@@ -231,13 +230,13 @@ class Game extends CI_Controller {
         $end_lat = $this->input->post('end_lat');
         $end_lng = $this->input->post('end_lng');
         $account = $this->user_model->this_account($world_key);
-        $tile = $this->game_model->get_single_tile($end_lat, $end_lng, $world_key);
-        $previous_tile = $this->game_model->get_single_tile($start_lat, $start_lng, $world_key);
+        $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
+        $previous_tile = $this->game_model->get_tile($start_lat, $start_lng, $world_key);
         if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
-            dd('error: tiles_are_adjacent');
+            api_error_response('tiles_not_adjacent', 'Tiles Are Not Adjacent');
         }
         if ($previous_tile['unit_owner_key'] != $account['id']) {
-            dd('error: unit_belongs_to_account');
+            api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
         // Keep remove before add, makes dupe bugs less likely
         $account = $this->get_this_full_account($tile['world_key'], true);
@@ -251,6 +250,7 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
+        api_response(array());
     }
 
     public function update_tile_name()
@@ -258,8 +258,7 @@ class Game extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('tile_name', 'tile_name', 'trim|max_length[100]');
         if ($this->form_validation->run() == FALSE) {
-            echo api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
-            return false;
+            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
         }
         $tile_id = $this->input->post('tile_id');
         $tile_name = $this->input->post('tile_name');
@@ -277,7 +276,7 @@ class Game extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('tile_desc', 'tile_desc', 'trim|max_length[1000]');
         if ($this->form_validation->run() == FALSE) {
-            echo api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
             return false;
         }
         $tile_id = $this->input->post('tile_id');
@@ -303,6 +302,7 @@ class Game extends CI_Controller {
         $terrain_key = COASTAL_KEY;
         // $terrain_key = OCEAN_KEY;
         $this->game_model->update_tile_terrain($world_key, $lng, $lat, $terrain_key);
+        api_response(array());
     }
 
 }

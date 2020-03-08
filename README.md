@@ -15,3 +15,7 @@ To set up a local instance
     <li>Set a cron for * * * * * php -f /path/to/application/cron.php</li>
     <li>Alternatively, hit up localhost/landgrab/cron/1234 to trigger a cron (Change the token under config/constants.php and cron.php for production)</li>
 </ul>
+
+<p>
+	Note: api_response and api_error_response both echo and exit so no return needed.
+</p>

@@ -17,7 +17,8 @@ mechanic for new players to take claimed land without selecting it, making it fe
 HIGH PRIORITY
     finish todo
     db names to plural?
-    api request wrapper and api responses standardized with http error codes
+    just use tile id
+    swal alerts
 MEDIUM PRIORITY
     land name and desc update
     population
