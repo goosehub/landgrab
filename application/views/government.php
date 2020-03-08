@@ -70,55 +70,82 @@
         <div class="col-md-4 government_card">
             <h3 class="text-center text-primary">Budget</h3>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">GDP: </strong>
+                <strong class="budget_info_item_label">
+                    GDP:
+                    <?php echo generate_popover('GDP', 'The sum of the GDP from every territory', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-action">
                     $<span id="foobar">5,400</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Tax Income: </strong>
+                <strong class="budget_info_item_label">
+                    Tax Income:
+                    <?php echo generate_popover('Tax Income', 'The percentage of GDP captured by the Tax Rate', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-success">
                     $<span id="foobar">800</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Corruption: </strong>
+                <strong class="budget_info_item_label">
+                    Corruption:
+                    <?php echo generate_popover('Corruption', 'Corruptiion is caused by power structure type and number of territories', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">50</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Federal Administrative: </strong>
+                <strong class="budget_info_item_label">
+                    Federal Administrative:
+                    <?php echo generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">50</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Military Bases: </strong>
+                <strong class="budget_info_item_label">
+                    Military Bases:
+                    <?php echo generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">0</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">University Education: </strong>
+                <strong class="budget_info_item_label">
+                    University Education:
+                    <?php echo generate_popover('University Education', 'Costs for Universities', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">30</span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Subsidized Healthcare: </strong>
+                <strong class="budget_info_item_label">
+                    Subsidized Healthcare:
+                    <?php echo generate_popover('University Education', 'Costs for Healthcare Industry', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">0</span> Million
                 </strong><br>
             </span>
-            <!-- <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Socialism: </strong>
+            <span class="budget_info_item_parent" style="display: none">
+                <strong class="budget_info_item_label">
+                    Socialism:
+                    <?php echo generate_popover('Soclaism', 'Socialism consumes all remaining income. But the upside is Socialism allows you to enlist using support instead of cash', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">670</span> Million
                 </strong><br>
-            </span> -->
+            </span>
             <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">Hourly Earnings: </strong>
+                <strong class="budget_info_item_label">
+                    Hourly Earnings:
+                    <?php echo generate_popover('Hourly Earnings', 'Income remaining after accounting for all fixed costs', 'right'); ?>
+                </strong>
                 <strong class="budget_info_value text-success">
                     $<span id="foobar">670</span> Million
                 </strong><br>

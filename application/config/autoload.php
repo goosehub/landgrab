@@ -63,7 +63,7 @@ function api_error_response($error_code, $error_message) {
 }
 
 // API Data JSON Response
-function api_response($data) {
+function api_response($data = array()) {
     $data['error'] = false;
     $data['success'] = true;
     // Encode and send data
@@ -155,9 +155,9 @@ function get_percent_of($number, $percentage) {
     return ceil( $number * ($percentage / 100) );
 }
 
-function generate_popover($title, $content, $placement, $classes) {
+function generate_popover($title, $content, $placement, $classes = '') {
     return '
-        <button type="button" class="popover_tip btn btn-sm btn-default ' . $classes . '" tabindex="0" data-toggle="popover" data-container="body" data-placement="' . $placement . '" data-trigger="focus" title="' . $title . '" 
+        <button type="button" class="popover_tip btn btn-xs btn-default ' . $classes . '" tabindex="0" data-toggle="popover" data-container="body" data-placement="' . $placement . '" data-trigger="focus" title="' . $title . '" 
         data-content="' . $content . '">
             <span class="fa fa-question" title="More Info"></span>
         </button>

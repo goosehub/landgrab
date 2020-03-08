@@ -42,7 +42,7 @@
     </div>
     <div class="enlist_parent menu_element btn-group">
       <button class="info_button btn btn-default dropdown-toggle" type="button" id="enlist_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Spawn new units onto the map">
-          Enlist <strong class="support_span text-primary">(78%)</strong>
+          Enlist <strong class="support_span text-primary">(78/100)</strong>
         <span class="caret"></span>
       </button>
       <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">

@@ -18,7 +18,6 @@ HIGH PRIORITY
     finish todo
 MEDIUM PRIORITY
     population
-    add tips
     unit system
         spawning
         attacks
@@ -47,8 +46,8 @@ MEDIUM PRIORITY
     selling
         the whole system
     hide resources in responses before discovered
-    beta
 LOW PRIORITY
+    add tips
     capitol and chat shortcut to diplomacy
     DB indexes
     ui for pressed buttons
@@ -56,9 +55,12 @@ LOW PRIORITY
     json leaderboard for every supply
     commission icons
     implement icons
-    tutorial based on todo list
     growing capital increases support
     handle troops inside opp. tile at start of war
+    have capitols show laws of nation
+GOING LIVE
+    beta
+    tutorial based on todo list
     5 worlds with clever names
     account migration
     social

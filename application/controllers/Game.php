@@ -152,7 +152,7 @@ class Game extends CI_Controller {
         // Set account
         $account_key = $account['id'];
         $this->game_model->update_account_laws($account_key, $government, $tax_rate, $ideology);
-        api_response(array());
+        api_response();
     }
 
     public function leaderboards($world_id)
@@ -178,8 +178,8 @@ class Game extends CI_Controller {
         }
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-        // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
-        api_response(array());
+        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);
+        api_response();
     }
 
     public function first_claim_validation($account, $tile)
@@ -249,7 +249,7 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
-        api_response(array());
+        api_response();
     }
 
     public function update_tile_name()
@@ -301,7 +301,7 @@ class Game extends CI_Controller {
         $terrain_key = COASTAL_KEY;
         // $terrain_key = OCEAN_KEY;
         $this->game_model->update_tile_terrain($world_key, $lng, $lat, $terrain_key);
-        api_response(array());
+        api_response();
     }
 
 }
