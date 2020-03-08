@@ -155,6 +155,15 @@ function get_percent_of($number, $percentage) {
     return ceil( $number * ($percentage / 100) );
 }
 
+function generate_popover($title, $content, $placement, $classes) {
+    return '
+        <button type="button" class="popover_tip btn btn-sm btn-default ' . $classes . '" tabindex="0" data-toggle="popover" data-container="body" data-placement="' . $placement . '" data-trigger="focus" title="' . $title . '" 
+        data-content="' . $content . '">
+            <span class="fa fa-question" title="More Info"></span>
+        </button>
+    ';
+}
+
 // For human readable spans of time
 // http://stackoverflow.com/questions/2915864/php-how-to-find-the-time-elapsed-since-a-date-time
 function get_time_ago($time_stamp) {

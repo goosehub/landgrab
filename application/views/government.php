@@ -13,6 +13,7 @@
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
+                        <?= generate_popover('Power Structure', 'Democracy has the least corruption but also generates the least support. Autocracy has the most corruption, but also the most support. Oligarchy is a balance between the two.', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
@@ -29,6 +30,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
+                        <?= generate_popover('Taxes', 'Higher taxes cause support to regenerate more slowly or even negatively', 'right', 'pull-right'); ?>
                         <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
                     </div>
                     <div class="col-md-8">
@@ -38,6 +40,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
+                        <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to use support to purchase units', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Economic Ideology: </label>
                     </div>
                     <div class="col-md-8">

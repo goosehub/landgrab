@@ -16,7 +16,7 @@
 
 <!-- Account Update -->
 <?php if ($account) { ?>
-<div id="account_update_block" class="center_block">
+<div id="account_update_block" class="center_block center_block_small">
     <strong>National Charter</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
@@ -185,7 +185,7 @@
 </div>
 
 <!-- Report Bugs Block -->
-<div id="report_bugs_block" class="center_block">
+<div id="report_bugs_block" class="center_block center_block_small">
     <strong>Report Bugs</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">

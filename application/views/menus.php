@@ -2,46 +2,46 @@
 <div id="top_right_block">
 
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-warning dropdown-toggle <?= DEFAULT_BORDER_TOGGLE ? '' : 'active'; ?>" type="button" id="border_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-map" title="Terrain/Borders"></span>
+    <button class="info_button btn btn-warning dropdown-toggle <?= DEFAULT_BORDER_TOGGLE ? '' : 'active'; ?>" type="button" title="Toggle Borders and Terrain" id="border_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-map"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-success dropdown-toggle <?= DEFAULT_RESOURCE_TOGGLE ? '' : 'active'; ?>" type="button" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-mountain" title="Resources"></span>
+    <button class="info_button btn btn-success dropdown-toggle <?= DEFAULT_RESOURCE_TOGGLE ? '' : 'active'; ?>" type="button" title="Toggle Resources" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-mountain"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-primary dropdown-toggle <?= DEFAULT_SETTLEMENT_TOGGLE ? 'active' : ''; ?>" type="button" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-city" title="Cities"></span>
+    <button class="info_button btn btn-primary dropdown-toggle <?= DEFAULT_SETTLEMENT_TOGGLE ? 'active' : ''; ?>" type="button" title="Toggle Settlements" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-city"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-danger dropdown-toggle <?= DEFAULT_UNIT_TOGGLE ? 'active' : '' ?>" type="button" id="unit_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-fist-raised" title="Units"></span>
+    <button class="info_button btn btn-danger dropdown-toggle <?= DEFAULT_UNIT_TOGGLE ? 'active' : '' ?>" type="button" title="Toggle Units" id="unit_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-fist-raised"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-info dropdown-toggle <?= DEFAULT_GRID_TOGGLE ? 'active' : '' ?>" type="button" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-crop" title="Grid"></span>
+    <button class="info_button btn btn-info dropdown-toggle <?= DEFAULT_GRID_TOGGLE ? 'active' : '' ?>" type="button" title="Toggle Grid" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-crop"></span>
     </button>
   </div>
 
   <?php if ($account) { ?>
     <div class="government_parent menu_element btn-group">
-      <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button">
+      <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
         Government <strong class="cash_span text-success">($4,120)</strong>
         <span class="caret"></span>
       </button>
     </div>
     <div class="diplomacy_parent menu_element btn-group">
-      <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button">
+      <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button" title="Trade, War, Peace">
         Diplomacy <strong class="diplomacy_unread_count text-danger">(3)</strong>
         <span class="caret"></span>
       </button>
     </div>
     <div class="enlist_parent menu_element btn-group">
-      <button class="info_button btn btn-default dropdown-toggle" type="button" id="enlist_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button class="info_button btn btn-default dropdown-toggle" type="button" id="enlist_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Spawn new units onto the map">
           Enlist <strong class="support_span text-primary">(78%)</strong>
         <span class="caret"></span>
       </button>
@@ -56,7 +56,7 @@
 
     <!-- Leaderboards dropdown -->
     <div class="leaderboard_parent menu_element btn-group">
-      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown">
+      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="leaderboard_dropdown" title="Leaderboard">
           Leaders
         <span class="caret"></span>
       </button>

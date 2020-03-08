@@ -63,6 +63,11 @@ html, body {
   font-weight: bold;
 }
 
+/* Popover Tip */
+.popover_tip {
+  border-radius: 10em;
+}
+
 /* Map */
 #map {
   height: 100%;
@@ -225,6 +230,11 @@ html, body {
   padding: 1em;
   border-radius: 1em;
   z-index: 10;
+}
+.center_block.center_block_small {
+  left: 25%;
+  width: 50%;
+
 }
 .budget_info_value {
   float: right;

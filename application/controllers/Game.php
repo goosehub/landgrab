@@ -60,7 +60,6 @@ class Game extends CI_Controller {
         $this->load->view('tile_block', $data);
         $this->load->view('trade_block', $data);
         $this->load->view('variables', $data);
-        $this->load->view('shared', $data);
         $this->load->view('scripts/shared_script', $data);
         $this->load->view('scripts/map_script', $data);
         $this->load->view('scripts/interface_script', $data);

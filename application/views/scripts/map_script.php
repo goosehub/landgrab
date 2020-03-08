@@ -372,37 +372,6 @@
     return true;
   }
 
-  function get_tile_border_color(tile) {
-    let fill_color = "#FFFFFF";
-    if (tile['account_key']) {
-      fill_color = tile['color'];
-    }
-    return fill_color;
-  }
-
-  function get_tile_terrain_color(terrain_key) {
-    let terrain_color = false;
-    if (terrain_key == <?= FERTILE_KEY; ?>) {
-      terrain_color = '<?= FERTILE_COLOR; ?>';
-    }
-    if (terrain_key == <?= BARREN_KEY; ?>) {
-      terrain_color = '<?= BARREN_COLOR; ?>';
-    }
-    if (terrain_key == <?= MOUNTAIN_KEY; ?>) {
-      terrain_color = '<?= MOUNTAIN_COLOR; ?>';
-    }
-    if (terrain_key == <?= TUNDRA_KEY; ?>) {
-      terrain_color = '<?= TUNDRA_COLOR; ?>';
-    }
-    if (terrain_key == <?= COASTAL_KEY; ?>) {
-      terrain_color = '<?= COASTAL_COLOR; ?>';
-    }
-    if (terrain_key == <?= OCEAN_KEY; ?>) {
-      terrain_color = '<?= OCEAN_COLOR; ?>';
-    }
-    return terrain_color;
-  }
-
   function update_tile_terrain(lng, lat, world_key, type, callback) {
     let data = {
       world_key: world_key,
@@ -470,19 +439,9 @@
     }
   }
 
-  function correct_lng(lng) {
-    if (lng === 182) {
-      lng = -178;
-    }
-    if (lng === -180) {
-      lng = 180;
-    }
-    return lng;
-  }
-
   function move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
     let allowed_move_to_new_position = false;
-    if (tile_in_range(start_lat, start_lng, end_lat, end_lng)) {
+    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng)) {
       lat = end_lat;
       lng = end_lng;
       allowed_move_to_new_position = true;
@@ -498,37 +457,6 @@
     marker.setPosition(position);
     start_lat = start_lng = null;
     return allowed_move_to_new_position;
-  }
-
-  function tile_in_range(start_lat, start_lng, end_lat, end_lng) {
-    // Ignore if ending same place we started
-    if (start_lat === end_lat && start_lng === end_lng) {
-      return false;
-    }
-    // Check if one is changed by 1, and other is the same
-    allowed_lats = [start_lat, start_lat + tile_size, start_lat - tile_size];
-    allowed_lngs = [start_lng, correct_lng(start_lng + tile_size), correct_lng(start_lng - tile_size)];
-    if (
-      (allowed_lats.includes(end_lat) && start_lng === end_lng) || 
-      (allowed_lngs.includes(end_lng) && start_lat === end_lat)
-      ) {
-      return true;
-    }
-    return false;
-  }
-
-  function tile_in_range_diagonal(start_lat, start_lng, end_lat, end_lng) {
-    // Ignore if ending same place we started
-    if (start_lat === end_lat && start_lng === end_lng) {
-      return false;
-    }
-    // Check that nothing is more than 1 tile size away from standard
-    allowed_lats = [start_lat, start_lat + tile_size, start_lat - tile_size];
-    allowed_lngs = [start_lng, start_lng + tile_size, start_lng - tile_size];
-    if (allowed_lats.includes(end_lat) && allowed_lngs.includes(end_lng)) {
-      return true;
-    }
-    return false;
   }
 
   function open_tile(event) {
