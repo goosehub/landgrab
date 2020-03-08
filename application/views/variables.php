@@ -20,6 +20,7 @@
 	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?php echo UNIT_VALID_SQUARE_COLOR; ?>';
+    let selected_square_color = '<?php echo SELECTED_SQUARE_COLOR; ?>';
     let border_toggle = <?php echo DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
     let resource_toggle = <?php echo DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
     let settlement_toggle = <?php echo DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;

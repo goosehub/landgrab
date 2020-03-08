@@ -14,8 +14,8 @@
             };
             ajax_post('game/update_settlement', data, function(response) {
                 current_tile.settlement_key = settlement_key;
-                render_tile_window();
                 get_map_update();
+                render_tile_window();
             });
         });
     }
@@ -28,8 +28,8 @@
             };
             ajax_post('game/update_industry', data, function(response) {
                 current_tile.industry_key = industry_key;
-                render_tile_window();
                 get_map_update();
+                render_tile_window();
             });
         });
     }

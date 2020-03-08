@@ -386,7 +386,7 @@
       }
       // @TODO Remove unit_markers logic needed
       if (new_tile.unit_key) {
-        unit_markers.push(set_unit_icon(new_tile.unit_key, account.color, new_tile.lat, new_tile.lng));
+        // unit_markers.push(set_unit_icon(new_tile.unit_key, account.color, new_tile.lat, new_tile.lng));
       }
     }
     return true;
@@ -416,8 +416,12 @@
     let end_lat = round_down(event.latLng.lat()) - tile_size;
     let end_lng = round_down(event.latLng.lng());
     end_lng = correct_lng(end_lng);
-    move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
-    unhighlight_valid_squares(start_lat, start_lng);
+    let moved = move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
+    if (!moved) {
+      return;
+    }
+    highlighted_tiles = [];
+    unhighlight_all_squares(start_lat, start_lng);
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(marker){
       get_map_update();
     });
@@ -449,8 +453,13 @@
     }
   }
 
-  function unhighlight_valid_squares() {
-    highlighted_tiles = [];
+  function highlight_single_square(tile_id) {
+    tiles[tile_id].setOptions({
+      fillColor: selected_square_color,
+    });;
+  }
+
+  function unhighlight_all_squares() {
     if (border_toggle) {
       tiles_to_borders();
     }
@@ -492,10 +501,12 @@
       return true;
     }
 
-    $('.center_block').fadeOut(100);
+    $('.center_block').hide();
 
+    unhighlight_all_squares();
     tile = get_tile(lat, lng, world_key, function(response) {
       current_tile = response;
+      highlight_single_square(current_tile.id);
       render_tile_window();
     });
   }
