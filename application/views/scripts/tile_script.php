@@ -4,6 +4,7 @@
     handle_first_claim();
     handle_set_settlement();
     handle_set_industry();
+    handle_exit_tile_block()
 
     function handle_set_settlement() {
         $('.set_settlement_button').click(function(event) {
@@ -81,6 +82,12 @@
                 get_map_update();
             });
         });
+    }
+
+    function handle_exit_tile_block() {
+        $('#exit_tile_block').click(function(){
+            unhighlight_all_squares();
+        })
     }
 
 </script>

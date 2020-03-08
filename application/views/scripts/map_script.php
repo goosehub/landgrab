@@ -343,6 +343,10 @@
       }
 
       update_tiles(response['tiles']);
+
+      if ($('#tile_block').is(':visible')) {
+        highlight_single_square(current_tile.id);
+      }
     });
   }
 

@@ -17,8 +17,7 @@ mechanic for new players to take claimed land without selecting it, making it fe
 HIGH PRIORITY
     finish todo
     capitol logic
-    remove marker logic
-    updating markers
+    remove during updating markers
 MEDIUM PRIORITY
     population
     unit system

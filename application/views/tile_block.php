@@ -1,5 +1,5 @@
 <div id="tile_block" class="center_block">
-    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
+    <button id="exit_tile_block" type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
 

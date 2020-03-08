@@ -48,10 +48,12 @@ $('.exit_center_block').click(function(){
   $('.center_block').hide();
 });
 $('.government_dropdown').click(function(){
+    unhighlight_all_squares();
     $('.center_block').hide();
     $('#government_block').fadeIn();
 });
 $('.diplomacy_dropdown').click(function(){
+    unhighlight_all_squares();
     $('.center_block').hide();
     $('#diplomacy_block').fadeIn();
 });
