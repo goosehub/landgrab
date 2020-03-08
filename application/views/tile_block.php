@@ -6,7 +6,14 @@
     <div class="coord_label pull-right">Coordinates: <a id="tile_coord_link" href=""></a></div>
 
     <div class="tile_name_label">
-        <strong id="tile_name">Paris</strong>
+        <strong id="tile_name"></strong>
+        <input type="tile_name" id="tile_name_input" class="form-control" style="display: none;"/>
+        <button id="edit_tile_name" class="btn btn-sm btn-default btn-round">
+            <span class="fa fa-edit" title="Edit"></span>
+        </button>
+        <button id="submit_tile_name" class="btn btn-sm btn-default btn-round" style="display: none;">
+            <span class="fa fa-save" title="Edit"></span>
+        </button>
     </div>
     <br>
     <div class="row">
@@ -43,8 +50,14 @@
             </p>
         </div>
         <div class="col-md-6">
-            <p id="tile_desc">
-            </p>
+            <p id="tile_desc"></p>
+            <textarea type="text" id="tile_desc_input" class="form-control" style="display: none;"></textarea>
+            <button id="edit_tile_desc" class="btn btn-sm btn-default btn-round">
+                <span class="fa fa-edit" title="Edit"></span>
+            </button>
+            <button id="submit_tile_desc" class="btn btn-sm btn-default btn-round" style="display: none;">
+                <span class="fa fa-save" title="Edit"></span>
+            </button>
         </div>
     </div>
     <div id="tile_register_plea">

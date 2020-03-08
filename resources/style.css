@@ -41,6 +41,9 @@ html, body {
 .btn {
   border-radius: 0;
 }
+.btn-round {
+  border-radius: 10em;
+}
 .btn-full {
   width: 100%;
 }
@@ -291,6 +294,13 @@ a.sell_resource {
 }
 #tile_form textarea {
   height: 4em;
+}
+#tile_desc {
+  max-height: 50vh;
+  overflow: auto;
+}
+#tile_desc_input {
+  max-width: 100%;
 }
 .alert-green {
   background: #5CB85C;

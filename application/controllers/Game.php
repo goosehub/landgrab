@@ -134,7 +134,6 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $account = $this->user_model->this_account($world_key);
 
-        // Fail
         if ($this->form_validation->run() == FALSE) {
             echo '{"error": "' + validation_errors() + '"}';
             return false;
@@ -216,7 +215,7 @@ class Game extends CI_Controller {
         return true;
     }
 
-    function can_move_to($account, $tile)
+    public function can_move_to($account, $tile)
     {
         if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return true;
@@ -224,7 +223,7 @@ class Game extends CI_Controller {
         return true;
     }
 
-    function unit_move_to_land()
+    public function unit_move_to_land()
     {
         $world_key = $this->input->post('world_key');
         $start_lat = $this->input->post('start_lat');
@@ -252,6 +251,44 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
+    }
+
+    public function update_tile_name()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('tile_name', 'tile_name', 'trim|max_length[100]');
+        if ($this->form_validation->run() == FALSE) {
+            echo api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            return false;
+        }
+        $tile_id = $this->input->post('tile_id');
+        $tile_name = $this->input->post('tile_name');
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        $account = $this->user_model->this_account($tile['world_key']);
+        if ($account['id'] != $tile['account_key']) {
+            return;
+        }
+        $this->game_model->update_tile_name($tile_id, $tile_name);
+        api_response([]);
+    }
+
+    public function update_tile_desc()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('tile_desc', 'tile_desc', 'trim|max_length[1000]');
+        if ($this->form_validation->run() == FALSE) {
+            echo api_error_response('Failed Validation', trim(strip_tags(validation_errors())));
+            return false;
+        }
+        $tile_id = $this->input->post('tile_id');
+        $tile_desc = $this->input->post('tile_desc');
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        $account = $this->user_model->this_account($tile['world_key']);
+        if ($account['id'] != $tile['account_key']) {
+            return;
+        }
+        $this->game_model->update_tile_desc($tile_id, $tile_desc);
+        api_response([]);
     }
 
     public function tile_form()

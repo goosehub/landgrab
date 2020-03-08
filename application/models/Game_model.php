@@ -69,6 +69,15 @@
 			$result = $query->result_array();
 			return isset($result[0]) ? $result[0] : false;
 		}
+		function get_tile_by_id($tile_id)
+		{
+			$this->db->select('*');
+			$this->db->from('tile');
+			$this->db->where('id', $tile_id);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return isset($result[0]) ? $result[0] : false;
+		}
 		function get_count_of_account_tile($account_key)
 		{
 			$this->db->select('COUNT(id) as count');
@@ -86,6 +95,22 @@
 			$this->db->where('world_key', $world_key);
 			$this->db->where('lat', $lat);
 			$this->db->where('lng', $lng);
+			$this->db->update('tile', $data);
+		}
+		function update_tile_name($tile_id, $tile_name)
+		{
+			$data = array(
+				'tile_name' => $tile_name,
+			);
+			$this->db->where('id', $tile_id);
+			$this->db->update('tile', $data);
+		}
+		function update_tile_desc($tile_id, $tile_desc)
+		{
+			$data = array(
+				'tile_desc' => $tile_desc,
+			);
+			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
 		}
 		function update_account_laws($account_id, $government, $tax_rate, $ideology)

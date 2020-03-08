@@ -1,11 +1,17 @@
 <script>
     function tile_name(d)
     {
-        $('#tile_name').html(d['tile_name'])
+        $('#tile_name').html(d['tile_name']);
+        $('#tile_name_input').val(d['tile_name']);
+        $('#edit_tile_name, #tile_name').show();
+        $('#tile_name_input, #submit_tile_name').hide();
     }
     function tile_desc(d)
     {
-        $('#tile_desc').html(d['tile_desc'])
+        $('#tile_desc').html(d['tile_desc']);
+        $('#tile_desc_input').html(d['tile_desc']);
+        $('#edit_tile_desc, #tile_desc').show();
+        $('#tile_desc_input, #submit_tile_desc').hide();
     }
     function tile_coord_link(d)
     {
@@ -153,5 +159,9 @@
     function settlement_is_incorporated(settlement_key)
     {
         return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
+    }
+    function nl2br(str, is_xhtml) {
+        var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
+        return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
     }
 </script>
