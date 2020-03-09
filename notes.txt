@@ -22,8 +22,9 @@ HIGH PRIORITY
     remove during updating markers
     enlist abstraction
     enlist spawn
+    settlement and industry select UI
 MEDIUM PRIORITY
-    capitol logic
+    capitol reassign logic
     population
     unit system
         attacks
@@ -32,6 +33,7 @@ MEDIUM PRIORITY
     settlement system
         selection
         crons
+        use 1 round of supply feed on start
         without supplies, lose support and size
         Capitols immune to insufficient supplies
     industry system
@@ -141,15 +143,15 @@ Tutorial Todo List
     Honest work
         Assign a territory to farm.
     Sister Cities
-        Create a second town.
+        Create a new town.
     Industry
         Have your second city assigned an Industry. Obtaining and producing the right supplies is key to success.
     Enlist
         Enlist additional units. You may spawn them on your Capitol, or on any Military Industry settlement. Each has a Rock Paper Scissors style advantage on each other.
     Diplomacy
         Send a diplomatic request. Trade supplies for mutual benefit.
-
-Creating a town requires and uses 1 food immediately
+    Metro
+        Get a Metro
 
 ==========================================================================================
     UI
