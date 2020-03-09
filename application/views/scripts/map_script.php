@@ -236,20 +236,20 @@
   }
 
   function set_marker_icon(path, lat, lng, unit) {
+    let draggable = false;
+    let title = '';
+    let this_icon = {
+      url: path,
+      scaledSize: new google.maps.Size(20, 20),
+      origin: new google.maps.Point(0,0),
+      anchor: new google.maps.Point(10,10)
+    };
     if (unit) {
-      var draggable = true;
+      draggable = true;
+      title = unit_labels[unit.unit_id];
       lat = lat - (tile_size / 4);
-      var this_icon = {
+      this_icon = {
         url: path,
-      };
-    }
-    else {
-      var draggable = false;
-      var this_icon = {
-        url: path,
-        scaledSize: new google.maps.Size(20, 20),
-        origin: new google.maps.Point(0,0),
-        anchor: new google.maps.Point(10,10)
       };
     }
     let myLatLng = {
@@ -262,6 +262,7 @@
       draggable:draggable,
       icon: this_icon,
       unit: unit,
+      title: title,
     });
     marker.setMap(map);
     if (draggable) {

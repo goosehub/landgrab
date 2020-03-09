@@ -4,8 +4,6 @@
 
 ask internet how to do a sell mechanic
 
-some sort of auto defense?
-temporary allow landgrab without war when starting new and little land is available
 mechanic for new players to take claimed land without selecting it, making it feel fair to players losing land, and preventing alt snipping
     if no non tundra land is available
     randomly generate capitol on non incorporated tile at least 2 squares from capitol
@@ -29,6 +27,8 @@ MEDIUM PRIORITY
     population
     unit system
         attacks
+        conceal
+        allow to see any units on ocean
     settlement system
         selection
         crons
@@ -54,6 +54,7 @@ MEDIUM PRIORITY
         the whole system
     hide resources in responses before discovered
 LOW PRIORITY
+    new player full map random start
     add tips
     capitol and chat shortcut to diplomacy
     DB indexes
