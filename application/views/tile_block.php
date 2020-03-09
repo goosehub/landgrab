@@ -94,6 +94,28 @@
             </strong>
         </p>
     </div>
+    <div id="enlist_select">
+        <hr>
+        <div id="enlist_disabled">
+            <p>
+                <strong class="text-danger">
+                    Move Current Unit To Enlist A New Unit
+                </strong>
+            </p>
+        </div>
+        <div id="enlist_enabled">
+            <p>
+                <strong class="text-danger">
+                    Enlist
+                </strong>
+            </p>
+            <ul class="enlist_button">
+                <button class="enlist_unit_button btn btn-success form-control" data-id="<?= INFANTRY_KEY; ?>">Infantry ($<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M)</button>
+                <button class="enlist_unit_button btn btn-danger form-control" data-id="<?= TANKS_KEY; ?>">Tanks ($<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M)</button>
+                <button class="enlist_unit_button btn btn-warning form-control" data-id="<?= COMMANDOS_KEY; ?>">Commandos ($<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M)</button>
+            </ul>
+        </div>
+    </div>
     <div id="settlement_select">
         <hr>
         <h3>Select Setttlement</h3>

@@ -20,8 +20,9 @@ population update
 HIGH PRIORITY
     finish todo
     remove during updating markers
-    enlist abstraction
-    enlist spawn
+    fix moving unit to existing square causing disappearing unit
+    enlist spawn validation
+    enlist select UI
     settlement and industry select UI
 MEDIUM PRIORITY
     capitol reassign logic

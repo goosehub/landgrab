@@ -5,6 +5,7 @@
     handle_set_settlement();
     handle_set_industry();
     handle_exit_tile_block()
+    handle_enlist_unit();
 
     function handle_set_settlement() {
         $('.set_settlement_button').click(function(event) {
@@ -108,6 +109,23 @@
         $('#exit_tile_block').click(function(){
             unhighlight_all_squares();
         })
+    }
+
+    function handle_enlist_unit() {
+        $('.enlist_unit_button').click(function(){
+            let unit_id = $(this).data('id');
+            let data = {
+                unit_id: unit_id,
+                tile_id: current_tile.id,
+            };
+            ajax_post('game/request_unit_spawn', data, function(response) {
+                let terrain_key = current_tile.terrain_key;
+                let unit_owner_color = account.color;
+                let lat = current_tile.lat;
+                let lng = current_tile.lng;
+                set_unit_icon(unit_id, terrain_key, unit_owner_color, lat, lng);
+            });
+        });
     }
 
 </script>

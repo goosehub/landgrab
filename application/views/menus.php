@@ -30,7 +30,7 @@
   <?php if ($account) { ?>
     <div class="government_parent menu_element btn-group">
       <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
-        Government <strong class="cash_span text-success">($4,120)</strong>
+        Government <strong class="cash_span text-success">($4,120), (78/100)</strong>
         <span class="caret"></span>
       </button>
     </div>
@@ -39,18 +39,6 @@
         Diplomacy <strong class="diplomacy_unread_count text-danger">(3)</strong>
         <span class="caret"></span>
       </button>
-    </div>
-    <div class="enlist_parent menu_element btn-group">
-      <button class="info_button btn btn-default dropdown-toggle" type="button" id="enlist_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Spawn new units onto the map">
-          Enlist <strong class="support_span text-primary">(78/100)</strong>
-        <span class="caret"></span>
-      </button>
-      <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-        <li class="text-center"><button class="btn btn-success form-control">Infantry ($<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M)</button></li>
-        <li class="text-center"><button class="btn btn-danger form-control">Tanks ($<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M)</button></li>
-        <li class="text-center"><button class="btn btn-warning form-control">Commandos ($<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M)</button></li>
-      </ul>
-      </ul>
     </div>
   <?php } ?>
 

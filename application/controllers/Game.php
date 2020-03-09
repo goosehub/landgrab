@@ -217,6 +217,9 @@ class Game extends CI_Controller {
         if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return true;
         }
+        if ($tile['unit_key']) {
+            api_error_response('square_is_occupied', 'There is already a friendly unit on this square');
+        }
         return true;
     }
 
@@ -328,6 +331,29 @@ class Game extends CI_Controller {
         api_response();
     }
 
+
+    public function request_unit_spawn()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('unit_id', 'unit_id', 'required');
+        $this->form_validation->set_rules('tile_id', 'tile_id', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('validation', trim(strip_tags(validation_errors())));
+        }
+        $unit_id = $this->input->post('unit_id');
+        $tile_id = $this->input->post('tile_id');
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        if ($tile['unit_key']) {
+            api_error_response('square_is_occupied', 'There is already a friendly unit on this square');
+        }
+        // @TODO
+        // Validate capitol or base
+        // Validate money/support needed exists
+        // Take money
+        $account = $this->get_this_full_account($tile['world_key'], true);
+        $this->game_model->put_unit_on_square($tile, $account, $unit_id);
+        api_response();
+    }
 
     public function tile_form()
     {

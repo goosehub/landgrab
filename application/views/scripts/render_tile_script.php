@@ -18,6 +18,7 @@
         tile_register_plea(current_tile);
         tile_first_claim(current_tile);
         tile_unit(current_tile);
+        enlist_select(current_tile);
         settlement_select(current_tile);
         industry_select(current_tile);
     }
@@ -133,6 +134,19 @@
         }
         else {
             $('#tile_population').html('--');
+        }
+    }
+    function enlist_select()
+    {
+        $('#enlist_select, #enlist_disabled, #enlist_enabled').hide();
+        if (parseInt(current_tile.is_capitol)) {
+            $('#enlist_select').show();
+            if (current_tile.unit_key) {
+                $('#enlist_disabled').show();
+            }
+            else {
+                $('#enlist_enabled').show();
+            }
         }
     }
     function settlement_select()
