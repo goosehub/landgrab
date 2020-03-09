@@ -248,7 +248,8 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
         }
-        api_response();
+        $data['tile'] = $tile;
+        api_response($data);
     }
 
     public function update_tile_name()

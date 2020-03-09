@@ -1,6 +1,7 @@
 <script>
   pass_new_laws();
   attack_key_listen();
+  enlist_listen();
   map_toggle_listen();
 
   if (account) {
@@ -83,6 +84,10 @@
         tiles_without_grid();
       }
     });
+  }
+
+  function enlist_listen() {
+
   }
 
   function tiles_to_terrain() {
@@ -194,16 +199,44 @@
   // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
   // Becomes
   // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
-  function set_unit_icon(unit_id, unit_owner_color, lat, lng) {
+  function set_unit_icon(unit_id, terrain_key, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
-    unit_color = unit_types[unit_id - 1].color;
-    character = unit_types[unit_id - 1].character;
-    let path = `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${stroke_color}/${stroke_color}`;
-    return set_marker_icon(path, lat, lng, true);
+    let character = unit_types[unit_id - 1].character;
+    let unit_color = unit_types[unit_id - 1].color;
+    if (parseInt(terrain_key) === ocean_key) {
+      character = navy_character;
+      unit_color = navy_color;
+    }
+    let path = get_googlemapsmarkers_path(character, unit_owner_color, unit_color, unit_color);
+    unit = {
+      unit_id: unit_id,
+      character: character,
+      unit_color: unit_color,
+      unit_owner_color: unit_owner_color,
+    }
+    return set_marker_icon(path, lat, lng, unit);
   }
 
-  function set_marker_icon(path, lat, lng, is_unit) {
-    if (is_unit) {
+  function update_unit_icon(marker, tile) {
+    let unit_owner_color = marker.unit.unit_owner_color;
+    let character = unit_types[marker.unit.unit_id - 1].character;
+    let unit_color = unit_types[marker.unit.unit_id - 1].color;
+    if (parseInt(tile.terrain_key) === ocean_key) {
+      character = navy_character;
+      unit_color = navy_color;
+    }
+    let url = get_googlemapsmarkers_path(character, marker.unit.unit_owner_color, unit_color, unit_color);
+    marker.setIcon(url);
+  }
+
+  function get_googlemapsmarkers_path(character, unit_owner_color, stroke_color, second_stroke_color) {
+    stroke_color = '000000';
+    // second_stroke_color = '000000';
+    return `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${stroke_color}/${second_stroke_color}`;
+  }
+
+  function set_marker_icon(path, lat, lng, unit) {
+    if (unit) {
       var draggable = true;
       lat = lat - (tile_size / 4);
       var this_icon = {
@@ -227,7 +260,8 @@
       position: myLatLng,
       map: map,
       draggable:draggable,
-      icon: this_icon
+      icon: this_icon,
+      unit: unit,
     });
     marker.setMap(map);
     if (draggable) {
@@ -256,7 +290,7 @@
         settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       ?>z(<?=
         $tile['id'] . ',' .
@@ -412,18 +446,18 @@
     highlight_valid_squares(start_lat, start_lng);
   }
 
-
   function end_drag_unit(event, marker) {
     unhighlight_all_squares(start_lat, start_lng);
     let end_lat = round_down(event.latLng.lat()) - tile_size;
     let end_lng = round_down(event.latLng.lng());
     end_lng = correct_lng(end_lng);
-    let moved = move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
+    let moved = move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
     if (!moved) {
       return;
     }
     highlighted_tiles = [];
-    request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(marker){
+    request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
+      update_unit_icon(marker, response.tile);
       get_map_update();
     });
   }
@@ -436,8 +470,8 @@
       end_lat: end_lat,
       end_lng: end_lng,
     };
-    ajax_post('game/unit_move_to_land', data, function(response) {
-      callback(response);
+    ajax_post('game/unit_move_to_land', data, function(tile) {
+      callback(tile);
     });
   }
 
@@ -469,7 +503,7 @@
     }
   }
 
-  function move_marker_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
+  function move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
     let allowed_move_to_new_position = false;
     if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng)) {
       lat = end_lat;

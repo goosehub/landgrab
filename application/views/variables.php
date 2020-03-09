@@ -1,23 +1,23 @@
 <script>
     const base_url = '<?= base_url(); ?>';
     const resources = JSON.parse('<?php echo json_encode($this->resources); ?>');
-	const terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
+    const terrains = JSON.parse('<?php echo json_encode($this->terrains); ?>');
     const settlements = JSON.parse('<?php echo json_encode($this->settlements); ?>');
     const industries = JSON.parse('<?php echo json_encode($this->industries); ?>');
     const unit_types = JSON.parse('<?php echo json_encode($this->unit_types); ?>');
     const unit_labels = JSON.parse('<?php echo json_encode($this->unit_labels); ?>');
-	const world_key = <?php echo $world['id']; ?>;
+    const world_key = <?php echo $world['id']; ?>;
     const tile_size = <?php echo $world['tile_size']; ?>;
-	let map = null;
-	let account = <?php echo json_encode($account); ?>;
+    let map = null;
+    let account = <?php echo json_encode($account); ?>;
     let tiles = [];
     let tiles_by_coord = [];
     let highlighted_tiles = [];
-	let current_tile = false;
-	let resource_markers = [];
-	let unit_markers = [];
+    let current_tile = false;
+    let resource_markers = [];
+    let unit_markers = [];
     let settlement_markers = [];
-	let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
+    let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?php echo UNIT_VALID_SQUARE_COLOR; ?>';
     let selected_square_color = '<?php echo SELECTED_SQUARE_COLOR; ?>';
@@ -25,15 +25,23 @@
     let resource_toggle = <?php echo DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
     let settlement_toggle = <?php echo DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;
     let unit_toggle = <?php echo DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
-	let grid_toggle = <?php echo DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
+    let grid_toggle = <?php echo DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
     let stroke_color = '<?= STROKE_COLOR; ?>';
-	let attack_key_pressed = false;
-	let keys = new Array();
+    let attack_key_pressed = false;
+    let keys = new Array();
+    const navy_character = '<?= NAVY_CHARACTER; ?>';
+    const navy_color = '<?= NAVY_COLOR; ?>';
+    const fertile_key = <?= FERTILE_KEY; ?>;
+    const barren_key = <?= BARREN_KEY; ?>;
+    const mountain_key = <?= MOUNTAIN_KEY; ?>;
+    const tundra_key = <?= TUNDRA_KEY; ?>;
+    const coastal_key = <?= COASTAL_KEY; ?>;
+    const ocean_key = <?= OCEAN_KEY; ?>;
     keys['enter'] = 13;
     keys['a'] = 65;
     let start_drag_lat = null;
     let start_drag_lng = null;
-	let styledMapType = {};
+    let styledMapType = {};
     let default_map_style = [{
       featureType: "poi.business",
       elementType: "labels",
