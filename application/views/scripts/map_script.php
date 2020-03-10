@@ -445,7 +445,7 @@
     $('.center_block').hide();
     start_lat = round_down(event.latLng.lat()) - tile_size;
     start_lng = round_down(event.latLng.lng());
-    highlight_valid_squares(start_lat, start_lng);
+    highlight_valid_squares();
   }
 
   function end_drag_unit(event, marker) {

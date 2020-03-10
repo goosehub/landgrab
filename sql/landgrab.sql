@@ -68,11 +68,11 @@ ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
-(1, 'Infantry', 3, 50, '42F5E3', 'I',
+(1, 'Infantry', 3, 50, 'FF0000', 'I',
   TRUE, TRUE, FALSE, FALSE, ''),
 (2, 'Tanks', 1, 150, '00FF00', 'T',
   TRUE, TRUE, TRUE, TRUE, ''),
-(3, 'Commandos', 2, 100, 'FF0000', 'C',
+(3, 'Commandos', 2, 100, 'BC13FE', 'C',
   TRUE, FALSE, FALSE, FALSE, '');
 
 CREATE TABLE `account` (

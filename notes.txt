@@ -8,10 +8,7 @@ mechanic for new players to take claimed land without selecting it, making it fe
     if no non tundra land is available
     randomly generate capitol on non incorporated tile at least 2 squares from capitol
 
-population update
-    base population to max population?
-    population max required to upgrade settlment
-    population affects GDP?
+industry for reduced corruption?
 
 ==========================================================================================
     Goals
@@ -21,12 +18,17 @@ HIGH PRIORITY
     finish todo
     remove during updating markers
     fix moving unit to existing square causing disappearing unit
+    custom icon for bases
     enlist spawn validation
     enlist select UI
     settlement and industry select UI
 MEDIUM PRIORITY
     capitol reassign logic
     population
+        Set on found, upgrade
+        Increase in cron
+        Have it affect GDP
+        Reset/Decrease on capture
     unit system
         attacks
         conceal
@@ -99,33 +101,30 @@ UPDATE tile SET terrian_key = 6;
     Mechanics
 ==========================================================================================
 
-Trade
-    war/peace/passage (war doesn't require acceptance, peace is not enforced, passage is unless war)
-
 Corruption
-    Each n land tiles increases corruption by 1 percent, or something
+    Each 10 land tiles increases corruption by 1 percent
+    Democracy Corruption = 20%
+    Oligarchy Corruption = 40%
+    Autocracy Corruption = 60%
 
-Military Mechanics
-    Infantry < Tanks < Commandos < Infantry
-    On Ocean, all units become Navy with equal fighting chances
-    Moves 1 tile in 4 directions, each attack costs 5 support, 50% chance of victory on sea square, 10% chance of victory taking a coast
-
-Support
-    Maxes out at 100(200 for socialism)
+Support (Democracy numbers)
+    Maxes out at 100(200 for socialism?)
     Following does not stack
     Moving: 1 Support
     Landgrab: 4 support
     Attack Unit: 8 support
-    Capture Town: 10 support
-    Capture City: 30 support
-    Capture Metro: 30 support
-    Socialism Spawn Unit: 40 support
-    Declare War: 50 support
+    Capture Town: 12 support
+    Capture City: 16 support
+    Capture Metro: 20 support
+    Socialism Spawn Unit: 20 support
+    Declare War: 30 support
+    Passing Laws: 50 support
 
 Unit Battle Logic
     Infantry have 3/4 chance of victory against Commandos
     Commandos have 3/4 chance of victory against Tanks
     Tanks have 3/4 chance of victory against Infantry
+    All have 3/4 chance of victory against Navy
     When on ocean, all units becomes Navy and have equal chances
     Towns get double defensive bonus
     Cities get triple defensive bonus
@@ -133,15 +132,20 @@ Unit Battle Logic
 
 Budget Rates
     Tax (Support) = Cash as Percent of GDP
+    Max support minus for each percent?
+
+==========================================================================================
+    Closet
+==========================================================================================
 
 Tutorial Todo List
     The Start Of A Nation
         Select a tile to start your nation. If available, select somewhere unclaimed.
-    I'm Just A Bill
+    Change The Law
         Click on the Government menu. Set a Government, Tax Rate, and Ideology. Autocracy is great for early quick expansion. Keep your tax rates low so your support will regenerate quicker. Free Markets are a safer bet for new players.
     Manifest Destiny
         Capture new land. Toggle the unit display. Drag the unit on your Capitol unto an adjacent land square to capture it. This, and other unit actions, use up your political support, which replenishes every hour.
-    Honest work
+    Honest Work
         Assign a territory to farm.
     Sister Cities
         Create a new town.
@@ -151,64 +155,10 @@ Tutorial Todo List
         Enlist additional units. You may spawn them on your Capitol, or on any Military Industry settlement. Each has a Rock Paper Scissors style advantage on each other.
     Diplomacy
         Send a diplomatic request. Trade supplies for mutual benefit.
-    Metro
-        Get a Metro
-
-==========================================================================================
-    UI
-==========================================================================================
-
-Map Elements
-    Resources
-    Units
-    Capitals
-    Metros
-    Cities
-    Towns
-
-Map Filters
-    Terrain 
-    Borders
 
 Tagline
+    Economy, Diplomacy, Warfare
     Harvest, Trade, and War
-
-UI
-    Main
-        Map
-        Google UI
-        Chat
-        Landgrab
-        Gov Manage Menu
-        User
-        Worlds
-        Leader List
-    Leader List
-        Leaderboard
-        Trade
-    Trade
-        Your supplies with qty
-        Their supplies with qty
-        Submit/Accept/Reject
-    Government
-        Government
-        Tax Rate
-        Financial Breakdown
-        Supply Breakdown
-        Tips
-    Land
-        ...
-
-Core Nav UI Stats
-    Land (Used to Win)
-    Pop (Is a base for a settlements GDP)
-    Units (Used to take land)
-    Cash (Used to purchase and trade)
-    Support (Must be at a minimum to get tax incomes)
-
-==========================================================================================
-    Closet
-==========================================================================================
 
 Attacks
     Spy (Cash) = reveals all units of other player

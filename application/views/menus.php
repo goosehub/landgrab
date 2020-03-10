@@ -30,7 +30,15 @@
   <?php if ($account) { ?>
     <div class="government_parent menu_element btn-group">
       <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
-        Government <strong class="cash_span text-success">($4,120), (78/100)</strong>
+        Government <strong class="cash_span text-success">
+          (
+          <span class="text-primary">271</span>
+          |
+          <span class="text-success">$4,120M</span>
+          |
+          <span class="text-warning">78%</span>
+          )
+        </strong>
         <span class="caret"></span>
       </button>
     </div>
