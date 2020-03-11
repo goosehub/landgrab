@@ -507,22 +507,44 @@
 
   function move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
     let allowed_move_to_new_position = false;
-    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng)) {
-      lat = end_lat;
-      lng = end_lng;
+    let lat = position_lat_lng_lower(end_lat, end_lng)[0];
+    let lng = position_lat_lng_lower(end_lat, end_lng)[1];
+    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_marker_at_square(lat, lng)) {
       allowed_move_to_new_position = true;
     }
     else {
-     lat = start_lat;
-     lng = start_lng; 
+      lat = position_lat_lng_lower(start_lat, start_lng)[0];
+      lng = position_lat_lng_lower(start_lat, start_lng)[1];
     }
-    lat = lat - (tile_size / 4);
-    lat = lat + (tile_size / 2);
-    lng = lng - (tile_size / 2);
     let position = new google.maps.LatLng(lat, lng);
     marker.setPosition(position);
     start_lat = start_lng = null;
     return allowed_move_to_new_position;
+  }
+
+  function position_lat_lng_lower(lat, lng) {
+    lat = lat - (tile_size / 4);
+    lat = lat + (tile_size / 2);
+    lng = lng - (tile_size / 2);
+    return [lat, lng];
+  }
+
+  function no_marker_at_square(lat, lng) {
+    for (let i = 0; i < unit_markers.length; i++) {
+      if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function is_location_free(search) {
+    for (var i = 0, l = lookup.length; i < l; i++) {
+      if (lookup[i][0] === search[0] && lookup[i][1] === search[1]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   function open_tile(event) {

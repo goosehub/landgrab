@@ -17,7 +17,6 @@ industry for reduced corruption?
 HIGH PRIORITY
     finish todo
     remove during updating markers
-    fix moving unit to existing square causing disappearing unit
     custom icon for bases
     enlist spawn validation
     enlist select UI
