@@ -78,6 +78,16 @@
 			$result = $query->result_array();
 			return isset($result[0]) ? $result[0] : false;
 		}
+		function get_capitol_tile_by_account($account_key)
+		{
+			$this->db->select('*');
+			$this->db->from('tile');
+			$this->db->where('account_key', $account_key);
+			$this->db->where('is_capitol', 1);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return isset($result[0]) ? $result[0] : false;
+		}
 		function get_count_of_account_tile($account_key)
 		{
 			$this->db->select('COUNT(id) as count');
@@ -121,10 +131,11 @@
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
 		}
-		function update_tile_industry($tile_id, $industry_key)
+		function update_tile_industry($tile_id, $industry_key = null)
 		{
 			$data = array(
 				'industry_key' => $industry_key,
+				'is_capitol' => (int)$industry_key === CAPITOL_INDUSTRY_KEY,
 			);
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
@@ -277,4 +288,14 @@
 	    	}
 	    	return $lng;
 	    }
+		function remove_capitol($account_id) {
+			$tile = $this->get_capitol_tile_by_account($account_id);
+			$data = array(
+				'is_capitol' => false,
+				'industry_key' => NULL,
+			);
+			$this->db->where('id', $tile['id']);
+			$this->db->update('tile', $data);
+	        $this->game_model->update_tile_industry($tile['id']);
+		}
 	}

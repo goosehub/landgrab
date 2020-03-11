@@ -327,6 +327,10 @@ class Game extends CI_Controller {
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');
         }
+
+        if ((int)$industry_key === CAPITOL_INDUSTRY_KEY) {
+            $this->game_model->remove_capitol($account['id']);
+        }
         $this->game_model->update_tile_industry($tile_id, $industry_key);
         api_response();
     }

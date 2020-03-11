@@ -18,11 +18,9 @@ HIGH PRIORITY
     finish todo
     remove during updating markers
     custom icon for bases
-    enlist spawn validation
     enlist select UI
     settlement and industry select UI
 MEDIUM PRIORITY
-    capitol reassign logic
     population
         Set on found, upgrade
         Increase in cron
@@ -57,6 +55,7 @@ MEDIUM PRIORITY
     selling
         the whole system
     hide resources in responses before discovered
+    enlist spawn validation
 LOW PRIORITY
     new player full map random start
     add tips
@@ -106,25 +105,29 @@ Corruption
     Oligarchy Corruption = 40%
     Autocracy Corruption = 60%
 
-Support (Democracy numbers)
+Support
     Maxes out at 100(200 for socialism?)
     Following does not stack
     Moving: 1 Support
-    Landgrab: 4 support
-    Attack Unit: 8 support
-    Capture Town: 12 support
-    Capture City: 16 support
-    Capture Metro: 20 support
-    Socialism Spawn Unit: 20 support
-    Declare War: 30 support
+    Landgrab: 4/2/2 support
+    Attack Unit: 8/4/2 support
+    Capture Town: 12/6/3 support
+    Capture City: 16/8/4 support
+    Capture Metro: 20/10/5 support
+    Socialism Spawn Unit: 50 support
+    Declare War: 50 support
     Passing Laws: 50 support
+    Moving Capitol: 100 Support
 
 Unit Battle Logic
     Infantry have 3/4 chance of victory against Commandos
     Commandos have 3/4 chance of victory against Tanks
     Tanks have 3/4 chance of victory against Infantry
     All have 3/4 chance of victory against Navy
-    When on ocean, all units becomes Navy and have equal chances
+    On ocean, all units becomes Navy
+    Mountains get double defensive bonus
+    Tundra get double defensive bonus
+    Barren gets double offensive bonus
     Towns get double defensive bonus
     Cities get triple defensive bonus
     Metros get quadruple defensive bonus
