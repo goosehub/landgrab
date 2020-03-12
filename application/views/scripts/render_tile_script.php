@@ -109,7 +109,7 @@
     }
     function tile_population()
     {
-        $('#tile_population').html(current_tile.population);
+        $('#tile_population').html(current_tile.population ? current_tile.population : '--');
     }
     function tile_gdp()
     {

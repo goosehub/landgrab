@@ -30,21 +30,27 @@
   <?php if ($account) { ?>
     <div class="government_parent menu_element btn-group">
       <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
-        Government <strong class="cash_span text-success">
-          (
-          <span class="text-primary">271</span>
+        <strong>Government</strong>
+        <strong class="cash_span text-success">
+          <span class="text-primary">
+            <span id="menu_supply_tiles"></span>
+          </span>
           |
-          <span class="text-success">$4,120M</span>
+          <span class="text-success">
+            <span id="menu_supply_cash"></span>M
+          </span>
           |
-          <span class="text-warning">78%</span>
-          )
+          <span class="text-warning">
+            <span id="menu_supply_support"></span>%
+          </span>
         </strong>
         <span class="caret"></span>
       </button>
     </div>
     <div class="diplomacy_parent menu_element btn-group">
       <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button" title="Trade, War, Peace">
-        Diplomacy <strong class="diplomacy_unread_count text-danger">(3)</strong>
+        <strong>Diplomacy</strong>
+        <strong class="diplomacy_unread_count text-danger">(3)</strong>
         <span class="caret"></span>
       </button>
     </div>

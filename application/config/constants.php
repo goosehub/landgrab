@@ -79,7 +79,7 @@ define('DEFAULT_IDEOLOGY', 1);
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 30 * 1000);
-define('ACCOUNT_UPDATE_INTERVAL_MS', 60 * 1000);
+define('ACCOUNT_UPDATE_INTERVAL_MS', 30 * 1000);
 define('LEADERBOARD_UPDATE_INTERVAL_M', 10);
 
 // Marketing

@@ -172,6 +172,7 @@
 				'account_key' => $account['id'],
 				'settlement_key' => TOWN_KEY,
 				'industry_key' => CAPITOL_INDUSTRY_KEY,
+				'population' => $this->settlements[TOWN_KEY - 1]['base_population'],
 				'unit_key' => INFANTRY_KEY,
 				'unit_owner_key' => $account['id'],
 				'unit_owner_color' => $account['color'],
