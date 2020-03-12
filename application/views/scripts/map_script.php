@@ -137,6 +137,12 @@
     marker.setVisible(visible);
   }
 
+  function update_visibility_of_markers() {
+    set_marker_set_visibility(resource_markers, resource_toggle);
+    set_marker_set_visibility(settlement_markers, settlement_toggle);
+    set_marker_set_visibility(unit_markers, unit_toggle);
+  }
+
   function set_map() {
     map = new google.maps.Map(document.getElementById('map'), {
       // Zoom on tile if set as parameter
@@ -305,9 +311,7 @@
       ; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
     } ?>
 
-    set_marker_set_visibility(resource_markers, resource_toggle);
-    set_marker_set_visibility(settlement_markers, settlement_toggle);
-    set_marker_set_visibility(unit_markers, unit_toggle);
+    update_visibility_of_markers();
   }
 
   // Declare square called by performance sensitive loop
@@ -430,6 +434,7 @@
         // unit_markers.push(set_unit_icon(new_tile.unit_key, new_tile.terrain_key.unit_key, account.color, new_tile.lat, new_tile.lng));
       }
     }
+    update_visibility_of_markers();
     return true;
   }
 
