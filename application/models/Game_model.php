@@ -136,6 +136,7 @@
 			$data = array(
 				'industry_key' => $industry_key,
 				'is_capitol' => (int)$industry_key === CAPITOL_INDUSTRY_KEY,
+				'is_base' => (int)$industry_key === BASE_INDUSTRY_KEY,
 			);
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
@@ -197,7 +198,7 @@
 			$this->db->where('lng', $tile['lng']);
 			$this->db->update('tile', $data);
 		}
-		function put_unit_on_square($tile, $account, $unit_key) {
+		function put_unit_on_tile($tile, $account, $unit_key) {
 			$data = array(
 				'unit_key' => $unit_key,
 				'unit_owner_key' => $account['id'],

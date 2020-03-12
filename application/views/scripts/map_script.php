@@ -181,18 +181,21 @@
   }
 
   function set_resource_icon(resource_id, lat, lng) {
-    return set_marker_icon(`${base_url}/resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
+    return set_marker_icon(`${base_url}resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
   }
 
-  function set_capitol_icon(lat, lng) {
-    return set_marker_icon(`${base_url}/resources/icons/capitol.png`, lat, lng, false);
+  function set_industry_icon(industry_slug, lat, lng) {
+    return set_marker_icon(`${base_url}resources/icons/industries/${industry_slug}.png`, lat, lng, false);
   }
 
-  function set_settlement_icon(settlement_id, is_capitol, lat, lng) {
+  function set_settlement_icon(settlement_id, is_capitol, is_base, lat, lng) {
     if (is_capitol) {
-      return set_capitol_icon(lat, lng);
+      return set_industry_icon('capitol', lat, lng);
     }
-    return set_marker_icon(`${base_url}/resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
+    if (is_base) {
+      return set_industry_icon('base', lat, lng);
+    }
+    return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
   }
 
   // Uses http://www.googlemapsmarkers.com/
@@ -288,7 +291,7 @@
         resource_markers.push(set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) { ?>
-        settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
       <?php }
       if ($tile['unit_key']) { ?>
         unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
@@ -417,10 +420,10 @@
       }
       // @TODO Remove settlement_markers logic needed
       if (new_tile.settlement_key) {
-        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.lat, new_tile.lng));
+        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng));
       }
       if (new_tile.is_capitol){
-        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.lat, new_tile.lng));
+        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng));
       }
       // @TODO Remove unit_markers logic needed
       if (new_tile.unit_key) {

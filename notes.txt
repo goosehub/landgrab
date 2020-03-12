@@ -17,7 +17,6 @@ industry for reduced corruption?
 HIGH PRIORITY
     finish todo
     remove during updating markers
-    custom icon for bases
     enlist select UI
     settlement and industry select UI
 MEDIUM PRIORITY
@@ -52,6 +51,7 @@ MEDIUM PRIORITY
         corruption
         socialism
         require support to pass laws
+        laws can only be passed once an hour
     selling
         the whole system
     hide resources in responses before discovered
@@ -99,24 +99,22 @@ UPDATE tile SET terrian_key = 6;
     Mechanics
 ==========================================================================================
 
-Corruption
-    Each 10 land tiles increases corruption by 1 percent
-    Democracy Corruption = 20%
-    Oligarchy Corruption = 40%
-    Autocracy Corruption = 60%
+Power Structure
+    Democracy Corruption at 20%, 2 support per minute
+    Oligarchy Corruption at 40%, 4 support per minute
+    Autocracy Corruption at 60%, 5 support per minute
 
 Support
-    Maxes out at 100(200 for socialism?)
+    Maxes out at 100(200 for Socialism?)
     Following does not stack
     Moving: 1 Support
-    Landgrab: 4/2/2 support
-    Attack Unit: 8/4/2 support
-    Capture Town: 12/6/3 support
-    Capture City: 16/8/4 support
-    Capture Metro: 20/10/5 support
-    Socialism Spawn Unit: 50 support
-    Declare War: 50 support
-    Passing Laws: 50 support
+    Capture Land: 5 Support
+    Capture Town: 10 Support
+    Capture City: 20 Support
+    Capture Metro: 30 Support
+    Socialism Spawn Unit: 50 Support
+    Declare War: 50 Support
+    Passing Laws: 50 Support
     Moving Capitol: 100 Support
 
 Unit Battle Logic
@@ -134,7 +132,7 @@ Unit Battle Logic
 
 Budget Rates
     Tax (Support) = Cash as Percent of GDP
-    Max support minus for each percent?
+    Affects rate of support increase, can become negative
 
 ==========================================================================================
     Closet

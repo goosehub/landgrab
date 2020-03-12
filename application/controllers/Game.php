@@ -218,7 +218,7 @@ class Game extends CI_Controller {
             return true;
         }
         if ($tile['unit_key']) {
-            api_error_response('square_is_occupied', 'There is already a friendly unit on this square');
+            api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
         }
         return true;
     }
@@ -245,11 +245,10 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
             $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-            // $this->game_model->increment_account_supply($account['id'], POPULATION_KEY);
         }
         else if ($this->can_move_to($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
-            $this->game_model->put_unit_on_square($tile, $account, $previous_tile['unit_key']);
+            $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
         }
         $data['tile'] = $tile;
         api_response($data);
@@ -309,6 +308,7 @@ class Game extends CI_Controller {
             api_error_response('auth', 'Tile is not yours');
         }
         $this->game_model->update_tile_settlement($tile_id, $settlement_key);
+        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[$settlement_key]['base_population']);
         api_response();
     }
 
@@ -348,14 +348,16 @@ class Game extends CI_Controller {
         $tile_id = $this->input->post('tile_id');
         $tile = $this->game_model->get_tile_by_id($tile_id);
         if ($tile['unit_key']) {
-            api_error_response('square_is_occupied', 'There is already a friendly unit on this square');
+            api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+        }
+        if (!(int)$tile['is_capitol'] && !(int)$tile['is_base']) {
+            api_error_response('tile_is_not_allowed_to_spawn', 'This tile must be a capitol or base');
         }
         // @TODO
-        // Validate capitol or base
         // Validate money/support needed exists
         // Take money
         $account = $this->get_this_full_account($tile['world_key'], true);
-        $this->game_model->put_unit_on_square($tile, $account, $unit_id);
+        $this->game_model->put_unit_on_tile($tile, $account, $unit_id);
         api_response();
     }
 

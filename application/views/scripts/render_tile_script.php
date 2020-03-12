@@ -139,7 +139,7 @@
     function enlist_select()
     {
         $('#enlist_select, #enlist_disabled, #enlist_enabled').hide();
-        if (parseInt(current_tile.is_capitol)) {
+        if (parseInt(current_tile.is_capitol) || parseInt(current_tile.is_base)) {
             $('#enlist_select').show();
             if (current_tile.unit_key) {
                 $('#enlist_disabled').show();

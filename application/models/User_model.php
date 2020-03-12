@@ -173,6 +173,13 @@
     }
     function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
     {
+        $this->update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait);
+        $this->update_account_tile_colors($account_id, $color);
+        $this->update_account_unit_colors($account_id, $color);
+        return true;
+    }
+    function update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
+    {
         $data = array(
             'color' => $color,
             'nation_name' => $nation_name,
@@ -181,21 +188,24 @@
         );
         $this->db->where('id', $account_id);
         $this->db->update('account', $data);
-
+    }
+    function update_account_tile_colors($account_id, $color)
+    {
         $data = array(
             'color' => $color,
             'modified' => date('Y-m-d H:i:s', time())
         );
         $this->db->where('account_key', $account_id);
         $this->db->update('tile', $data);
-
+    }
+    function update_account_unit_colors($account_id, $color)
+    {
         $data = array(
             'unit_owner_color' => $color,
             'modified' => date('Y-m-d H:i:s', time())
         );
         $this->db->where('unit_owner_key', $account_id);
         $this->db->update('tile', $data);
-        return true;
     }
     function update_account_tutorial($account_id, $tutorial)
     {
