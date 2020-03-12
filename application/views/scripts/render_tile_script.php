@@ -169,7 +169,6 @@
     function tile_first_claim_invalid_ocean()
     {
         if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.terrain_key == <?= OCEAN_KEY ?>) {
-            $('#tile_first_claim_invalid_ocean').show();
             return true;
         }
         return false;
@@ -177,7 +176,6 @@
     function tile_first_claim_invalid_incorporated()
     {
         if (account && account['supplies']['tiles']['amount'] < 1 && settlement_is_incorporated(current_tile.settlement_key)) {
-            $('#tile_first_claim_invalid_incorporated').show();
             return true;
         }
         return false;
@@ -188,12 +186,12 @@
         $('#tile_first_claim_invalid_ocean').hide();
         $('#tile_first_claim').hide();
         if (tile_first_claim_invalid_ocean()) {
-            return;
+            $('#tile_first_claim_invalid_ocean').show();
         }
-        if (tile_first_claim_invalid_incorporated()) {
-            return;
+        else if (tile_first_claim_invalid_incorporated()) {
+            $('#tile_first_claim_invalid_incorporated').show();
         }
-        if (account && account['supplies']['tiles']['amount'] < 1) {
+        else if (account && account['supplies']['tiles']['amount'] < 1) {
             $('#tile_first_claim').show();
         }
     }

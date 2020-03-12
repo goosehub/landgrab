@@ -74,6 +74,7 @@ GOING LIVE
     tutorial based on todo list
     5 worlds with clever names
     account migration
+    reset cron
     social
         reddit update post
 NO PRIORITY
@@ -82,7 +83,6 @@ NO PRIORITY
     list of current wars
     pollution mechanic
     custom google map color styling
-    reset
     score
     wiki
     nuke

@@ -189,10 +189,10 @@
   }
 
   function set_settlement_icon(settlement_id, is_capitol, is_base, lat, lng) {
-    if (is_capitol) {
+    if (parseInt(is_capitol)) {
       return set_industry_icon('capitol', lat, lng);
     }
-    if (is_base) {
+    if (parseInt(is_base)) {
       return set_industry_icon('base', lat, lng);
     }
     return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
@@ -425,9 +425,9 @@
       if (new_tile.is_capitol){
         settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng));
       }
-      // @TODO Remove unit_markers logic needed
       if (new_tile.unit_key) {
-        // unit_markers.push(set_unit_icon(new_tile.unit_key, account.color, new_tile.lat, new_tile.lng));
+        // Re-enable when removing markers on update exists
+        // unit_markers.push(set_unit_icon(new_tile.unit_key, new_tile.terrain_key.unit_key, account.color, new_tile.lat, new_tile.lng));
       }
     }
     return true;
@@ -565,22 +565,7 @@
     $('.center_block').hide();
 
     unhighlight_all_squares();
-    tile = get_tile(lat, lng, world_key, function(response) {
-      current_tile = response;
-      highlight_single_square(current_tile.id);
-      render_tile_window();
-    });
-  }
-
-  function get_tile(lat, lng, world_key, callback) {
-    let data = {
-      lat: lat,
-      lng: lng,
-      world_key: world_key
-    };
-    ajax_post('game/get_tile', data, function(response) {
-      callback(response);
-    });
+    render_tile(lat, lng);
   }
 
 </script>

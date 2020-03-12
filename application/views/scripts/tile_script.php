@@ -101,7 +101,17 @@
             };
             ajax_post('game/do_first_claim', data, function(response) {
                 get_map_update();
+                account['supplies']['tiles']['amount'] = 1;
+                render_tile(current_tile.lat, current_tile.lng)
             });
+        });
+    }
+
+    function render_tile(lat, lng) {
+        tile = get_tile(lat, lng, world_key, function(response) {
+          current_tile = response;
+          highlight_single_square(current_tile.id);
+          render_tile_window();
         });
     }
 
@@ -125,6 +135,17 @@
                 let lng = current_tile.lng;
                 set_unit_icon(unit_id, terrain_key, unit_owner_color, lat, lng);
             });
+        });
+    }
+
+    function get_tile(lat, lng, world_key, callback) {
+        let data = {
+            lat: lat,
+            lng: lng,
+            world_key: world_key
+        };
+        ajax_post('game/get_tile', data, function(response) {
+            callback(response);
         });
     }
 

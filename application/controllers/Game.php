@@ -170,7 +170,7 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
-        $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
+        $tile = $this->game_model->get_tile($lat, $lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key'], true);
         if (!$this->first_claim_validation($account, $tile)) {
             api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
