@@ -171,7 +171,7 @@
                 } ?>
 
                 <div class="government_supply parent">
-                    <label class="text-primary">
+                    <label class="text-primary" title="<?php echo $supply['meta']; ?>">
                         <?php echo $supply['label']; ?>
                         <?php if ($supply['can_sell']) { ?>
                         <span class="text-success">

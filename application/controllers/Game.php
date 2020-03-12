@@ -308,7 +308,6 @@ class Game extends CI_Controller {
             api_error_response('auth', 'Tile is not yours');
         }
         $this->game_model->update_tile_settlement($tile_id, $settlement_key);
-        $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[$settlement_key]['base_population']);
         api_response();
     }
 

@@ -109,12 +109,7 @@
     }
     function tile_population()
     {
-        if (current_tile.settlement_key) {
-            $('#tile_population').html(settlements[current_tile.settlement_key  - 1]['base_population'] + 'K');
-        }
-        else {
-            $('#tile_population').html('--');
-        }
+        $('#tile_population').html(current_tile.population);
     }
     function tile_gdp()
     {
@@ -131,9 +126,6 @@
         if (current_tile.unit_key) {
             $('#tile_unit').html(unit_labels[current_tile.unit_key]);
             $('#tile_unit_parent').show();
-        }
-        else {
-            $('#tile_population').html('--');
         }
     }
     function enlist_select()
