@@ -7,12 +7,16 @@
   if (account) {
     get_account_update();
     setInterval(function() {
-      get_account_update();
+      if (!active_requests['account_update']) {
+        get_account_update();
+      }
     }, account_update_interval_ms);
   }
 
   setInterval(function() {
-    get_map_update();
+    if (!active_requests['map_update']) {
+      get_map_update();
+    }
   }, map_update_interval_ms);
 
   function initMap() {
@@ -356,7 +360,7 @@
     ajax_get('game/get_this_full_account/' + world_key, function(response) {
       account = response;
       update_supplies(account.supplies);
-    });
+    }, 'account_update');
   }
 
   function update_supplies(supplies) {
@@ -390,7 +394,7 @@
       if ($('#tile_block').is(':visible')) {
         highlight_single_square(current_tile.id);
       }
-    });
+    }, 'map_update');
   }
 
   function pass_new_laws() {

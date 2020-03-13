@@ -8,7 +8,10 @@
     }
 
     // Abstract simple ajax calls
-    function ajax_post(url, data, callback) {
+    function ajax_post(url, data, callback, request_name = false) {
+        if (request_name) {
+            active_requests[request_name] = true;
+        }
         $.ajax({
             url: base_url + url,
             type: 'POST',
@@ -28,12 +31,17 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 console.error(xhr.status);
                 console.error(thrownError);
+            },
+            complete: function(data) {
+                if (request_name) {
+                    active_requests[request_name] = false;
+                }
             }
         });
     }
 
     // Abstract simple ajax calls
-    function ajax_get(url, callback) {
+    function ajax_get(url, callback, request_name = false) {
         $.ajax({
             url: base_url + url,
             type: 'GET',
@@ -52,6 +60,11 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 console.error(xhr.status);
                 console.error(thrownError);
+            },
+            complete: function(data) {
+                if (request_name) {
+                    active_requests[request_name] = false;
+                }
             }
         });
     }

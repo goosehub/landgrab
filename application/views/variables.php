@@ -29,6 +29,7 @@
     let grid_toggle = <?php echo DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
     let stroke_color = '<?= STROKE_COLOR; ?>';
     let attack_key_pressed = false;
+    let active_requests = [];
     let keys = new Array();
     const navy_character = '<?= NAVY_CHARACTER; ?>';
     const navy_color = '<?= NAVY_COLOR; ?>';
