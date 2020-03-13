@@ -12,13 +12,14 @@ industry for reduced corruption?
 
 is money too directly only useful for military?
 
+settlement militia defense
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
     finish todo
-    remove during updating markers
     enlist select UI
     settlement and industry select UI
 MEDIUM PRIORITY

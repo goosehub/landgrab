@@ -125,7 +125,7 @@
   }
 
   function set_marker_set_visibility(marker_set, visible) {
-    for (i = 0; i < marker_set.length; i++) {
+    for (var i in marker_set) {
       set_marker_visibility(marker_set[i], visible);
     }
   }
@@ -294,13 +294,13 @@
       $terrain_color = $this->game_model->get_tile_terrain_color($tile);
       $border_color = $this->game_model->get_tile_border_color($tile);
       if ($tile['resource_key']) { ?>
-        resource_markers.push(set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) { ?>
-        settlement_markers.push(set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers.push(set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>));
+        unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       ?>z(<?=
         $tile['id'] . ',' .
@@ -420,23 +420,35 @@
         fillColor: fill_color,
         borders_fillColor: border_color,
       });
+      disable_markers_on_tile(new_tile.id);
       if (new_tile.resource_key) {
-        resource_markers.push(set_resource_icon(new_tile.resource_key, new_tile.lat, new_tile.lng));
+        resource_markers[new_tile.id] = set_resource_icon(new_tile.resource_key, new_tile.lat, new_tile.lng);
       }
       // @TODO Remove settlement_markers logic needed
       if (new_tile.settlement_key) {
-        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng));
+        settlement_markers[new_tile.id] = set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng);
       }
       if (new_tile.is_capitol){
-        settlement_markers.push(set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng));
+        settlement_markers[new_tile.id] = set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng);
       }
       if (new_tile.unit_key) {
-        // Re-enable when removing markers on update exists
-        // unit_markers.push(set_unit_icon(new_tile.unit_key, new_tile.terrain_key.unit_key, account.color, new_tile.lat, new_tile.lng));
+        unit_markers[new_tile.id] = set_unit_icon(new_tile.unit_key, new_tile.terrain_key.unit_key, account.color, new_tile.lat, new_tile.lng);
       }
     }
     update_visibility_of_markers();
     return true;
+  }
+
+  function disable_markers_on_tile(tile_id) {
+    if (resource_markers[tile_id]) {
+      resource_markers[tile_id].setMap(null);
+    }
+    if (settlement_markers[tile_id]) {
+      settlement_markers[tile_id].setMap(null);
+    }
+    if (unit_markers[tile_id]) {
+      unit_markers[tile_id].setMap(null);
+    }
   }
 
   function update_tile_terrain(lng, lat, world_key, type, callback) {
@@ -539,7 +551,7 @@
   }
 
   function no_marker_at_square(lat, lng) {
-    for (let i = 0; i < unit_markers.length; i++) {
+    for (var i in unit_markers) {
       if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
         return false;
       }
