@@ -409,10 +409,10 @@
       let new_tile = new_tiles[i];
       new_tile.lat = parseInt(new_tile.lat);
       new_tile.lng = parseInt(new_tile.lng);
-      new_tile.is_capitol = parseInt(new_tile.is_capitol);
-      new_tile.resource_key = parseInt(new_tile.resource_key);
-      new_tile.settlement_key = parseInt(new_tile.settlement_key);
-      new_tile.unit_key = parseInt(new_tile.unit_key);
+      new_tile.is_capitol = new_tile.is_capitol ? parseInt(new_tile.is_capitol) : null;
+      new_tile.resource_key = new_tile.resource_key ? parseInt(new_tile.resource_key) : null;
+      new_tile.settlement_key = new_tile.settlement_key ? parseInt(new_tile.settlement_key) : null;
+      new_tile.unit_key = new_tile.unit_key ? parseInt(new_tile.unit_key) : null;
       border_color = get_tile_border_color(new_tile);
       fill_color = border_toggle ? border_color : tiles[new_tile['id']].fillColor;
       // Update settlement markers
@@ -444,11 +444,11 @@
     }
   }
   function update_tile_settlement_marker(tile) {
-    if (has_settlement_icon(tile) && settlement_markers[tile.id]) {
+    if (needs_settlement_icon(tile) && settlement_markers[tile.id]) {
       settlement_markers[tile.id].setMap(null);
       settlement_markers.splice(tile.id, 1);
     }
-    if (has_settlement_icon(tile)) {
+    if (needs_settlement_icon(tile)) {
       settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.is_capitol, tile.is_base, tile.lat, tile.lng);
     }
     else if (settlement_markers[tile.id]) {
@@ -457,6 +457,9 @@
     }
   }
   function update_tile_unit_marker(tile) {
+    if (unit_markers[tile.id] && unit_markers[tile.id].unit.unit_id === tile.unit_key) {
+      return;
+    }
     if (tile.unit_key && unit_markers[tile.id]) {
       unit_markers[tile.id].setMap(null);
       unit_markers.splice(tile.id, 1);
@@ -469,7 +472,7 @@
       unit_markers.splice(tile.id, 1);
     }
   }
-  function has_settlement_icon(tile) {
+  function needs_settlement_icon(tile) {
     return incorporated_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
 
@@ -552,9 +555,12 @@
     let allowed_move_to_new_position = false;
     let lat = position_lat_lng_lower(end_lat, end_lng)[0];
     let lng = position_lat_lng_lower(end_lat, end_lng)[1];
+    let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
+    let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
     if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_marker_at_square(lat, lng)) {
       unit_markers.splice(marker.tile_id, 1);
-      unit_markers[marker.tile_id] = marker;
+      unit_markers[end_tile_id] = marker;
+      unit_markers[end_tile_id].tile_id = end_tile_id;
       allowed_move_to_new_position = true;
     }
     else {

@@ -133,7 +133,7 @@
                 let unit_owner_color = account.color;
                 let lat = current_tile.lat;
                 let lng = current_tile.lng;
-                set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_color, lat, lng);
+                unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_color, lat, lng);
             });
         });
     }
