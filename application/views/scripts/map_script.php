@@ -186,29 +186,29 @@
     });
   }
 
-  function set_resource_icon(resource_id, lat, lng) {
-    return set_marker_icon(`${base_url}resources/icons/natural_resources/${resource_id}.png`, lat, lng, false);
+  function set_resource_icon(resource_id, tile_id, lat, lng) {
+    return set_marker_icon(`${base_url}resources/icons/natural_resources/${resource_id}.png`, tile_id, lat, lng, false);
   }
 
-  function set_industry_icon(industry_slug, lat, lng) {
-    return set_marker_icon(`${base_url}resources/icons/industries/${industry_slug}.png`, lat, lng, false);
+  function set_industry_icon(industry_slug, tile_id, lat, lng) {
+    return set_marker_icon(`${base_url}resources/icons/industries/${industry_slug}.png`, tile_id, lat, lng, false);
   }
 
-  function set_settlement_icon(settlement_id, is_capitol, is_base, lat, lng) {
+  function set_settlement_icon(settlement_id, tile_id, is_capitol, is_base, lat, lng) {
     if (parseInt(is_capitol)) {
-      return set_industry_icon('capitol', lat, lng);
+      return set_industry_icon('capitol', tile_id, lat, lng);
     }
     if (parseInt(is_base)) {
-      return set_industry_icon('base', lat, lng);
+      return set_industry_icon('base', tile_id, lat, lng);
     }
-    return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, lat, lng, false);
+    return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, tile_id, lat, lng, false);
   }
 
   // Uses http://www.googlemapsmarkers.com/
   // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
   // Becomes
   // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
-  function set_unit_icon(unit_id, terrain_key, unit_owner_color, lat, lng) {
+  function set_unit_icon(unit_id, tile_id, terrain_key, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
     let character = unit_types[unit_id - 1].character;
     let unit_color = unit_types[unit_id - 1].color;
@@ -223,7 +223,7 @@
       unit_color: unit_color,
       unit_owner_color: unit_owner_color,
     }
-    return set_marker_icon(path, lat, lng, unit);
+    return set_marker_icon(path, tile_id, lat, lng, unit);
   }
 
   function update_unit_icon(marker, tile) {
@@ -244,7 +244,7 @@
     return `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${stroke_color}/${second_stroke_color}`;
   }
 
-  function set_marker_icon(path, lat, lng, unit) {
+  function set_marker_icon(path, tile_id, lat, lng, unit) {
     let draggable = false;
     let title = '';
     let this_icon = {
@@ -271,6 +271,7 @@
       draggable:draggable,
       icon: this_icon,
       unit: unit,
+      tile_id: tile_id,
       title: title,
     });
     marker.setMap(map);
@@ -294,13 +295,13 @@
       $terrain_color = $this->game_model->get_tile_terrain_color($tile);
       $border_color = $this->game_model->get_tile_border_color($tile);
       if ($tile['resource_key']) { ?>
-        resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+        resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['id'] ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
-      if ($this->game_model->tile_is_incorporated($tile['settlement_key'])) { ?>
-        settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+      if ($this->game_model->tile_is_incorporated($tile['settlement_key']) || $tile['is_capitol'] || $tile['is_base']) { ?>
+        settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['id']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+        unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['id']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       ?>z(<?=
         $tile['id'] . ',' .
@@ -420,35 +421,56 @@
         fillColor: fill_color,
         borders_fillColor: border_color,
       });
-      disable_markers_on_tile(new_tile.id);
-      if (new_tile.resource_key) {
-        resource_markers[new_tile.id] = set_resource_icon(new_tile.resource_key, new_tile.lat, new_tile.lng);
-      }
-      // @TODO Remove settlement_markers logic needed
-      if (new_tile.settlement_key) {
-        settlement_markers[new_tile.id] = set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng);
-      }
-      if (new_tile.is_capitol){
-        settlement_markers[new_tile.id] = set_settlement_icon(new_tile.settlement_key, new_tile.is_capitol, new_tile.is_base, new_tile.lat, new_tile.lng);
-      }
-      if (new_tile.unit_key) {
-        unit_markers[new_tile.id] = set_unit_icon(new_tile.unit_key, new_tile.terrain_key.unit_key, account.color, new_tile.lat, new_tile.lng);
-      }
+
+      update_tile_resource_marker(new_tile);
+      update_tile_settlement_marker(new_tile);
+      update_tile_unit_marker(new_tile);
     }
     update_visibility_of_markers();
     return true;
   }
 
-  function disable_markers_on_tile(tile_id) {
-    if (resource_markers[tile_id]) {
-      resource_markers[tile_id].setMap(null);
+  function update_tile_resource_marker(tile) {
+    if (tile.resource_key && resource_markers[tile.id]) {
+      resource_markers[tile.id].setMap(null);
+      resource_markers.splice(tile.id, 1);
     }
-    if (settlement_markers[tile_id]) {
-      settlement_markers[tile_id].setMap(null);
+    if (tile.resource_key) {
+      resource_markers[tile.id] = set_resource_icon(tile.resource_key, tile.id, tile.lat, tile.lng);
     }
-    if (unit_markers[tile_id]) {
-      unit_markers[tile_id].setMap(null);
+    else if (resource_markers[tile.id]) {
+      resource_markers[tile.id].setMap(null);
+      resource_markers.splice(tile.id, 1);
     }
+  }
+  function update_tile_settlement_marker(tile) {
+    if (has_settlement_icon(tile) && settlement_markers[tile.id]) {
+      settlement_markers[tile.id].setMap(null);
+      settlement_markers.splice(tile.id, 1);
+    }
+    if (has_settlement_icon(tile)) {
+      settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.is_capitol, tile.is_base, tile.lat, tile.lng);
+    }
+    else if (settlement_markers[tile.id]) {
+      settlement_markers[tile.id].setMap(null);
+      settlement_markers.splice(tile.id, 1);
+    }
+  }
+  function update_tile_unit_marker(tile) {
+    if (tile.unit_key && unit_markers[tile.id]) {
+      unit_markers[tile.id].setMap(null);
+      unit_markers.splice(tile.id, 1);
+    }
+    if (tile.unit_key) {
+      unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
+    }
+    else if (unit_markers[tile.id]) {
+      unit_markers[tile.id].setMap(null);
+      unit_markers.splice(tile.id, 1);
+    }
+  }
+  function has_settlement_icon(tile) {
+    return incorporated_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
 
   function update_tile_terrain(lng, lat, world_key, type, callback) {
@@ -531,6 +553,8 @@
     let lat = position_lat_lng_lower(end_lat, end_lng)[0];
     let lng = position_lat_lng_lower(end_lat, end_lng)[1];
     if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_marker_at_square(lat, lng)) {
+      unit_markers.splice(marker.tile_id, 1);
+      unit_markers[marker.tile_id] = marker;
       allowed_move_to_new_position = true;
     }
     else {

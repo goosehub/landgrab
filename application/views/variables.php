@@ -17,6 +17,7 @@
     let resource_markers = [];
     let unit_markers = [];
     let settlement_markers = [];
+    let incorporated_array = [<?php echo TOWN_KEY; ?>, <?php echo CITY_KEY; ?>, <?php echo METRO_KEY; ?>];
     let map_update_interval_ms = <?php echo MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?php echo ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?php echo UNIT_VALID_SQUARE_COLOR; ?>';
