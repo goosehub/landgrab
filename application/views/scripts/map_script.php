@@ -14,9 +14,7 @@
   }
 
   setInterval(function() {
-    if (!active_requests['map_update']) {
-      get_map_update();
-    }
+    get_map_update();
   }, map_update_interval_ms);
 
   function initMap() {
@@ -376,6 +374,9 @@
   }
 
   function get_map_update() {
+    if (active_requests['map_update']) {
+      return;
+    }
     ajax_get('game/update_world/' + world_key, function(response) {
       // Check for refresh signal from server 
       if (response['refresh']) {
@@ -400,8 +401,7 @@
   function pass_new_laws() {
     $('#pass_new_laws_button').click(function(event) {
       ajax_get('game/laws_form', function(response) {
-        // Do update, don't think this is needed though?
-        // get_map_update();
+        get_map_update();
       });
     });
   }
@@ -461,19 +461,26 @@
     }
   }
   function update_tile_unit_marker(tile) {
-    if (unit_markers[tile.id] && unit_markers[tile.id].unit.unit_id === tile.unit_key) {
-      return;
+    // Tile does not have unit and map does not have unit
+    if (!tile.unit_key && !unit_markers[tile.id]) {
     }
-    if (tile.unit_key && unit_markers[tile.id]) {
+    // Tile has unit and map has unit and unit is the same
+    else if (tile.unit_key && unit_markers[tile.id] && parseInt(unit_markers[tile.id].unit.unit_id) === parseInt(tile.unit_key)) {
+    }
+    // Tile has unit and map has unit and unit is not the same
+    else if (tile.unit_key && unit_markers[tile.id] && parseInt(unit_markers[tile.id].unit.unit_id) !== parseInt(tile.unit_key)) {
       unit_markers[tile.id].setMap(null);
       unit_markers.splice(tile.id, 1);
-    }
-    if (tile.unit_key) {
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
     }
-    else if (unit_markers[tile.id]) {
+    // Tile does not have unit and map has unit
+    else if (!tile.unit_key && unit_markers[tile.id]) {
       unit_markers[tile.id].setMap(null);
       unit_markers.splice(tile.id, 1);
+    }
+    // Tile has unit and map does not have unit and unit is not current account (because own new units should only happen from user action)
+    else if (tile.unit_key && !unit_markers[tile.id] && tile.unit_owner_key != account.id) {
+      unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
     }
   }
   function needs_settlement_icon(tile) {
