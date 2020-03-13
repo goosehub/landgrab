@@ -29,14 +29,15 @@ Class cron_model extends CI_Model
 	}
 	function resource_distribute($resource) {
 		$this->db->group_start();
-		if ($resource['spawns_in_barren']) {
+		// Light bias against barren
+		if ($resource['spawns_in_barren'] && mt_rand(0,10) > 3) {
 			$this->db->where('terrain_key', BARREN_KEY);
 		}
 		if ($resource['spawns_in_mountain']) {
 			$this->db->or_where('terrain_key', MOUNTAIN_KEY);
 		}
-		// Bias against tundra
-		if ($resource['spawns_in_tundra'] && mt_rand(0,10) > 3) {
+		// Strong bias against tundra
+		if ($resource['spawns_in_tundra'] && mt_rand(0,10) > 6) {
 			$this->db->or_where('terrain_key', TUNDRA_KEY);
 		}
 		if ($resource['spawns_in_coastal']) {
