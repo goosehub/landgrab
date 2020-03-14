@@ -123,7 +123,7 @@
             <div id="settlement_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="text-primary"><strong>City</strong></div>
+                        <div class="text-primary"><strong id="select_settlement_header">City</strong></div>
                     </div>
                     <div class="col-md-6">
                         <div id="settlement_confirm" class="btn btn-action form-control">
@@ -185,17 +185,17 @@
             <div id="industry_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="text-action"><strong>Automotive</strong></div>
-                        <div>
-                            <label class="select_industry_label">Settlement:</label>
-                            <span id="select_industry_settlement" class="text-primary">City or Larger</span>
-                        </div>
+                        <div class="text-action"><strong id="select_industry_header">Automotive</strong></div>
                     </div>
                     <div class="col-md-6">
                         <div id="industry_confirm" class="btn btn-action form-control">
                             Establish
                         </div>
                     </div>
+                </div>
+                <div>
+                    <label class="select_industry_label">Settlement:</label>
+                    <span id="select_industry_settlement" class="text-primary">City or Larger</span>
                 </div>
                 <div>
                     <label class="select_industry_label">Terrain:</label>

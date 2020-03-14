@@ -22,8 +22,8 @@
         enlist_select();
         settlement_select();
         industry_select();
-        settlement_extended_info();
-        industry_extended_info();
+        handle_select_settlement();
+        handle_select_industry();
     }
     function tile_name()
     {
@@ -171,16 +171,6 @@
             $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
         }
     }
-    function settlement_extended_info()
-    {
-        $('#settlement_extended_info').hide();
-        $('#settlement_extended_info').show();
-    }
-    function industry_extended_info()
-    {
-        $('#industry_extended_info').hide();
-        $('#industry_extended_info').show();
-    }
     function tile_register_plea()
     {
         $('#tile_register_plea').hide();
@@ -216,5 +206,44 @@
         else if (account && account['supplies']['tiles']['amount'] < 1) {
             $('#tile_first_claim').show();
         }
+    }
+    function handle_select_settlement() {
+        $('.set_settlement_button').click(function(){
+            let settlement_key = $(this).data('id');
+            let settlement = settlements.find(obj => {
+                console.log(obj);
+                return obj.id == settlement_key
+            })
+            console.log(settlement);
+            console.log(settlement.label);
+            $('#select_settlement_header').html(settlement.label);
+            // @todo
+            return;
+            $('#select_settlement_pop').html('--');
+            $('#select_settlement_defensive_bonus').html('--');
+            $('#select_settlement_terrain').html('--');
+            $('#select_settlement_input').html('--');
+            $('#select_settlement_output').html('--');
+        });
+    }
+
+    function handle_select_industry() {
+        $('.set_industry_button').click(function(){
+            let industry_key = $(this).data('id');
+            let industry = industries.find(obj => {
+                console.log(obj);
+                return obj.id == industry_key
+            })
+            console.log(industry);
+            console.log(industry.label);
+            $('#select_industry_header').html(industry.label);
+            // @todo
+            return;
+            $('#select_industry_settlement').html('--');
+            $('#select_industry_terrain').html('--');
+            $('#select_industry_gdp').html('--');
+            $('#select_industry_input').html('--');
+            $('#select_industry_output').html('--');
+        });
     }
 </script>
