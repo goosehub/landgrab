@@ -142,9 +142,9 @@
     }
     function enlist_select()
     {
-        $('#enlist_select, #enlist_disabled, #enlist_enabled').hide();
+        $('#tab_select_enlist, #enlist_select, #enlist_disabled, #enlist_enabled').hide();
         if (parseInt(current_tile.is_capitol) || parseInt(current_tile.is_base)) {
-            $('#enlist_select').show();
+            $('#tab_select_enlist, #enlist_select').show();
             if (current_tile.unit_key) {
                 $('#enlist_disabled').show();
             }
@@ -155,19 +155,19 @@
     }
     function settlement_select()
     {
-        $('#settlement_select').hide();
+        $('#tab_select_settle, #settlement_select').hide();
         $('.set_settlement_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id']) {
-            $('#settlement_select').show();
+            $('#tab_select_settle, #settlement_select').show();
             $('.set_settlement_button[data-id=' + current_tile.settlement_key + ']').addClass('btn-default').addClass('btn-primary');
         }
     }
     function industry_select()
     {
-        $('#industry_select').hide();
+        $('#tab_select_industry, #industry_select').hide();
         $('.set_industry_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id'] && settlement_is_incorporated(current_tile.settlement_key)) {
-            $('#industry_select').show();
+            $('#tab_select_industry, #industry_select').show();
             $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
         }
     }

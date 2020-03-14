@@ -98,104 +98,138 @@
             </strong>
         </p>
     </div>
-    <div id="enlist_select">
-        <hr>
-        <div id="enlist_disabled">
-            <p>
-                <strong class="text-danger">
-                    Move Current Unit To Enlist A New Unit
-                </strong>
-            </p>
-        </div>
-        <div id="enlist_enabled">
-            <p>
-                <strong class="text-danger">
-                    Enlist
-                </strong>
-            </p>
-            <ul class="enlist_button">
-                <button class="enlist_unit_button btn btn-success form-control" data-id="<?= INFANTRY_KEY; ?>">Infantry ($<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M)</button>
-                <button class="enlist_unit_button btn btn-danger form-control" data-id="<?= TANKS_KEY; ?>">Tanks ($<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M)</button>
-                <button class="enlist_unit_button btn btn-warning form-control" data-id="<?= COMMANDOS_KEY; ?>">Commandos ($<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M)</button>
-            </ul>
-        </div>
+    <div id="tile_select_select">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" id="tab_select_settle" class="active">
+                <a href="#settle" aria-controls="home" role="tab" data-toggle="tab">
+                    <button class="tile_tab_button btn btn-success form-control">Settle</button>
+                </a>
+            </li>
+            <li role="presentation" id="tab_select_industry">
+                <a href="#industry" aria-controls="home" role="tab" data-toggle="tab">
+                    <button class="tile_tab_button btn btn-primary form-control">Industry</button>
+                </a>
+            </li>
+            <li role="presentation" id="tab_select_enlist">
+                <a href="#enlist" aria-controls="home" role="tab" data-toggle="tab">
+                    <button class="tile_tab_button btn btn-danger form-control">Enlist</button>
+                </a>
+            </li>
+        </ul>
     </div>
-    <div id="settlement_extended_info" class="well">
-        <strong>City</strong>
-        <p>Population: 1,000K</p>
-        <p>3X Defensive Bonus</p>
-        <p>Allows Industry</p>
-        <p>Allowed on all terrain</p>
-        <div id="settlement_confirm" class="btn btn-action">
-            Settle
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="settle">
+            <div id="settlement_extended_info" class="well">
+                <div class="text-primary">City</div>
+                <div>Population: 1,000K</div>
+                <div>3X Defensive Bonus</div>
+                <div>Allows Industry</div>
+                <div>Allowed on all terrain</div>
+                <div id="settlement_confirm" class="btn btn-action">
+                    Settle
+                </div>
+            </div>
+            <div id="settlement_select">
+                <div class="row">
+                    <?php $current_category_id = 0;
+                    foreach ($this->settlements as $key => $settlement) {
+                        if ($settlement['id'] == UNCLAIMED_KEY) {
+                            continue;
+                        }
+                        if ($current_category_id !== $settlement['category_id']) {
+                            $current_category_id = $settlement['category_id'];
+                            ?>
+                            <div class="col-md-3">
+                                <label><?php echo $this->settlement_category_labels[$settlement['category_id']]; ?></label>
+                            </div>
+                            <div class="col-md-9">
+                            <?php 
+                        } ?>
+                        <button id="set_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
+                            <?php echo $settlement['label']; ?>
+                        </button>
+                        <?php if (!isset($this->settlements[$key + 1]) || $current_category_id !== $this->settlements[$key + 1]['category_id']) {
+                            ?>
+                            </div>
+                            <?php 
+                        }
+                    ?>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="settlement_select">
-        <hr>
-        <h3>Select Setttlement</h3>
-        <div class="row">
-            <?php $current_category_id = 0;
-            foreach ($this->settlements as $key => $settlement) {
-                if ($settlement['id'] == UNCLAIMED_KEY) {
-                    continue;
-                }
-                if ($current_category_id !== $settlement['category_id']) {
-                    $current_category_id = $settlement['category_id'];
+        <div role="tabpanel" class="tab-pane" id="industry">
+            <div id="industry_extended_info" class="well">
+                <div class="text-primary">Automotive</div>
+                <div>Size Required: City</div>
+                <div>Tile Required: Any</div>
+                <div>Requires: Aluminum, Steel, Electronics, Chemicals, Engineering</div>
+                <div>Produces: Automotive</div>
+                <div>GDP: $1M/100K</div>
+                <div id="industry_confirm" class="btn btn-action">
+                    Establish
+                </div>
+            </div>
+            <div id="industry_select">
+                <div class="row">
+                    <?php $current_category_id = 0;
+                    foreach ($this->industries as $key => $industry) {
+                        if ($current_category_id !== $industry['category_id']) {
+                            $current_category_id = $industry['category_id'];
+                            ?>
+                            <div class="col-md-3">
+                                <label><?php echo $this->industry_category_labels[$industry['category_id']]; ?></label>
+                            </div>
+                            <div class="col-md-9">
+                            <?php 
+                        } ?>
+                        <button id="set_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
+                            <?php echo $industry['label']; ?>
+                        </button>
+                        <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {
+                            ?>
+                            </div>
+                            <?php 
+                        }
                     ?>
-                    <div class="col-md-3">
-                        <label><?php echo $this->settlement_category_labels[$settlement['category_id']]; ?></label>
-                    </div>
-                    <div class="col-md-9">
-                    <?php 
-                } ?>
-                <button id="set_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
-                    <?php echo $settlement['label']; ?>
-                </button>
-                <?php if (!isset($this->settlements[$key + 1]) || $current_category_id !== $this->settlements[$key + 1]['category_id']) {
-                    ?>
-                    </div>
-                    <?php 
-                }
-            ?>
-            <?php } ?>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
-    </div>
-    <div id="industry_extended_info" class="well">
-        <strong>Automotive</strong>
-        <p>Size Required: City</p>
-        <p>Tile Required: Any</p>
-        <p>Requires: Aluminum, Steel, Electronics, Chemicals, Engineering</p>
-        <p>Produces: Automotive</p>
-        <p>GDP: $1M/100K</p>
-        <div id="industry_confirm" class="btn btn-action">
-            Establish
-        </div>
-    </div>
-    <div id="industry_select">
-        <hr>
-        <h3>Select Industry</h3>
-        <div class="row">
-            <?php $current_category_id = 0;
-            foreach ($this->industries as $key => $industry) {
-                if ($current_category_id !== $industry['category_id']) {
-                    $current_category_id = $industry['category_id'];
-                    ?>
-                    <div class="col-md-3">
-                        <label><?php echo $this->industry_category_labels[$industry['category_id']]; ?></label>
-                    </div>
-                    <div class="col-md-9">
-                    <?php 
-                } ?>
-                <button id="set_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
-                    <?php echo $industry['label']; ?>
-                </button>
-                <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {
-                    ?>
-                    </div>
-                    <?php 
-                }
-            ?>
-            <?php } ?>
+        <div role="tabpanel" class="tab-pane" id="enlist">
+            <div id="enlist_select">
+                <div id="enlist_disabled">
+                    <p>
+                        <strong class="text-danger">
+                            Move Current Unit To Enlist A New Unit
+                        </strong>
+                    </p>
+                </div>
+                <div id="enlist_enabled">
+                    <br>
+                    <br>
+                    <ul class="enlist_button">
+                        <button class="enlist_unit_button btn btn-success" data-id="<?= INFANTRY_KEY; ?>">
+                            Infantry
+                            <span class="badge">
+                                $<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M
+                            </span>
+                        </button>
+                        <button class="enlist_unit_button btn btn-danger" data-id="<?= TANKS_KEY; ?>">
+                            Tanks
+                            <span class="badge">
+                                $<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M
+                            </span>
+                        </button>
+                        <button class="enlist_unit_button btn btn-warning" data-id="<?= COMMANDOS_KEY; ?>">
+                            Commandos
+                            <span class="badge">
+                                $<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M
+                            </span>
+                        </button>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
