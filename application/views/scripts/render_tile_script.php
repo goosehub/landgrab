@@ -2,25 +2,26 @@
     function render_tile_window() {
         $('#tile_block').show();
 
-        tile_name(current_tile);
-        tile_desc(current_tile);
-        tile_coord_link(current_tile);
-        tile_owner_info(current_tile);
-        tile_owner_username(current_tile);
-        tile_owner_country_name(current_tile);
-        tile_terrain(current_tile);
-        tile_resource_icon(current_tile);
-        tile_resource(current_tile);
-        tile_settlement_label(current_tile);
-        tile_industry_label(current_tile);
-        tile_population(current_tile);
-        tile_gdp(current_tile);
-        tile_register_plea(current_tile);
-        tile_first_claim(current_tile);
-        tile_unit(current_tile);
-        enlist_select(current_tile);
-        settlement_select(current_tile);
-        industry_select(current_tile);
+        tile_name();
+        tile_desc();
+        tile_coord_link();
+        tile_owner_info();
+        tile_owner_username();
+        tile_owner_country_name();
+        tile_terrain();
+        tile_resource_icon();
+        tile_resource();
+        tile_settlement_label();
+        tile_industry_label();
+        tile_population();
+        tile_gdp();
+        tile_register_plea();
+        tile_first_claim();
+        tile_unit();
+        tile_defensive_bonus();
+        enlist_select();
+        settlement_select();
+        industry_select();
     }
     function tile_name()
     {
@@ -126,6 +127,15 @@
         if (current_tile.unit_key) {
             $('#tile_unit').html(unit_labels[current_tile.unit_key]);
             $('#tile_unit_parent').show();
+        }
+    }
+    function tile_defensive_bonus()
+    {
+        $('#tile_defensive_bonus_parent').hide();
+        let defensive_bonus = get_defensive_bonus_of_tile(current_tile);
+        if (defensive_bonus !== 1) {
+            $('#tile_defensive_bonus').html(defensive_bonus + 'X');
+            $('#tile_defensive_bonus_parent').show();
         }
     }
     function enlist_select()

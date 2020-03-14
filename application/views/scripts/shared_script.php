@@ -109,6 +109,31 @@
     {
         return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
     }
+
+    function get_defensive_bonus_of_tile(tile)
+    {
+        let defensive_bonus = 1;
+        if (tile.terrain_key == tundra_key) {
+            defensive_bonus += tundra_defensive_bonus;
+        }
+        if (tile.terrain_key == mountain_key) {
+            defensive_bonus += mountain_defensive_bonus;
+        }
+        if (tile.terrain_key == barren_key) {
+            defensive_bonus += barren_defensive_bonus;
+        }
+        if (tile.settlement_key == town_key) {
+            defensive_bonus += town_defensive_bonus;
+        }
+        if (tile.settlement_key == city_key) {
+            defensive_bonus += city_defensive_bonus;
+        }
+        if (tile.settlement_key == metro_key) {
+            defensive_bonus += metro_defensive_bonus;
+        }
+        return defensive_bonus;
+    }
+
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
         return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');

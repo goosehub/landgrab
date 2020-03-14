@@ -48,6 +48,10 @@
                 <labe>Army:</labe>
                 <span id="tile_unit" class="text-primary pull-right"></span>
             </p>
+            <p id="tile_defensive_bonus_parent" class="tile_block_info_line">
+                <labe>Defensive Bonus:</labe>
+                <span id="tile_defensive_bonus" class="text-action pull-right"></span>
+            </p>
         </div>
         <div class="col-md-6">
             <p id="tile_desc"></p>
