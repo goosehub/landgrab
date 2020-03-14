@@ -22,6 +22,8 @@
         enlist_select();
         settlement_select();
         industry_select();
+        settlement_extended_info();
+        industry_extended_info();
     }
     function tile_name()
     {
@@ -168,6 +170,16 @@
             $('#industry_select').show();
             $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
         }
+    }
+    function settlement_extended_info()
+    {
+        $('#settlement_extended_info').hide();
+        $('#settlement_extended_info').show();
+    }
+    function industry_extended_info()
+    {
+        $('#industry_extended_info').hide();
+        $('#industry_extended_info').show();
     }
     function tile_register_plea()
     {

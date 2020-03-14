@@ -100,6 +100,18 @@ html, body {
 .menu_element .active {
   filter: brightness(85%);
 }
+.badge.menu_supply_tiles_badge {
+  background-color: #428bca;
+}
+.badge.menu_supply_cash_badge {
+  background-color: #3c763d;
+}
+.badge.menu_supply_support_badge {
+  background-color: #8a6d3b;
+}
+.badge.diplomacy_unread_count {
+  background-color: #d2322d;
+}
 #tile_resource_icon {
   height: 24px;
   width: auto;

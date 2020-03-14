@@ -120,6 +120,16 @@
             </ul>
         </div>
     </div>
+    <div id="settlement_extended_info" class="well">
+        <strong>City</strong>
+        <p>Population: 1,000K</p>
+        <p>3X Defensive Bonus</p>
+        <p>Allows Industry</p>
+        <p>Allowed on all terrain</p>
+        <div id="settlement_confirm" class="btn btn-action">
+            Settle
+        </div>
+    </div>
     <div id="settlement_select">
         <hr>
         <h3>Select Setttlement</h3>
@@ -148,6 +158,17 @@
                 }
             ?>
             <?php } ?>
+        </div>
+    </div>
+    <div id="industry_extended_info" class="well">
+        <strong>Automotive</strong>
+        <p>Size Required: City</p>
+        <p>Tile Required: Any</p>
+        <p>Requires: Aluminum, Steel, Electronics, Chemicals, Engineering</p>
+        <p>Produces: Automotive</p>
+        <p>GDP: $1M/100K</p>
+        <div id="industry_confirm" class="btn btn-action">
+            Establish
         </div>
     </div>
     <div id="industry_select">

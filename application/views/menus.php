@@ -31,26 +31,26 @@
     <div class="government_parent menu_element btn-group">
       <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
         <strong>Government</strong>
-        <strong class="cash_span text-success">
-          <span class="text-primary">
+        <span class="badges">
+          <span class="badge menu_supply_tiles_badge">
             <span id="menu_supply_tiles"></span>
           </span>
           |
-          <span class="text-success">
-            <span id="menu_supply_cash"></span>M
+          <span class="badge menu_supply_cash_badge">
+            $<span id="menu_supply_cash"></span>M
           </span>
           |
-          <span class="text-warning">
+          <span class="badge menu_supply_support_badge">
             <span id="menu_supply_support"></span>%
           </span>
-        </strong>
+        </span>
         <span class="caret"></span>
       </button>
     </div>
     <div class="diplomacy_parent menu_element btn-group">
       <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button" title="Trade, War, Peace">
         <strong>Diplomacy</strong>
-        <strong class="diplomacy_unread_count text-danger">(3)</strong>
+        <strong class="diplomacy_unread_count badge">3</strong>
         <span class="caret"></span>
       </button>
     </div>
