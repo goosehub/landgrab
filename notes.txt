@@ -104,6 +104,13 @@ UPDATE tile SET terrian_key = 6;
     Mechanics
 ==========================================================================================
 
+Hourly Cron Sequence
+    Pay for settlements
+    Pay for industry
+    Receive settlements output
+    Receive industry output
+    Use up auto used supplies
+
 Power Structure
     Democracy Corruption at 20%, 2 support per minute
     Oligarchy Corruption at 40%, 4 support per minute

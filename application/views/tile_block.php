@@ -100,9 +100,9 @@
     </div>
     <div id="tile_select_select">
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" id="tab_select_settle" class="active">
+            <li role="presentation" id="tab_select_settle">
                 <a href="#settle" aria-controls="home" role="tab" data-toggle="tab">
-                    <button class="tile_tab_button btn btn-success form-control">Settle</button>
+                    <button class="tile_tab_button btn btn-success form-control">Settlement</button>
                 </a>
             </li>
             <li role="presentation" id="tab_select_industry">
@@ -112,21 +112,44 @@
             </li>
             <li role="presentation" id="tab_select_enlist">
                 <a href="#enlist" aria-controls="home" role="tab" data-toggle="tab">
-                    <button class="tile_tab_button btn btn-danger form-control">Enlist</button>
+                    <button class="tile_tab_button btn btn-danger form-control">Enlistment</button>
                 </a>
             </li>
         </ul>
     </div>
+    <br>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="settle">
+        <div role="tabpanel" class="tab-pane" id="settle">
             <div id="settlement_extended_info" class="well">
-                <div class="text-primary">City</div>
-                <div>Population: 1,000K</div>
-                <div>3X Defensive Bonus</div>
-                <div>Allows Industry</div>
-                <div>Allowed on all terrain</div>
-                <div id="settlement_confirm" class="btn btn-action">
-                    Settle
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-primary"><strong>City</strong></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="settlement_confirm" class="btn btn-action form-control">
+                            Establish
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="select_settlement_label">Population:</label>
+                    <span id="select_settlement_pop" class="text-primary">1,000K</span>
+                </div>
+                <div>
+                    <label class="select_settlement_defensive_label">Defensive Bonus:</label>
+                    <span id="select_settlement_defensive_bonus" class="text-primary">3X</span>
+                </div>
+                <div>
+                    <label class="select_settlement_label">Terrain:</label>
+                    <span id="select_settlement_terrain" class="text-primary">Fertile, Costal, Barren, Mountain</span>
+                </div>
+                <div>
+                    <label class="select_settlement_label">Requires:</label>
+                    <span id="select_settlement_input" class="text-primary">5 energy, 3 food, 1 merchandise, 1 cash crop</span>
+                </div>
+                <div>
+                    <label class="select_settlement_label">Produces:</label>
+                    <span id="select_settlement_output" class="text-primary">Industry</span>
                 </div>
             </div>
             <div id="settlement_select">
@@ -160,14 +183,35 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="industry">
             <div id="industry_extended_info" class="well">
-                <div class="text-primary">Automotive</div>
-                <div>Size Required: City</div>
-                <div>Tile Required: Any</div>
-                <div>Requires: Aluminum, Steel, Electronics, Chemicals, Engineering</div>
-                <div>Produces: Automotive</div>
-                <div>GDP: $1M/100K</div>
-                <div id="industry_confirm" class="btn btn-action">
-                    Establish
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-action"><strong>Automotive</strong></div>
+                        <div>
+                            <label class="select_industry_label">Settlement:</label>
+                            <span id="select_industry_settlement" class="text-primary">City or Larger</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="industry_confirm" class="btn btn-action form-control">
+                            Establish
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="select_industry_label">Terrain:</label>
+                    <span id="select_industry_terrain" class="text-primary">Any</span>
+                </div>
+                <div>
+                    <label class="select_industry_label">GDP:</label>
+                    <span id="select_industry_gdp" class="text-primary">$1M/100K</span>
+                </div>
+                <div>
+                    <label class="select_industry_label">Requires:</label>
+                    <span id="select_industry_input" class="text-primary">Aluminum, Steel, Electronics, Chemicals, Engineering</span>
+                </div>
+                <div>
+                    <label class="select_industry_label">Produces:</label>
+                    <span id="select_industry_output" class="text-primary">Automotive</span>
                 </div>
             </div>
             <div id="industry_select">
@@ -206,8 +250,7 @@
                     </p>
                 </div>
                 <div id="enlist_enabled">
-                    <br>
-                    <br>
+                        <?= generate_popover('Units', 'Thse units have a rock paper scissors mechanism. Infantry are strong against Commandos, Tanks are strong against Infantry, Commandos are strong against Tanks. Units on ocean tiles become navy units, which are weak against all land units.', 'top', 'pull-right'); ?>
                     <ul class="enlist_button">
                         <button class="enlist_unit_button btn btn-success" data-id="<?= INFANTRY_KEY; ?>">
                             Infantry
