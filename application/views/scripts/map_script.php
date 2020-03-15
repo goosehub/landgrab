@@ -453,8 +453,15 @@
 
   function pass_new_laws() {
     $('#pass_new_laws_button').click(function(event) {
-      ajax_get('game/laws_form', function(response) {
+      let data = {
+        world_key: world_key,
+        input_government: $('#input_government').val(),
+        input_tax_rate: $('#input_tax_rate').val(),
+        input_ideology: $('input[name="input_ideology"]:checked').val(),
+      };
+      ajax_post('game/laws_form', data, function(response) {
         get_map_update();
+        get_account_update();
       });
     });
   }

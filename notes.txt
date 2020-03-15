@@ -4,17 +4,13 @@
 
 ask internet how to do a sell mechanic
 
-mechanic for new players to take claimed land without selecting it, making it feel fair to players losing land, and preventing alt snipping
-    if no non tundra land is available
-    randomly generate capitol on non township tile at least 2 squares from capitol
-
-industry for reduced corruption?
+an industry for reduced corruption?
 
 is money too directly only useful for military?
 
 settlement militia defense
-
 balanced diet for population?
+eat through fish, then meat, then fruit, then veggies, then meat
 
 ==========================================================================================
     Goals
@@ -22,26 +18,29 @@ balanced diet for population?
 
 HIGH PRIORITY
     finish todo
-    enlist select UI
-    settlement and industry select UI
 MEDIUM PRIORITY
+    commission icons
     population
-        cron to census population to update supply 
+        cron to increase
+        cron to census population to update supply
         Have it affect GDP
         Reset/Decrease on capture?
         Settlement GDP
     unit system
-        attacks
+        attacking
+        being attacked
         conceal
         allow to see any units on ocean
+    taxes
+        get income
+        have it affect support
+        budget
     settlement system
-        selection
         crons
         use 1 round of supply feed on start
         without supplies, lose support and size
         Capitols immune to insufficient supplies
     industry system
-        selection
         crons
         without supplies, no produciton, UI
         industry without supply
@@ -61,24 +60,18 @@ MEDIUM PRIORITY
         the whole system
     hide resources in responses before discovered
     enlist spawn validation
-    place unit on client map on first claim
 LOW PRIORITY
-    Tweak join modal
-    Population cron to increase
-    new player full map random start
-    add tips
-    capitol and chat shortcut to diplomacy
-    DB indexes
-    ui for pressed buttons
-    feedback when being attacked
-    json leaderboard for every supply
-    commission icons
     implement icons
+    capitol and chat shortcut to diplomacy
+    json leaderboard for every supply
     growing capital increases support
     handle troops inside opp. tile at start of war
     have capitols show laws of nation
     number formatting
 GOING LIVE
+    swal alerts
+    DB indexes
+    Finish tooltips
     beta
     tutorial based on todo list
     5 worlds with clever names
@@ -87,7 +80,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
-    swal alerts
+    new player full map random start
     fix correct_lng for non 2 tile size worlds
     list of current wars
     pollution mechanic

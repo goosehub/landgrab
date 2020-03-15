@@ -62,6 +62,10 @@ html, body {
 .text-is-bold {
   font-weight: bold;
 }
+.btn:active {
+  box-shadow: 1px 1px 1px #666;
+  transition: all 0.3s ease-in-out;
+}
 
 /* Popover Tip */
 .popover_tip {
@@ -246,7 +250,10 @@ html, body {
 .center_block.center_block_small {
   left: 25%;
   width: 50%;
-
+}
+.center_block.center_block_extra_small {
+  left: 33%;
+  width: 33%;
 }
 .budget_info_value {
   float: right;

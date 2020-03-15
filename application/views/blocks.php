@@ -212,7 +212,7 @@
 </div>
 
 <!-- Login Block -->
-<div id="login_block" class="center_block">
+<div id="login_block" class="center_block center_block_extra_small">
     <strong>Login</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
@@ -246,7 +246,7 @@
 </div>
 
 <!-- Join Block -->
-<div id="register_block" class="center_block">
+<div id="register_block" class="center_block center_block_extra_small">
     <strong>Start Playing</strong>
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>

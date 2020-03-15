@@ -105,16 +105,15 @@
     }
     function tile_industry_label()
     {
+        $('#tile_industry_parent').hide();
         if (current_tile.industry_key) {
             $('#tile_industry_label').html(industries[current_tile.industry_key  - 1]['label']);
-        }
-        else {
-            $('#tile_industry_label').html('--');
+            $('#tile_industry_parent').show();
         }
     }
     function tile_population()
     {
-        $('#tile_population').html(current_tile.population ? current_tile.population : '--');
+        $('#tile_population').html(current_tile.population ? current_tile.population : '0');
     }
     function tile_gdp()
     {
@@ -122,7 +121,7 @@
             $('#tile_gdp').html('$' + industries[current_tile.industry_key  - 1]['gdp'] + 'M');
         }
         else {
-            $('#tile_gdp').html('--');
+            $('#tile_gdp').html('$0');
         }
     }
     function tile_unit()

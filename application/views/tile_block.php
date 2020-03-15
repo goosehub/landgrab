@@ -32,7 +32,7 @@
                 <labe>Settlement:</labe>
                 <span id="tile_settlement_label" class="text-primary pull-right"></span>
             </p>
-            <p class="tile_block_info_line">
+            <p id="tile_industry_parent" class="tile_block_info_line">
                 <labe>Industry:</labe>
                 <span id="tile_industry_label" class="text-primary pull-right"></span>
             </p>

@@ -34,7 +34,7 @@
                         <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
                     </div>
                     <div class="col-md-8">
-                        <input type="number" min="0" max="100" required class="form-control" id="tax_rate" name="input_tax_rate" value="<?php echo $account['tax_rate']; ?>">
+                        <input type="number" min="0" max="100" required class="form-control" id="input_tax_rate" name="input_tax_rate" value="<?php echo $account['tax_rate']; ?>">
                     </div>
                 </div>
                 <br>

@@ -26,6 +26,9 @@
     const town_defensive_bonus = <?= TOWN_DEFENSIVE_BONUS; ?>;
     const city_defensive_bonus = <?= CITY_DEFENSIVE_BONUS; ?>;
     const metro_defensive_bonus = <?= METRO_DEFENSIVE_BONUS; ?>;
+    const infantry_key = <?= INFANTRY_KEY; ?>;
+    const tanks_key = <?= TANKS_KEY; ?>;
+    const commandos_key = <?= COMMANDOS_KEY; ?>;
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];
@@ -39,6 +42,7 @@
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?= UNIT_VALID_SQUARE_COLOR; ?>';
     let selected_square_color = '<?= SELECTED_SQUARE_COLOR; ?>';
+    let stroke_weight = <?= STROKE_WEIGHT; ?>;
     let stroke_color = '<?= STROKE_COLOR; ?>';
     let attack_key_pressed = false;
     let active_requests = [];

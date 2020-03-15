@@ -102,9 +102,19 @@
             ajax_post('game/do_first_claim', data, function(response) {
                 get_map_update();
                 account['supplies']['tiles']['amount'] = 1;
-                render_tile(current_tile.lat, current_tile.lng)
+                render_tile(current_tile.lat, current_tile.lng);
+                place_first_unit();
             });
         });
+    }
+
+    function place_first_unit() {
+        let terrain_key = current_tile.terrain_key;
+        let unit_owner_color = account.color;
+        let lat = current_tile.lat;
+        let lng = current_tile.lng;
+        let unit_id = infantry_key;
+        unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_color, lat, lng);
     }
 
     function render_tile(lat, lng) {
