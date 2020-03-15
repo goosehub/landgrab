@@ -17,11 +17,11 @@ eat through fish, then meat, then fruit, then veggies, then meat
 ==========================================================================================
 
 HIGH PRIORITY
-    finish todo
+    icon list
 MEDIUM PRIORITY
     commission icons
     population
-        cron to increase
+        cron to increase populations
         cron to census population to update supply
         Have it affect GDP
         Reset/Decrease on capture?
@@ -30,7 +30,7 @@ MEDIUM PRIORITY
         attacking
         being attacked
         conceal
-        allow to see any units on ocean
+        exclude conceal on ocean
     taxes
         get income
         have it affect support
@@ -63,6 +63,7 @@ MEDIUM PRIORITY
     fix industry tab showing when not an option
 LOW PRIORITY
     implement icons
+    confirmation check icon on some button clicks (pass laws)
     capitol and chat shortcut to diplomacy
     json leaderboard for every supply
     growing capital increases support

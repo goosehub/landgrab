@@ -212,49 +212,67 @@
     function handle_select_settlement() {
         $('.set_settlement_button').click(function(){
             let settlement_key = $(this).data('id');
-            let settlement = settlements.find(obj => {
-                return obj.id == settlement_key
-            });
-            $('#select_settlement_header').html(settlement.label);
-            $('#select_settlement_type').html(get_settlement_type_string(settlement));
-            $('#select_settlement_pop').html(settlement.base_population + 'K');
-            $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
-            $('#select_settlement_defensive_parent').hide();
-            if (get_defensive_bonus_of_settlement_string(settlement.id)) {
-                $('#select_settlement_defensive_bonus').html(get_defensive_bonus_of_settlement_string(settlement.id));
-                $('#select_settlement_defensive_parent').show();
-            }
-            $('#select_settlement_input_parent').hide();
-            if (settlement.input_desc) {
-                $('#select_settlement_input').html(settlement.input_desc);
-                $('#select_settlement_input_parent').show();
-            }
-            let output = settlement.output ? settlement.output.label : 'Nothing';
-            if (settlement_is_township(settlement.id)) {
-                output = 'Industry';
-            }
-            $('#select_settlement_output').html(output);
+            render_settlement_extended(settlement_key);
         });
     }
 
     function handle_select_industry() {
         $('.set_industry_button').click(function(){
             let industry_key = $(this).data('id');
-            let industry = industries.find(obj => {
-                return obj.id == industry_key
-            })
-            $('#select_industry_header').html(industry.label);
-            $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));
-            $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
-            $('#select_industry_gdp').html(industry.gdp);
-            $('#select_industry_input').html(industry_input_string(industry));
-            $('#select_industry_output').html(industry_output_string(industry));
-            $('#select_industry_special_parent').hide();
-            if (industry.meta) {
-                $('#select_industry_special_parent').show();
-                $('#select_industry_special').html(industry.meta);
+            if (industry_key) {
+                render_industry_extended(industry_key);
             }
         });
+    }
+    function render_settlement_extended(settlement_key) {
+        $('industry_extended_info').hide();
+        if (settlement_key == null) {
+            return;
+        }
+        $('settlement_extended_info').show();
+        let settlement = settlements.find(obj => {
+            return obj.id == settlement_key
+        });
+        $('#select_settlement_header').html(settlement.label);
+        $('#select_settlement_type').html(get_settlement_type_string(settlement));
+        $('#select_settlement_pop').html(settlement.base_population + 'K');
+        $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
+        $('#select_settlement_defensive_parent').hide();
+        if (get_defensive_bonus_of_settlement_string(settlement.id)) {
+            $('#select_settlement_defensive_bonus').html(get_defensive_bonus_of_settlement_string(settlement.id));
+            $('#select_settlement_defensive_parent').show();
+        }
+        $('#select_settlement_input_parent').hide();
+        if (settlement.input_desc) {
+            $('#select_settlement_input').html(settlement.input_desc);
+            $('#select_settlement_input_parent').show();
+        }
+        let output = settlement.output ? settlement.output.label : 'Nothing';
+        if (settlement_is_township(settlement.id)) {
+            output = 'Industry';
+        }
+        $('#select_settlement_output').html(output);
+    }
+    function render_industry_extended(industry_key) {
+        $('industry_extended_info').hide();
+        if (industry_key == null) {
+            return;
+        }
+        $('industry_extended_info').show();
+        let industry = industries.find(obj => {
+            return obj.id == industry_key
+        })
+        $('#select_industry_header').html(industry.label);
+        $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));
+        $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
+        $('#select_industry_gdp').html(industry.gdp);
+        $('#select_industry_input').html(industry_input_string(industry));
+        $('#select_industry_output').html(industry_output_string(industry));
+        $('#select_industry_special_parent').hide();
+        if (industry.meta) {
+            $('#select_industry_special_parent').show();
+            $('#select_industry_special').html(industry.meta);
+        }
     }
     function industry_input_string(industry) {
         let input_string = '';

@@ -120,6 +120,8 @@
     function render_tile(lat, lng) {
         tile = get_tile(lat, lng, world_key, function(response) {
           current_tile = response;
+          render_settlement_extended(current_tile.settlement_key);
+          render_industry_extended(current_tile.industry_key);
           highlight_single_square(current_tile.id);
           render_tile_window();
         });

@@ -101,17 +101,17 @@
     <div id="tile_select_select">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" id="tab_select_settle">
-                <a href="#settle" aria-controls="home" role="tab" data-toggle="tab">
+                <a id="settle_tab_button" href="#settle" aria-controls="home" role="tab" data-toggle="tab">
                     <button class="tile_tab_button btn btn-success form-control">Settlement</button>
                 </a>
             </li>
             <li role="presentation" id="tab_select_industry">
-                <a href="#industry" aria-controls="home" role="tab" data-toggle="tab">
+                <a id="industry_tab_button" href="#industry" aria-controls="home" role="tab" data-toggle="tab">
                     <button class="tile_tab_button btn btn-primary form-control">Industry</button>
                 </a>
             </li>
             <li role="presentation" id="tab_select_enlist">
-                <a href="#enlist" aria-controls="home" role="tab" data-toggle="tab">
+                <a id="enlist_tab_button" href="#enlist" aria-controls="home" role="tab" data-toggle="tab">
                     <button class="tile_tab_button btn btn-danger form-control">Enlistment</button>
                 </a>
             </li>
