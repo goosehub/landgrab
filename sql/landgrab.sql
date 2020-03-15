@@ -375,8 +375,8 @@ CREATE TABLE `settlement` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
-  `category_id` int(10) UNSIGNED NOT NULL, -- incorporated, food, materials, energy, cash_crops,
-  `is_incorporated` int(1) NOT NULL,
+  `category_id` int(10) UNSIGNED NOT NULL, -- township, food, materials, energy, cash_crops,
+  `is_township` int(1) NOT NULL,
   `is_food` int(1) NOT NULL,
   `is_material` int(1) NOT NULL,
   `is_energy` int(1) NOT NULL,
@@ -386,7 +386,7 @@ CREATE TABLE `settlement` (
   `is_allowed_on_barren` int(1) NOT NULL,
   `is_allowed_on_mountain` int(1) NOT NULL,
   `is_allowed_on_tundra` int(1) NOT NULL,
-  `population` int(10) UNSIGNED NOT NULL,
+  `base_population` int(10) UNSIGNED NOT NULL,
   `input_desc` varchar(256) NOT NULL,
   `output_desc` varchar(256) NOT NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
@@ -399,7 +399,7 @@ ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 INSERT INTO `settlement` (
   `label`, `slug`, `category_id`,
-  `is_incorporated`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
+  `is_township`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
   `base_population`, `input_desc`, `output_desc`, `output_supply_key`, `output_supply_amount`) VALUES
 ('Unclaimed', 'unclaimed', 1,

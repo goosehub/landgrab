@@ -23,6 +23,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table data for world
+--
+
+INSERT INTO `world` (`id`, `slug`, `tile_size`) 
+VALUES
+(NULL, 'Main', 2);
+
+--
 -- Table structure for table `tile`
 --
 

@@ -299,7 +299,7 @@
       if ($tile['resource_key']) { ?>
         resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['id'] ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
-      if ($this->game_model->tile_is_incorporated($tile['settlement_key']) || $tile['is_capitol'] || $tile['is_base']) { ?>
+      if ($this->game_model->tile_is_township($tile['settlement_key']) || $tile['is_capitol'] || $tile['is_base']) { ?>
         settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['id']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
@@ -484,7 +484,7 @@
     }
   }
   function needs_settlement_icon(tile) {
-    return incorporated_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
+    return township_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
 
   function update_tile_terrain(lng, lat, world_key, type, callback) {

@@ -79,7 +79,7 @@
             </strong>
         </p>
     </div>
-    <div id="tile_first_claim_invalid_incorporated">
+    <div id="tile_first_claim_invalid_township">
         <hr>
         <p>
             <strong class="text-danger">
@@ -123,7 +123,7 @@
             <div id="settlement_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="text-primary"><strong id="select_settlement_header">City</strong></div>
+                        <div class="text-action"><strong id="select_settlement_header"></strong></div>
                     </div>
                     <div class="col-md-6">
                         <div id="settlement_confirm" class="btn btn-action form-control">
@@ -132,24 +132,28 @@
                     </div>
                 </div>
                 <div>
-                    <label class="select_settlement_label">Population:</label>
-                    <span id="select_settlement_pop" class="text-primary">1,000K</span>
+                    <label class="select_settlement_label">Classification:</label>
+                    <span id="select_settlement_type" class="text-primary"></span>
                 </div>
                 <div>
-                    <label class="select_settlement_defensive_label">Defensive Bonus:</label>
-                    <span id="select_settlement_defensive_bonus" class="text-primary">3X</span>
+                    <label class="select_settlement_label">Population:</label>
+                    <span id="select_settlement_pop" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_settlement_label">Terrain:</label>
-                    <span id="select_settlement_terrain" class="text-primary">Fertile, Costal, Barren, Mountain</span>
+                    <span id="select_settlement_terrain" class="text-primary"></span>
                 </div>
-                <div>
+                <div id="select_settlement_defensive_parent">
+                    <label class="select_settlement_defensive_label">Defensive Bonus:</label>
+                    <span id="select_settlement_defensive_bonus" class="text-primary"></span>
+                </div>
+                <div id="select_settlement_input_parent">
                     <label class="select_settlement_label">Requires:</label>
-                    <span id="select_settlement_input" class="text-primary">5 energy, 3 food, 1 merchandise, 1 cash crop</span>
+                    <span id="select_settlement_input" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_settlement_label">Produces:</label>
-                    <span id="select_settlement_output" class="text-primary">Industry</span>
+                    <span id="select_settlement_output" class="text-primary"></span>
                 </div>
             </div>
             <div id="settlement_select">
@@ -185,7 +189,7 @@
             <div id="industry_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="text-action"><strong id="select_industry_header">Automotive</strong></div>
+                        <div class="text-action"><strong id="select_industry_header"></strong></div>
                     </div>
                     <div class="col-md-6">
                         <div id="industry_confirm" class="btn btn-action form-control">
@@ -195,23 +199,23 @@
                 </div>
                 <div>
                     <label class="select_industry_label">Settlement:</label>
-                    <span id="select_industry_settlement" class="text-primary">City or Larger</span>
+                    <span id="select_industry_settlement" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_industry_label">Terrain:</label>
-                    <span id="select_industry_terrain" class="text-primary">Any</span>
+                    <span id="select_industry_terrain" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_industry_label">GDP:</label>
-                    <span id="select_industry_gdp" class="text-primary">$1M/100K</span>
+                    <span id="select_industry_gdp" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_industry_label">Requires:</label>
-                    <span id="select_industry_input" class="text-primary">Aluminum, Steel, Electronics, Chemicals, Engineering</span>
+                    <span id="select_industry_input" class="text-primary"></span>
                 </div>
                 <div>
                     <label class="select_industry_label">Produces:</label>
-                    <span id="select_industry_output" class="text-primary">Automotive</span>
+                    <span id="select_industry_output" class="text-primary"></span>
                 </div>
             </div>
             <div id="industry_select">

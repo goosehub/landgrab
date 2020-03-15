@@ -105,7 +105,7 @@
         });
     }
 
-    function settlement_is_incorporated(settlement_key)
+    function settlement_is_township(settlement_key)
     {
         return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
     }
@@ -122,17 +122,113 @@
         if (tile.terrain_key == barren_key) {
             defensive_bonus += barren_defensive_bonus;
         }
-        if (tile.settlement_key == town_key) {
+        if (tile.terrain_key == town_key) {
             defensive_bonus += town_defensive_bonus;
         }
-        if (tile.settlement_key == city_key) {
+        if (tile.terrain_key == city_key) {
             defensive_bonus += city_defensive_bonus;
         }
-        if (tile.settlement_key == metro_key) {
+        if (tile.terrain_key == metro_key) {
             defensive_bonus += metro_defensive_bonus;
         }
         return defensive_bonus;
     }
+
+    function get_defensive_bonus_of_settlement_string(settlement_key)
+    {
+        if (settlement_key == town_key) {
+            return '+' + town_defensive_bonus;
+        }
+        if (settlement_key == city_key) {
+            return '+' + city_defensive_bonus;
+        }
+        if (settlement_key == metro_key) {
+            return '+' + metro_defensive_bonus;
+        }
+        return false;
+    }
+
+    function get_settlement_terrain_string(settlement)
+    {
+        let string = '';
+        if (settlement.is_allowed_on_fertile == 1 && settlement.is_allowed_on_coastal == 1 && settlement.is_allowed_on_barren == 1 && settlement.is_allowed_on_mountain == 1 && settlement.is_allowed_on_tundra == 1) {
+            return 'Any';
+        }
+        if (settlement.is_allowed_on_fertile == 1) {
+            string += 'Fertile, ';
+        }
+        if (settlement.is_allowed_on_coastal == 1) {
+            string += 'Coastal, ';
+        }
+        if (settlement.is_allowed_on_barren == 1) {
+            string += 'Barren, ';
+        }
+        if (settlement.is_allowed_on_mountain == 1) {
+            string += 'Mountain, ';
+        }
+        if (settlement.is_allowed_on_tundra == 1) {
+            string += 'Tundra, ';
+        }
+        return string.slice(0,-2);
+    }
+
+    function get_settlement_type_string(settlement)
+    {
+        if (settlement.is_township == 1) {
+            return 'Township';
+        }
+        if (settlement.is_food == 1) {
+            return 'Agriculture';
+        }
+        if (settlement.is_material == 1) {
+            return 'Materials';
+        }
+        if (settlement.is_energy == 1) {
+            return 'Energy';
+        }
+        if (settlement.is_cash_crop == 1) {
+            return 'Cash Crops';
+        }
+        return 'Other';
+    }
+
+    function get_industry_settlement_string(minimum_settlement_size)
+    {
+        if (town_key == minimum_settlement_size) {
+            return 'Town or Larger';
+        }
+        if (city_key == minimum_settlement_size) {
+            return 'City Or Larger';
+        }
+        if (metro_key == minimum_settlement_size) {
+            return 'Metro';
+        }
+        return 'Any';
+    }
+
+    function get_industry_terrain_string(required_terrain_key)
+    {
+        if (fertile_key == required_terrain_key) {
+            return 'Fertile';
+        }
+        if (barren_key == required_terrain_key) {
+            return 'Barren';
+        }
+        if (mountain_key == required_terrain_key) {
+            return 'Mountain';
+        }
+        if (tundra_key == required_terrain_key) {
+            return 'Tundra';
+        }
+        if (coastal_key == required_terrain_key) {
+            return 'Coastal';
+        }
+        if (ocean_key == required_terrain_key) {
+            return 'Ocean';
+        }
+        return 'Any';
+    }
+
 
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';

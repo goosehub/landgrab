@@ -162,7 +162,7 @@
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		function tile_is_incorporated($settlement_key)
+		function tile_is_township($settlement_key)
 		{
 			$settlement_key = (int)$settlement_key;
 			return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;

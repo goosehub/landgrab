@@ -1,4 +1,8 @@
 <script>
+
+    handle_select_settlement();
+    handle_select_industry();
+
     function render_tile_window() {
         $('#tile_block').show();
 
@@ -22,8 +26,6 @@
         enlist_select();
         settlement_select();
         industry_select();
-        handle_select_settlement();
-        handle_select_industry();
     }
     function tile_name()
     {
@@ -166,7 +168,7 @@
     {
         $('#tab_select_industry, #industry_select').hide();
         $('.set_industry_button').addClass('btn-default').removeClass('btn-primary');
-        if (account && current_tile.account_key === account['id'] && settlement_is_incorporated(current_tile.settlement_key)) {
+        if (account && current_tile.account_key === account['id'] && settlement_is_township(current_tile.settlement_key)) {
             $('#tab_select_industry, #industry_select').show();
             $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
         }
@@ -185,23 +187,23 @@
         }
         return false;
     }
-    function tile_first_claim_invalid_incorporated()
+    function tile_first_claim_invalid_township()
     {
-        if (account && account['supplies']['tiles']['amount'] < 1 && settlement_is_incorporated(current_tile.settlement_key)) {
+        if (account && account['supplies']['tiles']['amount'] < 1 && settlement_is_township(current_tile.settlement_key)) {
             return true;
         }
         return false;
     }
     function tile_first_claim()
     {
-        $('#tile_first_claim_invalid_incorporated').hide();
+        $('#tile_first_claim_invalid_township').hide();
         $('#tile_first_claim_invalid_ocean').hide();
         $('#tile_first_claim').hide();
         if (tile_first_claim_invalid_ocean()) {
             $('#tile_first_claim_invalid_ocean').show();
         }
-        else if (tile_first_claim_invalid_incorporated()) {
-            $('#tile_first_claim_invalid_incorporated').show();
+        else if (tile_first_claim_invalid_township()) {
+            $('#tile_first_claim_invalid_township').show();
         }
         else if (account && account['supplies']['tiles']['amount'] < 1) {
             $('#tile_first_claim').show();
@@ -211,19 +213,23 @@
         $('.set_settlement_button').click(function(){
             let settlement_key = $(this).data('id');
             let settlement = settlements.find(obj => {
-                console.log(obj);
                 return obj.id == settlement_key
-            })
-            console.log(settlement);
-            console.log(settlement.label);
+            });
             $('#select_settlement_header').html(settlement.label);
-            // @todo
-            return;
-            $('#select_settlement_pop').html('--');
-            $('#select_settlement_defensive_bonus').html('--');
-            $('#select_settlement_terrain').html('--');
-            $('#select_settlement_input').html('--');
-            $('#select_settlement_output').html('--');
+            $('#select_settlement_type').html(get_settlement_type_string(settlement));
+            $('#select_settlement_pop').html(settlement.base_population);
+            $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
+            $('#select_settlement_defensive_parent').hide();
+            if (get_defensive_bonus_of_settlement_string(settlement.id)) {
+                $('#select_settlement_defensive_bonus').html(get_defensive_bonus_of_settlement_string(settlement.id));
+                $('#select_settlement_defensive_parent').show();
+            }
+            $('#select_settlement_input_parent').hide();
+            if (settlement.input_desc) {
+                $('#select_settlement_input').html(settlement.input_desc);
+                $('#select_settlement_input_parent').show();
+            }
+            $('#select_settlement_output').html(settlement.output_desc);
         });
     }
 
@@ -231,19 +237,14 @@
         $('.set_industry_button').click(function(){
             let industry_key = $(this).data('id');
             let industry = industries.find(obj => {
-                console.log(obj);
                 return obj.id == industry_key
             })
-            console.log(industry);
-            console.log(industry.label);
             $('#select_industry_header').html(industry.label);
-            // @todo
-            return;
-            $('#select_industry_settlement').html('--');
-            $('#select_industry_terrain').html('--');
-            $('#select_industry_gdp').html('--');
-            $('#select_industry_input').html('--');
-            $('#select_industry_output').html('--');
+            $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));
+            $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
+            $('#select_industry_gdp').html(industry.gdp);
+            $('#select_industry_input').html(industry.input_desc);
+            $('#select_industry_output').html(industry.output_desc);
         });
     }
 </script>

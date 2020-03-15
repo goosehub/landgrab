@@ -11,7 +11,7 @@
     const town_key = <?= TOWN_KEY; ?>;
     const city_key = <?= CITY_KEY; ?>;
     const metro_key = <?= METRO_KEY; ?>;
-    const incorporated_array = [town_key, city_key, metro_key];
+    const township_array = [town_key, city_key, metro_key];
     const navy_character = '<?= NAVY_CHARACTER; ?>';
     const navy_color = '<?= NAVY_COLOR; ?>';
     const fertile_key = <?= FERTILE_KEY; ?>;
