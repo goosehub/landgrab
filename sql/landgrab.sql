@@ -306,7 +306,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
 (
   1, 'Silver', 'silver',
   TRUE, FALSE, FALSE,
-  15, TRUE, TRUE, TRUE, FALSE
+  10, TRUE, TRUE, TRUE, FALSE
 ),
 (
   2, 'Gold', 'gold',
@@ -327,7 +327,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
 (
   5, 'Coal', 'coal',
   FALSE, TRUE, FALSE,
-  25, TRUE, TRUE, TRUE, FALSE
+  15, TRUE, TRUE, TRUE, FALSE
 ),
 (
   6, 'Gas', 'gas',
@@ -348,7 +348,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
 (
   9, 'Iron', 'iron',
   FALSE, FALSE, TRUE,
-  30, TRUE, TRUE, TRUE, FALSE
+  20, TRUE, TRUE, TRUE, FALSE
 ),
 (
   10, 'Copper', 'copper',

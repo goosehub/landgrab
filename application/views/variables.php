@@ -39,21 +39,25 @@
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?= UNIT_VALID_SQUARE_COLOR; ?>';
     let selected_square_color = '<?= SELECTED_SQUARE_COLOR; ?>';
+    let stroke_color = '<?= STROKE_COLOR; ?>';
+    let attack_key_pressed = false;
+    let active_requests = [];
+    let start_drag_lat = null;
+    let start_drag_lng = null;
+
+    // Toggles
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
     let resource_toggle = <?= DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
     let settlement_toggle = <?= DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;
     let unit_toggle = <?= DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
     let grid_toggle = <?= DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
-    let stroke_color = '<?= STROKE_COLOR; ?>';
-    let attack_key_pressed = false;
-    let active_requests = [];
+
+    // Keys
     let keys = new Array();
     keys['enter'] = 13;
     keys['a'] = 65;
-    let start_drag_lat = null;
-    let start_drag_lng = null;
-    let styledMapType = {};
-    let default_map_style = [{
+
+    const default_map_style = [{
       featureType: "poi.business",
       elementType: "labels",
       stylers: [{
@@ -62,7 +66,7 @@
     }];
 
     // https://snazzymaps.com/style/21658/pirate-map
-    let map_pirate =
+    const map_pirate =
     [
         {
             "featureType": "all",

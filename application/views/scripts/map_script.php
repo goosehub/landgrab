@@ -1,7 +1,7 @@
 <script>
+  use_toggle_cookies();
   pass_new_laws();
   attack_key_listen();
-  enlist_listen();
   map_toggle_listen();
 
   if (account) {
@@ -41,10 +41,9 @@
     $('#border_toggle').click(function(event) {
       $('#border_toggle').removeClass('active');
       border_toggle = !border_toggle;
+      setCookie('border_toggle', border_toggle);
       if (border_toggle) {
         $('#border_toggle').addClass('active');
-      }
-      if (border_toggle) {
         tiles_to_borders();
       }
       else {
@@ -54,6 +53,7 @@
     $('#settlement_toggle').click(function(event) {
       $('#settlement_toggle').removeClass('active');
       settlement_toggle = !settlement_toggle;
+      setCookie('settlement_toggle', settlement_toggle);
       if (settlement_toggle) {
         $('#settlement_toggle').addClass('active');
       }
@@ -62,6 +62,7 @@
     $('#resource_toggle').click(function(event) {
       $('#resource_toggle').removeClass('active');
       resource_toggle = !resource_toggle;
+      setCookie('resource_toggle', resource_toggle);
       if (resource_toggle) {
         $('#resource_toggle').addClass('active');
       }
@@ -70,6 +71,7 @@
     $('#unit_toggle').click(function(event) {
       $('#unit_toggle').removeClass('active');
       unit_toggle = !unit_toggle;
+      setCookie('unit_toggle', unit_toggle);
       if (unit_toggle) {
         $('#unit_toggle').addClass('active');
       }
@@ -78,6 +80,7 @@
     $('#grid_toggle').click(function(event) {
       $('#grid_toggle').removeClass('active');
       grid_toggle = !grid_toggle;
+      setCookie('grid_toggle', grid_toggle);
       if (grid_toggle) {
         $('#grid_toggle').addClass('active');
         tiles_with_grid();
@@ -88,8 +91,52 @@
     });
   }
 
-  function enlist_listen() {
-
+  function use_toggle_cookies() {
+    if (getCookie('border_toggle') != null) {
+      border_toggle = getCookie('border_toggle') === 'true' ? true : false;
+      if (border_toggle) {
+        $('#border_toggle').addClass('active');
+      }
+      else {
+        $('#border_toggle').removeClass('active');
+      }
+    }
+    if (getCookie('resource_toggle') != null) {
+      resource_toggle = getCookie('resource_toggle') === 'true' ? true : false;
+      if (resource_toggle) {
+        $('#resource_toggle').addClass('active');
+      }
+      else {
+        $('#resource_toggle').removeClass('active');
+      }
+    }
+    if (getCookie('settlement_toggle') != null) {
+      settlement_toggle = getCookie('settlement_toggle') === 'true' ? true : false;
+      if (settlement_toggle) {
+        $('#settlement_toggle').addClass('active');
+      }
+      else {
+        $('#settlement_toggle').removeClass('active');
+      }
+    }
+    if (getCookie('unit_toggle') != null) {
+      unit_toggle = getCookie('unit_toggle') === 'true' ? true : false;
+      if (unit_toggle) {
+        $('#unit_toggle').addClass('active');
+      }
+      else {
+        $('#unit_toggle').removeClass('active');
+      }
+    }
+    if (getCookie('grid_toggle') != null) {
+      grid_toggle = getCookie('grid_toggle') === 'true' ? true : false;
+      if (grid_toggle) {
+        $('#grid_toggle').addClass('active');
+      }
+      else {
+        $('#grid_toggle').removeClass('active');
+      }
+    }
   }
 
   function tiles_to_terrain() {
@@ -143,6 +190,12 @@
     set_marker_set_visibility(resource_markers, resource_toggle);
     set_marker_set_visibility(settlement_markers, settlement_toggle);
     set_marker_set_visibility(unit_markers, unit_toggle);
+    if (grid_toggle) {
+      tiles_with_grid();
+    }
+    else {
+      tiles_without_grid();
+    }
   }
 
   function set_map() {
