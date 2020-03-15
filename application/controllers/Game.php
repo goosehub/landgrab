@@ -50,6 +50,7 @@ class Game extends CI_Controller {
         $data['failed_form'] = $this->session->flashdata('failed_form');
         $data['just_registered'] = $this->session->flashdata('just_registered');
 
+        $this->settlements = $this->game_model->merge_settlement_and_supply($this->settlements, $this->supplies);
         $this->industries = $this->game_model->merge_industry_and_supply($this->industries, $this->supplies);
 
         // Load view

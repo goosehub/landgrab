@@ -113,7 +113,8 @@
     }
     function tile_population()
     {
-        $('#tile_population').html(current_tile.population ? current_tile.population : '0');
+        population = current_tile.population ? current_tile.population : '0';
+        $('#tile_population').html(population + 'K');
     }
     function tile_gdp()
     {
@@ -216,7 +217,7 @@
             });
             $('#select_settlement_header').html(settlement.label);
             $('#select_settlement_type').html(get_settlement_type_string(settlement));
-            $('#select_settlement_pop').html(settlement.base_population);
+            $('#select_settlement_pop').html(settlement.base_population + 'K');
             $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
             $('#select_settlement_defensive_parent').hide();
             if (get_defensive_bonus_of_settlement_string(settlement.id)) {
@@ -228,7 +229,11 @@
                 $('#select_settlement_input').html(settlement.input_desc);
                 $('#select_settlement_input_parent').show();
             }
-            $('#select_settlement_output').html(settlement.output_desc);
+            let output = settlement.output ? settlement.output.label : 'Nothing';
+            if (settlement_is_township(settlement.id)) {
+                output = 'Industry';
+            }
+            $('#select_settlement_output').html(output);
         });
     }
 
