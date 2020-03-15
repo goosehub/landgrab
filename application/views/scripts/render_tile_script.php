@@ -242,8 +242,26 @@
             $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));
             $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
             $('#select_industry_gdp').html(industry.gdp);
-            $('#select_industry_input').html(industry.input_desc);
-            $('#select_industry_output').html(industry.output_desc);
+            $('#select_industry_input').html(industry_input_string(industry));
+            $('#select_industry_output').html(industry_output_string(industry));
         });
+    }
+    function industry_input_string(industry) {
+        let input_string = '';
+        for (let i = 0; i < industry.inputs.length; i++) {
+            input = industry.inputs[i];
+            input_string += input.amount + ' ' + input.label + ', ';
+        }
+        if (input_string) {
+            input_string = input_string.substring(0, input_string.length - 2);
+        }
+        return input_string;
+    }
+    function industry_output_string(industry) {
+        let output_string = '';
+        if (industry.output) {
+            output_string = industry.output.amount + ' ' + industry.output.label;
+        }
+        return output_string;
     }
 </script>

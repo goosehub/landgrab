@@ -235,6 +235,30 @@
 		// 
 		// 
 		// 
+		function merge_industry_and_supply($industries, $supplies) {
+	        $supply_industry_lookup = $this->get_all('supply_industry_lookup');
+			foreach ($industries as $key => $industry) {
+				$industries[$key]['inputs'] = [];
+				$industries[$key]['output'] = '';
+				foreach ($supplies as $supply) {
+					if ($industry['output_supply_key'] === $supply['id']) {
+						$supply['amount'] = $industry['output_supply_amount'];
+						$industries[$key]['output'] = $supply;
+					}
+				}
+				foreach ($supply_industry_lookup as $lookup) {
+					if ($industry['id'] === $lookup['industry_key']) {
+						foreach ($supplies as $supply) {
+							if ($supply['id'] === $lookup['supply_key']) {
+								$supply['amount'] = $lookup['amount'];
+								$industries[$key]['inputs'][] = $supply;
+							}
+						}
+					}
+				}
+			}
+			return $industries;
+		}
 	    function get_tile_border_color($tile)
 	    {
 	        $fill_color = "#FFFFFF";

@@ -60,6 +60,7 @@ MEDIUM PRIORITY
         the whole system
     hide resources in responses before discovered
     enlist spawn validation
+    fix industry tab showing when not an option
 LOW PRIORITY
     implement icons
     capitol and chat shortcut to diplomacy
