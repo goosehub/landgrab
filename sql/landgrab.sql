@@ -68,6 +68,7 @@ CREATE TABLE `unit_type` (
 ALTER TABLE `unit_type` ADD PRIMARY KEY (`id`);
 ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `unit_type`;
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`, `desc`) VALUES
 (1, 'Infantry', 3, 50, 'FF0000', 'I',
@@ -149,6 +150,7 @@ CREATE TABLE `supply_industry_lookup` (
 ALTER TABLE `supply_industry_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `supply_industry_lookup`;
 INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
 (4, 7, 1), -- Manufacturing
 (5, 5, 1), -- Timber
@@ -216,6 +218,7 @@ CREATE TABLE `supply` (
 ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `supply`;
 INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `can_sell`, `meta`) VALUES
 (1, 1, 'Cash', 'cash', 'M', TRUE, FALSE, 'This rules everything'),
 (2, 1, 'Support', 'support', '%', FALSE, FALSE, 'Increases every minute depending on government type'),
@@ -272,6 +275,7 @@ CREATE TABLE `terrain` (
 ALTER TABLE `terrain` ADD PRIMARY KEY (`id`);
 ALTER TABLE `terrain` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `terrain`;
 INSERT INTO `terrain` (`id`, `label`, `slug`, `meta`) VALUES
 (1, 'Fertile', 'fertile', ''),
 (2, 'Barren', 'barren', ''),
@@ -298,6 +302,7 @@ CREATE TABLE `resource` (
 ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
 ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `resource`;
 INSERT INTO `resource` (`id`, `label`, `slug`,
   `is_value_resource`, `is_energy_resource`, `is_metal_resource`,
   `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`
@@ -397,6 +402,7 @@ CREATE TABLE `settlement` (
 ALTER TABLE `settlement` ADD PRIMARY KEY (`id`);
 ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `settlement`;
 INSERT INTO `settlement` (
   `label`, `slug`, `category_id`,
   `is_township`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
@@ -529,6 +535,7 @@ CREATE TABLE `industry` (
 ALTER TABLE `industry` ADD PRIMARY KEY (`id`);
 ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
   `id`, `category_id`, `label`, `slug`, `input_slug`, `output_desc`, `minimum_settlement_size`, `required_terrain_key`,
   `output_supply_key`, `output_supply_amount`, `input_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
@@ -613,7 +620,7 @@ INSERT INTO `industry` (
 ),
 -- metro
 (25, 8, 'Financial & Banking', 'financial_banking', 'metro', '', 3, NULL,
-  null, 1, 1, 500, FALSE, ''
+  null, 1, 1, 500, FALSE, 'Having this industry doubles your national GDP'
 ),
 (26, 8, 'Entertainment & Media', 'entertainment_media', 'metro', 'support', 3, NULL,
   2, 30, 1, 100, FALSE, ''

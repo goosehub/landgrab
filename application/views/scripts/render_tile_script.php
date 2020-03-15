@@ -244,6 +244,11 @@
             $('#select_industry_gdp').html(industry.gdp);
             $('#select_industry_input').html(industry_input_string(industry));
             $('#select_industry_output').html(industry_output_string(industry));
+            $('#select_industry_special_parent').hide();
+            if (industry.meta) {
+                $('#select_industry_special_parent').show();
+                $('#select_industry_special').html(industry.meta);
+            }
         });
     }
     function industry_input_string(industry) {

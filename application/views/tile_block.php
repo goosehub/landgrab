@@ -217,6 +217,10 @@
                     <label class="select_industry_label">Produces:</label>
                     <span id="select_industry_output" class="text-primary"></span>
                 </div>
+                <div id="select_industry_special_parent">
+                    <label class="select_industry_label">Special Effect:</label>
+                    <span id="select_industry_special" class="text-primary"></span>
+                </div>
             </div>
             <div id="industry_select">
                 <div class="row">
