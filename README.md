@@ -9,7 +9,7 @@ To set up a local instance
 <ul>
     <li>Place files in webroot with proper permissions</li>
     <li>Configure database connection and token in auth.php</li>
-    <li>Run sql/landgrab.sql, and sql/default.sql as sql commands in database</li>
+    <li>Run sql/landgrab.sql, and sql/world.sql as sql commands in database</li>
     <li>You may need to add your domain under base_url in config/config.php</li>
     <li>You may need to disable HTTPS redirect in config/autoload.php</li>
     <li>Set a cron for <code>* * * * * php -f /ABSOLUTE_PATH_HERE/crons/CRON_NAME_HERE.php</code> for every cron in the crons folder</li>
