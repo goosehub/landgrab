@@ -4,6 +4,30 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
+    function world_resets()
+    {
+        $force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
+        $now = date('Y-m-d H:i:s');
+        $worlds = $this->game_model->get_all('world');
+        foreach ($worlds as $world) {
+            // Check if it's time to run
+            $time_to_reset = parse_crontab($now, $world['crontab']);
+            if (!$time_to_reset && !$force_reset_world_id) {
+                continue;
+            }
+            if ($force_reset_world_id) {
+                if ($force_reset_world_id != $world['id']) {
+                    continue;
+                }
+            }
+            echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
+            // $this->backup();
+            // $this->reset_tiles();
+            // $this->reset_trades();
+            // $this->reset_accounts();
+            $this->regenerate_resources($world['id']);
+        }
+    }
 	function regenerate_resources($world_key)
 	{
 		$this->reset_resources($world_key);
@@ -27,7 +51,8 @@ Class cron_model extends CI_Model
 		);
 		$this->db->update('tile', $data);
 	}
-	function resource_distribute($resource) {
+	function resource_distribute($resource)
+	{
 		$this->db->group_start();
 		// Light bias against barren
 		if ($resource['spawns_in_barren'] && mt_rand(0,10) > BARREN_BIAS) {

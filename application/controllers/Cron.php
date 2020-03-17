@@ -6,64 +6,40 @@ class Cron extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('cron_model', '', TRUE);
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
-        $this->load->model('cron_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
-    }
-
-    public function index($token = false)
-    {
-        $valid = $this->verify_token($token);
-        if (!$valid) { return; }
     }
 
     public function every_minute($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
+        echo 'every_minute CRON - ' . PHP_EOL;
+
+        // $this->cron_model->increase_support();
     }
 
     public function every_hour($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
+        echo 'every_hour CRON - ' . PHP_EOL;
+
+        // $this->cron_model->census_population();
+        // $this->cron_model->update_cache_leaderboards();
+        // $this->cron_model->settlement_run();
+        // $this->cron_model->industry_run();
+        // $this->cron_model->income_run();
+        $this->cron_model->world_resets();
     }
 
     public function every_day($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
-    }
-
-    public function every_reset($token = false, $force_reset_world_id = false)
-    {
-        $valid = $this->verify_token($token);
-        if (!$valid) { return; }
-
-        echo 'Running Cron - ';
-
-        $now = date('Y-m-d H:i:s');
-        $worlds = $this->game_model->get_all('world');
-        foreach ($worlds as $world) {
-            // Check if it's time to run
-            $time_to_reset = parse_crontab($now, $world['crontab']);
-            if (!$time_to_reset && !$force_reset_world_id) {
-                continue;
-            }
-            if ($force_reset_world_id) {
-                if ($force_reset_world_id != $world['id']) {
-                    continue;
-                }
-            }
-
-            echo 'Running for world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
-            // $this->game_model->backup();
-            // $this->game_model->reset_tiles();
-            // $this->game_model->reset_trades();
-            // $this->game_model->reset_accounts();
-            $this->cron_model->regenerate_resources($world['id']);
-        }
+        echo 'every_day CRON - ' . PHP_EOL;
     }
 
     private function verify_token($token = false) {

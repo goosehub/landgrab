@@ -17,7 +17,6 @@ eat through fish, then meat, then fruit, then veggies, then meat
 ==========================================================================================
 
 HIGH PRIORITY
-    icon list
 MEDIUM PRIORITY
     commission icons
     population
@@ -70,19 +69,21 @@ LOW PRIORITY
     handle troops inside opp. tile at start of war
     have capitols show laws of nation
     number formatting
+    tooltip for alliances, rights of passage, etc
 GOING LIVE
     swal alerts
     DB indexes
     Finish tooltips
     beta
     tutorial based on todo list
-    5 worlds with clever names
+    More worlds
     account migration
     reset cron
     terms of use
     social
         reddit update post
 NO PRIORITY
+    generate worlds when all worlds have no free non tundra land
     new player full map random start
     fix correct_lng for non 2 tile size worlds
     list of current wars
@@ -99,7 +100,7 @@ NO PRIORITY
     Code
 ==========================================================================================
 
-
+...
 
 ==========================================================================================
     Mechanics
@@ -151,6 +152,87 @@ Population Increase
 Budget Rates
     Tax (Support) = Cash as Percent of GDP
     Affects rate of support increase, can become negative
+
+==========================================================================================
+    Icons Needed
+==========================================================================================
+
+    potential artists
+https://www.fiverr.com/fernlee/create-a-set-of-10-vector-icons?context_referrer=search_gigs&source=main_banner&ref_ctx_id=97c3d709-7a7a-42ff-b9c9-81ace81390aa&pckg_id=1&pos=1&context_type=auto&funnel=a784619f-d082-461e-a3fd-cf24745cbcb6
+
+    riches resources
+silver - unique shaped bars in dull gray
+gold - unique shaped bars in gold
+platinum - unique shaped bars in shiny silver
+gemstones - bluish white diamond
+    energy resources
+coal - unique shaped rock in black
+gas - gas icon in blue
+oil - pumpjack in white, red, and yellow
+uranium - unique shaped rock in glowing green
+    metals resources
+iron - unique shaped rock in gray
+copper - unique shaped rock in rusty yellow
+zinc - unique shaped rock in dull blue
+aluminum - unique shaped rock in shiny silver
+nickle - unique shaped rock in rusty green
+    special settlements
+town - 3 small suburban type buildings in white and red
+city - 3 tall urban type buildings in  white, red, and blue
+metro - 3 glass skyscrappers in bluish tinted colors (flexible on ideas here)
+capitol - US Supreme Court style building with column in royal yellow
+base - Half oval shaped tarped barracks with tower in brownish green
+
+    settlements
+unclaimed
+uninhabited
+town
+city
+metro
+grain
+fruit
+vegetables
+livestock
+fish
+timber
+fiber
+ore
+biofuel
+solar
+wind
+coffee
+tea
+cannabis
+alcohol
+tobacco
+    industry
+capitol
+federal
+base
+manufacturing
+timber
+textile
+biofuel
+coal
+gas
+petroleum
+nuclear
+chemicals
+steel
+electronics
+port
+machinery
+automotive
+aerospace
+leisure
+resort
+gambling
+university
+software
+healthcare
+financial_banking
+entertainment_media
+engineering_design
 
 ==========================================================================================
     Closet
