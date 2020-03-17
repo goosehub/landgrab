@@ -79,6 +79,7 @@ GOING LIVE
     5 worlds with clever names
     account migration
     reset cron
+    terms of use
     social
         reddit update post
 NO PRIORITY
@@ -191,6 +192,9 @@ Tile considerations
     How it looks from afar when most players use it (Avoiding line terrain tiles)
     Population density (Considering max settlement for the square)
     Overlap between other tiles (coastal mountain, do I want to allow farming on this square?)
+
+Terms of use
+    I do not enforce rules I'm unable to properly enforce.
 
 Live Server Instance
     Change database connection in config/database.php

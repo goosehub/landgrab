@@ -97,9 +97,6 @@ define('ENABLE_FACEBOOK', false);
 // Use for emergencies
 define('MAINTENANCE', false);
 
-// This variable to be changed for live version
-define('CRON_TOKEN', '1234');
-
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

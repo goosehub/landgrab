@@ -225,11 +225,11 @@
         });
     }
     function render_settlement_extended(settlement_key) {
-        $('industry_extended_info').hide();
-        if (settlement_key == null) {
+        $('#settlement_extended_info').hide();
+        if (settlement_key == null || settlement_key == 1) {
             return;
         }
-        $('settlement_extended_info').show();
+        $('#settlement_extended_info').show();
         let settlement = settlements.find(obj => {
             return obj.id == settlement_key
         });
@@ -254,11 +254,11 @@
         $('#select_settlement_output').html(output);
     }
     function render_industry_extended(industry_key) {
-        $('industry_extended_info').hide();
+        $('#industry_extended_info').hide();
         if (industry_key == null) {
             return;
         }
-        $('industry_extended_info').show();
+        $('#industry_extended_info').show();
         let industry = industries.find(obj => {
             return obj.id == industry_key
         })
