@@ -26,9 +26,9 @@ SET time_zone = "+00:00";
 -- Table data for world
 --
 
-INSERT INTO `world` (`id`, `slug`, `tile_size`) 
+INSERT INTO `world` (`id`, `slug`, `tile_size`, `crontab`) 
 VALUES
-(1, 'Main', 2);
+(1, 'Main', 2, '0 * * * *');
 
 -- --------------------------------------------------------
 

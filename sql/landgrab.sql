@@ -21,8 +21,9 @@ DROP TABLE IF EXISTS ip_request;
 
 CREATE TABLE `world` (
   `id` int(10) UNSIGNED NOT NULL,
-  `slug` varchar(126) NOT NULL,
+  `slug` varchar(256) NOT NULL,
   `tile_size` int(4) NOT NULL,
+  `crontab` varchar(256) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);

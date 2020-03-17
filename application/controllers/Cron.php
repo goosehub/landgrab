@@ -36,23 +36,27 @@ class Cron extends CI_Controller {
         if (!$valid) { return; }
     }
 
-    public function every_reset($token = false)
+    public function every_reset($token = false, $force_reset_world_id = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
 
         echo 'Running Cron - ';
 
-        $world_reset_frequency[1] = '* * * * *';
-
         $now = date('Y-m-d H:i:s');
         $worlds = $this->game_model->get_all('world');
         foreach ($worlds as $world) {
             // Check if it's time to run
-            $time_to_reset = parse_crontab($now, $world_reset_frequency[$world['id']]);
-            if (!$time_to_reset) {
+            $time_to_reset = parse_crontab($now, $world['crontab']);
+            if (!$time_to_reset && !$force_reset_world_id) {
                 continue;
             }
+            if ($force_reset_world_id) {
+                if ($force_reset_world_id != $world['id']) {
+                    continue;
+                }
+            }
+
             echo 'Running for world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
             // $this->game_model->backup();
             // $this->game_model->reset_tiles();
@@ -62,7 +66,7 @@ class Cron extends CI_Controller {
         }
     }
 
-    public function verify_token($token = false) {
+    private function verify_token($token = false) {
         if (!$token) {
             $this->load->view('errors/page_not_found');
             return false;
