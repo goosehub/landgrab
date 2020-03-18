@@ -393,6 +393,7 @@ CREATE TABLE `settlement` (
   `is_allowed_on_tundra` int(1) NOT NULL,
   `base_population` int(10) UNSIGNED NOT NULL,
   `input_desc` varchar(256) NOT NULL,
+  `gdp` int(10) UNSIGNED NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
   `output_supply_amount` int(10) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
@@ -406,111 +407,111 @@ INSERT INTO `settlement` (
   `label`, `slug`, `category_id`,
   `is_township`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
-  `base_population`, `input_desc`, `output_supply_key`, `output_supply_amount`) VALUES
+  `base_population`, `input_desc`, `output_supply_key`, `output_supply_amount`, `gdp`) VALUES
 ('Unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  0, '', NULL, NULL
+  0, '', NULL, NULL, 0
 ),
 ('Uninhabited', 'uninhabited', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  0, '', NULL, NULL
+  0, '', NULL, NULL, 0
 ),
 ('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, '1 energy, 1 food', NULL, NULL
+  100, '1 energy, 1 food', NULL, NULL, 5
 ),
 ('City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '5 energy, 3 food, 1 merchandise, 1 cash crop', NULL, NULL
+  1000, '5 energy, 3 food, 1 merchandise, 1 cash crop', NULL, NULL, 10
 ),
 ('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '15 energy, 10 food, 5 merchandise, 3 cash crop', NULL, NULL
+  10000, '15 energy, 10 food, 5 merchandise, 3 cash crop', NULL, NULL, 20
 ),
 ('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 8, 3
+  10, '', 8, 3, 1
 ),
 ('Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 9, 2
+  10, '', 9, 2, 1
 ),
 ('Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 10, 2
+  10, '', 10, 2, 1
 ),
 ('Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 11, 1
+  10, '', 11, 1, 2
 ),
 ('Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 12, 2
+  10, '', 12, 2, 3
 ),
 ('Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 2
+  10, '', 5, 2, 2
 ),
 ('Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 6, 2
+  10, '', 6, 2, 3
 ),
 ('Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, '', 7, 1
+  10, '', 7, 1, 2
 ),
 ('Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 14, 1
+  10, '', 14, 1, 1
 ),
 ('Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, '', 13, 1
+  10, '', 13, 1, 1
 ),
 ('Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, '', 13, 1
+  10, '', 13, 1, 1
 ),
 ('Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 23, 1
+  10, '', 23, 1, 3
 ),
 ('Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 24, 1
+  10, '', 24, 1, 3
 ),
 ('Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 1
+  10, '', 25, 1, 3
 ),
 ('Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 1
+  10, '', 26, 1, 3
 ),
 ('Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 1
+  10, '', 27, 1, 3
 );
 
 CREATE TABLE `industry` (

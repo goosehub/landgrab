@@ -147,6 +147,10 @@
                     <label class="select_settlement_defensive_label">Defensive Bonus:</label>
                     <span id="select_settlement_defensive_bonus" class="text-primary"></span>
                 </div>
+                <div>
+                    <label class="select_settlement_label">GDP:</label>
+                    <span id="select_settlement_gdp" class="text-primary"></span>
+                </div>
                 <div id="select_settlement_input_parent">
                     <label class="select_settlement_label">Requires:</label>
                     <span id="select_settlement_input" class="text-primary"></span>

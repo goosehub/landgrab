@@ -235,6 +235,7 @@
         });
         $('#select_settlement_header').html(settlement.label);
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
+        $('#select_settlement_gdp').html('$' + settlement.gdp + 'M');
         $('#select_settlement_pop').html(settlement.base_population + 'K');
         $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
         $('#select_settlement_defensive_parent').hide();
