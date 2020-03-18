@@ -4,6 +4,58 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
+	function increase_support()
+	{
+		// increment supply by power structure type for all accounts
+		// set to 100 when more than 100
+	}
+	function census_population()
+	{
+		// foreach world
+		// foreach account
+		// set population supply to population of all territories
+	}
+	function settlement_output()
+	{
+		// foreach world
+		// foreach account
+		// foreach settlement that is not a township
+		// foreach generate output
+	}
+	function township_output_input()
+	{
+		// foreach world
+		// foreach account
+		// foreach settlement that is a township ordered by population desc
+		// if does not have all inputs, mark is_insufficient_township_input
+		// subtract from supply the inputs
+		// create outputs
+	}
+	function industry_output_input()
+	{
+		// foreach world
+		// foreach account
+		// foreach settlement that has a township ordered by population desc
+		// if does not have all inputs, mark is_insufficient_industry_input
+		// subtract from supply the inputs
+		// create outputs
+	}
+	function income_collect()
+	{
+		// foreach world
+		// foreach account
+		// get sum settlement GDP where not insufficient_input
+		// get sum industry GDP where not insufficient_input
+		// get taxed income
+		// get subtract corruption
+		// apply earnings
+	}
+	function update_cache_leaderboards()
+	{
+		// foreach supply
+		// get top 100 accounts by that supply
+		// generate datetime plus world id identified json
+	}
     function world_resets()
     {
         $force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;

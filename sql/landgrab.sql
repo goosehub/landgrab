@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS chat;
 DROP TABLE IF EXISTS analytics;
 DROP TABLE IF EXISTS ip_request;
 
-CREATE TABLE `world` (
+CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(256) NOT NULL,
   `tile_size` int(4) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `world` (
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);
 ALTER TABLE `world` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `tile` (
+CREATE TABLE IF NOT EXISTS `tile` (
   `id` int(10) UNSIGNED NOT NULL,
   `lat` int(4) NOT NULL,
   `lng` int(4) NOT NULL,
@@ -44,6 +44,8 @@ CREATE TABLE `tile` (
   `unit_owner_color` varchar(8) NULL,
   `is_capitol` int(1) NOT NULL,
   `is_base` int(1) NOT NULL,
+  `is_insufficient_township_input` int(1) NOT NULL,
+  `is_insufficient_industry_input` int(1) NOT NULL,
   `population` int(10) UNSIGNED NULL,
   `tile_name` varchar(512) NULL,
   `tile_desc` text NULL,
@@ -53,7 +55,7 @@ CREATE TABLE `tile` (
 ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
 ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `unit_type` (
+CREATE TABLE IF NOT EXISTS `unit_type` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(126) NOT NULL,
   `strength_against_key` int(10) UNSIGNED NOT NULL,
@@ -63,7 +65,7 @@ CREATE TABLE `unit_type` (
   `can_take_tiles` int(1) NOT NULL,
   `can_take_towns` int(1) NOT NULL,
   `can_take_cities` int(1) NOT NULL,
-  `can_take_metros` int(1) NOT NULL,
+  `can_take_metros` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `unit_type` ADD PRIMARY KEY (`id`);
 ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -72,13 +74,13 @@ TRUNCATE TABLE `unit_type`;
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
 (1, 'Infantry', 3, 50, 'FF0000', 'I',
-  TRUE, TRUE, FALSE, FALSE, ''),
+  TRUE, TRUE, FALSE, FALSE),
 (2, 'Tanks', 1, 150, '00FF00', 'T',
-  TRUE, TRUE, TRUE, TRUE, ''),
+  TRUE, TRUE, TRUE, TRUE),
 (3, 'Commandos', 2, 100, 'BC13FE', 'C',
-  TRUE, FALSE, FALSE, FALSE, '');
+  TRUE, FALSE, FALSE, FALSE);
 
-CREATE TABLE `account` (
+CREATE TABLE IF NOT EXISTS `account` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
   `world_key` int(10) UNSIGNED NOT NULL,
@@ -103,7 +105,7 @@ CREATE TABLE `account` (
 ALTER TABLE `account` ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `trade_request` (
+CREATE TABLE IF NOT EXISTS `trade_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `request_account_key` int(10) UNSIGNED NOT NULL,
   `receive_account_key` int(10) UNSIGNED NOT NULL,
@@ -121,7 +123,7 @@ CREATE TABLE `trade_request` (
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `agreement_lookup` (
+CREATE TABLE IF NOT EXISTS `agreement_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `a_account_key` int(10) UNSIGNED NOT NULL,
   `b_account_key` int(10) UNSIGNED NOT NULL,
@@ -132,7 +134,7 @@ CREATE TABLE `agreement_lookup` (
 ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `supply_trade_lookup` (
+CREATE TABLE IF NOT EXISTS `supply_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
@@ -141,7 +143,7 @@ CREATE TABLE `supply_trade_lookup` (
 ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `supply_industry_lookup` (
+CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `industry_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
@@ -152,41 +154,46 @@ ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT
 
 TRUNCATE TABLE `supply_industry_lookup`;
 INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
-(4, 7, 1), -- Manufacturing
-(5, 5, 1), -- Timber
-(6, 6, 1), -- Textile
-(7, 14, 1), -- Biofuel
-(8, 15, 1), -- Coal
-(9, 16, 1), -- Gas
-(10, 17, 1), -- Petroleum
-(11, 18, 1), -- Nuclear
-(12, 13, 1), -- Chemicals
-(13, 28, 1), -- Steel
-(14, 29, 1), -- Electronics
-(15, 39, 1), -- Port
-(16, 30, 1), -- Machinery
-(16, 39, 1), -- Machinery
-(16, 40, 1), -- Machinery
-(16, 36, 1), -- Machinery
-(16, 38, 1), -- Machinery
-(17, 31, 1), -- Automotive
-(17, 39, 1), -- Automotive
-(17, 40, 1), -- Automotive
-(17, 38, 1), -- Automotive
-(17, 36, 1), -- Automotive
-(18, 31, 1), -- Aerospace
-(18, 32, 1), -- Aerospace
-(18, 39, 1), -- Aerospace
-(18, 40, 1), -- Aerospace
-(18, 38, 1), -- Aerospace
-(18, 34, 1), -- Aerospace
-(18, 36, 1), -- Aerospace
-(21, 2, 1), -- Gambling
-(22, 1, 10), -- University
-(23, 33, 1), -- Software
-(24, 1, 10); -- Healthcare
+(4, 14, 1), -- Biofuel
+(5, 15, 1), -- Coal
+(6, 16, 1), -- Gas
+(7, 17, 1), -- Petroleum
+(8, 18, 1), -- Nuclear
+(9, 5, 1), -- Manufacturing
+(9, 6, 1), -- Manufacturing
+(9, 7, 1), -- Manufacturing
+(9, 13, 1), -- Manufacturing
+(10, 13, 1), -- Chemicals
+(11, 28, 1), -- Steel
+(11, 13, 1), -- Steel
+(12, 29, 1), -- Electronics
+(12, 7, 1), -- Electronics
+(13, 39, 2), -- Port
+(14, 30, 1), -- Machinery
+(14, 39, 1), -- Machinery
+(14, 40, 1), -- Machinery
+(14, 36, 1), -- Machinery
+(14, 38, 1), -- Machinery
+(15, 31, 1), -- Automotive
+(15, 39, 1), -- Automotive
+(15, 40, 1), -- Automotive
+(15, 38, 1), -- Automotive
+(15, 36, 1), -- Automotive
+(15, 17, 1), -- Automotive
+(16, 31, 1), -- Aerospace
+(16, 32, 1), -- Aerospace
+(16, 39, 1), -- Aerospace
+(16, 40, 1), -- Aerospace
+(16, 38, 1), -- Aerospace
+(16, 34, 1), -- Aerospace
+(16, 36, 1), -- Aerospace
+(16, 17, 1), -- Aerospace
+(19, 2, 1), -- Gambling
+(20, 1, 10), -- University
+(21, 33, 1), -- Software
+(22, 1, 10); -- Healthcare
 
-CREATE TABLE `supply_account_lookup` (
+CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
@@ -195,7 +202,7 @@ CREATE TABLE `supply_account_lookup` (
 ALTER TABLE `supply_account_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `supply_account_trade_lookup` (
+CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `supply_account_lookup_key` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
@@ -204,7 +211,7 @@ CREATE TABLE `supply_account_trade_lookup` (
 ALTER TABLE `supply_account_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `supply` (
+CREATE TABLE IF NOT EXISTS `supply` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
@@ -265,7 +272,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (43, 10, 'Automotive', 'automotive', ' Shipments', TRUE, FALSE, ''),
 (44, 10, 'Aerospace', 'aerospace', ' Shipments', TRUE, FALSE, '');
 
-CREATE TABLE `terrain` (
+CREATE TABLE IF NOT EXISTS `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
@@ -284,7 +291,7 @@ INSERT INTO `terrain` (`id`, `label`, `slug`, `meta`) VALUES
 (5, 'Coastal', 'coastal', ''),
 (6, 'Ocean', 'ocean', '');
 
-CREATE TABLE `resource` (
+CREATE TABLE IF NOT EXISTS `resource` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
@@ -376,7 +383,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`,
   5, TRUE, TRUE, TRUE, FALSE
 );
 
-CREATE TABLE `settlement` (
+CREATE TABLE IF NOT EXISTS `settlement` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
@@ -421,17 +428,17 @@ INSERT INTO `settlement` (
 ('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, '1 energy, 1 food', NULL, NULL, 5
+  100, '2 unique food, 1 energy', NULL, NULL, 5
 ),
 ('City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '5 energy, 3 food, 1 merchandise, 1 cash crop', NULL, NULL, 10
+  1000, '4 unique food, 3 energy, 2 unique cash crop, 1 merchandise', NULL, NULL, 10
 ),
 ('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '15 energy, 10 food, 5 merchandise, 3 cash crop', NULL, NULL, 20
+  10000, '5 unique food, 10 energy, 5 unique cash crop, 3 merchandise, 2 steel, 1 healthcare', NULL, NULL, 20
 ),
 ('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -456,12 +463,12 @@ INSERT INTO `settlement` (
 ('Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 12, 2, 3
+  10, '', 12, 2, 4
 ),
 ('Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 2, 2
+  10, '', 5, 3, 1
 ),
 ('Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
@@ -491,30 +498,30 @@ INSERT INTO `settlement` (
 ('Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 23, 1, 3
+  10, '', 23, 5, 3
 ),
 ('Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 24, 1, 3
+  10, '', 24, 5, 3
 ),
 ('Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 1, 3
+  10, '', 25, 5, 3
 ),
 ('Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 1, 3
+  10, '', 26, 5, 3
 ),
 ('Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 1, 3
+  10, '', 27, 5, 3
 );
 
-CREATE TABLE `industry` (
+CREATE TABLE IF NOT EXISTS `industry` (
   `id` int(10) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
@@ -538,99 +545,92 @@ INSERT INTO `industry` (
   `output_supply_key`, `output_supply_amount`, `input_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  2, 10, 10, 10, FALSE, 'Spawns units, creates corruption'
+  null, 10, 10, 10, FALSE, 'Spawns units, creates corruption'
 ),
 (2, 1, 'Federal', 'federal', NULL, NULL,
-  2, 10, 10, 5, FALSE, 'Creates corruption'
+  2, 10, 10, 5, FALSE, ''
 ),
 (3, 1, 'Base', 'base', NULL, NULL,
   null, 1, 10, 3, TRUE, 'Spawns units'
 ),
--- merchandise
-(4, 2, 'Manufacturing', 'manufacturing', NULL, NULL,
-  37, 1, 1, 4, TRUE, ''
-),
-(5, 2, 'Timber', 'timber', NULL, NULL,
-  37, 2, 1, 6, TRUE, ''
-),
-(6, 2, 'Textile', 'textile', NULL, NULL,
-  37, 1, 1, 6, TRUE, ''
-),
 -- energy
-(7, 3, 'Biofuel', 'biofuel', NULL, NULL,
+(4, 2, 'Biofuel', 'biofuel', NULL, NULL,
   13, 2, 1, 1, TRUE, ''
 ),
-(8, 3, 'Coal', 'coal', NULL, NULL,
+(5, 2, 'Coal', 'coal', NULL, NULL,
   13, 3, 1, 1, TRUE, ''
 ),
-(9, 3, 'Gas', 'gas', NULL, NULL,
+(6, 2, 'Gas', 'gas', NULL, NULL,
   13, 4, 1, 2, TRUE, ''
 ),
-(10, 3, 'Petroleum', 'petroleum', NULL, NULL,
+(7, 2, 'Petroleum', 'petroleum', NULL, NULL,
   13, 8, 1, 5, TRUE, ''
 ),
-(11, 3, 'Nuclear', 'nuclear', NULL, NULL,
+(8, 2, 'Nuclear', 'nuclear', NULL, NULL,
   13, 10, 1, 5, TRUE, ''
 ),
 -- light industry
-(12, 4, 'Chemicals', 'chemicals', NULL, NULL,
+(9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
+  37, 1, 1, 5, TRUE, ''
+),
+(10, 3, 'Chemicals', 'chemicals', NULL, NULL,
   38, 3, 1, 5, TRUE, ''
 ),
-(13, 4, 'Steel', 'steel', NULL, NULL,
-  39, 3, 1, 3, TRUE, ''
+(11, 3, 'Steel', 'steel', NULL, NULL,
+  39, 5, 1, 3, TRUE, ''
 ),
-(14, 4, 'Electronics', 'electronics', NULL, NULL,
+(12, 3, 'Electronics', 'electronics', NULL, NULL,
   40, 3, 1, 10, TRUE, ''
 ),
--- heavy industry
-(15, 5, 'Shipping Port', 'port', 2, 5,
-  41, 1, 1, 50, FALSE, 'Increases National GDP by 50%'
+-- hevvy industry
+(13, 4, 'Shipping Port', 'port', 2, 5,
+  41, 1, 1, 50, FALSE, 'Having this industry increases National GDP by 100%'
 ),
-(16, 5, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 1, 25, FALSE, 'A supply of machinery increases national GDP by 25%'
+(14, 4, 'Machinery', 'machinery', NULL, NULL,
+  42, 3, 1, 30, FALSE, 'A supply of machinery increases Cational GDP by 75%'
 ),
-(17, 5, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 1, 50, FALSE, 'A supply of automotive increases national GDP by 25%'
+(15, 4, 'Automotive', 'automotive', 2, NULL,
+  43, 3, 1, 40, FALSE, 'A supply of automotive increases Cational GDP by 50%'
 ),
-(18, 5, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 1, 100, FALSE, 'A supply of aerospace increases national GDP by 25%'
+(16, 4, 'Aerospace', 'aerospace', 2, NULL,
+  44, 3, 1, 50, FALSE, 'A supply of aerospace increases Cational GDP by 25%'
 ),
 -- tourism
-(19, 6, 'Leisure', 'leisure', NULL, 5,
+(17, 5, 'Leisure', 'leisure', NULL, 5,
   null, 1, 1, 10, FALSE, ''
 ),
-(20, 6, 'Resort', 'resort', NULL, 3,
+(18, 5, 'Resort', 'resort', NULL, 3,
   null, 1, 1, 5, FALSE, ''
 ),
-(21, 6, 'Gambling', 'gambling', 2, NULL,
-  null, 1, 5, 5, FALSE, ''
+(19, 5, 'Gambling', 'gambling', 2, NULL,
+  null, 1, 5, 10, FALSE, ''
 ),
 -- knowledge/quaternary
-(22, 7, 'University', 'university', NULL, NULL,
+(20, 6, 'University', 'university', NULL, NULL,
   33, 3, 5, 3, FALSE, ''
 ),
-(23, 7, 'Software', 'software', 2, NULL,
+(21, 6, 'Software', 'software', 2, NULL,
   34, 3, 1, 8, FALSE, ''
 ),
-(24, 7, 'Healthcare', 'healthcare', 2, NULL,
-  35, 1, 1, 6, FALSE, 'Increases population growth by 25%'
+(22, 6, 'Healthcare', 'healthcare', 2, NULL,
+  35, 1, 1, 6, FALSE, ''
 ),
 -- metro
-(25, 8, 'Financial & Banking', 'financial_banking', 3, NULL,
-  null, 1, 1, 500, FALSE, 'Having this industry doubles your national GDP'
+(23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
+  null, 1, 1, 200, FALSE, ''
 ),
-(26, 8, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  2, 30, 1, 100, FALSE, ''
+(24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
+  NULL, 1, 1, 50, FALSE, 'Having this industry reduces National Corruption by 50%'
 ),
-(27, 8, 'Engineering & Design', 'engineering_design', 3, NULL,
-  36, 5, 1, 200, FALSE, ''
+(25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
+  36, 5, 1, 100, FALSE, ''
 );
 
 -- 
 -- 
 -- 
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
@@ -644,7 +644,7 @@ CREATE TABLE `user` (
 ALTER TABLE `user` ADD PRIMARY KEY (`id`);
 ALTER TABLE `user` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `chat` (
+CREATE TABLE IF NOT EXISTS `chat` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
   `username` varchar(64) NOT NULL,
@@ -656,7 +656,7 @@ CREATE TABLE `chat` (
 ALTER TABLE `chat` ADD PRIMARY KEY (`id`);
 ALTER TABLE `chat` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `analytics` (
+CREATE TABLE IF NOT EXISTS `analytics` (
   `id` int(10) UNSIGNED NOT NULL,
   `marketing_slug` varchar(64) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -664,7 +664,7 @@ CREATE TABLE `analytics` (
 ALTER TABLE `analytics` ADD PRIMARY KEY (`id`);
 ALTER TABLE `analytics` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE `ip_request` (
+CREATE TABLE IF NOT EXISTS `ip_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `ip` varchar(64) NOT NULL,
   `request` varchar(64) NOT NULL,

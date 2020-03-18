@@ -17,7 +17,6 @@ class Cron extends CI_Controller {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
         echo 'every_minute CRON - ' . PHP_EOL;
-
         // $this->cron_model->increase_support();
     }
 
@@ -26,12 +25,12 @@ class Cron extends CI_Controller {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
         echo 'every_hour CRON - ' . PHP_EOL;
-
         // $this->cron_model->census_population();
+        // $this->cron_model->settlement_output();
+        // $this->cron_model->township_output_input();
+        // $this->cron_model->industry_output_input();
+        // $this->cron_model->income_collect();
         // $this->cron_model->update_cache_leaderboards();
-        // $this->cron_model->settlement_run();
-        // $this->cron_model->industry_run();
-        // $this->cron_model->income_run();
         $this->cron_model->world_resets();
     }
 

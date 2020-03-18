@@ -18,7 +18,7 @@ class Game extends CI_Controller {
         $this->settlements = $this->game_model->get_all('settlement');
         $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];
         $this->industries = $this->game_model->get_all('industry');
-        $this->industry_category_labels = [0, 'Government', 'Merchandise', 'Energy', 'Light', 'Heavy', 'Tourism', 'Knowledge', 'Metro'];
+        $this->industry_category_labels = [0, 'Government', 'Energy', 'Light', 'Heavy', 'Tourism', 'Knowledge', 'Metro'];
         $this->unit_labels = [0, 'Infantry', 'Tanks', 'Commandos'];
 
         // Force ssl

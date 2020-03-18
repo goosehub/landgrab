@@ -252,6 +252,9 @@
         if (settlement_is_township(settlement.id)) {
             output = 'Industry';
         }
+        if (settlement.output_supply_amount > 1) {
+            output = settlement.output_supply_amount + ' ' + output;
+        }
         $('#select_settlement_output').html(output);
     }
     function render_industry_extended(industry_key) {

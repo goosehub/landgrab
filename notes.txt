@@ -2,31 +2,18 @@
     Notes
 ==========================================================================================
 
-ask internet how to do a sell mechanic
-
-an industry for reduced corruption?
-
-is money too directly only useful for military?
-
-settlement militia defense
-balanced diet for population?
-eat through fish, then meat, then fruit, then veggies, then meat
+without supplies
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-MEDIUM PRIORITY
     commission icons
-    population
-        cron to increase populations
-        cron to census population to update supply
-        Have it affect GDP
-        Reset/Decrease on capture?
-        Settlement GDP
+MEDIUM PRIORITY
     unit system
         attacking
+        militia defense
         being attacked
         conceal
         exclude conceal on ocean
@@ -55,18 +42,22 @@ MEDIUM PRIORITY
         socialism
         require support to pass laws
         laws can only be passed once an hour
-    selling
-        the whole system
-    hide resources in responses before discovered
     enlist spawn validation
     fix industry tab showing when not an option
 LOW PRIORITY
+    population
+        cron to increase populations
+        cron to census population to update supply
+        Have it affect GDP
+        Reset/Decrease on capture?
+    hide resources in responses before discovered
+    sell mechanic
     implement icons
     confirmation check icon on some button clicks (pass laws)
     capitol and chat shortcut to diplomacy
     json leaderboard for every supply
     growing capital increases support
-    handle troops inside opp. tile at start of war
+    troops inside opp. tile at start of war
     have capitols show laws of nation
     number formatting
     tooltip for alliances, rights of passage, etc
@@ -83,6 +74,8 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    Map icon per industry
+    Toggle individual settlements and industries
     generate worlds when all worlds have no free non tundra land
     new player full map random start
     fix correct_lng for non 2 tile size worlds
@@ -136,6 +129,8 @@ Unit Battle Logic
     Commandos have 3/4 chance of victory against Tanks
     Tanks have 3/4 chance of victory against Infantry
     All have 3/4 chance of victory against Navy
+    All have 3/4 chance of victory against Militia
+    Undefended tiles have 1/4 chance of spawning militia
     On ocean, all units becomes Navy
     Mountains get double defensive bonus
     Tundra get double defensive bonus
