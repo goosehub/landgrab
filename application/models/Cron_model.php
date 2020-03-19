@@ -9,6 +9,10 @@ Class cron_model extends CI_Model
 		// increment supply by power structure type for all accounts
 		// set to 100 when more than 100
 	}
+	function mark_accounts_as_active()
+	{
+		// If account tiles > 0, set is_active to true, else set is_active to false
+	}
 	function census_population()
 	{
 		// foreach world
@@ -17,19 +21,22 @@ Class cron_model extends CI_Model
 	}
 	function settlement_output()
 	{
-		// foreach world
-		// foreach account
-		// foreach settlement that is not a township
-		// foreach generate output
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN settlement AS settlement_by_supply ON sal.supply_key = settlement_by_supply.output_supply_key
+			INNER JOIN (
+				SELECT settlement_key, account_key, COUNT(*) as tile_count
+				FROM tile
+				GROUP BY settlement_key, account_key
+			) AS tile_by_settlement_and_account ON settlement_by_supply.id = tile_by_settlement_and_account.settlement_key AND sal.account_key = tile_by_settlement_and_account.account_key
+			SET sal.amount = sal.amount + (tile_by_settlement_and_account.tile_count * settlement_by_supply.output_supply_amount)
+		");
 	}
-	function township_output_input()
+	function township_input()
 	{
-		// foreach world
-		// foreach account
-		// foreach settlement that is a township ordered by population desc
-		// if does not have all inputs, mark is_insufficient_township_input
-		// subtract from supply the inputs
-		// create outputs
+		// town
+		// city
+		// metro
 	}
 	function industry_output_input()
 	{

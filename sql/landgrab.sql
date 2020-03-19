@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `leader_portrait` varchar(256) NOT NULL,
   `color` varchar(8) NOT NULL,
   -- Government Settings
-  `government` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy as null
+  `government` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy
   `tax_rate` int(10) UNSIGNED NOT NULL,
   `ideology` int(10) UNSIGNED NULL, -- Socialism, Free Market
   `last_law_change` timestamp NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `supply_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
-  `amount` int(10) UNSIGNED NOT NULL
+  `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `industry_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
-  `amount` int(10) UNSIGNED NOT NULL
+  `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_industry_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
-  `amount` int(10) UNSIGNED NOT NULL
+  `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_account_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `supply_account_lookup_key` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
-  `amount` int(10) UNSIGNED NOT NULL
+  `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_account_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
@@ -402,7 +402,7 @@ CREATE TABLE IF NOT EXISTS `settlement` (
   `input_desc` varchar(256) NOT NULL,
   `gdp` int(10) UNSIGNED NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
-  `output_supply_amount` int(10) UNSIGNED NULL,
+  `output_supply_amount` int(10) NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -527,8 +527,8 @@ CREATE TABLE IF NOT EXISTS `industry` (
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
-  `output_supply_amount` int(10) UNSIGNED NULL,
-  `input_supply_amount` int(10) UNSIGNED NULL,
+  `output_supply_amount` int(10) NULL,
+  `input_supply_amount` int(10) NULL,
   `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
   `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,

@@ -39,6 +39,15 @@
         $result = $query->result_array();
         return isset($result[0]) ? $result[0] : false;
     }
+    function get_all_active_accounts()
+    {
+        $this->db->select('*');
+        $this->db->from('account');
+        $this->db->where('is_active', true);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return isset($result[0]) ? $result[0] : false;
+    }
     function get_all_users()
     {
         $this->db->select('id, username, created');

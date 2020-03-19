@@ -25,13 +25,15 @@ class Cron extends CI_Controller {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
         echo 'every_hour CRON - ' . PHP_EOL;
+        // $this->cron_model->mark_accounts_as_active();
         // $this->cron_model->census_population();
-        // $this->cron_model->settlement_output();
-        // $this->cron_model->township_output_input();
+        $this->cron_model->township_input();
+        $this->cron_model->settlement_input();
+        $this->cron_model->settlement_output();
+        $this->cron_model->township_output_input();
         // $this->cron_model->industry_output_input();
         // $this->cron_model->income_collect();
         // $this->cron_model->update_cache_leaderboards();
-        $this->cron_model->world_resets();
     }
 
     public function every_day($token = false)
@@ -39,6 +41,7 @@ class Cron extends CI_Controller {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
         echo 'every_day CRON - ' . PHP_EOL;
+        $this->cron_model->world_resets();
     }
 
     private function verify_token($token = false) {

@@ -2,7 +2,15 @@
     Notes
 ==========================================================================================
 
-without supplies
+before output functions are run
+shortages
+each 1 under supply count costs 1 support
+when below 0 support, government switched to anarchy before output functions are run
+no industry outputs, no gdp
+
+tax mechanic?
+
+exploit? trade all supplies, spend all money on troops, convert to socialism, use support for more troops
 
 ==========================================================================================
     Goals
@@ -37,6 +45,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
     government
+        UI of how much of each supply to expect per turn
         support
         corruption
         socialism
