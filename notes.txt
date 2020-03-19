@@ -18,6 +18,7 @@ exploit? trade all supplies, spend all money on troops, convert to socialism, us
 
 HIGH PRIORITY
     commission icons
+    input and output crons
 MEDIUM PRIORITY
     unit system
         attacking
@@ -54,6 +55,7 @@ MEDIUM PRIORITY
     enlist spawn validation
     fix industry tab showing when not an option
 LOW PRIORITY
+    refactor township input desc to be generated
     population
         cron to increase populations
         cron to census population to update supply
