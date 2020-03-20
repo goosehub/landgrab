@@ -194,14 +194,25 @@ Class cron_model extends CI_Model
 	    $result = $query->result_array();
 	    return $result;
 	}
-	function industry_output_input()
+	function industry_input()
 	{
-		// foreach world
-		// foreach account
-		// foreach settlement that has a township ordered by population desc
-		// if does not have all inputs, mark is_insufficient_industry_input
-		// subtract from supply the inputs
-		// create outputs
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT SUM(tile_count * supply_industry_lookup.amount) as new_amount, account_key, supply_key
+				FROM supply_industry_lookup
+			    INNER JOIN (
+				    SELECT COUNT(*) as tile_count, industry_key, account_key
+				    FROM tile
+				    GROUP BY industry_key, account_key
+			    ) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key
+				GROUP BY supply_industry_lookup.supply_key, tile_by_industry_and_account.account_key
+			) AS sil ON sil.supply_key = sal.supply_key AND sal.account_key = sil.account_key
+			SET sal.amount = sal.amount - new_amount
+		");
+	}
+	function industry_output()
+	{
 	}
 	function income_collect()
 	{
