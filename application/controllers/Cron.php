@@ -27,11 +27,17 @@ class Cron extends CI_Controller {
         echo 'every_hour CRON - ' . PHP_EOL;
         // $this->cron_model->mark_accounts_as_active();
         // $this->cron_model->census_population();
-        $this->cron_model->settlement_output();
-        $this->cron_model->township_input();
-        $this->cron_model->industry_input();
-        $this->cron_model->industry_output();
-        // $this->cron_model->income_collect();
+
+        // $this->cron_model->settlement_output();
+        // $this->cron_model->township_input();
+        // $this->cron_model->industry_input();
+        // $this->cron_model->industry_output();
+        echo microtime() . '<br>';
+        $this->cron_model->settlement_income_collect();
+        $this->cron_model->industry_income_collect();
+        echo microtime() . '<br>';
+
+        // $this->cron_model->punish_insufficient_supply();
         // $this->cron_model->update_cache_leaderboards();
     }
 

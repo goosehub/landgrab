@@ -44,8 +44,6 @@ CREATE TABLE IF NOT EXISTS `tile` (
   `unit_owner_color` varchar(8) NULL,
   `is_capitol` int(1) NOT NULL,
   `is_base` int(1) NOT NULL,
-  `is_insufficient_township_input` int(1) NOT NULL,
-  `is_insufficient_industry_input` int(1) NOT NULL,
   `population` int(10) UNSIGNED NULL,
   `tile_name` varchar(512) NULL,
   `tile_desc` text NULL,

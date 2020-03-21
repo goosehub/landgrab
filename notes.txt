@@ -28,17 +28,15 @@ MEDIUM PRIORITY
         exclude conceal on ocean
     taxes
         get income
+        budget UI
+    Punish negative supply
         have it affect support
-        budget
     settlement system
-        crons
-        use 1 round of supply feed on start
-        without supplies, lose support and size
-        Capitols immune to insufficient supplies
+        require 1 round of supply feed on start
+        settlement without supply input
     industry system
-        crons
-        without supplies, no produciton, UI
-        industry without supply
+        require 1 round of supply feed on start
+        industry without supply input
     trade
         supplies
         war/peace/passage

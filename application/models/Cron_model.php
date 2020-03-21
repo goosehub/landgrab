@@ -228,15 +228,61 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount + new_amount
 		");
 	}
-	function income_collect()
+	function settlement_income_collect()
 	{
-		// foreach world
-		// foreach account
-		// get sum settlement GDP where not insufficient_input
-		// get sum industry GDP where not insufficient_input
-		// get taxed income
-		// get subtract corruption
-		// apply earnings
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT sal.account_key, sal.amount, SUM(settlement_tile_join.settlement_gdp) as sum_settlement_gdp
+				FROM supply_account_lookup AS sal
+				LEFT JOIN (
+					SELECT COUNT(tile.id) * settlement.gdp AS settlement_gdp, account_key
+					FROM tile
+					INNER JOIN settlement ON tile.settlement_key = settlement.id
+					GROUP BY account_key, settlement_key
+				) AS settlement_tile_join ON settlement_tile_join.account_key = sal.account_key
+				WHERE sal.supply_key = 1
+				GROUP BY sal.account_key
+			) as gdp ON sal.account_key = gdp.account_key
+			SET sal.amount = sal.amount + sum_settlement_gdp
+			WHERE sal.supply_key = " . CASH_KEY . "
+		");
+		// Limit to active accounts
+		// Apply tax rate
+		// Apply power structure corruption
+		// Apply ideology
+		// Enforce support at least 0
+	}
+	function industry_income_collect()
+	{
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT sal.account_key, sal.amount, SUM(industry_tile_join.industry_gdp) as sum_industry_gdp
+				FROM supply_account_lookup AS sal
+				LEFT JOIN (
+					SELECT COUNT(tile.id) * industry.gdp AS industry_gdp, account_key
+					FROM tile
+					INNER JOIN industry ON tile.industry_key = industry.id
+					GROUP BY account_key, industry_key
+				) AS industry_tile_join ON industry_tile_join.account_key = sal.account_key
+				WHERE sal.supply_key = 1
+				GROUP BY sal.account_key
+			) as gdp ON sal.account_key = gdp.account_key
+			SET sal.amount = sal.amount + sum_industry_gdp
+			WHERE sal.supply_key = " . CASH_KEY . "
+		");
+		// Limit to active accounts
+		// Apply tax rate
+		// Apply power structure corruption
+		// Apply ideology
+		// Enforce support at least 0
+	}
+	function punish_insufficient_supply()
+	{
+		// Foreach account
+		// Foreach supply less than 0
+		// Reduce support supply
 	}
 	function update_cache_leaderboards()
 	{

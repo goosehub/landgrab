@@ -118,12 +118,14 @@
     }
     function tile_gdp()
     {
+        let sum_gdp = 0;
         if (current_tile.industry_key) {
-            $('#tile_gdp').html('$' + industries[current_tile.industry_key  - 1]['gdp'] + 'M');
+            sum_gdp += parseInt(industries[current_tile.industry_key  - 1]['gdp']);
         }
-        else {
-            $('#tile_gdp').html('$0');
+        if (current_tile.settlement_key) {
+            sum_gdp += parseInt(settlements[current_tile.settlement_key  - 1]['gdp']);
         }
+        $('#tile_gdp').html('$' + sum_gdp + 'M');
     }
     function tile_unit()
     {
