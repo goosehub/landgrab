@@ -168,31 +168,31 @@ Class cron_model extends CI_Model
 	}
 	function get_all_accounts_for_townships()
 	{
-	    $this->db->select("
-	    	*,
-	    	(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . TOWN_KEY . ") AS town_count,
-	    	(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . CITY_KEY . ") AS city_count,
-	    	(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . METRO_KEY . ") AS metro_count,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . GRAIN_KEY . ") AS grain,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . FRUIT_KEY . ") AS fruit,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . VEGETABLES_KEY . ") AS vegetables,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . LIVESTOCK_KEY . ") AS livestock,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . FISH_KEY . ") AS fish,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . COFFEE_KEY . ") coffee,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TEA_KEY . ") AS tea,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . CANNABIS_KEY . ") AS cannabis,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ALCOHOLS_KEY . ") AS alcohols,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TOBACCO_KEY . ") AS tobacco,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ENERGY_KEY . ") AS energy,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . MERCHANDISE_KEY . ") AS merchandise,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . STEEL_KEY . ") AS steel,
-	    	(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . HEALTHCARE_KEY . ") AS healthcare,
-    	");
-	    $this->db->from('account');
-	    $this->db->where('account.is_active', true);
-	    $query = $this->db->get();
-	    $result = $query->result_array();
-	    return $result;
+		$this->db->select("
+			*,
+			(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . TOWN_KEY . ") AS town_count,
+			(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . CITY_KEY . ") AS city_count,
+			(SELECT COUNT(tile.id) FROM tile WHERE account_key = account.id AND settlement_key = " . METRO_KEY . ") AS metro_count,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . GRAIN_KEY . ") AS grain,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . FRUIT_KEY . ") AS fruit,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . VEGETABLES_KEY . ") AS vegetables,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . LIVESTOCK_KEY . ") AS livestock,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . FISH_KEY . ") AS fish,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . COFFEE_KEY . ") coffee,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TEA_KEY . ") AS tea,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . CANNABIS_KEY . ") AS cannabis,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ALCOHOLS_KEY . ") AS alcohols,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TOBACCO_KEY . ") AS tobacco,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ENERGY_KEY . ") AS energy,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . MERCHANDISE_KEY . ") AS merchandise,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . STEEL_KEY . ") AS steel,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . HEALTHCARE_KEY . ") AS healthcare,
+		");
+		$this->db->from('account');
+		$this->db->where('account.is_active', true);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return $result;
 	}
 	function industry_input()
 	{
@@ -201,11 +201,11 @@ Class cron_model extends CI_Model
 			INNER JOIN (
 				SELECT SUM(tile_count * supply_industry_lookup.amount) as new_amount, account_key, supply_key
 				FROM supply_industry_lookup
-			    INNER JOIN (
-				    SELECT COUNT(*) as tile_count, industry_key, account_key
-				    FROM tile
-				    GROUP BY industry_key, account_key
-			    ) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key
+				INNER JOIN (
+					SELECT COUNT(*) as tile_count, industry_key, account_key
+					FROM tile
+					GROUP BY industry_key, account_key
+				) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key
 				GROUP BY supply_industry_lookup.supply_key, tile_by_industry_and_account.account_key
 			) AS sil ON sil.supply_key = sal.supply_key AND sal.account_key = sil.account_key
 			SET sal.amount = sal.amount - new_amount
@@ -213,6 +213,20 @@ Class cron_model extends CI_Model
 	}
 	function industry_output()
 	{
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT SUM(tile_count * industry.output_supply_amount) as new_amount, account_key, output_supply_key
+				FROM industry
+				INNER JOIN (
+					SELECT COUNT(*) as tile_count, industry_key, account_key
+					FROM tile
+					GROUP BY industry_key, account_key
+				) AS tile_by_industry_and_account ON industry.id = tile_by_industry_and_account.industry_key
+				GROUP BY industry.output_supply_key, tile_by_industry_and_account.account_key
+			) AS industry ON industry.output_supply_key = sal.supply_key AND sal.account_key = industry.account_key
+			SET sal.amount = sal.amount + new_amount
+		");
 	}
 	function income_collect()
 	{
@@ -230,30 +244,30 @@ Class cron_model extends CI_Model
 		// get top 100 accounts by that supply
 		// generate datetime plus world id identified json
 	}
-    function world_resets()
-    {
-        $force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
-        $now = date('Y-m-d H:i:s');
-        $worlds = $this->game_model->get_all('world');
-        foreach ($worlds as $world) {
-            // Check if it's time to run
-            $time_to_reset = parse_crontab($now, $world['crontab']);
-            if (!$time_to_reset && !$force_reset_world_id) {
-                continue;
-            }
-            if ($force_reset_world_id) {
-                if ($force_reset_world_id != $world['id']) {
-                    continue;
-                }
-            }
-            echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
-            // $this->backup();
-            // $this->reset_tiles();
-            // $this->reset_trades();
-            // $this->reset_accounts();
-            $this->regenerate_resources($world['id']);
-        }
-    }
+	function world_resets()
+	{
+		$force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
+		$now = date('Y-m-d H:i:s');
+		$worlds = $this->game_model->get_all('world');
+		foreach ($worlds as $world) {
+			// Check if it's time to run
+			$time_to_reset = parse_crontab($now, $world['crontab']);
+			if (!$time_to_reset && !$force_reset_world_id) {
+				continue;
+			}
+			if ($force_reset_world_id) {
+				if ($force_reset_world_id != $world['id']) {
+					continue;
+				}
+			}
+			echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
+			// $this->backup();
+			// $this->reset_tiles();
+			// $this->reset_trades();
+			// $this->reset_accounts();
+			$this->regenerate_resources($world['id']);
+		}
+	}
 	function regenerate_resources($world_key)
 	{
 		$this->reset_resources($world_key);

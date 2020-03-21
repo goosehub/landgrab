@@ -30,7 +30,7 @@ class Cron extends CI_Controller {
         $this->cron_model->settlement_output();
         $this->cron_model->township_input();
         $this->cron_model->industry_input();
-        // $this->cron_model->industry_output();
+        $this->cron_model->industry_output();
         // $this->cron_model->income_collect();
         // $this->cron_model->update_cache_leaderboards();
     }
