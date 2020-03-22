@@ -152,6 +152,8 @@ ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT
 
 TRUNCATE TABLE `supply_industry_lookup`;
 INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
+(2, 1, 10), -- Federal
+(3, 1, 10), -- Base
 (4, 14, 1), -- Biofuel
 (5, 15, 1), -- Coal
 (6, 16, 1), -- Gas

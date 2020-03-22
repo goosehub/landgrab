@@ -21,7 +21,6 @@ MEDIUM PRIORITY
         exclude conceal on ocean
     support generate
     support min/max based on power structure, tax rate, ideology
-    taxes budget UI
     Punish negative supply and have it affect support
     settlement require 1 round of supply feed on start
     industry require 1 round of supply feed on start
@@ -74,6 +73,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    make get_account_budget() calc settlement & industry separately for accuracy
     anarchy mechanic
     Township Population Reset/Decrease on capture?
     Toggle individual settlements and industries

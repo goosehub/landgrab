@@ -411,6 +411,7 @@
     ajax_get('game/get_this_full_account/' + world_key, function(response) {
       account = response;
       update_supplies(account.supplies);
+      update_budget(account.budget);
     }, 'account_update');
   }
 
@@ -424,6 +425,19 @@
       $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
       // $('#our_trade_supply_offer_' + supply['slug']).val(supply['amount']);
     });
+  }
+
+  function update_budget(budget){
+    $('#budget_gdp').html(number_format(budget.gdp));
+    $('#budget_tax_income').html(number_format(budget.tax_income));
+    $('#budget_power_corruption').html(number_format(budget.power_corruption));
+    $('#budget_size_corruption').html(number_format(budget.size_corruption));
+    $('#budget_federal').html(number_format(budget.federal));
+    $('#budget_bases').html(number_format(budget.bases));
+    $('#budget_education').html(number_format(budget.education));
+    $('#budget_healthcare').html(number_format(budget.healthcare));
+    $('#budget_socialism').html(number_format(budget.socialism));
+    $('#budget_earnings').html(number_format(budget.earnings));
   }
 
   function get_map_update() {

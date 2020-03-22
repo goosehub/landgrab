@@ -72,10 +72,10 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     GDP:
-                    <?php echo generate_popover('GDP', 'The sum of the GDP from every territory', 'right'); ?>
+                    <?php echo generate_popover('GDP', 'The sum of the GDP from from every territory', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
-                    $<span id="foobar">5,400</span> Million
+                    $<span id="budget_gdp"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
@@ -84,16 +84,25 @@
                     <?php echo generate_popover('Tax Income', 'The percentage of GDP captured by the Tax Rate', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-success">
-                    $<span id="foobar">800</span> Million
+                    $<span id="budget_tax_income"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
-                    Corruption:
-                    <?php echo generate_popover('Corruption', 'Corruptiion is caused by power structure, plus 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories', 'right'); ?>
+                    Corruption From Power:
+                    <?php echo generate_popover('Corruption', 'Corruption From Power is caused by the power structure of your government', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">50</span> Million
+                    -$<span id="budget_power_corruption"></span> Million
+                </strong><br>
+            </span>
+            <span class="budget_info_item_parent">
+                <strong class="budget_info_item_label">
+                    Corruption From Size:
+                    <?php echo generate_popover('Corruption', 'Corruption From Size is increased by 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories you control', 'right'); ?>
+                </strong>
+                <strong class="budget_info_value text-red">
+                    -$<span id="budget_size_corruption"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
@@ -102,7 +111,7 @@
                     <?php echo generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">50</span> Million
+                    -$<span id="budget_federal"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
@@ -111,7 +120,7 @@
                     <?php echo generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">0</span> Million
+                    -$<span id="budget_bases"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
@@ -120,7 +129,7 @@
                     <?php echo generate_popover('University Education', 'Costs for Universities', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">30</span> Million
+                    -$<span id="budget_education"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
@@ -129,7 +138,7 @@
                     <?php echo generate_popover('University Education', 'Costs for Healthcare Industry', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">0</span> Million
+                    -$<span id="budget_healthcare"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent" style="display: none">
@@ -138,16 +147,16 @@
                     <?php echo generate_popover('Soclaism', 'Socialism consumes all remaining income. But the upside is Socialism allows you to enlist using support instead of cash', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="foobar">670</span> Million
+                    -$<span id="budget_socialism"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
-                    Hourly Earnings:
-                    <?php echo generate_popover('Hourly Earnings', 'Income remaining after accounting for all fixed costs', 'right'); ?>
+                    Projected Hourly Earnings:
+                    <?php echo generate_popover('Hourly Earnings', 'Income remaining after accounting for all fixed costs. This number is an estimate based on current factors.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-success">
-                    $<span id="foobar">670</span> Million
+                    ~ $<span id="budget_earnings"></span> Million
                 </strong><br>
             </span>
         </div>

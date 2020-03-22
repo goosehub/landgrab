@@ -239,6 +239,7 @@
         if (!nStr) {
             return 0;
         }
+        nStr = Math.round(nStr);
         nStr += '';
         x = nStr.split('.');
         x1 = x[0];

@@ -128,6 +128,7 @@ class Game extends CI_Controller {
         foreach ($supplies as $key => $supply) {
             $account['supplies'][$supply['slug']] = $supply;
         }
+        $account['budget'] = $this->game_model->get_account_budget($account);
         if ($raw) {
             return $account;
         }

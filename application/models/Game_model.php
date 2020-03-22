@@ -232,6 +232,75 @@
 			$this->db->where('supply_key', $supply_key);
 			$this->db->update('supply_account_lookup');
 		}
+		function get_account_budget($account) {
+			// To more accurately make reflect settlement_income_collect and industry_income_collect, calculate it separately
+			$budget['gdp'] = $this->settlement_gdp($account['id']) + $this->industry_gdp($account['id']);
+			$budget['tax_income'] = $budget['gdp'] * ($account['tax_rate'] / 100);
+			$running_income = $budget['tax_income'];
+			$budget['power_corruption'] = $running_income * (($account['government'] * 10) / 100);
+			$running_income = $running_income - $budget['power_corruption'];
+			$budget['size_corruption'] = $running_income * (floor($account['supplies']['tiles']['amount'] / TILES_PER_CORRUPTION_PERCENT) / 100 );
+			$running_income = $running_income - $budget['size_corruption'];
+			$budget['federal'] = $this->get_cost_of_industry_by_account($account['id'], FEDERAL_INDUSTRY_KEY, FEDERAL_CASH_COST);
+			$running_income = $running_income - $budget['federal'];
+			$budget['bases'] = $this->get_cost_of_industry_by_account($account['id'], BASE_INDUSTRY_KEY, BASE_CASH_COST);
+			$running_income = $running_income - $budget['bases'];
+			$budget['education'] = $this->get_cost_of_industry_by_account($account['id'], EDUCATION_INDUSTRY_KEY, EDUCATION_CASH_COST);
+			$running_income = $running_income - $budget['education'];
+			$budget['healthcare'] = $this->get_cost_of_industry_by_account($account['id'], HEALTHCARE_INDUSTRY_KEY, HEALTHCARE_CASH_COST);
+			$running_income = $running_income - $budget['healthcare'];
+			$budget['socialism'] = $running_income;
+			$budget['earnings'] = $running_income;
+			return $budget;
+		}
+		function settlement_gdp($account_key) {
+			$query = $this->db->query("
+				SELECT SUM(settlement_tile_join.settlement_gdp) AS sum_settlement_gdp
+				FROM supply_account_lookup AS sal
+				INNER JOIN (
+					SELECT COUNT(tile.id) * settlement.gdp AS settlement_gdp, account_key
+					FROM tile
+					INNER JOIN settlement ON tile.settlement_key = settlement.id
+					GROUP BY account_key, settlement_key
+				) AS settlement_tile_join ON settlement_tile_join.account_key = sal.account_key
+				WHERE sal.supply_key = 1
+				AND sal.account_key = $account_key
+				GROUP BY sal.account_key
+			");
+			$result = $query->result_array();
+			$result = isset($result[0]) ? $result[0] : false;
+			return (int)$result['sum_settlement_gdp'];
+		}
+		function industry_gdp($account_key) {
+			$query = $this->db->query("
+				SELECT SUM(industry_tile_join.industry_gdp) AS sum_industry_gdp
+				FROM supply_account_lookup AS sal
+				INNER JOIN (
+					SELECT COUNT(tile.id) * industry.gdp AS industry_gdp, account_key
+					FROM tile
+					INNER JOIN industry ON tile.industry_key = industry.id
+					GROUP BY account_key, industry_key
+				) AS industry_tile_join ON industry_tile_join.account_key = sal.account_key
+				WHERE sal.supply_key = 1
+				AND sal.account_key = $account_key
+				GROUP BY sal.account_key
+			");
+			$result = $query->result_array();
+			$result = isset($result[0]) ? $result[0] : false;
+			return (int)$result['sum_industry_gdp'];
+		}
+		function get_cost_of_industry_by_account($account_key, $industry_key, $industry_cash_cost) {
+			$query = $this->db->query("
+				SELECT COUNT(id) AS tile_count
+				FROM tile
+				WHERE account_key = $account_key
+				AND industry_key = $industry_key
+				LIMIT 1
+			");
+			$result = $query->result_array();
+			$result = isset($result[0]) ? $result[0] : false;
+			return $result['tile_count'] * $industry_cash_cost;
+		}
 		// 
 		// 
 		// 
