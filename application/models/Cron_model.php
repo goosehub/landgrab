@@ -13,11 +13,39 @@ Class cron_model extends CI_Model
 	{
 		// If account tiles > 0, set is_active to true, else set is_active to false
 	}
+	function grow_population()
+	{
+		$town_population_increment = TOWN_POPULATION_INCREMENT;
+		$city_population_increment = CITY_POPULATION_INCREMENT;
+		$metro_population_increment = METRO_POPULATION_INCREMENT;
+		$town_key = TOWN_KEY;
+		$city_key = CITY_KEY;
+		$metro_key = METRO_KEY;
+		$this->db->query("
+			UPDATE tile
+			SET population = population + $town_population_increment
+			WHERE settlement_key = $town_key
+		");
+		$this->db->query("
+			UPDATE tile
+			SET population = population + $city_population_increment
+			WHERE settlement_key = $city_key
+		");
+		$this->db->query("
+			UPDATE tile
+			SET population = population + $metro_population_increment
+			WHERE settlement_key = $metro_key
+		");
+
+	}
 	function census_population()
 	{
-		// foreach world
-		// foreach account
-		// set population supply to population of all territories
+		$population_key = POPULATION_KEY;
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			SET sal.amount = (SELECT SUM(population) FROM tile WHERE tile.account_key = sal.account_key)
+			WHERE sal.supply_key = $population_key
+		");
 	}
 	function resource_output()
 	{
@@ -209,7 +237,6 @@ Class cron_model extends CI_Model
 	}
 	function industry_input()
 	{
-		// This is just for my text editor syntax highlighting
 		$support_key = SUPPORT_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
@@ -237,7 +264,6 @@ Class cron_model extends CI_Model
 	// This pattern can be switched to settlement_income_collect style if ever slow
 	function industry_output()
 	{
-		// This is just for my text editor syntax highlighting
 		$support_key = SUPPORT_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
@@ -264,7 +290,6 @@ Class cron_model extends CI_Model
 	}
 	function settlement_income_collect()
 	{
-		// This is just for my text editor syntax highlighting
 		$support_key = SUPPORT_KEY;
 		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
 		$free_market_key = FREE_MARKET_KEY;
@@ -313,7 +338,6 @@ Class cron_model extends CI_Model
 	}
 	function industry_income_collect()
 	{
-		// This is just for my text editor syntax highlighting
 		$support_key = SUPPORT_KEY;
 		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
 		$free_market_key = FREE_MARKET_KEY;

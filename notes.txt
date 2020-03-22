@@ -58,9 +58,7 @@ LOW PRIORITY
     make clear what borders are current players borders
     refactor township input desc to be generated
     population
-        cron to increase populations
-        cron to census population to update supply
-        Have it affect GDP
+        Have it be required for upgrading townships
         Reset/Decrease on capture?
     hide resources in responses before discovered
     sell mechanic

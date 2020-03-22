@@ -33,9 +33,9 @@ class Cron extends CI_Controller {
         echo '<br>';
         $this->microtime('start_crons');
         // $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
-        // $this->cron_model->grow_population(); $this->microtime('grow_population');
-        // $this->cron_model->census_population(); $this->microtime('census_population');
 
+        $this->cron_model->grow_population(); $this->microtime('grow_population');
+        $this->cron_model->census_population(); $this->microtime('census_population');
         $this->cron_model->resource_output(); $this->microtime('resource_output');
         $this->cron_model->settlement_output(); $this->microtime('settlement_output');
         $this->cron_model->township_input(); $this->microtime('township_input');
