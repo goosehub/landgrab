@@ -231,6 +231,11 @@ Class cron_model extends CI_Model
 	}
 	function settlement_income_collect()
 	{
+		// This is just for my text editor syntax highlighting
+		$support_key = SUPPORT_KEY;
+		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
+		$free_market_key = FREE_MARKET_KEY;
+		$cash_key = CASH_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
@@ -246,7 +251,7 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = " . SUPPORT_KEY . "
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -259,17 +264,22 @@ Class cron_model extends CI_Model
 				sum_settlement_gdp *
 				( account.tax_rate / 100 ) * 
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(all_tile.tile_count / " . TILES_PER_CORRUPTION_PERCENT . ") ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
-			AND account.ideology = " . FREE_MARKET_KEY . "
-			AND sal.supply_key = " . CASH_KEY . "
+			AND account.ideology = $free_market_key
+			AND sal.supply_key = $cash_key
 			AND sal_support.amount >= 0
 		");
 	}
 	function industry_income_collect()
 	{
+		// This is just for my text editor syntax highlighting
+		$support_key = SUPPORT_KEY;
+		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
+		$free_market_key = FREE_MARKET_KEY;
+		$cash_key = CASH_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
@@ -285,7 +295,7 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = " . SUPPORT_KEY . "
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -298,12 +308,12 @@ Class cron_model extends CI_Model
 				sum_industry_gdp *
 				( account.tax_rate / 100 ) *
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(all_tile.tile_count / " . TILES_PER_CORRUPTION_PERCENT . ") ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
-			AND account.ideology = " . FREE_MARKET_KEY . "
-			AND sal.supply_key = " . CASH_KEY . "
+			AND account.ideology = $free_market_key
+			AND sal.supply_key = $cash_key
 			AND sal_support.amount >= 0
 		");
 	}
