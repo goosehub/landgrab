@@ -258,7 +258,7 @@ Class cron_model extends CI_Model
 				sum_settlement_gdp *
 				( account.tax_rate / 100 ) * 
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(all_tile.tile_count / 20) ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / " . TILES_PER_CORRUPTION_PERCENT . ") ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
@@ -295,7 +295,7 @@ Class cron_model extends CI_Model
 				sum_industry_gdp *
 				( account.tax_rate / 100 ) *
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(all_tile.tile_count / 20) ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / " . TILES_PER_CORRUPTION_PERCENT . ") ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
