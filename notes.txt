@@ -18,7 +18,9 @@ exploit? trade all supplies, spend all money on troops, convert to socialism, us
 
 HIGH PRIORITY
     commission icons
+    resource output
 MEDIUM PRIORITY
+    lock supplies on request
     unit system
         attacking
         militia defense

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
-define('ACCOUNT_UPDATE_INTERVAL_MS', 5 * 1000);
+define('ACCOUNT_UPDATE_INTERVAL_MS', 1 * 1000);
 define('LEADERBOARD_UPDATE_INTERVAL_M', 10);
 
 // Defensive Bonuses

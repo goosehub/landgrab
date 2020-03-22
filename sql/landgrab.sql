@@ -526,7 +526,6 @@ CREATE TABLE IF NOT EXISTS `industry` (
   `slug` varchar(256) NOT NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
   `output_supply_amount` int(10) NULL,
-  `input_supply_amount` int(10) NULL,
   `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
   `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,
@@ -540,88 +539,88 @@ ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
   `id`, `category_id`, `label`, `slug`, `minimum_settlement_size`, `required_terrain_key`,
-  `output_supply_key`, `output_supply_amount`, `input_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
+  `output_supply_key`, `output_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  null, 10, 10, 10, FALSE, 'Spawns units, creates corruption'
+  null, 10, 10, FALSE, 'Spawns units, creates corruption'
 ),
 (2, 1, 'Federal', 'federal', NULL, NULL,
-  2, 10, 10, 5, FALSE, ''
+  2, 10, 5, FALSE, ''
 ),
 (3, 1, 'Base', 'base', NULL, NULL,
-  null, 1, 10, 3, TRUE, 'Spawns units'
+  null, 1, 3, TRUE, 'Spawns units'
 ),
 -- energy
 (4, 2, 'Biofuel', 'biofuel', NULL, NULL,
-  13, 2, 1, 1, TRUE, ''
+  13, 2, 1, TRUE, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 3, 1, 1, TRUE, ''
+  13, 3, 1, TRUE, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 4, 1, 2, TRUE, ''
+  13, 4, 2, TRUE, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 8, 1, 5, TRUE, ''
+  13, 8, 5, TRUE, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 10, 1, 5, TRUE, ''
+  13, 10, 5, TRUE, ''
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
-  37, 1, 1, 5, TRUE, ''
+  37, 1, 5, TRUE, ''
 ),
 (10, 3, 'Chemicals', 'chemicals', NULL, NULL,
-  38, 3, 1, 5, TRUE, ''
+  38, 3, 5, TRUE, ''
 ),
 (11, 3, 'Steel', 'steel', NULL, NULL,
-  39, 5, 1, 3, TRUE, ''
+  39, 5, 3, TRUE, ''
 ),
 (12, 3, 'Electronics', 'electronics', NULL, NULL,
-  40, 3, 1, 10, TRUE, ''
+  40, 3, 10, TRUE, ''
 ),
 -- hevvy industry
 (13, 4, 'Shipping Port', 'port', 2, 5,
-  41, 1, 1, 50, FALSE, 'Having this industry increases National GDP by 100%'
+  41, 1, 50, FALSE, 'Having this industry increases National GDP by 100%'
 ),
 (14, 4, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 1, 30, FALSE, 'A supply of machinery increases Cational GDP by 75%'
+  42, 3, 30, FALSE, 'A supply of machinery increases Cational GDP by 75%'
 ),
 (15, 4, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 1, 40, FALSE, 'A supply of automotive increases Cational GDP by 50%'
+  43, 3, 40, FALSE, 'A supply of automotive increases Cational GDP by 50%'
 ),
 (16, 4, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 1, 50, FALSE, 'A supply of aerospace increases Cational GDP by 25%'
+  44, 3, 50, FALSE, 'A supply of aerospace increases Cational GDP by 25%'
 ),
 -- tourism
 (17, 5, 'Leisure', 'leisure', NULL, 5,
-  null, 1, 1, 10, FALSE, ''
+  null, 1, 10, FALSE, ''
 ),
 (18, 5, 'Resort', 'resort', NULL, 3,
-  null, 1, 1, 5, FALSE, ''
+  null, 1, 5, FALSE, ''
 ),
 (19, 5, 'Gambling', 'gambling', 2, NULL,
-  null, 1, 5, 10, FALSE, ''
+  null, 1, 10, FALSE, ''
 ),
 -- knowledge/quaternary
 (20, 6, 'University', 'university', NULL, NULL,
-  33, 3, 5, 3, FALSE, ''
+  33, 3, 3, FALSE, ''
 ),
 (21, 6, 'Software', 'software', 2, NULL,
-  34, 3, 1, 8, FALSE, ''
+  34, 3, 8, FALSE, ''
 ),
 (22, 6, 'Healthcare', 'healthcare', 2, NULL,
-  35, 1, 1, 6, FALSE, ''
+  35, 1, 6, FALSE, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
-  null, 1, 1, 200, FALSE, ''
+  null, 1, 200, FALSE, ''
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  NULL, 1, 1, 50, FALSE, 'Having this industry reduces National Corruption by 50%'
+  NULL, 1, 50, FALSE, 'Having this industry reduces National Corruption by 50%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
-  36, 5, 1, 100, FALSE, ''
+  36, 5, 100, FALSE, ''
 );
 
 -- 

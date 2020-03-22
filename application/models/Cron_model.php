@@ -196,6 +196,8 @@ Class cron_model extends CI_Model
 	}
 	function industry_input()
 	{
+		// This is just for my text editor syntax highlighting
+		$support_key = SUPPORT_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
@@ -208,12 +210,17 @@ Class cron_model extends CI_Model
 				) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key
 				GROUP BY supply_industry_lookup.supply_key, tile_by_industry_and_account.account_key
 			) AS sil ON sil.supply_key = sal.supply_key AND sal.account_key = sil.account_key
+			INNER JOIN account ON sal.account_key = account.id
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
 			SET sal.amount = sal.amount - new_amount
+			AND sal_support.amount >= 0
 		");
 	}
 	// This pattern can be switched to settlement_income_collect style if ever slow
 	function industry_output()
 	{
+		// This is just for my text editor syntax highlighting
+		$support_key = SUPPORT_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
@@ -226,7 +233,10 @@ Class cron_model extends CI_Model
 				) AS tile_by_industry_and_account ON industry.id = tile_by_industry_and_account.industry_key
 				GROUP BY industry.output_supply_key, tile_by_industry_and_account.account_key
 			) AS industry ON industry.output_supply_key = sal.supply_key AND sal.account_key = industry.account_key
+			INNER JOIN account ON sal.account_key = account.id
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
 			SET sal.amount = sal.amount + new_amount
+			AND sal_support.amount >= 0
 		");
 	}
 	function settlement_income_collect()
