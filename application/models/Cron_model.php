@@ -29,7 +29,7 @@ Class cron_model extends CI_Model
 				FROM tile
 				GROUP BY settlement_key, account_key
 			) AS tile_by_settlement_and_account ON settlement_by_supply.id = tile_by_settlement_and_account.settlement_key AND sal.account_key = tile_by_settlement_and_account.account_key
-			SET sal.amount = sal.amount + (tile_by_settlement_and_account.tile_count * settlement_by_supply.output_supply_amount)
+			SET sal.amount = sal.amount + (IFNULL(tile_by_settlement_and_account.tile_count, 0) * IFNULL(settlement_by_supply.output_supply_amount, 0))
 		");
 	}
 	function township_input()
@@ -211,9 +211,14 @@ Class cron_model extends CI_Model
 				GROUP BY supply_industry_lookup.supply_key, tile_by_industry_and_account.account_key
 			) AS sil ON sil.supply_key = sal.supply_key AND sal.account_key = sil.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
+			INNER JOIN (
+				SELECT account_key, amount
+				FROM supply_account_lookup
+				WHERE supply_key = $support_key
+				AND amount >= 0
+			) AS sal_support ON sal_support.account_key = account.id
 			SET sal.amount = sal.amount - new_amount
-			AND sal_support.amount >= 0
+			WHERE sal_support.amount IS NOT NULL
 		");
 	}
 	// This pattern can be switched to settlement_income_collect style if ever slow
@@ -234,9 +239,14 @@ Class cron_model extends CI_Model
 				GROUP BY industry.output_supply_key, tile_by_industry_and_account.account_key
 			) AS industry ON industry.output_supply_key = sal.supply_key AND sal.account_key = industry.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
+			INNER JOIN (
+				SELECT account_key, amount
+				FROM supply_account_lookup
+				WHERE supply_key = $support_key
+				AND amount >= 0
+			) AS sal_support ON sal_support.account_key = account.id
 			SET sal.amount = sal.amount + new_amount
-			AND sal_support.amount >= 0
+			WHERE sal_support.amount IS NOT NULL
 		");
 	}
 	function settlement_income_collect()
@@ -261,7 +271,12 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
+			INNER JOIN (
+				SELECT account_key, amount
+				FROM supply_account_lookup
+				WHERE supply_key = $support_key
+				AND amount >= 0
+			) AS sal_support ON sal_support.account_key = account.id
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -280,7 +295,7 @@ Class cron_model extends CI_Model
 			WHERE account.is_active = 1
 			AND account.ideology = $free_market_key
 			AND sal.supply_key = $cash_key
-			AND sal_support.amount >= 0
+			AND sal_support.amount IS NOT NULL
 		");
 	}
 	function industry_income_collect()
@@ -305,7 +320,12 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = $support_key
+			INNER JOIN (
+				SELECT account_key, amount
+				FROM supply_account_lookup
+				WHERE supply_key = $support_key
+				AND amount >= 0
+			) AS sal_support ON sal_support.account_key = account.id
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -324,45 +344,7 @@ Class cron_model extends CI_Model
 			WHERE account.is_active = 1
 			AND account.ideology = $free_market_key
 			AND sal.supply_key = $cash_key
-			AND sal_support.amount >= 0
-		");
-	}
-	// 33 percent slower when using small datasets, may be quicker on larger datasets
-	function industry_income_collect___alternative()
-	{
-		$this->db->query("
-			UPDATE supply_account_lookup AS sal
-			INNER JOIN (
-				SELECT SUM(tile_count * industry.gdp) as new_amount, account_key
-				FROM industry
-				INNER JOIN (
-					SELECT COUNT(*) as tile_count, industry_key, account_key
-					FROM tile
-					GROUP BY industry_key, account_key
-				) AS tile_by_industry_and_account ON industry.id = tile_by_industry_and_account.industry_key
-				GROUP BY tile_by_industry_and_account.account_key
-			) AS industry ON sal.account_key = industry.account_key
-			SET sal.amount = sal.amount + new_amount
-			WHERE sal.supply_key = " . CASH_KEY . "
-		");
-	}
-	// 33 percent slower when using small datasets, may be quicker on larger datasets
-	function settlement_income_collect___alternative()
-	{
-		$this->db->query("
-			UPDATE supply_account_lookup AS sal
-			INNER JOIN (
-				SELECT SUM(tile_count * settlement.gdp) as new_amount, account_key
-				FROM settlement
-				INNER JOIN (
-					SELECT COUNT(*) as tile_count, settlement_key, account_key
-					FROM tile
-					GROUP BY settlement_key, account_key
-				) AS tile_by_settlement_and_account ON settlement.id = tile_by_settlement_and_account.settlement_key
-				GROUP BY tile_by_settlement_and_account.account_key
-			) AS settlement ON sal.account_key = settlement.account_key
-			SET sal.amount = sal.amount + new_amount
-			WHERE sal.supply_key = " . CASH_KEY . "
+			AND sal_support.amount IS NOT NULL
 		");
 	}
 	function punish_insufficient_supply()
