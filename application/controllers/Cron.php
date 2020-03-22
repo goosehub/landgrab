@@ -21,7 +21,7 @@ class Cron extends CI_Controller {
         if (!$valid) { return; }
         echo 'every_minute CRON - ' . PHP_EOL;
         $this->microtime('start_crons');
-        // $this->cron_model->increase_support();
+        $this->cron_model->increase_support(); $this->microtime('increase_support');
         // $this->cron_model->update_cache_leaderboards(); $this->microtime('update_cache_leaderboards');
     }
 
@@ -35,8 +35,8 @@ class Cron extends CI_Controller {
         // $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
         // $this->cron_model->grow_population(); $this->microtime('grow_population');
         // $this->cron_model->census_population(); $this->microtime('census_population');
-        // $this->cron_model->resource_output(); $this->microtime('resource_output');
 
+        $this->cron_model->resource_output(); $this->microtime('resource_output');
         $this->cron_model->settlement_output(); $this->microtime('settlement_output');
         $this->cron_model->township_input(); $this->microtime('township_input');
         $this->cron_model->industry_input(); $this->microtime('industry_input');
@@ -48,19 +48,19 @@ class Cron extends CI_Controller {
         // $this->cron_model->set_support_max_bottom(); $this->microtime('set_support_max_bottom');
     }
 
-    public function microtime($string = 'microtime')
-    {
-        $microseconds = microtime(true) - $this->logged_microtime;
-        echo '<br>' . $string . ' | ' . $microseconds . '<br>';
-        $this->logged_microtime = microtime(true);
-    }
-
     public function every_day($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
         echo 'every_day CRON - ' . PHP_EOL;
-        $this->cron_model->world_resets();
+        $this->cron_model->world_resets(); $this->microtime('world_resets');
+    }
+
+    public function microtime($string = 'microtime')
+    {
+        $microseconds = microtime(true) - $this->logged_microtime;
+        echo '<br>' . $string . ' | ' . $microseconds . '<br>';
+        $this->logged_microtime = microtime(true);
     }
 
     private function verify_token($token = false) {

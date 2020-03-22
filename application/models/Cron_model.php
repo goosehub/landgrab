@@ -19,6 +19,19 @@ Class cron_model extends CI_Model
 		// foreach account
 		// set population supply to population of all territories
 	}
+	function resource_output()
+	{
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN resource AS resource_by_supply ON sal.supply_key = resource_by_supply.output_supply_key
+			INNER JOIN (
+				SELECT resource_key, account_key, COUNT(*) as tile_count
+				FROM tile
+				GROUP BY resource_key, account_key
+			) AS tile_by_resource_and_account ON resource_by_supply.id = tile_by_resource_and_account.resource_key AND sal.account_key = tile_by_resource_and_account.account_key
+			SET sal.amount = sal.amount + (IFNULL(tile_by_resource_and_account.tile_count, 0))
+		");
+	}
 	function settlement_output()
 	{
 		$this->db->query("
@@ -361,6 +374,7 @@ Class cron_model extends CI_Model
 	}
 	function world_resets()
 	{
+			$this->regenerate_resources(1);
 		$force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
 		$now = date('Y-m-d H:i:s');
 		$worlds = $this->game_model->get_all('world');

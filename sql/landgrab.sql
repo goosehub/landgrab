@@ -229,46 +229,46 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (2, 1, 'Support', 'support', '%', FALSE, FALSE, 'Increases every minute depending on government type'),
 (3, 1, 'Population', 'population', 'K', FALSE, FALSE, 'Census occurs every hour and updates this value'),
 (4, 1, 'Territories', 'tiles', '', FALSE, FALSE, 'The primary leaderboard stat'),
-(5, 2, 'Timber', 'timber', 'M Lbs', TRUE, FALSE, ''),
-(6, 2, 'Fiber', 'fiber', 'M Lbs', TRUE, FALSE, ''),
-(7, 2, 'Ore', 'ore', 'M Lbs', TRUE, FALSE, ''),
-(8, 3, 'Grain', 'grain', 'M Lbs', TRUE, FALSE, ''),
-(9, 3, 'Fruit', 'fruit', 'M Lbs', TRUE, FALSE, ''),
-(10, 3, 'Vegetables', 'vegetables', 'M Lbs', TRUE, FALSE, ''),
-(11, 3, 'Livestock', 'livestock', 'M Lbs', TRUE, FALSE, ''),
-(12, 3, 'Fish', 'fish', 'M Lbs', TRUE, FALSE, ''),
-(13, 4, 'Energy', 'energy', 'MW', FALSE, FALSE, ''),
-(14, 4, 'Biofuel', 'biofuel', 'M Lbs', TRUE, FALSE, ''),
-(15, 4, 'Coal', 'coal', 'M Lbs', TRUE, FALSE, ''),
-(16, 4, 'Gas', 'gas', 'Tcf', TRUE, FALSE, ''),
-(17, 4, 'Oil', 'oil', 'MMb/d', TRUE, FALSE, ''),
-(18, 4, 'Uranium', 'uranium', 'Ton', TRUE, FALSE, ''),
-(19, 5, 'Silver', 'silver', 'Ton', TRUE, TRUE, ''),
-(20, 5, 'Gold', 'gold', 'Ton', TRUE, TRUE, ''),
-(21, 5, 'Platinum', 'platinum', 'Ton', TRUE, TRUE, ''),
-(22, 5, 'Gemstones', 'gemstones', 'CT', TRUE, TRUE, ''),
-(23, 6, 'Coffee', 'coffee', 'M Lbs', TRUE, TRUE, ''),
-(24, 6, 'Tea', 'tea', 'M Lbs', TRUE, TRUE, ''),
-(25, 6, 'Cannabis', 'cannabis', 'Ton', TRUE, TRUE, ''),
-(26, 6, 'Alcohols', 'alcohol', 'M Lbs', TRUE, TRUE, ''),
-(27, 6, 'Tobacco', 'tobacco', 'M Lbs', TRUE, TRUE, ''),
-(28, 7, 'Iron', 'iron', 'M Lbs', TRUE, FALSE, ''),
-(29, 7, 'Copper', 'copper', 'Ton', TRUE, FALSE, ''),
-(30, 7, 'Zinc', 'zinc', 'Ton', TRUE, FALSE, ''),
-(31, 7, 'Aluminum', 'aluminum', 'Ton', TRUE, FALSE, ''),
-(32, 7, 'Nickle', 'nickle', 'Ton', TRUE, FALSE, ''),
+(5, 2, 'Timber', 'timber', '', TRUE, FALSE, ''),
+(6, 2, 'Fiber', 'fiber', '', TRUE, FALSE, ''),
+(7, 2, 'Ore', 'ore', '', TRUE, FALSE, ''),
+(8, 3, 'Grain', 'grain', '', TRUE, FALSE, ''),
+(9, 3, 'Fruit', 'fruit', '', TRUE, FALSE, ''),
+(10, 3, 'Vegetables', 'vegetables', '', TRUE, FALSE, ''),
+(11, 3, 'Livestock', 'livestock', '', TRUE, FALSE, ''),
+(12, 3, 'Fish', 'fish', '', TRUE, FALSE, ''),
+(13, 4, 'Energy', 'energy', '', FALSE, FALSE, ''),
+(14, 4, 'Biofuel', 'biofuel', '', TRUE, FALSE, ''),
+(15, 4, 'Coal', 'coal', '', TRUE, FALSE, ''),
+(16, 4, 'Gas', 'gas', '', TRUE, FALSE, ''),
+(17, 4, 'Oil', 'oil', '', TRUE, FALSE, ''),
+(18, 4, 'Uranium', 'uranium', '', TRUE, FALSE, ''),
+(19, 5, 'Silver', 'silver', '', TRUE, TRUE, ''),
+(20, 5, 'Gold', 'gold', '', TRUE, TRUE, ''),
+(21, 5, 'Platinum', 'platinum', '', TRUE, TRUE, ''),
+(22, 5, 'Gemstones', 'gemstones', '', TRUE, TRUE, ''),
+(23, 6, 'Coffee', 'coffee', '', TRUE, TRUE, ''),
+(24, 6, 'Tea', 'tea', '', TRUE, TRUE, ''),
+(25, 6, 'Cannabis', 'cannabis', '', TRUE, TRUE, ''),
+(26, 6, 'Alcohols', 'alcohol', '', TRUE, TRUE, ''),
+(27, 6, 'Tobacco', 'tobacco', '', TRUE, TRUE, ''),
+(28, 7, 'Iron', 'iron', '', TRUE, FALSE, ''),
+(29, 7, 'Copper', 'copper', '', TRUE, FALSE, ''),
+(30, 7, 'Zinc', 'zinc', '', TRUE, FALSE, ''),
+(31, 7, 'Aluminum', 'aluminum', '', TRUE, FALSE, ''),
+(32, 7, 'Nickle', 'nickle', '', TRUE, FALSE, ''),
 (33, 8, 'Education', 'education', '', FALSE, FALSE, ''),
 (34, 8, 'Software', 'software', '', TRUE, FALSE, ''),
 (35, 8, 'Healthcare', 'healthcare', '', FALSE, FALSE, ''),
 (36, 8, 'Engineering', 'engineering', '', TRUE, FALSE, ''),
-(37, 9, 'Merchandise', 'merchandise', ' Shipments', TRUE, FALSE, ''),
-(38, 9, 'Chemicals', 'chemicals', 'Kl', TRUE, FALSE, ''),
-(39, 9, 'Steel', 'steel', 'M Lbs', TRUE, FALSE, ''),
-(40, 9, 'Electronics', 'electronics', ' Shipments', TRUE, FALSE, ''),
+(37, 9, 'Merchandise', 'merchandise', '', TRUE, FALSE, ''),
+(38, 9, 'Chemicals', 'chemicals', '', TRUE, FALSE, ''),
+(39, 9, 'Steel', 'steel', '', TRUE, FALSE, ''),
+(40, 9, 'Electronics', 'electronics', '', TRUE, FALSE, ''),
 (41, 10, 'Shipping Ports', 'port', '', FALSE, FALSE, ''),
-(42, 10, 'Machinery', 'machinery', ' Shipments', TRUE, FALSE, ''),
-(43, 10, 'Automotive', 'automotive', ' Shipments', TRUE, FALSE, ''),
-(44, 10, 'Aerospace', 'aerospace', ' Shipments', TRUE, FALSE, '');
+(42, 10, 'Machinery', 'machinery', '', TRUE, FALSE, ''),
+(43, 10, 'Automotive', 'automotive', '', TRUE, FALSE, ''),
+(44, 10, 'Aerospace', 'aerospace', '', TRUE, FALSE, '');
 
 CREATE TABLE IF NOT EXISTS `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -293,6 +293,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
+  `output_supply_key` int(10) UNSIGNED NOT NULL,
   `is_value_resource` int(1) UNSIGNED NOT NULL,
   `is_energy_resource` int(1) UNSIGNED NOT NULL,
   `is_metal_resource` int(1) UNSIGNED NOT NULL,
@@ -308,75 +309,75 @@ ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
 ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `resource`;
-INSERT INTO `resource` (`id`, `label`, `slug`,
+INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
   `is_value_resource`, `is_energy_resource`, `is_metal_resource`,
   `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`
 ) VALUES
 -- value
 (
-  1, 'Silver', 'silver',
+  1, 'Silver', 'silver', 19,
   TRUE, FALSE, FALSE,
   10, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  2, 'Gold', 'gold',
+  2, 'Gold', 'gold', 20,
   TRUE, FALSE, FALSE,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  3, 'Platinum', 'platinum',
+  3, 'Platinum', 'platinum', 21,
   TRUE, FALSE, FALSE,
   3, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  4, 'Gemstones', 'gemstones',
+  4, 'Gemstones', 'gemstones', 22,
   TRUE, FALSE, FALSE,
   2, TRUE, TRUE, TRUE, FALSE
 ),
 -- Energy
 (
-  5, 'Coal', 'coal',
+  5, 'Coal', 'coal', 15,
   FALSE, TRUE, FALSE,
   15, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  6, 'Gas', 'gas',
+  6, 'Gas', 'gas', 16,
   FALSE, TRUE, FALSE,
   12, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  7, 'Oil', 'oil',
+  7, 'Oil', 'oil', 17,
   FALSE, TRUE, FALSE,
   10, TRUE, FALSE, TRUE, TRUE
 ),
 (
-  8, 'Uranium', 'uranium',
+  8, 'Uranium', 'uranium', 18,
   FALSE, TRUE, FALSE,
   3, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
-  9, 'Iron', 'iron',
+  9, 'Iron', 'iron', 28,
   FALSE, FALSE, TRUE,
   20, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  10, 'Copper', 'copper',
+  10, 'Copper', 'copper', 29,
   FALSE, FALSE, TRUE,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  11, 'Zinc', 'zinc',
+  11, 'Zinc', 'zinc', 30,
   FALSE, FALSE, TRUE,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  12, 'Aluminum', 'aluminum',
+  12, 'Aluminum', 'aluminum', 31,
   FALSE, FALSE, TRUE,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
-  13, 'Nickle', 'nickle',
+  13, 'Nickle', 'nickle', 32,
   FALSE, FALSE, TRUE,
   5, TRUE, TRUE, TRUE, FALSE
 );
