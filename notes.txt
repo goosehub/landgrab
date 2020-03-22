@@ -18,7 +18,6 @@ exploit? trade all supplies, spend all money on troops, convert to socialism, us
 
 HIGH PRIORITY
     commission icons
-    input and output crons
 MEDIUM PRIORITY
     unit system
         attacking
@@ -27,8 +26,6 @@ MEDIUM PRIORITY
         conceal
         exclude conceal on ocean
     taxes
-        Apply power structure corruption
-        Enforce support at least 0
         budget UI
     Punish negative supply
         have it affect support

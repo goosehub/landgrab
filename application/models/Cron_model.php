@@ -246,6 +246,7 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = " . SUPPORT_KEY . "
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -264,6 +265,7 @@ Class cron_model extends CI_Model
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
 			AND sal.supply_key = " . CASH_KEY . "
+			AND sal_support.amount >= 0
 		");
 	}
 	function industry_income_collect()
@@ -283,6 +285,7 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
+			INNER JOIN supply_account_lookup sal_support ON sal_support.account_key = account.id AND sal_support.supply_key = " . SUPPORT_KEY . "
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -301,6 +304,7 @@ Class cron_model extends CI_Model
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
 			AND sal.supply_key = " . CASH_KEY . "
+			AND sal_support.amount >= 0
 		");
 	}
 	// 33 percent slower when using small datasets, may be quicker on larger datasets

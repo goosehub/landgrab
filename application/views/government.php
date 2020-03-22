@@ -13,7 +13,7 @@
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Power Structure', 'Democracy has the least corruption but also generates the least support. Autocracy has the most corruption, but also the most support. Oligarchy is a balance between the two.', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, 1 support per minute | Autocracy: 20% corruption, 2 support per minute | Oligarchy: 30% corruption, 3 support per minute', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
@@ -90,7 +90,7 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     Corruption:
-                    <?php echo generate_popover('Corruption', 'Corruptiion is caused by power structure type and number of territories', 'right'); ?>
+                    <?php echo generate_popover('Corruption', 'Corruptiion is caused by power structure, plus 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
                     -$<span id="foobar">50</span> Million
