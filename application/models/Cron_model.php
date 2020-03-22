@@ -245,8 +245,11 @@ Class cron_model extends CI_Model
 				WHERE sal.supply_key = 1
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
-			SET sal.amount = sal.amount + sum_settlement_gdp
-			WHERE sal.supply_key = " . CASH_KEY . "
+			INNER JOIN account ON sal.account_key = account.id
+			SET sal.amount = sal.amount + (sum_settlement_gdp * (account.tax_rate / 100))
+			WHERE account.is_active = 1
+			AND account.ideology = " . FREE_MARKET_KEY . "
+			AND sal.supply_key = " . CASH_KEY . "
 		");
 	}
 	function industry_income_collect()
@@ -265,8 +268,11 @@ Class cron_model extends CI_Model
 				WHERE sal.supply_key = 1
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
-			SET sal.amount = sal.amount + sum_industry_gdp
-			WHERE sal.supply_key = " . CASH_KEY . "
+			INNER JOIN account ON sal.account_key = account.id
+			SET sal.amount = sal.amount + (sum_industry_gdp * (account.tax_rate / 100))
+			WHERE account.is_active = 1
+			AND account.ideology = " . FREE_MARKET_KEY . "
+			AND sal.supply_key = " . CASH_KEY . "
 		");
 	}
 	// 33 percent slower when using small datasets, may be quicker on larger datasets

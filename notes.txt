@@ -27,10 +27,7 @@ MEDIUM PRIORITY
         conceal
         exclude conceal on ocean
     taxes
-        Limit to active accounts
-        Apply tax rate
         Apply power structure corruption
-        Apply ideology
         Enforce support at least 0
         budget UI
     Punish negative supply

@@ -46,10 +46,6 @@ class Cron extends CI_Controller {
         $this->microtime('settlement_income_collect');
         $this->cron_model->industry_income_collect();
         $this->microtime('industry_income_collect');
-        $this->cron_model->industry_income_collect___alternative();
-        $this->microtime('industry_income_collect___alternative');
-        $this->cron_model->settlement_income_collect___alternative();
-        $this->microtime('settlement_income_collect___alternative');
         // $this->cron_model->punish_insufficient_supply();
         // $this->microtime('punish_insufficient_supply');
         // $this->cron_model->update_cache_leaderboards();
