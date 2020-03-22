@@ -2,15 +2,8 @@
     Notes
 ==========================================================================================
 
-before output functions are run
 shortages
-each 1 under supply count costs 1 support
-when below 0 support, government switched to anarchy before output functions are run
-no industry outputs, no gdp
-
-tax mechanic?
-
-exploit? trade all supplies, spend all money on troops, convert to socialism, use support for more troops
+each 1 under supply count costs 1 support?
 
 ==========================================================================================
     Goals
@@ -26,16 +19,12 @@ MEDIUM PRIORITY
         being attacked
         conceal
         exclude conceal on ocean
-    taxes
-        budget UI
-    Punish negative supply
-        have it affect support
-    settlement system
-        require 1 round of supply feed on start
-        settlement without supply input
-    industry system
-        require 1 round of supply feed on start
-        industry without supply input
+    support generate
+    support min/max based on power structure, tax rate, ideology
+    taxes budget UI
+    Punish negative supply and have it affect support
+    settlement require 1 round of supply feed on start
+    industry require 1 round of supply feed on start
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -55,11 +44,10 @@ MEDIUM PRIORITY
     enlist spawn validation
     fix industry tab showing when not an option
 LOW PRIORITY
+    Better Power Structure popover
     make clear what borders are current players borders
     refactor township input desc to be generated
-    population
-        Have it be required for upgrading townships
-        Reset/Decrease on capture?
+    population required for upgrading townships
     hide resources in responses before discovered
     sell mechanic
     implement icons
@@ -71,6 +59,8 @@ LOW PRIORITY
     have capitols show laws of nation
     number formatting
     tooltip for alliances, rights of passage, etc
+    Industry/ non township icon marker toggle
+    socalism toggle tax rate, info UI
 GOING LIVE
     swal alerts
     DB indexes
@@ -84,7 +74,8 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
-    Map icon per industry
+    anarchy mechanic
+    Township Population Reset/Decrease on capture?
     Toggle individual settlements and industries
     generate worlds when all worlds have no free non tundra land
     new player full map random start
@@ -108,18 +99,6 @@ NO PRIORITY
 ==========================================================================================
     Mechanics
 ==========================================================================================
-
-Hourly Cron Sequence
-    Pay for settlements
-    Pay for industry
-    Receive settlements output
-    Receive industry output
-    Use up auto used supplies
-
-Power Structure
-    Democracy Corruption at 20%, 2 support per minute
-    Oligarchy Corruption at 40%, 4 support per minute
-    Autocracy Corruption at 60%, 5 support per minute
 
 Support
     Maxes out at 100(200 for Socialism?)
@@ -148,15 +127,6 @@ Unit Battle Logic
     Towns get double defensive bonus
     Cities get triple defensive bonus
     Metros get quadruple defensive bonus
-
-Population Increase
-    Town: 1 per hour
-    City: 10 per hour
-    Metro: 30 per hour
-
-Budget Rates
-    Tax (Support) = Cash as Percent of GDP
-    Affects rate of support increase, can become negative
 
 ==========================================================================================
     Icons Needed

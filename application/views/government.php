@@ -13,7 +13,7 @@
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, 1 support per minute | Autocracy: 20% corruption, 2 support per minute | Oligarchy: 30% corruption, 3 support per minute', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, 1 support per/min, socialism max support: 200 | Oligarchy: 20% corruption, 2 support per/min, socialism max support: 150 | Autocracy: 30% corruption, 3 support per/min, socialism max: 100 support', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
@@ -30,7 +30,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Taxes', 'Higher taxes cause support to regenerate more slowly or even negatively', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Taxes', 'Each 1% of taxes reduces your maximum support by 2', 'right', 'pull-right'); ?>
                         <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
                     </div>
                     <div class="col-md-8">
@@ -40,7 +40,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to use support to purchase units', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops.', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Economic Ideology: </label>
                     </div>
                     <div class="col-md-8">
