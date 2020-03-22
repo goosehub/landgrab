@@ -246,7 +246,13 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			SET sal.amount = sal.amount + (sum_settlement_gdp * (account.tax_rate / 100))
+			LEFT JOIN (
+				SELECT account_key, COUNT(tile.id) AS tile_count
+				FROM tile
+			) AS all_tile ON all_tile.account_key = account.id
+			-- amount equals current amount plus grp times tax rate * power structure corruption rate
+			SET sal.amount = sal.amount + ( sum_settlement_gdp * ( account.tax_rate / 100 ) * ( ( 100 - ( account.government * 10 ) ) / 100 ) )
+
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
 			AND sal.supply_key = " . CASH_KEY . "
@@ -269,7 +275,13 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			SET sal.amount = sal.amount + (sum_industry_gdp * (account.tax_rate / 100))
+			LEFT JOIN (
+				SELECT account_key, COUNT(tile.id) AS tile_count
+				FROM tile
+			) AS all_tile ON all_tile.account_key = account.id
+			-- amount equals current amount plus grp times tax rate * power structure corruption rate
+			SET sal.amount = sal.amount + ( sum_industry_gdp * ( account.tax_rate / 100 ) * ( ( 100 - ( account.government * 10 ) ) / 100 ) )
+
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
 			AND sal.supply_key = " . CASH_KEY . "
