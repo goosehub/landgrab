@@ -201,8 +201,8 @@ Class cron_model extends CI_Model
 			INNER JOIN (
 				SELECT SUM(tile_count * supply_industry_lookup.amount) as new_amount, account_key, supply_key
 				FROM supply_industry_lookup
-				INNER JOIN (
 					SELECT COUNT(*) as tile_count, industry_key, account_key
+				INNER JOIN (
 					FROM tile
 					GROUP BY industry_key, account_key
 				) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key
@@ -217,7 +217,7 @@ Class cron_model extends CI_Model
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
-				SELECT SUM(tile_count * industry.output_supply_amount) as new_amount, account_key, output_supply_key
+				SELECT SUM(tile_count * industry.output_supply_amount) AS new_amount, account_key, output_supply_key
 				FROM industry
 				INNER JOIN (
 					SELECT COUNT(*) as tile_count, industry_key, account_key
@@ -234,7 +234,7 @@ Class cron_model extends CI_Model
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
-				SELECT sal.account_key, sal.amount, SUM(settlement_tile_join.settlement_gdp) as sum_settlement_gdp
+				SELECT sal.account_key, sal.amount, SUM(settlement_tile_join.settlement_gdp) AS sum_settlement_gdp
 				FROM supply_account_lookup AS sal
 				INNER JOIN (
 					SELECT COUNT(tile.id) * settlement.gdp AS settlement_gdp, account_key
@@ -250,8 +250,14 @@ Class cron_model extends CI_Model
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
 			) AS all_tile ON all_tile.account_key = account.id
+
 			-- amount equals current amount plus grp times tax rate * power structure corruption rate
-			SET sal.amount = sal.amount + ( sum_settlement_gdp * ( account.tax_rate / 100 ) * ( ( 100 - ( account.government * 10 ) ) / 100 ) )
+			SET sal.amount = sal.amount + (
+				sum_settlement_gdp *
+				( account.tax_rate / 100 ) * 
+				( ( 100 - ( account.government * 10 ) ) / 100 ) *
+				( ( 100 - ( FLOOR(IFNULL(tile_count, 1) / 5) * 10 ) ) / 100 )
+			)
 
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
@@ -279,8 +285,14 @@ Class cron_model extends CI_Model
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
 			) AS all_tile ON all_tile.account_key = account.id
+
 			-- amount equals current amount plus grp times tax rate * power structure corruption rate
-			SET sal.amount = sal.amount + ( sum_industry_gdp * ( account.tax_rate / 100 ) * ( ( 100 - ( account.government * 10 ) ) / 100 ) )
+			SET sal.amount = sal.amount + (
+				sum_industry_gdp *
+				( account.tax_rate / 100 ) *
+				( ( 100 - ( account.government * 10 ) ) / 100 ) *
+				( ( 100 - ( FLOOR(IFNULL(tile_count, 1) / 5) * 10 ) ) / 100 )
+			)
 
 			WHERE account.is_active = 1
 			AND account.ideology = " . FREE_MARKET_KEY . "
