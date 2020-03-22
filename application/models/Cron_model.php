@@ -246,17 +246,19 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			LEFT JOIN (
+			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
-			) AS all_tile ON all_tile.account_key = account.id
+				GROUP BY account_key
+			) AS all_tile ON all_tile.account_key = sal.account_key
 
-			-- amount equals current amount plus grp times tax rate * power structure corruption rate
+			-- amount equals current amount plus grp times tax rate * power structure corruption rate * the tile corruption rate
+			-- Tile corruption is every N tiles another 1 percent of corruption
 			SET sal.amount = sal.amount + (
 				sum_settlement_gdp *
 				( account.tax_rate / 100 ) * 
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(IFNULL(tile_count, 1) / 5) * 10 ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / 20) ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
@@ -281,17 +283,19 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
-			LEFT JOIN (
+			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
-			) AS all_tile ON all_tile.account_key = account.id
+				GROUP BY account_key
+			) AS all_tile ON all_tile.account_key = sal.account_key
 
-			-- amount equals current amount plus grp times tax rate * power structure corruption rate
+			-- amount equals current amount plus grp times tax rate * power structure corruption rate * the tile corruption rate
+			-- Tile corruption is every N tiles another 1 percent of corruption
 			SET sal.amount = sal.amount + (
 				sum_industry_gdp *
 				( account.tax_rate / 100 ) *
 				( ( 100 - ( account.government * 10 ) ) / 100 ) *
-				( ( 100 - ( FLOOR(IFNULL(tile_count, 1) / 5) * 10 ) ) / 100 )
+				( ( 100 - ( FLOOR(all_tile.tile_count / 20) ) ) / 100 )
 			)
 
 			WHERE account.is_active = 1
