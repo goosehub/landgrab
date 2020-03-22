@@ -211,6 +211,7 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount - new_amount
 		");
 	}
+	// This pattern can be switched to settlement_income_collect style if ever slow
 	function industry_output()
 	{
 		$this->db->query("
@@ -235,7 +236,7 @@ Class cron_model extends CI_Model
 			INNER JOIN (
 				SELECT sal.account_key, sal.amount, SUM(settlement_tile_join.settlement_gdp) as sum_settlement_gdp
 				FROM supply_account_lookup AS sal
-				LEFT JOIN (
+				INNER JOIN (
 					SELECT COUNT(tile.id) * settlement.gdp AS settlement_gdp, account_key
 					FROM tile
 					INNER JOIN settlement ON tile.settlement_key = settlement.id
@@ -247,11 +248,6 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount + sum_settlement_gdp
 			WHERE sal.supply_key = " . CASH_KEY . "
 		");
-		// Limit to active accounts
-		// Apply tax rate
-		// Apply power structure corruption
-		// Apply ideology
-		// Enforce support at least 0
 	}
 	function industry_income_collect()
 	{
@@ -260,7 +256,7 @@ Class cron_model extends CI_Model
 			INNER JOIN (
 				SELECT sal.account_key, sal.amount, SUM(industry_tile_join.industry_gdp) as sum_industry_gdp
 				FROM supply_account_lookup AS sal
-				LEFT JOIN (
+				INNER JOIN (
 					SELECT COUNT(tile.id) * industry.gdp AS industry_gdp, account_key
 					FROM tile
 					INNER JOIN industry ON tile.industry_key = industry.id
@@ -272,11 +268,44 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount + sum_industry_gdp
 			WHERE sal.supply_key = " . CASH_KEY . "
 		");
-		// Limit to active accounts
-		// Apply tax rate
-		// Apply power structure corruption
-		// Apply ideology
-		// Enforce support at least 0
+	}
+	// 33 percent slower when using small datasets, may be quicker on larger datasets
+	function industry_income_collect___alternative()
+	{
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT SUM(tile_count * industry.gdp) as new_amount, account_key
+				FROM industry
+				INNER JOIN (
+					SELECT COUNT(*) as tile_count, industry_key, account_key
+					FROM tile
+					GROUP BY industry_key, account_key
+				) AS tile_by_industry_and_account ON industry.id = tile_by_industry_and_account.industry_key
+				GROUP BY tile_by_industry_and_account.account_key
+			) AS industry ON sal.account_key = industry.account_key
+			SET sal.amount = sal.amount + new_amount
+			WHERE sal.supply_key = " . CASH_KEY . "
+		");
+	}
+	// 33 percent slower when using small datasets, may be quicker on larger datasets
+	function settlement_income_collect___alternative()
+	{
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN (
+				SELECT SUM(tile_count * settlement.gdp) as new_amount, account_key
+				FROM settlement
+				INNER JOIN (
+					SELECT COUNT(*) as tile_count, settlement_key, account_key
+					FROM tile
+					GROUP BY settlement_key, account_key
+				) AS tile_by_settlement_and_account ON settlement.id = tile_by_settlement_and_account.settlement_key
+				GROUP BY tile_by_settlement_and_account.account_key
+			) AS settlement ON sal.account_key = settlement.account_key
+			SET sal.amount = sal.amount + new_amount
+			WHERE sal.supply_key = " . CASH_KEY . "
+		");
 	}
 	function punish_insufficient_supply()
 	{
