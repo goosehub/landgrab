@@ -201,8 +201,8 @@ Class cron_model extends CI_Model
 			INNER JOIN (
 				SELECT SUM(tile_count * supply_industry_lookup.amount) as new_amount, account_key, supply_key
 				FROM supply_industry_lookup
-					SELECT COUNT(*) as tile_count, industry_key, account_key
 				INNER JOIN (
+					SELECT COUNT(*) as tile_count, industry_key, account_key
 					FROM tile
 					GROUP BY industry_key, account_key
 				) AS tile_by_industry_and_account ON supply_industry_lookup.industry_key = tile_by_industry_and_account.industry_key

@@ -1,65 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// 
-// Cron Token, for verifying cron actions
-// 
+// Polling
+define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
+define('ACCOUNT_UPDATE_INTERVAL_MS', 5 * 1000);
+define('LEADERBOARD_UPDATE_INTERVAL_M', 10);
 
-// Keys
-// Settlements
-define('UNCLAIMED_KEY', 1);
-define('UNINHABITED_KEY', 2);
-define('TOWN_KEY', 3);
-define('CITY_KEY', 4);
-define('METRO_KEY', 5);
-// Governments
-define('DEMOCRACY_KEY', 1);
-define('OLIGARCHY_KEY', 2);
-define('AUTOCRACY_KEY', 3);
-define('ANARCHY_KEY', 4);
-// Ideology
-define('FREE_MARKET_KEY', 1);
-define('SOCIALISM_KEY', 2);
-// Terrain
-DEFINE('FERTILE_KEY', 1);
-DEFINE('BARREN_KEY', 2);
-DEFINE('MOUNTAIN_KEY', 3);
-DEFINE('TUNDRA_KEY', 4);
-DEFINE('COASTAL_KEY', 5);
-DEFINE('OCEAN_KEY', 6);
-// Agreement
-DEFINE('WAR_KEY', 1);
-DEFINE('PEACE_KEY', 2);
-DEFINE('PASSAGE_KEY', 3);
-// Supply
-define('CASH_KEY', 1);
-define('SUPPORT_KEY', 2);
-DEFINE('POPULATION_KEY', 3);
-DEFINE('TILES_KEY', 4);
-// Foods
-DEFINE('GRAIN_KEY', 8);
-DEFINE('FRUIT_KEY', 9);
-DEFINE('VEGETABLES_KEY', 10);
-DEFINE('LIVESTOCK_KEY', 11);
-DEFINE('FISH_KEY', 12);
-// Cash Crops
-DEFINE('COFFEE_KEY', 23);
-DEFINE('TEA_KEY', 24);
-DEFINE('CANNABIS_KEY', 25);
-DEFINE('ALCOHOLS_KEY', 26);
-DEFINE('TOBACCO_KEY', 27);
-// Other township supplies
-DEFINE('ENERGY_KEY', 13);
-DEFINE('MERCHANDISE_KEY', 37);
-DEFINE('STEEL_KEY', 39);
-DEFINE('HEALTHCARE_KEY', 35);
-// Industry
-DEFINE('CAPITOL_INDUSTRY_KEY', 1);
-DEFINE('BASE_INDUSTRY_KEY', 3);
-// Unit types
-DEFINE('INFANTRY_KEY', 1);
-DEFINE('TANKS_KEY', 2);
-DEFINE('COMMANDOS_KEY', 3);
 // Defensive Bonuses
 DEFINE('BARREN_DEFENSIVE_BONUS', -0.5);
 DEFINE('TUNDRA_DEFENSIVE_BONUS', 1);
@@ -67,7 +13,7 @@ DEFINE('MOUNTAIN_DEFENSIVE_BONUS', 1);
 DEFINE('TOWN_DEFENSIVE_BONUS', 1);
 DEFINE('CITY_DEFENSIVE_BONUS', 2);
 DEFINE('METRO_DEFENSIVE_BONUS', 3);
-// Costs
+// Township Costs
 DEFINE('TOWN_FOOD_COST', 1);
 DEFINE('CITY_FOOD_COST', 3);
 DEFINE('METRO_FOOD_COST', 5);
@@ -125,16 +71,72 @@ define('DEFAULT_GOVERNMENT', 2);
 define('DEFAULT_TAX_RATE', 15);
 define('DEFAULT_IDEOLOGY', 1);
 
-// Polling
-define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
-define('ACCOUNT_UPDATE_INTERVAL_MS', 5 * 1000);
-define('LEADERBOARD_UPDATE_INTERVAL_M', 10);
-
 // Marketing
 define('ENABLE_FACEBOOK', false);
 
 // Use for emergencies
 define('MAINTENANCE', false);
+
+/*
+|--------------------------------------------------------------------------
+| Keys
+|--------------------------------------------------------------------------
+*/
+
+// Settlements
+define('UNCLAIMED_KEY', 1);
+define('UNINHABITED_KEY', 2);
+define('TOWN_KEY', 3);
+define('CITY_KEY', 4);
+define('METRO_KEY', 5);
+// Governments
+define('DEMOCRACY_KEY', 1);
+define('OLIGARCHY_KEY', 2);
+define('AUTOCRACY_KEY', 3);
+define('ANARCHY_KEY', 4);
+// Ideology
+define('FREE_MARKET_KEY', 1);
+define('SOCIALISM_KEY', 2);
+// Terrain
+DEFINE('FERTILE_KEY', 1);
+DEFINE('BARREN_KEY', 2);
+DEFINE('MOUNTAIN_KEY', 3);
+DEFINE('TUNDRA_KEY', 4);
+DEFINE('COASTAL_KEY', 5);
+DEFINE('OCEAN_KEY', 6);
+// Agreement
+DEFINE('WAR_KEY', 1);
+DEFINE('PEACE_KEY', 2);
+DEFINE('PASSAGE_KEY', 3);
+// Supply
+define('CASH_KEY', 1);
+define('SUPPORT_KEY', 2);
+DEFINE('POPULATION_KEY', 3);
+DEFINE('TILES_KEY', 4);
+// Foods
+DEFINE('GRAIN_KEY', 8);
+DEFINE('FRUIT_KEY', 9);
+DEFINE('VEGETABLES_KEY', 10);
+DEFINE('LIVESTOCK_KEY', 11);
+DEFINE('FISH_KEY', 12);
+// Cash Crops
+DEFINE('COFFEE_KEY', 23);
+DEFINE('TEA_KEY', 24);
+DEFINE('CANNABIS_KEY', 25);
+DEFINE('ALCOHOLS_KEY', 26);
+DEFINE('TOBACCO_KEY', 27);
+// Other township supplies
+DEFINE('ENERGY_KEY', 13);
+DEFINE('MERCHANDISE_KEY', 37);
+DEFINE('STEEL_KEY', 39);
+DEFINE('HEALTHCARE_KEY', 35);
+// Industry
+DEFINE('CAPITOL_INDUSTRY_KEY', 1);
+DEFINE('BASE_INDUSTRY_KEY', 3);
+// Unit types
+DEFINE('INFANTRY_KEY', 1);
+DEFINE('TANKS_KEY', 2);
+DEFINE('COMMANDOS_KEY', 3);
 
 /*
 |--------------------------------------------------------------------------
