@@ -19,7 +19,7 @@ MEDIUM PRIORITY
         being attacked
         conceal
         exclude conceal on ocean
-    support min/max based on power structure, tax rate, ideology
+    support min/max based on ideology and power structure
     Punish negative supply and have it affect support
     settlement require 1 round of supply feed on start
     industry require 1 round of supply feed on start

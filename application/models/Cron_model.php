@@ -19,7 +19,7 @@ Class cron_model extends CI_Model
 			SET amount = amount + $democracy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $democracy_key
-			AND amount < 100
+			AND amount < 100 - tax_rate
 		");
 		$this->db->query("
 			UPDATE supply_account_lookup
@@ -27,7 +27,7 @@ Class cron_model extends CI_Model
 			SET amount = amount + $oligarchy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $oligarchy_key
-			AND amount < 100
+			AND amount < 100 - tax_rate
 		");
 		$this->db->query("
 			UPDATE supply_account_lookup
@@ -35,9 +35,9 @@ Class cron_model extends CI_Model
 			SET amount = amount + $autocracy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $autocracy_key
-			AND amount < 100
+			AND amount < 100 - tax_rate
 		");
-		// Limit max
+		// Implement for socialism
 	}
 	function mark_accounts_as_active()
 	{

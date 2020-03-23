@@ -41,7 +41,7 @@
           </span>
           |
           <span class="badge menu_supply_support_badge">
-            <span id="menu_supply_support"></span>%
+            <span id="menu_supply_support"></span>/<span id="menu_max_support"></span>
           </span>
         </span>
         <span class="caret"></span>

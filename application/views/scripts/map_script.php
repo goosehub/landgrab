@@ -419,6 +419,7 @@
     Object.keys(supplies).forEach(function(key) {
       let supply = supplies[key];
       $('#menu_supply_' + supply['slug']).html(supply['amount']);
+      $('#menu_max_support').html(100 - account['tax_rate']);
       $('#government_supply_' + supply['slug']).html(supply['amount']);
       $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
       // $('#their_trade_supply_offer_' + supply['slug']).val(supply['amount']);
