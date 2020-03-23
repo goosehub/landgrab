@@ -13,7 +13,7 @@
                 <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, 1 support per/min, socialism max support: 200 | Oligarchy: 20% corruption, 2 support per/min, socialism max support: 150 | Autocracy: 30% corruption, 3 support per/min, socialism max: 100 support', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, ' . DEMOCRACY_SUPPORT_REGEN . ' support per/min, socialism max support: 200 | Oligarchy: 20% corruption, ' . OLIGARCHY_SUPPORT_REGEN . ' support per/min, socialism max support: 150 | Autocracy: 30% corruption, ' . AUTOCRACY_SUPPORT_REGEN . ' support per/min, socialism max: 100 support', 'right', 'pull-right'); ?>
                         <label for="input_government" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">

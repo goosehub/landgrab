@@ -19,7 +19,6 @@ MEDIUM PRIORITY
         being attacked
         conceal
         exclude conceal on ocean
-    support generate
     support min/max based on power structure, tax rate, ideology
     Punish negative supply and have it affect support
     settlement require 1 round of supply feed on start
@@ -53,7 +52,6 @@ LOW PRIORITY
     confirmation check icon on some button clicks (pass laws)
     capitol and chat shortcut to diplomacy
     json leaderboard for every supply
-    growing capital increases support
     troops inside opp. tile at start of war
     have capitols show laws of nation
     number formatting
