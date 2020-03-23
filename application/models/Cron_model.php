@@ -8,10 +8,10 @@ Class cron_model extends CI_Model
 	{
 		$support_key = SUPPORT_KEY;
 		$democracy_key = DEMOCRACY_KEY;
-		$democracy_support_regen = DEMOCRACY_SUPPORT_REGEN;
 		$oligarchy_key = OLIGARCHY_KEY;
-		$oligarchy_support_regen = OLIGARCHY_SUPPORT_REGEN;
 		$autocracy_key = AUTOCRACY_KEY;
+		$democracy_support_regen = DEMOCRACY_SUPPORT_REGEN;
+		$oligarchy_support_regen = OLIGARCHY_SUPPORT_REGEN;
 		$autocracy_support_regen = AUTOCRACY_SUPPORT_REGEN;
 		$this->db->query("
 			UPDATE supply_account_lookup
@@ -19,6 +19,7 @@ Class cron_model extends CI_Model
 			SET amount = amount + $democracy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $democracy_key
+			AND amount < 100
 		");
 		$this->db->query("
 			UPDATE supply_account_lookup
@@ -26,6 +27,7 @@ Class cron_model extends CI_Model
 			SET amount = amount + $oligarchy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $oligarchy_key
+			AND amount < 100
 		");
 		$this->db->query("
 			UPDATE supply_account_lookup
@@ -33,6 +35,7 @@ Class cron_model extends CI_Model
 			SET amount = amount + $autocracy_support_regen
 			WHERE supply_key = $support_key
 			AND government = $autocracy_key
+			AND amount < 100
 		");
 		// Limit max
 	}
