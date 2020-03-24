@@ -493,4 +493,35 @@ Class cron_model extends CI_Model
 		}
 		$this->db->group_end();
 	}
+	function update_market_prices()
+	{
+		// To get gradual gains in the long term, either set percent_chance_of_increase to slightly more than 50, or set max_increase slighter higher than max_decrease.
+		// Leaving it even leads to the price occasionally hitting bottom, which might be ideal depending on your use case.
+		// Setting max_increase and max_decrease gives a very volatile market.
+		$starting_price = 10;
+		$min_price = 1;
+		$max_price = 10000;
+		$percent_chance_of_increase = 50;
+		$min_increase = 1;
+		$min_decrease = 1;
+		$max_increase = 10;
+		$max_decrease = 10;
+		$rounds = 24 * 30;
+
+		$turnip_price = $starting_price;
+		for ($i = 0; $i < $rounds; $i++) {
+			if (mt_rand(0,100) > $percent_chance_of_increase) {
+				$turnip_price = $turnip_price + mt_rand($min_increase, $max_increase);
+			}
+			else {
+				$turnip_price = $turnip_price - mt_rand($min_decrease, $max_decrease);
+			}
+			if ($turnip_price < $min_price) {
+				$turnip_price = $min_price;
+			}
+			echo $turnip_price . '<br>';
+		}
+		die();
+	}
+
 }

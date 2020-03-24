@@ -4,6 +4,7 @@
 
 shortages
 each 1 under supply count costs 1 support?
+turn off industry where supply doesn't exist after running resource/settlement outputs?
 
 ==========================================================================================
     Goals
@@ -18,11 +19,18 @@ MEDIUM PRIORITY
         militia defense
         being attacked
         conceal
+        money purchase
+        socialism purchase
         exclude conceal on ocean
     support min/max based on ideology and power structure
     Punish negative supply and have it affect support
-    settlement require 1 round of supply feed on start
-    industry require 1 round of supply feed on start
+    settlement and industry require 1 round of supply feed on start
+    Socalism max supports per power structure
+    Government UI of how much of each supply to expect per turn
+    Government UI of calculated max support, support per turn based on selections
+    require support to pass laws
+    laws can only be passed once an hour
+    enlist spawn validation
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -32,15 +40,6 @@ MEDIUM PRIORITY
         messages
         notices
         chat message for diplomacy changes
-    government
-        UI of how much of each supply to expect per turn
-        support
-        corruption
-        socialism
-        require support to pass laws
-        laws can only be passed once an hour
-    enlist spawn validation
-    fix industry tab showing when not an option
 LOW PRIORITY
     Better Power Structure popover
     make clear what borders are current players borders
