@@ -70,6 +70,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    must have land on world to send trade request
     make get_account_budget() calc settlement & industry separately for accuracy
     anarchy mechanic
     Township Population Reset/Decrease on capture?

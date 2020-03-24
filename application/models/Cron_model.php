@@ -493,24 +493,24 @@ Class cron_model extends CI_Model
 		}
 		$this->db->group_end();
 	}
-	function update_market_prices()
+	function market_prices_debug()
 	{
 		// To get gradual gains in the long term, either set percent_chance_of_increase to slightly more than 50, or set max_increase slighter higher than max_decrease.
 		// Leaving it even leads to the price occasionally hitting bottom, which might be ideal depending on your use case.
 		// Setting max_increase and max_decrease gives a very volatile market.
-		$starting_price = 10;
-		$min_price = 1;
-		$max_price = 10000;
+		$starting_price = 1;
 		$percent_chance_of_increase = 50;
+		$max_increase = 5;
+		$max_decrease = 5;
 		$min_increase = 1;
 		$min_decrease = 1;
-		$max_increase = 10;
-		$max_decrease = 10;
+		$min_price = 1;
+		$max_price = 10000;
 		$rounds = 24 * 30;
 
 		$turnip_price = $starting_price;
 		for ($i = 0; $i < $rounds; $i++) {
-			if (mt_rand(0,100) > $percent_chance_of_increase) {
+			if ($percent_chance_of_increase > mt_rand(0,100)) {
 				$turnip_price = $turnip_price + mt_rand($min_increase, $max_increase);
 			}
 			else {
@@ -522,6 +522,56 @@ Class cron_model extends CI_Model
 			echo $turnip_price . '<br>';
 		}
 		die();
+	}
+	function update_market_prices()
+	{
+		// Silver
+		// Tends low and a little volatile
+		$starting_price = 1;
+		$percent_chance_of_increase = 40;
+		$max_increase = 4;
+		$max_decrease = 5;
+		$min_increase = 1;
+		$min_decrease = 1;
+		$min_price = 1;
+		$max_price = 10000;
+		$rounds = 24 * 30;
+
+		// Gold
+		// Tends higher and not volatile 
+		$starting_price = 1;
+		$percent_chance_of_increase = 55;
+		$max_increase = 1;
+		$max_decrease = 1;
+		$min_increase = 1;
+		$min_decrease = 1;
+		$min_price = 1;
+		$max_price = 10000;
+		$rounds = 24 * 30;
+
+		// Platinum
+		// Even but volatile
+		$starting_price = 1;
+		$percent_chance_of_increase = 50;
+		$max_increase = 5;
+		$max_decrease = 5;
+		$min_increase = 1;
+		$min_decrease = 1;
+		$min_price = 1;
+		$max_price = 10000;
+		$rounds = 24 * 30;
+
+		// Gemstones
+		// Tends higher and a little volatile
+		$starting_price = 1;
+		$percent_chance_of_increase = 50;
+		$max_increase = 3;
+		$max_decrease = 2;
+		$min_increase = 1;
+		$min_decrease = 1;
+		$min_price = 1;
+		$max_price = 10000;
+		$rounds = 24 * 30;
 	}
 
 }
