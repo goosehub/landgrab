@@ -182,14 +182,14 @@
                 <div class="government_supply parent">
                     <label class="text-primary" title="<?php echo $supply['meta']; ?>">
                         <?php echo $supply['label']; ?>
-                        <?php if ($supply['can_sell']) { ?>
+                        <?php if ($supply['market_price_key']) { ?>
                         <span class="text-success">
                             ($<?php echo mt_rand(1, 6); ?>M)
                         </span>
                         <?php } ?>
                     </label>
                     <span class="pull-right">
-                        <?php if ($supply['can_sell']) { ?>
+                        <?php if ($supply['market_price_key']) { ?>
                         <a href="" class="sell_resource">
                             (Sell)
                         </a>

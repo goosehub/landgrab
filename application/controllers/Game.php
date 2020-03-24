@@ -14,6 +14,7 @@ class Game extends CI_Controller {
         $this->terrains = $this->game_model->get_all('terrain');
         $this->unit_types = $this->game_model->get_all('unit_type');
         $this->supplies = $this->game_model->get_all('supply');
+        $this->market_prices = $this->game_model->get_all('market_price');
         $this->supplies_category_labels = [0,'Stats','Materials','Agriculture','Energy','Riches','Cash Crops','Metals','Knowledge','Light Industry','Heavy Industry'];
         $this->settlements = $this->game_model->get_all('settlement');
         $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];

@@ -46,7 +46,7 @@ LOW PRIORITY
     refactor township input desc to be generated
     population required for upgrading townships
     hide resources in responses before discovered
-    sell mechanic
+    sell UI and mechanic
     implement icons
     confirmation check icon on some button clicks (pass laws)
     capitol and chat shortcut to diplomacy

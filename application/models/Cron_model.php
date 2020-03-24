@@ -532,6 +532,15 @@ Class cron_model extends CI_Model
 	}
 	function update_market_prices()
 	{
+		$market_prices = $this->game_model->get_all('market_price');
+		foreach ($market_prices as $market_price) {
+			$new_price = $this->generate_new_market_price($market_price);
+			$data = array(
+				'amount' => $new_price,
+			);
+			$this->db->where('id', $market_price['id']);
+			$this->db->update('market_price', $data);
+		}
 	}
 
 }
