@@ -24,7 +24,7 @@ if (in_array($ip, $perm_banned_ips)) {
     die();
 }
 
-function dd($value) {
+function dd($value = '') {
     var_dump($value);
     die();
 }

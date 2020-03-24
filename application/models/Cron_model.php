@@ -495,83 +495,43 @@ Class cron_model extends CI_Model
 	}
 	function market_prices_debug()
 	{
+		$market_prices = $this->game_model->get_all('market_price');
+		foreach ($market_prices as $market_price) {
+			$rounds = 24 * 15;
+			echo '<hr>' . $market_price['supply_key'] . '<hr>';
+			for ($i = 0; $i < $rounds; $i++) {
+				$market_price['amount'] = $this->generate_new_market_price($market_price);
+				echo $market_price['amount'] . '<br>';
+			}
+		}
+	}
+	function generate_new_market_price($market_price)
+	{
 		// To get gradual gains in the long term, either set percent_chance_of_increase to slightly more than 50, or set max_increase slighter higher than max_decrease.
 		// Leaving it even leads to the price occasionally hitting bottom, which might be ideal depending on your use case.
 		// Setting max_increase and max_decrease gives a very volatile market.
-		$starting_price = 1;
-		$percent_chance_of_increase = 50;
-		$max_increase = 5;
-		$max_decrease = 5;
-		$min_increase = 1;
-		$min_decrease = 1;
-		$min_price = 1;
-		$max_price = 10000;
-		$rounds = 24 * 30;
+		$price = (int)$market_price['amount'];
+		$percent_chance_of_increase = (int)$market_price['percent_chance_of_increase'];
+		$max_increase = (int)$market_price['max_increase'];
+		$max_decrease = (int)$market_price['max_decrease'];
+		$min_increase = (int)$market_price['min_increase'];
+		$min_decrease = (int)$market_price['min_decrease'];
+		$min_price = (int)$market_price['min_price'];
+		$max_price = (int)$market_price['max_price'];
 
-		$turnip_price = $starting_price;
-		for ($i = 0; $i < $rounds; $i++) {
-			if ($percent_chance_of_increase > mt_rand(0,100)) {
-				$turnip_price = $turnip_price + mt_rand($min_increase, $max_increase);
-			}
-			else {
-				$turnip_price = $turnip_price - mt_rand($min_decrease, $max_decrease);
-			}
-			if ($turnip_price < $min_price) {
-				$turnip_price = $min_price;
-			}
-			echo $turnip_price . '<br>';
+		if ($percent_chance_of_increase > mt_rand(0,100)) {
+			$price = $price + mt_rand($min_increase, $max_increase);
 		}
-		die();
+		else {
+			$price = $price - mt_rand($min_decrease, $max_decrease);
+		}
+		if ($price < $min_price) {
+			$price = $min_price;
+		}
+		return $price;
 	}
 	function update_market_prices()
 	{
-		// Silver
-		// Tends low and a little volatile
-		$starting_price = 1;
-		$percent_chance_of_increase = 40;
-		$max_increase = 4;
-		$max_decrease = 5;
-		$min_increase = 1;
-		$min_decrease = 1;
-		$min_price = 1;
-		$max_price = 10000;
-		$rounds = 24 * 30;
-
-		// Gold
-		// Tends higher and not volatile 
-		$starting_price = 1;
-		$percent_chance_of_increase = 55;
-		$max_increase = 1;
-		$max_decrease = 1;
-		$min_increase = 1;
-		$min_decrease = 1;
-		$min_price = 1;
-		$max_price = 10000;
-		$rounds = 24 * 30;
-
-		// Platinum
-		// Even but volatile
-		$starting_price = 1;
-		$percent_chance_of_increase = 50;
-		$max_increase = 5;
-		$max_decrease = 5;
-		$min_increase = 1;
-		$min_decrease = 1;
-		$min_price = 1;
-		$max_price = 10000;
-		$rounds = 24 * 30;
-
-		// Gemstones
-		// Tends higher and a little volatile
-		$starting_price = 1;
-		$percent_chance_of_increase = 50;
-		$max_increase = 3;
-		$max_decrease = 2;
-		$min_increase = 1;
-		$min_decrease = 1;
-		$min_price = 1;
-		$max_price = 10000;
-		$rounds = 24 * 30;
 	}
 
 }

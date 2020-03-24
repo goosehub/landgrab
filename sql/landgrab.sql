@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS chat;
 DROP TABLE IF EXISTS analytics;
 DROP TABLE IF EXISTS ip_request;
 
+DROP TABLE IF EXISTS `world`;
 CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(256) NOT NULL,
@@ -29,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `world` (
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);
 ALTER TABLE `world` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `tile`;
 CREATE TABLE IF NOT EXISTS `tile` (
   `id` int(10) UNSIGNED NOT NULL,
   `lat` int(4) NOT NULL,
@@ -53,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `tile` (
 ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
 ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `unit_type`;
 CREATE TABLE IF NOT EXISTS `unit_type` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(126) NOT NULL,
@@ -78,6 +81,7 @@ INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `col
 (3, 'Commandos', 2, 100, 'BC13FE', 'C',
   TRUE, FALSE, FALSE, FALSE);
 
+DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
@@ -103,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `account` (
 ALTER TABLE `account` ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `trade_request`;
 CREATE TABLE IF NOT EXISTS `trade_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `request_account_key` int(10) UNSIGNED NOT NULL,
@@ -121,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `trade_request` (
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `agreement_lookup`;
 CREATE TABLE IF NOT EXISTS `agreement_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `a_account_key` int(10) UNSIGNED NOT NULL,
@@ -132,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `agreement_lookup` (
 ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `supply_trade_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
@@ -141,6 +148,7 @@ CREATE TABLE IF NOT EXISTS `supply_trade_lookup` (
 ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `supply_industry_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `industry_key` int(10) UNSIGNED NOT NULL,
@@ -193,6 +201,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (21, 33, 1), -- Software
 (22, 1, 10); -- Healthcare
 
+DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_key` int(10) UNSIGNED NOT NULL,
@@ -202,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
 ALTER TABLE `supply_account_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `supply_account_trade_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `supply_account_lookup_key` int(10) UNSIGNED NOT NULL,
@@ -211,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
 ALTER TABLE `supply_account_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `supply`;
 CREATE TABLE IF NOT EXISTS `supply` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
@@ -218,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `supply` (
   `category_id` int(10) UNSIGNED NOT NULL, -- core,food,cash_crops,materials,energy,valuables,metals,light,heavy,knowledge
   `suffix` varchar(256) NOT NULL,
   `can_trade` int(1) UNSIGNED NOT NULL,
-  `can_sell` int(1) UNSIGNED NOT NULL,
+  `market_price_key` int(10) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -226,52 +237,100 @@ ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `supply`;
-INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `can_sell`, `meta`) VALUES
-(1, 1, 'Cash', 'cash', 'M', TRUE, FALSE, 'This rules everything'),
-(2, 1, 'Support', 'support', '%', FALSE, FALSE, 'Increases every minute depending on government type'),
-(3, 1, 'Population', 'population', 'K', FALSE, FALSE, 'Census occurs every hour and updates this value'),
-(4, 1, 'Territories', 'tiles', '', FALSE, FALSE, 'The primary leaderboard stat'),
-(5, 2, 'Timber', 'timber', '', TRUE, FALSE, ''),
-(6, 2, 'Fiber', 'fiber', '', TRUE, FALSE, ''),
-(7, 2, 'Ore', 'ore', '', TRUE, FALSE, ''),
-(8, 3, 'Grain', 'grain', '', TRUE, FALSE, ''),
-(9, 3, 'Fruit', 'fruit', '', TRUE, FALSE, ''),
-(10, 3, 'Vegetables', 'vegetables', '', TRUE, FALSE, ''),
-(11, 3, 'Livestock', 'livestock', '', TRUE, FALSE, ''),
-(12, 3, 'Fish', 'fish', '', TRUE, FALSE, ''),
-(13, 4, 'Energy', 'energy', '', FALSE, FALSE, ''),
-(14, 4, 'Biofuel', 'biofuel', '', TRUE, FALSE, ''),
-(15, 4, 'Coal', 'coal', '', TRUE, FALSE, ''),
-(16, 4, 'Gas', 'gas', '', TRUE, FALSE, ''),
-(17, 4, 'Oil', 'oil', '', TRUE, FALSE, ''),
-(18, 4, 'Uranium', 'uranium', '', TRUE, FALSE, ''),
-(19, 5, 'Silver', 'silver', '', TRUE, TRUE, ''),
-(20, 5, 'Gold', 'gold', '', TRUE, TRUE, ''),
-(21, 5, 'Platinum', 'platinum', '', TRUE, TRUE, ''),
-(22, 5, 'Gemstones', 'gemstones', '', TRUE, TRUE, ''),
-(23, 6, 'Coffee', 'coffee', '', TRUE, TRUE, ''),
-(24, 6, 'Tea', 'tea', '', TRUE, TRUE, ''),
-(25, 6, 'Cannabis', 'cannabis', '', TRUE, TRUE, ''),
-(26, 6, 'Alcohols', 'alcohol', '', TRUE, TRUE, ''),
-(27, 6, 'Tobacco', 'tobacco', '', TRUE, TRUE, ''),
-(28, 7, 'Iron', 'iron', '', TRUE, FALSE, ''),
-(29, 7, 'Copper', 'copper', '', TRUE, FALSE, ''),
-(30, 7, 'Zinc', 'zinc', '', TRUE, FALSE, ''),
-(31, 7, 'Aluminum', 'aluminum', '', TRUE, FALSE, ''),
-(32, 7, 'Nickle', 'nickle', '', TRUE, FALSE, ''),
-(33, 8, 'Education', 'education', '', FALSE, FALSE, ''),
-(34, 8, 'Software', 'software', '', TRUE, FALSE, ''),
-(35, 8, 'Healthcare', 'healthcare', '', FALSE, FALSE, ''),
-(36, 8, 'Engineering', 'engineering', '', TRUE, FALSE, ''),
-(37, 9, 'Merchandise', 'merchandise', '', TRUE, FALSE, ''),
-(38, 9, 'Chemicals', 'chemicals', '', TRUE, FALSE, ''),
-(39, 9, 'Steel', 'steel', '', TRUE, FALSE, ''),
-(40, 9, 'Electronics', 'electronics', '', TRUE, FALSE, ''),
-(41, 10, 'Shipping Ports', 'port', '', FALSE, FALSE, ''),
-(42, 10, 'Machinery', 'machinery', '', TRUE, FALSE, ''),
-(43, 10, 'Automotive', 'automotive', '', TRUE, FALSE, ''),
-(44, 10, 'Aerospace', 'aerospace', '', TRUE, FALSE, '');
+INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `meta`) VALUES
+(1, 1, 'Cash', 'cash', 'M', TRUE, NULL, 'This rules everything'),
+(2, 1, 'Support', 'support', '%', FALSE, NULL, 'Increases every minute depending on government type'),
+(3, 1, 'Population', 'population', 'K', FALSE, NULL, 'Census occurs every hour and updates this value'),
+(4, 1, 'Territories', 'tiles', '', FALSE, NULL, 'The primary leaderboard stat'),
+(5, 2, 'Timber', 'timber', '', TRUE, NULL, ''),
+(6, 2, 'Fiber', 'fiber', '', TRUE, NULL, ''),
+(7, 2, 'Ore', 'ore', '', TRUE, NULL, ''),
+(8, 3, 'Grain', 'grain', '', TRUE, NULL, ''),
+(9, 3, 'Fruit', 'fruit', '', TRUE, NULL, ''),
+(10, 3, 'Vegetables', 'vegetables', '', TRUE, NULL, ''),
+(11, 3, 'Livestock', 'livestock', '', TRUE, NULL, ''),
+(12, 3, 'Fish', 'fish', '', TRUE, NULL, ''),
+(13, 4, 'Energy', 'energy', '', FALSE, NULL, ''),
+(14, 4, 'Biofuel', 'biofuel', '', TRUE, NULL, ''),
+(15, 4, 'Coal', 'coal', '', TRUE, NULL, ''),
+(16, 4, 'Gas', 'gas', '', TRUE, NULL, ''),
+(17, 4, 'Oil', 'oil', '', TRUE, NULL, ''),
+(18, 4, 'Uranium', 'uranium', '', TRUE, NULL, ''),
+(19, 5, 'Silver', 'silver', '', TRUE, 1, ''),
+(20, 5, 'Gold', 'gold', '', TRUE, 2, ''),
+(21, 5, 'Platinum', 'platinum', '', TRUE, 3, ''),
+(22, 5, 'Gemstones', 'gemstones', '', TRUE, 4, ''),
+(23, 6, 'Coffee', 'coffee', '', TRUE, NULL, ''),
+(24, 6, 'Tea', 'tea', '', TRUE, NULL, ''),
+(25, 6, 'Cannabis', 'cannabis', '', TRUE, NULL, ''),
+(26, 6, 'Alcohols', 'alcohol', '', TRUE, NULL, ''),
+(27, 6, 'Tobacco', 'tobacco', '', TRUE, NULL, ''),
+(28, 7, 'Iron', 'iron', '', TRUE, NULL, ''),
+(29, 7, 'Copper', 'copper', '', TRUE, NULL, ''),
+(30, 7, 'Zinc', 'zinc', '', TRUE, NULL, ''),
+(31, 7, 'Aluminum', 'aluminum', '', TRUE, NULL, ''),
+(32, 7, 'Nickle', 'nickle', '', TRUE, NULL, ''),
+(33, 8, 'Education', 'education', '', FALSE, NULL, ''),
+(34, 8, 'Software', 'software', '', TRUE, NULL, ''),
+(35, 8, 'Healthcare', 'healthcare', '', FALSE, NULL, ''),
+(36, 8, 'Engineering', 'engineering', '', TRUE, NULL, ''),
+(37, 9, 'Merchandise', 'merchandise', '', TRUE, NULL, ''),
+(38, 9, 'Chemicals', 'chemicals', '', TRUE, NULL, ''),
+(39, 9, 'Steel', 'steel', '', TRUE, NULL, ''),
+(40, 9, 'Electronics', 'electronics', '', TRUE, NULL, ''),
+(41, 10, 'Shipping Ports', 'port', '', FALSE, NULL, ''),
+(42, 10, 'Machinery', 'machinery', '', TRUE, NULL, ''),
+(43, 10, 'Automotive', 'automotive', '', TRUE, NULL, ''),
+(44, 10, 'Aerospace', 'aerospace', '', TRUE, NULL, '');
 
+DROP TABLE IF EXISTS `market_price`;
+CREATE TABLE IF NOT EXISTS `market_price` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `supply_key` int(10) UNSIGNED NOT NULL,
+  `amount` int(10) UNSIGNED NOT NULL,
+  `starting_price` int(10) UNSIGNED NOT NULL,
+  `percent_chance_of_increase` int(10) UNSIGNED NOT NULL,
+  `max_increase` int(10) UNSIGNED NOT NULL,
+  `max_decrease` int(10) UNSIGNED NOT NULL,
+  `min_increase` int(10) UNSIGNED NOT NULL,
+  `min_decrease` int(10) UNSIGNED NOT NULL,
+  `min_price` int(10) UNSIGNED NOT NULL,
+  `max_price` int(10) UNSIGNED NOT NULL,
+  `sort_order` int(10) UNSIGNED NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `market_price` ADD PRIMARY KEY (`id`);
+ALTER TABLE `market_price` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+TRUNCATE TABLE `market_price`;
+INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
+  `percent_chance_of_increase`, `max_increase`, `max_decrease`,
+  `min_increase`, `min_decrease`, `min_price`, `max_price`) VALUES
+-- Silver
+-- Tends low and a little volatile
+(1, 19, 1, 1, 
+  40, 4, 5,
+  1, 1, 1, 1000
+),
+-- Gold
+-- Tends higher and not volatile 
+(2, 20, 1, 1, 
+  55, 3, 2,
+  1, 1, 1, 1000
+),
+-- Platinum
+-- Even but volatile
+(3, 21, 1, 1, 
+  50, 5, 5,
+  1, 1, 1, 1000
+),
+-- Gemstones
+-- Tends higher and a little volatile
+(4, 22, 1, 1, 
+  50, 2, 1,
+  1, 1, 1, 1000
+);
+
+DROP TABLE IF EXISTS `terrain`;
 CREATE TABLE IF NOT EXISTS `terrain` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
@@ -291,6 +350,7 @@ INSERT INTO `terrain` (`id`, `label`, `slug`, `meta`) VALUES
 (5, 'Coastal', 'coastal', ''),
 (6, 'Ocean', 'ocean', '');
 
+DROP TABLE IF EXISTS `resource`;
 CREATE TABLE IF NOT EXISTS `resource` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
@@ -384,6 +444,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
   5, TRUE, TRUE, TRUE, FALSE
 );
 
+DROP TABLE IF EXISTS `settlement`;
 CREATE TABLE IF NOT EXISTS `settlement` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(256) NOT NULL,
@@ -522,6 +583,7 @@ INSERT INTO `settlement` (
   10, '', 27, 5, 3
 );
 
+DROP TABLE IF EXISTS `industry`;
 CREATE TABLE IF NOT EXISTS `industry` (
   `id` int(10) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED NOT NULL,
@@ -630,6 +692,7 @@ INSERT INTO `industry` (
 -- 
 -- 
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(128) NOT NULL,
@@ -644,6 +707,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ALTER TABLE `user` ADD PRIMARY KEY (`id`);
 ALTER TABLE `user` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `chat`;
 CREATE TABLE IF NOT EXISTS `chat` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
@@ -656,6 +720,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
 ALTER TABLE `chat` ADD PRIMARY KEY (`id`);
 ALTER TABLE `chat` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `analytics`;
 CREATE TABLE IF NOT EXISTS `analytics` (
   `id` int(10) UNSIGNED NOT NULL,
   `marketing_slug` varchar(64) NOT NULL,
@@ -664,6 +729,7 @@ CREATE TABLE IF NOT EXISTS `analytics` (
 ALTER TABLE `analytics` ADD PRIMARY KEY (`id`);
 ALTER TABLE `analytics` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
+DROP TABLE IF EXISTS `ip_request`;
 CREATE TABLE IF NOT EXISTS `ip_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `ip` varchar(64) NOT NULL,
