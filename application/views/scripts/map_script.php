@@ -408,7 +408,7 @@
   }
 
   function get_account_update() {
-    ajax_get('game/get_this_full_account/' + world_key, function(response) {
+    ajax_get('game/get_user_full_account/' + world_key, function(response) {
       account = response;
       update_supplies(account.supplies);
       update_budget(account.budget);

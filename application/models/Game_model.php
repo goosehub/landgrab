@@ -162,6 +162,21 @@
 			$query = $this->db->get();
 			return $query->result_array();
 		}
+		function get_account_supplies_with_projections($account)
+		{
+			// Resource input
+			// Settlement input
+			// Settlement output
+			// Industry input
+			// Industry output
+
+			$this->db->select('*');
+			$this->db->from('supply');
+			$this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
+			$this->db->where('supply_account_lookup.account_key', $account);
+			$query = $this->db->get();
+			return $query->result_array();
+		}
 		function tile_is_township($settlement_key)
 		{
 			$settlement_key = (int)$settlement_key;

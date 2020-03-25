@@ -49,7 +49,7 @@ class Cron extends CI_Controller {
         $this->cron_model->industry_income_collect(); $this->microtime('industry_income_collect');
 
         // $this->cron_model->punish_insufficient_supply(); $this->microtime('punish_insufficient_supply');
-        // $this->cron_model->set_support_max_bottom(); $this->microtime('set_support_max_bottom');
+        // $this->cron_model->set_support_max_min(); $this->microtime('set_support_max_min');
     }
 
     public function every_day($token = false)

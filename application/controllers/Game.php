@@ -121,7 +121,19 @@ class Game extends CI_Controller {
         api_response($tile);
     }
 
-    public function get_this_full_account($world_key, $raw = false)
+    public function get_user_full_account($world_key)
+    {
+        $account = $this->user_model->this_account($world_key);
+        $account['supplies'] = array();
+        $supplies = $this->game_model->get_account_supplies_with_projections($account['id']);
+        foreach ($supplies as $key => $supply) {
+            $account['supplies'][$supply['slug']] = $supply;
+        }
+        $account['budget'] = $this->game_model->get_account_budget($account);
+        api_response($account);
+    }
+
+    public function get_this_full_account($world_key)
     {
         $account = $this->user_model->this_account($world_key);
         $account['supplies'] = array();
@@ -130,10 +142,7 @@ class Game extends CI_Controller {
             $account['supplies'][$supply['slug']] = $supply;
         }
         $account['budget'] = $this->game_model->get_account_budget($account);
-        if ($raw) {
-            return $account;
-        }
-        api_response($account);
+        return $account;
     }
 
     public function laws_form()
@@ -176,7 +185,7 @@ class Game extends CI_Controller {
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
         $tile = $this->game_model->get_tile($lat, $lng, $world_key);
-        $account = $this->get_this_full_account($tile['world_key'], true);
+        $account = $this->get_this_full_account($tile['world_key']);
         if (!$this->first_claim_validation($account, $tile)) {
             api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
         }
@@ -245,7 +254,7 @@ class Game extends CI_Controller {
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
         // Keep remove before add, makes dupe bugs less likely
-        $account = $this->get_this_full_account($tile['world_key'], true);
+        $account = $this->get_this_full_account($tile['world_key']);
         if ($this->can_claim($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
@@ -360,7 +369,7 @@ class Game extends CI_Controller {
         // @TODO
         // Validate money/support needed exists
         // Take money
-        $account = $this->get_this_full_account($tile['world_key'], true);
+        $account = $this->get_this_full_account($tile['world_key']);
         $this->game_model->put_unit_on_tile($tile, $account, $unit_id);
         api_response();
     }
