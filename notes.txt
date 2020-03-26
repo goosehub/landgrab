@@ -13,6 +13,7 @@ turn off industry where supply doesn't exist after running resource/settlement o
 HIGH PRIORITY
     commission icons
     Show projected change in each supply
+    reorder government supplies
 MEDIUM PRIORITY
     unit system
         attacking
@@ -31,6 +32,8 @@ MEDIUM PRIORITY
     require support to pass laws
     laws can only be passed once an hour
     enlist spawn validation
+    cash projection
+    population projection
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -42,6 +45,7 @@ MEDIUM PRIORITY
         chat message for diplomacy changes
 LOW PRIORITY
     Better Power Structure popover
+    stripped rows across app
     make clear what borders are current players borders
     refactor township input desc to be generated
     population required for upgrading townships

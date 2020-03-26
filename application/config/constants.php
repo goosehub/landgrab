@@ -124,15 +124,16 @@ define('CASH_KEY', 1);
 define('SUPPORT_KEY', 2);
 DEFINE('POPULATION_KEY', 3);
 DEFINE('TILES_KEY', 4);
+// Supply category key
+DEFINE('FOOD_KEY', 2); // Symbolic key 
+DEFINE('CASH_CROPS_KEY', 5); // Symbolic key 
 // Food Supply
-DEFINE('FOOD_KEY', 69420); // Symbolic key 
 DEFINE('GRAIN_KEY', 8);
 DEFINE('FRUIT_KEY', 9);
 DEFINE('VEGETABLES_KEY', 10);
 DEFINE('LIVESTOCK_KEY', 11);
 DEFINE('FISH_KEY', 12);
 // Cash Crops Supply
-DEFINE('CASH_CROPS_KEY', 777); // Symbolic key 
 DEFINE('COFFEE_KEY', 23);
 DEFINE('TEA_KEY', 24);
 DEFINE('CANNABIS_KEY', 25);

@@ -411,8 +411,57 @@
     ajax_get('game/get_user_full_account/' + world_key, function(response) {
       account = response;
       update_supplies(account.supplies);
+      update_input_projections(account.input_projections);
+      update_output_projections(account.output_projections);
+      update_sum_projections();
       update_budget(account.budget);
     }, 'account_update');
+  }
+
+  function update_input_projections(input_projections) {
+    $('.input_projection').html('');
+    for (let key in input_projections) {
+      $('#input_projection_' + key).html('-' + input_projections[key]);
+    }
+  }
+  function update_output_projections(output_projections) {
+    $('.output_projection').html('');
+    for (let key in output_projections) {
+      $('#output_projection_' + key).html('+' + output_projections[key]);
+    }
+  }
+
+  function update_sum_projections() {
+    $('.sum_projection').each(function(){
+      $(this).removeClass('text-danger').removeClass('text-success');
+      let id = $(this).data('id');
+      input = $('#input_projection_' + id).html();
+      output = $('#output_projection_' + id).html();
+      if (!input && !output) {
+        return;
+      }
+      if (input && !output) {
+        sum = 0 - input;
+      }
+      else if (!input && output) {
+        sum = output;
+      }
+      else {
+        sum = parseInt(output) + parseInt(input);
+      }
+      if (sum === 0) {
+        return;
+      }
+      if (sum > 0) {
+        $(this).addClass('text-success');
+      }
+      else if (sum < 0) {
+        $(this).addClass('text-danger');
+      }
+      sum = parseInt(sum);
+      prefix = sum > 0 ? '+' : '';
+      $(this).html(prefix + sum);
+    });
   }
 
   function update_supplies(supplies) {

@@ -161,45 +161,61 @@
             </span>
         </div>
         <div class="col-md-4 government_card">
+            <div class="row">
+                <div class="col-md-5">
+                    <p class="text-center">
+                        <strong>Supply</strong>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="text-center">
+                        <strong>Hourly</strong>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-center">
+                        <strong>Sell</strong>
+                    </p>
+                </div>
+            </div>
             <!-- <h3 class="text-center text-primary">Supplies</h3> -->
             <div class="government_supplies_parent row">
             <?php $current_category_id = 0; ?>
-            <?php $category_counter = 0; ?>
-            <?php foreach ($this->supplies as $key => $supply) { ?>
-                <?php
-                if ($category_counter % 2 == 0) { ?>
-                    <div class="col-xs-12"></div>
-                <?php }
+            <?php foreach ($this->supplies as $key => $supply) {
                 if ($current_category_id !== $supply['category_id']) {
-                    $category_counter++;
                     $current_category_id = $supply['category_id'];
                     ?>
-                    <div class="col-md-6">
-                        <h3 class="text-purple"><?php echo $this->supplies_category_labels[$supply['category_id']]; ?></h3>
-                    <?php 
-                } ?>
+                <div class="col-md-12">
+                    <h3 class="text-purple"><?php echo $this->supplies_category_labels[$supply['category_id']]; ?></h3>
+                <?php } ?>
 
-                <div class="government_supply parent">
-                    <label class="text-primary" title="<?php echo $supply['meta']; ?>">
-                        <?php echo $supply['label']; ?>
-                        <?php if ($supply['market_price_key']) { ?>
-                        <span class="text-success">
-                            ($<?php echo mt_rand(1, 6); ?>M)
-                        </span>
-                        <?php } ?>
-                    </label>
-                    <span class="pull-right">
-                        <?php if ($supply['market_price_key']) { ?>
-                        <a href="" class="sell_resource">
-                            (Sell)
-                        </a>
-                        <?php } ?>
-                        <span id="government_supply_<?php echo $supply['slug']; ?>"></span>
-                        <?php echo $supply['suffix']; ?>
-                    </span>
-                    <br>
-                </div>
-
+                    <div class="government_supply_parent row">
+                        <div class="col-md-4 text-left">
+                            <label class="text-primary" title="<?php echo $supply['meta']; ?>">
+                                <?php echo $supply['label']; ?>
+                            </label>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <span class="government_supply" id="government_supply_<?php echo $supply['slug']; ?>"></span>
+                            <?php echo $supply['suffix']; ?>
+                        </div>
+                        <div class="col-md-1 text-right text-success">
+                            <span class="output_projection" id="output_projection_<?php echo $supply['id']; ?>" data-id="<?php echo $supply['id']; ?>"></span>
+                        </div>
+                        <div class="col-md-1 text-right text-danger">
+                            <span class="input_projection" id="input_projection_<?php echo $supply['id']; ?>" data-id="<?php echo $supply['id']; ?>"></span>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <span class="sum_projection" id="sum_projection_<?php echo $supply['id']; ?>" data-id="<?php echo $supply['id']; ?>"></span>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <?php if ($supply['market_price_key']) { ?>
+                            <a class="text-success">
+                                (Sell: $<?php echo mt_rand(1, 6); ?>M)
+                            </a>
+                            <?php } ?>
+                        </div>
+                    </div>
                 <?php if (!isset($this->supplies[$key + 1]) || $current_category_id !== $this->supplies[$key + 1]['category_id']) {
                     ?>
                     </div>
