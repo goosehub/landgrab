@@ -153,27 +153,120 @@
 			$this->db->where('id', $account_id);
 			$this->db->update('account', $data);
 		}
-		function get_account_supplies($account)
+		function get_account_supplies($account_key)
 		{
 			$this->db->select('*');
 			$this->db->from('supply');
 			$this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
-			$this->db->where('supply_account_lookup.account_key', $account);
+			$this->db->where('supply_account_lookup.account_key', $account_key);
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		function get_account_supplies_with_projections($account)
+		function get_account_supplies_with_projections($account_key)
 		{
-			// Resource input
-			// Settlement input
-			// Settlement output
-			// Industry input
-			// Industry output
+			$resource_output = $this->get_resource_output_by_account($account_key);
+			$settlements_grouped = $this->get_settlement_input_by_account($account_key);
+			$settlement_input = $this->get_supplies_of_settlement_input($settlements_grouped);
+			$settlement_output = $this->get_settlement_output_by_account($account_key);
+			$industry_input = $this->get_industry_input_by_account($account_key);
+			$industry_output = $this->get_industry_output_by_account($account_key);
 
 			$this->db->select('*');
 			$this->db->from('supply');
 			$this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
-			$this->db->where('supply_account_lookup.account_key', $account);
+			$this->db->where('supply_account_lookup.account_key', $account_key);
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_resource_output_by_account($account_key)
+		{
+			$this->db->select('COUNT(tile.id) as resource_count, output_supply_key');
+			$this->db->from('tile');
+			$this->db->join('resource', 'resource.id = tile.resource_key', 'left');
+			$this->db->where('tile.account_key', $account_key);
+			$this->db->where('output_supply_key IS NOT NULL', NULL, FALSE);
+			$this->db->group_by('resource_key');
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_settlement_input_by_account($account_key)
+		{
+			$this->db->select('COUNT(tile.id) as settlement_count, settlement_key');
+			$this->db->from('tile');
+			$this->db->where('account_key', $account_key);
+			$this->db->where_in('settlement_key', array(TOWN_KEY, CITY_KEY, METRO_KEY));
+			$this->db->group_by('settlement_key');
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_supplies_of_settlement_input($settlements_grouped)
+		{
+			$food = $cash_crops = $energy = $merchandise = $steel = $healthcare = 0;
+			foreach ($settlements_grouped as $settlement) {
+				if ($settlement['settlement_key'] == TOWN_KEY) {
+					$food = $food + (TOWN_FOOD_COST * $settlement['settlement_count']);
+					$energy = $energy + (TOWN_ENERGY_COST * $settlement['settlement_count']);
+					$cash_crops = $cash_crops + (TOWN_CASH_CROPS_COST * $settlement['settlement_count']);
+					$merchandise = $merchandise + (TOWN_MERCHANDISE_COST * $settlement['settlement_count']);
+					$steel = $steel + (TOWN_STEEL_COST * $settlement['settlement_count']);
+					$healthcare = $healthcare + (TOWN_HEALTHCARE_COST * $settlement['settlement_count']);
+				}
+				else if ($settlement['settlement_key'] == CITY_KEY) {
+					$food = $food + (CITY_FOOD_COST * $settlement['settlement_count']);
+					$energy = $energy + (CITY_ENERGY_COST * $settlement['settlement_count']);
+					$cash_crops = $cash_crops + (CITY_CASH_CROPS_COST * $settlement['settlement_count']);
+					$merchandise = $merchandise + (CITY_MERCHANDISE_COST * $settlement['settlement_count']);
+					$steel = $steel + (CITY_STEEL_COST * $settlement['settlement_count']);
+					$healthcare = $healthcare + (CITY_HEALTHCARE_COST * $settlement['settlement_count']);
+				}
+				else if ($settlement['settlement_key'] == METRO_KEY) {
+					$food = $food + (METRO_FOOD_COST * $settlement['settlement_count']);
+					$energy = $energy + (METRO_ENERGY_COST * $settlement['settlement_count']);
+					$cash_crops = $cash_crops + (METRO_CASH_CROPS_COST * $settlement['settlement_count']);
+					$merchandise = $merchandise + (METRO_MERCHANDISE_COST * $settlement['settlement_count']);
+					$steel = $steel + (METRO_STEEL_COST * $settlement['settlement_count']);
+					$healthcare = $healthcare + (METRO_HEALTHCARE_COST * $settlement['settlement_count']);
+				}
+			}
+			return array(
+				'food' => $food,
+				'cash_crops' => $cash_crops,
+				'energy' => $energy,
+				'merchandise' => $merchandise,
+				'steel' => $steel,
+				'healthcare' => $healthcare,
+			);
+		}
+		function get_settlement_output_by_account($account_key)
+		{
+			$this->db->select('(COUNT(tile.id) * output_supply_amount) as supply_count, output_supply_key');
+			$this->db->from('settlement');
+			$this->db->join('tile', 'settlement.id = tile.settlement_key', 'left');
+			$this->db->where('account_key', $account_key);
+			$this->db->where('output_supply_key IS NOT NULL', NULL, FALSE);
+			$this->db->group_by('output_supply_key');
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_industry_input_by_account($account_key)
+		{
+			$this->db->select('(COUNT(tile.id) * amount) as supply_count, supply_key');
+			$this->db->from('supply_industry_lookup');
+			$this->db->join('tile', 'supply_industry_lookup.industry_key = tile.industry_key', 'left');
+			$this->db->where('account_key', $account_key);
+			$this->db->where('supply_key IS NOT NULL', NULL, FALSE);
+			$this->db->group_by('supply_key');
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_industry_output_by_account($account_key)
+		{
+			$this->db->select('(COUNT(tile.id) * output_supply_amount) as supply_count, output_supply_key');
+			$this->db->from('industry');
+			$this->db->join('tile', 'industry.id = tile.industry_key', 'left');
+			$this->db->where('account_key', $account_key);
+			$this->db->where('output_supply_key IS NOT NULL', NULL, FALSE);
+			$this->db->group_by('output_supply_key');
 			$query = $this->db->get();
 			return $query->result_array();
 		}
@@ -182,7 +275,7 @@
 			$settlement_key = (int)$settlement_key;
 			return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
 		}
-		function first_claim($tile,$account) {
+		function first_claim($tile, $account) {
 			$data = array(
 				'account_key' => $account['id'],
 				'settlement_key' => TOWN_KEY,
