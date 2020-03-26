@@ -165,11 +165,17 @@
 		function get_account_supplies_with_projections($account_key)
 		{
 			$resource_output = $this->get_resource_output_by_account($account_key);
+			var_dump($resource_output[0]);
 			$settlements_grouped = $this->get_settlement_input_by_account($account_key);
 			$settlement_input = $this->get_supplies_of_settlement_input($settlements_grouped);
+			var_dump($settlement_input[0]);
 			$settlement_output = $this->get_settlement_output_by_account($account_key);
+			var_dump($settlement_output[0]);
 			$industry_input = $this->get_industry_input_by_account($account_key);
+			var_dump($industry_input[0]);
 			$industry_output = $this->get_industry_output_by_account($account_key);
+			var_dump($industry_output[0]);
+			dd();
 
 			$this->db->select('*');
 			$this->db->from('supply');
@@ -180,7 +186,7 @@
 		}
 		function get_resource_output_by_account($account_key)
 		{
-			$this->db->select('COUNT(tile.id) as resource_count, output_supply_key');
+			$this->db->select('COUNT(tile.id) as output_supply_amount, output_supply_key');
 			$this->db->from('tile');
 			$this->db->join('resource', 'resource.id = tile.resource_key', 'left');
 			$this->db->where('tile.account_key', $account_key);
@@ -229,17 +235,35 @@
 				}
 			}
 			return array(
-				'food' => $food,
-				'cash_crops' => $cash_crops,
-				'energy' => $energy,
-				'merchandise' => $merchandise,
-				'steel' => $steel,
-				'healthcare' => $healthcare,
+				array(
+					'output_supply_amount' => $food,
+					'output_supply_key' => FOOD_KEY,
+				),
+				array(
+					'output_supply_amount' => $cash_crops,
+					'output_supply_key' => CASH_CROPS_KEY,
+				),
+				array(
+					'output_supply_amount' => $energy,
+					'output_supply_key' => ENERGY_KEY,
+				),
+				array(
+					'output_supply_amount' => $merchandise,
+					'output_supply_key' => MERCHANDISE_KEY,
+				),
+				array(
+					'output_supply_amount' => $steel,
+					'output_supply_key' => STEEL_KEY,
+				),
+				array(
+					'output_supply_amount' => $healthcare,
+					'output_supply_key' => HEALTHCARE_KEY,
+				),
 			);
 		}
 		function get_settlement_output_by_account($account_key)
 		{
-			$this->db->select('(COUNT(tile.id) * output_supply_amount) as supply_count, output_supply_key');
+			$this->db->select('(COUNT(tile.id) * output_supply_amount) as output_supply_amount, output_supply_key');
 			$this->db->from('settlement');
 			$this->db->join('tile', 'settlement.id = tile.settlement_key', 'left');
 			$this->db->where('account_key', $account_key);
@@ -250,7 +274,7 @@
 		}
 		function get_industry_input_by_account($account_key)
 		{
-			$this->db->select('(COUNT(tile.id) * amount) as supply_count, supply_key');
+			$this->db->select('(COUNT(tile.id) * amount) as output_supply_amount, supply_key AS output_supply_key');
 			$this->db->from('supply_industry_lookup');
 			$this->db->join('tile', 'supply_industry_lookup.industry_key = tile.industry_key', 'left');
 			$this->db->where('account_key', $account_key);
@@ -261,7 +285,7 @@
 		}
 		function get_industry_output_by_account($account_key)
 		{
-			$this->db->select('(COUNT(tile.id) * output_supply_amount) as supply_count, output_supply_key');
+			$this->db->select('(COUNT(tile.id) * output_supply_amount) as output_supply_amount, output_supply_key');
 			$this->db->from('industry');
 			$this->db->join('tile', 'industry.id = tile.industry_key', 'left');
 			$this->db->where('account_key', $account_key);

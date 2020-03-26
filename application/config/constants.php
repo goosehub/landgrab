@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
-define('ACCOUNT_UPDATE_INTERVAL_MS', 3 * 1000);
+define('ACCOUNT_UPDATE_INTERVAL_MS', 1 * 1000);
 define('LEADERBOARD_UPDATE_INTERVAL_M', 10);
 
 // Defensive Bonuses
@@ -119,24 +119,26 @@ DEFINE('OCEAN_KEY', 6);
 DEFINE('WAR_KEY', 1);
 DEFINE('PEACE_KEY', 2);
 DEFINE('PASSAGE_KEY', 3);
-// Supply
+// Core Supply
 define('CASH_KEY', 1);
 define('SUPPORT_KEY', 2);
 DEFINE('POPULATION_KEY', 3);
 DEFINE('TILES_KEY', 4);
-// Foods
+// Food Supply
+DEFINE('FOOD_KEY', 69420); // Symbolic key 
 DEFINE('GRAIN_KEY', 8);
 DEFINE('FRUIT_KEY', 9);
 DEFINE('VEGETABLES_KEY', 10);
 DEFINE('LIVESTOCK_KEY', 11);
 DEFINE('FISH_KEY', 12);
-// Cash Crops
+// Cash Crops Supply
+DEFINE('CASH_CROPS_KEY', 777); // Symbolic key 
 DEFINE('COFFEE_KEY', 23);
 DEFINE('TEA_KEY', 24);
 DEFINE('CANNABIS_KEY', 25);
 DEFINE('ALCOHOLS_KEY', 26);
 DEFINE('TOBACCO_KEY', 27);
-// Other township supplies
+// Other Township Input Supply
 DEFINE('ENERGY_KEY', 13);
 DEFINE('MERCHANDISE_KEY', 37);
 DEFINE('STEEL_KEY', 39);
