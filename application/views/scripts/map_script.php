@@ -441,7 +441,7 @@
         return;
       }
       if (input && !output) {
-        sum = 0 - input;
+        sum = input;
       }
       else if (!input && output) {
         sum = output;

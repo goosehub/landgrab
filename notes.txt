@@ -11,6 +11,7 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
+    fix projection vs cron run
     commission icons
     Show projected change in each supply
     reorder government supplies
@@ -44,6 +45,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    Fix exploit move base before top of hour
     Better Power Structure popover
     stripped rows across app
     make clear what borders are current players borders
