@@ -162,27 +162,27 @@
 			$query = $this->db->get();
 			return $query->result_array();
 		}
-		function get_account_supplies_with_projections($account_key)
+		function get_input_projections($account_key)
 		{
-			$resource_output = $this->get_resource_output_by_account($account_key);
-			var_dump($resource_output[0]);
 			$settlements_grouped = $this->get_settlement_input_by_account($account_key);
 			$settlement_input = $this->get_supplies_of_settlement_input($settlements_grouped);
-			var_dump($settlement_input[0]);
-			$settlement_output = $this->get_settlement_output_by_account($account_key);
-			var_dump($settlement_output[0]);
 			$industry_input = $this->get_industry_input_by_account($account_key);
-			var_dump($industry_input[0]);
+			return $this->restructure_data(array_merge($settlement_input, $industry_input));
+		}
+		function get_output_projections($account_key)
+		{
+			$resource_output = $this->get_resource_output_by_account($account_key);
+			$settlement_output = $this->get_settlement_output_by_account($account_key);
 			$industry_output = $this->get_industry_output_by_account($account_key);
-			var_dump($industry_output[0]);
-			dd();
-
-			$this->db->select('*');
-			$this->db->from('supply');
-			$this->db->join('supply_account_lookup', 'supply_account_lookup.supply_key = supply.id', 'left');
-			$this->db->where('supply_account_lookup.account_key', $account_key);
-			$query = $this->db->get();
-			return $query->result_array();
+			return $this->restructure_data(array_merge($resource_output, $settlement_output, $industry_output));
+		}
+		function restructure_data($array)
+		{
+			$new_array = array();
+			foreach ($array as $row) {
+				$new_array[$row['output_supply_key']] = (int)$row['output_supply_amount'];
+			}
+			return $new_array;
 		}
 		function get_resource_output_by_account($account_key)
 		{

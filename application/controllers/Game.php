@@ -125,7 +125,9 @@ class Game extends CI_Controller {
     {
         $account = $this->user_model->this_account($world_key);
         $account['supplies'] = array();
-        $supplies = $this->game_model->get_account_supplies_with_projections($account['id']);
+        $supplies = $this->game_model->get_account_supplies($account['id']);
+        $account['input_projections'] = $this->game_model->get_input_projections($account['id']);
+        $account['output_projections'] = $this->game_model->get_output_projections($account['id']);
         foreach ($supplies as $key => $supply) {
             $account['supplies'][$supply['slug']] = $supply;
         }
