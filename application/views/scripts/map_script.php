@@ -429,6 +429,22 @@
     for (let key in output_projections) {
       $('#output_projection_' + key).html('+' + output_projections[key]);
     }
+    let sum_food_output = 0;
+    $(".output_projection[data-category-id='" + food_category_id + "']").each(function(){
+      this_value = $(this).html();
+      if (this_value) {
+        sum_food_output += parseInt(this_value);
+      }
+    });
+    $('#output_projection_' + food_key).html('+' + sum_food_output);
+    let sum_cash_crops_output = 0;
+    $(".output_projection[data-category-id='" + cash_crops_category_id + "']").each(function(){
+      this_value = $(this).html();
+      if (this_value) {
+        sum_cash_crops_output += parseInt(this_value);
+      }
+    });
+    $('#output_projection_' + cash_crops_key).html('+' + sum_cash_crops_output);
   }
 
   function update_sum_projections() {

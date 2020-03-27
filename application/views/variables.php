@@ -29,6 +29,10 @@
     const infantry_key = <?= INFANTRY_KEY; ?>;
     const tanks_key = <?= TANKS_KEY; ?>;
     const commandos_key = <?= COMMANDOS_KEY; ?>;
+    const food_key = <?= FOOD_KEY ?>;
+    const cash_crops_key = <?= CASH_CROPS_KEY ?>;
+    const food_category_id = <?= FOOD_CATEGORY_ID ?>;
+    const cash_crops_category_id = <?= CASH_CROPS_CATEGORY_ID ?>;
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];

@@ -286,6 +286,21 @@ html, body {
 a.sell_resource {
   color: #758E4F;
 }
+.government_supply_header_parent h3 {
+  margin-top: 0.2em;
+}
+.government_supply_header_parent p.lead {
+  margin-bottom: 0;
+}
+.government_supply_header_parent.row {
+  border-top: 1px solid #bbb;
+}
+.even_row {
+  background-color: #eee;
+}
+.sell_button {
+  margin-bottom: 1em;
+}
 
 /* Trade */
 .trade_supplies_parent, .government_supplies_parent {
