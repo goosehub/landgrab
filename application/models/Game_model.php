@@ -183,7 +183,12 @@
 		{
 			$new_array = array();
 			foreach ($array as $row) {
-				$new_array[$row['output_supply_key']] = (int)$row['output_supply_amount'];
+				if (isset($new_array[$row['output_supply_key']])) {
+					$new_array[$row['output_supply_key']] += (int)$row['output_supply_amount'];
+				}
+				else {
+					$new_array[$row['output_supply_key']] = (int)$row['output_supply_amount'];
+				}
 			}
 			return $new_array;
 		}

@@ -12,7 +12,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 
 HIGH PRIORITY
     commission icons
-    merge like projection inputs and output
     undo industry when remove township
 MEDIUM PRIORITY
     unit system
