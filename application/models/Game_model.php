@@ -4,10 +4,13 @@
 
 	Class game_model extends CI_Model
 	{
-		function get_all($table)
+		function get_all($table, $sort_column = false)
 		{
 			$this->db->select('*');
 			$this->db->from($table);
+			if ($sort_column) {
+				$this->db->order_by($sort_column, 'ASC');
+			}
 			$query = $this->db->get();
 			return $query->result_array();
 		}
