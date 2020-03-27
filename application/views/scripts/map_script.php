@@ -421,14 +421,24 @@
   function update_input_projections(input_projections) {
     $('.input_projection').html('');
     for (let key in input_projections) {
-      $('#input_projection_' + key).html('-' + input_projections[key]);
+      if (input_projections[key]) {
+        $('#input_projection_' + key).html('-' + input_projections[key]);
+      }
     }
   }
   function update_output_projections(output_projections) {
     $('.output_projection').html('');
     for (let key in output_projections) {
-      $('#output_projection_' + key).html('+' + output_projections[key]);
+      if (output_projections[key]) {
+        $('#output_projection_' + key).html('+' + output_projections[key]);
+      }
     }
+    sum_food_output();
+    sum_cash_crops_output();
+  }
+
+  function sum_food_output() {
+    $('#output_projection_' + food_key).html('');
     let sum_food_output = 0;
     $(".output_projection[data-category-id='" + food_category_id + "']").each(function(){
       this_value = $(this).html();
@@ -436,7 +446,13 @@
         sum_food_output += parseInt(this_value);
       }
     });
-    $('#output_projection_' + food_key).html('+' + sum_food_output);
+    if (sum_food_output) {
+      $('#output_projection_' + food_key).html('+' + sum_food_output);
+    }
+  }
+
+  function sum_cash_crops_output() {
+    $('#output_projection_' + cash_crops_key).html('');
     let sum_cash_crops_output = 0;
     $(".output_projection[data-category-id='" + cash_crops_category_id + "']").each(function(){
       this_value = $(this).html();
@@ -444,10 +460,13 @@
         sum_cash_crops_output += parseInt(this_value);
       }
     });
-    $('#output_projection_' + cash_crops_key).html('+' + sum_cash_crops_output);
+    if (sum_cash_crops_output) {
+      $('#output_projection_' + cash_crops_key).html('+' + sum_cash_crops_output);
+    }
   }
 
   function update_sum_projections() {
+    $('.sum_projection').html('');
     $('.sum_projection').each(function(){
       $(this).removeClass('text-danger').removeClass('text-success');
       let id = $(this).data('id');

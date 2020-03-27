@@ -11,10 +11,9 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    fix projection vs cron run
     commission icons
-    Show projected change in each supply
-    reorder government supplies
+    merge like projection inputs and output
+    undo industry when remove township
 MEDIUM PRIORITY
     unit system
         attacking
