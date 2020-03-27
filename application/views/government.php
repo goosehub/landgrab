@@ -181,7 +181,15 @@
                     $current_category_id = $supply['category_id'];
                     ?>
                 <div class="col-md-12">
-                    <h3 class="text-purple"><?php echo $this->supplies_category_labels[$supply['category_id']]; ?></h3>
+                    <h3 class="text-purple">
+                        <?php echo $this->supplies_category_labels[$supply['category_id']]; ?>
+                        <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
+                            <small class="input_projection text-danger" id="input_projection_<?php echo FOOD_KEY; ?>" data-id="<?php echo FOOD_KEY; ?>"></small>
+                        <?php } ?>
+                        <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
+                            <small class="input_projection text-danger" id="input_projection_<?php echo CASH_CROPS_KEY; ?>" data-id="<?php echo CASH_CROPS_KEY; ?>"></small>
+                        <?php } ?>
+                    </h3>
                 <?php } ?>
 
                     <div class="government_supply_parent row">
@@ -215,7 +223,7 @@
                         </div>
                         <div class="col-md-12">
                             <?php if ($supply['market_price_key']) { ?>
-                            <a class="btn btn-success form-control">
+                            <a class="btn btn-success">
                                 Sell At Current Price: $<?php echo mt_rand(1, 6); ?>M
                             </a>
                             <?php } ?>
