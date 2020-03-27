@@ -132,6 +132,9 @@
 				'settlement_key' => $settlement_key,
 				'population' => $this->settlements[$settlement_key - 1]['base_population'],
 			);
+			if (!$this->tile_is_township($settlement_key)) {
+				$data['industry_key'] = NULL;
+			}
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
 		}

@@ -12,7 +12,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 
 HIGH PRIORITY
     commission icons
-    undo industry when remove township
 MEDIUM PRIORITY
     unit system
         attacking
@@ -43,6 +42,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    undo industry when township downgrade
     Fix exploit move base before top of hour
     Better Power Structure popover
     stripped rows across app
