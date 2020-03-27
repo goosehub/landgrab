@@ -94,13 +94,18 @@ Class cron_model extends CI_Model
 	{
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
-			INNER JOIN settlement AS settlement_by_supply ON sal.supply_key = settlement_by_supply.output_supply_key
 			INNER JOIN (
-				SELECT settlement_key, account_key, COUNT(*) as tile_count
-				FROM tile
-				GROUP BY settlement_key, account_key
-			) AS tile_by_settlement_and_account ON settlement_by_supply.id = tile_by_settlement_and_account.settlement_key AND sal.account_key = tile_by_settlement_and_account.account_key
-			SET sal.amount = sal.amount + (IFNULL(tile_by_settlement_and_account.tile_count, 0) * IFNULL(settlement_by_supply.output_supply_amount, 0))
+				SELECT SUM(tile_count * settlement.output_supply_amount) AS new_amount, account_key, output_supply_key
+				FROM settlement
+				INNER JOIN (
+					SELECT COUNT(*) as tile_count, settlement_key, account_key
+					FROM tile
+					GROUP BY settlement_key, account_key
+				) AS tile_by_settlement_and_account ON settlement.id = tile_by_settlement_and_account.settlement_key
+				GROUP BY settlement.output_supply_key, tile_by_settlement_and_account.account_key
+			) AS settlement ON settlement.output_supply_key = sal.supply_key AND sal.account_key = settlement.account_key
+			INNER JOIN account ON sal.account_key = account.id
+			SET sal.amount = sal.amount + new_amount
 		");
 	}
 	function township_input()

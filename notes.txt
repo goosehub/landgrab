@@ -12,6 +12,7 @@ turn off industry where supply doesn't exist after running resource/settlement o
 
 HIGH PRIORITY
     commission icons
+    Punish insufficient supply
 MEDIUM PRIORITY
     unit system
         attacking
@@ -22,16 +23,12 @@ MEDIUM PRIORITY
         socialism purchase
         exclude conceal on ocean
     support min/max based on ideology and power structure
-    Punish negative supply and have it affect support
     settlement and industry require 1 round of supply feed on start
     Socalism max supports per power structure
     Government UI of how much of each supply to expect per turn
     Government UI of calculated max support, support per turn based on selections
     require support to pass laws
     laws can only be passed once an hour
-    enlist spawn validation
-    cash projection
-    population projection
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -42,6 +39,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    enlist spawn validation
     undo industry when township downgrade
     Fix exploit move base before top of hour
     Better Power Structure popover
@@ -61,6 +59,7 @@ LOW PRIORITY
     tooltip for alliances, rights of passage, etc
     Industry/ non township icon marker toggle
     socalism toggle tax rate, info UI
+    population projection
 GOING LIVE
     swal alerts
     DB indexes
