@@ -554,7 +554,7 @@
   }
 
   function pass_new_laws() {
-    $('#laws_passed_confirm_icon').fadeOut(1);
+    $('#laws_passed_confirm_icon').fadeTo(1, 0);
     $('#pass_new_laws_button').click(function(event) {
       let data = {
         world_key: world_key,
@@ -565,8 +565,8 @@
       ajax_post('game/laws_form', data, function(response) {
         get_map_update();
         get_account_update();
-        $('#laws_passed_confirm_icon').fadeIn(500);
-        $('#laws_passed_confirm_icon').fadeOut(2000);
+        $('#laws_passed_confirm_icon').fadeTo(500, 1);
+        $('#laws_passed_confirm_icon').fadeTo(2000, 0);
       });
     });
   }
