@@ -22,8 +22,7 @@ MEDIUM PRIORITY
         money purchase
         socialism purchase
         exclude conceal on ocean
-    Socalism max supports per power structure
-    require support to pass laws
+    Max support
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -97,8 +96,7 @@ NO PRIORITY
     Mechanics
 ==========================================================================================
 
-Support
-    Maxes out at 100(200 for Socialism?)
+Support use
     Following does not stack
     Moving: 1 Support
     Capture Land: 5 Support

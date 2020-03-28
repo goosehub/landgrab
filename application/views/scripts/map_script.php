@@ -413,8 +413,9 @@
       update_supplies(account.supplies);
       update_input_projections(account.input_projections);
       update_output_projections(account.output_projections);
-      update_sum_projections();
       update_budget(account.budget);
+      update_sum_projections();
+      update_max_support();
       update_law_wait();
     }, 'account_update');
   }
@@ -520,7 +521,6 @@
     Object.keys(supplies).forEach(function(key) {
       let supply = supplies[key];
       $('#menu_supply_' + supply['slug']).html(supply['amount']);
-      $('#menu_max_support').html(100 - account['tax_rate']);
       $('#government_supply_' + supply['slug']).html(supply['amount']).removeClass('text-danger');
       if (supply['amount'] < 0) {
         $('#government_supply_' + supply['slug']).addClass('text-danger');
@@ -530,6 +530,23 @@
       $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
       // $('#our_trade_supply_offer_' + supply['slug']).val(supply['amount']);
     });
+  }
+
+  function update_max_support() {
+    if (account.ideology == free_market_key) {
+      $('#menu_max_support').html(100 - account['tax_rate']);
+    }
+    else {
+      if (account.power_structure == democracy_key) {
+        $('#menu_max_support').html(democracy_socialism_max_support);
+      }
+      if (account.power_structure == oligarchy_key) {
+        $('#menu_max_support').html(oligarchy_socialism_max_support);
+      }
+      if (account.power_structure == autocracy_key) {
+        $('#menu_max_support').html(autocracy_socialism_max_support);
+      }
+    }
   }
 
   function update_budget(budget){
