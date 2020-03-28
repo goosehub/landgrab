@@ -38,7 +38,7 @@
                         <input type="range" min="0" max="50" required class="form-control" id="input_tax_rate" name="input_tax_rate" value="<?= $account['tax_rate']; ?>">
                     </div>
                     <div class="col-md-4">
-                        <strong id="display_input_tax_rate"></strong>
+                        <strong id="display_input_tax_rate"></strong> %
                     </div>
                 </div>
                 <br>
@@ -87,8 +87,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-md-push-2">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
                         <div id="pass_new_laws_button" class="btn btn-action form-control text-is-bold">Sign Into Law</div>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="laws_passed_confirm_icon" class="text-success">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </p>
                     </div>
                 </div>
             </form>

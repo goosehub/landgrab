@@ -77,9 +77,11 @@ function render_law_preview() {
 function set_tax_rate_disabled() {
     if (ideology == socialism_key) {
         $('#input_tax_rate').prop('disabled', true);
+        $('#display_input_tax_rate').html('100');
     }
     else {
         $('#input_tax_rate').removeAttr('disabled');
+        $('#display_input_tax_rate').html(tax_rate);
     }
 }
 
