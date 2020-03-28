@@ -14,6 +14,7 @@ HIGH PRIORITY
     commission icons
     Punish insufficient settlement input with loss of support
     Punish negative money
+    supply increase GDP logic
 MEDIUM PRIORITY
     unit system
         attacking
@@ -68,6 +69,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    enforce supplies not being stackable
     capitol and chat shortcut to diplomacy
     system chat at top of the hour for market prices
     must have land on world to send trade request

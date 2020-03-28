@@ -230,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `supply` (
   `suffix` varchar(256) NOT NULL,
   `can_trade` int(1) UNSIGNED NOT NULL,
   `market_price_key` int(10) UNSIGNED NULL,
+  `gdp_increase` int(1) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -237,51 +238,53 @@ ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `supply`;
-INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `meta`) VALUES
-(1, 1, 'Cash', 'cash', 'M', TRUE, NULL, 'This rules everything'),
-(2, 1, 'Support', 'support', '%', FALSE, NULL, 'Increases every minute depending on government type'),
-(3, 1, 'Population', 'population', 'K', FALSE, NULL, 'Census occurs every hour and updates this value'),
-(4, 1, 'Territories', 'tiles', '', FALSE, NULL, 'The primary leaderboard stat'),
-(5, 4, 'Timber', 'timber', '', TRUE, NULL, ''),
-(6, 4, 'Fiber', 'fiber', '', TRUE, NULL, ''),
-(7, 4, 'Ore', 'ore', '', TRUE, NULL, ''),
-(8, 2, 'Grain', 'grain', '', TRUE, NULL, ''),
-(9, 2, 'Fruit', 'fruit', '', TRUE, NULL, ''),
-(10, 2, 'Vegetables', 'vegetables', '', TRUE, NULL, ''),
-(11, 2, 'Livestock', 'livestock', '', TRUE, NULL, ''),
-(12, 2, 'Fish', 'fish', '', TRUE, NULL, ''),
-(13, 3, 'Energy', 'energy', '', FALSE, NULL, ''),
-(14, 3, 'Biofuel', 'biofuel', '', TRUE, NULL, ''),
-(15, 3, 'Coal', 'coal', '', TRUE, NULL, ''),
-(16, 3, 'Gas', 'gas', '', TRUE, NULL, ''),
-(17, 3, 'Oil', 'oil', '', TRUE, NULL, ''),
-(18, 3, 'Uranium', 'uranium', '', TRUE, NULL, ''),
-(19, 10, 'Silver', 'silver', '', TRUE, 1, 'Prices tend to stay low, with brief moments of volatility'),
-(20, 10, 'Gold', 'gold', '', TRUE, 2, 'Prices tend to slowly but steadily increase over time'),
-(21, 10, 'Platinum', 'platinum', '', TRUE, 3, 'Prices tend to be extremely volatile'),
-(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, 'Prices tend to move higher with frequent volatility'),
-(23, 5, 'Coffee', 'coffee', '', TRUE, NULL, ''),
-(24, 5, 'Tea', 'tea', '', TRUE, NULL, ''),
-(25, 5, 'Cannabis', 'cannabis', '', TRUE, NULL, ''),
-(26, 5, 'Alcohols', 'alcohol', '', TRUE, NULL, ''),
-(27, 5, 'Tobacco', 'tobacco', '', TRUE, NULL, ''),
-(28, 6, 'Iron', 'iron', '', TRUE, NULL, ''),
-(29, 6, 'Copper', 'copper', '', TRUE, NULL, ''),
-(30, 6, 'Zinc', 'zinc', '', TRUE, NULL, ''),
-(31, 6, 'Aluminum', 'aluminum', '', TRUE, NULL, ''),
-(32, 6, 'Nickle', 'nickle', '', TRUE, NULL, ''),
-(33, 7, 'Education', 'education', '', FALSE, NULL, ''),
-(34, 7, 'Software', 'software', '', TRUE, NULL, ''),
-(35, 7, 'Healthcare', 'healthcare', '', FALSE, NULL, ''),
-(36, 7, 'Engineering', 'engineering', '', TRUE, NULL, ''),
-(37, 8, 'Merchandise', 'merchandise', '', TRUE, NULL, ''),
-(38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, ''),
-(39, 8, 'Steel', 'steel', '', TRUE, NULL, ''),
-(40, 8, 'Electronics', 'electronics', '', TRUE, NULL, ''),
-(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, ''),
-(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, ''),
-(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, ''),
-(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, '');
+INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_increase`, `meta`) VALUES
+(1, 1, 'Cash', 'cash', 'M', TRUE, NULL, NULL, 'This rules everything'),
+(2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Increases every minute depending on government type'),
+(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Census occurs every hour and updates this value'),
+(4, 1, 'Territories', 'tiles', '', FALSE, NULL, NULL, 'The primary leaderboard stat'),
+(5, 4, 'Timber', 'timber', '', TRUE, NULL, NULL, ''),
+(6, 4, 'Fiber', 'fiber', '', TRUE, NULL, NULL, ''),
+(7, 4, 'Ore', 'ore', '', TRUE, NULL, NULL, ''),
+(8, 2, 'Grain', 'grain', '', TRUE, NULL, NULL, ''),
+(9, 2, 'Fruit', 'fruit', '', TRUE, NULL, NULL, ''),
+(10, 2, 'Vegetables', 'vegetables', '', TRUE, NULL, NULL, ''),
+(11, 2, 'Livestock', 'livestock', '', TRUE, NULL, NULL, ''),
+(12, 2, 'Fish', 'fish', '', TRUE, NULL, NULL, ''),
+(13, 3, 'Energy', 'energy', '', FALSE, NULL, NULL, ''),
+(14, 3, 'Biofuel', 'biofuel', '', TRUE, NULL, NULL, ''),
+(15, 3, 'Coal', 'coal', '', TRUE, NULL, NULL, ''),
+(16, 3, 'Gas', 'gas', '', TRUE, NULL, NULL, ''),
+(17, 3, 'Oil', 'oil', '', TRUE, NULL, NULL, ''),
+(18, 3, 'Uranium', 'uranium', '', TRUE, NULL, NULL, ''),
+(19, 10, 'Silver', 'silver', '', TRUE, 1, NULL, 'Prices tend to stay low, with brief moments of volatility'),
+(20, 10, 'Gold', 'gold', '', TRUE, 2, NULL, 'Prices tend to slowly but steadily increase over time'),
+(21, 10, 'Platinum', 'platinum', '', TRUE, 3, NULL, 'Prices tend to be extremely volatile'),
+(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, NULL, 'Prices tend to move higher with frequent volatility'),
+(23, 5, 'Coffee', 'coffee', '', TRUE, NULL, NULL, ''),
+(24, 5, 'Tea', 'tea', '', TRUE, NULL, NULL, ''),
+(25, 5, 'Cannabis', 'cannabis', '', TRUE, NULL, NULL, ''),
+(26, 5, 'Alcohols', 'alcohol', '', TRUE, NULL, NULL, ''),
+(27, 5, 'Tobacco', 'tobacco', '', TRUE, NULL, NULL, ''),
+(28, 6, 'Iron', 'iron', '', TRUE, NULL, NULL, ''),
+(29, 6, 'Copper', 'copper', '', TRUE, NULL, NULL, ''),
+(30, 6, 'Zinc', 'zinc', '', TRUE, NULL, NULL, ''),
+(31, 6, 'Aluminum', 'aluminum', '', TRUE, NULL, NULL, ''),
+(32, 6, 'Nickle', 'nickle', '', TRUE, NULL, NULL, ''),
+(33, 7, 'Education', 'education', '', FALSE, NULL, NULL, ''),
+(34, 7, 'Software', 'software', '', TRUE, NULL, NULL, ''),
+(35, 7, 'Healthcare', 'healthcare', '', FALSE, NULL, NULL, ''),
+(36, 7, 'Engineering', 'engineering', '', TRUE, NULL, NULL, ''),
+(37, 8, 'Merchandise', 'merchandise', '', TRUE, NULL, NULL, ''),
+(38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, NULL, ''),
+(39, 8, 'Steel', 'steel', '', TRUE, NULL, NULL, ''),
+(40, 8, 'Electronics', 'electronics', '', TRUE, NULL, NULL, ''),
+(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 50, 'Increases National GDP by 50%'),
+(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
+(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
+(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
+(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 50, 'Increases National GDP by 50%'),
+(46, 7, 'Financial', 'financial', '', FALSE, NULL, 50, 'Increases National GDP by 50%');
 
 DROP TABLE IF EXISTS `market_price`;
 CREATE TABLE IF NOT EXISTS `market_price` (
@@ -590,7 +593,6 @@ CREATE TABLE IF NOT EXISTS `industry` (
   `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
   `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,
-  `is_stackable` int(1) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -600,88 +602,88 @@ ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
   `id`, `category_id`, `label`, `slug`, `minimum_settlement_size`, `required_terrain_key`,
-  `output_supply_key`, `output_supply_amount`, `gdp`, `is_stackable`, `meta`) VALUES
+  `output_supply_key`, `output_supply_amount`, `gdp`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  null, 10, 10, FALSE, 'Spawns units, creates corruption'
+  null, 10, 10, 'Spawns units, creates corruption'
 ),
 (2, 1, 'Federal', 'federal', NULL, NULL,
-  2, 10, 5, FALSE, ''
+  2, 10, 5, ''
 ),
 (3, 1, 'Base', 'base', NULL, NULL,
-  null, 1, 3, TRUE, 'Spawns units'
+  null, 1, 3, 'Spawns units'
 ),
 -- energy
 (4, 2, 'Biofuel', 'biofuel', NULL, NULL,
-  13, 2, 1, TRUE, ''
+  13, 2, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 3, 1, TRUE, ''
+  13, 3, 1, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 4, 2, TRUE, ''
+  13, 4, 2, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 8, 5, TRUE, ''
+  13, 8, 5, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 10, 5, TRUE, ''
+  13, 10, 5, ''
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
-  37, 1, 5, TRUE, ''
+  37, 1, 5, ''
 ),
 (10, 3, 'Chemicals', 'chemicals', NULL, NULL,
-  38, 3, 5, TRUE, ''
+  38, 3, 5, ''
 ),
 (11, 3, 'Steel', 'steel', NULL, NULL,
-  39, 5, 3, TRUE, ''
+  39, 5, 3, ''
 ),
 (12, 3, 'Electronics', 'electronics', NULL, NULL,
-  40, 3, 10, TRUE, ''
+  40, 3, 10, ''
 ),
 -- hevvy industry
 (13, 4, 'Shipping Port', 'port', 2, 5,
-  41, 1, 50, FALSE, 'Having this industry increases National GDP by 100%'
+  41, 1, 50, ''
 ),
 (14, 4, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 30, FALSE, 'A supply of machinery increases Cational GDP by 75%'
+  42, 3, 30, ''
 ),
 (15, 4, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 40, FALSE, 'A supply of automotive increases Cational GDP by 50%'
+  43, 3, 40, ''
 ),
 (16, 4, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 50, FALSE, 'A supply of aerospace increases Cational GDP by 25%'
+  44, 3, 50, ''
 ),
 -- tourism
 (17, 5, 'Leisure', 'leisure', NULL, 5,
-  null, 1, 10, FALSE, ''
+  null, 1, 10, ''
 ),
 (18, 5, 'Resort', 'resort', NULL, 3,
-  null, 1, 5, FALSE, ''
+  null, 1, 5, ''
 ),
 (19, 5, 'Gambling', 'gambling', 2, NULL,
-  null, 1, 10, FALSE, ''
+  null, 1, 10, ''
 ),
 -- knowledge/quaternary
 (20, 6, 'University', 'university', NULL, NULL,
-  33, 3, 3, FALSE, ''
+  33, 3, 3, ''
 ),
 (21, 6, 'Software', 'software', 2, NULL,
-  34, 3, 8, FALSE, ''
+  34, 3, 8, ''
 ),
 (22, 6, 'Healthcare', 'healthcare', 2, NULL,
-  35, 1, 6, FALSE, ''
+  35, 1, 6, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
-  null, 1, 200, FALSE, ''
+  45, 1, 200, ''
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  NULL, 1, 50, FALSE, 'Having this industry reduces National Corruption by 50%'
+  46, 1, 50, ''
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
-  36, 5, 100, FALSE, ''
+  36, 5, 100, ''
 );
 
 -- 
