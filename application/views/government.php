@@ -14,15 +14,15 @@
                 <div class="row">
                     <div class="col-md-4">
                         <?= generate_popover('Power Structure', 'Democracy: 10% corruption, ' . DEMOCRACY_SUPPORT_REGEN . ' support per/min, socialism max support: 200 | Oligarchy: 20% corruption, ' . OLIGARCHY_SUPPORT_REGEN . ' support per/min, socialism max support: 150 | Autocracy: 30% corruption, ' . AUTOCRACY_SUPPORT_REGEN . ' support per/min, socialism max: 100 support', 'right', 'pull-right'); ?>
-                        <label for="input_government" class="pull-right">Power Structure: </label>
+                        <label for="input_power_structure" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" id="input_government" name="input_government" value="<?= $account['government']; ?>">
-                            <option value="1" title="Difficult Support, Ordinary Corruption" <?php if ((int)$account['government'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy</option>
+                        <select class="form-control" id="input_power_structure" name="input_power_structure" value="<?= $account['power_structure']; ?>">
+                            <option value="1" title="Difficult Support, Ordinary Corruption" <?php if ((int)$account['power_structure'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy</option>
                             <!-- Great for economic growth -->
-                            <option value="2" title="Moderate Support, Harsh Corruption" <?php if ((int)$account['government'] === OLIGARCHY_KEY) { echo 'selected'; } ?>>Oligarchy</option>
+                            <option value="2" title="Moderate Support, Harsh Corruption" <?php if ((int)$account['power_structure'] === OLIGARCHY_KEY) { echo 'selected'; } ?>>Oligarchy</option>
                             <!-- Great for flexibility -->
-                            <option value="3" title="Easy Support, Severe Corruption" <?php if ((int)$account['government'] === AUTOCRACY_KEY) { echo 'selected'; } ?>>Autocracy</option>
+                            <option value="3" title="Easy Support, Severe Corruption" <?php if ((int)$account['power_structure'] === AUTOCRACY_KEY) { echo 'selected'; } ?>>Autocracy</option>
                             <!-- Great for early expansion and war -->
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops.', 'right', 'pull-right'); ?>
-                        <label for="input_government" class="pull-right">Economic Ideology: </label>
+                        <label for="input_power_structure" class="pull-right">Economic Ideology: </label>
                     </div>
                     <div class="col-md-8">
                         <div class="col-md-3">

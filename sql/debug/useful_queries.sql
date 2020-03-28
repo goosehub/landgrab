@@ -9,12 +9,12 @@ LEFT JOIN user
 WHERE `last_load` > DATE_SUB(NOW(), INTERVAL 3 MINUTE)
 GROUP BY user.ip
 
--- Most common government
-SELECT `government` , COUNT(*) AS count
+-- Most common power_structure
+SELECT `power_structure` , COUNT(*) AS count
 FROM  `account`
 WHERE `tutorial` > 4
 AND last_load >= ( CURDATE() - INTERVAL 3 DAY )
-GROUP BY `government`
+GROUP BY `power_structure`
 ORDER BY count DESC 
 
 -- Most common tax_rate

@@ -504,7 +504,10 @@
       let supply = supplies[key];
       $('#menu_supply_' + supply['slug']).html(supply['amount']);
       $('#menu_max_support').html(100 - account['tax_rate']);
-      $('#government_supply_' + supply['slug']).html(supply['amount']);
+      $('#government_supply_' + supply['slug']).html(supply['amount']).removeClass('text-danger');
+      if (supply['amount'] < 0) {
+        $('#government_supply_' + supply['slug']).addClass('text-danger');
+      }
       $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
       // $('#their_trade_supply_offer_' + supply['slug']).val(supply['amount']);
       $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
@@ -554,7 +557,7 @@
     $('#pass_new_laws_button').click(function(event) {
       let data = {
         world_key: world_key,
-        input_government: $('#input_government').val(),
+        input_power_structure: $('#input_power_structure').val(),
         input_tax_rate: $('#input_tax_rate').val(),
         input_ideology: $('input[name="input_ideology"]:checked').val(),
       };

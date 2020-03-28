@@ -163,8 +163,6 @@ class User extends CI_Controller {
             $nation_name = $username . ' Nation';
             $nation_flag = 'default_nation_flag.png';
             $leader_portrait = 'default_leader_portrait.png';
-            $government = 1;
-            $ideology = 1;
 
             $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_portrait);
         }

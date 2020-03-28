@@ -151,7 +151,7 @@ class Game extends CI_Controller {
     {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
-        $this->form_validation->set_rules('input_government', 'Form of Government', 'trim|required|integer|max_length[1]');
+        $this->form_validation->set_rules('input_power_structure', 'Power Structure', 'trim|required|integer|max_length[1]');
         $this->form_validation->set_rules('input_tax_rate', 'Tax Rate', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
         $this->form_validation->set_rules('input_ideology', 'Ideology', 'trim|integer|greater_than_equal_to[1]|less_than_equal_to[2]');
 
@@ -161,13 +161,13 @@ class Game extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
-        $government = $this->input->post('input_government');
+        $power_structure = $this->input->post('input_power_structure');
         $tax_rate = $this->input->post('input_tax_rate');
         $ideology = $this->input->post('input_ideology');
 
         // Set account
         $account_key = $account['id'];
-        $this->game_model->update_account_laws($account_key, $government, $tax_rate, $ideology);
+        $this->game_model->update_account_laws($account_key, $power_structure, $tax_rate, $ideology);
         api_response();
     }
     public function leaderboards($world_id)

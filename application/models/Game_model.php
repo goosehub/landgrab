@@ -148,10 +148,10 @@
 			$this->db->where('id', $tile_id);
 			$this->db->update('tile', $data);
 		}
-		function update_account_laws($account_id, $government, $tax_rate, $ideology)
+		function update_account_laws($account_id, $power_structure, $tax_rate, $ideology)
 		{
 			$data = array(
-				'government' => $government,
+				'power_structure' => $power_structure,
 				'tax_rate' => $tax_rate,
 				'ideology' => $ideology,
 				'last_law_change' => date('Y-m-d H:i:s', time())
@@ -380,7 +380,7 @@
 			$budget['gdp'] = $this->settlement_gdp($account['id']) + $this->industry_gdp($account['id']);
 			$budget['tax_income'] = $budget['gdp'] * ($account['tax_rate'] / 100);
 			$running_income = $budget['tax_income'];
-			$budget['power_corruption'] = $running_income * (($account['government'] * 10) / 100);
+			$budget['power_corruption'] = $running_income * (($account['power_structure'] * 10) / 100);
 			$running_income = $running_income - $budget['power_corruption'];
 			$budget['size_corruption'] = $running_income * (floor($account['supplies']['tiles']['amount'] / TILES_PER_CORRUPTION_PERCENT) / 100 );
 			$running_income = $running_income - $budget['size_corruption'];

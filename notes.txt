@@ -22,10 +22,8 @@ MEDIUM PRIORITY
         money purchase
         socialism purchase
         exclude conceal on ocean
-    support min/max based on ideology and power structure
-    settlement and industry require 1 round of supply feed on start
+    support gen based on power structure
     Socalism max supports per power structure
-    Government UI of how much of each supply to expect per turn
     Government UI of calculated max support, support per turn based on selections
     require support to pass laws
     laws can only be passed once an hour
@@ -39,6 +37,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    settlement and industry require 1 round of supply feed on start
     enlist spawn validation
     undo industry when township downgrade
     Fix exploit move base before top of hour
@@ -46,7 +45,9 @@ LOW PRIORITY
     stripped rows across app
     make clear what borders are current players borders
     refactor township input desc to be generated
+    population growth based on food
     population required for upgrading townships
+    population projection
     hide resources in responses before discovered
     sell UI and mechanic
     implement icons
@@ -59,7 +60,6 @@ LOW PRIORITY
     tooltip for alliances, rights of passage, etc
     Industry/ non township icon marker toggle
     socalism toggle tax rate, info UI
-    population projection
 GOING LIVE
     swal alerts
     DB indexes

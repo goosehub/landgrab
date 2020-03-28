@@ -79,7 +79,7 @@ DEFINE('STROKE_WEIGHT', 0.1);
 DEFINE('STROKE_COLOR', '#222222');
 
 // Account Defaults
-define('DEFAULT_GOVERNMENT', 2);
+define('DEFAULT_POWER_STRUCTURE', 2);
 define('DEFAULT_TAX_RATE', 15);
 define('DEFAULT_IDEOLOGY', 1);
 
@@ -101,7 +101,7 @@ define('UNINHABITED_KEY', 2);
 define('TOWN_KEY', 3);
 define('CITY_KEY', 4);
 define('METRO_KEY', 5);
-// Governments
+// Power Structure
 define('DEMOCRACY_KEY', 1);
 define('OLIGARCHY_KEY', 2);
 define('AUTOCRACY_KEY', 3);

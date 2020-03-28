@@ -307,6 +307,7 @@ a.sell_resource {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 60vh;
+  font-weight: bold;
 }
 
 /* Beta */

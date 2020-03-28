@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `leader_portrait` varchar(256) NOT NULL,
   `color` varchar(8) NOT NULL,
   -- Government Settings
-  `government` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy
+  `power_structure` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy
   `tax_rate` int(10) UNSIGNED NOT NULL,
   `ideology` int(10) UNSIGNED NULL, -- Socialism, Free Market
   `last_law_change` timestamp NOT NULL,

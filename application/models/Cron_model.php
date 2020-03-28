@@ -13,6 +13,14 @@ Class cron_model extends CI_Model
 			WHERE tile.id IS NOT NULL;
 		");
 	}
+	function zero_negative_account_supply()
+	{
+		$this->db->query("
+			UPDATE supply_account_lookup
+			SET amount = 0
+			WHERE amount < 0;
+		");
+	}
 	function increase_support()
 	{
 		$support_key = SUPPORT_KEY;
@@ -27,7 +35,7 @@ Class cron_model extends CI_Model
 			INNER JOIN account ON account_key = account.id
 			SET amount = amount + $democracy_support_regen
 			WHERE supply_key = $support_key
-			AND government = $democracy_key
+			AND power_structure = $democracy_key
 			AND amount < 100 - tax_rate
 		");
 		$this->db->query("
@@ -35,7 +43,7 @@ Class cron_model extends CI_Model
 			INNER JOIN account ON account_key = account.id
 			SET amount = amount + $oligarchy_support_regen
 			WHERE supply_key = $support_key
-			AND government = $oligarchy_key
+			AND power_structure = $oligarchy_key
 			AND amount < 100 - tax_rate
 		");
 		$this->db->query("
@@ -43,7 +51,7 @@ Class cron_model extends CI_Model
 			INNER JOIN account ON account_key = account.id
 			SET amount = amount + $autocracy_support_regen
 			WHERE supply_key = $support_key
-			AND government = $autocracy_key
+			AND power_structure = $autocracy_key
 			AND amount < 100 - tax_rate
 		");
 		// Implement for socialism
@@ -386,7 +394,7 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount + (
 				sum_settlement_gdp *
 				( account.tax_rate / 100 ) * 
-				( ( 100 - ( account.government * 10 ) ) / 100 ) *
+				( ( 100 - ( account.power_structure * 10 ) ) / 100 ) *
 				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
 
@@ -434,7 +442,7 @@ Class cron_model extends CI_Model
 			SET sal.amount = sal.amount + (
 				sum_industry_gdp *
 				( account.tax_rate / 100 ) *
-				( ( 100 - ( account.government * 10 ) ) / 100 ) *
+				( ( 100 - ( account.power_structure * 10 ) ) / 100 ) *
 				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
 
