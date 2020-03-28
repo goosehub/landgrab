@@ -33,6 +33,17 @@
     const cash_crops_key = <?= CASH_CROPS_KEY ?>;
     const food_category_id = <?= FOOD_CATEGORY_ID ?>;
     const cash_crops_category_id = <?= CASH_CROPS_CATEGORY_ID ?>;
+    const democracy_key = <?= DEMOCRACY_KEY ?>;
+    const oligarchy_key = <?= OLIGARCHY_KEY ?>;
+    const autocracy_key = <?= AUTOCRACY_KEY ?>;
+    const free_market_key = <?= FREE_MARKET_KEY ?>;
+    const socialism_key = <?= SOCIALISM_KEY ?>;
+    const democracy_socialism_max_support = <?= DEMOCRACY_SOCIALISM_MAX_SUPPORT ?>;
+    const oligarchy_socialism_max_support = <?= OLIGARCHY_SOCIALISM_MAX_SUPPORT ?>;
+    const autocracy_socialism_max_support = <?= AUTOCRACY_SOCIALISM_MAX_SUPPORT ?>;
+    const democracy_support_regen = <?= DEMOCRACY_SUPPORT_REGEN ?>;
+    const oligarchy_support_regen = <?= OLIGARCHY_SUPPORT_REGEN ?>;
+    const autocracy_support_regen = <?= AUTOCRACY_SUPPORT_REGEN ?>;
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];
@@ -52,6 +63,9 @@
     let active_requests = [];
     let start_drag_lat = null;
     let start_drag_lng = null;
+    let power_structure = null;
+    let tax_rate = null;
+    let ideology = null;
 
     // Toggles
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;

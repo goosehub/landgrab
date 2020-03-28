@@ -152,7 +152,7 @@ class Game extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('input_power_structure', 'Power Structure', 'trim|required|integer|max_length[1]');
-        $this->form_validation->set_rules('input_tax_rate', 'Tax Rate', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[100]');
+        $this->form_validation->set_rules('input_tax_rate', 'Tax Rate', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[' . MAX_TAX_RATE . ']|greater_than_equal_to[0]|less_than_equal_to[100]');
         $this->form_validation->set_rules('input_ideology', 'Ideology', 'trim|integer|greater_than_equal_to[1]|less_than_equal_to[2]');
 
         $world_key = $this->input->post('world_key');

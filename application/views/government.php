@@ -8,6 +8,7 @@
     <div class="row">
         <div class="col-md-4 government_card">
             <h3 class="text-center text-primary">Laws</h3>
+            <hr>
             <!-- Form -->
             <?= form_open('laws_form', array('id' => 'laws_form', 'method' => 'post')); ?>
                 <input type="hidden" name="world_key" value="<?= $world['id']; ?>">
@@ -60,8 +61,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-md-push-4">
-                        <hr>
+                    <hr>
+                    <p class="lead text-center">
+                        <strong id="projected_support_per_minute" class="text-success"></strong> Support/Minute
+                        |
+                        <strong id="projected_max_support" class="text-primary"></strong> Max Support
+                        |
+                        <strong id="projected_corruption" class="text-danger"></strong>% Corruption
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
                         <div id="pass_new_laws_button" class="btn btn-action form-control text-is-bold">Sign Into Law</div>
                     </div>
                 </div>
@@ -69,6 +79,7 @@
         </div>
         <div class="col-md-4 government_card">
             <h3 class="text-center text-primary">Budget</h3>
+            <hr>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     GDP:

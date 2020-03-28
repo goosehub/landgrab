@@ -22,9 +22,7 @@ MEDIUM PRIORITY
         money purchase
         socialism purchase
         exclude conceal on ocean
-    support gen based on power structure
     Socalism max supports per power structure
-    Government UI of calculated max support, support per turn based on selections
     require support to pass laws
     laws can only be passed once an hour
     trade

@@ -41,6 +41,82 @@ $('#register_block').show();
 <?php } ?>
 
 // 
+// Laws
+// 
+
+render_law_preview();
+$(document).ready(function(){
+    $('#input_tax_rate').keyup(function() {
+        render_law_preview();
+    });
+    $('#input_power_structure').change(function() {
+        render_law_preview();
+    });
+    $('input[name=input_ideology]').click(function() {
+        render_law_preview();
+    });
+});
+
+function render_law_preview() {
+    power_structure = $('#input_power_structure').val();
+    tax_rate = $('#input_tax_rate').val();
+    ideology = $('input[name=input_ideology]:checked').val();
+
+    set_tax_rate_disabled();
+    set_max_support();
+    set_support_per_minute();
+    set_corruption();
+}
+
+function set_tax_rate_disabled() {
+    if (ideology == socialism_key) {
+        $('#input_tax_rate').prop('disabled', true);
+    }
+    else {
+        $('#input_tax_rate').removeAttr('disabled');
+    }
+}
+
+function set_max_support() {
+    if (ideology == socialism_key) {
+        if (power_structure == democracy_key) {
+            $('#projected_max_support').html(democracy_socialism_max_support);
+        }
+        else if (power_structure == oligarchy_key) {
+            $('#projected_max_support').html(oligarchy_socialism_max_support);
+        }
+        else if (power_structure == autocracy_key) {
+            $('#projected_max_support').html(autocracy_socialism_max_support);
+        }
+    }
+    else {
+        $('#projected_max_support').html(100 - tax_rate);
+    }
+}
+
+function set_support_per_minute() {
+    if (power_structure == democracy_key) {
+        $('#projected_support_per_minute').html(democracy_support_regen);
+    }
+    else if (power_structure == oligarchy_key) {
+        $('#projected_support_per_minute').html(oligarchy_support_regen);
+    }
+    else if (power_structure == autocracy_key) {
+        $('#projected_support_per_minute').html(autocracy_support_regen);
+    }
+}
+
+function set_corruption() {
+    if (ideology == socialism_key) {
+        $('#projected_corruption').html('100');
+    }
+    else {
+        $('#projected_corruption').html(power_structure * 10);
+    }
+}
+
+
+// 
 // Center block hide and show logic
 // 
 
