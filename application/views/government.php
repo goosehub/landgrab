@@ -198,19 +198,6 @@
             </span>
         </div>
         <div class="col-md-4 government_card">
-            <div class="row">
-                <div class="col-md-4">
-                    <p class="text-center">
-                        <strong>Supply Amount</strong>
-                    </p>
-                </div>
-                <div class="col-md-8">
-                    <p class="text-center">
-                        <strong>Hourly Output/Input/Surplus</strong>
-                    </p>
-                </div>
-            </div>
-            <!-- <h3 class="text-center text-primary">Supplies</h3> -->
             <div class="government_supplies_parent row">
             <?php $current_category_id = 0; ?>
             <?php $odd = false; ?>
@@ -228,6 +215,10 @@
                             </h3>
                         </div>
                         <div class="col-md-3">
+                        <?php if ($supply['category_id'] == 1) { ?>
+                            Supply
+                            <?= generate_popover('Supplies', 'Supplies are the heart of your economy. Each hour your settlements and industries will produce and consume supplies. If a supply runs negative, industries depending on that supply will not produce output, and townships depending on that supply will _____ _____ _____ _____. Negative supplies are reset to zero before the hourly cycle, so deficits won\'t run wild while you are away. Most supplies can be traded with diplomacy. Ensure you have a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                        <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
@@ -236,6 +227,9 @@
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
+                        <?php if ($supply['category_id'] == 1) { ?>
+                            Hourly Production
+                        <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="output_projection text-success lead" id="output_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
@@ -244,6 +238,9 @@
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
+                        <?php if ($supply['category_id'] == 1) { ?>
+                            Hourly Consumption
+                        <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
@@ -252,6 +249,9 @@
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
+                        <?php if ($supply['category_id'] == 1) { ?>
+                            Hourly Surplus
+                        <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="sum_projection text-danger lead" id="sum_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>

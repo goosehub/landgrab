@@ -13,6 +13,7 @@ turn off industry where supply doesn't exist after running resource/settlement o
 HIGH PRIORITY
     commission icons
     Punish insufficient settlement input with loss of support
+    Punish negative money
 MEDIUM PRIORITY
     unit system
         attacking
