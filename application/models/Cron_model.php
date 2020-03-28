@@ -4,6 +4,15 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
+	function mark_active_accounts_as_active()
+	{
+		$this->db->query("
+			UPDATE account
+			INNER JOIN tile ON tile.account_key = account.id
+			SET is_active = IF (tile.id IS NOT NULL, 1, 0)
+			WHERE tile.id IS NOT NULL;
+		");
+	}
 	function increase_support()
 	{
 		$support_key = SUPPORT_KEY;
