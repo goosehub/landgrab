@@ -418,7 +418,46 @@
       update_sum_projections();
       update_max_support();
       update_law_wait();
+      update_grouped_food_supply();
+      update_grouped_cash_crops_supply();
+      update_grouped_food_output();
+      update_grouped_cash_crops_output();
     }, 'account_update');
+  }
+  function update_grouped_food_output() {
+    let food = 0;
+    for (let key in food_key_array) {
+      let this_food = $('#output_projection_' + food_key_array[key]).html();
+      food += parseInt(this_food);
+    }
+    $('#output_projection_' + food_key).html(food);
+  }
+
+  function update_grouped_cash_crops_output() {
+    let cash_crops = 0;
+    for (let key in cash_crops_key_array) {
+      let this_cash_crop = $('#output_projection_' + cash_crops_key_array[key]).html();
+      cash_crops += parseInt(this_cash_crop);
+    }
+    $('#output_projection_' + cash_crops_key).html(cash_crops);
+  }
+
+  function update_grouped_food_supply() {
+    let food = 0;
+    for (let key in food_slug_array) {
+      let this_food = $('#government_supply_' + food_slug_array[key]).html();
+      food += parseInt(this_food);
+    }
+    $('#government_supply_' + food_key).html(food);
+  }
+
+  function update_grouped_cash_crops_supply() {
+    let cash_crops = 0;
+    for (let key in cash_crops_slug_array) {
+      let this_cash_crop = $('#government_supply_' + cash_crops_slug_array[key]).html();
+      cash_crops += parseInt(this_cash_crop);
+    }
+    $('#government_supply_' + cash_crops_key).html(cash_crops);
   }
 
   function update_market_prices(market_prices) {

@@ -44,6 +44,34 @@
     const democracy_support_regen = <?= DEMOCRACY_SUPPORT_REGEN ?>;
     const oligarchy_support_regen = <?= OLIGARCHY_SUPPORT_REGEN ?>;
     const autocracy_support_regen = <?= AUTOCRACY_SUPPORT_REGEN ?>;
+    const food_key_array = [
+      <?= GRAIN_KEY ?>,
+      <?= VEGETABLES_KEY ?>,
+      <?= FRUIT_KEY ?>,
+      <?= LIVESTOCK_KEY ?>,
+      <?= FISH_KEY ?>,
+    ];
+    const cash_crops_key_array = [
+      <?= COFFEE_KEY ?>,
+      <?= TEA_KEY ?>,
+      <?= CANNABIS_KEY ?>,
+      <?= ALCOHOLS_KEY ?>,
+      <?= TOBACCO_KEY ?>,
+    ];
+    const food_slug_array = [
+      'grain',
+      'vegetables',
+      'fruit',
+      'livestock',
+      'fish',
+    ];
+    const cash_crops_slug_array = [
+      'coffee',
+      'tea',
+      'cannabis',
+      'alcohols',
+      'tobacco',
+    ];
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];

@@ -222,10 +222,18 @@
                     ?>
                 <div class="col-md-12">
                     <div class="government_supply_header_parent row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <h3 class="text-purple">
                                 <?= $this->supplies_category_labels[$supply['category_id']]; ?>
                             </h3>
+                        </div>
+                        <div class="col-md-3">
+                        <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
+                            <p class="government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
+                        <?php } ?>
+                        <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
+                            <p class="government_supply lead" id="government_supply_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
+                        <?php } ?>
                         </div>
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
