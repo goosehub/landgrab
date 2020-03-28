@@ -24,7 +24,6 @@ MEDIUM PRIORITY
         exclude conceal on ocean
     Socalism max supports per power structure
     require support to pass laws
-    laws can only be passed once an hour
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -49,8 +48,6 @@ LOW PRIORITY
     hide resources in responses before discovered
     sell UI and mechanic
     implement icons
-    confirmation check icon on some button clicks (pass laws)
-    capitol and chat shortcut to diplomacy
     json leaderboard for every supply
     troops inside opp. tile at start of war
     have capitols show laws of nation
@@ -71,6 +68,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    capitol and chat shortcut to diplomacy
     must have land on world to send trade request
     make get_account_budget() calc settlement & industry separately for accuracy
     anarchy mechanic

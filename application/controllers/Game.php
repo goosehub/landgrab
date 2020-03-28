@@ -161,6 +161,11 @@ class Game extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
+
+        if (strtotime($account['last_law_change']) > time() - (60 * 60)) {
+            api_error_response('law_change_too_soon', 'You must wait an hour between passing laws.');
+        }
+
         $power_structure = $this->input->post('input_power_structure');
         $tax_rate = $this->input->post('input_tax_rate');
         $ideology = $this->input->post('input_ideology');

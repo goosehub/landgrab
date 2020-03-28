@@ -415,7 +415,24 @@
       update_output_projections(account.output_projections);
       update_sum_projections();
       update_budget(account.budget);
+      update_law_wait();
     }, 'account_update');
+  }
+
+  function update_law_wait() {
+    let last_date = new Date(account.last_law_change);
+    let current_date = new Date();
+    let milliseconds = Math.abs(current_date - last_date);
+    let minutes = milliseconds / 1000 / 60;
+    if (minutes > 60) {
+      $('#pass_new_laws_button_text').html('Pass New Laws');
+      $('#pass_new_laws_button').removeClass('disabled');
+    }
+    else {
+      let wait_message = '' + (60 - parseInt(minutes)) + ' Minutes';
+      $('#pass_new_laws_button_text').html(wait_message);
+      $('#pass_new_laws_button').addClass('disabled');
+    }
   }
 
   function update_input_projections(input_projections) {

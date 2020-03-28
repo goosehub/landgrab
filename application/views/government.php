@@ -88,17 +88,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <p id="minutes_until_next_law_pass_parent" class="text-warning text-right" style="display: none;">
-                            <span id="minutes_until_next_law_pass"></span>
-                            Minutes
-                        </p>
                     </div>
                     <div class="col-md-1">
                         <?= generate_popover('Passing Laws', 'Laws can only be passed once an hour.', 'right', 'pull-right'); ?>
                     </div>
                     <div class="col-md-8">
                         <div id="pass_new_laws_button" class="btn btn-action form-control text-is-bold">
-                            Pass Mew Laws
+                            <span id="pass_new_laws_button_text"></span>
                             <span id="laws_passed_confirm_icon" class="text-success">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </span>
