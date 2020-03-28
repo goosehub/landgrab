@@ -22,7 +22,6 @@ MEDIUM PRIORITY
         money purchase
         socialism purchase
         exclude conceal on ocean
-    Max support
     trade
         lock supplies on trade request
         refund supplies on trade request rejected
@@ -53,7 +52,6 @@ LOW PRIORITY
     number formatting
     tooltip for alliances, rights of passage, etc
     Industry/ non township icon marker toggle
-    socalism toggle tax rate, info UI
 GOING LIVE
     swal alerts
     DB indexes
