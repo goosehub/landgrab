@@ -54,6 +54,7 @@ LOW PRIORITY
     tooltip for alliances, rights of passage, etc
     selling riches
     Industry/ non township icon marker toggle
+    Rename healthcare to pharmaceuticals and make tradeable
 GOING LIVE
     swal alerts
     DB indexes

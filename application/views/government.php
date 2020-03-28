@@ -267,6 +267,9 @@
                             <span class="text-left">
                                 <label class="text-primary" title="<?= $supply['meta']; ?>">
                                     <?= $supply['label']; ?>
+                                    <?php if ($supply['meta']) { ?>
+                                        <?= generate_popover('Supplies', $supply['meta'], 'right', ''); ?>
+                                    <?php } ?>
                                 </label>
                             </span>
                         </div>

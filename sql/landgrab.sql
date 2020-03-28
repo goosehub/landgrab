@@ -256,10 +256,10 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (16, 3, 'Gas', 'gas', '', TRUE, NULL, ''),
 (17, 3, 'Oil', 'oil', '', TRUE, NULL, ''),
 (18, 3, 'Uranium', 'uranium', '', TRUE, NULL, ''),
-(19, 10, 'Silver', 'silver', '', TRUE, 1, ''),
-(20, 10, 'Gold', 'gold', '', TRUE, 2, ''),
-(21, 10, 'Platinum', 'platinum', '', TRUE, 3, ''),
-(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, ''),
+(19, 10, 'Silver', 'silver', '', TRUE, 1, 'Prices tend to stay low, with brief moments of volatility'),
+(20, 10, 'Gold', 'gold', '', TRUE, 2, 'Prices tend to slowly but steadily increase over time'),
+(21, 10, 'Platinum', 'platinum', '', TRUE, 3, 'Prices tend to be extremely volatile'),
+(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, 'Prices tend to move higher with frequent volatility'),
 (23, 5, 'Coffee', 'coffee', '', TRUE, NULL, ''),
 (24, 5, 'Tea', 'tea', '', TRUE, NULL, ''),
 (25, 5, 'Cannabis', 'cannabis', '', TRUE, NULL, ''),
@@ -306,25 +306,21 @@ INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
   `percent_chance_of_increase`, `max_increase`, `max_decrease`,
   `min_increase`, `min_decrease`, `min_price`, `max_price`) VALUES
 -- Silver
--- Tends low and a little volatile
 (1, 19, 1, 1, 
   40, 4, 5,
   1, 1, 1, 1000
 ),
 -- Gold
--- Tends higher and not volatile 
 (2, 20, 1, 1, 
   55, 3, 2,
   1, 1, 1, 1000
 ),
 -- Platinum
--- Even but volatile
 (3, 21, 1, 1, 
   50, 5, 5,
   1, 1, 1, 1000
 ),
 -- Gemstones
--- Tends higher and a little volatile
 (4, 22, 1, 1, 
   50, 2, 1,
   1, 1, 1, 1000
