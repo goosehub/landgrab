@@ -120,6 +120,17 @@ function escape_quotes(&$value) {
     $value = nl2br(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
 }
 
+// https://www.php.net/manual/en/function.shuffle.php#94697
+function shuffle_assoc(&$array) { 
+    $keys = array_keys($array);
+    shuffle($keys);
+    foreach($keys as $key) {
+        $new[$key] = $array[$key];
+    }
+    $array = $new;
+    return true;
+}
+
 function sanitize_html($html) {
     // Content input allow only gmail whitelisted tags
     $whitelisted_tags = '<a><abbr><acronym><address><area><b><bdo><big><blockquote><br><button><caption><center><cite><code><col><colgroup><dd><del><dfn><dir><div><dl><dt><em><fieldset><font><form><h1><h2><h3><h4><h5><h6><hr><i><img><input><ins><kbd><label><legend><li><map><menu><ol><optgroup><option><p><pre><q><s><samp><select><small><span><strike><strong><sub><sup><table><tbody><td><textarea><tfoot><th><thead><u><tr><tt><u><ul><var>';

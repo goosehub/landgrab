@@ -175,86 +175,94 @@ Class cron_model extends CI_Model
 	{
 		$accounts = $this->get_all_accounts_for_townships();
 		foreach ($accounts as $account) {
-			// Starting values
-			$grain = $fruit = $vegetables = $livestock = $fish = $coffee = $tea = $cannabis = $alcohols = $tobacco = $energy = $merchandise = $steel = $healthcare = 0;
+			// Calculate new grouped supply values
 			$food_needed = $this->get_account_food_needed($account);
 			$cash_crops_needed = $this->get_account_cash_crops_needed($account);
-			// Calculate new food supply values
-			$this->update_grouped_supply($fish, $account['fish'], $food_needed);
-			$this->update_grouped_supply($livestock, $account['livestock'], $food_needed);
-			$this->update_grouped_supply($fruit, $account['fruit'], $food_needed);
-			$this->update_grouped_supply($vegetables, $account['vegetables'], $food_needed);
-			$this->update_grouped_supply($grain, $account['grain'], $food_needed);
-			// Calculate new cash crops supply values
-			$this->update_grouped_supply($coffee, $account['coffee'], $cash_crops_needed);
-			$this->update_grouped_supply($tea, $account['tea'], $cash_crops_needed);
-			$this->update_grouped_supply($tobacco, $account['tobacco'], $cash_crops_needed);
-			$this->update_grouped_supply($alcohols, $account['alcohols'], $cash_crops_needed);
-			$this->update_grouped_supply($cannabis, $account['cannabis'], $cash_crops_needed);
+			$food_randomized = [
+				'fish' => 0,
+				'livestock' => 0,
+				'fruit' => 0,
+				'vegetables' => 0,
+				'grain' => 0,
+			];
+			$cash_crops_randomized = [
+				'coffee' => 0,
+				'tea' => 0,
+				'tobacco' => 0,
+				'alcohols' => 0,
+				'cannabis' => 0,
+			];
+			// Shuffle with perserved keys
+			shuffle_assoc($food_randomized);
+			shuffle_assoc($cash_crops_randomized);
+			// update_grouped_supply receives reference
+			$this->update_grouped_supply($account, $food_randomized, $food_needed);
+			$this->update_grouped_supply($account, $cash_crops_randomized, $cash_crops_needed);
 			// Calculate new direct supply values
+			$energy = $merchandise = $steel = $healthcare = 0;
 			$energy = ($account['town_count'] * TOWN_ENERGY_COST) + ($account['city_count'] * CITY_ENERGY_COST) + ($account['metro_count'] * METRO_ENERGY_COST);
 			$merchandise = ($account['town_count'] * TOWN_MERCHANDISE_COST) + ($account['city_count'] * CITY_MERCHANDISE_COST) + ($account['metro_count'] * METRO_MERCHANDISE_COST);
 			$steel = ($account['town_count'] * TOWN_STEEL_COST) + ($account['city_count'] * CITY_STEEL_COST) + ($account['metro_count'] * METRO_STEEL_COST);
 			$healthcare = ($account['town_count'] * TOWN_HEALTHCARE_COST) + ($account['city_count'] * CITY_HEALTHCARE_COST) + ($account['metro_count'] * METRO_HEALTHCARE_COST);
 			// Apply new values
-			$data = $this->township_input_update_array($account, $grain, $fruit, $vegetables, $livestock, $fish, $coffee, $tea, $cannabis, $alcohols, $tobacco, $energy, $merchandise, $steel, $healthcare);
+			$data = $this->township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $healthcare);
 			// Run update
 			$this->db->where('account_key', $account['id']);
 			$this->db->update_batch('supply_account_lookup', $data, 'supply_key');
 		}
 	}
-	function township_input_update_array($account, $grain, $fruit, $vegetables, $livestock, $fish, $coffee, $tea, $cannabis, $alcohols, $tobacco, $energy, $merchandise, $steel, $healthcare)
+	function township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $healthcare)
 	{
 		return [
 			[
 				'account_key' => $account['id'],
 				'supply_key' => GRAIN_KEY,
-				'amount' => $account['grain'] - $grain,
+				'amount' => $account['grain'] - $food_randomized['grain'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => FRUIT_KEY,
-				'amount' => $account['fruit'] - $fruit,
+				'amount' => $account['fruit'] - $food_randomized['fruit'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => VEGETABLES_KEY,
-				'amount' => $account['vegetables'] - $vegetables,
+				'amount' => $account['vegetables'] - $food_randomized['vegetables'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => LIVESTOCK_KEY,
-				'amount' => $account['livestock'] - $livestock,
+				'amount' => $account['livestock'] - $food_randomized['livestock'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => FISH_KEY,
-				'amount' => $account['fish'] - $fish,
+				'amount' => $account['fish'] - $food_randomized['fish'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => COFFEE_KEY,
-				'amount' => $account['coffee'] - $coffee,
+				'amount' => $account['coffee'] - $cash_crops_randomized['coffee'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => TEA_KEY,
-				'amount' => $account['tea'] - $tea,
+				'amount' => $account['tea'] - $cash_crops_randomized['tea'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => CANNABIS_KEY,
-				'amount' => $account['cannabis'] - $cannabis,
+				'amount' => $account['cannabis'] - $cash_crops_randomized['cannabis'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => ALCOHOLS_KEY,
-				'amount' => $account['alcohols'] - $alcohols,
+				'amount' => $account['alcohols'] - $cash_crops_randomized['alcohols'],
 			],
 			[
 				'account_key' => $account['id'],
 				'supply_key' => TOBACCO_KEY,
-				'amount' => $account['tobacco'] - $tobacco,
+				'amount' => $account['tobacco'] - $cash_crops_randomized['tobacco'],
 			],
 			[
 				'account_key' => $account['id'],
@@ -294,15 +302,17 @@ Class cron_model extends CI_Model
 		$cash_crops_needed += $account['metro_count'] * METRO_CASH_CROPS_COST;
 		return $cash_crops_needed;
 	}
-	function update_grouped_supply(&$new_supply, &$old_supply, &$supply_needed)
+	function update_grouped_supply($account, &$new_supplies, &$supply_needed)
 	{
-		if ($old_supply >= $supply_needed) {
-			$new_supply = $supply_needed;
-			$supply_needed = 0;
-		}
-		else {
-			$new_supply = $old_supply;
-			$supply_needed = $supply_needed - $old_supply;
+		foreach ($new_supplies as $key => $value) {
+			if ($account[$key] >= $supply_needed) {
+				$new_supplies[$key] = $supply_needed;
+				$supply_needed = 0;
+			}
+			else {
+				$new_supplies[$key] = $account[$key];
+				$supply_needed = $supply_needed - $account[$key];
+			}
 		}
 	}
 	function get_all_accounts_for_townships()
