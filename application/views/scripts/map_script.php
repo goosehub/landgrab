@@ -414,10 +414,17 @@
       update_input_projections(account.input_projections);
       update_output_projections(account.output_projections);
       update_budget(account.budget);
+      update_market_prices(account.market_prices);
       update_sum_projections();
       update_max_support();
       update_law_wait();
     }, 'account_update');
+  }
+
+  function update_market_prices(market_prices) {
+    for (let key in market_prices) {
+      $('#sell_supply_' + market_prices[key].supply_key).html(market_prices[key].amount)
+    }
   }
 
   function update_law_wait() {

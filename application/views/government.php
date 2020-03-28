@@ -283,13 +283,23 @@
                                 <span class="sum_projection" id="sum_projection_<?= $supply['id']; ?>" data-id="<?= $supply['id']; ?>" data-category-id="<?= $supply['category_id']; ?>"></span>
                             </span>
                         </div>
+                        <?php if ($supply['market_price_key']) { ?>
                         <div class="col-md-12">
-                            <?php if ($supply['market_price_key']) { ?>
-                            <a class="sell_button btn btn-success">
-                                Sell At Current Price: $<?= mt_rand(1, 6); ?>M
-                            </a>
-                            <?php } ?>
                         </div>
+                        <div class="col-md-6">
+                            <a class="sell_button btn btn-success form-control">
+                                Sell
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="lead">
+                                Current Price:
+                                <strong class="text-success">
+                                    $<span id="sell_supply_<?= $supply['id'] ?>"></span>M
+                                </strong>
+                            </p>
+                        </div>
+                        <?php } ?>
                     </div>
                 <?php if (!isset($this->supplies[$key + 1]) || $current_category_id !== $this->supplies[$key + 1]['category_id']) {
                     ?>

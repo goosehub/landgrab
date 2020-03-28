@@ -132,6 +132,7 @@ class Game extends CI_Controller {
             $account['supplies'][$supply['slug']] = $supply;
         }
         $account['budget'] = $this->game_model->get_account_budget($account);
+        $account['market_prices'] = $this->market_prices;
         api_response($account);
     }
 

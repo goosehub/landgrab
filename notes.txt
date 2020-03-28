@@ -51,6 +51,7 @@ LOW PRIORITY
     have capitols show laws of nation
     number formatting
     tooltip for alliances, rights of passage, etc
+    selling riches
     Industry/ non township icon marker toggle
 GOING LIVE
     swal alerts
@@ -66,6 +67,7 @@ GOING LIVE
         reddit update post
 NO PRIORITY
     capitol and chat shortcut to diplomacy
+    system chat at top of the hour for market prices
     must have land on world to send trade request
     make get_account_budget() calc settlement & industry separately for accuracy
     anarchy mechanic
