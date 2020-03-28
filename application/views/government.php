@@ -14,12 +14,12 @@
                 <input type="hidden" name="world_key" value="<?= $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Power Structure', 'Democracy: 10% corruption, ' . DEMOCRACY_SUPPORT_REGEN . ' support per/min, socialism max support: 200 | Oligarchy: 20% corruption, ' . OLIGARCHY_SUPPORT_REGEN . ' support per/min, socialism max support: 150 | Autocracy: 30% corruption, ' . AUTOCRACY_SUPPORT_REGEN . ' support per/min, socialism max: 100 support', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Power Structure', 'Democracy provides low support per turn, moderate corruption, and under Marxist Socialism higher max support. Autocracy provides high support per turn, severe corruption, and under Marxist Socialism lower max support. Oligarchy is a balance of the two. Play with the inputs to see the projections', 'right', 'pull-right'); ?>
                         <label for="input_power_structure" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
                         <select class="form-control" id="input_power_structure" name="input_power_structure" value="<?= $account['power_structure']; ?>">
-                            <option value="1" title="Difficult Support, Ordinary Corruption" <?php if ((int)$account['power_structure'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy</option>
+                            <option value="1" title="Difficult Support, Moderate Corruption" <?php if ((int)$account['power_structure'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy</option>
                             <!-- Great for economic growth -->
                             <option value="2" title="Moderate Support, Harsh Corruption" <?php if ((int)$account['power_structure'] === OLIGARCHY_KEY) { echo 'selected'; } ?>>Oligarchy</option>
                             <!-- Great for flexibility -->
@@ -31,11 +31,14 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Taxes', 'Each 1% of taxes reduces your maximum support by 2', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Taxes', 'Each 1% of taxes reduces your maximum support by 1', 'right', 'pull-right'); ?>
                         <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
                     </div>
-                    <div class="col-md-8">
-                        <input type="number" min="0" max="100" required class="form-control" id="input_tax_rate" name="input_tax_rate" value="<?= $account['tax_rate']; ?>">
+                    <div class="col-md-4">
+                        <input type="range" min="0" max="50" required class="form-control" id="input_tax_rate" name="input_tax_rate" value="<?= $account['tax_rate']; ?>">
+                    </div>
+                    <div class="col-md-4">
+                        <strong id="display_input_tax_rate"></strong>
                     </div>
                 </div>
                 <br>
@@ -61,14 +64,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <hr>
-                    <p class="lead text-center">
-                        <strong id="projected_support_per_minute" class="text-success"></strong> Support/Minute
-                        |
-                        <strong id="projected_max_support" class="text-primary"></strong> Max Support
-                        |
-                        <strong id="projected_corruption" class="text-danger"></strong>% Corruption
-                    </p>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="text-center">
+                            <strong id="projected_support_per_minute" class="text-success"></strong>
+                            Support/Minute
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="text-center">
+                            <strong id="projected_max_support" class="text-primary"></strong>
+                            Max Support
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="text-center">
+                            <strong id="projected_corruption" class="text-danger"></strong>
+                            % Corruption
+                        </p>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8 col-md-push-2">

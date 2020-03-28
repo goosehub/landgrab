@@ -46,7 +46,7 @@ $('#register_block').show();
 
 render_law_preview();
 $(document).ready(function(){
-    $('#input_tax_rate').keyup(function() {
+    $('#input_tax_rate').change(function() {
         render_law_preview();
     });
     $('#input_power_structure').change(function() {
@@ -56,11 +56,17 @@ $(document).ready(function(){
         render_law_preview();
     });
 });
+$('input[type=range]').on('input', function () {
+    $(this).trigger('change');
+});
 
 function render_law_preview() {
     power_structure = $('#input_power_structure').val();
     tax_rate = $('#input_tax_rate').val();
     ideology = $('input[name=input_ideology]:checked').val();
+    $('#display_input_tax_rate').html(tax_rate);
+    // Convert tax rate to hex, multiply, and use for red value 
+    $('#display_input_tax_rate').css('color', '#' + (tax_rate * 4).toString(16) + '0000');
 
     set_tax_rate_disabled();
     set_max_support();
