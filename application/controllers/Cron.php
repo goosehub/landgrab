@@ -36,6 +36,7 @@ class Cron extends CI_Controller {
         // Debugs
         // $this->cron_model->market_prices_debug();
 
+        // Order matters
         $this->cron_model->zero_negative_account_supply(); $this->microtime('zero_negative_account_supply');
         $this->cron_model->update_market_prices(); $this->microtime('update_market_prices');
         $this->cron_model->grow_population(); $this->microtime('grow_population');
@@ -46,6 +47,7 @@ class Cron extends CI_Controller {
         $this->cron_model->township_input(); $this->microtime('township_input');
         $this->cron_model->industry_input(); $this->microtime('industry_input');
         $this->cron_model->industry_output(); $this->microtime('industry_output');
+        $this->cron_model->shrink_population(); $this->microtime('shrink_population');
         $this->cron_model->settlement_income_collect(); $this->microtime('settlement_income_collect');
         $this->cron_model->industry_income_collect(); $this->microtime('industry_income_collect');
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');

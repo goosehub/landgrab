@@ -11,7 +11,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    Punish insufficient settlement input with population loss
     downgrade township when under minimum population
     supply special increase GDP logic
     UI for increased GDP logic
@@ -35,7 +34,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
-    logic population required for upgrading townships
+    logic population required for upgrading townships, don't reset on upgrade
     enlist spawn validation
     undo industry when township downgrade
     Fix exploit move base before top of hour

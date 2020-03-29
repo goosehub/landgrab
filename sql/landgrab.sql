@@ -240,8 +240,8 @@ ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `supply`;
 INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_increase`, `meta`) VALUES
 (1, 1, 'Cash', 'cash', 'M', TRUE, NULL, NULL, 'Cash is consumed each hour for certain industries that require government cash. If your cash goes negative, you will lose all support'),
-(2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Support is used up when using units. It increases each minute depending on power structure and each hour depending on cash crops. If you go into debt, support will go to zero.'),
-(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Each hour the population will grow depending on how many types of food you have'),
+(2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Support is used for controlling units. It increases each minute depending on power structure and each hour depending on cash crops. If you go into debt, support will go to zero.'),
+(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Each hour the population will grow depending on how many types of food you have. Townships without the needed supplies will shrink'),
 (4, 1, 'Territories', 'tiles', '', FALSE, NULL, NULL, 'Territories is the primary leaderboard stat and determines the offical winner of each round.'),
 (5, 5, 'Timber', 'timber', '', TRUE, NULL, NULL, ''),
 (6, 5, 'Fiber', 'fiber', '', TRUE, NULL, NULL, ''),

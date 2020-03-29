@@ -182,7 +182,121 @@ Class cron_model extends CI_Model
 			SET population = population + ($metro_population_increment * pop_bonus)
 			WHERE settlement_key = $metro_key
 		");
+	}
+	function shrink_population()
+	{
+		$town_population_increment = TOWN_POPULATION_INCREMENT;
+		$city_population_increment = CITY_POPULATION_INCREMENT;
+		$metro_population_increment = METRO_POPULATION_INCREMENT;
+		$town_key = TOWN_KEY;
+		$city_key = CITY_KEY;
+		$metro_key = METRO_KEY;
+		$grain_key = GRAIN_KEY;
+		$fruit_key = FRUIT_KEY;
+		$vegetables_key = VEGETABLES_KEY;
+		$livestock_key = LIVESTOCK_KEY;
+		$fish_key = FISH_KEY;
+		$coffee_key = COFFEE_KEY;
+		$tea_key = TEA_KEY;
+		$cannabis_key = CANNABIS_KEY;
+		$alcohols_key = ALCOHOLS_KEY;
+		$tobacco_key = TOBACCO_KEY;
+		$energy_key = ENERGY_KEY;
+		$merchandise_key = MERCHANDISE_KEY;
+		$steel_key = STEEL_KEY;
+		$pharmaceuticals_key = PHARMACEUTICALS_KEY;
 
+		$this->db->query("
+			UPDATE tile
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.supply_key = $grain_key AND grain.amount < 0
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.supply_key = $fruit_key AND fruit.amount < 0
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.supply_key = $vegetables_key AND vegetables.amount < 0
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.supply_key = $livestock_key AND livestock.amount < 0
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.supply_key = $fish_key AND fish.amount < 0
+			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
+			SET population = population - $town_population_increment - ($town_population_increment * 5)
+			WHERE settlement_key = $town_key
+			AND population IS NOT NULL
+			AND population > $town_population_increment + ($town_population_increment * 5)
+			AND (
+				grain.amount IS NOT NULL
+				OR fruit.amount IS NOT NULL
+				OR vegetables.amount IS NOT NULL
+				OR livestock.amount IS NOT NULL
+				OR fish.amount IS NOT NULL
+				OR energy.amount IS NOT NULL
+			)
+		");
+		$this->db->query("
+			UPDATE tile
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.supply_key = $grain_key AND grain.amount < 0
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.supply_key = $fruit_key AND fruit.amount < 0
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.supply_key = $vegetables_key AND vegetables.amount < 0
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.supply_key = $livestock_key AND livestock.amount < 0
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.supply_key = $fish_key AND fish.amount < 0
+			LEFT JOIN supply_account_lookup AS coffee ON tile.account_key = coffee.account_key AND coffee.supply_key = $coffee_key AND coffee.amount < 0
+			LEFT JOIN supply_account_lookup AS tea ON tile.account_key = tea.account_key AND tea.supply_key = $tea_key AND tea.amount < 0
+			LEFT JOIN supply_account_lookup AS cannabis ON tile.account_key = cannabis.account_key AND cannabis.supply_key = $cannabis_key AND cannabis.amount < 0
+			LEFT JOIN supply_account_lookup AS alcohols ON tile.account_key = alcohols.account_key AND alcohols.supply_key = $alcohols_key AND alcohols.amount < 0
+			LEFT JOIN supply_account_lookup AS tobacco ON tile.account_key = tobacco.account_key AND tobacco.supply_key = $tobacco_key AND tobacco.amount < 0
+			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
+			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
+			SET population = population - $city_population_increment - ($city_population_increment * 5)
+			WHERE settlement_key = $city_key
+			AND population IS NOT NULL
+			AND population > $city_population_increment + ($city_population_increment * 5)
+			AND (
+				grain.amount IS NOT NULL
+				OR fruit.amount IS NOT NULL
+				OR vegetables.amount IS NOT NULL
+				OR livestock.amount IS NOT NULL
+				OR fish.amount IS NOT NULL
+				OR coffee.amount IS NOT NULL
+				OR tea.amount IS NOT NULL
+				OR cannabis.amount IS NOT NULL
+				OR alcohols.amount IS NOT NULL
+				OR tobacco.amount IS NOT NULL
+				OR energy.amount IS NOT NULL
+				OR merchandise.amount IS NOT NULL
+			)
+		");
+		$this->db->query("
+			UPDATE tile
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.supply_key = $grain_key AND grain.amount < 0
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.supply_key = $fruit_key AND fruit.amount < 0
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.supply_key = $vegetables_key AND vegetables.amount < 0
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.supply_key = $livestock_key AND livestock.amount < 0
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.supply_key = $fish_key AND fish.amount < 0
+			LEFT JOIN supply_account_lookup AS coffee ON tile.account_key = coffee.account_key AND coffee.supply_key = $coffee_key AND coffee.amount < 0
+			LEFT JOIN supply_account_lookup AS tea ON tile.account_key = tea.account_key AND tea.supply_key = $tea_key AND tea.amount < 0
+			LEFT JOIN supply_account_lookup AS cannabis ON tile.account_key = cannabis.account_key AND cannabis.supply_key = $cannabis_key AND cannabis.amount < 0
+			LEFT JOIN supply_account_lookup AS alcohols ON tile.account_key = alcohols.account_key AND alcohols.supply_key = $alcohols_key AND alcohols.amount < 0
+			LEFT JOIN supply_account_lookup AS tobacco ON tile.account_key = tobacco.account_key AND tobacco.supply_key = $tobacco_key AND tobacco.amount < 0
+			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
+			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
+			LEFT JOIN supply_account_lookup AS steel ON tile.account_key = steel.account_key AND steel.supply_key = $steel_key AND steel.amount < 0
+			LEFT JOIN supply_account_lookup AS pharmaceuticals ON tile.account_key = pharmaceuticals.account_key AND pharmaceuticals.supply_key = $pharmaceuticals_key AND pharmaceuticals.amount < 0
+			SET population = population - $metro_population_increment - ($metro_population_increment * 5)
+			WHERE settlement_key = $metro_key
+			AND population IS NOT NULL
+			AND population > $metro_population_increment + ($metro_population_increment * 5)
+			AND (
+				grain.amount IS NOT NULL
+				OR fruit.amount IS NOT NULL
+				OR vegetables.amount IS NOT NULL
+				OR livestock.amount IS NOT NULL
+				OR fish.amount IS NOT NULL
+				OR coffee.amount IS NOT NULL
+				OR tea.amount IS NOT NULL
+				OR cannabis.amount IS NOT NULL
+				OR alcohols.amount IS NOT NULL
+				OR tobacco.amount IS NOT NULL
+				OR energy.amount IS NOT NULL
+				OR merchandise.amount IS NOT NULL
+				OR steel.amount IS NOT NULL
+				OR pharmaceuticals.amount IS NOT NULL
+			)
+		");
 	}
 	function diverse_imports_bonus()
 	{
