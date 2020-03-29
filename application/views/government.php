@@ -109,92 +109,96 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     GDP:
-                    <?= generate_popover('GDP', 'The sum of the GDP from from every territory', 'right'); ?>
+                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
                     $<span id="budget_gdp"></span> Million
                 </strong><br>
             </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Tax Income:
-                    <?= generate_popover('Tax Income', 'The percentage of GDP captured by the Tax Rate', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-success">
-                    $<span id="budget_tax_income"></span> Million
-                </strong><br>
+            <span id="socialism_budget">
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Socialism:
+                        <?= generate_popover('Soclaism', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops.', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_socialism"></span> Million
+                    </strong><br>
+                </span>
             </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Corruption From Power:
-                    <?= generate_popover('Corruption', 'Corruption From Power is caused by the power structure of your government', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_power_corruption"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Corruption From Size:
-                    <?= generate_popover('Corruption', 'Corruption From Size is increased by 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories you control', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_size_corruption"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Federal Administrative:
-                    <?= generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_federal"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Military Bases:
-                    <?= generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_bases"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    University Education:
-                    <?= generate_popover('University Education', 'Costs for Universities', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_education"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Subsidized Healthcare:
-                    <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_pharmaceuticals"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent" style="display: none">
-                <strong class="budget_info_item_label">
-                    Socialism:
-                    <?= generate_popover('Soclaism', 'Socialism consumes all remaining income. But the upside is Socialism allows you to enlist using support instead of cash', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-red">
-                    -$<span id="budget_socialism"></span> Million
-                </strong><br>
-            </span>
-            <span class="budget_info_item_parent">
-                <strong class="budget_info_item_label">
-                    Projected Hourly Earnings:
-                    <?= generate_popover('Hourly Earnings', 'Income remaining estimate after accounting for all fixed costs. This does not account for supply shortages.', 'right'); ?>
-                </strong>
-                <strong class="budget_info_value text-success">
-                    $<span id="budget_earnings"></span> Million
-                </strong><br>
+            <span id="free_market_budget">
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Tax Income:
+                        <?= generate_popover('Tax Income', 'The percentage of GDP captured by the Tax Rate', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-success">
+                        $<span id="budget_tax_income"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Corruption From Power:
+                        <?= generate_popover('Corruption', 'Corruption From Power is caused by the power structure of your government', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_power_corruption"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Corruption From Size:
+                        <?= generate_popover('Corruption', 'Corruption From Size is increased by 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories you control', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_size_corruption"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Federal Administrative:
+                        <?= generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_federal"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Military Bases:
+                        <?= generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_bases"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        University Education:
+                        <?= generate_popover('University Education', 'Costs for Universities', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_education"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Subsidized Healthcare:
+                        <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_pharmaceuticals"></span> Million
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Projected Hourly Earnings:
+                        <?= generate_popover('Hourly Earnings', 'Income remaining estimate after accounting for all fixed costs. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-success">
+                        $<span id="budget_earnings"></span> Million
+                    </strong><br>
+                </span>
             </span>
         </div>
         <div class="col-md-4 government_card">
@@ -217,7 +221,7 @@
                         <div class="col-md-3">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Supply
-                            <?= generate_popover('Supplies', 'Supplies are the heart of your economy. Each hour your settlements and industries will produce and consume supplies. If a supply runs negative, industries depending on that supply will not produce output, and townships depending on that supply will _____ _____ _____ _____. Negative supplies are reset to zero before the hourly cycle, so deficits won\'t run wild while you are away. Most supplies can be traded with diplomacy. Ensure you have a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'Each hour settlements & industries produce and consume supplies. If a supply runs negative, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -290,7 +294,7 @@
                                 <label class="text-primary" title="<?= $supply['meta']; ?>">
                                     <?= $supply['label']; ?>
                                     <?php if ($supply['meta']) { ?>
-                                        <?= generate_popover('Supplies', $supply['meta'], 'right', ''); ?>
+                                        <?= generate_popover($supply['label'], $supply['meta'], 'right', ''); ?>
                                     <?php } ?>
                                 </label>
                             </span>

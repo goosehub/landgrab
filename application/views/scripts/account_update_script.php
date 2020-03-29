@@ -213,7 +213,15 @@
     }
 
     function update_budget(budget){
+      $('#free_market_budget, #socialism_budget').hide();
+      if (account.ideology == free_market_key) {
+        $('#free_market_budget').show();
+      }
+      if (account.ideology == socialism_key) {
+        $('#socialism_budget').show();
+      }
       $('#budget_gdp').html(number_format(budget.gdp));
+      $('#budget_socialism').html(number_format(budget.gdp));
       $('#budget_tax_income').html(number_format(budget.tax_income));
       $('#budget_power_corruption').html(number_format(budget.power_corruption));
       $('#budget_size_corruption').html(number_format(budget.size_corruption));
@@ -221,7 +229,6 @@
       $('#budget_bases').html(number_format(budget.bases));
       $('#budget_education').html(number_format(budget.education));
       $('#budget_pharmaceuticals').html(number_format(budget.pharmaceuticals));
-      $('#budget_socialism').html(number_format(budget.socialism));
       $('#budget_earnings').html(number_format(budget.earnings));
     }
 </script>

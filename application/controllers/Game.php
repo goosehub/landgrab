@@ -388,8 +388,8 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
-        $terrain_key = FERTILE_KEY;
-        $terrain_key = BARREN_KEY;
+        // $terrain_key = FERTILE_KEY;
+        // $terrain_key = BARREN_KEY;
         // $terrain_key = MOUNTAIN_KEY;
         // $terrain_key = TUNDRA_KEY;
         $terrain_key = COASTAL_KEY;
