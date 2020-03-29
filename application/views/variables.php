@@ -44,6 +44,7 @@
     const democracy_support_regen = <?= DEMOCRACY_SUPPORT_REGEN ?>;
     const oligarchy_support_regen = <?= OLIGARCHY_SUPPORT_REGEN ?>;
     const autocracy_support_regen = <?= AUTOCRACY_SUPPORT_REGEN ?>;
+    const base_support_bonus = <?= BASE_SUPPORT_BONUS ?>;
     const food_key_array = [
       <?= GRAIN_KEY ?>,
       <?= VEGETABLES_KEY ?>,

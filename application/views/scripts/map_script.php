@@ -422,7 +422,18 @@
       update_grouped_cash_crops_supply();
       update_grouped_food_output();
       update_grouped_cash_crops_output();
+      update_diverse_diet_population_bonus();
+      update_cash_crops_support_bonus();
     }, 'account_update');
+  }
+  function update_diverse_diet_population_bonus() {
+    let bonus = !!parseInt(account.supplies.grain.amount) + !!parseInt(account.supplies.vegetables.amount) + !!parseInt(account.supplies.fruit.amount) + !!parseInt(account.supplies.livestock.amount) + !!parseInt(account.supplies.fish.amount);
+    $('#diverse_diet_population_bonus').html(bonus);
+  }
+  function update_cash_crops_support_bonus() {
+    let variety = !!parseInt(account.supplies.coffee.amount) + !!parseInt(account.supplies.tea.amount) + !!parseInt(account.supplies.alcohol.amount) + !!parseInt(account.supplies.cannabis.amount) + !!parseInt(account.supplies.tobacco.amount);
+    let bonus = Math.pow(base_support_bonus, variety);
+    $('#cash_crops_support_bonus').html(bonus);
   }
   function update_grouped_food_output() {
     let food = 0;

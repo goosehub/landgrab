@@ -15,7 +15,6 @@ HIGH PRIORITY
     Punish insufficient settlement input
     Punish negative money
     supply increase GDP logic
-    cash crop variety having some meaning
     cash crops supply fix
     supply category tooltips
     population required for upgrading townships
@@ -56,6 +55,7 @@ LOW PRIORITY
     have capitols show laws of nation
     number formatting
     tooltip for alliances, rights of passage, etc
+    formatting in tooltips
     selling riches
     Industry/ non township icon marker toggle
     Rename healthcare to pharmaceuticals and make tradeable
