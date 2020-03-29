@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// Debug
+define('ALLOW_TERRAIN_UPDATE', TRUE);
+
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
 define('ACCOUNT_UPDATE_INTERVAL_MS', 1 * 1000);

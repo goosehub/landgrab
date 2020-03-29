@@ -56,7 +56,6 @@ LOW PRIORITY
     selling riches
     Industry/ non township icon marker toggle
     only make own units draggable
-    lock down terrain change
 GOING LIVE
     swal alerts
     DB indexes

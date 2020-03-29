@@ -385,6 +385,9 @@ class Game extends CI_Controller {
 
     public function tile_form()
     {
+        if (!ALLOW_TERRAIN_UPDATE) {
+            return;
+        }
         $world_key = $this->input->post('world_key');
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
