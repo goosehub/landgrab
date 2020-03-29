@@ -6,12 +6,28 @@ Class cron_model extends CI_Model
 {
 	function mark_active_accounts_as_active()
 	{
+		$support_key = SUPPORT_KEY;
+		$cash_key = CASH_KEY;
 		$this->db->query("
 			UPDATE account
 			INNER JOIN tile ON tile.account_key = account.id
+			INNER JOIN supply_account_lookup AS support ON tile.account_key = support.account_key AND support.supply_key = $support_key
 			SET is_active = IF (tile.id IS NOT NULL, 1, 0)
 			WHERE tile.id IS NOT NULL;
 		");
+	}
+	function punish_negative_money()
+	{
+		$support_key = SUPPORT_KEY;
+		$cash_key = CASH_KEY;
+		$this->db->query("
+			UPDATE supply_account_lookup as support
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = 0
+			WHERE support.supply_key = $support_key
+			AND cash.amount < 0
+		");
+
 	}
 	function zero_negative_account_supply()
 	{
@@ -23,6 +39,7 @@ Class cron_model extends CI_Model
 	}
 	function increase_support()
 	{
+		$cash_key = CASH_KEY;
 		$support_key = SUPPORT_KEY;
 		$democracy_key = DEMOCRACY_KEY;
 		$oligarchy_key = OLIGARCHY_KEY;
@@ -37,69 +54,81 @@ Class cron_model extends CI_Model
 		$autocracy_socialism_max_support = AUTOCRACY_SOCIALISM_MAX_SUPPORT;
 		// Free Market Democracy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $democracy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $democracy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $democracy_key
 			AND ideology = $free_market_key
-			AND amount < 100 - tax_rate
+			AND support.amount < 100 - tax_rate
 		");
 		// Free Market Oligarchy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $oligarchy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $oligarchy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $oligarchy_key
 			AND ideology = $free_market_key
-			AND amount < 100 - tax_rate
+			AND support.amount < 100 - tax_rate
 		");
 		// Free Market Autocracy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $autocracy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $autocracy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $autocracy_key
 			AND ideology = $free_market_key
-			AND amount < 100 - tax_rate
+			AND support.amount < 100 - tax_rate
 		");
 		// Socialism Democracy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $democracy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $democracy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $democracy_key
 			AND ideology = $socialism_key
-			AND amount < $democracy_socialism_max_support
+			AND support.amount < $democracy_socialism_max_support
 		");
 		// Socialism Oligarchy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $oligarchy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $oligarchy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $oligarchy_key
 			AND ideology = $socialism_key
-			AND amount < $oligarchy_socialism_max_support
+			AND support.amount < $oligarchy_socialism_max_support
 		");
 		// Socialism Autocracy
 		$this->db->query("
-			UPDATE supply_account_lookup
+			UPDATE supply_account_lookup AS support
 			INNER JOIN account ON account_key = account.id
-			SET amount = amount + $autocracy_support_regen
-			WHERE supply_key = $support_key
+			INNER JOIN supply_account_lookup AS cash ON support.account_key = cash.account_key AND cash.supply_key = $cash_key
+			SET support.amount = support.amount + $autocracy_support_regen
+			WHERE support.supply_key = $support_key
 			AND is_active = 1
+			AND cash.amount >= 0
 			AND power_structure = $autocracy_key
 			AND ideology = $socialism_key
-			AND amount < $autocracy_socialism_max_support
+			AND support.amount < $autocracy_socialism_max_support
 		");
 	}
 	function mark_accounts_as_active()

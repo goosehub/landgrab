@@ -12,7 +12,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 
 HIGH PRIORITY
     Punish insufficient settlement input
-    Punish negative money
     supply special increase GDP logic
     UI for increased GDP logic
 MEDIUM PRIORITY
