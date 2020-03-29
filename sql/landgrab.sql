@@ -489,17 +489,17 @@ INSERT INTO `settlement` (
 ('Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, '1 food, 1 energy', NULL, NULL, 5
+  100, '100K Population, 1 Food, 1 Energy', NULL, NULL, 5
 ),
 ('City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '3 food, 3 energy, 1 cash crop, 1 merchandise', NULL, NULL, 10
+  1000, '1,000K Population, 3 Food, 3 Energy, 1 Cash Crops, 1 Merchandise', NULL, NULL, 10
 ),
 ('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '5 food, 5 energy, 3 cash crop, 3 merchandise, 1 steel, 1 healthcare', NULL, NULL, 20
+  10000, '10,000K Population, 5 Food, 5 Energy, 3 Cash Crops, 3 Merchandise, 1 Steel, 1 Healthcare', NULL, NULL, 20
 ),
 ('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -539,7 +539,7 @@ INSERT INTO `settlement` (
 ('Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, '', 7, 1, 2
+  10, '', 7, 2, 2
 ),
 ('Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,

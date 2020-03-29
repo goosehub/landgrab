@@ -119,12 +119,27 @@
 
     function render_tile(lat, lng) {
         tile = get_tile(lat, lng, world_key, function(response) {
-          current_tile = response;
-          render_settlement_extended(current_tile.settlement_key);
-          render_industry_extended(current_tile.industry_key);
-          highlight_single_square(current_tile.id);
-          render_tile_window();
+            current_tile = response;
+            render_settlement_extended(current_tile.settlement_key);
+            render_industry_extended(current_tile.industry_key);
+            highlight_single_square(current_tile.id);
+            render_tile_window();
+            open_selection_tab();
         });
+    }
+
+    function open_selection_tab() {
+        if (current_tile.account_key == account.id) {
+            if (parseInt(current_tile.is_capitol) || parseInt(current_tile.is_base)) {
+                $('#enlist_tab_button').tab('show');
+            }
+            else if ([town_key, city_key, metro_key].includes(parseInt(current_tile.settlement_key))) {
+                $('#industry_tab_button').tab('show');
+            }
+            else {
+                $('#settle_tab_button').tab('show');
+            }
+        }
     }
 
     function handle_exit_tile_block() {

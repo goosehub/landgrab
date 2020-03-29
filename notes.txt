@@ -14,9 +14,8 @@ HIGH PRIORITY
     Punish insufficient settlement input
     Punish negative money
     supply special increase GDP logic
-    population required for upgrading townships
-    establish button
 MEDIUM PRIORITY
+    Rename healthcare to pharmaceuticals and make tradeable and consumable
     commission icons
     unit system
         attacking
@@ -36,6 +35,7 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    logic population required for upgrading townships
     settlement and industry require 1 round of supply feed on start
     enlist spawn validation
     undo industry when township downgrade
@@ -56,7 +56,6 @@ LOW PRIORITY
     formatting in tooltips
     selling riches
     Industry/ non township icon marker toggle
-    Rename healthcare to pharmaceuticals and make tradeable
     only make own units draggable
 GOING LIVE
     swal alerts

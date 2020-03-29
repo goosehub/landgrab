@@ -659,7 +659,6 @@
     $('.center_block').hide();
 
     unhighlight_all_squares();
-    $('#settle_tab_button').tab('show');
     render_tile(lat, lng);
   }
 

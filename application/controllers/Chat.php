@@ -66,7 +66,7 @@ class Chat extends CI_Controller {
     {
         // Authentication
         $log_check = $data['log_check'] = $data['user_id'] = false;
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('user')) {
             $log_check = $data['log_check'] = true;
             $session_data = $this->session->userdata('logged_in');
             $user_id = $data['user_id'] = $session_data['id'];

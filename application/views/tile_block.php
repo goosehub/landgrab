@@ -122,13 +122,8 @@
         <div role="tabpanel" class="tab-pane" id="settle">
             <div id="settlement_extended_info" class="well">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="text-action"><strong id="select_settlement_header"></strong></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="settlement_confirm" class="btn btn-action form-control">
-                            Establish
-                        </div>
                     </div>
                 </div>
                 <div>
@@ -136,7 +131,7 @@
                     <span id="select_settlement_type" class="text-primary"></span>
                 </div>
                 <div>
-                    <label class="select_settlement_label">Population:</label>
+                    <label class="select_settlement_label">Starting Population:</label>
                     <span id="select_settlement_pop" class="text-primary"></span>
                 </div>
                 <div>
@@ -192,13 +187,8 @@
         <div role="tabpanel" class="tab-pane" id="industry">
             <div id="industry_extended_info" class="well">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="text-action"><strong id="select_industry_header"></strong></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="industry_confirm" class="btn btn-action form-control">
-                            Establish
-                        </div>
                     </div>
                 </div>
                 <div>
