@@ -11,9 +11,9 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-MEDIUM PRIORITY
-    commission icons
     stats supplies
+    commission icons
+MEDIUM PRIORITY
     unit system
         attacking
         militia defense

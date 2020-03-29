@@ -283,8 +283,8 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
-(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
-(46, 7, 'Financial', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');
+(45, 9, 'Entertainment', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
+(46, 9, 'Financial', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');
 
 DROP TABLE IF EXISTS `market_price`;
 CREATE TABLE IF NOT EXISTS `market_price` (
@@ -667,13 +667,13 @@ INSERT INTO `industry` (
 ),
 -- knowledge/quaternary
 (20, 6, 'University', 'university', NULL, NULL,
-  33, 2, 3, ''
+  33, 1, 3, ''
 ),
 (21, 6, 'Software', 'software', 2, NULL,
-  34, 5, 8, ''
+  34, 10, 8, ''
 ),
 (22, 6, 'Healthcare', 'healthcare', 2, NULL,
-  35, 5, 6, ''
+  35, 10, 6, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
