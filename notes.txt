@@ -11,8 +11,7 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    downgrade township when under minimum population
-    supply special increase GDP logic
+    use consumable gdp bonus supplies
     UI for increased GDP logic
 MEDIUM PRIORITY
     commission icons

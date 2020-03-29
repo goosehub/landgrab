@@ -572,9 +572,9 @@ Class cron_model extends CI_Model
 				FROM supply_account_lookup
 				WHERE supply_key = $support_key
 				AND amount >= 0
-			) AS sal_support ON sal_support.account_key = account.id
+			) AS support ON support.account_key = account.id
 			SET sal.amount = sal.amount - new_amount
-			WHERE sal_support.amount IS NOT NULL
+			WHERE support.amount IS NOT NULL
 		");
 	}
 	// This pattern can be switched to settlement_income_collect style if ever slow
@@ -601,10 +601,10 @@ Class cron_model extends CI_Model
 				FROM supply_account_lookup
 				WHERE supply_key = $support_key
 				AND amount >= 0
-			) AS sal_support ON sal_support.account_key = account.id
+			) AS support ON support.account_key = account.id
 			-- Set
 			SET sal.amount = sal.amount + new_amount
-			WHERE sal_support.amount IS NOT NULL
+			WHERE support.amount IS NOT NULL
 			-- Ensure supply exists
 			AND NOT EXISTS (
 				SELECT industry_key, account_key
@@ -642,12 +642,6 @@ Class cron_model extends CI_Model
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
 			INNER JOIN (
-				SELECT account_key, amount
-				FROM supply_account_lookup
-				WHERE supply_key = $support_key
-				AND amount >= 0
-			) AS sal_support ON sal_support.account_key = account.id
-			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
 				GROUP BY account_key
@@ -665,20 +659,51 @@ Class cron_model extends CI_Model
 			WHERE account.is_active = 1
 			AND account.ideology = $free_market_key
 			AND sal.supply_key = $cash_key
-			AND sal_support.amount IS NOT NULL
 		");
 	}
 	function industry_income_collect()
 	{
-		$support_key = SUPPORT_KEY;
 		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
 		$free_market_key = FREE_MARKET_KEY;
 		$cash_key = CASH_KEY;
+		$port_key = PORT_KEY;
+		$machinery_key = MACHINERY_KEY;
+		$automotive_key = AUTOMOTIVE_KEY;
+		$aerospace_key = AEROSPACE_KEY;
+		$entertainment_key = ENTERTAINMENT_KEY;
+		$financial_key = FINANCIAL_KEY;
+		$port_bonus = PORT_BONUS;
+		$machinery_bonus = MACHINERY_BONUS;
+		$automotive_bonus = AUTOMOTIVE_BONUS;
+		$aerospace_bonus = AEROSPACE_BONUS;
+		$entertainment_bonus = ENTERTAINMENT_BONUS;
+		$financial_bonus = FINANCIAL_BONUS;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
-				SELECT sal.account_key, sal.amount, SUM(industry_tile_join.industry_gdp) as sum_industry_gdp
+				SELECT sal.account_key, sal.amount, (SUM(industry_tile_join.industry_gdp) * IFNULL(sum_gdp_bonus,1) ) AS sum_industry_gdp
 				FROM supply_account_lookup AS sal
+				-- GDP Bonus
+				INNER JOIN (
+					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
+					(
+						1 +
+						(IF(port.id, $port_bonus, 0) / 100) + 
+						(IF(machinery.id, $machinery_bonus, 0) / 100) + 
+						(IF(automotive.id, $automotive_bonus, 0) / 100) + 
+						(IF(aerospace.id, $aerospace_bonus, 0) / 100) + 
+						(IF(entertainment.id, $entertainment_bonus, 0) / 100) + 
+						(IF(financial.id, $financial_bonus, 0) / 100)
+					) AS sum_gdp_bonus
+					FROM supply_account_lookup
+					LEFT JOIN supply_account_lookup AS port ON port.account_key = supply_account_lookup.supply_key AND port.supply_key = $port_key && port.amount > 0
+					LEFT JOIN supply_account_lookup AS machinery ON machinery.account_key = supply_account_lookup.supply_key AND machinery.supply_key = $machinery_key && machinery.amount > 0
+					LEFT JOIN supply_account_lookup AS automotive ON automotive.account_key = supply_account_lookup.supply_key AND automotive.supply_key = $automotive_key && automotive.amount > 0
+					LEFT JOIN supply_account_lookup AS aerospace ON aerospace.account_key = supply_account_lookup.supply_key AND aerospace.supply_key = $aerospace_key && aerospace.amount > 0
+					LEFT JOIN supply_account_lookup AS entertainment ON entertainment.account_key = supply_account_lookup.supply_key AND entertainment.supply_key = $entertainment_key && entertainment.amount > 0
+					LEFT JOIN supply_account_lookup AS financial ON financial.account_key = supply_account_lookup.supply_key AND financial.supply_key = $financial_key && financial.amount > 0
+				) AS sal_gdp_bonus ON sal_gdp_bonus.id = sal.id
+				-- GDP of tiles grouped by industry
 				INNER JOIN (
 					SELECT COUNT(tile.id) * industry.gdp AS industry_gdp, account_key
 					FROM tile
@@ -703,12 +728,6 @@ Class cron_model extends CI_Model
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
 			INNER JOIN (
-				SELECT account_key, amount
-				FROM supply_account_lookup
-				WHERE supply_key = $support_key
-				AND amount >= 0
-			) AS sal_support ON sal_support.account_key = account.id
-			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
 				GROUP BY account_key
@@ -722,11 +741,9 @@ Class cron_model extends CI_Model
 				( ( 100 - ( account.power_structure * 10 ) ) / 100 ) *
 				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
-
 			WHERE account.is_active = 1
 			AND account.ideology = $free_market_key
 			AND sal.supply_key = $cash_key
-			AND sal_support.amount IS NOT NULL
 		");
 	}
 	function punish_insufficient_supply()

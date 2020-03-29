@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `supply` (
   `suffix` varchar(256) NOT NULL,
   `can_trade` int(1) UNSIGNED NOT NULL,
   `market_price_key` int(10) UNSIGNED NULL,
-  `gdp_increase` int(1) UNSIGNED NULL,
+  `gdp_bonus` int(1) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -238,7 +238,7 @@ ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `supply`;
-INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_increase`, `meta`) VALUES
+INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_bonus`, `meta`) VALUES
 (1, 1, 'Cash', 'cash', 'M', TRUE, NULL, NULL, 'Cash is consumed each hour for certain industries that require government cash. If your cash goes negative, you will lose all support'),
 (2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Support is used for controlling units. It increases each minute depending on power structure and each hour depending on cash crops. If you go into debt, support will go to zero.'),
 (3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Population for each townships grows each hour. Townships without the needed supplies will shrink. Having a diverse diet available gives you a growth bonus'),
@@ -279,12 +279,12 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, NULL, ''),
 (39, 8, 'Steel', 'steel', '', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', '', TRUE, NULL, NULL, ''),
-(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 50, 'Increases National GDP by 50%'),
-(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
-(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
-(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 50, 'Increases National GDP by 50%'),
-(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 50, 'Increases National GDP by 50%'),
-(46, 7, 'Financial', 'financial', '', FALSE, NULL, 50, 'Increases National GDP by 50%');
+(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10%'),
+(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
+(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
+(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
+(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30%'),
+(46, 7, 'Financial', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30%');
 
 DROP TABLE IF EXISTS `market_price`;
 CREATE TABLE IF NOT EXISTS `market_price` (
@@ -644,16 +644,16 @@ INSERT INTO `industry` (
 ),
 -- hevvy industry
 (13, 4, 'Shipping Port', 'port', 2, 5,
-  41, 1, 50, 'Increases National GDP by 50%'
+  41, 1, 50, 'Increases National GDP by 10%'
 ),
 (14, 4, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 30, 'Increases National GDP by 50%'
+  42, 3, 30, 'Increases National GDP by 10%'
 ),
 (15, 4, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 40, 'Increases National GDP by 50%'
+  43, 3, 40, 'Increases National GDP by 10%'
 ),
 (16, 4, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 50, 'Increases National GDP by 50%'
+  44, 3, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
 (17, 5, 'Leisure', 'leisure', NULL, 5,
@@ -677,10 +677,10 @@ INSERT INTO `industry` (
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
-  46, 1, 200, 'Increases National GDP by 50%'
+  46, 1, 200, 'Increases National GDP by 30%'
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  45, 1, 50, 'Increases National GDP by 50%'
+  45, 1, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
   36, 5, 100, ''
