@@ -457,7 +457,9 @@
     let food = 0;
     for (let key in food_slug_array) {
       let this_food = $('#government_supply_' + food_slug_array[key]).html();
-      food += parseInt(this_food);
+      if (this_food) {
+        food += parseInt(this_food);
+      }
     }
     $('#government_supply_' + food_key).html(food);
   }
@@ -466,7 +468,9 @@
     let cash_crops = 0;
     for (let key in cash_crops_slug_array) {
       let this_cash_crop = $('#government_supply_' + cash_crops_slug_array[key]).html();
-      cash_crops += parseInt(this_cash_crop);
+      if (this_cash_crop) {
+        cash_crops += parseInt(this_cash_crop);
+      }
     }
     $('#government_supply_' + cash_crops_key).html(cash_crops);
   }
