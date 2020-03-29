@@ -667,20 +667,20 @@ INSERT INTO `industry` (
 ),
 -- knowledge/quaternary
 (20, 6, 'University', 'university', NULL, NULL,
-  33, 3, 3, ''
+  33, 2, 3, ''
 ),
 (21, 6, 'Software', 'software', 2, NULL,
-  34, 3, 8, ''
+  34, 5, 8, ''
 ),
 (22, 6, 'Healthcare', 'healthcare', 2, NULL,
-  35, 1, 6, ''
+  35, 5, 6, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
-  45, 1, 200, 'Increases National GDP by 50%'
+  46, 1, 200, 'Increases National GDP by 50%'
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  46, 1, 50, 'Increases National GDP by 50%'
+  45, 1, 50, 'Increases National GDP by 50%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
   36, 5, 100, ''

@@ -520,6 +520,19 @@ Class cron_model extends CI_Model
 					SELECT COUNT(tile.id) * industry.gdp AS industry_gdp, account_key
 					FROM tile
 					INNER JOIN industry ON tile.industry_key = industry.id
+					-- Ensure supply exists
+					WHERE NOT EXISTS (
+						SELECT industry_key, account_key
+						FROM supply_industry_lookup
+						INNER JOIN (
+							SELECT supply_key, account_key, id, amount
+							FROM supply_account_lookup
+							WHERE amount < 0
+						) AS sal_by_sil ON supply_industry_lookup.supply_key = sal_by_sil.supply_key
+						WHERE sal_by_sil.amount < 0
+						AND sal_by_sil.account_key = tile.account_key
+						AND supply_industry_lookup.industry_key = tile.industry_key
+					)
 					GROUP BY account_key, industry_key
 				) AS industry_tile_join ON industry_tile_join.account_key = sal.account_key
 				WHERE sal.supply_key = 1

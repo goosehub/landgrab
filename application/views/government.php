@@ -190,7 +190,7 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     Projected Hourly Earnings:
-                    <?= generate_popover('Hourly Earnings', 'Income remaining after accounting for all fixed costs. This number is an estimate based on current factors.', 'right'); ?>
+                    <?= generate_popover('Hourly Earnings', 'Income remaining estimate after accounting for all fixed costs. This does not account for supply shortages.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-success">
                     $<span id="budget_earnings"></span> Million

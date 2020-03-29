@@ -11,7 +11,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    don't collect industry income when supplies are insufficient
     Punish insufficient settlement input
     Punish negative money
     supply special increase GDP logic
