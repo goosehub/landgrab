@@ -279,12 +279,12 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, NULL, ''),
 (39, 8, 'Steel', 'steel', '', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', '', TRUE, NULL, NULL, ''),
-(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10%'),
-(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
-(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
-(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 10, 'Increases National GDP by 10%'),
-(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30%'),
-(46, 7, 'Financial', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30%');
+(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(42, 9, 'Machinery', 'machinery', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(43, 9, 'Automotive', 'automotive', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(44, 9, 'Aerospace', 'aerospace', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(45, 7, 'Entertainment', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
+(46, 7, 'Financial', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');
 
 DROP TABLE IF EXISTS `market_price`;
 CREATE TABLE IF NOT EXISTS `market_price` (
@@ -529,12 +529,12 @@ INSERT INTO `settlement` (
 ('Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 3, 1
+  10, '', 5, 10, 1
 ),
 ('Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 6, 2, 3
+  10, '', 6, 20, 3
 ),
 ('Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,

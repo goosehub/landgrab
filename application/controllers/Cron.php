@@ -51,11 +51,11 @@ class Cron extends CI_Controller {
         $this->cron_model->downgrade_townships(); $this->microtime('downgrade_townships');
         $this->cron_model->settlement_income_collect(); $this->microtime('settlement_income_collect');
         $this->cron_model->industry_income_collect(); $this->microtime('industry_income_collect');
+        $this->cron_model->consume_gdp_bonus_supplies(); $this->microtime('consume_gdp_bonus_supplies');
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
 
         // $this->cron_model->system_chat_messages(); $this->microtime('system_chat_messages');
-        // $this->cron_model->punish_insufficient_supply(); $this->microtime('punish_insufficient_supply');
     }
 
     public function every_day($token = false)

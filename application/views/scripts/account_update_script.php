@@ -16,6 +16,7 @@
         update_output_projections(account.output_projections);
         update_budget(account.budget);
         update_market_prices(account.market_prices);
+        update_gdp_bonus_consume_supplies();
         update_sum_projections();
         update_max_support();
         update_law_wait();
@@ -26,6 +27,9 @@
         update_diverse_diet_population_bonus();
         update_cash_crops_support_bonus();
       }, 'account_update');
+    }
+
+    function update_gdp_bonus_consume_supplies() {
     }
     
     function update_diverse_diet_population_bonus() {

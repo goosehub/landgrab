@@ -11,8 +11,6 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    use consumable gdp bonus supplies
-    UI for increased GDP logic
 MEDIUM PRIORITY
     commission icons
     stats supplies

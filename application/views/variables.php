@@ -31,6 +31,12 @@
     const commandos_key = <?= COMMANDOS_KEY; ?>;
     const food_key = <?= FOOD_KEY ?>;
     const cash_crops_key = <?= CASH_CROPS_KEY ?>;
+    const port_key = <?= PORT_KEY ?>;
+    const machinery_key = <?= MACHINERY_KEY ?>;
+    const automotive_key = <?= AUTOMOTIVE_KEY ?>;
+    const aerospace_key = <?= AEROSPACE_KEY ?>;
+    const entertainment_key = <?= ENTERTAINMENT_KEY ?>;
+    const financial_key = <?= FINANCIAL_KEY ?>;
     const food_category_id = <?= FOOD_CATEGORY_ID ?>;
     const cash_crops_category_id = <?= CASH_CROPS_CATEGORY_ID ?>;
     const democracy_key = <?= DEMOCRACY_KEY ?>;

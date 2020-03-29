@@ -4,8 +4,7 @@ A Game of Economies, Diplomacy, Warfare on planet earth using Google Maps. Join 
 
 <br>
 
-To set up a local instance
-
+<p>To set up a local instance</p>
 <ul>
     <li>Place files in webroot with proper permissions</li>
     <li>Configure database connection and token in auth.php</li>
@@ -16,6 +15,9 @@ To set up a local instance
     <li>Alternatively, use your browser to send a request to localhost/landgrab/cron/CRON_NAME_HERE/TOKEN_HERE to trigger a cron</li>
 </ul>
 
-<p>
-	Note: api_response and api_error_response both echo and exit so no return needed.
-</p>
+<p>Unconventional Decisions</p>
+<ul>
+	<li>For performance reasons, many keys are in a constants file to be referenced without needing queries or joins for that value</li>
+	<li>Township inputs are hardcoded because of the complexity of the grouped inputs of food and cash crops</li>
+	<li>Note: api_response and api_error_response both echo and exit so no return needed.</li>
+</ul>

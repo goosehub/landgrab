@@ -648,12 +648,12 @@ Class cron_model extends CI_Model
 					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
 					(
 						1 +
-						(IF(port.id, $port_bonus, 0) / 100) + 
-						(IF(machinery.id, $machinery_bonus, 0) / 100) + 
-						(IF(automotive.id, $automotive_bonus, 0) / 100) + 
-						(IF(aerospace.id, $aerospace_bonus, 0) / 100) + 
-						(IF(entertainment.id, $entertainment_bonus, 0) / 100) + 
-						(IF(financial.id, $financial_bonus, 0) / 100)
+						(IF(port.amount, $port_bonus, 0) / 100) + 
+						(IF(machinery.amount, $machinery_bonus, 0) / 100) + 
+						(IF(automotive.amount, $automotive_bonus, 0) / 100) + 
+						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) + 
+						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) + 
+						(IF(financial.amount, $financial_bonus, 0) / 100)
 					) AS sum_gdp_bonus
 					FROM supply_account_lookup
 					LEFT JOIN supply_account_lookup AS port ON port.account_key = supply_account_lookup.supply_key AND port.supply_key = $port_key && port.amount > 0
@@ -720,12 +720,12 @@ Class cron_model extends CI_Model
 					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
 					(
 						1 +
-						(IF(port.id, $port_bonus, 0) / 100) + 
-						(IF(machinery.id, $machinery_bonus, 0) / 100) + 
-						(IF(automotive.id, $automotive_bonus, 0) / 100) + 
-						(IF(aerospace.id, $aerospace_bonus, 0) / 100) + 
-						(IF(entertainment.id, $entertainment_bonus, 0) / 100) + 
-						(IF(financial.id, $financial_bonus, 0) / 100)
+						(IF(port.amount, $port_bonus, 0) / 100) + 
+						(IF(machinery.amount, $machinery_bonus, 0) / 100) + 
+						(IF(automotive.amount, $automotive_bonus, 0) / 100) + 
+						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) + 
+						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) + 
+						(IF(financial.amount, $financial_bonus, 0) / 100)
 					) AS sum_gdp_bonus
 					FROM supply_account_lookup
 					LEFT JOIN supply_account_lookup AS port ON port.account_key = supply_account_lookup.supply_key AND port.supply_key = $port_key && port.amount > 0
@@ -778,11 +778,15 @@ Class cron_model extends CI_Model
 			AND sal.supply_key = $cash_key
 		");
 	}
-	function punish_insufficient_supply()
+	function consume_gdp_bonus_supplies()
 	{
-		// Foreach account
-		// Foreach supply less than 0
-		// Reduce support supply
+		$this->db->query("
+			UPDATE supply_account_lookup AS sal
+			INNER JOIN supply ON supply.id = sal.supply_key
+			SET amount = amount - 1
+			WHERE amount > 0
+			AND supply.gdp_bonus IS NOT NULL
+		");
 	}
 	function update_cache_leaderboards()
 	{
