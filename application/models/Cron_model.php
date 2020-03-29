@@ -162,7 +162,7 @@ Class cron_model extends CI_Model
 		$coffee_key = COFFEE_KEY;
 		$tea_key = TEA_KEY;
 		$cannabis_key = CANNABIS_KEY;
-		$alcohols_key = ALCOHOLS_KEY;
+		$alcohol_key = ALCOHOLS_KEY;
 		$tobacco_key = TOBACCO_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup as osal
@@ -170,7 +170,7 @@ Class cron_model extends CI_Model
 				SELECT account_key, COUNT(id) as support_bonus
 				FROM supply_account_lookup
 				WHERE amount > 0
-				AND supply_key IN ($coffee_key, $tea_key, $cannabis_key, $alcohols_key, $tobacco_key)
+				AND supply_key IN ($coffee_key, $tea_key, $cannabis_key, $alcohol_key, $tobacco_key)
 			) AS isal ON osal.account_key = isal.account_key
 			SET amount = amount + POWER($base_support_bonus, support_bonus)
 			WHERE supply_key = $support_key
@@ -234,7 +234,7 @@ Class cron_model extends CI_Model
 				'coffee' => 0,
 				'tea' => 0,
 				'tobacco' => 0,
-				'alcohols' => 0,
+				'alcohol' => 0,
 				'cannabis' => 0,
 			];
 			// Shuffle with perserved keys
@@ -302,7 +302,7 @@ Class cron_model extends CI_Model
 			[
 				'account_key' => $account['id'],
 				'supply_key' => ALCOHOLS_KEY,
-				'amount' => $account['alcohols'] - $cash_crops_randomized['alcohols'],
+				'amount' => $account['alcohol'] - $cash_crops_randomized['alcohol'],
 			],
 			[
 				'account_key' => $account['id'],
@@ -375,7 +375,7 @@ Class cron_model extends CI_Model
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . COFFEE_KEY . ") coffee,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TEA_KEY . ") AS tea,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . CANNABIS_KEY . ") AS cannabis,
-			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ALCOHOLS_KEY . ") AS alcohols,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ALCOHOLS_KEY . ") AS alcohol,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TOBACCO_KEY . ") AS tobacco,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ENERGY_KEY . ") AS energy,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . MERCHANDISE_KEY . ") AS merchandise,

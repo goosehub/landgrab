@@ -16,7 +16,6 @@ HIGH PRIORITY
     supply special increase GDP logic
     population required for upgrading townships
     establish button
-    abstract get_account_update into it's own js file
 MEDIUM PRIORITY
     commission icons
     unit system

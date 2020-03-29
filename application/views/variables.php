@@ -70,7 +70,7 @@
       'coffee',
       'tea',
       'cannabis',
-      'alcohols',
+      'alcohol',
       'tobacco',
     ];
     let map = null;

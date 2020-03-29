@@ -264,7 +264,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (23, 3, 'Coffee', 'coffee', '', TRUE, NULL, NULL, ''),
 (24, 3, 'Tea', 'tea', '', TRUE, NULL, NULL, ''),
 (25, 3, 'Cannabis', 'cannabis', '', TRUE, NULL, NULL, ''),
-(26, 3, 'Alcohols', 'alcohol', '', TRUE, NULL, NULL, ''),
+(26, 3, 'Alcohol', 'alcohol', '', TRUE, NULL, NULL, ''),
 (27, 3, 'Tobacco', 'tobacco', '', TRUE, NULL, NULL, ''),
 (28, 6, 'Iron', 'iron', '', TRUE, NULL, NULL, ''),
 (29, 6, 'Copper', 'copper', '', TRUE, NULL, NULL, ''),
