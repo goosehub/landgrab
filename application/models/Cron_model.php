@@ -276,10 +276,10 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
 			LEFT JOIN supply_account_lookup AS steel ON tile.account_key = steel.account_key AND steel.supply_key = $steel_key AND steel.amount < 0
 			LEFT JOIN supply_account_lookup AS pharmaceuticals ON tile.account_key = pharmaceuticals.account_key AND pharmaceuticals.supply_key = $pharmaceuticals_key AND pharmaceuticals.amount < 0
-			SET population = population - $metro_population_increment - ($metro_population_increment * 5)
+			SET population = population - $metro_population_increment - ($metro_population_increment * 6)
 			WHERE settlement_key = $metro_key
 			AND population IS NOT NULL
-			AND population > $metro_population_increment + ($metro_population_increment * 5)
+			AND population > $metro_population_increment + ($metro_population_increment * 6)
 			AND (
 				grain.amount IS NOT NULL
 				OR fruit.amount IS NOT NULL
@@ -296,6 +296,26 @@ Class cron_model extends CI_Model
 				OR steel.amount IS NOT NULL
 				OR pharmaceuticals.amount IS NOT NULL
 			)
+		");
+	}
+	function downgrade_townships()
+	{
+		$town_key = TOWN_KEY;
+		$city_key = CITY_KEY;
+		$metro_key = METRO_KEY;
+		$this->db->query("
+			UPDATE tile
+			INNER JOIN settlement ON settlement.id = settlement_key
+			SET settlement_key = $town_key, industry_key = NULL
+			WHERE settlement_key = $city_key
+			AND population < settlement.base_population
+		");
+		$this->db->query("
+			UPDATE tile
+			INNER JOIN settlement ON settlement.id = settlement_key
+			SET settlement_key = $city_key, industry_key = NULL
+			WHERE settlement_key = $metro_key
+			AND population < settlement.base_population
 		");
 	}
 	function diverse_imports_bonus()

@@ -241,7 +241,7 @@ TRUNCATE TABLE `supply`;
 INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_increase`, `meta`) VALUES
 (1, 1, 'Cash', 'cash', 'M', TRUE, NULL, NULL, 'Cash is consumed each hour for certain industries that require government cash. If your cash goes negative, you will lose all support'),
 (2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Support is used for controlling units. It increases each minute depending on power structure and each hour depending on cash crops. If you go into debt, support will go to zero.'),
-(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Each hour the population will grow depending on how many types of food you have. Townships without the needed supplies will shrink'),
+(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Population for each townships grows each hour. Townships without the needed supplies will shrink. Having a diverse diet available gives you a growth bonus'),
 (4, 1, 'Territories', 'tiles', '', FALSE, NULL, NULL, 'Territories is the primary leaderboard stat and determines the offical winner of each round.'),
 (5, 5, 'Timber', 'timber', '', TRUE, NULL, NULL, ''),
 (6, 5, 'Fiber', 'fiber', '', TRUE, NULL, NULL, ''),
@@ -275,7 +275,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (34, 7, 'Software', 'software', '', TRUE, NULL, NULL, ''),
 (35, 8, 'Pharmaceuticals', 'pharmaceuticals', '', TRUE, NULL, NULL, ''),
 (36, 7, 'Engineering', 'engineering', '', TRUE, NULL, NULL, ''),
-(37, 8, 'Merchandise', 'merchandise', '', TRUE, NULL, NULL, ''),
+(37, 5, 'Merchandise', 'merchandise', '', TRUE, NULL, NULL, ''),
 (38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, NULL, ''),
 (39, 8, 'Steel', 'steel', '', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', '', TRUE, NULL, NULL, ''),

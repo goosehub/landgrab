@@ -131,7 +131,7 @@
                     <span id="select_settlement_type" class="text-primary"></span>
                 </div>
                 <div>
-                    <label class="select_settlement_label">Starting Population:</label>
+                    <label class="select_settlement_label">Minimum Population:</label>
                     <span id="select_settlement_pop" class="text-primary"></span>
                 </div>
                 <div>
