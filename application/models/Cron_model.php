@@ -244,19 +244,19 @@ Class cron_model extends CI_Model
 			$this->update_grouped_supply($account, $food_randomized, $food_needed);
 			$this->update_grouped_supply($account, $cash_crops_randomized, $cash_crops_needed);
 			// Calculate new direct supply values
-			$energy = $merchandise = $steel = $healthcare = 0;
+			$energy = $merchandise = $steel = $pharmaceuticals = 0;
 			$energy = ($account['town_count'] * TOWN_ENERGY_COST) + ($account['city_count'] * CITY_ENERGY_COST) + ($account['metro_count'] * METRO_ENERGY_COST);
 			$merchandise = ($account['town_count'] * TOWN_MERCHANDISE_COST) + ($account['city_count'] * CITY_MERCHANDISE_COST) + ($account['metro_count'] * METRO_MERCHANDISE_COST);
 			$steel = ($account['town_count'] * TOWN_STEEL_COST) + ($account['city_count'] * CITY_STEEL_COST) + ($account['metro_count'] * METRO_STEEL_COST);
-			$healthcare = ($account['town_count'] * TOWN_HEALTHCARE_COST) + ($account['city_count'] * CITY_HEALTHCARE_COST) + ($account['metro_count'] * METRO_HEALTHCARE_COST);
+			$pharmaceuticals = ($account['town_count'] * TOWN_PHARMACEUTICALS_COST) + ($account['city_count'] * CITY_PHARMACEUTICALS_COST) + ($account['metro_count'] * METRO_PHARMACEUTICALS_COST);
 			// Apply new values
-			$data = $this->township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $healthcare);
+			$data = $this->township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $pharmaceuticals);
 			// Run update
 			$this->db->where('account_key', $account['id']);
 			$this->db->update_batch('supply_account_lookup', $data, 'supply_key');
 		}
 	}
-	function township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $healthcare)
+	function township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $pharmaceuticals)
 	{
 		return [
 			[
@@ -326,8 +326,8 @@ Class cron_model extends CI_Model
 			],
 			[
 				'account_key' => $account['id'],
-				'supply_key' => HEALTHCARE_KEY,
-				'amount' => $account['healthcare'] - $healthcare,
+				'supply_key' => PHARMACEUTICALS_KEY,
+				'amount' => $account['pharmaceuticals'] - $pharmaceuticals,
 			],
 		];
 	}
@@ -380,7 +380,7 @@ Class cron_model extends CI_Model
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ENERGY_KEY . ") AS energy,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . MERCHANDISE_KEY . ") AS merchandise,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . STEEL_KEY . ") AS steel,
-			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . HEALTHCARE_KEY . ") AS healthcare,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . PHARMACEUTICALS_KEY . ") AS pharmaceuticals,
 		");
 		$this->db->from('account');
 		$this->db->where('account.is_active', true);

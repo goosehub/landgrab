@@ -220,7 +220,7 @@
       $('#budget_federal').html(number_format(budget.federal));
       $('#budget_bases').html(number_format(budget.bases));
       $('#budget_education').html(number_format(budget.education));
-      $('#budget_healthcare').html(number_format(budget.healthcare));
+      $('#budget_pharmaceuticals').html(number_format(budget.pharmaceuticals));
       $('#budget_socialism').html(number_format(budget.socialism));
       $('#budget_earnings').html(number_format(budget.earnings));
     }

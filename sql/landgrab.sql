@@ -199,7 +199,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (19, 2, 1), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
-(22, 1, 10); -- Healthcare
+(22, 1, 10); -- Pharmaceuticals
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
@@ -273,7 +273,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (32, 6, 'Nickle', 'nickle', '', TRUE, NULL, NULL, ''),
 (33, 7, 'Education', 'education', '', FALSE, NULL, NULL, ''),
 (34, 7, 'Software', 'software', '', TRUE, NULL, NULL, ''),
-(35, 7, 'Healthcare', 'healthcare', '', FALSE, NULL, NULL, ''),
+(35, 8, 'Pharmaceuticals', 'pharmaceuticals', '', TRUE, NULL, NULL, ''),
 (36, 7, 'Engineering', 'engineering', '', TRUE, NULL, NULL, ''),
 (37, 8, 'Merchandise', 'merchandise', '', TRUE, NULL, NULL, ''),
 (38, 8, 'Chemicals', 'chemicals', '', TRUE, NULL, NULL, ''),
@@ -499,7 +499,7 @@ INSERT INTO `settlement` (
 ('Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '10,000K Population, 5 Food, 5 Energy, 3 Cash Crops, 3 Merchandise, 1 Steel, 1 Healthcare', NULL, NULL, 20
+  10000, '10,000K Population, 5 Food, 5 Energy, 3 Cash Crops, 3 Merchandise, 1 Steel, 1 Pharmaceuticals', NULL, NULL, 20
 ),
 ('Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -618,10 +618,10 @@ INSERT INTO `industry` (
   13, 2, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 3, 1, ''
+  13, 4, 1, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 4, 2, ''
+  13, 6, 2, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
   13, 8, 5, ''
@@ -631,7 +631,7 @@ INSERT INTO `industry` (
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
-  37, 1, 5, ''
+  37, 10, 5, ''
 ),
 (10, 3, 'Chemicals', 'chemicals', NULL, NULL,
   38, 3, 5, ''
@@ -672,7 +672,7 @@ INSERT INTO `industry` (
 (21, 6, 'Software', 'software', 2, NULL,
   34, 3, 8, ''
 ),
-(22, 6, 'Healthcare', 'healthcare', 2, NULL,
+(22, 6, 'Pharmaceuticals', 'pharmaceuticals', 2, NULL,
   35, 1, 6, ''
 ),
 -- metro

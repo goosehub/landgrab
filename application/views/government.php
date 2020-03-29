@@ -171,11 +171,11 @@
             </span>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
-                    Subsidized Healthcare:
-                    <?= generate_popover('University Education', 'Costs for Healthcare Industry', 'right'); ?>
+                    Subsidized Pharmaceuticals:
+                    <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
-                    -$<span id="budget_healthcare"></span> Million
+                    -$<span id="budget_pharmaceuticals"></span> Million
                 </strong><br>
             </span>
             <span class="budget_info_item_parent" style="display: none">
@@ -253,7 +253,7 @@
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Surplus
-                            <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of each consumed supply to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="sum_projection text-danger lead" id="sum_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>

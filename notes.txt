@@ -11,11 +11,12 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
+    don't collect industry income when supplies are insufficient
     Punish insufficient settlement input
     Punish negative money
     supply special increase GDP logic
+    UI for increased GDP logic
 MEDIUM PRIORITY
-    Rename healthcare to pharmaceuticals and make tradeable and consumable
     commission icons
     unit system
         attacking
@@ -204,7 +205,7 @@ resort
 gambling
 university
 software
-healthcare
+pharmaceuticals
 financial_banking
 entertainment_media
 engineering_design

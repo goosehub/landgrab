@@ -218,7 +218,7 @@
 		}
 		function get_supplies_of_settlement_input($settlements_grouped)
 		{
-			$food = $cash_crops = $energy = $merchandise = $steel = $healthcare = 0;
+			$food = $cash_crops = $energy = $merchandise = $steel = $pharmaceuticals = 0;
 			foreach ($settlements_grouped as $settlement) {
 				if ($settlement['settlement_key'] == TOWN_KEY) {
 					$food = $food + (TOWN_FOOD_COST * $settlement['settlement_count']);
@@ -226,7 +226,7 @@
 					$cash_crops = $cash_crops + (TOWN_CASH_CROPS_COST * $settlement['settlement_count']);
 					$merchandise = $merchandise + (TOWN_MERCHANDISE_COST * $settlement['settlement_count']);
 					$steel = $steel + (TOWN_STEEL_COST * $settlement['settlement_count']);
-					$healthcare = $healthcare + (TOWN_HEALTHCARE_COST * $settlement['settlement_count']);
+					$pharmaceuticals = $pharmaceuticals + (TOWN_PHARMACEUTICALS_COST * $settlement['settlement_count']);
 				}
 				else if ($settlement['settlement_key'] == CITY_KEY) {
 					$food = $food + (CITY_FOOD_COST * $settlement['settlement_count']);
@@ -234,7 +234,7 @@
 					$cash_crops = $cash_crops + (CITY_CASH_CROPS_COST * $settlement['settlement_count']);
 					$merchandise = $merchandise + (CITY_MERCHANDISE_COST * $settlement['settlement_count']);
 					$steel = $steel + (CITY_STEEL_COST * $settlement['settlement_count']);
-					$healthcare = $healthcare + (CITY_HEALTHCARE_COST * $settlement['settlement_count']);
+					$pharmaceuticals = $pharmaceuticals + (CITY_PHARMACEUTICALS_COST * $settlement['settlement_count']);
 				}
 				else if ($settlement['settlement_key'] == METRO_KEY) {
 					$food = $food + (METRO_FOOD_COST * $settlement['settlement_count']);
@@ -242,7 +242,7 @@
 					$cash_crops = $cash_crops + (METRO_CASH_CROPS_COST * $settlement['settlement_count']);
 					$merchandise = $merchandise + (METRO_MERCHANDISE_COST * $settlement['settlement_count']);
 					$steel = $steel + (METRO_STEEL_COST * $settlement['settlement_count']);
-					$healthcare = $healthcare + (METRO_HEALTHCARE_COST * $settlement['settlement_count']);
+					$pharmaceuticals = $pharmaceuticals + (METRO_PHARMACEUTICALS_COST * $settlement['settlement_count']);
 				}
 			}
 			return array(
@@ -267,8 +267,8 @@
 					'output_supply_key' => STEEL_KEY,
 				),
 				array(
-					'output_supply_amount' => $healthcare,
-					'output_supply_key' => HEALTHCARE_KEY,
+					'output_supply_amount' => $pharmaceuticals,
+					'output_supply_key' => PHARMACEUTICALS_KEY,
 				),
 			);
 		}
@@ -390,8 +390,8 @@
 			$running_income = $running_income - $budget['bases'];
 			$budget['education'] = $this->get_cost_of_industry_by_account($account['id'], EDUCATION_INDUSTRY_KEY, EDUCATION_CASH_COST);
 			$running_income = $running_income - $budget['education'];
-			$budget['healthcare'] = $this->get_cost_of_industry_by_account($account['id'], HEALTHCARE_INDUSTRY_KEY, HEALTHCARE_CASH_COST);
-			$running_income = $running_income - $budget['healthcare'];
+			$budget['pharmaceuticals'] = $this->get_cost_of_industry_by_account($account['id'], PHARMACEUTICALS_INDUSTRY_KEY, PHARMACEUTICALS_CASH_COST);
+			$running_income = $running_income - $budget['pharmaceuticals'];
 			$budget['socialism'] = $running_income;
 			$budget['earnings'] = $running_income;
 			return $budget;
