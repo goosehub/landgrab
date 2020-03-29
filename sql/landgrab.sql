@@ -672,7 +672,7 @@ INSERT INTO `industry` (
 (21, 6, 'Software', 'software', 2, NULL,
   34, 3, 8, ''
 ),
-(22, 6, 'Pharmaceuticals', 'pharmaceuticals', 2, NULL,
+(22, 6, 'Healthcare', 'healthcare', 2, NULL,
   35, 1, 6, ''
 ),
 -- metro

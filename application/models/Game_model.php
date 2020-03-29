@@ -390,7 +390,7 @@
 			$running_income = $running_income - $budget['bases'];
 			$budget['education'] = $this->get_cost_of_industry_by_account($account['id'], EDUCATION_INDUSTRY_KEY, EDUCATION_CASH_COST);
 			$running_income = $running_income - $budget['education'];
-			$budget['pharmaceuticals'] = $this->get_cost_of_industry_by_account($account['id'], PHARMACEUTICALS_INDUSTRY_KEY, PHARMACEUTICALS_CASH_COST);
+			$budget['pharmaceuticals'] = $this->get_cost_of_industry_by_account($account['id'], HEALTHCARE_INDUSTRY_KEY, PHARMACEUTICALS_CASH_COST);
 			$running_income = $running_income - $budget['pharmaceuticals'];
 			$budget['socialism'] = $running_income;
 			$budget['earnings'] = $running_income;

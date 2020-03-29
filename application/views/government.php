@@ -171,7 +171,7 @@
             </span>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
-                    Subsidized Pharmaceuticals:
+                    Subsidized Healthcare:
                     <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-red">
