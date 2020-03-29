@@ -112,7 +112,7 @@
                     <small class="text-action">
                         <span id="budget_gdp_bonus"></span>% Bonus
                     </small>
-                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus supplies.', 'right'); ?>
+                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus Supplies.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
                     $<span id="budget_gdp"></span> Million
@@ -304,7 +304,7 @@
                         </div>
                         <div class="col-md-3">
                             <span class="text-right">
-                                <span class="government_supply" id="government_supply_<?= $supply['slug']; ?>"></span>
+                                <span class="government_supply" id="government_supply_<?= $supply['id']; ?>"></span>
                                 <?= $supply['suffix']; ?>
                             </span>
                         </div>

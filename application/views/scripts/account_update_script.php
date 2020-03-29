@@ -30,6 +30,30 @@
     }
 
     function update_gdp_bonus_consume_supplies() {
+      let port_supply = $('#government_supply_' + port_key).html();
+      if (port_supply) {
+        $('#input_projection_' + port_key).html('-1');
+      }
+      let machinery_supply = $('#government_supply_' + machinery_key).html();
+      if (machinery_supply) {
+        $('#input_projection_' + machinery_key).html('-1');
+      }
+      let automotive_supply = $('#government_supply_' + automotive_key).html();
+      if (automotive_supply) {
+        $('#input_projection_' + automotive_key).html('-1');
+      }
+      let aerospace_supply = $('#government_supply_' + aerospace_key).html();
+      if (aerospace_supply) {
+        $('#input_projection_' + aerospace_key).html('-1');
+      }
+      let entertainment_supply = $('#government_supply_' + entertainment_key).html();
+      if (entertainment_supply) {
+        $('#input_projection_' + entertainment_key).html('-1');
+      }
+      let financial_supply = $('#government_supply_' + financial_key).html();
+      if (financial_supply) {
+        $('#input_projection_' + financial_key).html('-1');
+      }
     }
     
     function update_diverse_diet_population_bonus() {
@@ -62,7 +86,7 @@
     function update_grouped_food_supply() {
       let food = 0;
       for (let key in food_slug_array) {
-        let this_food = $('#government_supply_' + food_slug_array[key]).html();
+        let this_food = $('#government_supply_' + food_key_array[key]).html();
         if (this_food) {
           food += parseInt(this_food);
         }
@@ -73,7 +97,7 @@
     function update_grouped_cash_crops_supply() {
       let cash_crops = 0;
       for (let key in cash_crops_slug_array) {
-        let this_cash_crop = $('#government_supply_' + cash_crops_slug_array[key]).html();
+        let this_cash_crop = $('#government_supply_' + cash_crops_key_array[key]).html();
         if (this_cash_crop) {
           cash_crops += parseInt(this_cash_crop);
         }
@@ -188,9 +212,9 @@
       Object.keys(supplies).forEach(function(key) {
         let supply = supplies[key];
         $('#menu_supply_' + supply['slug']).html(supply['amount']);
-        $('#government_supply_' + supply['slug']).html(supply['amount']).removeClass('text-danger');
+        $('#government_supply_' + supply['supply_key']).html(supply['amount']).removeClass('text-danger');
         if (supply['amount'] < 0) {
-          $('#government_supply_' + supply['slug']).addClass('text-danger');
+          $('#government_supply_' + supply['supply_key']).addClass('text-danger');
         }
         $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
         // $('#their_trade_supply_offer_' + supply['slug']).val(supply['amount']);
