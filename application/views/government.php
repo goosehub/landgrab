@@ -210,9 +210,9 @@
                 <div class="col-md-12">
                     <div class="government_supply_header_parent row">
                         <div class="col-md-3">
-                            <h3 class="text-purple">
+                            <h4 class="text-purple">
                                 <?= $this->supplies_category_labels[$supply['category_id']]; ?>
-                            </h3>
+                            </h4>
                         </div>
                         <div class="col-md-3">
                         <?php if ($supply['category_id'] == 1) { ?>
@@ -229,6 +229,7 @@
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Production
+                            <?= generate_popover('Supplies', 'Each hour your settlements and industries will produce and consume supplies.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="output_projection text-success lead" id="output_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -240,6 +241,7 @@
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Consumption
+                            <?= generate_popover('Supplies', 'If a supply runs negative, industries depending on that supply will not produce output, and townships depending on that supply will _____ _____ _____ _____. Negative supplies reset to zero each cycle.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -251,6 +253,7 @@
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Surplus
+                            <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="sum_projection text-danger lead" id="sum_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -259,7 +262,20 @@
                             <p class="sum_projection text-danger lead" id="sum_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
+                        <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
+                        <div class="col-md-12">
+                            <span id="diverse_diet_population_bonus" class="text-success">2</span>X Growth Bonus
+                            <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth | 2 Types: 2X Population Growth | 3 Types: 3X Population Growth | 4 Types: 4X Population Growth | 5 Types: 5X Population Growth', 'bottom', ''); ?>
+                        </div>
+                        <?php } ?>
+                        <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
+                        <div class="col-md-12">
+                            <span id="cash_crops_support_bonus" class="text-danger">16</span> Support Bonus
+                            <?= generate_popover('Diverse Imports Support Bonus', '1 Types: 2 Support/Hour | 2 Types: 4 Support/Hour | 3 Types: 8 Support/Hour | 4 Types: 16 Support/Hour | 5 Types: 32 Support/Hour', 'bottom', ''); ?>
+                        </div>
+                        <?php } ?>
                     </div>
+
                 <?php } ?>
 
                     <div class="government_supply_parent row <?= $odd ? 'odd_row' : 'even_row' ?>">
@@ -298,7 +314,8 @@
                         <div class="col-md-12">
                         </div>
                         <div class="col-md-6">
-                            <a class="sell_button btn btn-success form-control">
+                            <a class="sell_button btn btn-action form-control">
+                                <i class="fas fa-hand-holding-usd"></i>
                                 Sell
                             </a>
                         </div>

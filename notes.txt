@@ -12,9 +12,14 @@ turn off industry where supply doesn't exist after running resource/settlement o
 
 HIGH PRIORITY
     commission icons
-    Punish insufficient settlement input with loss of support
+    Punish insufficient settlement input
     Punish negative money
     supply increase GDP logic
+    cash crop variety having some meaning
+    cash crops supply fix
+    supply category tooltips
+    population required for upgrading townships
+    establish button
 MEDIUM PRIORITY
     unit system
         attacking
@@ -42,8 +47,6 @@ LOW PRIORITY
     stripped rows across app
     make clear what borders are current players borders
     refactor township input desc to be generated
-    population growth based on food
-    population required for upgrading townships
     population projection
     hide resources in responses before discovered
     sell UI and mechanic
@@ -56,6 +59,7 @@ LOW PRIORITY
     selling riches
     Industry/ non township icon marker toggle
     Rename healthcare to pharmaceuticals and make tradeable
+    only make own units draggable
 GOING LIVE
     swal alerts
     DB indexes

@@ -240,32 +240,32 @@ ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `supply`;
 INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_increase`, `meta`) VALUES
 (1, 1, 'Cash', 'cash', 'M', TRUE, NULL, NULL, 'This rules everything'),
-(2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Increases every minute depending on government type'),
-(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Census occurs every hour and updates this value'),
+(2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Increases every minute depending on your power structure and each hour depending on how many types of cash crops you have'),
+(3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Each hour the population will grow depending on how many types of food you have'),
 (4, 1, 'Territories', 'tiles', '', FALSE, NULL, NULL, 'The primary leaderboard stat'),
-(5, 4, 'Timber', 'timber', '', TRUE, NULL, NULL, ''),
-(6, 4, 'Fiber', 'fiber', '', TRUE, NULL, NULL, ''),
-(7, 4, 'Ore', 'ore', '', TRUE, NULL, NULL, ''),
+(5, 5, 'Timber', 'timber', '', TRUE, NULL, NULL, ''),
+(6, 5, 'Fiber', 'fiber', '', TRUE, NULL, NULL, ''),
+(7, 5, 'Ore', 'ore', '', TRUE, NULL, NULL, ''),
 (8, 2, 'Grain', 'grain', '', TRUE, NULL, NULL, ''),
 (9, 2, 'Fruit', 'fruit', '', TRUE, NULL, NULL, ''),
 (10, 2, 'Vegetables', 'vegetables', '', TRUE, NULL, NULL, ''),
 (11, 2, 'Livestock', 'livestock', '', TRUE, NULL, NULL, ''),
 (12, 2, 'Fish', 'fish', '', TRUE, NULL, NULL, ''),
-(13, 3, 'Energy', 'energy', '', FALSE, NULL, NULL, ''),
-(14, 3, 'Biofuel', 'biofuel', '', TRUE, NULL, NULL, ''),
-(15, 3, 'Coal', 'coal', '', TRUE, NULL, NULL, ''),
-(16, 3, 'Gas', 'gas', '', TRUE, NULL, NULL, ''),
-(17, 3, 'Oil', 'oil', '', TRUE, NULL, NULL, ''),
-(18, 3, 'Uranium', 'uranium', '', TRUE, NULL, NULL, ''),
+(13, 4, 'Energy', 'energy', '', FALSE, NULL, NULL, ''),
+(14, 4, 'Biofuel', 'biofuel', '', TRUE, NULL, NULL, ''),
+(15, 4, 'Coal', 'coal', '', TRUE, NULL, NULL, ''),
+(16, 4, 'Gas', 'gas', '', TRUE, NULL, NULL, ''),
+(17, 4, 'Oil', 'oil', '', TRUE, NULL, NULL, ''),
+(18, 4, 'Uranium', 'uranium', '', TRUE, NULL, NULL, ''),
 (19, 10, 'Silver', 'silver', '', TRUE, 1, NULL, 'Prices tend to stay low, with brief moments of volatility'),
 (20, 10, 'Gold', 'gold', '', TRUE, 2, NULL, 'Prices tend to slowly but steadily increase over time'),
 (21, 10, 'Platinum', 'platinum', '', TRUE, 3, NULL, 'Prices tend to be extremely volatile'),
 (22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, NULL, 'Prices tend to move higher with frequent volatility'),
-(23, 5, 'Coffee', 'coffee', '', TRUE, NULL, NULL, ''),
-(24, 5, 'Tea', 'tea', '', TRUE, NULL, NULL, ''),
-(25, 5, 'Cannabis', 'cannabis', '', TRUE, NULL, NULL, ''),
-(26, 5, 'Alcohols', 'alcohol', '', TRUE, NULL, NULL, ''),
-(27, 5, 'Tobacco', 'tobacco', '', TRUE, NULL, NULL, ''),
+(23, 3, 'Coffee', 'coffee', '', TRUE, NULL, NULL, ''),
+(24, 3, 'Tea', 'tea', '', TRUE, NULL, NULL, ''),
+(25, 3, 'Cannabis', 'cannabis', '', TRUE, NULL, NULL, ''),
+(26, 3, 'Alcohols', 'alcohol', '', TRUE, NULL, NULL, ''),
+(27, 3, 'Tobacco', 'tobacco', '', TRUE, NULL, NULL, ''),
 (28, 6, 'Iron', 'iron', '', TRUE, NULL, NULL, ''),
 (29, 6, 'Copper', 'copper', '', TRUE, NULL, NULL, ''),
 (30, 6, 'Zinc', 'zinc', '', TRUE, NULL, NULL, ''),
@@ -644,16 +644,16 @@ INSERT INTO `industry` (
 ),
 -- hevvy industry
 (13, 4, 'Shipping Port', 'port', 2, 5,
-  41, 1, 50, ''
+  41, 1, 50, 'Increases National GDP by 50%'
 ),
 (14, 4, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 30, ''
+  42, 3, 30, 'Increases National GDP by 50%'
 ),
 (15, 4, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 40, ''
+  43, 3, 40, 'Increases National GDP by 50%'
 ),
 (16, 4, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 50, ''
+  44, 3, 50, 'Increases National GDP by 50%'
 ),
 -- tourism
 (17, 5, 'Leisure', 'leisure', NULL, 5,
@@ -677,10 +677,10 @@ INSERT INTO `industry` (
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
-  45, 1, 200, ''
+  45, 1, 200, 'Increases National GDP by 50%'
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  46, 1, 50, ''
+  46, 1, 50, 'Increases National GDP by 50%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
   36, 5, 100, ''

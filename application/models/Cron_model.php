@@ -114,19 +114,43 @@ Class cron_model extends CI_Model
 		$town_key = TOWN_KEY;
 		$city_key = CITY_KEY;
 		$metro_key = METRO_KEY;
+		$grain_key = GRAIN_KEY;
+		$fruit_key = FRUIT_KEY;
+		$vegetables_key = VEGETABLES_KEY;
+		$livestock_key = LIVESTOCK_KEY;
+		$fish_key = FISH_KEY;
+
 		$this->db->query("
 			UPDATE tile
-			SET population = population + $town_population_increment
+			INNER JOIN (
+				SELECT account_key, COUNT(id) as pop_bonus
+				FROM supply_account_lookup
+				WHERE amount > 0
+				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
+			) AS sal ON tile.account_key = sal.account_key
+			SET population = population + ($town_population_increment * pop_bonus)
 			WHERE settlement_key = $town_key
 		");
 		$this->db->query("
 			UPDATE tile
-			SET population = population + $city_population_increment
+			INNER JOIN (
+				SELECT account_key, COUNT(id) as pop_bonus
+				FROM supply_account_lookup
+				WHERE amount > 0
+				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
+			) AS sal ON tile.account_key = sal.account_key
+			SET population = population + ($city_population_increment * pop_bonus)
 			WHERE settlement_key = $city_key
 		");
 		$this->db->query("
 			UPDATE tile
-			SET population = population + $metro_population_increment
+			INNER JOIN (
+				SELECT account_key, COUNT(id) as pop_bonus
+				FROM supply_account_lookup
+				WHERE amount > 0
+				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
+			) AS sal ON tile.account_key = sal.account_key
+			SET population = population + ($metro_population_increment * pop_bonus)
 			WHERE settlement_key = $metro_key
 		");
 
