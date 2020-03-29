@@ -155,6 +155,27 @@ Class cron_model extends CI_Model
 		");
 
 	}
+	function diverse_imports_bonus()
+	{
+		$base_support_bonus = BASE_SUPPORT_BONUS;
+		$support_key = SUPPORT_KEY;
+		$coffee_key = COFFEE_KEY;
+		$tea_key = TEA_KEY;
+		$cannabis_key = CANNABIS_KEY;
+		$alcohols_key = ALCOHOLS_KEY;
+		$tobacco_key = TOBACCO_KEY;
+		$this->db->query("
+			UPDATE supply_account_lookup as osal
+			INNER JOIN (
+				SELECT account_key, COUNT(id) as support_bonus
+				FROM supply_account_lookup
+				WHERE amount > 0
+				AND supply_key IN ($coffee_key, $tea_key, $cannabis_key, $alcohols_key, $tobacco_key)
+			) AS isal ON osal.account_key = isal.account_key
+			SET amount = amount + POWER($base_support_bonus, support_bonus)
+			WHERE supply_key = $support_key
+		");
+	}
 	function census_population()
 	{
 		$population_key = POPULATION_KEY;

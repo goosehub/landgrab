@@ -271,7 +271,13 @@
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
                         <div class="col-md-12">
                             <span id="cash_crops_support_bonus" class="text-danger">16</span> Support Bonus
-                            <?= generate_popover('Diverse Imports Support Bonus', '1 Types: 2 Support/Hour | 2 Types: 4 Support/Hour | 3 Types: 8 Support/Hour | 4 Types: 16 Support/Hour | 5 Types: 32 Support/Hour', 'bottom', ''); ?>
+                            <?= generate_popover('Diverse Imports Support Bonus', '
+                                1 Types:(' . (BASE_SUPPORT_BONUS) . ' Support/Hour |
+                                2 Types:(' . (BASE_SUPPORT_BONUS * 2) . ' Support/Hour |
+                                3 Types:(' . (BASE_SUPPORT_BONUS * 4) . ' Support/Hour |
+                                4 Types: (' . (BASE_SUPPORT_BONUS * 8) . ' Support/Hour |
+                                5 Types: (' . (BASE_SUPPORT_BONUS * 16) . ' Support/Hour
+                            ', 'bottom', ''); ?>
                         </div>
                         <?php } ?>
                     </div>
