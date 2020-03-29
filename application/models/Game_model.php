@@ -377,7 +377,10 @@
 		}
 		function get_account_budget($account) {
 			// To more accurately make reflect settlement_income_collect and industry_income_collect, calculate it separately
-			$budget['gdp'] = $this->settlement_gdp($account['id']) + $this->industry_gdp($account['id']);
+			$budget['base_gdp'] = $this->settlement_gdp($account['id']) + $this->industry_gdp($account['id']);
+			$budget['gdp_bonus'] = $this->gdp_bonus($account);
+			$bonus_multiplier = (1 + ($budget['gdp_bonus'] / 100));
+			$budget['gdp'] = $budget['base_gdp'] * $bonus_multiplier;
 			$budget['tax_income'] = $budget['gdp'] * ($account['tax_rate'] / 100);
 			$running_income = $budget['tax_income'];
 			$budget['power_corruption'] = $running_income * (($account['power_structure'] * 10) / 100);
@@ -395,6 +398,28 @@
 			$budget['socialism'] = $running_income;
 			$budget['earnings'] = $running_income;
 			return $budget;
+		}
+		function gdp_bonus($account) {
+			$gdp_bonus = 0;
+			if ($account['supplies']['port']['amount'] > 0) {
+				$gdp_bonus += PORT_BONUS;
+			}
+			if ($account['supplies']['machinery']['amount'] > 0) {
+				$gdp_bonus += MACHINERY_BONUS;
+			}
+			if ($account['supplies']['automotive']['amount'] > 0) {
+				$gdp_bonus += AUTOMOTIVE_BONUS;
+			}
+			if ($account['supplies']['aerospace']['amount'] > 0) {
+				$gdp_bonus += AEROSPACE_BONUS;
+			}
+			if ($account['supplies']['entertainment']['amount'] > 0) {
+				$gdp_bonus += ENTERTAINMENT_BONUS;
+			}
+			if ($account['supplies']['financial']['amount'] > 0) {
+				$gdp_bonus += FINANCIAL_BONUS;
+			}
+			return $gdp_bonus;
 		}
 		function settlement_gdp($account_key) {
 			$query = $this->db->query("

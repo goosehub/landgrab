@@ -221,6 +221,7 @@
         $('#socialism_budget').show();
       }
       $('#budget_gdp').html(number_format(budget.gdp));
+      $('#budget_gdp_bonus').html(budget.gdp_bonus);
       $('#budget_socialism').html(number_format(budget.gdp));
       $('#budget_tax_income').html(number_format(budget.tax_income));
       $('#budget_power_corruption').html(number_format(budget.power_corruption));

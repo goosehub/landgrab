@@ -15,6 +15,7 @@ HIGH PRIORITY
     UI for increased GDP logic
 MEDIUM PRIORITY
     commission icons
+    stats supplies
     unit system
         attacking
         militia defense

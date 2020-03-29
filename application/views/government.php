@@ -109,7 +109,10 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     GDP:
-                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry', 'right'); ?>
+                    <small class="text-action">
+                        <span id="budget_gdp_bonus"></span>% Bonus
+                    </small>
+                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus supplies.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
                     $<span id="budget_gdp"></span> Million
@@ -130,7 +133,7 @@
                 <span class="budget_info_item_parent">
                     <strong class="budget_info_item_label">
                         Tax Income:
-                        <?= generate_popover('Tax Income', 'The percentage of GDP captured by the Tax Rate', 'right'); ?>
+                        <?= generate_popover('Tax Income', 'Update your tax rate to capture more GDP into income', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-success">
                         $<span id="budget_tax_income"></span> Million
@@ -192,8 +195,8 @@
                 </span>
                 <span class="budget_info_item_parent">
                     <strong class="budget_info_item_label">
-                        Projected Hourly Earnings:
-                        <?= generate_popover('Hourly Earnings', 'Income remaining estimate after accounting for all fixed costs. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
+                        Estimated Hourly Earnings:
+                        <?= generate_popover('Hourly Earnings', 'Estimate for the Income remaining after accounting for all fixed costs. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-success">
                         $<span id="budget_earnings"></span> Million

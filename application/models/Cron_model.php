@@ -626,11 +626,43 @@ Class cron_model extends CI_Model
 		$tiles_per_corruption_percent = TILES_PER_CORRUPTION_PERCENT;
 		$free_market_key = FREE_MARKET_KEY;
 		$cash_key = CASH_KEY;
+		$port_key = PORT_KEY;
+		$machinery_key = MACHINERY_KEY;
+		$automotive_key = AUTOMOTIVE_KEY;
+		$aerospace_key = AEROSPACE_KEY;
+		$entertainment_key = ENTERTAINMENT_KEY;
+		$financial_key = FINANCIAL_KEY;
+		$port_bonus = PORT_BONUS;
+		$machinery_bonus = MACHINERY_BONUS;
+		$automotive_bonus = AUTOMOTIVE_BONUS;
+		$aerospace_bonus = AEROSPACE_BONUS;
+		$entertainment_bonus = ENTERTAINMENT_BONUS;
+		$financial_bonus = FINANCIAL_BONUS;
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN (
-				SELECT sal.account_key, sal.amount, SUM(settlement_tile_join.settlement_gdp) AS sum_settlement_gdp
+				SELECT sal.account_key, sal.amount, (SUM(settlement_tile_join.settlement_gdp) * IFNULL(sum_gdp_bonus,1) ) AS sum_settlement_gdp
 				FROM supply_account_lookup AS sal
+				-- GDP Bonus
+				INNER JOIN (
+					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
+					(
+						1 +
+						(IF(port.id, $port_bonus, 0) / 100) + 
+						(IF(machinery.id, $machinery_bonus, 0) / 100) + 
+						(IF(automotive.id, $automotive_bonus, 0) / 100) + 
+						(IF(aerospace.id, $aerospace_bonus, 0) / 100) + 
+						(IF(entertainment.id, $entertainment_bonus, 0) / 100) + 
+						(IF(financial.id, $financial_bonus, 0) / 100)
+					) AS sum_gdp_bonus
+					FROM supply_account_lookup
+					LEFT JOIN supply_account_lookup AS port ON port.account_key = supply_account_lookup.supply_key AND port.supply_key = $port_key && port.amount > 0
+					LEFT JOIN supply_account_lookup AS machinery ON machinery.account_key = supply_account_lookup.supply_key AND machinery.supply_key = $machinery_key && machinery.amount > 0
+					LEFT JOIN supply_account_lookup AS automotive ON automotive.account_key = supply_account_lookup.supply_key AND automotive.supply_key = $automotive_key && automotive.amount > 0
+					LEFT JOIN supply_account_lookup AS aerospace ON aerospace.account_key = supply_account_lookup.supply_key AND aerospace.supply_key = $aerospace_key && aerospace.amount > 0
+					LEFT JOIN supply_account_lookup AS entertainment ON entertainment.account_key = supply_account_lookup.supply_key AND entertainment.supply_key = $entertainment_key && entertainment.amount > 0
+					LEFT JOIN supply_account_lookup AS financial ON financial.account_key = supply_account_lookup.supply_key AND financial.supply_key = $financial_key && financial.amount > 0
+				) AS sal_gdp_bonus ON sal_gdp_bonus.id = sal.id
 				INNER JOIN (
 					SELECT COUNT(tile.id) * settlement.gdp AS settlement_gdp, account_key
 					FROM tile
