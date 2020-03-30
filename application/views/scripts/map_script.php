@@ -343,7 +343,7 @@
       if ($tile['resource_key']) { ?>
         resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['id'] ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
-      if ($this->game_model->tile_is_township($tile['settlement_key']) || $tile['is_capitol'] || $tile['is_base']) { ?>
+      if ($tile['settlement_key'] > 2) { ?>
         settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['id']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
@@ -487,7 +487,7 @@
       settlement_markers[tile.id].setMap(null);
       settlement_markers.splice(tile.id, 1);
     }
-    if (needs_settlement_icon(tile)) {
+    if (tile.settlement_key > 2) {
       settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.is_capitol, tile.is_base, tile.lat, tile.lng);
     }
     else if (settlement_markers[tile.id]) {

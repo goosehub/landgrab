@@ -473,111 +473,111 @@ ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `settlement`;
 INSERT INTO `settlement` (
-  `label`, `slug`, `category_id`,
+  `id`, `label`, `slug`, `category_id`,
   `is_township`, `is_food`, `is_material`, `is_energy`, `is_cash_crop`,
   `is_allowed_on_fertile`, `is_allowed_on_coastal`, `is_allowed_on_barren`, `is_allowed_on_mountain`, `is_allowed_on_tundra`,
   `base_population`, `input_desc`, `output_supply_key`, `output_supply_amount`, `gdp`) VALUES
-('Unclaimed', 'unclaimed', 1,
+(1, 'Unclaimed', 'unclaimed', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   0, '', NULL, NULL, 0
 ),
-('Uninhabited', 'uninhabited', 1,
+(2, 'Uninhabited', 'uninhabited', 1,
   FALSE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   0, '', NULL, NULL, 0
 ),
-('Town', 'town', 1,
+(3, 'Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
   100, '100K Population, 1 Food, 1 Energy', NULL, NULL, 5
 ),
-('City', 'city', 1,
+(4, 'City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   1000, '1,000K Population, 3 Food, 3 Energy, 1 Cash Crops, 1 Merchandise', NULL, NULL, 10
 ),
-('Metro', 'metro', 1,
+(5, 'Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10000, '10,000K Population, 5 Food, 5 Energy, 3 Cash Crops, 3 Merchandise, 1 Steel, 1 Pharmaceuticals', NULL, NULL, 20
 ),
-('Grain', 'grain', 2,
+(6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 8, 2, 1
 ),
-('Fruit', 'fruit', 2,
+(7, 'Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 9, 1, 1
 ),
-('Vegetables', 'vegetables', 2,
+(8, 'Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 10, 1, 1
 ),
-('Livestock', 'livestock', 2,
+(9, 'Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 11, 1, 2
 ),
-('Fish', 'fish', 2,
+(10, 'Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   10, '', 12, 2, 4
 ),
-('Timber', 'timber', 3,
+(11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 5, 10, 1
 ),
-('Fiber', 'fiber', 3,
+(12, 'Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 6, 20, 3
 ),
-('Ore', 'ore', 3,
+(13, 'Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, '', 7, 2, 2
+  10, '', 7, 1, 2
 ),
-('Biofuel', 'biofuel', 4,
+(14, 'Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 14, 2, 2
 ),
-('Solar', 'solar', 4,
+(15, 'Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, '', 13, 2, 1
 ),
-('Wind', 'wind', 4,
+(16, 'Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
   10, '', 13, 1, 1
 ),
-('Coffee', 'coffee', 5,
+(17, 'Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 23, 5, 3
 ),
-('Tea', 'tea', 5,
+(18, 'Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 24, 5, 3
 ),
-('Cannabis', 'cannabis', 5,
+(19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 25, 5, 3
 ),
-('Alcohol', 'alcohol', 5,
+(20, 'Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 26, 5, 3
 ),
-('Tobacco', 'tobacco', 5,
+(21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 27, 5, 3
