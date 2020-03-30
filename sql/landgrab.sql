@@ -196,7 +196,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (16, 34, 1), -- Aerospace
 (16, 36, 1), -- Aerospace
 (16, 17, 1), -- Aerospace
-(19, 2, 1), -- Gambling
+(19, 2, 10), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
 (22, 1, 10); -- Pharmaceuticals
@@ -257,10 +257,10 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (16, 4, 'Gas', 'gas', '', TRUE, NULL, NULL, ''),
 (17, 4, 'Oil', 'oil', '', TRUE, NULL, NULL, ''),
 (18, 4, 'Uranium', 'uranium', '', TRUE, NULL, NULL, ''),
-(19, 10, 'Silver', 'silver', '', TRUE, 1, NULL, 'Prices tend to stay low, with brief moments of volatility'),
-(20, 10, 'Gold', 'gold', '', TRUE, 2, NULL, 'Prices tend to slowly but steadily increase over time'),
-(21, 10, 'Platinum', 'platinum', '', TRUE, 3, NULL, 'Prices tend to be extremely volatile'),
-(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, NULL, 'Prices tend to move higher with frequent volatility'),
+(19, 10, 'Silver', 'silver', '', TRUE, 1, NULL, 'Silver Prices tend to push downward, with occasional volatility pushing it upwards'),
+(20, 10, 'Gold', 'gold', '', TRUE, 2, NULL, 'Gold Prices tend to slowly but steadily push upwards'),
+(21, 10, 'Platinum', 'platinum', '', TRUE, 3, NULL, 'Platinum Prices tend to push up and down with extremely volatile'),
+(22, 10, 'Gemstones', 'gemstones', '', TRUE, 4, NULL, 'Gemstones Prices tend to push higher but with occasional volatility pushing it downwards'),
 (23, 3, 'Coffee', 'coffee', '', TRUE, NULL, NULL, ''),
 (24, 3, 'Tea', 'tea', '', TRUE, NULL, NULL, ''),
 (25, 3, 'Cannabis', 'cannabis', '', TRUE, NULL, NULL, ''),
@@ -549,12 +549,12 @@ INSERT INTO `settlement` (
 ('Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, '', 13, 1, 1
+  10, '', 13, 1, 4
 ),
 ('Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  10, '', 13, 1, 1
+  10, '', 13, 2, 1
 ),
 ('Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
@@ -618,16 +618,16 @@ INSERT INTO `industry` (
   13, 2, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 4, 1, ''
+  13, 5, 1, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 6, 2, ''
+  13, 10, 2, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 8, 5, ''
+  13, 15, 5, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 10, 5, ''
+  13, 20, 5, ''
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
@@ -637,23 +637,23 @@ INSERT INTO `industry` (
   38, 3, 5, ''
 ),
 (11, 3, 'Steel', 'steel', NULL, NULL,
-  39, 5, 3, ''
+  39, 10, 3, ''
 ),
 (12, 3, 'Electronics', 'electronics', NULL, NULL,
-  40, 3, 10, ''
+  40, 20, 10, ''
 ),
 -- hevvy industry
 (13, 4, 'Shipping Port', 'port', 2, 5,
   41, 1, 50, 'Increases National GDP by 10%'
 ),
 (14, 4, 'Machinery', 'machinery', NULL, NULL,
-  42, 3, 30, 'Increases National GDP by 10%'
+  42, 10, 30, 'Increases National GDP by 10%'
 ),
 (15, 4, 'Automotive', 'automotive', 2, NULL,
-  43, 3, 40, 'Increases National GDP by 10%'
+  43, 20, 40, 'Increases National GDP by 10%'
 ),
 (16, 4, 'Aerospace', 'aerospace', 2, NULL,
-  44, 3, 50, 'Increases National GDP by 10%'
+  44, 5, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
 (17, 5, 'Leisure', 'leisure', NULL, 5,
@@ -680,10 +680,10 @@ INSERT INTO `industry` (
   46, 1, 200, 'Increases National GDP by 30%'
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
-  45, 1, 50, 'Increases National GDP by 30%'
+  45, 3, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
-  36, 5, 100, ''
+  36, 10, 100, ''
 );
 
 -- 

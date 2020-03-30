@@ -224,7 +224,7 @@
                         <div class="col-md-3">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Supply
-                            <?= generate_popover('Supplies', 'Each hour settlements & industries produce and consume supplies. If a supply runs negative, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'Each hour settlements & industries produce and consume supplies. Industries consume first, and produce second, so ensure you have supplies on hand before starting new industries.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -248,7 +248,7 @@
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Consumption
-                            <?= generate_popover('Supplies', 'If a supply runs negative, industries depending on that supply will not produce output, and townships depending on that supply will _____ _____ _____ _____. Negative supplies reset to zero each cycle.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'If a supply runs negative, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -271,13 +271,13 @@
                         </div>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                         <div class="col-md-12">
-                            <span id="diverse_diet_population_bonus" class="text-success">2</span>X Growth Bonus
+                            <span id="diverse_diet_population_bonus" class="text-success"></span>X Growth Bonus
                             <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth | 2 Types: 2X Population Growth | 3 Types: 3X Population Growth | 4 Types: 4X Population Growth | 5 Types: 5X Population Growth', 'bottom', ''); ?>
                         </div>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
                         <div class="col-md-12">
-                            <span id="cash_crops_support_bonus" class="text-danger">16</span> Support Bonus
+                            <span id="cash_crops_support_bonus" class="text-danger"></span> Support Bonus
                             <?= generate_popover('Diverse Imports Support Bonus', '
                                 1 Types:' . (BASE_SUPPORT_BONUS) . ' Support/Hour |
                                 2 Types:' . (BASE_SUPPORT_BONUS * 2) . ' Support/Hour |

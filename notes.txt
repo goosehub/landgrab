@@ -11,15 +11,20 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    stats supplies
     commission icons
+    double income on a fresh account
 MEDIUM PRIORITY
+    establish functionality (on select, btn goes to action, text goes to establish)
+    stats supplies math
+    require round of feed
+    law UI reset to current settings
+    resource output_supply_amount
     unit system
         attacking
         militia defense
         being attacked
         conceal
-        money purchase
+        cash purchase
         socialism purchase
         exclude conceal on ocean
     trade
@@ -53,6 +58,8 @@ LOW PRIORITY
     selling riches
     Industry/ non township icon marker toggle
     only make own units draggable
+    UI indicator for number of negative supplies and negative surpluses
+    store default google maps id type
 GOING LIVE
     swal alerts
     DB indexes
@@ -66,6 +73,7 @@ GOING LIVE
     social
         reddit update post
 NO PRIORITY
+    no population hit for downgrading township
     enforce supplies not being stackable
     capitol and chat shortcut to diplomacy
     system chat at top of the hour for market prices
@@ -210,10 +218,20 @@ engineering_design
 ==========================================================================================
 
 Tutorial Todo List
+    Explore the worlld
+        Use all 5 Toggles
     The Start Of A Nation
         Select a tile to start your nation. If available, select somewhere unclaimed.
+    Establishing a Charter
+        Update your nation
     Change The Law
         Click on the Government menu. Set a Government, Tax Rate, and Ideology. Autocracy is great for early quick expansion. Keep your tax rates low so your support will regenerate quicker. Free Markets are a safer bet for new players.
+    Feed the Masses
+        Start a farm
+    Power The People
+        Have a source of energy
+    Seize the Mean of Production
+        Gather Timber, Fiber, and Ore, and create a manufacturing industry
     Manifest Destiny
         Capture new land. Toggle the unit display. Drag the unit on your Capitol unto an adjacent land square to capture it. This, and other unit actions, use up your political support, which replenishes every hour.
     Honest Work
@@ -226,6 +244,15 @@ Tutorial Todo List
         Enlist additional units. You may spawn them on your Capitol, or on any Military Industry settlement. Each has a Rock Paper Scissors style advantage on each other.
     Diplomacy
         Send a diplomatic request. Trade supplies for mutual benefit.
+    Urban Life
+        Establish a city
+    Metropolitan
+        Establish a metro
+    My First Billion
+        Become a billionaire
+    It's Lonley at the Top
+        Reach #1 on the leaderboard for territories
+
 
 Tagline
     Economy, Diplomacy, Warfare

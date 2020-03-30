@@ -95,7 +95,7 @@ DEFINE('STROKE_COLOR', '#222222');
 
 // Account Defaults
 define('DEFAULT_POWER_STRUCTURE', 2);
-define('DEFAULT_TAX_RATE', 15);
+define('DEFAULT_TAX_RATE', 25);
 define('DEFAULT_IDEOLOGY', 1);
 
 // Marketing

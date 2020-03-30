@@ -30,27 +30,27 @@
     }
 
     function update_gdp_bonus_consume_supplies() {
-      let port_supply = $('#government_supply_' + port_key).html();
+      let port_supply = parseInt($('#government_supply_' + port_key).html());
       if (port_supply) {
         $('#input_projection_' + port_key).html('-1');
       }
-      let machinery_supply = $('#government_supply_' + machinery_key).html();
+      let machinery_supply = parseInt($('#government_supply_' + machinery_key).html());
       if (machinery_supply) {
         $('#input_projection_' + machinery_key).html('-1');
       }
-      let automotive_supply = $('#government_supply_' + automotive_key).html();
+      let automotive_supply = parseInt($('#government_supply_' + automotive_key).html());
       if (automotive_supply) {
         $('#input_projection_' + automotive_key).html('-1');
       }
-      let aerospace_supply = $('#government_supply_' + aerospace_key).html();
+      let aerospace_supply = parseInt($('#government_supply_' + aerospace_key).html());
       if (aerospace_supply) {
         $('#input_projection_' + aerospace_key).html('-1');
       }
-      let entertainment_supply = $('#government_supply_' + entertainment_key).html();
+      let entertainment_supply = parseInt($('#government_supply_' + entertainment_key).html());
       if (entertainment_supply) {
         $('#input_projection_' + entertainment_key).html('-1');
       }
-      let financial_supply = $('#government_supply_' + financial_key).html();
+      let financial_supply = parseInt($('#government_supply_' + financial_key).html());
       if (financial_supply) {
         $('#input_projection_' + financial_key).html('-1');
       }
@@ -116,7 +116,7 @@
       let current_date = new Date();
       let milliseconds = Math.abs(current_date - last_date);
       let minutes = milliseconds / 1000 / 60;
-      if (minutes > 60) {
+      if (minutes > 60 || isNaN(NaN)) {
         $('#pass_new_laws_button_text').html('Pass New Laws');
         $('#pass_new_laws_button').removeClass('disabled');
       }

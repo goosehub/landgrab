@@ -780,11 +780,12 @@ Class cron_model extends CI_Model
 	}
 	function consume_gdp_bonus_supplies()
 	{
+		// Minimum of 1 so industry has input to use before outputting
 		$this->db->query("
 			UPDATE supply_account_lookup AS sal
 			INNER JOIN supply ON supply.id = sal.supply_key
 			SET amount = amount - 1
-			WHERE amount > 0
+			WHERE amount > 1
 			AND supply.gdp_bonus IS NOT NULL
 		");
 	}

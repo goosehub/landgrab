@@ -129,7 +129,7 @@
             'nation_name' => $nation_name,
             'nation_flag' => $nation_flag,
             'leader_portrait' => $leader_portrait,
-            'government' => DEFAULT_POWER_STRUCTURE,
+            'power_structure' => DEFAULT_POWER_STRUCTURE,
             'tax_rate' => DEFAULT_TAX_RATE,
             'ideology' => DEFAULT_IDEOLOGY,
             'last_load' => date('Y-m-d H:i:s'),
