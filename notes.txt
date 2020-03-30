@@ -11,15 +11,15 @@ turn off industry where supply doesn't exist after running resource/settlement o
 ==========================================================================================
 
 HIGH PRIORITY
-    commission icons
-    double income on a fresh account
+    industry icons
+    Industry/township toggle
 MEDIUM PRIORITY
+    commission icons
     establish functionality (on select, btn goes to action, text goes to establish)
     stats supplies math
     require round of feed
     law UI reset to current settings
     resource output_supply_amount
-    Industry/ non township icon marker toggle
     unit system
         attacking
         militia defense
@@ -60,7 +60,11 @@ LOW PRIORITY
     only make own units draggable
     UI indicator for number of negative supplies and negative surpluses
     store default google maps id type
+BUGS
+    supplies projections vs reality
+    icon swapping
 GOING LIVE
+    buy icons8 paid license
     swal alerts
     DB indexes
     Finish tooltips

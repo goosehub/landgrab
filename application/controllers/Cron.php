@@ -42,6 +42,7 @@ class Cron extends CI_Controller {
         $this->cron_model->grow_population(); $this->microtime('grow_population');
         $this->cron_model->diverse_imports_bonus(); $this->microtime('diverse_imports_bonus');
         $this->cron_model->census_population(); $this->microtime('census_population');
+        $this->cron_model->consume_gdp_bonus_supplies(); $this->microtime('consume_gdp_bonus_supplies');
         $this->cron_model->resource_output(); $this->microtime('resource_output');
         $this->cron_model->settlement_output(); $this->microtime('settlement_output');
         $this->cron_model->township_input(); $this->microtime('township_input');
@@ -51,7 +52,6 @@ class Cron extends CI_Controller {
         $this->cron_model->downgrade_townships(); $this->microtime('downgrade_townships');
         $this->cron_model->settlement_income_collect(); $this->microtime('settlement_income_collect');
         $this->cron_model->industry_income_collect(); $this->microtime('industry_income_collect');
-        $this->cron_model->consume_gdp_bonus_supplies(); $this->microtime('consume_gdp_bonus_supplies');
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
 

@@ -490,17 +490,17 @@ INSERT INTO `settlement` (
 (3, 'Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, '100K Population, 1 Food, 1 Energy', NULL, NULL, 5
+  100, '100K Population, 2 Food, 2 Energy', NULL, NULL, 5
 ),
 (4, 'City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '1,000K Population, 3 Food, 3 Energy, 1 Cash Crops, 1 Merchandise', NULL, NULL, 10
+  1000, '1,000K Population, 5 Food, 5 Energy, 2 Cash Crops, 2 Merchandise', NULL, NULL, 10
 ),
 (5, 'Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '10,000K Population, 5 Food, 5 Energy, 3 Cash Crops, 3 Merchandise, 1 Steel, 1 Pharmaceuticals', NULL, NULL, 20
+  10000, '10,000K Population, 15 Food, 15 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 20
 ),
 (6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -530,7 +530,7 @@ INSERT INTO `settlement` (
 (11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 10, 1
+  10, '', 5, 5, 1
 ),
 (12, 'Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
@@ -560,12 +560,12 @@ INSERT INTO `settlement` (
 (17, 'Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 23, 5, 3
+  10, '', 23, 1, 3
 ),
 (18, 'Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 24, 5, 3
+  10, '', 24, 2, 3
 ),
 (19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
@@ -575,12 +575,12 @@ INSERT INTO `settlement` (
 (20, 'Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 5, 3
+  10, '', 26, 4, 3
 ),
 (21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 5, 3
+  10, '', 27, 3, 3
 );
 
 DROP TABLE IF EXISTS `industry`;
@@ -619,16 +619,16 @@ INSERT INTO `industry` (
   13, 2, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 5, 1, ''
+  13, 10, 1, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 10, 2, ''
+  13, 15, 2, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 15, 5, ''
+  13, 25, 5, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 20, 5, ''
+  13, 50, 5, ''
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
@@ -674,7 +674,7 @@ INSERT INTO `industry` (
   34, 10, 8, ''
 ),
 (22, 6, 'Healthcare', 'healthcare', 2, NULL,
-  35, 10, 6, ''
+  35, 3, 6, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
