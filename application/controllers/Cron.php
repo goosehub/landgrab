@@ -35,6 +35,7 @@ class Cron extends CI_Controller {
 
         // Debugs
         // $this->cron_model->market_prices_debug();
+        // dd();
 
         // Order matters
         $this->cron_model->zero_negative_account_supply(); $this->microtime('zero_negative_account_supply');

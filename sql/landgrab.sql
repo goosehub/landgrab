@@ -321,12 +321,12 @@ INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
 ),
 -- Platinum
 (3, 21, 1, 1, 
-  50, 5, 5,
+  50, 14, 15,
   1, 1, 1, 1000
 ),
 -- Gemstones
 (4, 22, 1, 1, 
-  50, 2, 1,
+  66, 5, 5,
   1, 1, 1, 1000
 );
 
