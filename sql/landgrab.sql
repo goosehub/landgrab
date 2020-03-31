@@ -356,6 +356,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
   `label` varchar(256) NOT NULL,
   `slug` varchar(256) NOT NULL,
   `output_supply_key` int(10) UNSIGNED NOT NULL,
+  `output_supply_amount` int(10) UNSIGNED NOT NULL,
   `is_value_resource` int(1) UNSIGNED NOT NULL,
   `is_energy_resource` int(1) UNSIGNED NOT NULL,
   `is_metal_resource` int(1) UNSIGNED NOT NULL,
@@ -372,75 +373,75 @@ ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `resource`;
 INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
-  `is_value_resource`, `is_energy_resource`, `is_metal_resource`,
+  `is_value_resource`, `is_energy_resource`, `is_metal_resource`, `output_supply_amount`,
   `frequency_per_world`, `spawns_in_barren`, `spawns_in_mountain`, `spawns_in_tundra`, `spawns_in_coastal`
 ) VALUES
 -- value
 (
   1, 'Silver', 'silver', 19,
-  TRUE, FALSE, FALSE,
+  TRUE, FALSE, FALSE, 1,
   10, TRUE, TRUE, TRUE, FALSE
 ),
 (
   2, 'Gold', 'gold', 20,
-  TRUE, FALSE, FALSE,
+  TRUE, FALSE, FALSE, 1,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   3, 'Platinum', 'platinum', 21,
-  TRUE, FALSE, FALSE,
+  TRUE, FALSE, FALSE, 1,
   3, TRUE, TRUE, TRUE, FALSE
 ),
 (
   4, 'Gemstones', 'gemstones', 22,
-  TRUE, FALSE, FALSE,
+  TRUE, FALSE, FALSE, 1,
   2, TRUE, TRUE, TRUE, FALSE
 ),
 -- Energy
 (
   5, 'Coal', 'coal', 15,
-  FALSE, TRUE, FALSE,
+  FALSE, TRUE, FALSE, 2,
   15, TRUE, TRUE, TRUE, FALSE
 ),
 (
   6, 'Gas', 'gas', 16,
-  FALSE, TRUE, FALSE,
+  FALSE, TRUE, FALSE, 2,
   7, TRUE, TRUE, TRUE, FALSE
 ),
 (
   7, 'Oil', 'oil', 17,
-  FALSE, TRUE, FALSE,
+  FALSE, TRUE, FALSE, 2,
   15, TRUE, FALSE, TRUE, TRUE
 ),
 (
   8, 'Uranium', 'uranium', 18,
-  FALSE, TRUE, FALSE,
+  FALSE, TRUE, FALSE, 2,
   3, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
   9, 'Iron', 'iron', 28,
-  FALSE, FALSE, TRUE,
+  FALSE, FALSE, TRUE, 3,
   20, TRUE, TRUE, TRUE, FALSE
 ),
 (
   10, 'Copper', 'copper', 29,
-  FALSE, FALSE, TRUE,
+  FALSE, FALSE, TRUE, 3,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   11, 'Zinc', 'zinc', 30,
-  FALSE, FALSE, TRUE,
+  FALSE, FALSE, TRUE, 3,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   12, 'Aluminum', 'aluminum', 31,
-  FALSE, FALSE, TRUE,
+  FALSE, FALSE, TRUE, 3,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   13, 'Nickle', 'nickle', 32,
-  FALSE, FALSE, TRUE,
+  FALSE, FALSE, TRUE, 3,
   5, TRUE, TRUE, TRUE, FALSE
 );
 
@@ -625,10 +626,10 @@ INSERT INTO `industry` (
   13, 15, 2, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 25, 5, ''
+  13, 20, 5, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 50, 5, ''
+  13, 30, 5, ''
 ),
 -- light industry
 (9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,

@@ -219,6 +219,15 @@
                         <div class="col-md-3">
                             <h4 class="text-purple">
                                 <?= $this->supplies_category_labels[$supply['category_id']]; ?>
+                                <?php if ($supply['category_id'] == ENERGY_CATEGORY_ID) { ?>
+                                    <?= generate_popover('Energy', 'Coal, Gas, Oil, and Uranium are high energy supplies that are scattered across the map. Each produces 2 per hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                <?php } ?>
+                                <?php if ($supply['category_id'] == METALS_CATEGORY_ID) { ?>
+                                    <?= generate_popover('Metals', 'Metal Alloys are scattered across the map. Each produces 3 per hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                <?php } ?>
+                                <?php if ($supply['category_id'] == RICHES_CATEGORY_ID) { ?>
+                                    <?= generate_popover('Riches', 'Riches are scattered across the map. Each produces 1 per hour. They can be sold at market prices that fluctuate every hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                <?php } ?>
                             </h4>
                         </div>
                         <div class="col-md-3">

@@ -358,7 +358,7 @@ Class cron_model extends CI_Model
 				FROM tile
 				GROUP BY resource_key, account_key
 			) AS tile_by_resource_and_account ON resource_by_supply.id = tile_by_resource_and_account.resource_key AND sal.account_key = tile_by_resource_and_account.account_key
-			SET sal.amount = sal.amount + (IFNULL(tile_by_resource_and_account.tile_count, 0))
+			SET sal.amount = sal.amount + (IFNULL(tile_by_resource_and_account.tile_count, 0) * resource_by_supply.output_supply_amount)
 		");
 	}
 	function settlement_output()

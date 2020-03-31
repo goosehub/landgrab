@@ -197,7 +197,7 @@
 		}
 		function get_resource_output_by_account($account_key)
 		{
-			$this->db->select('COUNT(tile.id) as output_supply_amount, output_supply_key');
+			$this->db->select('COUNT(tile.id) * output_supply_amount AS output_supply_amount, output_supply_key');
 			$this->db->from('tile');
 			$this->db->join('resource', 'resource.id = tile.resource_key', 'left');
 			$this->db->where('tile.account_key', $account_key);
