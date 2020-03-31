@@ -13,6 +13,11 @@
   </div>
   <div class="views_parent menu_element btn-group">
     <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Settlements" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-industry"></span>
+    </button>
+  </div>
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Townships and Industry" id="township_industry_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-city"></span>
     </button>
   </div>

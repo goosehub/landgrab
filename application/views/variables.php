@@ -8,6 +8,7 @@
     const unit_labels = JSON.parse('<?= json_encode($this->unit_labels); ?>');
     const world_key = <?= $world['id']; ?>;
     const tile_size = <?= $world['tile_size']; ?>;
+    const uninhabited_key = <?= UNINHABITED_KEY ?>;
     const town_key = <?= TOWN_KEY; ?>;
     const city_key = <?= CITY_KEY; ?>;
     const metro_key = <?= METRO_KEY; ?>;
@@ -87,8 +88,8 @@
     let current_tile = false;
     let resource_markers = [];
     let unit_markers = [];
-    let township_markers = [];
     let settlement_markers = [];
+    let township_markers = [];
     let industry_markers = [];
     let map_update_interval_ms = <?= MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
@@ -108,6 +109,7 @@
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
     let resource_toggle = <?= DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
     let settlement_toggle = <?= DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;
+    let township_and_industry_toggle = <?= DEFAULT_TOWNSHIP_AND_INDUSTRY_TOGGLE ? 'true' : 'false'; ?>;
     let unit_toggle = <?= DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
     let grid_toggle = <?= DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
 
