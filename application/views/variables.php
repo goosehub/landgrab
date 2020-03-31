@@ -8,6 +8,10 @@
     const unit_labels = JSON.parse('<?= json_encode($this->unit_labels); ?>');
     const world_key = <?= $world['id']; ?>;
     const tile_size = <?= $world['tile_size']; ?>;
+    const map_icon_size = <?= MAP_ICON_SIZE; ?>;
+    const focus_zoom = <?= FOCUS_ZOOM; ?>;
+    const default_zoom = <?= DEFAULT_ZOOM; ?>;
+    const max_zoom = <?= MAX_ZOOM; ?>;
     const uninhabited_key = <?= UNINHABITED_KEY ?>;
     const town_key = <?= TOWN_KEY; ?>;
     const city_key = <?= CITY_KEY; ?>;

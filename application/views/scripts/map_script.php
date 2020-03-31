@@ -250,7 +250,7 @@
         lng: <?= $_GET['lng'] - ($world['tile_size'] / 2); ?>
       },
       // Zoom should be adjusted based on box size
-      zoom: 6,
+      zoom: focus_zoom,
       <?php } else { ?>
 
       // Map center is slightly north centric
@@ -259,10 +259,10 @@
         lng: 0
       },
       // Zoom shows whole world but no repetition
-      zoom: 3,
+      zoom: default_zoom,
       <?php } ?>
       // Prevent seeing north and south edge
-      minZoom: 2,
+      minZoom: max_zoom,
       // Prevent excesssive zoom
       // maxZoom: 10,
       mapTypeControlOptions: {
@@ -344,9 +344,9 @@
     let title = '';
     let this_icon = {
       url: path,
-      scaledSize: new google.maps.Size(25, 25),
+      scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
       origin: new google.maps.Point(0,0),
-      anchor: new google.maps.Point(10,10)
+      anchor: new google.maps.Point(map_icon_size / 2,map_icon_size / 2)
     };
     if (unit) {
       draggable = true;
