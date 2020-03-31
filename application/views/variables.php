@@ -87,7 +87,9 @@
     let current_tile = false;
     let resource_markers = [];
     let unit_markers = [];
+    let township_markers = [];
     let settlement_markers = [];
+    let industry_markers = [];
     let map_update_interval_ms = <?= MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let unit_valid_square_color = '<?= UNIT_VALID_SQUARE_COLOR; ?>';

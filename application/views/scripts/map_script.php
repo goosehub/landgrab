@@ -236,16 +236,13 @@
     return set_marker_icon(`${base_url}resources/icons/natural_resources/${resource_id}.png`, tile_id, lat, lng, false);
   }
 
-  function set_industry_icon(industry_slug, tile_id, lat, lng) {
-    return set_marker_icon(`${base_url}resources/icons/industries/${industry_slug}.png`, tile_id, lat, lng, false);
+  function set_industry_icon(industry_id, tile_id, lat, lng) {
+    return set_marker_icon(`${base_url}resources/icons/industries/${industry_id}.png`, tile_id, lat, lng, false);
   }
 
-  function set_settlement_icon(settlement_id, tile_id, is_capitol, is_base, lat, lng) {
-    if (parseInt(is_capitol)) {
-      return set_industry_icon('capitol', tile_id, lat, lng);
-    }
-    if (parseInt(is_base)) {
-      return set_industry_icon('base', tile_id, lat, lng);
+  function set_settlement_icon(settlement_id, tile_id, lat, lng) {
+    if (settlement_id == 3 || settlement_id == 4 || settlement_id == 5) {
+      return;
     }
     return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, tile_id, lat, lng, false);
   }
@@ -344,7 +341,10 @@
         resource_markers[<?= $tile['id']; ?>] = set_resource_icon(<?= $tile['resource_key']; ?>,<?= $tile['id'] ?>,<?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['settlement_key'] > 2) { ?>
-        settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['id']; ?>, <?= $tile['is_capitol'] ? '1' : '0'; ?>, <?= $tile['is_base'] ? '1' : '0'; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+        settlement_markers[<?= $tile['id']; ?>] = set_settlement_icon(<?= $tile['settlement_key']; ?>, <?= $tile['id']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+      <?php }
+      if ($tile['industry_key']) { ?>
+        industry_markers[<?= $tile['id']; ?>] = set_industry_icon(<?= $tile['industry_key']; ?>, <?= $tile['id']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
         unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['id']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
@@ -488,7 +488,10 @@
       settlement_markers.splice(tile.id, 1);
     }
     if (tile.settlement_key > 2) {
-      settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.is_capitol, tile.is_base, tile.lat, tile.lng);
+      settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
+    }
+    if (tile.industry_key > 2) {
+      industry_markers[tile.id] = set_industry_icon(tile.industry_key, tile.id, tile.lat, tile.lng);
     }
     else if (settlement_markers[tile.id]) {
       settlement_markers[tile.id].setMap(null);
