@@ -18,7 +18,7 @@ MEDIUM PRIORITY
     require round of feed
     law UI reset to current settings
     unit system
-        icon system?
+        icon color system | own, ally, neutral, enemy
         attacking
         militia defense
         being attacked
@@ -36,6 +36,8 @@ MEDIUM PRIORITY
         notices
         chat message for diplomacy changes
 LOW PRIORITY
+    fonts
+    pretty up national charter update
     logic population required for upgrading townships, don't reset on upgrade
     enlist spawn validation
     undo industry when township downgrade
@@ -157,63 +159,11 @@ copper - unique shaped rock in rusty yellow
 zinc - unique shaped rock in dull blue
 aluminum - unique shaped rock in shiny silver
 nickle - unique shaped rock in rusty green
-    special settlements
-town - 3 small suburban type buildings in white and red
-city - 3 tall urban type buildings in  white, red, and blue
-metro - 3 glass skyscrappers in bluish tinted colors (flexible on ideas here)
-capitol - US Supreme Court style building with column in royal yellow
-base - Half oval shaped tarped barracks with tower in brownish green
-
-    settlements
-unclaimed
-uninhabited
-town
-city
-metro
-grain
-fruit
-vegetables
-livestock
-fish
-timber
-fiber
-ore
-biofuel
-solar
-wind
-coffee
-tea
-cannabis
-alcohol
-tobacco
-    industry
-capitol
-federal
-base
-manufacturing
-timber
-textile
-biofuel
-coal
-gas
-petroleum
-nuclear
-chemicals
-steel
-electronics
-port
-machinery
-automotive
-aerospace
-leisure
-resort
-gambling
-university
-software
-pharmaceuticals
-financial_banking
-entertainment_media
-engineering_design
+    Units (each in 4 colors for own, ally, neutral, enemy)
+infantry
+tanks
+commandos
+navy
 
 ==========================================================================================
     Closet

@@ -281,8 +281,8 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (39, 8, 'Steel', 'steel', '', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', '', TRUE, NULL, NULL, ''),
 (41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
-(42, 9, 'Machines', 'machinery', 'K', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
-(43, 9, 'Automobiles', 'automotive', 'M', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(42, 9, 'Machines', 'machinery', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(43, 9, 'Automobiles', 'automotive', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (44, 9, 'Airplanes', 'aerospace', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (45, 9, 'Culture', 'entertainment', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
 (46, 9, 'Influence', 'financial', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');

@@ -173,6 +173,7 @@
                         } ?>
                         <button id="set_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
                             <?php echo $settlement['label']; ?>
+                            <img class="settlement_selection_icon" src="<?=base_url()?>resources/icons/settlements/<?php echo $settlement['id'] ?>.png"/>
                         </button>
                         <?php if (!isset($this->settlements[$key + 1]) || $current_category_id !== $this->settlements[$key + 1]['category_id']) {
                             ?>
@@ -231,6 +232,7 @@
                         } ?>
                         <button id="set_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
                             <?php echo $industry['label']; ?>
+                            <img class="industry_selection_icon" src="<?=base_url()?>resources/icons/industries/<?php echo $industry['id'] ?>.png"/>
                         </button>
                         <?php if (!isset($this->industries[$key + 1]) || $current_category_id !== $this->industries[$key + 1]['category_id']) {
                             ?>

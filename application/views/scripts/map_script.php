@@ -344,7 +344,7 @@
     let title = '';
     let this_icon = {
       url: path,
-      scaledSize: new google.maps.Size(20, 20),
+      scaledSize: new google.maps.Size(25, 25),
       origin: new google.maps.Point(0,0),
       anchor: new google.maps.Point(10,10)
     };
