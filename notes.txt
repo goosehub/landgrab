@@ -2,24 +2,23 @@
     Notes
 ==========================================================================================
 
-shortages
-each 1 under supply count costs 1 support?
-turn off industry where supply doesn't exist after running resource/settlement outputs?
+do industries with no inputs produce output, or get false flagged for no supply?
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    Industry/township toggle
+    settlement/industry icons in selection
+    establish functionality (on select, btn goes to action, text goes to establish)
+    resource output_supply_amount, 1 for riches, 2 for energy, 3 for metals
 MEDIUM PRIORITY
     commission icons
-    establish functionality (on select, btn goes to action, text goes to establish)
     stats supplies math
     require round of feed
     law UI reset to current settings
-    resource output_supply_amount
     unit system
+        icon system?
         attacking
         militia defense
         being attacked

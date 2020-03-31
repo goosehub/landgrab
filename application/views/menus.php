@@ -2,18 +2,8 @@
 <div id="top_right_block">
 
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-warning dropdown-toggle" type="button" title="Toggle Borders and Terrain" id="border_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Borders and Terrain" id="border_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-map"></span>
-    </button>
-  </div>
-  <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-success dropdown-toggle" type="button" title="Toggle Resources" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-mountain"></span>
-    </button>
-  </div>
-  <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Settlements" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="fa fa-industry"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
@@ -22,12 +12,22 @@
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-danger dropdown-toggle" type="button" title="Toggle Units" id="unit_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Settlements" id="settlement_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-industry"></span>
+    </button>
+  </div>
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Units" id="unit_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-fist-raised"></span>
     </button>
   </div>
   <div class="views_parent menu_element btn-group">
-    <button class="info_button btn btn-info dropdown-toggle" type="button" title="Toggle Grid" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Resources" id="resource_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="fa fa-mountain"></span>
+    </button>
+  </div>
+  <div class="views_parent menu_element btn-group">
+    <button class="info_button btn btn-primary dropdown-toggle" type="button" title="Toggle Grid" id="grid_toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="fa fa-crop"></span>
     </button>
   </div>

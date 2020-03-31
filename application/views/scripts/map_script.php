@@ -30,11 +30,11 @@
 
   function map_toggle_listen() {
     $('#border_toggle').click(function(event) {
-      $('#border_toggle').removeClass('active');
+      $('#border_toggle').removeClass('btn-success').addClass('btn-warning');
       border_toggle = !border_toggle;
       setCookie('border_toggle', border_toggle);
       if (border_toggle) {
-        $('#border_toggle').addClass('active');
+        $('#border_toggle').removeClass('btn-warning').addClass('btn-success');
         tiles_to_borders();
       }
       else {
@@ -42,11 +42,11 @@
       }
     });
     $('#settlement_toggle').click(function(event) {
-      $('#settlement_toggle').removeClass('active');
+      $('#settlement_toggle').removeClass('btn-success').addClass('btn-primary');
       settlement_toggle = !settlement_toggle;
       setCookie('settlement_toggle', settlement_toggle);
       if (settlement_toggle) {
-        $('#settlement_toggle').addClass('active');
+        $('#settlement_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       set_marker_set_visibility(settlement_markers, settlement_toggle);
     });
@@ -56,43 +56,45 @@
         township_and_industry_toggle = 0;
       }
       if (township_and_industry_toggle == 0) {
-        $('#township_industry_toggle').removeClass('active');
+        $('#township_industry_toggle').removeClass('btn-success').removeClass('btn-warning').addClass('btn-primary');
         set_marker_set_visibility(industry_markers, false);
       }
       if (township_and_industry_toggle == 1) {
-        $('#township_industry_toggle').addClass('active');
+        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-warning').addClass('btn-success');
         set_marker_set_visibility(township_markers, true);
         
       }
       if (township_and_industry_toggle == 2) {
+        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-success').addClass('btn-warning');
         set_marker_set_visibility(township_markers, false);
         set_marker_set_visibility(industry_markers, true);
       }
+      setCookie('township_and_industry_toggle', township_and_industry_toggle);
     });
     $('#resource_toggle').click(function(event) {
-      $('#resource_toggle').removeClass('active');
+      $('#resource_toggle').removeClass('btn-success').addClass('btn-primary');
       resource_toggle = !resource_toggle;
       setCookie('resource_toggle', resource_toggle);
       if (resource_toggle) {
-        $('#resource_toggle').addClass('active');
+        $('#resource_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       set_marker_set_visibility(resource_markers, resource_toggle);
     });
     $('#unit_toggle').click(function(event) {
-      $('#unit_toggle').removeClass('active');
+      $('#unit_toggle').removeClass('btn-success').addClass('btn-primary');
       unit_toggle = !unit_toggle;
       setCookie('unit_toggle', unit_toggle);
       if (unit_toggle) {
-        $('#unit_toggle').addClass('active');
+        $('#unit_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       set_marker_set_visibility(unit_markers, unit_toggle);
     });
     $('#grid_toggle').click(function(event) {
-      $('#grid_toggle').removeClass('active');
+      $('#grid_toggle').removeClass('btn-success').addClass('btn-primary');
       grid_toggle = !grid_toggle;
       setCookie('grid_toggle', grid_toggle);
       if (grid_toggle) {
-        $('#grid_toggle').addClass('active');
+        $('#grid_toggle').removeClass('btn-primary').addClass('btn-success');
         tiles_with_grid();
       }
       else {
@@ -105,55 +107,64 @@
     if (getCookie('border_toggle') != null) {
       border_toggle = getCookie('border_toggle') === 'true' ? true : false;
       if (border_toggle) {
-        $('#border_toggle').addClass('active');
+        $('#border_toggle').removeClass('btn-warning').addClass('btn-success');
       }
       else {
-        $('#border_toggle').removeClass('active');
+        $('#border_toggle').removeClass('btn-success').addClass('btn-warning');
       }
     }
     if (getCookie('resource_toggle') != null) {
       resource_toggle = getCookie('resource_toggle') === 'true' ? true : false;
       if (resource_toggle) {
-        $('#resource_toggle').addClass('active');
+        $('#resource_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       else {
-        $('#resource_toggle').removeClass('active');
+        $('#resource_toggle').removeClass('btn-success').addClass('btn-primary');
       }
     }
     if (getCookie('settlement_toggle') != null) {
       settlement_toggle = getCookie('settlement_toggle') === 'true' ? true : false;
       if (settlement_toggle) {
-        $('#settlement_toggle').addClass('active');
+        $('#settlement_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       else {
-        $('#settlement_toggle').removeClass('active');
+        $('#settlement_toggle').removeClass('btn-success').addClass('btn-primary');
       }
     }
     if (getCookie('township_and_industry_toggle') != null) {
-      township_and_industry_toggle = getCookie('township_and_industry_toggle') === 'true' ? true : false;
+      township_and_industry_toggle = getCookie('township_and_industry_toggle');
       if (township_and_industry_toggle) {
-        $('#township_and_industry_toggle').addClass('active');
+        township_and_industry_toggle = parseInt(township_and_industry_toggle);
       }
       else {
-        $('#township_and_industry_toggle').removeClass('active');
+        township_and_industry_toggle = 0;
+      }
+      if (township_and_industry_toggle == 0) {
+        $('#township_industry_toggle').removeClass('btn-warning').removeClass('btn-success').addClass('btn-primary');
+      }
+      if (township_and_industry_toggle == 1) {
+        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-warning').addClass('btn-success');
+      }
+      if (township_and_industry_toggle == 2) {
+        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-success').addClass('btn-warning');
       }
     }
     if (getCookie('unit_toggle') != null) {
       unit_toggle = getCookie('unit_toggle') === 'true' ? true : false;
       if (unit_toggle) {
-        $('#unit_toggle').addClass('active');
+        $('#unit_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       else {
-        $('#unit_toggle').removeClass('active');
+        $('#unit_toggle').removeClass('btn-success').addClass('btn-primary');
       }
     }
     if (getCookie('grid_toggle') != null) {
       grid_toggle = getCookie('grid_toggle') === 'true' ? true : false;
       if (grid_toggle) {
-        $('#grid_toggle').addClass('active');
+        $('#grid_toggle').removeClass('btn-primary').addClass('btn-success');
       }
       else {
-        $('#grid_toggle').removeClass('active');
+        $('#grid_toggle').removeClass('btn-success').addClass('btn-primary');
       }
     }
   }
