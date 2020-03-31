@@ -410,13 +410,13 @@
 			if ($account['supplies']['automotive']['amount'] > 0) {
 				$gdp_bonus += AUTOMOTIVE_BONUS;
 			}
-			if ($account['supplies']['aerospace']['amount'] > 0) {
+			if ($account['supplies']['airplanes']['amount'] > 0) {
 				$gdp_bonus += AEROSPACE_BONUS;
 			}
-			if ($account['supplies']['entertainment']['amount'] > 0) {
+			if ($account['supplies']['culture']['amount'] > 0) {
 				$gdp_bonus += ENTERTAINMENT_BONUS;
 			}
-			if ($account['supplies']['financial']['amount'] > 0) {
+			if ($account['supplies']['influence']['amount'] > 0) {
 				$gdp_bonus += FINANCIAL_BONUS;
 			}
 			return $gdp_bonus;

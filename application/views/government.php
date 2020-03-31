@@ -312,9 +312,9 @@
                             </span>
                         </div>
                         <div class="col-md-3">
-                            <span class="text-right">
+                            <span class="government_supply_and_suffix">
                                 <span class="government_supply" id="government_supply_<?= $supply['id']; ?>"></span>
-                                <?= $supply['suffix']; ?>
+                                <small class="government_supply_suffix"><?= $supply['suffix']; ?></small>
                             </span>
                         </div>
                         <div class="col-md-2">
