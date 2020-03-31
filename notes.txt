@@ -9,7 +9,6 @@ do industries with no inputs produce output, or get false flagged for no supply?
 ==========================================================================================
 
 HIGH PRIORITY
-    settlement/industry icons in selection
     establish functionality (on select, btn goes to action, text goes to establish)
     resource output_supply_amount, 1 for riches, 2 for energy, 3 for metals
 MEDIUM PRIORITY

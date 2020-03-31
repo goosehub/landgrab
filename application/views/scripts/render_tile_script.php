@@ -164,6 +164,7 @@
         if (account && current_tile.account_key === account['id']) {
             $('#tab_select_settle, #settlement_select').show();
             $('.set_settlement_button[data-id=' + current_tile.settlement_key + ']').addClass('btn-default').addClass('btn-primary');
+            $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${current_tile.settlement_key}.png`);
         }
     }
     function industry_select()
@@ -173,6 +174,7 @@
         if (account && current_tile.account_key === account['id'] && settlement_is_township(current_tile.settlement_key)) {
             $('#tab_select_industry, #industry_select').show();
             $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
+            $('#industry_selection_icon_preview').prop('src', `${base_url}resources/icons/industries/${current_tile.industry_key}.png`);
         }
     }
     function tile_register_plea()

@@ -403,6 +403,9 @@ html body .tile_content_div, html body .tile_content_div[style] {
 img.industry_selection_icon, img.settlement_selection_icon {
   max-width: 20px;
 }
+img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
+  max-width: 40px;
+}
 
 /* Chat */
 #chat_parent {

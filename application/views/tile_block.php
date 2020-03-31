@@ -123,36 +123,39 @@
             <div id="settlement_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-action"><strong id="select_settlement_header"></strong></div>
+                        <div class="text-primary">
+                            <strong id="select_settlement_header"></strong>
+                            <img id="settlement_selection_icon_preview" src=""/>
+                        </div>
+                        <div>
+                            <label class="select_settlement_label">Classification:</label>
+                            <span id="select_settlement_type" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_settlement_label">Minimum Population:</label>
+                            <span id="select_settlement_pop" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_settlement_label">Terrain:</label>
+                            <span id="select_settlement_terrain" class="text-primary"></span>
+                        </div>
+                        <div id="select_settlement_defensive_parent">
+                            <label class="select_settlement_defensive_label">Defensive Bonus:</label>
+                            <span id="select_settlement_defensive_bonus" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_settlement_label">GDP:</label>
+                            <span id="select_settlement_gdp" class="text-primary"></span>
+                        </div>
+                        <div id="select_settlement_input_parent">
+                            <label class="select_settlement_label">Requires:</label>
+                            <span id="select_settlement_input" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_settlement_label">Produces:</label>
+                            <span id="select_settlement_output" class="text-primary"></span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label class="select_settlement_label">Classification:</label>
-                    <span id="select_settlement_type" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_settlement_label">Minimum Population:</label>
-                    <span id="select_settlement_pop" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_settlement_label">Terrain:</label>
-                    <span id="select_settlement_terrain" class="text-primary"></span>
-                </div>
-                <div id="select_settlement_defensive_parent">
-                    <label class="select_settlement_defensive_label">Defensive Bonus:</label>
-                    <span id="select_settlement_defensive_bonus" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_settlement_label">GDP:</label>
-                    <span id="select_settlement_gdp" class="text-primary"></span>
-                </div>
-                <div id="select_settlement_input_parent">
-                    <label class="select_settlement_label">Requires:</label>
-                    <span id="select_settlement_input" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_settlement_label">Produces:</label>
-                    <span id="select_settlement_output" class="text-primary"></span>
                 </div>
             </div>
             <div id="settlement_select">
@@ -189,32 +192,35 @@
             <div id="industry_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-action"><strong id="select_industry_header"></strong></div>
+                        <div class="text-primary">
+                            <strong id="select_industry_header"></strong>
+                            <img id="industry_selection_icon_preview" src=""/>
+                        </div>
+                        <div>
+                            <label class="select_industry_label">Settlement:</label>
+                            <span id="select_industry_settlement" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_industry_label">Terrain:</label>
+                            <span id="select_industry_terrain" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_industry_label">GDP:</label>
+                            <span id="select_industry_gdp" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_industry_label">Requires:</label>
+                            <span id="select_industry_input" class="text-primary"></span>
+                        </div>
+                        <div>
+                            <label class="select_industry_label">Produces:</label>
+                            <span id="select_industry_output" class="text-primary"></span>
+                        </div>
+                        <div id="select_industry_special_parent">
+                            <label class="select_industry_label">Special Effect:</label>
+                            <span id="select_industry_special" class="text-primary"></span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <label class="select_industry_label">Settlement:</label>
-                    <span id="select_industry_settlement" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_industry_label">Terrain:</label>
-                    <span id="select_industry_terrain" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_industry_label">GDP:</label>
-                    <span id="select_industry_gdp" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_industry_label">Requires:</label>
-                    <span id="select_industry_input" class="text-primary"></span>
-                </div>
-                <div>
-                    <label class="select_industry_label">Produces:</label>
-                    <span id="select_industry_output" class="text-primary"></span>
-                </div>
-                <div id="select_industry_special_parent">
-                    <label class="select_industry_label">Special Effect:</label>
-                    <span id="select_industry_special" class="text-primary"></span>
                 </div>
             </div>
             <div id="industry_select">
