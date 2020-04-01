@@ -25,6 +25,17 @@
     const tundra_key = <?= TUNDRA_KEY; ?>;
     const coastal_key = <?= COASTAL_KEY; ?>;
     const ocean_key = <?= OCEAN_KEY; ?>;
+    const fertile_text_color = '<?= FERTILE_TEXT_COLOR; ?>';
+    const barren_text_color = '<?= BARREN_TEXT_COLOR; ?>';
+    const mountain_text_color = '<?= MOUNTAIN_TEXT_COLOR; ?>';
+    const tundra_text_color = '<?= TUNDRA_TEXT_COLOR; ?>';
+    const coastal_text_color = '<?= COASTAL_TEXT_COLOR; ?>';
+    const fertile_color = '<?= FERTILE_COLOR ?>';
+    const barren_color = '<?= BARREN_COLOR ?>';
+    const mountain_color = '<?= MOUNTAIN_COLOR ?>';
+    const tundra_color = '<?= TUNDRA_COLOR ?>';
+    const coastal_color = '<?= COASTAL_COLOR ?>';
+    const ocean_color = '<?= OCEAN_COLOR ?>';
     const barren_defensive_bonus = <?= BARREN_DEFENSIVE_BONUS; ?>;
     const tundra_defensive_bonus = <?= TUNDRA_DEFENSIVE_BONUS; ?>;
     const mountain_defensive_bonus = <?= MOUNTAIN_DEFENSIVE_BONUS; ?>;

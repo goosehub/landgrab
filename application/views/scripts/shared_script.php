@@ -206,29 +206,6 @@
         return 'Any';
     }
 
-    function get_industry_terrain_string(required_terrain_key)
-    {
-        if (fertile_key == required_terrain_key) {
-            return 'Fertile';
-        }
-        if (barren_key == required_terrain_key) {
-            return 'Barren';
-        }
-        if (mountain_key == required_terrain_key) {
-            return 'Mountain';
-        }
-        if (tundra_key == required_terrain_key) {
-            return 'Tundra';
-        }
-        if (coastal_key == required_terrain_key) {
-            return 'Coastal';
-        }
-        if (ocean_key == required_terrain_key) {
-            return 'Ocean';
-        }
-        return 'Any';
-    }
-
 
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';

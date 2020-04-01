@@ -241,7 +241,7 @@
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
         $('#select_settlement_gdp').html('$' + settlement.gdp + 'M');
         $('#select_settlement_pop').html(settlement.base_population + 'K');
-        $('#select_settlement_terrain').html(get_settlement_terrain_string(settlement));
+        $('#select_settlement_terrain').html(get_settlement_terrain_string_with_color(settlement));
         $('#select_settlement_defensive_parent').hide();
         if (get_defensive_bonus_of_settlement_string(settlement.id)) {
             $('#select_settlement_defensive_bonus').html(get_defensive_bonus_of_settlement_string(settlement.id));
@@ -272,15 +272,69 @@
         })
         $('#select_industry_header').html(industry.label);
         $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));
-        $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
-        $('#select_industry_gdp').html(industry.gdp);
-        $('#select_industry_input').html(industry_input_string(industry));
-        $('#select_industry_output').html(industry_output_string(industry));
+        $('#select_industry_terrain_parent').hide();
+        if (industry.required_terrain_key) {
+            $('#select_industry_terrain_parent').show();
+            $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
+        }
+        $('#select_industry_gdp').html('$' + industry.gdp + 'M');
+        $('#select_industry_input_parent').hide();
+        if (industry_input_string(industry)) {
+            $('#select_industry_input_parent').show();
+            $('#select_industry_input').html(industry_input_string(industry));
+        }
+        $('#select_industry_output_parent').hide();
+        if (industry_output_string(industry)) {
+            $('#select_industry_output_parent').show();
+            $('#select_industry_output').html(industry_output_string(industry));
+        }
         $('#select_industry_special_parent').hide();
         if (industry.meta) {
             $('#select_industry_special_parent').show();
             $('#select_industry_special').html(industry.meta);
         }
+    }
+    function get_settlement_terrain_string_with_color(settlement)
+    {
+        let string = '';
+        if (settlement.is_allowed_on_fertile == 1 && settlement.is_allowed_on_coastal == 1 && settlement.is_allowed_on_barren == 1 && settlement.is_allowed_on_mountain == 1 && settlement.is_allowed_on_tundra == 1) {
+            return 'Any';
+        }
+        if (settlement.is_allowed_on_fertile == 1) {
+            string += `<span class="terrain_value" style="color: ${fertile_text_color}">Fertile</span>, `;
+        }
+        if (settlement.is_allowed_on_coastal == 1) {
+            string += `<span class="terrain_value" style="color: ${coastal_text_color}">Coastal</span>, `;
+        }
+        if (settlement.is_allowed_on_barren == 1) {
+            string += `<span class="terrain_value" style="color: ${barren_text_color}">Barren</span>, `;
+        }
+        if (settlement.is_allowed_on_mountain == 1) {
+            string += `<span class="terrain_value" style="color: ${mountain_text_color}">Mountain</span>, `;
+        }
+        if (settlement.is_allowed_on_tundra == 1) {
+            string += `<span class="terrain_value" style="color: ${tundra_text_color}">Tundra</span>, `;
+        }
+        return string.slice(0,-2);
+    }
+    function get_industry_terrain_string(required_terrain_key)
+    {
+        if (fertile_key == required_terrain_key) {
+            return `<span class="terrain_value" style="color: ${fertile_text_color}">Fertile</span>`;
+        }
+        if (barren_key == required_terrain_key) {
+            return `<span class="terrain_value" style="color: ${barren_text_color}">Barren</span>`;
+        }
+        if (mountain_key == required_terrain_key) {
+            return `<span class="terrain_value" style="color: ${mountain_text_color}">Mountain</span>`;
+        }
+        if (tundra_key == required_terrain_key) {
+            return `<span class="terrain_value" style="color: ${tundra_text_color}">Tundra</span>`;
+        }
+        if (coastal_key == required_terrain_key) {
+            return `<span class="terrain_value" style="color: ${coastal_text_color}">Coastal</span>`;
+        }
+        return 'Any';
     }
     function industry_input_string(industry) {
         let input_string = '';

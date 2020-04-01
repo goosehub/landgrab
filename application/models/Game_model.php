@@ -508,62 +508,62 @@
 			}
 			return $industries;
 		}
-	    function get_tile_border_color($tile)
-	    {
-	        $fill_color = "#FFFFFF";
-	        if ($tile['account_key']) {
-	        	$fill_color = $tile['color'];
-	        }
-	        return $fill_color;
-	    }
-	    function get_tile_terrain_color($tile)
-	    {
-	        $fill_color = "#FFFFFF";
-	        if ($tile['terrain_key'] == FERTILE_KEY) {
-	            $fill_color = FERTILE_COLOR;
-	        }
-	        if ($tile['terrain_key'] == BARREN_KEY) {
-	            $fill_color = BARREN_COLOR;
-	        }
-	        if ($tile['terrain_key'] == MOUNTAIN_KEY) {
-	            $fill_color = MOUNTAIN_COLOR;
-	        }
-	        if ($tile['terrain_key'] == TUNDRA_KEY) {
-	            $fill_color = TUNDRA_COLOR;
-	        }
-	        if ($tile['terrain_key'] == COASTAL_KEY) {
-	            $fill_color = COASTAL_COLOR;
-	        }
-	        if ($tile['terrain_key'] == OCEAN_KEY) {
-	            $fill_color = OCEAN_COLOR;
-	        }
-	        return $fill_color;
-	    }
-	    function tiles_are_adjacent($start_lat, $start_lng, $end_lat, $end_lng) {
-		    // Ignore if ending same place we started
-		    if ($start_lat === $end_lat && $start_lng === $end_lng) {
-		      return false;
-		    }
-		    // Check if one is changed by 1, and other is the same
-		    $allowed_lats = [$start_lat, $start_lat + TILE_SIZE, $start_lat - TILE_SIZE];
-		    $allowed_lngs = [$start_lng, $this->correct_lng($start_lng + TILE_SIZE), $this->correct_lng($start_lng - TILE_SIZE)];
-		    if (
-		      (in_array($end_lat, $allowed_lats) && $start_lng === $end_lng) || 
-		      (in_array($end_lng, $allowed_lngs) && $start_lat === $end_lat)
-		      ) {
-		      return true;
-		    }
-		    return false;
-	    }
-	    function correct_lng($lng) {
-	    	if ($lng === 182) {
-	    	  $lng = -178;
-	    	}
-	    	if ($lng === -180) {
-	    	  $lng = 180;
-	    	}
-	    	return $lng;
-	    }
+		function get_tile_border_color($tile)
+		{
+			$fill_color = "#FFFFFF";
+			if ($tile['account_key']) {
+				$fill_color = $tile['color'];
+			}
+			return $fill_color;
+		}
+		function get_tile_terrain_color($tile)
+		{
+			$fill_color = "#FFFFFF";
+			if ($tile['terrain_key'] == FERTILE_KEY) {
+				$fill_color = FERTILE_COLOR;
+			}
+			if ($tile['terrain_key'] == BARREN_KEY) {
+				$fill_color = BARREN_COLOR;
+			}
+			if ($tile['terrain_key'] == MOUNTAIN_KEY) {
+				$fill_color = MOUNTAIN_COLOR;
+			}
+			if ($tile['terrain_key'] == TUNDRA_KEY) {
+				$fill_color = TUNDRA_COLOR;
+			}
+			if ($tile['terrain_key'] == COASTAL_KEY) {
+				$fill_color = COASTAL_COLOR;
+			}
+			if ($tile['terrain_key'] == OCEAN_KEY) {
+				$fill_color = OCEAN_COLOR;
+			}
+			return $fill_color;
+		}
+		function tiles_are_adjacent($start_lat, $start_lng, $end_lat, $end_lng) {
+			// Ignore if ending same place we started
+			if ($start_lat === $end_lat && $start_lng === $end_lng) {
+			  return false;
+			}
+			// Check if one is changed by 1, and other is the same
+			$allowed_lats = [$start_lat, $start_lat + TILE_SIZE, $start_lat - TILE_SIZE];
+			$allowed_lngs = [$start_lng, $this->correct_lng($start_lng + TILE_SIZE), $this->correct_lng($start_lng - TILE_SIZE)];
+			if (
+			  (in_array($end_lat, $allowed_lats) && $start_lng === $end_lng) || 
+			  (in_array($end_lng, $allowed_lngs) && $start_lat === $end_lat)
+			  ) {
+			  return true;
+			}
+			return false;
+		}
+		function correct_lng($lng) {
+			if ($lng === 182) {
+			  $lng = -178;
+			}
+			if ($lng === -180) {
+			  $lng = 180;
+			}
+			return $lng;
+		}
 		function remove_capitol($account_id) {
 			$tile = $this->get_capitol_tile_by_account($account_id);
 			$data = array(
@@ -572,6 +572,6 @@
 			);
 			$this->db->where('id', $tile['id']);
 			$this->db->update('tile', $data);
-	        $this->game_model->update_tile_industry($tile['id']);
+			$this->game_model->update_tile_industry($tile['id']);
 		}
 	}

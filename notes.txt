@@ -16,7 +16,6 @@ MEDIUM PRIORITY
     law UI reset to current settings
     selling riches
     UI indicator for number of negative supplies and negative surpluses
-    store default google maps id type
     settlement/industry validation
         require round of feed
         logic population required for upgrading townships, don't reset on upgrade
@@ -54,7 +53,9 @@ LOW PRIORITY
     number formatting
     tooltip for alliances, rights of passage, etc
     only make own units draggable
+    suffix on industry input selection preview
 BUGS
+    township defensive bonus on barren
     supplies projections vs reality
     icon bugs
 EXPLOITs
@@ -71,6 +72,7 @@ GOING LIVE
     reddit update post
 NO PRIORITY
     More worlds
+    abstract settlement input string into programatic
     no population hit for downgrading township
     capitol and chat shortcut to diplomacy
     system chat at top of the hour for market prices
@@ -80,6 +82,7 @@ NO PRIORITY
     Toggle individual settlements and industries
     generate worlds when all worlds have no free non tundra land
     fix correct_lng for non 2 tile size worlds
+    store default google maps id type
     list of current wars
     pollution mechanic
     custom google map color styling
@@ -164,7 +167,7 @@ Mine
 
 Tutorial Todo List
     Explore the worlld
-        Use all 5 Toggles
+        Use all 5 Toggles, explain terrain
     The Start Of A Nation
         Select a tile to start your nation. If available, select somewhere unclaimed.
     Establishing a Charter
@@ -197,7 +200,6 @@ Tutorial Todo List
         Become a billionaire
     It's Lonley at the Top
         Reach #1 on the leaderboard for territories
-
 
 Tagline
     Economy, Diplomacy, Warfare

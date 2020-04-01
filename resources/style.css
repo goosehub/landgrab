@@ -406,6 +406,9 @@ img.industry_selection_icon, img.settlement_selection_icon {
 img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
   max-width: 40px;
 }
+.terrain_value {
+  font-weight: bold;
+}
 
 /* Chat */
 #chat_parent {

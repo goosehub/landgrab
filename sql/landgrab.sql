@@ -169,7 +169,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (8, 18, 1), -- Nuclear
 (9, 5, 1), -- Manufacturing
 (9, 6, 1), -- Manufacturing
-(9, 7, 1), -- Manufacturing
+(9, 7, 2), -- Manufacturing
 (9, 13, 1), -- Manufacturing
 (10, 13, 1), -- Chemicals
 (11, 28, 1), -- Steel
@@ -244,9 +244,9 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (2, 1, 'Support', 'support', '%', FALSE, NULL, NULL, 'Support is used for controlling units. It increases each minute depending on power structure and each hour depending on cash crops. If you go into debt, support will go to zero.'),
 (3, 1, 'Population', 'population', 'K', FALSE, NULL, NULL, 'Population for each townships grows each hour. Townships without the needed supplies will shrink. Having a diverse diet available gives you a growth bonus'),
 (4, 1, 'Territories', 'tiles', '', FALSE, NULL, NULL, 'Territories is the primary leaderboard stat and determines the offical winner of each round.'),
-(5, 5, 'Timber', 'timber', 'Mt', TRUE, NULL, NULL, ''),
-(6, 5, 'Fiber', 'fiber', 'Mt', TRUE, NULL, NULL, ''),
-(7, 5, 'Ore', 'ore', 'Mt', TRUE, NULL, NULL, ''),
+(5, 6, 'Timber', 'timber', 'Mt', TRUE, NULL, NULL, ''),
+(6, 6, 'Fiber', 'fiber', 'Mt', TRUE, NULL, NULL, ''),
+(7, 6, 'Ore', 'ore', 'Mt', TRUE, NULL, NULL, ''),
 (8, 2, 'Grain', 'grain', 'Gt', TRUE, NULL, NULL, ''),
 (9, 2, 'Fruit', 'fruit', 'Gt', TRUE, NULL, NULL, ''),
 (10, 2, 'Vegetables', 'vegetables', 'Gt', TRUE, NULL, NULL, ''),
@@ -267,16 +267,16 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (25, 3, 'Cannabis', 'cannabis', 'Mt', TRUE, NULL, NULL, ''),
 (26, 3, 'Alcohol', 'alcohol', 'Mt', TRUE, NULL, NULL, ''),
 (27, 3, 'Tobacco', 'tobacco', 'Mt', TRUE, NULL, NULL, ''),
-(28, 6, 'Iron', 'iron', 'Gt', TRUE, NULL, NULL, ''),
-(29, 6, 'Copper', 'copper', 'Mt', TRUE, NULL, NULL, ''),
-(30, 6, 'Zinc', 'zinc', 'Mt', TRUE, NULL, NULL, ''),
-(31, 6, 'Aluminum', 'aluminum', 'Mt', TRUE, NULL, NULL, ''),
-(32, 6, 'Nickle', 'nickle', 'Mt', TRUE, NULL, NULL, ''),
-(33, 7, 'Education', 'education', '', FALSE, NULL, NULL, ''),
-(34, 7, 'Software', 'software', '', TRUE, NULL, NULL, ''),
+(28, 5, 'Iron', 'iron', 'Gt', TRUE, NULL, NULL, ''),
+(29, 5, 'Copper', 'copper', 'Mt', TRUE, NULL, NULL, ''),
+(30, 5, 'Zinc', 'zinc', 'Mt', TRUE, NULL, NULL, ''),
+(31, 5, 'Aluminum', 'aluminum', 'Mt', TRUE, NULL, NULL, ''),
+(32, 5, 'Nickle', 'nickle', 'Mt', TRUE, NULL, NULL, ''),
+(33, 7, 'Professors', 'professors', 'K', FALSE, NULL, NULL, ''),
+(34, 7, 'Programmers', 'programmers', 'K', TRUE, NULL, NULL, ''),
 (35, 8, 'Pharmaceuticals', 'pharmaceuticals', 'Ton', TRUE, NULL, NULL, ''),
-(36, 7, 'Engineering', 'engineering', '', TRUE, NULL, NULL, ''),
-(37, 5, 'Merchandise', 'merchandise', 'Mt', TRUE, NULL, NULL, ''),
+(36, 7, 'Engineers', 'engineers', 'K', TRUE, NULL, NULL, ''),
+(37, 6, 'Merchandise', 'merchandise', 'Mt', TRUE, NULL, NULL, ''),
 (38, 8, 'Chemicals', 'chemicals', 'M gal', TRUE, NULL, NULL, ''),
 (39, 8, 'Steel', 'steel', 'Gt', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', 'M', TRUE, NULL, NULL, ''),
@@ -501,7 +501,7 @@ INSERT INTO `settlement` (
 (5, 'Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '10,000K Population, 15 Food, 15 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 20
+  10000, '10,000K Population, 20 Food, 20 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 20
 ),
 (6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -511,7 +511,7 @@ INSERT INTO `settlement` (
 (7, 'Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 9, 1, 1
+  10, '', 9, 1, 2
 ),
 (8, 'Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -521,22 +521,22 @@ INSERT INTO `settlement` (
 (9, 'Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 11, 1, 2
+  10, '', 11, 1, 3
 ),
 (10, 'Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 12, 2, 4
+  10, '', 12, 1, 5
 ),
 (11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 5, 1
+  10, '', 5, 10, 1
 ),
 (12, 'Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 6, 20, 3
+  10, '', 6, 10, 3
 ),
 (13, 'Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
@@ -546,16 +546,16 @@ INSERT INTO `settlement` (
 (14, 'Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 14, 2, 2
+  10, '', 14, 1, 2
 ),
 (15, 'Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
-  TRUE, TRUE, TRUE, TRUE, FALSE,
+  TRUE, TRUE, TRUE, FALSE, FALSE,
   10, '', 13, 2, 1
 ),
 (16, 'Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
-  TRUE, TRUE, TRUE, TRUE, FALSE,
+  TRUE, TRUE, FALSE, TRUE, FALSE,
   10, '', 13, 1, 1
 ),
 (17, 'Coffee', 'coffee', 5,
@@ -571,7 +571,7 @@ INSERT INTO `settlement` (
 (19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 5, 3
+  10, '', 25, 3, 3
 ),
 (20, 'Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
@@ -581,7 +581,7 @@ INSERT INTO `settlement` (
 (21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 3, 3
+  10, '', 27, 5, 3
 );
 
 DROP TABLE IF EXISTS `industry`;
@@ -609,7 +609,7 @@ INSERT INTO `industry` (
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
   null, 10, 10, 'Spawns units, creates corruption'
 ),
-(2, 1, 'Federal', 'federal', NULL, NULL,
+(2, 1, 'Federal', 'federal', 4, NULL,
   2, 10, 5, ''
 ),
 (3, 1, 'Base', 'base', NULL, NULL,
@@ -617,7 +617,7 @@ INSERT INTO `industry` (
 ),
 -- energy
 (4, 2, 'Biofuel', 'biofuel', NULL, NULL,
-  13, 2, 1, ''
+  13, 5, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
   13, 10, 1, ''
@@ -629,62 +629,62 @@ INSERT INTO `industry` (
   13, 20, 5, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 30, 5, ''
+  13, 25, 5, ''
 ),
 -- light industry
-(9, 3, 'Manufacturing', 'manufacturing', NULL, NULL,
+(9, 5, 'Manufacturing', 'manufacturing', NULL, NULL,
   37, 10, 5, ''
 ),
-(10, 3, 'Chemicals', 'chemicals', NULL, NULL,
+(10, 5, 'Chemicals', 'chemicals', NULL, NULL,
   38, 3, 5, ''
 ),
-(11, 3, 'Steel', 'steel', NULL, NULL,
+(11, 5, 'Steel', 'steel', NULL, NULL,
   39, 10, 3, ''
 ),
-(12, 3, 'Electronics', 'electronics', NULL, NULL,
+(12, 5, 'Electronics', 'electronics', 4, NULL,
   40, 20, 10, ''
 ),
 -- hevvy industry
-(13, 4, 'Shipping Port', 'port', 2, 5,
+(13, 6, 'Shipping Port', 'port', 4, 5,
   41, 1, 50, 'Increases National GDP by 10%'
 ),
-(14, 4, 'Machinery', 'machinery', NULL, NULL,
+(14, 6, 'Machinery', 'machinery', 4, NULL,
   42, 10, 30, 'Increases National GDP by 10%'
 ),
-(15, 4, 'Automotive', 'automotive', 2, NULL,
+(15, 6, 'Automotive', 'automotive', 4, NULL,
   43, 20, 40, 'Increases National GDP by 10%'
 ),
-(16, 4, 'Aerospace', 'aerospace', 2, NULL,
+(16, 6, 'Aerospace', 'aerospace', 4, NULL,
   44, 5, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
-(17, 5, 'Leisure', 'leisure', NULL, 5,
+(17, 3, 'Leisure', 'leisure', NULL, 5,
   null, 1, 10, ''
 ),
-(18, 5, 'Resort', 'resort', NULL, 3,
+(18, 3, 'Resort', 'resort', NULL, 3,
   null, 1, 5, ''
 ),
-(19, 5, 'Gambling', 'gambling', 2, NULL,
+(19, 3, 'Gambling', 'gambling', NULL, NULL,
   null, 1, 10, ''
 ),
 -- knowledge/quaternary
-(20, 6, 'University', 'university', NULL, NULL,
+(20, 4, 'University', 'university', NULL, NULL,
   33, 1, 3, ''
 ),
-(21, 6, 'Software', 'software', 2, NULL,
+(21, 4, 'Software', 'software', 4, NULL,
   34, 10, 8, ''
 ),
-(22, 6, 'Healthcare', 'healthcare', 2, NULL,
+(22, 4, 'Healthcare', 'healthcare', 4, NULL,
   35, 3, 6, ''
 ),
 -- metro
-(23, 7, 'Financial & Banking', 'financial_banking', 3, NULL,
+(23, 7, 'Financial & Banking', 'financial_banking', 5, NULL,
   46, 1, 200, 'Increases National GDP by 30%'
 ),
-(24, 7, 'Entertainment & Media', 'entertainment_media', 3, NULL,
+(24, 7, 'Entertainment & Media', 'entertainment_media', 5, NULL,
   45, 3, 50, 'Increases National GDP by 30%'
 ),
-(25, 7, 'Engineering & Design', 'engineering_design', 3, NULL,
+(25, 7, 'Engineering & Design', 'engineering_design', 5, NULL,
   36, 10, 100, ''
 );
 
