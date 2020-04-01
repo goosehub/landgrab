@@ -508,6 +508,24 @@
 			}
 			return $industries;
 		}
+		function settlement_allowed_on_terrain($terrain_key, $settlement) {
+			if ($terrain_key == FERTILE_KEY && $settlement['is_allowed_on_fertile']) {
+				return true;
+			}
+			if ($terrain_key == COASTAL_KEY && $settlement['is_allowed_on_coastal']) {
+				return true;
+			}
+			if ($terrain_key == BARREN_KEY && $settlement['is_allowed_on_barren']) {
+				return true;
+			}
+			if ($terrain_key == MOUNTAIN_KEY && $settlement['is_allowed_on_mountain']) {
+				return true;
+			}
+			if ($terrain_key == TUNDRA_KEY && $settlement['is_allowed_on_tundra']) {
+				return true;
+			}
+			return false;
+		}
 		function get_tile_border_color($tile)
 		{
 			$fill_color = "#FFFFFF";
@@ -563,6 +581,20 @@
 			  $lng = 180;
 			}
 			return $lng;
+		}
+		function get_industry_from_state($industry_key) {
+			foreach ($this->industries as $industry) {
+				if ($industry['id'] == $industry_key) {
+					return $industry;
+				}
+			}
+		}
+		function get_settlement_from_state($settlement_key) {
+			foreach ($this->settlements as $settlement) {
+				if ($settlement['id'] == $settlement_key) {
+					return $settlement;
+				}
+			}
 		}
 		function remove_capitol($account_id) {
 			$tile = $this->get_capitol_tile_by_account($account_id);
