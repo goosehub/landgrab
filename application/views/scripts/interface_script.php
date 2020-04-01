@@ -132,6 +132,14 @@ $('.exit_center_block').click(function(){
   $('.center_block').hide();
 });
 $('.government_dropdown').click(function(){
+    $('#input_power_structure').val(account.power_structure).trigger('change');
+    $('#input_tax_rate').val(account.tax_rate).trigger('change');
+    if (account.ideology == 1) {
+        $('#free_market').prop('checked', account.ideology);
+    }
+    else {
+        $('#socialism').prop('checked', account.ideology);
+    }
     unhighlight_all_squares();
     $('.center_block').hide();
     $('#government_block').fadeIn();

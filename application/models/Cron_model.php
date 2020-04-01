@@ -508,10 +508,6 @@ Class cron_model extends CI_Model
 		$cash_crops_needed += $account['town_count'] * TOWN_CASH_CROPS_COST;
 		$cash_crops_needed += $account['city_count'] * CITY_CASH_CROPS_COST;
 		$cash_crops_needed += $account['metro_count'] * METRO_CASH_CROPS_COST;
-		if ($account['id'] == 6) {
-			dd($account['metro_count']);
-			dd($cash_crops_needed);
-		}
 		return $cash_crops_needed;
 	}
 	function update_grouped_supply($account, &$new_supplies, &$supply_needed)

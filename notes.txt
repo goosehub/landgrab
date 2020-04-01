@@ -12,7 +12,6 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     stats supplies math
-    law UI reset to current settings
     selling riches
     negative surplus warning and negative supply danger in UI to replace tiles badge
     settlement/industry validation
