@@ -8,31 +8,29 @@
     handle_enlist_unit();
 
     function handle_set_settlement() {
-        $('.set_settlement_button').click(function(event) {
-            let settlement_key = $(this).data('id');
+        $('#set_settlement_button').click(function(event) {
             let data = {
-                settlement_key: settlement_key,
+                settlement_key: preview_settlement_key,
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_settlement', data, function(response) {
-                if (settlement_is_township(current_tile.settlement_key) && settlement_key < current_tile.settlement_key) {
+                if (settlement_is_township(current_tile.settlement_key) && preview_settlement_key < current_tile.settlement_key) {
                     current_tile.industry_key = null;
                 }
-                current_tile.settlement_key = settlement_key;
+                current_tile.settlement_key = preview_settlement_key;
                 get_map_update();
                 render_tile_window();
             });
         });
     }
     function handle_set_industry() {
-        $('.set_industry_button').click(function(event) {
-            let industry_key = $(this).data('id');
+        $('#set_industry_button').click(function(event) {
             let data = {
-                industry_key: industry_key,
+                industry_key: preview_industry_key,
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_industry', data, function(response) {
-                current_tile.industry_key = industry_key;
+                current_tile.industry_key = preview_industry_key;
                 get_map_update();
                 render_tile_window();
             });
@@ -123,6 +121,8 @@
     function render_tile(lat, lng) {
         tile = get_tile(lat, lng, world_key, function(response) {
             current_tile = response;
+            preview_settlement_key = current_tile.settlement_key;
+            preview_industry_key = current_tile.industry_key;
             render_settlement_extended(current_tile.settlement_key);
             render_industry_extended(current_tile.industry_key);
             highlight_single_square(current_tile.id);

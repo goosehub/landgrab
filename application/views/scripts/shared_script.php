@@ -98,6 +98,12 @@
         }
     }
 
+    // Sort by id column
+    function sort_by_id(list) {
+        list.sort((a, b) => (parseInt(a.id) > parseInt(b.id)) ? 1 : -1);
+        return list;
+    }
+
     // Upper case words
     function ucwords(str) {
         return (str + '').replace(/^([a-z])|\s+([a-z])/g, function($1) {

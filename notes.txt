@@ -9,13 +9,12 @@ do industries with no inputs produce output, or get false flagged for no supply?
 ==========================================================================================
 
 HIGH PRIORITY
-    establish functionality (on select, btn goes to action, text goes to establish)
 MEDIUM PRIORITY
     commission icons
     stats supplies math
     law UI reset to current settings
     selling riches
-    UI indicator for number of negative supplies and negative surpluses
+    negative surplus warning and negative supply danger in UI to replace tiles badge
     settlement/industry validation
         require round of feed
         logic population required for upgrading townships, don't reset on upgrade

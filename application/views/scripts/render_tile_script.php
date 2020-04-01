@@ -160,21 +160,33 @@
     function settlement_select()
     {
         $('#tab_select_settle, #settlement_select').hide();
-        $('.set_settlement_button').addClass('btn-default').removeClass('btn-primary');
+        $('.preview_settlement_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id']) {
             $('#tab_select_settle, #settlement_select').show();
-            $('.set_settlement_button[data-id=' + current_tile.settlement_key + ']').addClass('btn-default').addClass('btn-primary');
-            $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${current_tile.settlement_key}.png`);
+            $('.preview_settlement_button[data-id=' + preview_settlement_key + ']').addClass('btn-default').addClass('btn-primary');
+            $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${preview_settlement_key}.png`);
+            $('.preview_settlement_button').removeClass('btn-action');
+            $('.preview_settlement_button[data-id=' + current_tile.settlement_key + ']').removeClass('btn-primary').addClass('btn-action');
+            $('#set_settlement_button').hide();
+            if (current_tile.settlement_key != preview_settlement_key) {
+                $('#set_settlement_button').show();
+            }
         }
     }
     function industry_select()
     {
         $('#tab_select_industry, #industry_select').hide();
-        $('.set_industry_button').addClass('btn-default').removeClass('btn-primary');
+        $('.preview_industry_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id'] && settlement_is_township(current_tile.settlement_key)) {
             $('#tab_select_industry, #industry_select').show();
-            $('.set_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-primary');
-            $('#industry_selection_icon_preview').prop('src', `${base_url}resources/icons/industries/${current_tile.industry_key}.png`);
+            $('.preview_industry_button[data-id=' + preview_industry_key + ']').removeClass('btn-default').addClass('btn-primary');
+            $('#industry_selection_icon_preview').prop('src', `${base_url}resources/icons/industries/${preview_industry_key}.png`);
+            $('.preview_industry_button').removeClass('btn-action');
+            $('.preview_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-primary').addClass('btn-action');
+            $('#set_industry_button').hide();
+            if (current_tile.industry_key != preview_industry_key) {
+                $('#set_industry_button').show();
+            }
         }
     }
     function tile_register_plea()
@@ -214,16 +226,20 @@
         }
     }
     function handle_select_settlement() {
-        $('.set_settlement_button').click(function(){
+        $('.preview_settlement_button').click(function(){
             let settlement_key = $(this).data('id');
+            preview_settlement_key = settlement_key;
+            settlement_select();
             render_settlement_extended(settlement_key);
         });
     }
 
     function handle_select_industry() {
-        $('.set_industry_button').click(function(){
+        $('.preview_industry_button').click(function(){
             let industry_key = $(this).data('id');
+            preview_industry_key = industry_key;
             if (industry_key) {
+                industry_select();
                 render_industry_extended(industry_key);
             }
         });
@@ -235,7 +251,7 @@
         }
         $('#settlement_extended_info').show();
         let settlement = settlements.find(obj => {
-            return obj.id == settlement_key
+            return obj.id == preview_settlement_key
         });
         $('#select_settlement_header').html(settlement.label);
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
@@ -268,7 +284,7 @@
         }
         $('#industry_extended_info').show();
         let industry = industries.find(obj => {
-            return obj.id == industry_key
+            return obj.id == preview_industry_key
         })
         $('#select_industry_header').html(industry.label);
         $('#select_industry_settlement').html(get_industry_settlement_string(industry.minimum_settlement_size));

@@ -2,8 +2,8 @@
     const base_url = '<?= base_url(); ?>';
     const resources = JSON.parse('<?= json_encode($this->resources); ?>');
     const terrains = JSON.parse('<?= json_encode($this->terrains); ?>');
-    const settlements = JSON.parse('<?= json_encode($this->settlements); ?>');
-    const industries = JSON.parse('<?= json_encode($this->industries); ?>');
+    const settlements = sort_by_id(JSON.parse('<?= json_encode($this->settlements); ?>'));
+    const industries = sort_by_id(JSON.parse('<?= json_encode($this->industries); ?>'));
     const unit_types = JSON.parse('<?= json_encode($this->unit_types); ?>');
     const unit_labels = JSON.parse('<?= json_encode($this->unit_labels); ?>');
     const world_key = <?= $world['id']; ?>;
@@ -101,6 +101,8 @@
     let tiles_by_coord = [];
     let highlighted_tiles = [];
     let current_tile = false;
+    let preview_settlement_key = null;
+    let preview_industry_key = null;
     let resource_markers = [];
     let unit_markers = [];
     let settlement_markers = [];

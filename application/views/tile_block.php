@@ -124,15 +124,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-primary">
-                            <strong id="select_settlement_header"></strong>
                             <img id="settlement_selection_icon_preview" src=""/>
+                            <strong id="select_settlement_header"></strong>
+                            <button id="set_settlement_button" class="btn btn-lg btn-action pull-right">
+                                Establish
+                                <span class="fa fa-industry"></span>
+                            </button>
                         </div>
                         <div style="display: none;">
                             <label class="select_settlement_label">Classification:</label>
                             <span id="select_settlement_type" class="text-primary"></span>
                         </div>
                         <div>
-                            <label class="select_settlement_label">Minimum Population:</label>
+                            <label class="select_settlement_label">Population:</label>
                             <span id="select_settlement_pop" class="text-purple"></span>
                         </div>
                         <div>
@@ -174,7 +178,7 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
-                        <button id="set_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="set_settlement_button btn btn btn-default">
+                        <button id="preview_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="preview_settlement_button btn btn btn-default">
                             <?php echo $settlement['label']; ?>
                             <img class="settlement_selection_icon" src="<?=base_url()?>resources/icons/settlements/<?php echo $settlement['id'] ?>.png"/>
                         </button>
@@ -193,8 +197,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-primary">
-                            <strong id="select_industry_header"></strong>
                             <img id="industry_selection_icon_preview" src=""/>
+                            <strong id="select_industry_header"></strong>
+                            <button id="set_industry_button" class="btn btn-lg btn-action pull-right">
+                                Establish
+                                <span class="fa fa-city"></span>
+                            </button>
                         </div>
                         <div id="select_industry_settlement_parent">
                             <label class="select_industry_label">Settlement:</label>
@@ -236,7 +244,7 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
-                        <button id="set_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="set_industry_button btn btn btn-default">
+                        <button id="preview_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="preview_industry_button btn btn btn-default">
                             <?php echo $industry['label']; ?>
                             <img class="industry_selection_icon" src="<?=base_url()?>resources/icons/industries/<?php echo $industry['id'] ?>.png"/>
                         </button>
