@@ -48,7 +48,7 @@
       if (settlement_toggle) {
         $('#settlement_toggle').removeClass('btn-primary').addClass('btn-success');
       }
-      set_marker_set_visibility(settlement_markers, settlement_toggle);
+      update_visibility_of_markers();
     });
     $('#township_industry_toggle').click(function(event) {
       township_and_industry_toggle++
@@ -57,18 +57,14 @@
       }
       if (township_and_industry_toggle == 0) {
         $('#township_industry_toggle').removeClass('btn-success').removeClass('btn-warning').addClass('btn-primary');
-        set_marker_set_visibility(industry_markers, false);
       }
       if (township_and_industry_toggle == 1) {
         $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-warning').addClass('btn-success');
-        set_marker_set_visibility(township_markers, true);
-        
       }
       if (township_and_industry_toggle == 2) {
         $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-success').addClass('btn-warning');
-        set_marker_set_visibility(township_markers, false);
-        set_marker_set_visibility(industry_markers, true);
       }
+      update_visibility_of_markers();
       setCookie('township_and_industry_toggle', township_and_industry_toggle);
     });
     $('#resource_toggle').click(function(event) {
@@ -78,7 +74,7 @@
       if (resource_toggle) {
         $('#resource_toggle').removeClass('btn-primary').addClass('btn-success');
       }
-      set_marker_set_visibility(resource_markers, resource_toggle);
+      update_visibility_of_markers();
     });
     $('#unit_toggle').click(function(event) {
       $('#unit_toggle').removeClass('btn-success').addClass('btn-primary');
@@ -87,7 +83,7 @@
       if (unit_toggle) {
         $('#unit_toggle').removeClass('btn-primary').addClass('btn-success');
       }
-      set_marker_set_visibility(unit_markers, unit_toggle);
+      update_visibility_of_markers();
     });
     $('#grid_toggle').click(function(event) {
       $('#grid_toggle').removeClass('btn-success').addClass('btn-primary');
@@ -518,68 +514,59 @@
 
       update_tile_resource_marker(new_tile);
       update_tile_settlement_marker(new_tile);
+      update_tile_township_marker(new_tile);
+      update_tile_industry_marker(new_tile);
       update_tile_unit_marker(new_tile);
     }
     update_visibility_of_markers();
     return true;
   }
-
   function update_tile_resource_marker(tile) {
-    if (tile.resource_key && resource_markers[tile.id]) {
+    if (resource_markers[tile.id]) {
       resource_markers[tile.id].setMap(null);
       resource_markers.splice(tile.id, 1);
     }
     if (tile.resource_key) {
       resource_markers[tile.id] = set_resource_icon(tile.resource_key, tile.id, tile.lat, tile.lng);
     }
-    else if (resource_markers[tile.id]) {
-      resource_markers[tile.id].setMap(null);
-      resource_markers.splice(tile.id, 1);
-    }
   }
   function update_tile_settlement_marker(tile) {
-    if (needs_settlement_icon(tile) && settlement_markers[tile.id]) {
+    if (settlement_markers[tile.id]) {
       settlement_markers[tile.id].setMap(null);
       settlement_markers.splice(tile.id, 1);
     }
     if (tile.settlement_key > metro_key) {
       settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
     }
-    if (tile.settlement_key <= metro_key && tile.settlement_key > uninhabited_key) {
-      township_markers[tile.id] = set_township_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
+  }
+  function update_tile_industry_marker(tile) {
+    if (industry_markers[tile.id]) {
+      industry_markers[tile.id].setMap(null);
+      industry_markers.splice(tile.id, 1);
     }
     if (tile.industry_key) {
       industry_markers[tile.id] = set_industry_icon(tile.industry_key, tile.id, tile.lat, tile.lng);
     }
-    else if (settlement_markers[tile.id]) {
-      settlement_markers[tile.id].setMap(null);
-      settlement_markers.splice(tile.id, 1);
+  }
+  function update_tile_township_marker(tile) {
+    if (township_markers[tile.id]) {
+      township_markers[tile.id].setMap(null);
+      township_markers.splice(tile.id, 1);
+    }
+    if (settlement_is_township(tile.settlement_key)) {
+      township_markers[tile.id] = set_township_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
     }
   }
   function update_tile_unit_marker(tile) {
-    // Tile does not have unit and map does not have unit
-    if (!tile.unit_key && !unit_markers[tile.id]) {
-    }
-    // Tile has unit and map has unit and unit is the same
-    else if (tile.unit_key && unit_markers[tile.id] && parseInt(unit_markers[tile.id].unit.unit_id) === parseInt(tile.unit_key)) {
-    }
-    // Tile has unit and map has unit and unit is not the same
-    else if (tile.unit_key && unit_markers[tile.id] && parseInt(unit_markers[tile.id].unit.unit_id) !== parseInt(tile.unit_key)) {
-      unit_markers[tile.id].setMap(null);
-      unit_markers.splice(tile.id, 1);
-      unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
-    }
-    // Tile does not have unit and map has unit
-    else if (!tile.unit_key && unit_markers[tile.id]) {
+    if (unit_markers[tile.id]) {
       unit_markers[tile.id].setMap(null);
       unit_markers.splice(tile.id, 1);
     }
-    // Tile has unit and map does not have unit and unit is not current account (because own new units should only happen from user action)
-    else if (tile.unit_key && !unit_markers[tile.id] && tile.unit_owner_key != account.id) {
+    else if (tile.unit_key) {
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
     }
   }
-  function needs_settlement_icon(tile) {
+  function needs_township_icon(tile) {
     return township_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
 

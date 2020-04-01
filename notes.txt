@@ -56,7 +56,6 @@ LOW PRIORITY
 BUGS
     township defensive bonus on barren
     supplies projections vs reality
-    icon bugs
 EXPLOITs
     Move base before top of hour
 GOING LIVE
