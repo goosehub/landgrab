@@ -15,6 +15,9 @@
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_settlement', data, function(response) {
+                if (settlement_is_township(current_tile.settlement_key) && settlement_key < current_tile.settlement_key) {
+                    current_tile.industry_key = null;
+                }
                 current_tile.settlement_key = settlement_key;
                 get_map_update();
                 render_tile_window();

@@ -326,6 +326,9 @@ class Game extends CI_Controller {
         $settlement_key = $this->input->post('settlement_key');
         $tile_id = $this->input->post('tile_id');
         $tile = $this->game_model->get_tile_by_id($tile_id);
+        if ($this->game_model->tile_is_township($tile['settlement_key']) && $settlement_key < $tile['settlement_key']) {
+            $this->game_model->update_tile_industry($tile_id, null);
+        }
         $account = $this->user_model->this_account($tile['world_key']);
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');

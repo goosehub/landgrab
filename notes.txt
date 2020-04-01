@@ -13,8 +13,13 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     stats supplies math
-    require round of feed
     law UI reset to current settings
+    selling riches
+    UI indicator for number of negative supplies and negative surpluses
+    store default google maps id type
+    settlement/industry validation
+        require round of feed
+        logic population required for upgrading townships, don't reset on upgrade
     unit system
         icon color system | own, ally, neutral, enemy
         attacking
@@ -36,56 +41,44 @@ MEDIUM PRIORITY
 LOW PRIORITY
     fonts
     pretty up national charter update
-    logic population required for upgrading townships, don't reset on upgrade
     enlist spawn validation
-    undo industry when township downgrade
-    Fix exploit move base before top of hour
-    Better Power Structure popover
+    Better Power Structure popover with formatting
     stripped rows across app
     make clear what borders are current players borders
     refactor township input desc to be generated
     population projection
     hide resources in responses before discovered
-    sell UI and mechanic
-    implement icons
     json leaderboard for every supply
     troops inside opp. tile at start of war
-    have capitols show laws of nation
+    have capitols show laws of that nation
     number formatting
     tooltip for alliances, rights of passage, etc
-    formatting in tooltips
-    selling riches
     only make own units draggable
-    UI indicator for number of negative supplies and negative surpluses
-    store default google maps id type
 BUGS
     supplies projections vs reality
-    icon swapping
+    icon bugs
+EXPLOITs
+    Move base before top of hour
 GOING LIVE
     buy icons8 paid license
     swal alerts
     DB indexes
-    Finish tooltips
     beta
     tutorial based on todo list
-    More worlds
     account migration
     reset cron
     terms of use
-    social
-        reddit update post
+    reddit update post
 NO PRIORITY
+    More worlds
     no population hit for downgrading township
-    enforce supplies not being stackable
     capitol and chat shortcut to diplomacy
     system chat at top of the hour for market prices
     must have land on world to send trade request
     make get_account_budget() calc settlement & industry separately for accuracy
-    anarchy mechanic
-    Township Population Reset/Decrease on capture?
+    Township Population Reset/Decrease on capture
     Toggle individual settlements and industries
     generate worlds when all worlds have no free non tundra land
-    new player full map random start
     fix correct_lng for non 2 tile size worlds
     list of current wars
     pollution mechanic
