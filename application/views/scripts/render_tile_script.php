@@ -162,21 +162,21 @@
     }
     function settlement_selection_disable()
     {
-        $('.preview_settlement_button.btn-danger').removeClass('btn-danger').addClass('btn-default');
+        $('.preview_settlement_button.btn-soft-disabled').removeClass('btn-soft-disabled').addClass('btn-default');
         $('.preview_settlement_button').each(function(){
             let settlement_key = $(this).data('id');
             if (!settlement_allowed_on_this_tile(settlement_key)) {
-                $(this).removeClass('btn-default').addClass('btn-danger');
+                $(this).removeClass('btn-default').addClass('btn-soft-disabled');
             }
         });
     }
     function industry_selection_disable()
     {
-        $('.preview_industry_button.btn-danger').removeClass('btn-danger').addClass('btn-default');
+        $('.preview_industry_button.btn-soft-disabled').removeClass('btn-soft-disabled').addClass('btn-default');
         $('.preview_industry_button').each(function(){
             let industry_key = $(this).data('id');
             if (!industry_allowed_on_this_tile(industry_key)) {
-                $(this).removeClass('btn-default').addClass('btn-danger');
+                $(this).removeClass('btn-default').addClass('btn-soft-disabled');
             }
         });
     }
