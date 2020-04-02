@@ -130,8 +130,10 @@
 		{
 			$data = array(
 				'settlement_key' => $settlement_key,
-				'population' => $this->settlements[$settlement_key - 1]['base_population'],
 			);
+			if ($settlement_key == TOWN_KEY) {
+				$data['population'] = $this->settlements[$settlement_key - 1]['base_population'];
+			}
 			if (!$this->tile_is_township($settlement_key)) {
 				$data['industry_key'] = NULL;
 			}

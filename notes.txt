@@ -15,7 +15,6 @@ MEDIUM PRIORITY
     selling riches
     negative surplus warning and negative supply danger in UI to replace tiles badge
     settlement/industry require round of feed to establish
-    don't reset population on upgrade
     unit system
         icon color system | own, ally, neutral, enemy
         attacking

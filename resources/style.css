@@ -6,7 +6,7 @@ html, body {
   font-family: 'Lato', sans-serif;
 }
 /* Orange Action Bootstrap-Styled Button */
-.btn-action {   
+.btn-action {
   background-color: hsl(44, 100%, 56%) !important; 
   background-repeat: repeat-x; 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffc31e", endColorstr="#ffc31e"); 
@@ -38,7 +38,8 @@ html, body {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
 }
-.btn-soft-disabled {   
+.btn-soft-disabled {
+  background-color: hsl(0, 0%, 78%) !important; 
   background-repeat: repeat-x; 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c8c8c8", endColorstr="#c8c8c8"); 
   background-image: -khtml-gradient(linear, left top, left bottom, from(#c8c8c8), to(#c8c8c8)); 
@@ -48,12 +49,13 @@ html, body {
   background-image: -webkit-linear-gradient(top, #c8c8c8, #c8c8c8); 
   background-image: -o-linear-gradient(top, #c8c8c8, #c8c8c8); 
   background-image: linear-gradient(#c8c8c8, #c8c8c8); 
-  border-color: #c8c8c8 #c8c8c8 hsl(44, 100%, 56%); 
+  border-color: #c8c8c8 #c8c8c8 hsl(0, 0%, 78%); 
   color: #333 !important; 
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
 }
 .btn-soft-disabled:hover {
+  background-color: hsl(0, 0%, 78%) !important;
   background-repeat: repeat-x; 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b8b8b8", endColorstr="#b8b8b8"); 
   background-image: -khtml-gradient(linear, left top, left bottom, from(#b8b8b8), to(#b8b8b8)); 
@@ -63,7 +65,7 @@ html, body {
   background-image: -webkit-linear-gradient(top, #b8b8b8, #b8b8b8); 
   background-image: -o-linear-gradient(top, #b8b8b8, #b8b8b8); 
   background-image: linear-gradient(#b8b8b8, #b8b8b8); 
-  border-color: #b8b8b8 #b8b8b8 hsl(38, 100%, 54%); 
+  border-color: #b8b8b8 #b8b8b8 hsl(0, 0%, 78%); 
   color: #333 !important; 
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
