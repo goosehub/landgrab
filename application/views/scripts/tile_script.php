@@ -14,12 +14,11 @@
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_settlement', data, function(response) {
-                if (settlement_is_township(current_tile.settlement_key) && preview_settlement_key < current_tile.settlement_key) {
-                    current_tile.industry_key = null;
-                }
-                current_tile.settlement_key = preview_settlement_key;
-                get_map_update();
-                render_tile_window();
+                get_tile(current_tile.lat, current_tile.lng, current_tile.world_key, function(response) {
+                    current_tile = response;
+                    get_map_update();
+                    render_tile_window();
+                });
             });
         });
     }
@@ -30,9 +29,11 @@
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_industry', data, function(response) {
-                current_tile.industry_key = preview_industry_key;
-                get_map_update();
-                render_tile_window();
+                get_tile(current_tile.lat, current_tile.lng, current_tile.world_key, function(response) {
+                    current_tile = response;
+                    get_map_update();
+                    render_tile_window();
+                });
             });
         });
     }

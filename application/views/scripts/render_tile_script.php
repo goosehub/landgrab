@@ -6,6 +6,7 @@
     function render_tile_window() {
         $('#tile_block').show();
 
+        // Order may matter
         tile_name();
         tile_desc();
         tile_coord_link();
@@ -24,6 +25,8 @@
         tile_unit();
         tile_defensive_bonus();
         enlist_select();
+        settlement_selection_disable();
+        industry_selection_disable();
         settlement_select();
         industry_select();
     }
@@ -157,37 +160,90 @@
             }
         }
     }
+    function settlement_selection_disable()
+    {
+        $('.preview_settlement_button.btn-danger').removeClass('btn-danger').addClass('btn-default');
+        $('.preview_settlement_button').each(function(){
+            let settlement_key = $(this).data('id');
+            if (!settlement_allowed_on_this_tile(settlement_key)) {
+                $(this).removeClass('btn-default').addClass('btn-danger');
+            }
+        });
+    }
+    function industry_selection_disable()
+    {
+        $('.preview_industry_button.btn-danger').removeClass('btn-danger').addClass('btn-default');
+        $('.preview_industry_button').each(function(){
+            let industry_key = $(this).data('id');
+            if (!industry_allowed_on_this_tile(industry_key)) {
+                $(this).removeClass('btn-default').addClass('btn-danger');
+            }
+        });
+    }
     function settlement_select()
     {
+        $('.preview_settlement_button.btn-primary').removeClass('btn-primary').addClass('btn-default');
         $('#tab_select_settle, #settlement_select').hide();
-        $('.preview_settlement_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id']) {
             $('#tab_select_settle, #settlement_select').show();
             $('.preview_settlement_button[data-id=' + preview_settlement_key + ']').addClass('btn-default').addClass('btn-primary');
             $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${preview_settlement_key}.png`);
-            $('.preview_settlement_button').removeClass('btn-action');
-            $('.preview_settlement_button[data-id=' + current_tile.settlement_key + ']').removeClass('btn-primary').addClass('btn-action');
+            $('.preview_settlement_button.btn-action').removeClass('btn-action').addClass('btn-default');
+            $('.preview_settlement_button[data-id=' + current_tile.settlement_key + ']').removeClass('btn-default').addClass('btn-action');
             $('#set_settlement_button').hide();
+            $('#set_settlement_button').removeClass('disabled');
             if (current_tile.settlement_key != preview_settlement_key) {
                 $('#set_settlement_button').show();
+            }
+            if (!settlement_allowed_on_this_tile(preview_settlement_key)) {
+                $('#set_settlement_button').addClass('disabled');
             }
         }
     }
     function industry_select()
     {
+        $('.preview_industry_button.btn-primary').removeClass('btn-primary').addClass('btn-default');
         $('#tab_select_industry, #industry_select').hide();
-        $('.preview_industry_button').addClass('btn-default').removeClass('btn-primary');
         if (account && current_tile.account_key === account['id'] && settlement_is_township(current_tile.settlement_key)) {
             $('#tab_select_industry, #industry_select').show();
             $('.preview_industry_button[data-id=' + preview_industry_key + ']').removeClass('btn-default').addClass('btn-primary');
             $('#industry_selection_icon_preview').prop('src', `${base_url}resources/icons/industries/${preview_industry_key}.png`);
-            $('.preview_industry_button').removeClass('btn-action');
-            $('.preview_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-primary').addClass('btn-action');
+            $('.preview_industry_button.btn-action').removeClass('btn-action').addClass('btn-default');
+            $('.preview_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-action');
             $('#set_industry_button').hide();
+            $('#set_industry_button').removeClass('disabled');
             if (current_tile.industry_key != preview_industry_key) {
                 $('#set_industry_button').show();
             }
+            if (!industry_allowed_on_this_tile(preview_industry_key)) {
+                $('#set_industry_button').addClass('disabled');
+            }
         }
+    }
+    function settlement_allowed_on_this_tile(settlement_key)
+    {
+        let settlement = get_settlement_from_state(settlement_key);
+        if (!settlement_is_township(current_tile.settlement_key) && (settlement_key == city_key || settlement_key == metro_key)) {
+            return false;
+        }
+        if (!settlement_allowed_on_terrain(current_tile.terrain_key, settlement)) {
+            return false;
+        }
+        if (settlement_is_township(current_tile.settlement_key) && parseInt(current_tile.population) < parseInt(settlement.base_population)) {
+            return false;
+        }
+        return true;
+    }
+    function industry_allowed_on_this_tile(industry_key)
+    {
+        let industry = get_industry_from_state(industry_key);
+        if (industry.required_terrain_key && industry.required_terrain_key != current_tile.terrain_key) {
+            return false;
+        }
+        if (industry.minimum_settlement_size && industry.minimum_settlement_size > current_tile.settlement_key) {
+            return false;
+        }
+        return true;
     }
     function tile_register_plea()
     {

@@ -14,9 +14,8 @@ MEDIUM PRIORITY
     stats supplies math
     selling riches
     negative surplus warning and negative supply danger in UI to replace tiles badge
-    settlement/industry validation
-        require round of feed
-        logic population required for upgrading townships, don't reset on upgrade
+    settlement/industry require round of feed to establish
+    don't reset population on upgrade
     unit system
         icon color system | own, ally, neutral, enemy
         attacking

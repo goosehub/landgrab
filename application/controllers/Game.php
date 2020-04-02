@@ -337,6 +337,9 @@ class Game extends CI_Controller {
         if (!$this->game_model->settlement_allowed_on_terrain($tile['terrain_key'], $settlement)) {
             api_error_response('terrain_not_allowed', 'Not the correct terrain type');
         }
+        if (!$this->game_model->tile_is_township($tile['settlement_key']) && ($settlement_key == CITY_KEY || $settlement_key == METRO_KEY)) {
+            api_error_response('township_upgrade_not_allowed', 'You must be a township to make this upgrade');
+        }
         if ($this->game_model->tile_is_township($tile['settlement_key']) && $tile['population'] < $settlement['base_population']) {
             api_error_response('popuation_insufficient', 'Popuation insufficient to upgrade township');
         }
@@ -344,7 +347,8 @@ class Game extends CI_Controller {
             $this->game_model->update_tile_industry($tile_id, null);
         }
         $this->game_model->update_tile_settlement($tile_id, $settlement_key);
-        api_response();
+        $tile = $this->game_model->get_tile_by_id($tile_id);
+        api_response($tile);
     }
 
     public function update_industry()
@@ -363,11 +367,11 @@ class Game extends CI_Controller {
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');
         }
-        if (!$this->game_model->tile_is_township($tile['settlement_key'])) {
-            api_error_response('tile_must_be_township', 'Tile must be township');
-        }
         if ($tile['terrain_key'] == OCEAN_KEY) {
             api_error_response('ocean_terrain_not_allowed', 'Not the correct terrain type');
+        }
+        if (!$this->game_model->tile_is_township($tile['settlement_key'])) {
+            api_error_response('tile_must_be_township', 'Tile must be township');
         }
         if ($industry['required_terrain_key'] && $industry['required_terrain_key'] != $tile['terrain_key']) {
             api_error_response('terrain_not_allowed', 'Not the correct terrain type');
@@ -378,8 +382,9 @@ class Game extends CI_Controller {
         if ((int)$industry_key === CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);
         }
+        $tile = $this->game_model->get_tile_by_id($tile_id);
         $this->game_model->update_tile_industry($tile_id, $industry_key);
-        api_response();
+        api_response($tile);
     }
 
 

@@ -116,6 +116,26 @@
         return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
     }
 
+    function settlement_allowed_on_terrain(terrain_key, settlement)
+    {
+        if (terrain_key == fertile_key && parseInt(settlement.is_allowed_on_fertile)) {
+            return true;
+        }
+        if (terrain_key == coastal_key && parseInt(settlement.is_allowed_on_coastal)) {
+            return true;
+        }
+        if (terrain_key == barren_key && parseInt(settlement.is_allowed_on_barren)) {
+            return true;
+        }
+        if (terrain_key == mountain_key && parseInt(settlement.is_allowed_on_mountain)) {
+            return true;
+        }
+        if (terrain_key == tundra_key && parseInt(settlement.is_allowed_on_tundra)) {
+            return true;
+        }
+        return false;
+    }
+
     function get_defensive_bonus_of_tile(tile)
     {
         let defensive_bonus = 1;
@@ -273,6 +293,22 @@
             lng = 180;
         }
         return lng;
+    }
+
+    function get_settlement_from_state(settlement_key) {
+        for (let i = 0; i < settlements.length; i++) {
+            if (settlements[i].id == settlement_key) {
+                return settlements[i];
+            }
+        }
+    }
+
+    function get_industry_from_state(industry_key) {
+        for (let i = 0; i < industries.length; i++) {
+            if (industries[i].id == industry_key) {
+                return industries[i];
+            }
+        }
     }
 
     function get_tile_border_color(tile) {
