@@ -73,6 +73,7 @@ class Game extends CI_Controller {
         $this->load->view('scripts/tutorial_script', $data);
         $this->load->view('scripts/chat_script', $data);
         $this->load->view('scripts/account_update_script', $data);
+        $this->load->view('scripts/market_script', $data);
         $this->load->view('footer', $data);
     }
 
@@ -410,6 +411,24 @@ class Game extends CI_Controller {
         // Take money
         $account = $this->get_this_full_account($tile['world_key']);
         $this->game_model->put_unit_on_tile($tile, $account, $unit_id);
+        api_response();
+    }
+
+    public function sell()
+    {
+        $world_key = $this->input->post('world_key');
+        $supply_key = $this->input->post('supply_key');
+        $account = $this->user_model->this_account($world_key);
+        $supply = $this->game_model->get_supply_by_account($account['id'], $supply_key);
+        $market_price = $this->game_model->get_market_price_by_supply_key($supply_key);
+        if (!$market_price) {
+            api_error_response('not_sellable', 'You can\'t sell this supply');
+        }
+        if ($supply['amount'] < 1) {
+            api_error_response('insufficient_supply', 'You don\'t have enough to sell');
+        }
+        $this->game_model->sell_supply_remove_supply($account['id'], $supply_key);
+        $this->game_model->sell_supply_add_cash($account['id'], $market_price['amount']);
         api_response();
     }
 

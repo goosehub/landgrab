@@ -14,6 +14,24 @@
 			$query = $this->db->get();
 			return $query->result_array();
 		}
+		function get_single($table, $id)
+		{
+			$this->db->select('*');
+			$this->db->from($table);
+			$this->db->where('id', $id);
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+		function get_supply_by_account($account_key, $supply_key)
+		{
+			$this->db->select('*');
+			$this->db->from('supply_account_lookup');
+			$this->db->where('account_key', $account_key);
+			$this->db->where('supply_key', $supply_key);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return isset($result[0]) ? $result[0] : false;
+		}
 		function get_world($world_id)
 		{
 			$this->db->select('*');
@@ -607,5 +625,26 @@
 			$this->db->where('id', $tile['id']);
 			$this->db->update('tile', $data);
 			$this->game_model->update_tile_industry($tile['id']);
+		}
+		function get_market_price_by_supply_key($supply_key) {
+			$this->db->select('market_price.*');
+			$this->db->from('supply');
+			$this->db->join('market_price', 'market_price.id = supply.market_price_key', 'left');
+			$this->db->where('supply.id', $supply_key);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return isset($result[0]) ? $result[0] : false;
+		}
+		function sell_supply_remove_supply($account_key, $supply_key) {
+			$this->db->set('amount', 'amount - 1', FALSE);
+			$this->db->where('supply_key', $supply_key);
+			$this->db->where('account_key', $account_key);
+			$this->db->update('supply_account_lookup');
+		}
+		function sell_supply_add_cash($account_key, $market_price_amount) {
+			$this->db->set('amount', 'amount + ' . $market_price_amount, FALSE);
+			$this->db->where('supply_key', CASH_KEY);
+			$this->db->where('account_key', $account_key);
+			$this->db->update('supply_account_lookup');
 		}
 	}

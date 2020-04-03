@@ -12,7 +12,6 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     stats supplies math
-    selling riches
     negative surplus warning and negative supply danger in UI to replace tiles badge
     settlement/industry require round of feed to establish
     unit system
@@ -66,6 +65,7 @@ GOING LIVE
     terms of use
     reddit update post
 NO PRIORITY
+    abstract market table per world
     More worlds
     abstract settlement input string into programatic
     no population hit for downgrading township
