@@ -11,7 +11,6 @@ do industries with no inputs produce output, or get false flagged for no supply?
 HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
-    stats supplies math
     negative surplus warning and negative supply danger in UI to replace tiles badge
     settlement/industry require round of feed to establish
     unit system
@@ -154,7 +153,7 @@ tanks
 commandos
 navy
     Other
-Mine
+Ore Mine
 
 ==========================================================================================
     Closet

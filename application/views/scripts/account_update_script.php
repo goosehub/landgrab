@@ -26,6 +26,7 @@
         update_grouped_cash_crops_output();
         update_diverse_diet_population_bonus();
         update_cash_crops_support_bonus();
+        update_stats_projections();
       }, 'account_update');
     }
 
@@ -144,6 +145,27 @@
       }
       sum_food_output();
       sum_cash_crops_output();
+    }
+
+    function update_stats_projections() {
+      cash_stats();
+    }
+
+    function cash_stats() {
+      let earnings = $('#budget_earnings').html();
+      let cash_input = $('#input_projection_' + cash_key).html();
+      let cash_output = parseInt(earnings) + Math.abs(parseInt(cash_input));
+      $('#output_projection_' + cash_key).html('+' + cash_output);
+
+      $('#sum_projection_' + cash_key).removeClass('text-danger').removeClass('text-success');
+      if (earnings >= 0) {
+        $('#sum_projection_' + cash_key).addClass('text-success');
+        $('#sum_projection_' + cash_key).html('+' + earnings);
+      }
+      else {
+        $('#sum_projection_' + cash_key).addClass('text-danger');
+        $('#sum_projection_' + cash_key).html(earnings);
+      }
     }
 
     function sum_food_output() {
