@@ -27,7 +27,19 @@
         update_diverse_diet_population_bonus();
         update_cash_crops_support_bonus();
         update_stats_projections();
+        update_supply_alerts();
       }, 'account_update');
+    }
+
+    function update_supply_alerts() {
+      let count_negative_supplies = $('.government_supply.text-danger').not('.category_government_supply').length;
+      if (count_negative_supplies == 0) {
+        $('.menu_supply_negative_supplies_badge').hide();
+        return;
+      }
+      $('.menu_supply_negative_supplies_badge').show();
+      let plural = count_negative_supplies > 1 ? 's' : '';
+      $('#count_negative_supplies').html(count_negative_supplies + ' Shortage' + plural);
     }
 
     function update_gdp_bonus_consume_supplies() {

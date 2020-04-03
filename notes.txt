@@ -11,8 +11,7 @@ do industries with no inputs produce output, or get false flagged for no supply?
 HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
-    negative surplus warning and negative supply danger in UI to replace tiles badge
-    settlement/industry require round of feed to establish
+    check cash crops support
     unit system
         icon color system | own, ally, neutral, enemy
         attacking
@@ -33,6 +32,7 @@ MEDIUM PRIORITY
         chat message for diplomacy changes
 LOW PRIORITY
     fonts
+    settlement/industry require round of feed to establish
     pretty up national charter update
     enlist spawn validation
     Better Power Structure popover with formatting
@@ -49,6 +49,7 @@ LOW PRIORITY
     only make own units draggable
     suffix on industry input selection preview
 BUGS
+    is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality
 EXPLOITs

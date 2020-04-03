@@ -136,14 +136,14 @@ html, body {
 .menu_element .active {
   filter: brightness(85%);
 }
-.badge.menu_supply_tiles_badge {
-  background-color: #428bca;
-}
 .badge.menu_supply_cash_badge {
   background-color: #3c763d;
 }
 .badge.menu_supply_support_badge {
   background-color: #8a6d3b;
+}
+.badge.menu_supply_negative_supplies_badge {
+  background-color: #d2322d;
 }
 .badge.diplomacy_unread_count {
   background-color: #d2322d;
@@ -326,6 +326,10 @@ a.sell_resource {
 }
 .government_supply_header_parent.row {
   border-top: 1px solid #bbb;
+}
+.government_supply.text-danger {
+  border: 2px dashed #ff0000;
+  padding: 0.3em;
 }
 .even_row {
   background-color: #eee;

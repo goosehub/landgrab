@@ -237,6 +237,9 @@
     function industry_allowed_on_this_tile(industry_key)
     {
         let industry = get_industry_from_state(industry_key);
+        if (!industry) {
+            return false;
+        }
         if (industry.required_terrain_key && industry.required_terrain_key != current_tile.terrain_key) {
             return false;
         }

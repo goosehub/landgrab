@@ -236,10 +236,10 @@
                             <?= generate_popover('Supplies', 'Each hour settlements & industries produce and consume supplies. Industries consume first, and produce second, so ensure you have supplies on hand before starting new industries.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
-                            <p class="government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
+                            <p class="category_government_supply government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
-                            <p class="government_supply lead" id="government_supply_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
+                            <p class="category_government_supply government_supply lead" id="government_supply_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
@@ -248,22 +248,22 @@
                             <?= generate_popover('Supplies', 'Each hour your settlements and industries will produce and consume supplies.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
-                            <p class="output_projection text-success lead" id="output_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
+                            <p class="category_output_projection output_projection text-success lead" id="output_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
-                            <p class="output_projection text-success lead" id="output_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
+                            <p class="category_output_projection output_projection text-success lead" id="output_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Hourly Consumption
-                            <?= generate_popover('Supplies', 'If a supply runs negative, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'If you have a supply shortage, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
-                            <p class="input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
+                            <p class="category_input_projection input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
-                            <p class="input_projection text-danger lead" id="input_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
+                            <p class="category_input_projection input_projection text-danger lead" id="input_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
                         <div class="col-md-2">
@@ -272,10 +272,10 @@
                             <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of each consumed supply to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
-                            <p class="sum_projection text-danger lead" id="sum_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
+                            <p class="category_sum_projection sum_projection text-danger lead" id="sum_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
-                            <p class="sum_projection text-danger lead" id="sum_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
+                            <p class="category_sum_projection sum_projection text-danger lead" id="sum_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>

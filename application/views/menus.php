@@ -37,16 +37,14 @@
       <button id="government_dropdown" class="government_dropdown menu_element btn btn-default" type="button" title="Laws, Budget, Supplies">
         <strong>Government</strong>
         <span class="badges">
-          <span class="badge menu_supply_tiles_badge">
-            <span id="menu_supply_tiles"></span>
+          <span class="badge menu_supply_support_badge" title="Available Support/Max Support">
+            <span id="menu_supply_support"></span>/<span id="menu_max_support"></span>
           </span>
-          |
-          <span class="badge menu_supply_cash_badge">
+          <span class="badge menu_supply_cash_badge" title="Available Cash">
             $<span id="menu_supply_cash"></span>M
           </span>
-          |
-          <span class="badge menu_supply_support_badge">
-            <span id="menu_supply_support"></span>/<span id="menu_max_support"></span>
+          <span class="badge menu_supply_negative_supplies_badge" title="Number of supply shortages">
+            <span id="count_negative_supplies"></span>
           </span>
         </span>
         <span class="caret"></span>
