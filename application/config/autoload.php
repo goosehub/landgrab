@@ -168,7 +168,7 @@ function get_percent_of($number, $percentage) {
 
 function generate_popover($title, $content, $placement, $classes = '') {
     return '
-        <button type="button" class="popover_tip btn btn-xs btn-default ' . $classes . '" tabindex="0" data-toggle="popover" data-container="body" data-placement="' . $placement . '" data-trigger="focus" title="' . $title . '" 
+        <button type="button" class="popover_tip btn btn-xs btn-default ' . $classes . '" tabindex="0" data-toggle="popover" data-html="true" data-container="body" data-placement="' . $placement . '" data-trigger="focus" title="' . $title . '" 
         data-content="' . $content . '">
             <span class="fa fa-question" title="More Info"></span>
         </button>

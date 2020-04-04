@@ -11,7 +11,7 @@ do industries with no inputs produce output, or get false flagged for no supply?
 HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
-    check cash crops support
+    cash crops support bonus
     unit system
         icon color system | own, ally, neutral, enemy
         attacking
@@ -35,7 +35,6 @@ LOW PRIORITY
     settlement/industry require round of feed to establish
     pretty up national charter update
     enlist spawn validation
-    Better Power Structure popover with formatting
     stripped rows across app
     make clear what borders are current players borders
     refactor township input desc to be generated
@@ -49,6 +48,7 @@ LOW PRIORITY
     only make own units draggable
     suffix on industry input selection preview
 BUGS
+    max support?
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality

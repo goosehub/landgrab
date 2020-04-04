@@ -14,7 +14,7 @@
                 <input type="hidden" name="world_key" value="<?= $world['id']; ?>">
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Power Structure', 'Democracy provides low support per turn, moderate corruption, and under Marxist Socialism higher max support. Autocracy provides high support per turn, severe corruption, and under Marxist Socialism lower max support. Oligarchy is a balance of the two. Play with the inputs to see the projections', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Power Structure', 'Democracy provides low support per turn and moderate corruption.<br><br>Autocracy provides high support per turn and severe corruption.<br><br>Oligarchy is a balance of the two.<br><br>Play with the inputs to see the projections', 'right', 'pull-right'); ?>
                         <label for="input_power_structure" class="pull-right">Power Structure: </label>
                     </div>
                     <div class="col-md-8">
@@ -44,7 +44,7 @@
                 <br>
                 <div class="row">
                     <div class="col-md-4">
-                        <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops.', 'right', 'pull-right'); ?>
+                        <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops. Democracy will provide the highest maximum support and Autocracy the least', 'right', 'pull-right'); ?>
                         <label for="input_power_structure" class="pull-right">Economic Ideology: </label>
                     </div>
                     <div class="col-md-8">
@@ -281,17 +281,17 @@
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                         <div class="col-md-12">
                             <span id="diverse_diet_population_bonus" class="text-success"></span>X Growth Bonus
-                            <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth | 2 Types: 2X Population Growth | 3 Types: 3X Population Growth | 4 Types: 4X Population Growth | 5 Types: 5X Population Growth', 'bottom', ''); ?>
+                            <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth<br>2 Types: 2X Population Growth<br>3 Types: 3X Population Growth<br>4 Types: 4X Population Growth<br>5 Types: 5X Population Growth', 'bottom', ''); ?>
                         </div>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
                         <div class="col-md-12">
                             <span id="cash_crops_support_bonus" class="text-danger"></span> Support Bonus
                             <?= generate_popover('Diverse Imports Support Bonus', '
-                                1 Types:' . (BASE_SUPPORT_BONUS) . ' Support/Hour |
-                                2 Types:' . (BASE_SUPPORT_BONUS * 2) . ' Support/Hour |
-                                3 Types:' . (BASE_SUPPORT_BONUS * 4) . ' Support/Hour |
-                                4 Types:' . (BASE_SUPPORT_BONUS * 8) . ' Support/Hour |
+                                1 Types:' . (BASE_SUPPORT_BONUS) . ' Support/Hour<br>
+                                2 Types:' . (BASE_SUPPORT_BONUS * 2) . ' Support/Hour<br>
+                                3 Types:' . (BASE_SUPPORT_BONUS * 4) . ' Support/Hour<br>
+                                4 Types:' . (BASE_SUPPORT_BONUS * 8) . ' Support/Hour<br>
                                 5 Types:' . (BASE_SUPPORT_BONUS * 16) . ' Support/Hour
                             ', 'bottom', ''); ?>
                         </div>
