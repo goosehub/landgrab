@@ -12,7 +12,6 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     unit system
-        unit render lag/disappear
         icon color system | own, ally, neutral, enemy
         attacking
         militia defense

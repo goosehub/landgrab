@@ -312,6 +312,7 @@
       unit_id: unit_id,
       character: character,
       unit_color: unit_color,
+      unit_key: unit_id,
       unit_owner_key: unit_owner_key,
       unit_owner_color: unit_owner_color,
     }
@@ -561,6 +562,9 @@
     }
   }
   function update_tile_unit_marker(tile) {
+    if (unit_markers[tile.id] && unit_marker_unchanged(tile, unit_markers[tile.id])) {
+      return;
+    }
     if (unit_markers[tile.id]) {
       unit_markers[tile.id].setMap(null);
       unit_markers.splice(tile.id, 1);
@@ -568,6 +572,15 @@
     else if (tile.unit_key) {
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, tile.unit_owner_key, tile.unit_owner_color, tile.lat, tile.lng);
     }
+  }
+  function unit_marker_unchanged(tile, marker) {
+    if (tile.unit_key != marker.unit.unit_key) {
+      return false;
+    }
+    if (tile.unit_owner_key != marker.unit.unit_owner_key) {
+      return false;
+    }
+    return true;
   }
   function needs_township_icon(tile) {
     return township_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
