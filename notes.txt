@@ -19,10 +19,11 @@ MEDIUM PRIORITY
         cash purchase
         socialism purchase
         exclude conceal on ocean
+        enlist spawn validation
     trade
-        lock supplies on trade request
+        hold supplies on trade request
         refund supplies on trade request rejected
-        expire trade requests
+        expire trade requests after 24 hours
         supplies
         war/peace/passage
         messages
@@ -31,8 +32,7 @@ MEDIUM PRIORITY
         tooltip for alliances, rights of passage, etc
 LOW PRIORITY
     fonts
-    settlement/industry require round of feed to establish
-    enlist spawn validation
+    industry require round of feed to establish
     hide resources in responses before discovered
     json leaderboard for every supply
     troops inside opp. tile at start of war
