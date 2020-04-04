@@ -27,7 +27,6 @@ Class cron_model extends CI_Model
 			WHERE support.supply_key = $support_key
 			AND cash.amount < 0
 		");
-
 	}
 	function zero_negative_account_supply()
 	{
@@ -129,6 +128,61 @@ Class cron_model extends CI_Model
 			AND power_structure = $autocracy_key
 			AND ideology = $socialism_key
 			AND support.amount < $autocracy_socialism_max_support
+		");
+	}
+	function enforce_max_support()
+	{
+		$support_key = SUPPORT_KEY;
+		$democracy_key = DEMOCRACY_KEY;
+		$oligarchy_key = OLIGARCHY_KEY;
+		$autocracy_key = AUTOCRACY_KEY;
+		$free_market_key = FREE_MARKET_KEY;
+		$socialism_key = SOCIALISM_KEY;
+		$democracy_socialism_max_support = DEMOCRACY_SOCIALISM_MAX_SUPPORT;
+		$oligarchy_socialism_max_support = OLIGARCHY_SOCIALISM_MAX_SUPPORT;
+		$autocracy_socialism_max_support = AUTOCRACY_SOCIALISM_MAX_SUPPORT;
+		// Free Market
+		$this->db->query("
+			UPDATE supply_account_lookup AS support
+			INNER JOIN account ON account_key = account.id
+			SET support.amount = 100 - tax_rate
+			WHERE support.supply_key = $support_key
+			AND is_active = 1
+			AND ideology = $free_market_key
+			AND support.amount > 100 - tax_rate
+		");
+		// Socialism Democracy
+		$this->db->query("
+			UPDATE supply_account_lookup AS support
+			INNER JOIN account ON account_key = account.id
+			SET support.amount = $democracy_socialism_max_support
+			WHERE support.supply_key = $support_key
+			AND is_active = 1
+			AND power_structure = $democracy_key
+			AND ideology = $socialism_key
+			AND support.amount > $democracy_socialism_max_support
+		");
+		// Socialism Oligarchy
+		$this->db->query("
+			UPDATE supply_account_lookup AS support
+			INNER JOIN account ON account_key = account.id
+			SET support.amount = $oligarchy_socialism_max_support
+			WHERE support.supply_key = $support_key
+			AND is_active = 1
+			AND power_structure = $oligarchy_key
+			AND ideology = $socialism_key
+			AND support.amount > $oligarchy_socialism_max_support
+		");
+		// Socialism Autocracy
+		$this->db->query("
+			UPDATE supply_account_lookup AS support
+			INNER JOIN account ON account_key = account.id
+			SET support.amount = $autocracy_socialism_max_support
+			WHERE support.supply_key = $support_key
+			AND is_active = 1
+			AND power_structure = $autocracy_key
+			AND ideology = $socialism_key
+			AND support.amount > $autocracy_socialism_max_support
 		");
 	}
 	function mark_accounts_as_active()
