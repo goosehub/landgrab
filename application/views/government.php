@@ -115,7 +115,7 @@
                     <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus Supplies.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
-                    $<span id="budget_gdp"></span> Million
+                    $<span id="budget_gdp"></span> Billion
                 </strong><br>
             </span>
             <span id="socialism_budget">
@@ -125,7 +125,7 @@
                         <?= generate_popover('Soclaism', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops.', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_socialism"></span> Million
+                        -$<span id="budget_socialism"></span> Billion
                     </strong><br>
                 </span>
             </span>
@@ -136,7 +136,7 @@
                         <?= generate_popover('Tax Income', 'Update your tax rate to capture more GDP into income', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-success">
-                        $<span id="budget_tax_income"></span> Million
+                        $<span id="budget_tax_income"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -145,7 +145,7 @@
                         <?= generate_popover('Corruption', 'Corruption From Power is caused by the power structure of your government', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_power_corruption"></span> Million
+                        -$<span id="budget_power_corruption"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -154,7 +154,7 @@
                         <?= generate_popover('Corruption', 'Corruption From Size is increased by 1 percent for every ' . TILES_PER_CORRUPTION_PERCENT . ' territories you control', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_size_corruption"></span> Million
+                        -$<span id="budget_size_corruption"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -163,7 +163,7 @@
                         <?= generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_federal"></span> Million
+                        -$<span id="budget_federal"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -172,7 +172,7 @@
                         <?= generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_bases"></span> Million
+                        -$<span id="budget_bases"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -181,7 +181,7 @@
                         <?= generate_popover('University Education', 'Costs for Universities', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_education"></span> Million
+                        -$<span id="budget_education"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -190,7 +190,7 @@
                         <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-red">
-                        -$<span id="budget_pharmaceuticals"></span> Million
+                        -$<span id="budget_pharmaceuticals"></span> Billion
                     </strong><br>
                 </span>
                 <span class="budget_info_item_parent">
@@ -199,7 +199,7 @@
                         <?= generate_popover('Hourly Earnings', 'Estimate for the Income remaining after accounting for all fixed costs. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-success">
-                        $<span id="budget_earnings"></span> Million
+                        $<span id="budget_earnings"></span> Billion
                     </strong><br>
                 </span>
             </span>
