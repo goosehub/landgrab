@@ -44,7 +44,7 @@
     const metro_defensive_bonus = <?= METRO_DEFENSIVE_BONUS; ?>;
     const infantry_key = <?= INFANTRY_KEY; ?>;
     const tanks_key = <?= TANKS_KEY; ?>;
-    const commandos_key = <?= COMMANDOS_KEY; ?>;
+    const airforce_key = <?= AIRFORCE_KEY; ?>;
     const cash_key = <?= CASH_KEY ?>;
     const food_key = <?= FOOD_KEY ?>;
     const cash_crops_key = <?= CASH_CROPS_KEY ?>;

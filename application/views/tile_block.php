@@ -268,7 +268,7 @@
                     </p>
                 </div>
                 <div id="enlist_enabled">
-                        <?= generate_popover('Units', 'Thse units have a rock paper scissors mechanism. Infantry are strong against Commandos, Tanks are strong against Infantry, Commandos are strong against Tanks. Units on ocean tiles become navy units, which are weak against all units. Territories without units have a chance to form a militia to defend themselves, which is weak against all units', 'top', 'pull-right'); ?>
+                        <?= generate_popover('Units', 'Thse units have a rock paper scissors mechanism. Infantry are strong against Airforce, Tanks are strong against Infantry, Airforce are strong against Tanks. Units on ocean tiles become navy units, which are weak against all units. Territories without units have a chance to form a militia to defend themselves, which is weak against all units', 'top', 'pull-right'); ?>
                     <ul class="enlist_button">
                         <button class="enlist_unit_button btn btn-success" data-id="<?= INFANTRY_KEY; ?>">
                             Infantry
@@ -282,10 +282,10 @@
                                 $<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M
                             </span>
                         </button>
-                        <button class="enlist_unit_button btn btn-warning" data-id="<?= COMMANDOS_KEY; ?>">
-                            Commandos
+                        <button class="enlist_unit_button btn btn-warning" data-id="<?= AIRFORCE_KEY; ?>">
+                            Airforce
                             <span class="badge">
-                                $<?php echo $this->unit_types[COMMANDOS_KEY - 1]['cost_base']; ?>M
+                                $<?php echo $this->unit_types[AIRFORCE_KEY - 1]['cost_base']; ?>M
                             </span>
                         </button>
                     </ul>

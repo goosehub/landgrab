@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `tile` (
   `resource_key` int(10) UNSIGNED NULL,
   `settlement_key` int(10) UNSIGNED NULL,
   `industry_key` int(10) UNSIGNED NULL,
-  `unit_key` int(10) UNSIGNED NULL, -- Infantry, Tanks, Commandos, none as null
+  `unit_key` int(10) UNSIGNED NULL, -- Infantry, Tanks, Airforce, none as null
   `unit_owner_key` int(10) UNSIGNED NULL,
   `unit_owner_color` varchar(8) NULL,
   `is_capitol` int(1) NOT NULL,
@@ -75,10 +75,10 @@ TRUNCATE TABLE `unit_type`;
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`, `character`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
 (1, 'Infantry', 3, 50, 'FF0000', 'I',
-  TRUE, TRUE, FALSE, FALSE),
+  TRUE, TRUE, TRUE, FALSE),
 (2, 'Tanks', 1, 150, '00FF00', 'T',
   TRUE, TRUE, TRUE, TRUE),
-(3, 'Commandos', 2, 100, 'BC13FE', 'C',
+(3, 'Airforce', 2, 100, 'BC13FE', 'A',
   TRUE, FALSE, FALSE, FALSE);
 
 DROP TABLE IF EXISTS `account`;

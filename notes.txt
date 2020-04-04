@@ -42,7 +42,7 @@ BUGS
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality
-EXPLOITs
+EXPLOITS
     Move base before top of hour
 GOING LIVE
     buy icons8 paid license
@@ -105,8 +105,8 @@ Support use
     Moving Capitol: 100 Support
 
 Unit Battle Logic
-    Infantry have 3/4 chance of victory against Commandos
-    Commandos have 3/4 chance of victory against Tanks
+    Infantry have 3/4 chance of victory against Airforce
+    Airforce have 3/4 chance of victory against Tanks
     Tanks have 3/4 chance of victory against Infantry
     All have 3/4 chance of victory against Navy
     All have 3/4 chance of victory against Militia
@@ -145,7 +145,7 @@ nickle - unique shaped rock in rusty green
     Units (each in 4 colors for own, ally, neutral, enemy)
 infantry
 tanks
-commandos
+airforce
 navy
     Other
 Ore Mine

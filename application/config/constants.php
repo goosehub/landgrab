@@ -190,7 +190,7 @@ DEFINE('HEALTHCARE_INDUSTRY_KEY', 22);
 // Unit types
 DEFINE('INFANTRY_KEY', 1);
 DEFINE('TANKS_KEY', 2);
-DEFINE('COMMANDOS_KEY', 3);
+DEFINE('AIRFORCE_KEY', 3);
 
 /*
 |--------------------------------------------------------------------------
