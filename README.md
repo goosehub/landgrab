@@ -20,4 +20,5 @@ A Game of Economies, Diplomacy, Warfare on planet earth using Google Maps. Join 
 	<li>For performance reasons, many keys are in a constants file to be referenced without needing queries or joins for that value</li>
 	<li>Township inputs are hardcoded because of the complexity of the grouped inputs of food and cash crops</li>
 	<li>Note: api_response and api_error_response both echo and exit so no return needed.</li>
+    <li>In retrospect, I should have used objects to hold the functions, but right now all functions are global.</li>
 </ul>

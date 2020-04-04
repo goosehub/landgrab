@@ -295,10 +295,6 @@
     return set_marker_icon(`${base_url}resources/icons/settlements/${settlement_id}.png`, tile_id, lat, lng, false);
   }
 
-  // Uses http://www.googlemapsmarkers.com/
-  // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
-  // Becomes
-  // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
   function set_unit_icon(unit_id, tile_id, terrain_key, unit_owner_key, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
     let unit_key = unit_id;
@@ -317,20 +313,6 @@
       unit_owner_color: unit_owner_color,
     }
     return set_marker_icon(path, tile_id, lat, lng, unit);
-  }
-
-  function update_unit_icon(marker, tile) {
-    let unit_key = marker.unit.unit_key;
-    if (parseInt(tile.terrain_key) === ocean_key) {
-      unit_key = navy_key;
-    }
-    let this_icon = {
-      url: `${base_url}resources/icons/units/${unit_key}-${marker.unit.unit_color}.png`,
-      scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
-      origin: new google.maps.Point(0,0),
-      anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2),
-    };
-    marker.setIcon(this_icon);
   }
 
   function set_marker_icon(path, tile_id, lat, lng, unit) {
@@ -517,6 +499,7 @@
     update_visibility_of_markers();
     return true;
   }
+
   function update_tile_resource_marker(tile) {
     if (resource_markers[tile.id]) {
       resource_markers[tile.id].setMap(null);
@@ -526,6 +509,7 @@
       resource_markers[tile.id] = set_resource_icon(tile.resource_key, tile.id, tile.lat, tile.lng);
     }
   }
+
   function update_tile_settlement_marker(tile) {
     if (settlement_markers[tile.id]) {
       settlement_markers[tile.id].setMap(null);
@@ -535,6 +519,7 @@
       settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
     }
   }
+
   function update_tile_industry_marker(tile) {
     if (industry_markers[tile.id]) {
       industry_markers[tile.id].setMap(null);
@@ -544,6 +529,7 @@
       industry_markers[tile.id] = set_industry_icon(tile.industry_key, tile.id, tile.lat, tile.lng);
     }
   }
+
   function update_tile_township_marker(tile) {
     if (township_markers[tile.id]) {
       township_markers[tile.id].setMap(null);
@@ -553,6 +539,7 @@
       township_markers[tile.id] = set_township_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
     }
   }
+
   function update_tile_unit_marker(tile) {
     if (unit_markers[tile.id] && unit_marker_unchanged(tile, unit_markers[tile.id])) {
       return;
@@ -565,6 +552,7 @@
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, tile.unit_owner_key, tile.unit_owner_color, tile.lat, tile.lng);
     }
   }
+
   function unit_marker_unchanged(tile, marker) {
     if (tile.unit_key != marker.unit.unit_key) {
       return false;
@@ -574,6 +562,7 @@
     }
     return true;
   }
+
   function needs_township_icon(tile) {
     return township_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
@@ -589,55 +578,6 @@
     });
   }
 
-  function start_drag_unit(event, marker) {
-    $('.center_block').hide();
-    start_lat = round_down(event.latLng.lat()) - tile_size;
-    start_lng = round_down(event.latLng.lng());
-    highlight_valid_squares();
-  }
-
-  function end_drag_unit(event, marker) {
-    unhighlight_all_squares(start_lat, start_lng);
-    let end_lat = round_down(event.latLng.lat()) - tile_size;
-    let end_lng = round_down(event.latLng.lng());
-    end_lng = correct_lng(end_lng);
-    let moved = move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
-    if (!moved) {
-      return;
-    }
-    highlighted_tiles = [];
-    request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
-      update_unit_icon(marker, response.tile);
-      get_map_update();
-    });
-  }
-
-  function request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, callback) {
-    let data = {
-      world_key: world_key,
-      start_lat: start_lat,
-      start_lng: start_lng,
-      end_lat: end_lat,
-      end_lng: end_lng,
-    };
-    ajax_post('game/unit_move_to_land', data, function(tile) {
-      callback(tile);
-    });
-  }
-
-  function highlight_valid_squares() {
-    highlighted_tiles = [];
-    highlighted_tiles.push(tiles_by_coord['' + (start_lat + tile_size) + ',' + (start_lng)]);
-    highlighted_tiles.push(tiles_by_coord['' + (start_lat) + ',' + (correct_lng(start_lng + tile_size))]);
-    highlighted_tiles.push(tiles_by_coord['' + (start_lat - tile_size) + ',' + (start_lng)]);
-    highlighted_tiles.push(tiles_by_coord['' + (start_lat) + ',' + (correct_lng(start_lng - tile_size))]);
-    for (let i = 0; i < highlighted_tiles.length; i++) {
-      tiles[highlighted_tiles[i].tile_key].setOptions({
-        fillColor: unit_valid_square_color,
-      });;
-    }
-  }
-
   function highlight_single_square(tile_id) {
     tiles[tile_id].setOptions({
       fillColor: selected_square_color,
@@ -651,46 +591,6 @@
     else {
       tiles_to_terrain();
     }
-  }
-
-  function move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
-    let allowed_move_to_new_position = false;
-    let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
-    let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
-    let lat = end_lat + (tile_size / 2);
-    let lng = end_lng - (tile_size / 2);
-    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_marker_at_square(lat, lng)) {
-      unit_markers.splice(marker.tile_id, 1);
-      unit_markers[end_tile_id] = marker;
-      unit_markers[end_tile_id].tile_id = end_tile_id;
-      allowed_move_to_new_position = true;
-    }
-    else {
-      lat = start_lat + (tile_size / 2);
-      lng = start_lng - (tile_size / 2);
-    }
-    let position = new google.maps.LatLng(lat, lng);
-    marker.setPosition(position);
-    start_lat = start_lng = null;
-    return allowed_move_to_new_position;
-  }
-
-  function no_marker_at_square(lat, lng) {
-    for (var i in unit_markers) {
-      if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  function is_location_free(search) {
-    for (var i = 0, l = lookup.length; i < l; i++) {
-      if (lookup[i][0] === search[0] && lookup[i][1] === search[1]) {
-        return false;
-      }
-    }
-    return true;
   }
 
   function open_tile(event) {
