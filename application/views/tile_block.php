@@ -268,27 +268,122 @@
                     </p>
                 </div>
                 <div id="enlist_enabled">
-                        <?= generate_popover('Units', 'Thse units have a rock paper scissors mechanism. Infantry are strong against Airforce, Tanks are strong against Infantry, Airforce are strong against Tanks. Units on ocean tiles become navy units, which are weak against all units. Territories without units have a chance to form a militia to defend themselves, which is weak against all units', 'top', 'pull-right'); ?>
-                    <ul class="enlist_button">
-                        <button class="enlist_unit_button btn btn-success" data-id="<?= INFANTRY_KEY; ?>">
-                            Infantry
-                            <span class="badge">
-                                $<?php echo $this->unit_types[INFANTRY_KEY - 1]['cost_base']; ?>M
-                            </span>
-                        </button>
-                        <button class="enlist_unit_button btn btn-danger" data-id="<?= TANKS_KEY; ?>">
-                            Tanks
-                            <span class="badge">
-                                $<?php echo $this->unit_types[TANKS_KEY - 1]['cost_base']; ?>M
-                            </span>
-                        </button>
-                        <button class="enlist_unit_button btn btn-warning" data-id="<?= AIRFORCE_KEY; ?>">
-                            Airforce
-                            <span class="badge">
-                                $<?php echo $this->unit_types[AIRFORCE_KEY - 1]['cost_base']; ?>M
-                            </span>
-                        </button>
-                    </ul>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="text-primary">Support Costs</span>
+                            <?= generate_popover('Support Costs', '
+                                Moving Unit: ' . SUPPORT_COST_MOVE_UNIT . ' Support <br>
+                                Capture Land: ' . SUPPORT_COST_CAPTURE_LAND . ' Support <br>
+                                Capture Town: ' . SUPPORT_COST_CAPTURE_TOWN . ' Support <br>
+                                Capture City: ' . SUPPORT_COST_CAPTURE_CITY . ' Support <br>
+                                Capture Metro: ' . SUPPORT_COST_CAPTURE_METRO . ' Support <br>
+                                Declare War: ' . SUPPORT_COST_DECLARE_WAR . ' Support
+                            ', 'top', 'pull-right'); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="text-primary">Defense Bonuses</span>
+                            <?= generate_popover('Defense Bonus', '
+                                Mountain Defensive Bonus: X' . (MOUNTAIN_DEFENSIVE_BONUS >= 1 ? (MOUNTAIN_DEFENSIVE_BONUS + 1) : abs(MOUNTAIN_DEFENSIVE_BONUS)) . '<br>
+                                Tundra Defensive Bonus: X' . (TUNDRA_DEFENSIVE_BONUS >= 1 ? (TUNDRA_DEFENSIVE_BONUS + 1) : abs(TUNDRA_DEFENSIVE_BONUS)) . '<br>
+                                Barren Defensive Bonus: X' . (BARREN_DEFENSIVE_BONUS >= 1 ? (BARREN_DEFENSIVE_BONUS + 1) : abs(BARREN_DEFENSIVE_BONUS)) . '<br>
+                                <br>
+                                Town Defensive Bonus: X' . (TOWN_DEFENSIVE_BONUS >= 1 ? (TOWN_DEFENSIVE_BONUS + 1) : abs(TOWN_DEFENSIVE_BONUS)) . '<br>
+                                City Defensive Bonus: X' . (CITY_DEFENSIVE_BONUS >= 1 ? (CITY_DEFENSIVE_BONUS + 1) : abs(CITY_DEFENSIVE_BONUS)) . '<br>
+                                Metro Defensive Bonus: X' . (METRO_DEFENSIVE_BONUS >= 1 ? (METRO_DEFENSIVE_BONUS + 1) : abs(METRO_DEFENSIVE_BONUS)) . '
+                            ', 'top', 'pull-right'); ?>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="text-primary">Situational Units</span>
+                            <?= generate_popover('Special Units', '
+                                Units transform into Navy units on ocean and will transform back after returning to land.
+                                <br><br>
+                                Territories without units have a chance to form a Militia to defend themselves when attacked.
+                            ', 'top', 'pull-right'); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 well">
+                            <button class="enlist_unit_button btn btn-success form-control" data-id="<?= INFANTRY_KEY; ?>">
+                                Infantry
+                                <img class="unit_preview_icon_preview" src="<?=base_url()?>resources/icons/units/<?=INFANTRY_KEY;?>-neutral.png">
+                            </button>
+                            <p class="text-primary">
+                                Cost:
+                                <strong class="show_if_free_market">
+                                    $<?php echo $this->unit_types[INFANTRY_KEY - 1]['cash_cost']; ?> Billion
+                                </strong>
+                                <strong class="show_if_socialism">
+                                    Cost: <?php echo $this->unit_types[INFANTRY_KEY - 1]['support_cost']; ?> Support
+                                </strong>
+                            </p>
+                            <p class="text-success">
+                                Strong against <span>Airforce, Navy, & Militia</span>
+                            </p>
+                            <p class="text-danger">
+                                Weak against <span>Tanks</span>
+                            </p>
+                            <p class="text-purple">
+                                Can take <span>Territories, Towns, & Cities</span>
+                            </p>
+                            <p class="text-info">
+                                It's cheap price makes it a great foundation for your armies
+                            </p>
+                        </div>
+                        <div class="col-md-4 well">
+                            <button class="enlist_unit_button btn btn-danger form-control" data-id="<?= TANKS_KEY; ?>">
+                                Tanks
+                                <img class="unit_preview_icon_preview" src="<?=base_url()?>resources/icons/units/<?=TANKS_KEY?>-neutral.png">
+                            </button>
+                            <p class="text-primary">
+                                Cost:
+                                <strong class="show_if_free_market">
+                                    $<?php echo $this->unit_types[TANKS_KEY - 1]['cash_cost']; ?> Billion
+                                </strong>
+                                <strong class="show_if_socialism">
+                                    <?php echo $this->unit_types[TANKS_KEY - 1]['support_cost']; ?> Support
+                                </strong>
+                            </p>
+                            <p class="text-success">
+                                Strong against <span>Infantry, Navy, & Militia</span>
+                            </p>
+                            <p class="text-danger">
+                                Weak against <span>Airforce</span>
+                            </p>
+                            <p class="text-purple">
+                                Can take <span>Territories, Towns, Cities, & Metros</span>
+                            </p>
+                            <p class="text-info">
+                                A great counter to infantry armies without air support, and is the only unit able to capture a Metro
+                            </p>
+                        </div>
+                        <div class="col-md-4 well">
+                            <button class="enlist_unit_button btn btn-warning form-control" data-id="<?= AIRFORCE_KEY; ?>">
+                                Airforce
+                                <img class="unit_preview_icon_preview" src="<?=base_url()?>resources/icons/units/<?=AIRFORCE_KEY?>-neutral.png">
+                            </button>
+                            <p class="text-primary">
+                                Cost:
+                                <strong class="show_if_free_market">
+                                    $<?php echo $this->unit_types[AIRFORCE_KEY - 1]['cash_cost']; ?> Billion
+                                </strong>
+                                <strong class="show_if_socialism">
+                                    Cost: <?php echo $this->unit_types[AIRFORCE_KEY - 1]['support_cost']; ?> Support
+                                </strong>
+                            </p>
+                            <p class="text-success">
+                                Strong against <span>Tanks, Navy, & Militia</span>
+                            </p>
+                            <p class="text-danger">
+                                Weak against <span>Infantry</span>
+                            </p>
+                            <p class="text-purple">
+                                Can take <span>Territories</span>
+                            </p>
+                            <p class="text-info">
+                                It's expensive price and inability to take townships means it should be used primarily as support against Tanks.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

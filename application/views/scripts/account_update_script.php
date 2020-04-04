@@ -27,8 +27,19 @@
         update_diverse_diet_population_bonus();
         update_cash_crops_support_bonus();
         update_stats_projections();
+        update_ideology_ui()
         update_supply_alerts();
       }, 'account_update');
+    }
+
+    function update_ideology_ui() {
+      $('.show_if_free_market, .show_if_socialism').hide();
+      if (account.ideology == free_market_key) {
+        $('.show_if_free_market').show();
+      }
+      if (account.ideology == socialism_key) {
+        $('.show_if_socialism').show();
+      }
     }
 
     function update_supply_alerts() {
@@ -275,13 +286,6 @@
     }
 
     function update_budget(budget){
-      $('#free_market_budget, #socialism_budget').hide();
-      if (account.ideology == free_market_key) {
-        $('#free_market_budget').show();
-      }
-      if (account.ideology == socialism_key) {
-        $('#socialism_budget').show();
-      }
       $('#budget_gdp').html(number_format(budget.gdp));
       $('#budget_gdp_bonus').html(budget.gdp_bonus);
       $('#budget_socialism').html(number_format(budget.gdp));

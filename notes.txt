@@ -45,6 +45,7 @@ BUGS
     do industries with no inputs produce output, or get false flagged for no supply?
 EXPLOITS
     Remove base before top of hour
+    Moving Capitol
 GOING LIVE
     buy icons8 paid license
     add license to game
@@ -94,18 +95,6 @@ NO PRIORITY
     Mechanics
 ==========================================================================================
 
-Support use
-    Following does not stack
-    Moving: 1 Support
-    Capture Land: 5 Support
-    Capture Town: 10 Support
-    Capture City: 20 Support
-    Capture Metro: 30 Support
-    Socialism Spawn Unit: 50 Support
-    Declare War: 50 Support
-    Passing Laws: 50 Support
-    Moving Capitol: 100 Support
-
 Unit Battle Logic
     Infantry have 3/4 chance of victory against Airforce
     Airforce have 3/4 chance of victory against Tanks
@@ -113,23 +102,10 @@ Unit Battle Logic
     All have 3/4 chance of victory against Navy
     All have 3/4 chance of victory against Militia
     Undefended tiles have 1/4 chance of spawning militia
-    On ocean, all units becomes Navy
-    Mountains get double defensive bonus
-    Tundra get double defensive bonus
-    Barren gets double offensive bonus
-    Towns get double defensive bonus
-    Cities get triple defensive bonus
-    Metros get quadruple defensive bonus
 
 ==========================================================================================
     Icons Needed
 ==========================================================================================
-
-    unit colors
-own: 739E82
-enemy: AD343E
-ally: 2541B2
-neutral: E0E0CE
 
     potential artists
 https://www.fiverr.com/fernlee/create-a-set-of-10-vector-icons?context_referrer=search_gigs&source=main_banner&ref_ctx_id=97c3d709-7a7a-42ff-b9c9-81ace81390aa&pckg_id=1&pos=1&context_type=auto&funnel=a784619f-d082-461e-a3fd-cf24745cbcb6
@@ -151,10 +127,6 @@ zinc - unique shaped rock in dull blue
 aluminum - unique shaped rock in shiny silver
 nickle - unique shaped rock in rusty green
     Units (each in 4 colors for own, ally, neutral, enemy)
-infantry
-tanks
-airforce
-navy
     Other
 Ore Mine
 
@@ -216,6 +188,12 @@ Tile considerations
     How it looks from afar when most players use it (Avoiding line terrain tiles)
     Population density (Considering max settlement for the square)
     Overlap between other tiles (coastal mountain, do I want to allow farming on this square?)
+
+Unit Colors
+    own: 739E82
+    enemy: AD343E
+    ally: 2541B2
+    neutral: E0E0CE
 
 Terms of use
     I do not enforce rules I'm unable to properly enforce.

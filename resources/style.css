@@ -436,7 +436,7 @@ html body .tile_content_div, html body .tile_content_div[style] {
 }
 
 /* Selection */
-img.industry_selection_icon, img.settlement_selection_icon {
+img.industry_selection_icon, img.settlement_selection_icon, img.unit_preview_icon_preview {
   max-width: 20px;
 }
 img#industry_selection_icon_preview, img#settlement_selection_icon_preview {

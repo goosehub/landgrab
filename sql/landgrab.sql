@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `unit_type` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(126) NOT NULL,
   `strength_against_key` int(10) UNSIGNED NOT NULL,
-  `cost_base` int(4) NOT NULL,
-  `color` varchar(8) NULL,
+  `cash_cost` int(4) NOT NULL,
+  `support_cost` int(4) NOT NULL,
   `can_take_tiles` int(1) NOT NULL,
   `can_take_towns` int(1) NOT NULL,
   `can_take_cities` int(1) NOT NULL,
@@ -71,13 +71,13 @@ ALTER TABLE `unit_type` ADD PRIMARY KEY (`id`);
 ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 TRUNCATE TABLE `unit_type`;
-INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cost_base`, `color`,
+INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cash_cost`, `support_cost`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
-(1, 'Infantry', 3, 50, 'FF0000',
+(1, 'Infantry', 3, 10, 10,
   TRUE, TRUE, TRUE, FALSE),
-(2, 'Tanks', 1, 150, '00FF00',
+(2, 'Tanks', 1, 20, 30,
   TRUE, TRUE, TRUE, TRUE),
-(3, 'Airforce', 2, 100, 'BC13FE',
+(3, 'Airforce', 2, 30, 50,
   TRUE, FALSE, FALSE, FALSE);
 
 DROP TABLE IF EXISTS `account`;

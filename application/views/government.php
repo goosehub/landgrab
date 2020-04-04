@@ -118,7 +118,7 @@
                     $<span id="budget_gdp"></span> Billion
                 </strong><br>
             </span>
-            <span id="socialism_budget">
+            <span id="socialism_budget" class="show_if_socialism">
                 <span class="budget_info_item_parent">
                     <strong class="budget_info_item_label">
                         Socialism:
@@ -129,7 +129,7 @@
                     </strong><br>
                 </span>
             </span>
-            <span id="free_market_budget">
+            <span id="free_market_budget" class="show_if_free_market">
                 <span class="budget_info_item_parent">
                     <strong class="budget_info_item_label">
                         Tax Income:
