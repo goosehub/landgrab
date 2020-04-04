@@ -305,7 +305,7 @@
     if (parseInt(terrain_key) === ocean_key) {
       unit_key = navy_key;
     }
-    let path = `${base_url}resources/icons/units/${unit_key}.png`;
+    let path = `${base_url}resources/icons/units/${unit_key}-own.png`;
     unit = {
       unit_key: unit_id,
       unit_owner_key: unit_owner_key,
@@ -320,7 +320,7 @@
       unit_key = navy_key;
     }
     let this_icon = {
-      url: `${base_url}resources/icons/units/${unit_key}.png`,
+      url: `${base_url}resources/icons/units/${unit_key}-own.png`,
       scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
       origin: new google.maps.Point(0,0),
       anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2)
@@ -341,8 +341,8 @@
       draggable = true;
     }
     let myLatLng = {
-      lat: lat + (tile_size / 2),
-      lng: lng - (tile_size / 2)
+      lat: parseInt(lat) + (tile_size / 2),
+      lng: parseInt(lng) - (tile_size / 2)
     };
     let marker = new google.maps.Marker({
       position: myLatLng,

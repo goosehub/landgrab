@@ -12,7 +12,8 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     unit system
-        icon color system | own, ally, neutral, enemy
+        unit icon always on top
+        icon depending on relationship
         attacking
         militia defense
         being attacked
@@ -39,6 +40,7 @@ LOW PRIORITY
     troops inside opp. tile at start of war
     number formatting
 BUGS
+    unit icons disappear?
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality
@@ -69,13 +71,12 @@ NO PRIORITY
     must have land on world to send trade request
     make get_account_budget() calc settlement & industry separately for accuracy
     Township Population Reset/Decrease on capture
-    Toggle individual settlements and industries
     generate worlds when all worlds have no free non tundra land
     fix correct_lng for non 2 tile size worlds
     store default google maps id type
     list of current wars
     pollution mechanic
-    custom google map color styling
+    units UI for colorblind
     score
     wiki
     nuke
@@ -123,6 +124,12 @@ Unit Battle Logic
 ==========================================================================================
     Icons Needed
 ==========================================================================================
+
+    unit colors
+own: 739E82
+enemy: AD343E
+ally: 2541B2
+neutral: E0E0CE
 
     potential artists
 https://www.fiverr.com/fernlee/create-a-set-of-10-vector-icons?context_referrer=search_gigs&source=main_banner&ref_ctx_id=97c3d709-7a7a-42ff-b9c9-81ace81390aa&pckg_id=1&pos=1&context_type=auto&funnel=a784619f-d082-461e-a3fd-cf24745cbcb6
