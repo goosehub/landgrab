@@ -112,11 +112,12 @@
 
     function place_first_unit() {
         let terrain_key = current_tile.terrain_key;
+        let unit_owner_key = account.id;
         let unit_owner_color = account.color;
         let lat = current_tile.lat;
         let lng = current_tile.lng;
         let unit_id = infantry_key;
-        unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_color, lat, lng);
+        unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_key, unit_owner_color, lat, lng);
     }
 
     function render_tile(lat, lng) {
@@ -161,10 +162,11 @@
             };
             ajax_post('game/request_unit_spawn', data, function(response) {
                 let terrain_key = current_tile.terrain_key;
+                let unit_owner_key = account.id;
                 let unit_owner_color = account.color;
                 let lat = current_tile.lat;
                 let lng = current_tile.lng;
-                unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_color, lat, lng);
+                unit_markers[current_tile.id] = set_unit_icon(unit_id, current_tile.id, terrain_key, unit_owner_key, unit_owner_color, lat, lng);
             });
         });
     }

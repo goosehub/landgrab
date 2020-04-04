@@ -299,7 +299,7 @@
   // http://www.googlemapsmarkers.com/v1/A/0099FF/FFFFFF/FF0000/
   // Becomes
   // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
-  function set_unit_icon(unit_id, tile_id, terrain_key, unit_owner_color, lat, lng) {
+  function set_unit_icon(unit_id, tile_id, terrain_key, unit_owner_key, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
     let character = unit_types[unit_id - 1].character;
     let unit_color = unit_types[unit_id - 1].color;
@@ -312,6 +312,7 @@
       unit_id: unit_id,
       character: character,
       unit_color: unit_color,
+      unit_owner_key: unit_owner_key,
       unit_owner_color: unit_owner_color,
     }
     return set_marker_icon(path, tile_id, lat, lng, unit);
@@ -345,7 +346,9 @@
       anchor: new google.maps.Point(map_icon_size / 2,map_icon_size / 2)
     };
     if (unit) {
-      draggable = true;
+      if (unit.unit_owner_key == account.id) {
+        draggable = true;
+      }
       title = unit_labels[unit.unit_id];
       lat = lat - (tile_size / 4);
       this_icon = {
@@ -398,7 +401,7 @@
         industry_markers[<?= $tile['id']; ?>] = set_industry_icon(<?= $tile['industry_key']; ?>, <?= $tile['id']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       if ($tile['unit_key']) { ?>
-        unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['id']; ?>, <?= $tile['terrain_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
+        unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['id']; ?>, <?= $tile['terrain_key']; ?>, <?= $tile['unit_owner_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       ?>z(<?=
         $tile['id'] . ',' .
@@ -563,7 +566,7 @@
       unit_markers.splice(tile.id, 1);
     }
     else if (tile.unit_key) {
-      unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, account.color, tile.lat, tile.lng);
+      unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, tile.unit_owner_key, tile.unit_owner_color, tile.lat, tile.lng);
     }
   }
   function needs_township_icon(tile) {

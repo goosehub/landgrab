@@ -13,6 +13,7 @@ MEDIUM PRIORITY
     commission icons
     cash crops support bonus
     unit system
+        unit render lag/disappear
         icon color system | own, ally, neutral, enemy
         attacking
         militia defense
@@ -30,23 +31,15 @@ MEDIUM PRIORITY
         messages
         notices
         chat message for diplomacy changes
+        tooltip for alliances, rights of passage, etc
 LOW PRIORITY
     fonts
     settlement/industry require round of feed to establish
-    pretty up national charter update
     enlist spawn validation
-    stripped rows across app
-    make clear what borders are current players borders
-    refactor township input desc to be generated
-    population projection
     hide resources in responses before discovered
     json leaderboard for every supply
     troops inside opp. tile at start of war
-    have capitols show laws of that nation
     number formatting
-    tooltip for alliances, rights of passage, etc
-    only make own units draggable
-    suffix on industry input selection preview
 BUGS
     max support?
     is_capitol remaing when changing industry, refactor columns away?
@@ -65,7 +58,11 @@ GOING LIVE
     terms of use
     reddit update post
 NO PRIORITY
+    suffix on industry input selection preview
+    have capitols show laws of that nation, wars and rights of passage
+    refactor township input desc to be generated
     abstract market table per world
+    population projection
     More worlds
     abstract settlement input string into programatic
     no population hit for downgrading township
