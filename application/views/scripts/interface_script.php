@@ -149,6 +149,10 @@ $('.diplomacy_dropdown').click(function(){
     $('.center_block').hide();
     $('#diplomacy_block').fadeIn();
 });
+$('.open_terms_block').click(function(){
+    $('.center_block').hide();
+    $('#terms_block').fadeIn();
+});
 $('.user_button').click(function(){
     $('.center_block').hide();
     $('#account_update_block').fadeIn();

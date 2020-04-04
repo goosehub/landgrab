@@ -256,11 +256,15 @@
     <?php if ($failed_form === 'register') { echo $validation_errors; } ?>
     <!-- Form -->
     <?php echo form_open('user/register'); ?>
-      <div class="form-group">
-        <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
-        <input type="hidden" name="ab_test" id="ab_test" value="">
-        <label for="input_username">Username</label>
-        <input type="username" class="form-control" id="register_input_username" name="username">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="form-group">
+                <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+                <input type="hidden" name="ab_test" id="ab_test" value="">
+                <label for="input_username">Username</label>
+                <input type="username" class="form-control" id="register_input_username" name="username">
+              </div>
+          </div>
       </div>
       <div class="row">
           <div class="col-md-6">
@@ -281,7 +285,16 @@
               </div>
           </div>
       </div>
-      <button type="submit" class="btn btn-action form-control text-is-bold">Start Playing</button>
+      <div class="row">
+           <div class="col-md-3">
+                <button class="open_terms_block btn btn-info btn-sm" type="button">
+                    Terms
+                </button>
+            </div>
+          <div class="col-md-9">
+              <button type="submit" class="btn btn-action form-control text-is-bold">Start Playing</button>
+          </div>
+    </div>
     </form>
     <hr>
     <div class="row">
@@ -293,4 +306,57 @@
             <button class="login_button btn btn-info form-control">Login</button>
         </div>
     </div>
+
+</div>
+
+<div id="terms_block" class="center_block center_block_extra_small">
+    <strong>Terms and Conditions</strong>
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <br>
+    <br>
+    <p class="lead">
+        Landgrab is developed and maintained primarily by a single person in their spare time.
+        Please understand their limited ability to moderate chat, monitor cheating, and guarantee stability.
+    </p>
+    <br>
+    By Using Landgrab, you agree to the following Terms and Conditions
+    <br>
+    <br>
+    <strong>Content</strong>
+    <br>
+    Landgrab may contain user submitted content not appropriate for individuals who are less than 18 years of age.
+    <br>
+    <strong>Cookies</strong>
+    <br>
+    Landgrab uses Cookies to track gameplay preferences.
+    Landgrab does not use marketing cookies.
+    <br>
+    <strong>Privacy Policy</strong>
+    <br>
+    Landgrab may share anonymized data for educational purposes free of charge.
+    Landgrab does not sell any collected data.
+    <br>
+    <strong>Limitation of Liability</strong>
+    <br>
+    Landgrab is not responsible for user content, chat, and/or communications.
+    Users are responsible for their own actions and all consequences that may arise.
+    Landgrab does not make any warranty that the website is free from infection from viruses.
+    Landgrab will not be liable for any loss or damage as a consequence of Landgrab becoming temporarily or permanently unavailable. 
+    You agree to assume all risk related to your use of Landgrab, including but not limited to, the risk of communications with other people or damage to your computer.
+    <br>
+    <strong>User Rules</strong>
+    <br>
+    You will not post content that is illegal, pornographic, overly disruptive, abusive towards individual users, or contains personally identifying information.
+    You will not use multiple active accounts without obtaining permission from Landgrab.
+    If you feel that the behaviour of another user breaches these Terms and Conditions then please let me know by sending an email to goosepostbox@gmail.com.
+    <br>
+    <br>
+    These Terms and Conditions are governed by the laws of the United States of America.
+    <br>
+    The above Terms and Conditions are subject to change
+    <br>
+    <button class="register_button btn btn-success form-control">Agree and return to Create Account</button>
+    <br>
 </div>

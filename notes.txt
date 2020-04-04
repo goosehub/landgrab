@@ -46,18 +46,16 @@ BUGS
 EXPLOITS
     Remove base before top of hour
     Moving Capitol
+    test for any duplication exploits
 GOING LIVE
     buy icons8 paid license
-    add license to game
-    test for any duplication exploits
     swal alerts
     DB indexes
-    beta
     tutorial based on todo list
     account migration
     reset cron
-    terms of use
     reddit update post
+    beta
 NO PRIORITY
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage
@@ -194,9 +192,6 @@ Unit Colors
     enemy: AD343E
     ally: 2541B2
     neutral: E0E0CE
-
-Terms of use
-    I do not enforce rules I'm unable to properly enforce.
 
 Live Server Instance
     Change database connection in config/database.php
