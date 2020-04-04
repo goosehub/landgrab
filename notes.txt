@@ -11,8 +11,7 @@ do industries with no inputs produce output, or get false flagged for no supply?
 HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
-    cash crops support bonus
-    enforce support roof
+    better enforce support roof
     unit system
         unit render lag/disappear
         icon color system | own, ally, neutral, enemy
@@ -42,7 +41,6 @@ LOW PRIORITY
     troops inside opp. tile at start of war
     number formatting
 BUGS
-    max support?
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality

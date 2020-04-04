@@ -137,6 +137,7 @@ Class cron_model extends CI_Model
 	}
 	function grow_population()
 	{
+		// If all increments are the same, these 3 queries could be merged
 		$town_population_increment = TOWN_POPULATION_INCREMENT;
 		$city_population_increment = CITY_POPULATION_INCREMENT;
 		$metro_population_increment = METRO_POPULATION_INCREMENT;
@@ -148,38 +149,58 @@ Class cron_model extends CI_Model
 		$vegetables_key = VEGETABLES_KEY;
 		$livestock_key = LIVESTOCK_KEY;
 		$fish_key = FISH_KEY;
-
 		$this->db->query("
 			UPDATE tile
-			INNER JOIN (
-				SELECT account_key, COUNT(id) as pop_bonus
-				FROM supply_account_lookup
-				WHERE amount > 0
-				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
-			) AS sal ON tile.account_key = sal.account_key
-			SET population = population + ($town_population_increment * pop_bonus)
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.amount > 0 AND grain.supply_key = $grain_key
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.amount > 0 AND fruit.supply_key = $fruit_key
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
+			SET population = population + ($town_population_increment * 
+				(
+					IF(grain.id, 1, 0) + 
+					IF(fruit.id, 1, 0) + 
+					IF(vegetables.id, 1, 0) + 
+					IF(livestock.id, 1, 0) + 
+					IF(fish.id, 1, 0)
+				)
+			)
 			WHERE settlement_key = $town_key
 		");
 		$this->db->query("
 			UPDATE tile
-			INNER JOIN (
-				SELECT account_key, COUNT(id) as pop_bonus
-				FROM supply_account_lookup
-				WHERE amount > 0
-				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
-			) AS sal ON tile.account_key = sal.account_key
-			SET population = population + ($city_population_increment * pop_bonus)
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.amount > 0 AND grain.supply_key = $grain_key
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.amount > 0 AND fruit.supply_key = $fruit_key
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
+			SET population = population + ($city_population_increment * 
+				(
+					IF(grain.id, 1, 0) + 
+					IF(fruit.id, 1, 0) + 
+					IF(vegetables.id, 1, 0) + 
+					IF(livestock.id, 1, 0) + 
+					IF(fish.id, 1, 0)
+				)
+			)
 			WHERE settlement_key = $city_key
 		");
 		$this->db->query("
 			UPDATE tile
-			INNER JOIN (
-				SELECT account_key, COUNT(id) as pop_bonus
-				FROM supply_account_lookup
-				WHERE amount > 0
-				AND supply_key IN ($grain_key, $fruit_key, $vegetables_key, $livestock_key, $fish_key)
-			) AS sal ON tile.account_key = sal.account_key
-			SET population = population + ($metro_population_increment * pop_bonus)
+			LEFT JOIN supply_account_lookup AS grain ON tile.account_key = grain.account_key AND grain.amount > 0 AND grain.supply_key = $grain_key
+			LEFT JOIN supply_account_lookup AS fruit ON tile.account_key = fruit.account_key AND fruit.amount > 0 AND fruit.supply_key = $fruit_key
+			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
+			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
+			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
+			SET population = population + ($metro_population_increment * 
+				(
+					IF(grain.id, 1, 0) + 
+					IF(fruit.id, 1, 0) + 
+					IF(vegetables.id, 1, 0) + 
+					IF(livestock.id, 1, 0) + 
+					IF(fish.id, 1, 0)
+				)
+			)
 			WHERE settlement_key = $metro_key
 		");
 	}
