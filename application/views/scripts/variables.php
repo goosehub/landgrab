@@ -17,8 +17,6 @@
     const city_key = <?= CITY_KEY; ?>;
     const metro_key = <?= METRO_KEY; ?>;
     const township_array = [town_key, city_key, metro_key];
-    const navy_character = '<?= NAVY_CHARACTER; ?>';
-    const navy_color = '<?= NAVY_COLOR; ?>';
     const fertile_key = <?= FERTILE_KEY; ?>;
     const barren_key = <?= BARREN_KEY; ?>;
     const mountain_key = <?= MOUNTAIN_KEY; ?>;
@@ -45,6 +43,7 @@
     const infantry_key = <?= INFANTRY_KEY; ?>;
     const tanks_key = <?= TANKS_KEY; ?>;
     const airforce_key = <?= AIRFORCE_KEY; ?>;
+    const navy_key = <?= NAVY_KEY; ?>;
     const cash_key = <?= CASH_KEY ?>;
     const food_key = <?= FOOD_KEY ?>;
     const cash_crops_key = <?= CASH_CROPS_KEY ?>;

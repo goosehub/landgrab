@@ -46,6 +46,7 @@ EXPLOITS
     Move base before top of hour
 GOING LIVE
     buy icons8 paid license
+    test for any duplication exploits
     swal alerts
     DB indexes
     beta

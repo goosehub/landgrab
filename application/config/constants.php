@@ -84,8 +84,6 @@ DEFINE('COASTAL_TEXT_COLOR', '#5FB6B8');
 // Units UI
 DEFINE('UNIT_VALID_SQUARE_COLOR', '#00FFFF');
 DEFINE('SELECTED_SQUARE_COLOR', '#00FFFF');
-DEFINE('NAVY_CHARACTER', 'N');
-DEFINE('NAVY_COLOR', '000000');
 
 // Map
 DEFINE('DEFAULT_MAP', 'paper_map');
@@ -191,6 +189,7 @@ DEFINE('HEALTHCARE_INDUSTRY_KEY', 22);
 DEFINE('INFANTRY_KEY', 1);
 DEFINE('TANKS_KEY', 2);
 DEFINE('AIRFORCE_KEY', 3);
+DEFINE('NAVY_KEY', 4);
 
 /*
 |--------------------------------------------------------------------------

@@ -301,17 +301,12 @@
   // https://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin%27i%5c%27%5bA%27-2%27f%5chv%27a%5c%5dh%5c%5do%5c0099FF%27fC%5cFFFFFF%27tC%5cFF0000%27eC%5cLauto%27f%5c&ext=.png
   function set_unit_icon(unit_id, tile_id, terrain_key, unit_owner_key, unit_owner_color, lat, lng) {
     unit_owner_color = unit_owner_color.replace('#', '');
-    let character = unit_types[unit_id - 1].character;
-    let unit_color = unit_types[unit_id - 1].color;
+    let unit_key = unit_id;
     if (parseInt(terrain_key) === ocean_key) {
-      character = navy_character;
-      unit_color = navy_color;
+      unit_key = navy_key;
     }
-    let path = get_googlemapsmarkers_path(character, unit_owner_color, unit_color, unit_color);
+    let path = `${base_url}resources/icons/units/${unit_key}.png`;
     unit = {
-      unit_id: unit_id,
-      character: character,
-      unit_color: unit_color,
       unit_key: unit_id,
       unit_owner_key: unit_owner_key,
       unit_owner_color: unit_owner_color,
@@ -320,21 +315,17 @@
   }
 
   function update_unit_icon(marker, tile) {
-    let unit_owner_color = marker.unit.unit_owner_color;
-    let character = unit_types[marker.unit.unit_id - 1].character;
-    let unit_color = unit_types[marker.unit.unit_id - 1].color;
+    let unit_key = marker.unit.unit_key;
     if (parseInt(tile.terrain_key) === ocean_key) {
-      character = navy_character;
-      unit_color = navy_color;
+      unit_key = navy_key;
     }
-    let url = get_googlemapsmarkers_path(character, marker.unit.unit_owner_color, unit_color, unit_color);
-    marker.setIcon(url);
-  }
-
-  function get_googlemapsmarkers_path(character, unit_owner_color, stroke_color, second_stroke_color) {
-    stroke_color = '000000';
-    // second_stroke_color = '000000';
-    return `http://www.googlemapsmarkers.com/v1/${character}/${unit_owner_color}/${stroke_color}/${second_stroke_color}`;
+    let this_icon = {
+      url: `${base_url}resources/icons/units/${unit_key}.png`,
+      scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
+      origin: new google.maps.Point(0,0),
+      anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2)
+    };
+    marker.setIcon(this_icon);
   }
 
   function set_marker_icon(path, tile_id, lat, lng, unit) {
@@ -346,15 +337,8 @@
       origin: new google.maps.Point(0,0),
       anchor: new google.maps.Point(map_icon_size / 2,map_icon_size / 2)
     };
-    if (unit) {
-      if (unit.unit_owner_key == account.id) {
-        draggable = true;
-      }
-      title = unit_labels[unit.unit_id];
-      lat = lat - (tile_size / 4);
-      this_icon = {
-        url: path,
-      };
+    if (unit && unit.unit_owner_key == account.id) {
+      draggable = true;
     }
     let myLatLng = {
       lat: lat + (tile_size / 2),
@@ -663,10 +647,10 @@
 
   function move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
     let allowed_move_to_new_position = false;
-    let lat = position_lat_lng_lower(end_lat, end_lng)[0];
-    let lng = position_lat_lng_lower(end_lat, end_lng)[1];
     let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
+    let lat = end_lat + (tile_size / 2);
+    let lng = end_lng - (tile_size / 2);
     if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_marker_at_square(lat, lng)) {
       unit_markers.splice(marker.tile_id, 1);
       unit_markers[end_tile_id] = marker;
@@ -674,20 +658,13 @@
       allowed_move_to_new_position = true;
     }
     else {
-      lat = position_lat_lng_lower(start_lat, start_lng)[0];
-      lng = position_lat_lng_lower(start_lat, start_lng)[1];
+      lat = start_lat + (tile_size / 2);
+      lng = start_lng - (tile_size / 2);
     }
     let position = new google.maps.LatLng(lat, lng);
     marker.setPosition(position);
     start_lat = start_lng = null;
     return allowed_move_to_new_position;
-  }
-
-  function position_lat_lng_lower(lat, lng) {
-    lat = lat - (tile_size / 4);
-    lat = lat + (tile_size / 2);
-    lng = lng - (tile_size / 2);
-    return [lat, lng];
   }
 
   function no_marker_at_square(lat, lng) {
