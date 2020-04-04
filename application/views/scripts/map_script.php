@@ -323,38 +323,41 @@
       url: `${base_url}resources/icons/units/${unit_key}-own.png`,
       scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
       origin: new google.maps.Point(0,0),
-      anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2)
+      anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2),
     };
     marker.setIcon(this_icon);
   }
 
   function set_marker_icon(path, tile_id, lat, lng, unit) {
-    let draggable = false;
-    let title = '';
     let this_icon = {
       url: path,
       scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
       origin: new google.maps.Point(0,0),
       anchor: new google.maps.Point(map_icon_size / 2,map_icon_size / 2)
     };
-    if (unit && unit.unit_owner_key == account.id) {
-      draggable = true;
-    }
     let myLatLng = {
       lat: parseInt(lat) + (tile_size / 2),
       lng: parseInt(lng) - (tile_size / 2)
     };
-    let marker = new google.maps.Marker({
+    let this_marker = {
       position: myLatLng,
       map: map,
-      draggable:draggable,
+      draggable: false,
       icon: this_icon,
       unit: unit,
       tile_id: tile_id,
-      title: title,
-    });
+      title: '',
+    };
+    if (unit) {
+      this_marker.optimized = false;
+      this_marker.zIndex = 10000;
+      if (unit.unit_owner_key == account.id) {
+        this_marker.draggable = true;
+      }
+    }
+    let marker = new google.maps.Marker(this_marker);
     marker.setMap(map);
-    if (draggable) {
+    if (this_marker.draggable) {
       marker.addListener('dragstart', function(event){
         start_drag_unit(event, marker);
       });

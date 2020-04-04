@@ -2,7 +2,6 @@
     Notes
 ==========================================================================================
 
-do industries with no inputs produce output, or get false flagged for no supply?
 
 ==========================================================================================
     Goals
@@ -12,7 +11,6 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     unit system
-        unit icon always on top
         icon depending on relationship
         attacking
         militia defense
@@ -44,8 +42,9 @@ BUGS
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality
+    do industries with no inputs produce output, or get false flagged for no supply?
 EXPLOITS
-    Move base before top of hour
+    Remove base before top of hour
 GOING LIVE
     buy icons8 paid license
     test for any duplication exploits
