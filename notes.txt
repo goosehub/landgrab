@@ -47,6 +47,7 @@ EXPLOITS
     Remove base before top of hour
 GOING LIVE
     buy icons8 paid license
+    add license to game
     test for any duplication exploits
     swal alerts
     DB indexes

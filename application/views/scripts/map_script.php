@@ -305,9 +305,14 @@
     if (parseInt(terrain_key) === ocean_key) {
       unit_key = navy_key;
     }
-    let path = `${base_url}resources/icons/units/${unit_key}-own.png`;
+    let unit_color = 'neutral';
+    if (unit_owner_key == account.id) {
+      unit_color = 'own';
+    }
+    let path = `${base_url}resources/icons/units/${unit_key}-${unit_color}.png`;
     unit = {
       unit_key: unit_id,
+      unit_color: unit_color,
       unit_owner_key: unit_owner_key,
       unit_owner_color: unit_owner_color,
     }
@@ -320,7 +325,7 @@
       unit_key = navy_key;
     }
     let this_icon = {
-      url: `${base_url}resources/icons/units/${unit_key}-own.png`,
+      url: `${base_url}resources/icons/units/${unit_key}-${marker.unit.unit_color}.png`,
       scaledSize: new google.maps.Size(map_icon_size, map_icon_size),
       origin: new google.maps.Point(0,0),
       anchor: new google.maps.Point(map_icon_size / 2, map_icon_size / 2),
