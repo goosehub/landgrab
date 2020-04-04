@@ -12,6 +12,7 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     cash crops support bonus
+    enforce support roof
     unit system
         unit render lag/disappear
         icon color system | own, ally, neutral, enemy

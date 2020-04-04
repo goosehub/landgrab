@@ -306,14 +306,18 @@ Class cron_model extends CI_Model
 		$this->db->query("
 			UPDATE tile
 			INNER JOIN settlement ON settlement.id = settlement_key
-			SET settlement_key = $town_key, industry_key = NULL
+			SET 
+				settlement_key = $town_key,
+				industry_key = NULL
 			WHERE settlement_key = $city_key
 			AND population < settlement.base_population
 		");
 		$this->db->query("
 			UPDATE tile
 			INNER JOIN settlement ON settlement.id = settlement_key
-			SET settlement_key = $city_key, industry_key = NULL
+			SET 
+				settlement_key = $city_key,
+				industry_key = NULL
 			WHERE settlement_key = $metro_key
 			AND population < settlement.base_population
 		");
@@ -328,15 +332,22 @@ Class cron_model extends CI_Model
 		$alcohol_key = ALCOHOLS_KEY;
 		$tobacco_key = TOBACCO_KEY;
 		$this->db->query("
-			UPDATE supply_account_lookup as osal
-			INNER JOIN (
-				SELECT account_key, COUNT(id) as support_bonus
-				FROM supply_account_lookup
-				WHERE amount > 0
-				AND supply_key IN ($coffee_key, $tea_key, $cannabis_key, $alcohol_key, $tobacco_key)
-			) AS isal ON osal.account_key = isal.account_key
-			SET amount = amount + POWER($base_support_bonus, support_bonus)
-			WHERE supply_key = $support_key
+			UPDATE supply_account_lookup AS osal
+			LEFT JOIN supply_account_lookup AS coffee ON osal.account_key = coffee.account_key AND coffee.amount > 0 AND coffee.supply_key = $coffee_key
+			LEFT JOIN supply_account_lookup AS tea ON osal.account_key = tea.account_key AND tea.amount > 0 AND tea.supply_key = $tea_key
+			LEFT JOIN supply_account_lookup AS cannabis ON osal.account_key = cannabis.account_key AND cannabis.amount > 0 AND cannabis.supply_key = $cannabis_key
+			LEFT JOIN supply_account_lookup AS alcohol ON osal.account_key = alcohol.account_key AND alcohol.amount > 0 AND alcohol.supply_key = $alcohol_key
+			LEFT JOIN supply_account_lookup AS tobacco ON osal.account_key = tobacco.account_key AND tobacco.amount > 0 AND tobacco.supply_key = $tobacco_key
+			SET osal.amount = osal.amount + POWER($base_support_bonus, 
+				(
+					IF(coffee.id, 1, 0) +
+					IF(tea.id, 1, 0) +
+					IF(cannabis.id, 1, 0) +
+					IF(alcohol.id, 1, 0) +
+					IF(tobacco.id, 1, 0)
+				)
+			)
+			WHERE osal.supply_key = $support_key
 		");
 	}
 	function census_population()
