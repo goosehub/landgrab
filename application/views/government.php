@@ -348,8 +348,9 @@
                             <p class="lead">
                                 Current Price:
                                 <strong class="text-success">
-                                    $<span id="sell_supply_<?= $supply['id'] ?>"></span>M
+                                    $<span id="sell_supply_<?= $supply['id'] ?>"></span>
                                 </strong>
+                                <small>Billion</small>
                             </p>
                         </div>
                         <?php } ?>

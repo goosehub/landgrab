@@ -89,14 +89,20 @@
     </div>
     <div id="tile_first_claim">
         <hr>
-        <button class="btn btn-action form-control" id="do_first_claim">
-            Claim
-        </button>
-        <p class="text-center">
-            <strong class="text-action">
-                Make this the Capitol of your new nation!
-            </strong>
-        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="text-center">
+                    <strong class="text-action">
+                        Make this the Capitol of your new nation!
+                    </strong>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-action form-control" id="do_first_claim">
+                    Claim
+                </button>
+            </div>
+        </div>
     </div>
     <div id="tile_select_select">
         <ul class="nav nav-tabs" role="tablist">
