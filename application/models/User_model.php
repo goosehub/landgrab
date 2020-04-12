@@ -55,6 +55,15 @@
         $query = $this->db->get();
         return $query->result_array();
     }
+    function get_active_accounts_in_world($world_id)
+    {
+        $this->db->select('account.*, user.username');
+        $this->db->from('account');
+        $this->db->join('user', 'user.id = account.user_key', 'left');
+        $this->db->where('is_active', true);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     function get_user_by_id($user_id)
     {
         $this->db->select('id, username, created');

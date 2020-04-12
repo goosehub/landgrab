@@ -2,12 +2,17 @@
     Notes
 ==========================================================================================
 
+Unit logic
+
+
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    diplomacy
+        war/peace/passage
 MEDIUM PRIORITY
     commission icons
     unit system
@@ -20,16 +25,17 @@ MEDIUM PRIORITY
         socialism purchase
         exclude conceal on ocean
         enlist spawn validation
-    trade
+    diplomacy
         hold supplies on trade request
         refund supplies on trade request rejected
         expire trade requests after 24 hours
         supplies
-        war/peace/passage
         messages
         notices
         chat message for diplomacy changes
         tooltip for alliances, rights of passage, etc
+        withdraw trade request
+        limit number of active requests
 LOW PRIORITY
     fonts
     industry require round of feed to establish
@@ -37,8 +43,11 @@ LOW PRIORITY
     json leaderboard for every supply
     troops inside opp. tile at start of war
     number formatting
+    UI for war declared on you
+    UI for your current alliances and wars
 BUGS
-    unit icons disappear?
+    unit icons cleint side duplicate
+    unit icons disappears?
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
     supplies projections vs reality
@@ -73,7 +82,6 @@ NO PRIORITY
     generate worlds when all worlds have no free non tundra land
     fix correct_lng for non 2 tile size worlds
     store default google maps id type
-    list of current wars
     pollution mechanic
     units UI for colorblind
     score

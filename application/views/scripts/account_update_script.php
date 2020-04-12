@@ -261,8 +261,6 @@
         if (supply['amount'] < 0) {
           $('#government_supply_' + supply['supply_key']).addClass('text-danger');
         }
-        $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
-        // $('#their_trade_supply_offer_' + supply['slug']).val(supply['amount']);
         $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
         // $('#our_trade_supply_offer_' + supply['slug']).val(supply['amount']);
       });

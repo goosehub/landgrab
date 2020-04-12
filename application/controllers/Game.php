@@ -46,6 +46,7 @@ class Game extends CI_Controller {
 
         $data['worlds'] = $this->game_model->get_all('world');
         $data['leaderboards'] = $this->leaderboards($data['world']['id']);
+        $data['active_accounts'] = $this->user_model->get_active_accounts_in_world($data['world']['id']);
         $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
         $data['failed_form'] = $this->session->flashdata('failed_form');
@@ -62,7 +63,8 @@ class Game extends CI_Controller {
         $this->load->view('leaderboard', $data);
         $this->load->view('blocks', $data);
         $this->load->view('tile_block', $data);
-        $this->load->view('trade_block', $data);
+        $this->load->view('new_trade_block', $data);
+        // $this->load->view('trade_block', $data);
         $this->load->view('scripts/shared_script', $data);
         $this->load->view('scripts/variables', $data);
         $this->load->view('scripts/map_script', $data);
@@ -149,6 +151,18 @@ class Game extends CI_Controller {
         }
         $account['budget'] = $this->game_model->get_account_budget($account);
         return $account;
+    }
+
+    public function get_account_with_supplies($account_key)
+    {
+        $account = $this->user_model->get_account_by_id($account_key);
+        $account['supplies'] = array();
+        $supplies = $this->game_model->get_account_supplies($account['id']);
+        foreach ($supplies as $key => $supply) {
+            $account['supplies'][$supply['slug']] = $supply;
+        }
+        $account['budget'] = $this->game_model->get_account_budget($account);
+        api_response($account);
     }
 
     public function laws_form()

@@ -9,14 +9,15 @@
 
     <div class="row">
         <div class="col-md-9">
-            <select class="form-control" id="input_agreement" name="input_agreement"">
-                <option value="1">Thatcher</option>
-                <option value="2">Modi</option>
-                <option value="3">Elizabeth</option>
+            <select class="form-control" id="select_account_for_diplomacy">
+                <?php foreach ($active_accounts as $an_account) { ?>
+                    <?php if ($an_account['id'] === $account['id']) { continue; } ?>
+                    <option value="<?= $an_account['id'] ?>"><?= $an_account['username'] ?></option>
+                <?php } ?>
             </select>
         </div>
         <div class="col-md-3">
-            <button class="open_trade_request btn btn-action form-control" trade-id="0">
+            <button id="start_new_diplomacy" class="btn btn-action form-control">
                 <i class="fas fa-plus"></i>
                 Start Diplomacy
             </button>
@@ -26,77 +27,9 @@
     <hr>
 
     <p class="lead">Unread</p>
-    <div class="row">
-        <div class="col-md-3">
-            Request by Thatcher to You
-        </div>
-        <div class="col-md-3">
-            <span class="text-primary">Trade</span>
-        </div>
-        <div class="col-md-3">
-            <span class="text-warning">Pending</span>
-        </div>
-        <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
-                <i class="fas fa-sign-out-alt"></i>
-                Open
-            </button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-3">
-            Request by You to Modi
-        </div>
-        <div class="col-md-3">
-            <span class="text-primary">Trade and Rights of Passge</span>
-        </div>
-        <div class="col-md-3">
-            <span class="text-danger">Rejected</span>
-        </div>
-        <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
-                <i class="fas fa-sign-out-alt"></i>
-                Open
-            </button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-3">
-            Request by John to You
-        </div>
-        <div class="col-md-3">
-            <span class="text-danger">WAR</span>
-        </div>
-        <div class="col-md-3">
-            <span class="text-danger">Declared</span>
-        </div>
-        <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
-                <i class="fas fa-sign-out-alt"></i>
-                Open
-            </button>
-        </div>
-    </div>
+    <section id="unread_trade_requests"></section>
     <hr>
     <p class="lead">Read</p>
-    <div class="row">
-        <div class="col-md-3">
-            Request by You to Trudo
-        </div>
-        <div class="col-md-3">
-            <span class="text-primary">Rights of Passge</span>
-        </div>
-        <div class="col-md-3">
-            <span class="text-success">Accepted</span>
-        </div>
-        <div class="col-md-3">
-            <button class="open_trade_request btn btn-primary form-control" trade-id="0">
-                <i class="fas fa-sign-out-alt"></i>
-                Open
-            </button>
-        </div>
-    </div>
+    <section id="unread_trade_requests"></section>
 </div>
 <?php } ?>
