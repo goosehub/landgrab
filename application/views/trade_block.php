@@ -18,10 +18,10 @@
                             <label><?php echo $supply['label']; ?></label>
                         </div>
                         <div class="col-md-3">
-                            <strong id="their_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                            <strong id="partner_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" id="their_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
+                            <input value="0" id="partner_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>
@@ -40,7 +40,7 @@
                     <option value="3">Passage</option>
                 </select>
                 <p class="lead">Thatcher's Message</p>
-                <textarea class="form-control" id="their_message" name="their_message">Accept or I will destroy you!</textarea>
+                <textarea class="form-control" id="partner_message" name="partner_message">Accept or I will destroy you!</textarea>
 
                 <p class="lead">Message</p>
                 <textarea class="form-control" id="my_message" name="my_message"></textarea>

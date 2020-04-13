@@ -12,7 +12,8 @@
 		    $('#trade_block').show();
 		    let account_id = $('#select_account_for_diplomacy').val();
 			ajax_get('game/get_account_with_supplies/' + account_id, function(response) {
-			    render_new_diplomacy(response);
+				trade_partner = response;
+			    render_new_diplomacy();
 			});
 		});
 	}
@@ -28,16 +29,17 @@
 		});
 	}
 
-	function render_new_diplomacy(their_account) {
-		$('.trade_request_their_username').html(their_account.username);
-		update_their_supplies(their_account.supplies);
+	function render_new_diplomacy() {
+		console.log();
+		$('.trade_request_partner_username').html(trade_partner.username);
+		update_partner_supplies();
 	};
 
-    function update_their_supplies(supplies) {
-      Object.keys(supplies).forEach(function(key) {
-        let supply = supplies[key];
-        $('#their_trade_supply_current_' + supply['slug']).html(supply['amount']);
-        $('#their_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount']);
+    function update_partner_supplies() {
+      Object.keys(trade_partner.supplies).forEach(function(key) {
+        let supply = trade_partner.supplies[key];
+        $('#partner_trade_supply_current_' + supply['slug']).html(supply['amount']);
+        $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount']);
       });
     }
 </script>

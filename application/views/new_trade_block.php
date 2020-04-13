@@ -9,7 +9,7 @@
 
         <div class="row">
             <div class="col-md-4">
-                <h3 class="trade_request_their_username text-center text-primary"></h3>
+                <h3 class="trade_request_partner_username text-center text-primary"></h3>
                 <div class="trade_supplies_parent">
                 <?php foreach ($this->supplies as $supply) { ?>
                     <?php if (!$supply['can_trade']) { continue; } ?>
@@ -18,10 +18,10 @@
                             <label><?php echo $supply['label']; ?></label>
                         </div>
                         <div class="col-md-3">
-                            <strong id="their_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                            <strong id="partner_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" min="0" max="10000" id="their_trade_supply_proposal_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
+                            <input value="0" min="0" max="10000" id="partner_trade_supply_proposal_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>
