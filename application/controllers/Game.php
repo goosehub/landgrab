@@ -429,6 +429,11 @@ class Game extends CI_Controller {
         api_response();
     }
 
+    public function declare_war()
+    {
+        api_response();
+    }
+
     public function sell()
     {
         $world_key = $this->input->post('world_key');

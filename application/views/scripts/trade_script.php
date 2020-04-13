@@ -4,6 +4,7 @@
 	function main() {
 		handle_new_diplomacy();
 		handle_input_change();
+		handle_declare_war();
 	}
 
 	function handle_new_diplomacy() {
@@ -29,8 +30,22 @@
 		});
 	}
 
+	function handle_declare_war() {
+		$('#declare_war').click(function(){
+			declare_war();
+		});
+	}
+
+	function declare_war() {
+		let data = {
+			trade_partner_key: trade_partner.id,
+		};
+		ajax_post('game/declare_war', data, function(response) {
+			$('.center_block').hide();
+		});
+	}
+
 	function render_new_diplomacy() {
-		console.log();
 		$('.trade_request_partner_username').html(trade_partner.username);
 		update_partner_supplies();
 	};
@@ -39,7 +54,7 @@
       Object.keys(trade_partner.supplies).forEach(function(key) {
         let supply = trade_partner.supplies[key];
         $('#partner_trade_supply_current_' + supply['slug']).html(supply['amount']);
-        $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount']);
+        $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
       });
     }
 </script>

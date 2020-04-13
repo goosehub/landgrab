@@ -36,7 +36,6 @@
                 <p class="lead">Proposed Diplomatic Agreement</p>
                 <select class="form-control" id="input_agreement" name="input_agreement">
                     <option value="2">Peace</option>
-                    <option value="1">War!</option>
                     <option value="3">Passage</option>
                 </select>
                 <p class="lead">Thatcher's Message</p>

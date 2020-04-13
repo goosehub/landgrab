@@ -36,7 +36,6 @@
                 <p class="lead">Proposed Diplomatic Agreement</p>
                 <select class="form-control" id="input_agreement" name="input_agreement">
                     <option value="2">Peace</option>
-                    <option value="1">War!</option>
                     <option value="3">Passage</option>
                 </select>
 
@@ -47,19 +46,19 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button class="accept_trade_request btn btn-success form-control">
+                        <button class="accept_trade_request btn btn-success form-control" type="button" disabled>
                             <i class="fas fa-check"></i>
                             Accept
                         </button>
                     </div>
                     <div class="col-md-4">
-                        <button class="reject_trade_request btn btn-warning form-control">
+                        <button class="reject_trade_request btn btn-warning form-control" type="button" disabled>
                             <i class="fas fa-times"></i>
                             Reject
                         </button>
                     </div>
                     <div class="col-md-4">
-                        <button class="reject_trade_request btn btn-danger form-control">
+                        <button id="declare_war" class="btn btn-danger form-control" type="button">
                             <i class="fas fa-skull"></i>
                             War
                         </button>

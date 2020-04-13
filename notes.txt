@@ -66,6 +66,7 @@ GOING LIVE
     reddit update post
     beta
 NO PRIORITY
+    war confirm
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage
     refactor township input desc to be generated
