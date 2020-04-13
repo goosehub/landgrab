@@ -431,6 +431,26 @@ class Game extends CI_Controller {
 
     public function declare_war()
     {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('trade_partner_key', 'trade_partner_key', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('validation', trim(strip_tags(validation_errors())));
+        }
+        $trade_partner_key = $this->input->post('trade_partner_key');
+        $world_key = $this->input->post('world_key');
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
+        $agreement_key = false;
+        $existing_agreement = $this->game_model->find_existing_agreement($account['id'], $trade_partner_key);
+        if ($existing_agreement) {
+            $agreement_key = $existing_agreement['id'];
+            $this->game_model->update_agreement($existing_agreement['id'], WAR_KEY);
+        }
+        else {
+            $this->game_model->create_agreement($account['id'], $trade_partner_key, WAR_KEY);
+        }
         api_response();
     }
 

@@ -647,4 +647,31 @@
 			$this->db->where('account_key', $account_key);
 			$this->db->update('supply_account_lookup');
 		}
+		function find_existing_agreement($account_key, $trade_partner_key) {
+			$account_key = (int)$account_key;
+			$trade_partner_key = (int)$trade_partner_key;
+			$this->db->select('id');
+			$this->db->from('agreement_lookup');
+			$this->db->where('
+				(a_account_key = ' . $account_key . ' AND b_account_key = ' . $trade_partner_key . ')
+				OR
+				(b_account_key = ' . $account_key . ' AND a_account_key = ' . $trade_partner_key . ')
+			', NULL, FALSE);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return isset($result[0]) ? $result[0] : false;
+		}
+		function update_agreement($id, $agreement_key) {
+			$this->db->set('agreement_key', $agreement_key);
+			$this->db->where('id', $id);
+			$this->db->update('agreement_lookup');
+		}
+		function create_agreement($account_a, $account_b, $agreement_key) {
+	        $data = array(
+	        	'a_account_key' => $account_a,
+	        	'b_account_key' => $account_b,
+	        	'agreement_key' => $agreement_key,
+	        );
+	        $this->db->insert('agreement_lookup', $data);
+		}
 	}

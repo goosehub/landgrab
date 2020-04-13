@@ -38,6 +38,7 @@
 
 	function declare_war() {
 		let data = {
+			world_key: world_key,
 			trade_partner_key: trade_partner.id,
 		};
 		ajax_post('game/declare_war', data, function(response) {
