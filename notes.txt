@@ -28,12 +28,12 @@ MEDIUM PRIORITY
     diplomacy
         hold supplies on trade request
         refund supplies on trade request rejected
-        expire trade requests after 24 hours
         supplies
         messages
         notices
-        chat message for diplomacy changes
+        world wide message for diplomacy changes
         tooltip for alliances, rights of passage, etc
+        expire trade requests after 24 hours
         withdraw trade request
         limit number of active requests
 LOW PRIORITY

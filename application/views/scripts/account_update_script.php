@@ -262,7 +262,13 @@
           $('#government_supply_' + supply['supply_key']).addClass('text-danger');
         }
         $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
-        // $('#our_trade_supply_offer_' + supply['slug']).val(supply['amount']);
+        $('#our_trade_supply_offer_' + supply['slug']).prop('max', supply['amount']);
+        let current_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).val());
+        let max_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).prop('max'));
+        $('#our_trade_supply_offer_' + supply['slug']).removeClass('input-danger');
+        if (current_value > max_value || current_value < 0) {
+          $('#our_trade_supply_offer_' + supply['slug']).addClass('input-danger');
+        }
       });
     }
 

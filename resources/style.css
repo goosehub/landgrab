@@ -70,6 +70,9 @@ html, body {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.00); 
   -webkit-font-smoothing: antialiased;
 }
+.input-danger {
+  border: #d9534f 2px solid;
+}
 .btn {
   border-radius: 0;
 }

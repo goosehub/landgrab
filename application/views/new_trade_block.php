@@ -21,7 +21,7 @@
                             <strong id="their_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" id="their_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
+                            <input value="0" min="0" max="10000" id="their_trade_supply_proposal_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>
@@ -79,7 +79,7 @@
                             <strong id="our_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" id="our_trade_supply_offer_<?php echo $supply['slug']; ?>" class="input form-control pull-right" type="number"/>
+                            <input value="0" min="0" max="" id="our_trade_supply_offer_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>
