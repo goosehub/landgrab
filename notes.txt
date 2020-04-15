@@ -16,7 +16,6 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     unit system
-        icon depending on relationship
         attacking
         militia defense
         being attacked
@@ -37,7 +36,7 @@ MEDIUM PRIORITY
         withdraw trade request
         limit number of active requests
 LOW PRIORITY
-    fonts
+    show diplomacy status on click other players land
     industry require round of feed to establish
     hide resources in responses before discovered
     json leaderboard for every supply
@@ -66,6 +65,7 @@ GOING LIVE
     reddit update post
     beta
 NO PRIORITY
+    fonts
     war confirm
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage

@@ -305,6 +305,12 @@
     if (unit_owner_key == account.id) {
       unit_color = 'own';
     }
+    else if (find_agreement_by_account_key(unit_owner_key) == war_key) {
+      unit_color = 'enemy';
+    }
+    else if (find_agreement_by_account_key(unit_owner_key) == passage_key) {
+      unit_color = 'ally';
+    }
     let path = `${base_url}resources/icons/units/${unit_key}-${unit_color}.png`;
     unit = {
       unit_key: unit_id,
@@ -354,6 +360,19 @@
     }
     marker.addListener('click', open_tile);
     return marker;
+  }
+
+  function find_agreement_by_account_key(account_key) {
+    if (!account || !account.agreements || account_key == account.id) {
+      return peace_key;
+    }
+    for (i = 0; i < account.agreements.length; i++) {
+      let aggrement = account.agreements[i];
+      if (account_key == aggrement.a_account_key || account_key == aggrement.b_account_key) {
+        return aggrement.agreement_key;
+      }
+    }
+    return peace_key;
   }
 
   function generate_tiles() {

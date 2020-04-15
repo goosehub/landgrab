@@ -23,6 +23,9 @@
     const tundra_key = <?= TUNDRA_KEY; ?>;
     const coastal_key = <?= COASTAL_KEY; ?>;
     const ocean_key = <?= OCEAN_KEY; ?>;
+    const war_key = <?= WAR_KEY; ?>;
+    const peace_key = <?= PEACE_KEY; ?>;
+    const passage_key = <?= PASSAGE_KEY; ?>;
     const fertile_text_color = '<?= FERTILE_TEXT_COLOR; ?>';
     const barren_text_color = '<?= BARREN_TEXT_COLOR; ?>';
     const mountain_text_color = '<?= MOUNTAIN_TEXT_COLOR; ?>';

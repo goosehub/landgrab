@@ -674,4 +674,13 @@
 	        );
 	        $this->db->insert('agreement_lookup', $data);
 		}
+		function agreements_by_account($account_key) {
+			$this->db->select('*');
+			$this->db->from('agreement_lookup');
+			$this->db->where('a_account_key', $account_key);
+			$this->db->or_where('b_account_key', $account_key);
+			$query = $this->db->get();
+			$result = $query->result_array();
+			return $result;
+		}
 	}

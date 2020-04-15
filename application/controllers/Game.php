@@ -43,6 +43,7 @@ class Game extends CI_Controller {
         }
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
+        $data['account']['agreements'] = $this->game_model->agreements_by_account($data['account']['id']);
 
         $data['worlds'] = $this->game_model->get_all('world');
         $data['leaderboards'] = $this->leaderboards($data['world']['id']);
@@ -129,6 +130,7 @@ class Game extends CI_Controller {
     public function get_user_full_account($world_key)
     {
         $account = $this->user_model->this_account($world_key);
+        $account['agreements'] = $this->game_model->agreements_by_account($account['id']);
         $account['supplies'] = array();
         $supplies = $this->game_model->get_account_supplies($account['id']);
         $account['input_projections'] = $this->game_model->get_input_projections($account['id']);
