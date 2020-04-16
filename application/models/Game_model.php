@@ -650,7 +650,7 @@
 		function find_existing_agreement($account_key, $trade_partner_key) {
 			$account_key = (int)$account_key;
 			$trade_partner_key = (int)$trade_partner_key;
-			$this->db->select('id');
+			$this->db->select('*');
 			$this->db->from('agreement_lookup');
 			$this->db->where('
 				(a_account_key = ' . $account_key . ' AND b_account_key = ' . $trade_partner_key . ')

@@ -68,7 +68,7 @@
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
     let lat = end_lat + (tile_size / 2);
     let lng = end_lng - (tile_size / 2);
-    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_unit_at_square(lat, lng)) {
+    if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_friendly_unit_at_square(lat, lng)) {
       unit_markers.splice(marker.tile_id, 1);
       unit_markers[end_tile_id] = marker;
       unit_markers[end_tile_id].tile_id = end_tile_id;
@@ -84,10 +84,10 @@
     return allowed_move_to_new_position;
   }
 
-  function no_unit_at_square(lat, lng) {
+  function no_friendly_unit_at_square(lat, lng) {
     for (var i in unit_markers) {
       if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
-        return false;
+        return find_agreement_by_account_key(unit_markers[i].unit.unit_owner_key) == war_key;
       }
     }
     return true;

@@ -43,7 +43,9 @@ class Game extends CI_Controller {
         }
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
-        $data['account']['agreements'] = $this->game_model->agreements_by_account($data['account']['id']);
+        if ($data['account']) {
+            $data['account']['agreements'] = $this->game_model->agreements_by_account($data['account']['id']);
+        }
 
         $data['worlds'] = $this->game_model->get_all('world');
         $data['leaderboards'] = $this->leaderboards($data['world']['id']);
@@ -247,8 +249,14 @@ class Game extends CI_Controller {
         if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return false;
         }
-        if ($tile['account_key']) {
+        if ($tile['account_key'] == $account['id']) {
             return false;
+        }
+        if ($tile['account_key']) {
+            $agreement = $this->game_model->find_existing_agreement($account['id'], $tile['account_key']);
+            if (!$agreement || $agreement['agreement_key'] != WAR_KEY) {
+                api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
+            }
         }
         return true;
     }
@@ -258,8 +266,12 @@ class Game extends CI_Controller {
         if ((int)$tile['terrain_key'] === OCEAN_KEY) {
             return true;
         }
+
         if ($tile['unit_key']) {
-            api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+            $agreement = $this->game_model->find_existing_agreement($account['id'], $tile['account_key']);
+            if (!$agreement || $agreement['agreement_key'] != WAR_KEY) {
+                api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+            }
         }
         return true;
     }

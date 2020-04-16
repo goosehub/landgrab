@@ -81,9 +81,8 @@
       </ul>
     </div>
 
-    <?php if ($account) { ?>
-
     <!-- User Dropdown -->
+    <?php if ($account) { ?>
     <div class="user_parent menu_element btn-group">
         <button class="user_button btn btn-primary" type="button" id="user_dropdown">
             <?php echo $account['username']; ?>
