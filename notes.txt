@@ -4,7 +4,7 @@
 
 Unit logic
 
-
+Bar that shrinks down to victory chance
 
 ==========================================================================================
     Goals
@@ -15,9 +15,9 @@ HIGH PRIORITY
         war/peace/passage
 MEDIUM PRIORITY
     commission icons
+    combat UI of quick growing bar that shows odds
     unit system
         attacking
-        militia defense
         being attacked
         conceal
         cash purchase
@@ -44,6 +44,7 @@ LOW PRIORITY
     number formatting
     UI for war declared on you
     UI for your current alliances and wars
+    war confirm
 BUGS
     unit icons cleint side duplicate
     unit icons disappears?
@@ -64,15 +65,16 @@ GOING LIVE
     reset cron
     reddit update post
     beta
+Next Update
+    militia defense
+    More worlds
 NO PRIORITY
     fonts
-    war confirm
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage
     refactor township input desc to be generated
     abstract market table per world
     population projection
-    More worlds
     abstract settlement input string into programatic
     no population hit for downgrading township
     capitol and chat shortcut to diplomacy

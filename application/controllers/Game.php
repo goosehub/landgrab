@@ -7,6 +7,7 @@ class Game extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('game_model', '', TRUE);
+        $this->load->model('combat_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
 
@@ -31,6 +32,14 @@ class Game extends CI_Controller {
     // Game view
     public function index($world_slug = 1, $marketing_slug = false)
     {
+        $defender_unit_key = 1;
+        $attacker_unit_key = 2;
+        $defender_terrain_key = 4;
+        $attacker_terrain_key = 1;
+        $settlement_key = 8;
+        $object = $this->combat_model->combat($defender_unit_key, $attacker_unit_key, $defender_terrain_key, $attacker_terrain_key, $settlement_key);
+        dd($object);
+
         if (MAINTENANCE) {
             return $this->maintenance();
         }
@@ -296,6 +305,9 @@ class Game extends CI_Controller {
         $account = $this->get_this_full_account($tile['world_key']);
         if ($this->can_claim($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
+            if ($tile['unit_key']) {
+                $combat_result = $this->combat_model->combat_logic($tile['unit_key'], $previous_tile['unit_key'], $tile['terrain_key'], $previous_tile['terrain_key'], $tile['settlement_key']);
+            }
             $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
             $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         }
