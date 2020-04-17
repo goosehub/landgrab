@@ -32,14 +32,6 @@ class Game extends CI_Controller {
     // Game view
     public function index($world_slug = 1, $marketing_slug = false)
     {
-        $defender_unit_key = 1;
-        $attacker_unit_key = 2;
-        $defender_terrain_key = 4;
-        $attacker_terrain_key = 1;
-        $settlement_key = 8;
-        $object = $this->combat_model->combat($defender_unit_key, $attacker_unit_key, $defender_terrain_key, $attacker_terrain_key, $settlement_key);
-        dd($object);
-
         if (MAINTENANCE) {
             return $this->maintenance();
         }
