@@ -37,7 +37,7 @@
     const tundra_color = '<?= TUNDRA_COLOR ?>';
     const coastal_color = '<?= COASTAL_COLOR ?>';
     const ocean_color = '<?= OCEAN_COLOR ?>';
-    const barren_defensive_bonus = <?= BARREN_DEFENSIVE_BONUS; ?>;
+    const barren_offensive_bonus = <?= BARREN_OFFENSIVE_BONUS; ?>;
     const tundra_defensive_bonus = <?= TUNDRA_DEFENSIVE_BONUS; ?>;
     const mountain_defensive_bonus = <?= MOUNTAIN_DEFENSIVE_BONUS; ?>;
     const town_defensive_bonus = <?= TOWN_DEFENSIVE_BONUS; ?>;

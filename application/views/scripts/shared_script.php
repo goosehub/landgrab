@@ -145,9 +145,6 @@
         if (tile.terrain_key == mountain_key) {
             defensive_bonus += mountain_defensive_bonus;
         }
-        if (tile.terrain_key == barren_key) {
-            defensive_bonus += barren_defensive_bonus;
-        }
         if (tile.terrain_key == town_key) {
             defensive_bonus += town_defensive_bonus;
         }
@@ -156,6 +153,10 @@
         }
         if (tile.terrain_key == metro_key) {
             defensive_bonus += metro_defensive_bonus;
+        }
+        // Offensive bonus
+        if (tile.terrain_key == barren_key) {
+            defensive_bonus -= barren_offensive_bonus;
         }
         return defensive_bonus;
     }

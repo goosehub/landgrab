@@ -289,13 +289,13 @@
                         <div class="col-md-4">
                             <span class="text-primary">Defense Bonuses</span>
                             <?= generate_popover('Defense Bonus', '
-                                Mountain Defensive Bonus: X' . (MOUNTAIN_DEFENSIVE_BONUS >= 1 ? (MOUNTAIN_DEFENSIVE_BONUS + 1) : abs(MOUNTAIN_DEFENSIVE_BONUS)) . '<br>
-                                Tundra Defensive Bonus: X' . (TUNDRA_DEFENSIVE_BONUS >= 1 ? (TUNDRA_DEFENSIVE_BONUS + 1) : abs(TUNDRA_DEFENSIVE_BONUS)) . '<br>
-                                Barren Defensive Bonus: X' . (BARREN_DEFENSIVE_BONUS >= 1 ? (BARREN_DEFENSIVE_BONUS + 1) : abs(BARREN_DEFENSIVE_BONUS)) . '<br>
+                                Mountain Defensive Bonus: X' . (1 + MOUNTAIN_DEFENSIVE_BONUS) . '<br>
+                                Tundra Defensive Bonus: X' . (1 + TUNDRA_DEFENSIVE_BONUS) . '<br>
+                                Barren Offensive Bonus: X' . (1 + BARREN_OFFENSIVE_BONUS) . '<br>
                                 <br>
-                                Town Defensive Bonus: X' . (TOWN_DEFENSIVE_BONUS >= 1 ? (TOWN_DEFENSIVE_BONUS + 1) : abs(TOWN_DEFENSIVE_BONUS)) . '<br>
-                                City Defensive Bonus: X' . (CITY_DEFENSIVE_BONUS >= 1 ? (CITY_DEFENSIVE_BONUS + 1) : abs(CITY_DEFENSIVE_BONUS)) . '<br>
-                                Metro Defensive Bonus: X' . (METRO_DEFENSIVE_BONUS >= 1 ? (METRO_DEFENSIVE_BONUS + 1) : abs(METRO_DEFENSIVE_BONUS)) . '
+                                Town Defensive Bonus: X' . (1 + TOWN_DEFENSIVE_BONUS) . '<br>
+                                City Defensive Bonus: X' . (1 + CITY_DEFENSIVE_BONUS) . '<br>
+                                Metro Defensive Bonus: X' . (1 + METRO_DEFENSIVE_BONUS) . '
                             ', 'top', 'pull-right'); ?>
                         </div>
                         <div class="col-md-4">

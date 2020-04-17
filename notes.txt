@@ -46,7 +46,7 @@ LOW PRIORITY
     UI for your current alliances and wars
     war confirm
 BUGS
-    unit icons cleint side duplicate
+    unit icons cleint side duplicate (dragging while updating)
     unit icons disappears?
     is_capitol remaing when changing industry, refactor columns away?
     township defensive bonus on barren
