@@ -11,6 +11,7 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
+    no settlement/industry icon
     unit system
         Combat UI breakdown advantages
         confirm advantages

@@ -22,7 +22,7 @@ Class combat_model extends CI_Model
 			'defend_power' => $defend_power,
 			'total_power' => $attack_power + $defend_power,
 			'combat_result' => (float)$combat_result,
-			'victory' => $combat_result > $defend_power,
+			'victory' => $combat_result >= $defend_power,
 		);
 	}
 

@@ -142,7 +142,9 @@
       marker.setMap(null);
     }
     else {
-      unit_markers[end_tile_id].setMap(null);
+      if (combat && combat.victory) {
+        unit_markers[end_tile_id].setMap(null);
+      }
       unit_markers[end_tile_id] = marker;
       unit_markers[end_tile_id].tile_id = end_tile_id;
     }
