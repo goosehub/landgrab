@@ -11,19 +11,15 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
-    diplomacy
-        war/peace/passage
+    unit system
+        Only keep winning unit
+        Combat UI breakdown advantages
+        confirm advantages
+        free market purchase
+        socialism purchase
+        enlist spawn validation
 MEDIUM PRIORITY
     commission icons
-    combat UI of quick growing bar that shows odds
-    unit system
-        attacking
-        being attacked
-        conceal
-        cash purchase
-        socialism purchase
-        exclude conceal on ocean
-        enlist spawn validation
     diplomacy
         hold supplies on trade request
         refund supplies on trade request rejected
@@ -31,6 +27,7 @@ MEDIUM PRIORITY
         messages
         notices
         world wide message for diplomacy changes
+        passage
         tooltip for alliances, rights of passage, etc
         expire trade requests after 24 hours
         withdraw trade request
@@ -45,6 +42,7 @@ LOW PRIORITY
     UI for war declared on you
     UI for your current alliances and wars
     war confirm
+    refactor into a marker script
 BUGS
     unit icons cleint side duplicate (dragging while updating)
     unit icons disappears?
@@ -66,8 +64,10 @@ GOING LIVE
     reddit update post
     beta
 Next Update
+    Conceal except when own, ally, or navy
     militia defense
     More worlds
+    Being attacked UI
 NO PRIORITY
     fonts
     suffix on industry input selection preview

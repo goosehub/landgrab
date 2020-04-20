@@ -16,6 +16,8 @@ Class combat_model extends CI_Model
 		$combat_result = rand(0, $total_power * COMBAT_ACCURACY) / COMBAT_ACCURACY;
 
 		return array(
+			'defender_unit_key' => $defender_unit_key,
+			'attacker_unit_key' => $attacker_unit_key,
 			'attack_power' => $attack_power,
 			'defend_power' => $defend_power,
 			'total_power' => $attack_power + $defend_power,
@@ -50,7 +52,7 @@ Class combat_model extends CI_Model
 		if ($terrain_key === OCEAN_KEY) {
 			return NAVY_KEY;
 		}
-		return $unit_key;
+		return (int)$unit_key;
 	}
 
 	function find_matchup_offensive_bonus($defender_unit_key, $attacker_unit_key)

@@ -6,6 +6,29 @@
     </strong>
 </div>
 
+<!--  -->
+<div id="combat_block" class="center_block center_block_small">
+    <div class="combat_pending_message">
+        <h3 class="text-center text-primary">
+            <span id="chance_of_victory_text"></span>% chance of victory
+        </h3>
+    </div>
+    <div class="victory_message">
+        <h3 class="text-center text-success">Victory</h3>
+    </div>
+    <div class="defeat_message">
+        <h3 class="text-center text-danger">Defeat</h3>
+    </div>
+    <hr>
+    <img id="defender_unit_image" class="combat_unit_image pull-left" src=""/>
+    <img id="attacker_unit_image" class="combat_unit_image pull-right" src=""/>
+    <div class="progress">
+        <div id="victory_bar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+        <div id="defender_bar" class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+        <div id="total_bar" class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+    </div>
+</div>
+
 <!-- Tutorial Block -->
 <div id="tutorial_block">
     <span class="exit_tutorial glyphicon glyphicon-remove-sign pull-right" aria-hidden="true"></span>

@@ -18,8 +18,60 @@
     highlighted_tiles = [];
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
       update_unit_icon(marker, response.tile);
+      animate_combat(response.combat);
       get_map_update();
     });
+  }
+
+  // https://getbootstrap.com/docs/3.3/components/#progress-stacked
+  function animate_combat(combat) {
+    if (!combat) {
+      return false;
+    }
+    let total_power = combat.total_power;
+    let victory = combat.victory;
+    let victory_bar_percent = parseInt( (combat.combat_result * 100) / combat.total_power );
+    let defender_percent = parseInt( (combat.defend_power * 100) / combat.total_power );
+    let attacker_unit_path = `${base_url}resources/icons/units/${combat.attacker_unit_key}-own.png`;
+    let defender_unit_path = `${base_url}resources/icons/units/${combat.defender_unit_key}-enemy.png`;
+    let combat_wait_ms = parseInt(combat_animate_ms / 2);
+    let defender_bar_percent = parseInt(defender_percent);
+    let remaining_bar_percent = parseInt(100 - defender_percent);
+    let fadeout_ms = 500;
+
+    $('.center_block').hide();
+    $('.defeat_message').hide();
+    $('.victory_message').hide();
+    $('.combat_pending_message').show();
+    $('#chance_of_victory_text').html(remaining_bar_percent);
+    $('#defender_unit_image').prop('src', attacker_unit_path);
+    $('#attacker_unit_image').prop('src', defender_unit_path);
+    $('#victory_bar').css('width', 0 + '%');
+    $('#defender_bar').css('width', defender_bar_percent + '%');
+    $('#total_bar').css('width', remaining_bar_percent + '%');
+    $('#combat_block').show();
+
+    setTimeout(function(){
+      $('#victory_bar').css('width', victory_bar_percent + '%');
+      let defender_bar_percent = parseInt(defender_percent - victory_bar_percent) > 0 ? parseInt(defender_percent - victory_bar_percent) : 0;
+      $('#defender_bar').css('width', defender_bar_percent + '%');
+      let remaining_bar_percent = parseInt(100 - victory_bar_percent - defender_bar_percent);
+      $('#total_bar').css('width', remaining_bar_percent + '%');
+      victory_message_render(victory);
+      setTimeout(function(){
+        $('#combat_block').fadeOut(fadeout_ms);
+      }, combat_wait_ms);
+    }, combat_wait_ms);
+  }
+
+  function victory_message_render(victory) {
+    $('.combat_pending_message').hide();
+    if (victory) {
+      $('.victory_message').show();
+    }
+    else {
+      $('.defeat_message').show();
+    }
   }
 
   function highlight_valid_squares() {

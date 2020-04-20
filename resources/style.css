@@ -233,6 +233,14 @@ html, body {
   font-weight: bold;
 }
 
+/* Combat */
+#combat_block {
+
+}
+.combat_unit_image {
+  width: 40px;
+}
+
 /* Tutorial */
 #tutorial_block {
   display: none;
