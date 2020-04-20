@@ -296,20 +296,20 @@ class Game extends CI_Controller {
         // Keep remove before add, makes dupe bugs less likely
         $account = $this->get_this_full_account($tile['world_key']);
         if ($this->can_claim($account, $tile)) {
-            // $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $victory = true;
+            $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             if ($tile['unit_key']) {
                 $data['combat'] = $this->combat_model->combat($tile['unit_key'], $previous_tile['unit_key'], $tile['terrain_key'], $previous_tile['terrain_key'], $tile['settlement_key']);
                 $victory = $data['combat']['victory'];
             }
             if ($victory) {
-                // $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
-                // $this->game_model->increment_account_supply($account['id'], TILES_KEY);
+                $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
+                $this->game_model->increment_account_supply($account['id'], TILES_KEY);
             }
         }
         else if ($this->can_move_to($account, $tile)) {
-            // $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
-            // $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
+            $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
+            $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
         }
         $data['tile'] = $tile;
         api_response($data);

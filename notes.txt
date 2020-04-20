@@ -12,7 +12,6 @@ Bar that shrinks down to victory chance
 
 HIGH PRIORITY
     unit system
-        Only keep winning unit
         Combat UI breakdown advantages
         confirm advantages
         free market purchase

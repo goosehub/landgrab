@@ -11,7 +11,7 @@
     let end_lat = round_down(event.latLng.lat()) - tile_size;
     let end_lng = round_down(event.latLng.lng());
     end_lng = correct_lng(end_lng);
-    let moved = move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng);
+    let moved = unit_can_move_to_new_tile(marker, start_lat, start_lng, end_lat, end_lng);
     if (!moved) {
       return;
     }
@@ -19,6 +19,7 @@
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
       update_unit_icon(marker, response.tile);
       animate_combat(response.combat);
+      move_unit_to_new_tile(marker, response.combat, start_lat, start_lng, end_lat, end_lng);
       get_map_update();
     });
   }
@@ -114,7 +115,7 @@
     });
   }
 
-  function move_unit_to_new_position(marker, start_lat, start_lng, end_lat, end_lng) {
+  function unit_can_move_to_new_tile(marker, start_lat, start_lng, end_lat, end_lng) {
     let allowed_move_to_new_position = false;
     let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
@@ -122,8 +123,6 @@
     let lng = end_lng - (tile_size / 2);
     if (tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng) && no_friendly_unit_at_square(lat, lng)) {
       unit_markers.splice(marker.tile_id, 1);
-      unit_markers[end_tile_id] = marker;
-      unit_markers[end_tile_id].tile_id = end_tile_id;
       allowed_move_to_new_position = true;
     }
     else {
@@ -134,6 +133,19 @@
     marker.setPosition(position);
     start_lat = start_lng = null;
     return allowed_move_to_new_position;
+  }
+
+  function move_unit_to_new_tile(marker, combat, start_lat, start_lng, end_lat, end_lng) {
+    let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
+    let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
+    if (combat && !combat.victory) {
+      marker.setMap(null);
+    }
+    else {
+      unit_markers[end_tile_id].setMap(null);
+      unit_markers[end_tile_id] = marker;
+      unit_markers[end_tile_id].tile_id = end_tile_id;
+    }
   }
 
   function no_friendly_unit_at_square(lat, lng) {
