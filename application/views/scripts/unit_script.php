@@ -26,7 +26,6 @@
   }
 
   function render_comat_bonuses(combat) {
-    console.log(combat);
     if (!combat) {
       return;
     }
