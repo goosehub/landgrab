@@ -27,6 +27,52 @@
         <div id="defender_bar" class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
         <div id="total_bar" class="progress-bar progress-bar-primary progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
     </div>
+    <div class="pull-left">
+        <p id="attack_power_parent">
+            <strong id="attack_power" class="text-success"></strong>
+            <label id="attack_power_label" class="text-purple">
+                Total Attack Power:
+            </label>
+        </p>
+        <p id="matchup_offensive_bonus_parent">
+            <strong id="matchup_offensive_bonus" class="text-success"></strong>
+            <label id="matchup_offensive_bonus_label" class="text-primary">
+                Matchup Bonus:
+            </label>
+        </p>
+        <p id="terrain_offensive_bonus_parent">
+            <strong id="terrain_offensive_bonus" class="text-success"></strong>
+            <label id="terrain_offensive_bonus_label" class="text-primary">
+                Terrain Bonus:
+            </label>
+        </p>
+    </div>
+    <div class="pull-right">
+        <p id="defend_power_parent">
+            <strong id="defend_power" class="text-success"></strong>
+            <label id="defend_power_label" class="text-purple">
+                :Total Defend Power
+            </label>
+        </p>
+        <p id="matchup_defensive_bonus_parent">
+            <strong id="matchup_defensive_bonus" class="text-danger"></strong>
+            <label id="matchup_defensive_bonus_label" class="text-primary">
+                :Matchup Bonus
+            </label>
+        </p>
+        <p id="terrain_defensive_bonus_parent">
+            <strong id="terrain_defensive_bonus" class="text-danger"></strong>
+            <label id="terrain_defensive_bonus_label" class="text-primary">
+                :Terrain Bonus
+            </label>
+        </p>
+        <p id="township_defensive_bonus_parent">
+            <strong id="township_defensive_bonus" class="text-danger"></strong>
+            <label id="township_defensive_bonus_label" class="text-primary">
+                :Township Bonus
+            </label>
+        </p>
+    </div>
 </div>
 
 <!-- Tutorial Block -->

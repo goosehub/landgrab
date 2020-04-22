@@ -19,9 +19,44 @@
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
       update_unit_icon(marker, response.tile);
       animate_combat(response.combat);
+      render_comat_bonuses(response.combat);
       move_unit_to_new_tile(marker, response.combat, start_lat, start_lng, end_lat, end_lng);
       get_map_update();
     });
+  }
+
+  function render_comat_bonuses(combat) {
+    console.log(combat);
+    if (!combat) {
+      return;
+    }
+    $('#matchup_offensive_bonus_parent').hide();
+    $('#terrain_offensive_bonus_parent').hide();
+    $('#matchup_defensive_bonus_parent').hide();
+    $('#terrain_defensive_bonus_parent').hide();
+    $('#township_defensive_bonus_parent').hide();
+    if (combat.matchup_offensive_bonus) {
+      $('#matchup_offensive_bonus_parent').show();
+    }
+    if (combat.terrain_offensive_bonus) {
+      $('#terrain_offensive_bonus_parent').show();
+    }
+    if (combat.matchup_defensive_bonus) {
+      $('#matchup_defensive_bonus_parent').show();
+    }
+    if (combat.terrain_defensive_bonus) {
+      $('#terrain_defensive_bonus_parent').show();
+    }
+    if (combat.township_defensive_bonus) {
+      $('#township_defensive_bonus_parent').show();
+    }
+    $('#attack_power').html('+' + combat.attack_power);
+    $('#defend_power').html('+' + combat.defend_power);
+    $('#matchup_offensive_bonus').html('+' + combat.matchup_offensive_bonus);
+    $('#terrain_offensive_bonus').html('+' + combat.terrain_offensive_bonus);
+    $('#matchup_defensive_bonus').html('+' + combat.matchup_defensive_bonus);
+    $('#terrain_defensive_bonus').html('+' + combat.terrain_defensive_bonus);
+    $('#township_defensive_bonus').html('+' + combat.township_defensive_bonus);
   }
 
   // https://getbootstrap.com/docs/3.3/components/#progress-stacked
