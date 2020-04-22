@@ -172,16 +172,22 @@
   function move_unit_to_new_tile(marker, combat, start_lat, start_lng, end_lat, end_lng) {
     let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
-    if (combat && !combat.victory) {
-      marker.setMap(null);
+    // Prevent client side dupe unit approach, but unit blinks
+    marker.setMap(null);
+    if (combat && combat.victory) {
+      unit_markers[end_tile_id].setMap(null);
     }
-    else {
-      if (combat && combat.victory) {
-        unit_markers[end_tile_id].setMap(null);
-      }
-      unit_markers[end_tile_id] = marker;
-      unit_markers[end_tile_id].tile_id = end_tile_id;
-    }
+    // Prevent unit blinks but client side dupe unit
+    // if (combat && !combat.victory) {
+    //   marker.setMap(null);
+    // }
+    // else {
+    //   if (combat && combat.victory) {
+    //     unit_markers[end_tile_id].setMap(null);
+    //   }
+    //   unit_markers[end_tile_id] = marker;
+    //   unit_markers[end_tile_id].tile_id = end_tile_id;
+    // }
   }
 
   function no_friendly_unit_at_square(lat, lng) {

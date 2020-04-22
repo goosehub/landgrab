@@ -41,10 +41,7 @@ LOW PRIORITY
     war confirm
     refactor into a marker script
 BUGS
-    unit icons cleint side duplicate (dragging while updating)
-    unit icons disappears?
-    is_capitol remaing when changing industry, refactor columns away?
-    township defensive bonus on barren
+    is_capitol remaining when changing industry, refactor columns away?
     supplies projections vs reality
     do industries with no inputs produce output, or get false flagged for no supply?
 EXPLOITS
