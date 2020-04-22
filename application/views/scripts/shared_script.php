@@ -138,27 +138,32 @@
 
     function get_defensive_bonus_of_tile(tile)
     {
-        let defensive_bonus = 1;
+        let defensive_bonus = 0;
         if (tile.terrain_key == tundra_key) {
             defensive_bonus += tundra_defensive_bonus;
         }
         if (tile.terrain_key == mountain_key) {
             defensive_bonus += mountain_defensive_bonus;
         }
-        if (tile.terrain_key == town_key) {
+        if (tile.settlement_key == town_key) {
             defensive_bonus += town_defensive_bonus;
         }
-        if (tile.terrain_key == city_key) {
+        if (tile.settlement_key == city_key) {
             defensive_bonus += city_defensive_bonus;
         }
-        if (tile.terrain_key == metro_key) {
+        if (tile.settlement_key == metro_key) {
             defensive_bonus += metro_defensive_bonus;
         }
-        // Offensive bonus
-        if (tile.terrain_key == barren_key) {
-            defensive_bonus -= barren_offensive_bonus;
-        }
         return defensive_bonus;
+    }
+
+    function get_offensive_bonus_of_tile(tile)
+    {
+        let offensive_bonus = 0;
+        if (tile.terrain_key == barren_key) {
+            offensive_bonus += barren_offensive_bonus;
+        }
+        return offensive_bonus;
     }
 
     function get_defensive_bonus_of_settlement_string(settlement_key)

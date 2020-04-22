@@ -36,21 +36,25 @@
                 <labe>Industry:</labe>
                 <span id="tile_industry_label" class="text-primary pull-right"></span>
             </p>
-            <p class="tile_block_info_line">
-                <labe>Population:</labe>
-                <span id="tile_population" class="text-purple pull-right"></span>
-            </p>
-            <p class="tile_block_info_line">
-                <labe>GDP:</labe>
-                <span id="tile_gdp" class="text-success pull-right"></span>
-            </p>
             <p id="tile_unit_parent" class="tile_block_info_line">
                 <labe>Army:</labe>
                 <span id="tile_unit" class="text-primary pull-right"></span>
             </p>
             <p id="tile_defensive_bonus_parent" class="tile_block_info_line">
                 <labe>Defensive Bonus:</labe>
-                <span id="tile_defensive_bonus" class="text-action pull-right"></span>
+                <strong id="tile_defensive_bonus" class="text-success pull-right"></strong>
+            </p>
+            <p id="tile_offensive_bonus_parent" class="tile_block_info_line">
+                <labe>Offensive Bonus:</labe>
+                <strong id="tile_offensive_bonus" class="text-danger pull-right"></strong>
+            </p>
+            <p id="tile_population_parent" class="tile_block_info_line">
+                <labe>Population:</labe>
+                <strong id="tile_population" class="text-purple pull-right"></strong>
+            </p>
+            <p id="tile_gdp_parent" class="tile_block_info_line">
+                <labe>GDP:</labe>
+                <strong id="tile_gdp" class="text-success pull-right"></strong>
             </p>
         </div>
         <div class="col-md-6">

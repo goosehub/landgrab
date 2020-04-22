@@ -24,6 +24,7 @@
         tile_first_claim();
         tile_unit();
         tile_defensive_bonus();
+        tile_offensive_bonus();
         enlist_select();
         settlement_selection_disable();
         industry_selection_disable();
@@ -116,11 +117,16 @@
     }
     function tile_population()
     {
+        $('#tile_population_parent').hide();
         population = current_tile.population ? current_tile.population : '0';
         $('#tile_population').html(population + 'K');
+        if (population > 0) {
+            $('#tile_population_parent').show();
+        }
     }
     function tile_gdp()
     {
+        $('#tile_gdp_parent').hide();
         let sum_gdp = 0;
         if (current_tile.industry_key) {
             sum_gdp += parseInt(industries[current_tile.industry_key  - 1]['gdp']);
@@ -128,7 +134,10 @@
         if (current_tile.settlement_key) {
             sum_gdp += parseInt(settlements[current_tile.settlement_key  - 1]['gdp']);
         }
-        $('#tile_gdp').html('$' + sum_gdp + 'M');
+        $('#tile_gdp').html('$' + sum_gdp + 'B');
+        if (sum_gdp > 0) {
+            $('#tile_gdp_parent').show();
+        }
     }
     function tile_unit()
     {
@@ -142,9 +151,18 @@
     {
         $('#tile_defensive_bonus_parent').hide();
         let defensive_bonus = get_defensive_bonus_of_tile(current_tile);
-        if (defensive_bonus !== 1) {
-            $('#tile_defensive_bonus').html(defensive_bonus + 'X');
+        if (defensive_bonus > 0) {
+            $('#tile_defensive_bonus').html('+' + defensive_bonus);
             $('#tile_defensive_bonus_parent').show();
+        }
+    }
+    function tile_offensive_bonus()
+    {
+        $('#tile_offensive_bonus_parent').hide();
+        let offensive_bonus = get_offensive_bonus_of_tile(current_tile);
+        if (offensive_bonus > 0) {
+            $('#tile_offensive_bonus').html('+' + offensive_bonus);
+            $('#tile_offensive_bonus_parent').show();
         }
     }
     function enlist_select()
@@ -314,7 +332,7 @@
         });
         $('#select_settlement_header').html(settlement.label);
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
-        $('#select_settlement_gdp').html('$' + settlement.gdp + 'M');
+        $('#select_settlement_gdp').html('$' + settlement.gdp + 'B');
         $('#select_settlement_pop').html(settlement.base_population + 'K');
         $('#select_settlement_terrain').html(get_settlement_terrain_string_with_color(settlement));
         $('#select_settlement_defensive_parent').hide();
@@ -352,7 +370,7 @@
             $('#select_industry_terrain_parent').show();
             $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
         }
-        $('#select_industry_gdp').html('$' + industry.gdp + 'M');
+        $('#select_industry_gdp').html('$' + industry.gdp + 'B');
         $('#select_industry_input_parent').hide();
         if (industry_input_string(industry)) {
             $('#select_industry_input_parent').show();
