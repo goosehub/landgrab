@@ -174,7 +174,7 @@
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
     // Prevent client side dupe unit approach, but unit blinks
     marker.setMap(null);
-    if (combat && combat.victory) {
+    if (combat && combat.victory && unit_markers[end_tile_id]) {
       unit_markers[end_tile_id].setMap(null);
     }
     // Prevent unit blinks but client side dupe unit
@@ -182,7 +182,7 @@
     //   marker.setMap(null);
     // }
     // else {
-    //   if (combat && combat.victory) {
+    //   if (combat && combat.victory && unit_markers[end_tile_id]) {
     //     unit_markers[end_tile_id].setMap(null);
     //   }
     //   unit_markers[end_tile_id] = marker;
