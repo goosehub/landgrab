@@ -191,10 +191,10 @@ Tile considerations
     Overlap between other tiles (coastal mountain, do I want to allow farming on this square?)
 
 Unit Colors
-    own: 739E82
-    enemy: AD343E
-    ally: 2541B2
-    neutral: E0E0CE
+    own: #739E82
+    enemy: #AD343E
+    ally: #2541B2
+    neutral: #E0E0CE
 
 Live Server Instance
     Change database connection in config/database.php
