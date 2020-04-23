@@ -284,9 +284,6 @@
                             <?= generate_popover('Support Costs', '
                                 Moving Unit: ' . SUPPORT_COST_MOVE_UNIT . ' Support <br>
                                 Capture Land: ' . SUPPORT_COST_CAPTURE_LAND . ' Support <br>
-                                Capture Town: ' . SUPPORT_COST_CAPTURE_TOWN . ' Support <br>
-                                Capture City: ' . SUPPORT_COST_CAPTURE_CITY . ' Support <br>
-                                Capture Metro: ' . SUPPORT_COST_CAPTURE_METRO . ' Support <br>
                                 Declare War: ' . SUPPORT_COST_DECLARE_WAR . ' Support
                             ', 'top', 'pull-right'); ?>
                         </div>
@@ -307,7 +304,7 @@
                             <?= generate_popover('Special Units', '
                                 Units transform into Navy units on ocean and will transform back after returning to land.
                                 <br><br>
-                                Territories without units have a chance to form a Militia to defend themselves when attacked.
+                                Townships without units form a Militia to defend themselves when attacked.
                             ', 'top', 'pull-right'); ?>
                         </div>
                     </div>
