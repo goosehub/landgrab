@@ -11,10 +11,7 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
-    unit system
-        free market purchase
-        socialism purchase
-        enlist spawn validation
+    unit support cost
 MEDIUM PRIORITY
     commission icons
     diplomacy
@@ -64,6 +61,7 @@ Next Update
     Being attacked UI
 NO PRIORITY
     fonts
+    disable enlist options when not enough cash exists
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage
     refactor township input desc to be generated

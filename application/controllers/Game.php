@@ -448,10 +448,22 @@ class Game extends CI_Controller {
         if (!(int)$tile['is_capitol'] && !(int)$tile['is_base']) {
             api_error_response('tile_is_not_allowed_to_spawn', 'This tile must be a capitol or base');
         }
-        // @TODO
-        // Validate money/support needed exists
-        // Take money
         $account = $this->get_this_full_account($tile['world_key']);
+        if ($account['ideology'] == FREE_MARKET_KEY && $account['supplies']['cash'] < $this->unit_types[$unit_id - 1]['cash_cost']) {
+            api_error_response('insufficient_cash', 'You do not have enough cash to complete this action');
+        }
+        if ($account['ideology'] == SOCIALISM_KEY && $account['supplies']['support'] < $this->unit_types[$unit_id - 1]['support_cost']) {
+            api_error_response('insufficient_cash', 'You do not have enough cash to complete this action');
+        }
+        if ($account['ideology'] == FREE_MARKET_KEY) {
+            $this->game_model->decrement_account_supply($account['id'], CASH_KEY, $this->unit_types[$unit_id - 1]['cash_cost']);
+        }
+        else if ($account['ideology'] == SOCIALISM_KEY) {
+            $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, $this->unit_types[$unit_id - 1]['support_cost']);
+        }
+        else {
+            api_error_response('must_have_ideology', 'You must have an ideology to complete this action');
+        }
         $this->game_model->put_unit_on_tile($tile, $account, $unit_id);
         api_response();
     }
