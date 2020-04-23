@@ -143,7 +143,11 @@
     {
         $('#tile_unit_parent').hide();
         if (current_tile.unit_key) {
-            $('#tile_unit').html(unit_labels[current_tile.unit_key]);
+            let unit_string = unit_labels[current_tile.unit_key];
+            if (current_tile.unit_owner_key != current_tile.account_key) {
+                unit_string += ' ' + '(' + current_tile.unit_owner_username + ')';
+            }
+            $('#tile_unit').html(unit_string);
             $('#tile_unit_parent').show();
         }
     }

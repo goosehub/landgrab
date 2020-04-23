@@ -114,8 +114,10 @@ class Game extends CI_Controller {
             api_error_response('tile_not_found', 'Tile Not Found');
         }
         $tile['account'] = $tile['account_key'] ? $this->user_model->get_account_by_id($tile['account_key']) : false;
-
         $tile['username'] = $tile['account'] ? $tile['account']['username'] : '';
+
+        $unit_account = $tile['unit_owner_key'] ? $this->user_model->get_account_by_id($tile['unit_owner_key']) : false;
+        $tile['unit_owner_username'] = $unit_account ? $unit_account['username'] : '';
 
         $account = $this->user_model->this_account($world_key);
         if ($account) {

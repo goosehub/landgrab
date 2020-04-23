@@ -11,7 +11,7 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
-    unit support cost
+    action support cost
 MEDIUM PRIORITY
     commission icons
     diplomacy
