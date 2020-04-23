@@ -11,8 +11,7 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
-    bug: invisible own units
-    action support cost
+    bug: units not moving
 MEDIUM PRIORITY
     commission icons
     diplomacy

@@ -35,3 +35,6 @@ SELECT a.*, u.* FROM `account` as a
 LEFT JOIN
 	`user` as u on `user_key` = u.`id`
 WHERE `username` = 'foobar';
+
+-- Set cash and support
+UPDATE `landgrab_new`.`supply_account_lookup` SET `amount` = '200' WHERE supply_key IN (1, 2);

@@ -301,6 +301,7 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
+                $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
                 $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
             }
@@ -309,6 +310,7 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
+                $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
                 $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
             }
         }
@@ -478,6 +480,7 @@ class Game extends CI_Controller {
             api_error_response('auth', 'You must be logged in');
         }
         $agreement_key = false;
+        $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_DECLARE_WAR);
         $existing_agreement = $this->game_model->find_existing_agreement($account['id'], $trade_partner_key);
         if ($existing_agreement) {
             $agreement_key = $existing_agreement['id'];
