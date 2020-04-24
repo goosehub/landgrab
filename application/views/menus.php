@@ -41,7 +41,7 @@
             <span id="menu_supply_support"></span>/<span id="menu_max_support"></span>
           </span>
           <span class="badge menu_supply_cash_badge" title="Available Cash">
-            $<span id="menu_supply_cash"></span>
+            $<span id="menu_supply_cash"></span>B
           </span>
           <span class="badge menu_supply_negative_supplies_badge" title="Number of supply shortages">
             <span id="count_negative_supplies"></span>

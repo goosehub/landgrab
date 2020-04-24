@@ -115,6 +115,7 @@
     let map_update_interval_ms = <?= MAP_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let combat_animate_ms = <?= COMBAT_ANIMATE_MS; ?>;
+    let unit_linger_ms = <?= UNIT_LINGER_MS; ?>;
     let unit_valid_square_color = '<?= UNIT_VALID_SQUARE_COLOR; ?>';
     let selected_square_color = '<?= SELECTED_SQUARE_COLOR; ?>';
     let stroke_weight = <?= STROKE_WEIGHT; ?>;

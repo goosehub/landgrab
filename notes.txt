@@ -11,7 +11,6 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
-    bug: units not moving
 MEDIUM PRIORITY
     commission icons
     diplomacy
