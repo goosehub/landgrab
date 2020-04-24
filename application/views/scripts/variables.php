@@ -6,6 +6,7 @@
     const industries = sort_by_id(JSON.parse('<?= json_encode($this->industries); ?>'));
     const unit_types = JSON.parse('<?= json_encode($this->unit_types); ?>');
     const unit_labels = JSON.parse('<?= json_encode($this->unit_labels); ?>');
+    const treaties = JSON.parse('<?= json_encode($this->treaties); ?>');
     const world_key = <?= $world['id']; ?>;
     const tile_size = <?= $world['tile_size']; ?>;
     const map_icon_size = <?= MAP_ICON_SIZE; ?>;

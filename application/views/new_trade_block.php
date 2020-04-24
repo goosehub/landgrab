@@ -1,7 +1,7 @@
-<div id="trade_block" class="center_block">
+<div id="new_trade_block" class="center_block">
     <form id="trade_form" action="<?=base_url()?>trade_form" method="post">
 
-        <strong>Trade Proposal</strong>
+        <strong>Create a Trade Proposal</strong>
         <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
           <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
         </button>
@@ -28,15 +28,15 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h2>Proposed Agreement</h2>
+                <h2 class="text-center">Proposed Agreement</h2>
                 <p class="lead">
-                    Current Diplomatic Agreement:
-                    <strong id="current_agreement" class="text-danger">War</strong>
+                    Current Treaty:
+                    <strong class="current_treaty"></strong>
                 </p>
-                <p class="lead">Proposed Diplomatic Agreement</p>
+                <p class="lead">Proposed Treaty</p>
                 <select class="form-control" id="input_agreement" name="input_agreement">
                     <option value="2">Peace</option>
-                    <option value="3">Passage</option>
+                    <!-- <option value="3">Passage</option> -->
                 </select>
 
                 <p class="lead">Message</p>
@@ -46,21 +46,17 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button class="accept_trade_request btn btn-success form-control" type="button" disabled>
-                            <i class="fas fa-check"></i>
-                            Accept
+                        <button class="accept_trade_request btn btn-success form-control" type="button">
+                            <i class="fas fa-envelope-square"></i>
+                            Send Proposal
                         </button>
                     </div>
                     <div class="col-md-4">
-                        <button class="reject_trade_request btn btn-warning form-control" type="button" disabled>
-                            <i class="fas fa-times"></i>
-                            Reject
-                        </button>
                     </div>
                     <div class="col-md-4">
                         <button id="declare_war" class="btn btn-danger form-control" type="button">
                             <i class="fas fa-skull"></i>
-                            War
+                            Declare War
                         </button>
                     </div>
                 </div>
