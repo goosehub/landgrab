@@ -5,6 +5,7 @@
 		handle_new_diplomacy();
 		handle_input_change();
 		handle_declare_war();
+		handle_send_trade_request();
 	}
 
 	function handle_new_diplomacy() {
@@ -34,6 +35,26 @@
 		$('#declare_war').click(function(){
 			declare_war();
 		});
+	}
+
+	function handle_send_trade_request() {
+		$('#send_trade_request').click(function(){
+			send_trade_request();
+		});
+	}
+
+	function send_trade_request() {
+		let data = {
+			world_key: world_key,
+			trade_partner_key: trade_partner.id,
+			supplies_offered: null,
+			supplies_demanded: null,
+			message: $('#sent_trade_message').html(),
+		};
+		ajax_post('game/send_trade_request', data, function(response) {
+			$('.center_block').hide();
+		});
+
 	}
 
 	function declare_war() {

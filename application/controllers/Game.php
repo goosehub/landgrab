@@ -493,6 +493,26 @@ class Game extends CI_Controller {
         api_response();
     }
 
+    public function send_trade_request()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('trade_partner_key', 'trade_partner_key', 'required');
+        $this->form_validation->set_rules('message', 'message', 'max_length[1000]');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('validation', trim(strip_tags(validation_errors())));
+        }
+        $trade_partner_key = $this->input->post('trade_partner_key');
+        $world_key = $this->input->post('world_key');
+        $supplies_offered = $this->input->post('supplies_offered');
+        $supplies_demanded = $this->input->post('supplies_demanded');
+        $message = $this->input->post('message');
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
+        dd('marco');
+    }
+
     public function sell()
     {
         $world_key = $this->input->post('world_key');

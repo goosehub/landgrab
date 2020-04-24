@@ -40,13 +40,13 @@
                 </select>
 
                 <p class="lead">Message</p>
-                <textarea class="form-control" id="my_message" name="my_message"></textarea>
+                <textarea class="form-control" id="sent_trade_message" name="my_message"></textarea>
                 
                 <hr>
 
                 <div class="row">
                     <div class="col-md-4">
-                        <button class="accept_trade_request btn btn-success form-control" type="button">
+                        <button id="send_trade_request" class="btn btn-success form-control" type="button">
                             <i class="fas fa-envelope-square"></i>
                             Send Proposal
                         </button>
