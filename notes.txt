@@ -60,6 +60,7 @@ Next Update
 NO PRIORITY
     fonts
     disable enlist options when not enough cash exists
+    refactor agreement_key to treaty_key
     suffix on industry input selection preview
     have capitols show laws of that nation, wars and rights of passage
     refactor township input desc to be generated

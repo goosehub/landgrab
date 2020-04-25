@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS trade_request;
 DROP TABLE IF EXISTS agreement_lookup;
 DROP TABLE IF EXISTS supply_account_lookup;
 DROP TABLE IF EXISTS supply_account_trade_lookup;
-DROP TABLE IF EXISTS supply_trade_lookup;
 DROP TABLE IF EXISTS supply_industry_lookup;
 DROP TABLE IF EXISTS supply;
 DROP TABLE IF EXISTS terrain;
@@ -137,16 +136,6 @@ CREATE TABLE IF NOT EXISTS `agreement_lookup` (
 ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-DROP TABLE IF EXISTS `supply_trade_lookup`;
-CREATE TABLE IF NOT EXISTS `supply_trade_lookup` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `trade_key` int(10) UNSIGNED NOT NULL,
-  `supply_key` int(10) UNSIGNED NOT NULL,
-  `amount` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ALTER TABLE `supply_trade_lookup` ADD PRIMARY KEY (`id`);
-ALTER TABLE `supply_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
-
 DROP TABLE IF EXISTS `supply_industry_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -214,7 +203,8 @@ ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 DROP TABLE IF EXISTS `supply_account_trade_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
-  `supply_account_lookup_key` int(10) UNSIGNED NOT NULL,
+  `supply_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NOT NULL,
   `trade_key` int(10) UNSIGNED NOT NULL,
   `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

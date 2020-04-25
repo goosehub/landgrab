@@ -47,15 +47,53 @@
 		let data = {
 			world_key: world_key,
 			trade_partner_key: trade_partner.id,
-			supplies_offered: null,
-			supplies_demanded: null,
-			message: $('#sent_trade_message').html(),
+			supplies_offered: JSON.stringify(supplies_offered()),
+			supplies_demanded: JSON.stringify(supplies_demanded()),
+			message: $('#input_trade_message').html(),
+			treaty: $('#input_treaty').val(),
 		};
+		console.log('send_trade_request');
+		console.log(data);
 		ajax_post('game/send_trade_request', data, function(response) {
 			$('.center_block').hide();
 		});
-
 	}
+
+	function supplies_offered() {
+		let supplies_offered = [];
+		$('.own_supply_trade').each(function(){
+			if ($(this).val() > 0) {
+				supplies_offered.push(
+					{
+						'supply_key': $(this).data('id'),
+						'amount': $(this).val(),
+					}
+				)
+			}
+		});
+		console.log('supplies_offered');
+		console.log(supplies_offered);
+		return supplies_offered;
+	}
+
+	function supplies_demanded() {
+		let supplies_demanded = [];
+		$('.partner_supply_trade').each(function(){
+			if ($(this).val() > 0) {
+				supplies_demanded.push(
+					{
+						'supply_key': $(this).data('id'),
+						'amount': $(this).val(),
+					}
+				)
+			}
+		});
+		console.log('supplies_demanded');
+		console.log(supplies_demanded);
+		return supplies_demanded;
+	}
+
+
 
 	function declare_war() {
 		let data = {

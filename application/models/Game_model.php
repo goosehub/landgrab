@@ -490,6 +490,72 @@ Class game_model extends CI_Model
 		$result = isset($result[0]) ? $result[0] : false;
 		return $result['tile_count'] * $industry_cash_cost;
 	}
+	function create_trade_main($request_account_key, $receive_account_key, $message, $agreement_key, $supplies_offered, $supplies_demanded) {
+		$trade_key = $this->create_trade_request($request_account_key, $receive_account_key, $message, $agreement_key);
+		$this->create_agreement($request_account_key, $receive_account_key, $agreement_key);
+		foreach ($supplies_offered as $supply) {
+			$this->create_supply_account_trade_lookups($supply->supply_key, $request_account_key, $trade_key, (int)$supply->amount);
+		}
+		foreach ($supplies_demanded as $supply) {
+			$this->create_supply_account_trade_lookups($supply->supply_key, $receive_account_key, $trade_key, (int)$supply->amount);
+		}
+	}
+	function create_trade_request($request_account_key, $receive_account_key, $message, $agreement_key) {
+		$data = array(
+			'request_account_key' => $request_account_key,
+			'receive_account_key' => $receive_account_key,
+			'request_message' => $message,
+			'is_declared' => $agreement_key == WAR_KEY,
+			'agreement_key' => $agreement_key,
+		);
+		$this->db->insert('trade_request', $data);
+		return $this->db->insert_id();
+	}
+	function create_supply_account_trade_lookups($supply_key, $account_key, $trade_key, $amount) {
+		$data = array(
+			'supply_key' => $supply_key,
+			'account_key' => $account_key,
+			'trade_key' => $trade_key,
+			'amount' => $amount,
+		);
+		$this->db->insert('supply_account_trade_lookup', $data);
+	}
+	function find_existing_agreement($account_key, $trade_partner_key) {
+		$account_key = (int)$account_key;
+		$trade_partner_key = (int)$trade_partner_key;
+		$this->db->select('*');
+		$this->db->from('agreement_lookup');
+		$this->db->where('
+			(a_account_key = ' . $account_key . ' AND b_account_key = ' . $trade_partner_key . ')
+			OR
+			(b_account_key = ' . $account_key . ' AND a_account_key = ' . $trade_partner_key . ')
+		', NULL, FALSE);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return isset($result[0]) ? $result[0] : false;
+	}
+	function update_agreement($id, $agreement_key) {
+		$this->db->set('agreement_key', $agreement_key);
+		$this->db->where('id', $id);
+		$this->db->update('agreement_lookup');
+	}
+	function create_agreement($account_a, $account_b, $agreement_key) {
+		$data = array(
+			'a_account_key' => $account_a,
+			'b_account_key' => $account_b,
+			'agreement_key' => $agreement_key,
+		);
+		$this->db->insert('agreement_lookup', $data);
+	}
+	function agreements_by_account($account_key) {
+		$this->db->select('*');
+		$this->db->from('agreement_lookup');
+		$this->db->where('a_account_key', $account_key);
+		$this->db->or_where('b_account_key', $account_key);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return $result;
+	}
 	// 
 	// 
 	// 
@@ -647,41 +713,5 @@ Class game_model extends CI_Model
 		$this->db->where('supply_key', CASH_KEY);
 		$this->db->where('account_key', $account_key);
 		$this->db->update('supply_account_lookup');
-	}
-	function find_existing_agreement($account_key, $trade_partner_key) {
-		$account_key = (int)$account_key;
-		$trade_partner_key = (int)$trade_partner_key;
-		$this->db->select('*');
-		$this->db->from('agreement_lookup');
-		$this->db->where('
-			(a_account_key = ' . $account_key . ' AND b_account_key = ' . $trade_partner_key . ')
-			OR
-			(b_account_key = ' . $account_key . ' AND a_account_key = ' . $trade_partner_key . ')
-		', NULL, FALSE);
-		$query = $this->db->get();
-		$result = $query->result_array();
-		return isset($result[0]) ? $result[0] : false;
-	}
-	function update_agreement($id, $agreement_key) {
-		$this->db->set('agreement_key', $agreement_key);
-		$this->db->where('id', $id);
-		$this->db->update('agreement_lookup');
-	}
-	function create_agreement($account_a, $account_b, $agreement_key) {
-		$data = array(
-			'a_account_key' => $account_a,
-			'b_account_key' => $account_b,
-			'agreement_key' => $agreement_key,
-		);
-		$this->db->insert('agreement_lookup', $data);
-	}
-	function agreements_by_account($account_key) {
-		$this->db->select('*');
-		$this->db->from('agreement_lookup');
-		$this->db->where('a_account_key', $account_key);
-		$this->db->or_where('b_account_key', $account_key);
-		$query = $this->db->get();
-		$result = $query->result_array();
-		return $result;
 	}
 }

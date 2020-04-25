@@ -1,6 +1,5 @@
 TRUNCATE TABLE `trade_request`;
 TRUNCATE TABLE `agreement_lookup`;
-TRUNCATE TABLE `supply_trade_lookup`;
 TRUNCATE TABLE `supply_industry_lookup`;
 TRUNCATE TABLE `supply_account_trade_lookup`;
 

@@ -15,13 +15,13 @@
                     <?php if (!$supply['can_trade']) { continue; } ?>
                     <div class="trade_supply_parent row">
                         <div class="col-md-5 col-md-push-1">
-                            <label><?php echo $supply['label']; ?></label>
+                            <label><?= $supply['label']; ?></label>
                         </div>
                         <div class="col-md-3">
-                            <strong id="partner_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                            <strong id="partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" min="0" max="10000" id="partner_trade_supply_proposal_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
+                            <input value="0" min="0" max="10000" data-id="<?= $supply['id']; ?>" id="partner_trade_supply_proposal_<?= $supply['slug']; ?>" class="partner_supply_trade trade_supply_change input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>
@@ -31,16 +31,16 @@
                 <h2 class="text-center">Proposed Agreement</h2>
                 <p class="lead">
                     Current Treaty:
-                    <strong class="current_treaty"></strong>
+                    <span class="current_treaty"></span>
                 </p>
                 <p class="lead">Proposed Treaty</p>
-                <select class="form-control" id="input_agreement" name="input_agreement">
+                <select class="form-control" id="input_treaty" name="input_treaty">
                     <option value="2">Peace</option>
                     <!-- <option value="3">Passage</option> -->
                 </select>
 
                 <p class="lead">Message</p>
-                <textarea class="form-control" id="sent_trade_message" name="my_message"></textarea>
+                <textarea class="form-control" id="input_trade_message" name="input_trade_message"></textarea>
                 
                 <hr>
 
@@ -68,13 +68,13 @@
                     <?php if (!$supply['can_trade']) { continue; } ?>
                     <div class="trade_supply_parent row">
                         <div class="col-md-5 col-md-push-1">
-                            <label><?php echo $supply['label']; ?></label>
+                            <label><?= $supply['label']; ?></label>
                         </div>
                         <div class="col-md-3">
-                            <strong id="our_trade_supply_current_<?php echo $supply['slug']; ?>"></strong>
+                            <strong id="our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                         </div>
                         <div class="col-md-3">
-                            <input value="0" min="0" max="" id="our_trade_supply_offer_<?php echo $supply['slug']; ?>" class="trade_supply_change input form-control pull-right" type="number"/>
+                            <input value="0" min="0" max="" data-id="<?= $supply['id']; ?>" id="our_trade_supply_offer_<?= $supply['slug']; ?>" class="own_supply_trade trade_supply_change input form-control pull-right" type="number"/>
                         </div>
                     </div>
                 <?php } ?>

@@ -503,14 +503,24 @@ class Game extends CI_Controller {
         }
         $trade_partner_key = $this->input->post('trade_partner_key');
         $world_key = $this->input->post('world_key');
-        $supplies_offered = $this->input->post('supplies_offered');
-        $supplies_demanded = $this->input->post('supplies_demanded');
         $message = $this->input->post('message');
+        $treaty_key = $this->input->post('treaty');
+        $supplies_offered = json_decode($this->input->post('supplies_offered'));
+        $supplies_demanded = json_decode($this->input->post('supplies_demanded'));
+
         $account = $this->user_model->this_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
-        dd('marco');
+        $trade_partner = $this->user_model->this_account($trade_partner_key);
+        if (!$account) {
+            api_error_response('partner_does_not_exist', 'This trade partner does not exist');
+        }
+        if ($trade_partner['world_key'] != $world_key) {
+            api_error_response('partner_is_in_different_world', 'This trade partner does not exist in the same world');
+        }
+        $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
+        api_response();
     }
 
     public function sell()
