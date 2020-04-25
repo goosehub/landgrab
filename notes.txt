@@ -16,18 +16,15 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     diplomacy
-        hold supplies on trade request
         refund supplies on trade request rejected
         supplies
         messages
         notices
-        world wide message for diplomacy changes
-        passage
-        tooltip for alliances, rights of passage, etc
+        world wide message for treaty changes
         expire trade requests after 24 hours
         withdraw trade request
-        limit number of active requests
 LOW PRIORITY
+    limit to active trade requests
     Better handle trying to attack peaceful nation
     show diplomacy status on click other players land
     industry require round of feed to establish
@@ -57,6 +54,7 @@ GOING LIVE
     reddit update post
     beta
 Next Update
+    Passage
     Conceal except when own, ally, or navy
     More worlds
     Being attacked UI
@@ -65,6 +63,7 @@ NO PRIORITY
     disable enlist options when not enough cash exists
     refactor agreement_key to treaty_key
     suffix on industry input selection preview
+    tooltip for alliances, rights of passage, etc
     have capitols show laws of that nation, wars and rights of passage
     refactor township input desc to be generated
     abstract market table per world

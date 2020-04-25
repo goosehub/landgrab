@@ -505,6 +505,8 @@ Class game_model extends CI_Model
 		$this->create_agreement($request_account_key, $receive_account_key, $agreement_key);
 		foreach ($supplies_offered as $supply) {
 			$this->create_supply_account_trade_lookups($supply->supply_key, $request_account_key, $trade_key, (int)$supply->amount);
+			// We hold the money pal
+			$this->decrement_account_supply($request_account_key, $supply->supply_key, (int)$supply->amount);
 		}
 		foreach ($supplies_demanded as $supply) {
 			$this->create_supply_account_trade_lookups($supply->supply_key, $receive_account_key, $trade_key, (int)$supply->amount);
