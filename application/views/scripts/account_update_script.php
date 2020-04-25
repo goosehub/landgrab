@@ -29,7 +29,22 @@
         update_stats_projections();
         update_ideology_ui()
         update_supply_alerts();
+        update_unread_diplomacy();
       }, 'account_update');
+    }
+
+    function update_unread_diplomacy() {
+      let unread = 0;
+      for (let key in account.pending_trades) {
+        if (!parseInt(account.pending_trades[key].request_seen)) {
+          unread++;
+        }
+      }
+      $('.diplomacy_unread_count').hide();
+      if (unread) {
+        $('.diplomacy_unread_count').html(unread);
+        $('.diplomacy_unread_count').show();
+      }
     }
 
     function update_ideology_ui() {

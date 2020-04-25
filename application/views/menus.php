@@ -53,7 +53,7 @@
     <div class="diplomacy_parent menu_element btn-group">
       <button id="diplomacy_dropdown" class="diplomacy_dropdown menu_element btn btn-default" type="button" title="Trade, War, Peace">
         <strong>Diplomacy</strong>
-        <strong class="diplomacy_unread_count badge">3</strong>
+        <strong class="diplomacy_unread_count badge"></strong>
         <span class="caret"></span>
       </button>
     </div>

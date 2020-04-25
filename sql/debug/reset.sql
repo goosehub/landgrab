@@ -24,7 +24,7 @@ UPDATE `supply_account_lookup` SET
 WHERE 1;
 
 UPDATE `account` SET
-`government` = 2,
+`ideology` = 2,
 `tax_rate` = 10,
 `ideology` = 1,
 `last_law_change` = NULL
@@ -32,18 +32,21 @@ WHERE 1;
 
 --
 
+TRUNCATE TABLE `supply_account_lookup`;
+TRUNCATE TABLE `user`;
+TRUNCATE TABLE `account`;
+
 -- TRUNCATE TABLE `world`;
+-- TRUNCATE TABLE `tiles`;
+
 -- TRUNCATE TABLE `unit_type`;
 -- TRUNCATE TABLE `supply`;
 -- TRUNCATE TABLE `terrain`;
 -- TRUNCATE TABLE `resource`;
 -- TRUNCATE TABLE `settlement`;
 -- TRUNCATE TABLE `industry`;
--- TRUNCATE TABLE `user`;
+
 -- TRUNCATE TABLE `chat`;
+
 -- TRUNCATE TABLE `analytics`;
 -- TRUNCATE TABLE `ip_request`;
-
--- TRUNCATE TABLE `tiles`;
--- TRUNCATE TABLE `supply_account_lookup`;
--- TRUNCATE TABLE `account`;

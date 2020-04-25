@@ -11,6 +11,8 @@ Bar that shrinks down to victory chance
 ==========================================================================================
 
 HIGH PRIORITY
+    Industry not showing required
+    Make it clear that it's paid up front
 MEDIUM PRIORITY
     commission icons
     diplomacy
@@ -26,6 +28,7 @@ MEDIUM PRIORITY
         withdraw trade request
         limit number of active requests
 LOW PRIORITY
+    Better handle trying to attack peaceful nation
     show diplomacy status on click other players land
     industry require round of feed to establish
     hide resources in responses before discovered

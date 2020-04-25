@@ -88,7 +88,7 @@ Class combat_model extends CI_Model
 
 	function navy_translate($unit_key, $terrain_key)
 	{
-		if ($terrain_key === OCEAN_KEY) {
+		if ($unit_key && $terrain_key === OCEAN_KEY) {
 			return NAVY_KEY;
 		}
 		return (int)$unit_key;

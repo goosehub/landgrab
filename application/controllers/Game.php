@@ -137,6 +137,7 @@ class Game extends CI_Controller {
     {
         $account = $this->user_model->this_account($world_key);
         $account['agreements'] = $this->game_model->agreements_by_account($account['id']);
+        $account['pending_trades'] = $this->game_model->pending_trades($account['id']);
         $account['supplies'] = array();
         $supplies = $this->game_model->get_account_supplies($account['id']);
         $account['input_projections'] = $this->game_model->get_input_projections($account['id']);

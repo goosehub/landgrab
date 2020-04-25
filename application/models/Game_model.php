@@ -490,6 +490,16 @@ Class game_model extends CI_Model
 		$result = isset($result[0]) ? $result[0] : false;
 		return $result['tile_count'] * $industry_cash_cost;
 	}
+	function pending_trades($account_key) {
+		$this->db->select('trade_request.*, user.username');
+		$this->db->from('trade_request');
+		$this->db->join('account', 'trade_request.request_account_key = account.id', 'left');
+		$this->db->join('user', 'user.id = account.user_key', 'left');
+		$this->db->where('receive_account_key', $account_key);
+		$this->db->where('is_accepted', false);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function create_trade_main($request_account_key, $receive_account_key, $message, $agreement_key, $supplies_offered, $supplies_demanded) {
 		$trade_key = $this->create_trade_request($request_account_key, $receive_account_key, $message, $agreement_key);
 		$this->create_agreement($request_account_key, $receive_account_key, $agreement_key);
