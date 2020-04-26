@@ -8,7 +8,14 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#trade_requests_received" aria-controls="home" role="tab" data-toggle="tab">Received Proposals</a></li>
+                <li role="presentation"><a href="#trade_requests_sent" aria-controls="profile" role="tab" data-toggle="tab">Sent Proposals</a></li>
+                <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2">
             <select class="form-control" id="select_account_for_diplomacy">
                 <?php foreach ($active_accounts as $an_account) { ?>
                     <?php if ($an_account['id'] === $account['id']) { continue; } ?>
@@ -16,25 +23,44 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button id="start_new_diplomacy" class="btn btn-action form-control">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-handshake"></i>
                 Start Diplomacy
             </button>
         </div>
     </div>
 
-    <div>
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#trade_requests_received" aria-controls="home" role="tab" data-toggle="tab">Received Proposals</a></li>
-        <li role="presentation"><a href="#trade_requests_sent" aria-controls="profile" role="tab" data-toggle="tab">Sent Proposals</a></li>
-        <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane well active" id="trade_requests_received"></div>
-        <div role="tabpanel" class="tab-pane well" id="trade_requests_sent"></div>
-        <div role="tabpanel" class="tab-pane well" id="current_treaties"></div>
-      </div>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane well active" id="trade_requests_received">
+            <div class="row">
+              <div class="col-md-2"><label>Leader</label></div>
+              <div class="col-md-2"><label>Message</label></div>
+              <div class="col-md-2"><label>Reply</label></div>
+              <div class="col-md-2"><label>Treaty</label></div>
+              <div class="col-md-2"><label>Created</label></div>
+              <div class="col-md-1"><label>Status</label></div>
+              <div class="col-md-1"></div>
+            </div>
+            <hr>
+            <div id="trade_requests_received_listing"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane well" id="trade_requests_sent">
+            <div class="row">
+              <div class="col-md-2"><label>Leader</label></div>
+              <div class="col-md-2"><label>Message</label></div>
+              <div class="col-md-2"><label>Reply</label></div>
+              <div class="col-md-2"><label>Treaty</label></div>
+              <div class="col-md-2"><label>Created</label></div>
+              <div class="col-md-1"><label>Status</label></div>
+              <div class="col-md-1"></div>
+            </div>
+            <hr>
+            <div id="trade_requests_sent_listing"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane well" id="current_treaties">
+            
+        </div>
     </div>
 </div>
 <?php } ?>

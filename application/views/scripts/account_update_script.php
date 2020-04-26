@@ -30,25 +30,25 @@
         update_ideology_ui()
         update_supply_alerts();
         update_unread_diplomacy();
-        sent_trades();
-        received_trades();
+        update_sent_trades();
+        update_received_trades();
         update_current_treaties();
       }, 'account_update');
     }
 
-    function sent_trades() {
-      $('#trade_requests_sent').html('');
-      for (let key in account.sent_trades) {
-        let row_html = trade_requests_sent_html(account.sent_trades[key]);
-        $('#trade_requests_sent').append(row_html);
+    function update_received_trades() {
+      $('#trade_requests_received_listing').html('');
+      for (let key in account.received_trades) {
+        let row_html = trade_requests_received_html(account.received_trades[key]);
+        $('#trade_requests_received_listing').append(row_html);
       }
     }
 
-    function received_trades() {
-      $('#trade_requests_received').html('');
-      for (let key in account.received_trades) {
-        let row_html = trade_requests_received_html(account.received_trades[key]);
-        $('#trade_requests_received').append(row_html);
+    function update_sent_trades() {
+      $('#trade_requests_sent_listing').html('');
+      for (let key in account.sent_trades) {
+        let row_html = trade_requests_sent_html(account.sent_trades[key]);
+        $('#trade_requests_sent_listing').append(row_html);
       }
     }
 
@@ -61,37 +61,61 @@
     }
 
     function trade_requests_sent_html(trade) {
-      var date_formatted = new Date(trade.modified).toLocaleDateString();
+      let date_formatted = new Date(trade.modified).toLocaleDateString();
       return `
-      <p class="lead">
-        <strong class="text-primary">${trade.username}</strong>
-        <strong class="text-default">${trade.request_message}</strong>
-        <strong class="text-default">${trade.response_message}</strong>
-        <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
-        <strong class="info">${date_formatted}</strong>
-        <strong>${trade.is_accepted ? 'Yes' : 'No'}</strong>
-        <strong>${trade.is_declared ? 'Yes' : 'No'}</strong>
-        <strong>${trade.is_rejected ? 'Yes' : 'No'}</strong>
-        <button class="btn btn-primary" data-id="${trade.id}">Open Request</button>
-      </p>
+      <div class="row">
+        <div class="col-md-2">
+          <strong class="text-primary">${trade.username}</strong>
+        </div>
+        <div class="col-md-2">
+          <small class="text-default">${trade.request_message.substring(0,100)}</small>
+        </div>
+        <div class="col-md-2">
+          <small class="text-default">${trade.response_message.substring(0,100)}</small>
+        </div>
+        <div class="col-md-2">
+          <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
+        </div>
+        <div class="col-md-2">
+          <strong class="text-info">${date_formatted}</strong>
+        </div>
+        <div class="col-md-1">
+          <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i></button>
+        </div>
+      </div>
       <hr>
       `
     }
 
     function trade_requests_received_html(trade) {
-      var date_formatted = new Date(trade.modified).toLocaleDateString();
+      let date_formatted = new Date(trade.modified).toLocaleDateString();
       return `
-      <p class="lead">
-        <strong class="text-primary">${trade.username}</strong>
-        <strong class="text-default">${trade.request_message}</strong>
-        <strong class="text-default">${trade.response_message}</strong>
-        <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
-        <strong class="info">${date_formatted}</strong>
-        <strong>${parseInt(trade.is_accepted) ? 'Yes' : 'No'}</strong>
-        <strong>${parseInt(trade.is_declared) ? 'Yes' : 'No'}</strong>
-        <strong>${parseInt(trade.is_rejected) ? 'Yes' : 'No'}</strong>
-        <button class="btn btn-primary" data-id="${trade.id}">Open Request</button>
-      </p>
+      <div class="row">
+        <div class="col-md-2">
+          <strong class="text-primary">${trade.username}</strong>
+        </div>
+        <div class="col-md-2">
+          <small class="text-default">${trade.request_message.substring(0,100)}</small>
+        </div>
+        <div class="col-md-2">
+          <small class="text-default">${trade.response_message.substring(0,100)}</small>
+        </div>
+        <div class="col-md-2">
+          <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
+        </div>
+        <div class="col-md-2">
+          <strong class="text-info">${date_formatted}</strong>
+        </div>
+        <div class="col-md-1">
+          <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i></button>
+        </div>
+      </div>
       <hr>
       `
     }
@@ -100,7 +124,7 @@
       if (treaty.treaty_key == peace_key) {
         return '';
       }
-      var date_formatted = new Date(treaty.modified).toLocaleDateString();
+      let date_formatted = new Date(treaty.modified).toLocaleDateString();
       return `
       <p class="lead">
         <strong class="text-primary">${treaty.a_username}</strong>

@@ -13,18 +13,15 @@ HIGH PRIORITY
     Unit not wanting to move
 MEDIUM PRIORITY
     commission icons
-    duplicate treaties
     diplomacy
-        refund supplies on trade request rejected
-        supplies
+        pay and receive supplies on trade request accept
+        refund supplies on trade request reject
         messages
-        notices
-        world wide message for treaty changes
+        notices when accepted, war, ect
         expire trade requests after 24 hours
-        withdraw trade request
-        show accepted/rejected/expired trades
-        clean up diplomacy tabs UI
+        only show last 24 hours of trade requests
 LOW PRIORITY
+    world wide message for treaty changes
     limit to active trade requests
     Better handle trying to attack peaceful nation
     show diplomacy status on click other players land
@@ -41,6 +38,7 @@ LOW PRIORITY
 BUGS
     is_capitol remaining when changing industry, refactor columns away?
     supplies projections vs reality
+    duplicate treaties
     do industries with no inputs produce output, or get false flagged for no supply?
 EXPLOITS
     Remove base before top of hour
@@ -62,6 +60,7 @@ Next Update
     Being attacked UI
 NO PRIORITY
     fonts
+    withdraw trade request
     disable enlist options when not enough cash exists
     suffix on industry input selection preview
     tooltip for alliances, rights of passage, etc

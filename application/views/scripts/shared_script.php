@@ -166,6 +166,32 @@
         return offensive_bonus;
     }
 
+    function trade_status(trade) {
+        if (trade.is_declared) {
+            return 'War';
+        }
+        if (trade.is_accepted) {
+            return 'Accepted';
+        }
+        if (trade.is_rejected) {
+            return 'Rejected';
+        }
+        return 'Pending';
+    }
+
+    function trade_status_class(trade) {
+        if (trade.is_declared) {
+            return 'text-danger';
+        }
+        if (trade.is_accepted) {
+            return 'text-success';
+        }
+        if (trade.is_rejected) {
+            return 'text-warning';
+        }
+        return 'text-primary';
+    }
+
     function get_defensive_bonus_of_settlement_string(settlement_key)
     {
         if (settlement_key == town_key) {
