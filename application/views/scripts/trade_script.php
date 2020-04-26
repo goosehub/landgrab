@@ -60,16 +60,25 @@
 
 	function open_trade_sent(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
-			console.log('open_trade_sent');
-			console.log(response);
+			render_open_trade_sent(response);
 		});
 	}
 
 	function open_trade_received(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
-			console.log('open_trade_received');
-			console.log(response);
+			render_open_trade_received(response);
 		});
+	}
+
+	function render_open_trade_sent(data) {
+		$('.center_block').hide();
+		$('.view_trade_supply_parent').hide();
+		$('#view_trade_block').show();
+	}
+	function render_open_trade_received(data) {
+		$('.center_block').hide();
+		$('.view_trade_supply_parent').hide();
+		$('#view_trade_block').show();
 	}
 
 	function send_trade_request() {
