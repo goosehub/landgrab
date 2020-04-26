@@ -251,6 +251,21 @@
         return peace_key;
     }
 
+    function treaty_class(treaty_key) {
+        let treaty_class = '';
+        if (treaty_key == war_key) {
+            treaty_class = 'text-danger';
+            $('#declare_war').hide();
+        }
+        else if (treaty_key == peace_key) {
+            treaty_class = 'text-success';
+        }
+        else if (treaty_key == passage_key) {
+            treaty_class = 'text-info';
+        }
+        return treaty_class;
+    }
+
 
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';

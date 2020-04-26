@@ -560,8 +560,12 @@ Class game_model extends CI_Model
 		$this->db->insert('agreement_lookup', $data);
 	}
 	function agreements_by_account($account_key) {
-		$this->db->select('*');
+		$this->db->select('agreement_lookup.*, a_user.username AS a_username, b_user.username AS b_username');
 		$this->db->from('agreement_lookup');
+		$this->db->join('account AS a_account', 'agreement_lookup.a_account_key = a_account.id', 'left');
+		$this->db->join('user AS a_user', 'a_user.id = a_account.user_key', 'left');
+		$this->db->join('account AS b_account', 'agreement_lookup.b_account_key = b_account.id', 'left');
+		$this->db->join('user AS b_user', 'b_user.id = b_account.user_key', 'left');
 		$this->db->where('a_account_key', $account_key);
 		$this->db->or_where('b_account_key', $account_key);
 		$query = $this->db->get();

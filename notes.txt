@@ -2,19 +2,19 @@
     Notes
 ==========================================================================================
 
-Unit logic
 
-Bar that shrinks down to victory chance
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    Industry not showing required
     Make it clear that it's paid up front
+    Industry not showing required inputs
+    Unit not wanting to move
 MEDIUM PRIORITY
     commission icons
+    duplicate treaties
     diplomacy
         refund supplies on trade request rejected
         supplies

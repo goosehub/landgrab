@@ -29,10 +29,12 @@
             </div>
             <div class="col-md-4">
                 <h2 class="text-center">Proposed Agreement</h2>
+
                 <p class="lead">
                     Current Treaty:
                     <span class="current_treaty"></span>
                 </p>
+
                 <p class="lead">Proposed Treaty</p>
                 <select class="form-control" id="input_treaty" name="input_treaty">
                     <option value="2">Peace</option>
@@ -43,6 +45,8 @@
                 <textarea class="form-control" id="input_trade_message" name="input_trade_message"></textarea>
                 
                 <hr>
+
+                <p>Offered supplies are held until the agreement is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.</p>
 
                 <div class="row">
                     <div class="col-md-4">

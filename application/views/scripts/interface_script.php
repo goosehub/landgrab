@@ -40,6 +40,20 @@ $('#login_block').show();
 $('#register_block').show();
 <?php } ?>
 
+// Tabs
+$('#trade_requests_received a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+$('#trade_requests_sent a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+$('#current_treaties a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+
 // 
 // Laws
 // 

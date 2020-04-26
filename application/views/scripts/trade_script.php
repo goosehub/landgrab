@@ -118,19 +118,8 @@
 	function update_partner_treaty() {
 		$('#declare_war').show();
 		let treaty_key = find_agreement_by_account_key(trade_partner.id)
-		let treaty_class = '';
-		if (treaty_key == war_key) {
-			treaty_class = 'text-danger';
-			$('#declare_war').hide();
-		}
-		else if (treaty_key == peace_key) {
-			treaty_class = 'text-success';
-		}
-		else if (treaty_key == passage_key) {
-			treaty_class = 'text-info';
-		}
 		let treaty = treaties[treaty_key];
-		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class);
+		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
 	}
 
     function update_partner_supplies() {

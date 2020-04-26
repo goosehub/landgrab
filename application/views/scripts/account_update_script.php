@@ -30,7 +30,35 @@
         update_ideology_ui()
         update_supply_alerts();
         update_unread_diplomacy();
+        update_current_treaties();
       }, 'account_update');
+    }
+
+    function update_current_treaties() {
+      $('#current_treaties').html('');
+      for (let key in account.agreements) {
+        let row_html = current_treaty_html(account.agreements[key]);
+        $('#current_treaties').append(row_html);
+      }
+    }
+
+    function current_treaty_html(treaty) {
+      if (treaty.agreement_key == peace_key) {
+        // return '';
+      }
+      var date_formatted = new Date(treaty.modified).toLocaleDateString();
+      return `
+      <p class="lead">
+        <strong class="text-primary">${treaty.a_username}</strong>
+        and
+        <strong class="text-primary">${treaty.b_username}</strong>
+        have a treaty of
+        <strong class="${treaty_class(treaty.agreement_key)}">${treaties[treaty.agreement_key]}</strong>
+        last ratified on
+        <strong class="info">${date_formatted}</strong>
+      </p>
+      <hr>
+      `
     }
 
     function update_unread_diplomacy() {

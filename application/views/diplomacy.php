@@ -24,12 +24,23 @@
         </div>
     </div>
 
-    <hr>
-
-    <p class="lead">Unread</p>
-    <section id="unread_trade_requests"></section>
-    <hr>
-    <p class="lead">Read</p>
-    <section id="unread_trade_requests"></section>
+    <div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#trade_requests_received" aria-controls="home" role="tab" data-toggle="tab">Received Proposals</a></li>
+        <li role="presentation"><a href="#trade_requests_sent" aria-controls="profile" role="tab" data-toggle="tab">Sent Proposals</a></li>
+        <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane well active" id="trade_requests_received">
+            trade_requests_received
+        </div>
+        <div role="tabpanel" class="tab-pane well" id="trade_requests_sent">
+            trade_requests_sent
+        </div>
+        <div role="tabpanel" class="tab-pane well" id="current_treaties">
+            current_treaties
+        </div>
+      </div>
+    </div>
 </div>
 <?php } ?>
