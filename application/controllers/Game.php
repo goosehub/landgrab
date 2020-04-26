@@ -469,6 +469,17 @@ class Game extends CI_Controller {
         api_response();
     }
 
+    public function get_trade_request($trade_request_key)
+    {
+        $data['trade_request'] = $this->game_model->get_trade_request($trade_request_key);
+        if (!$data['trade_request']) {
+            api_error_response('trade_request_not_found', 'Trade request not found');
+        }
+        $data['request_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['request_account_key']);
+        $data['receive_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['receive_account_key']);
+        api_response($data);
+    }
+
     public function declare_war()
     {
         $this->load->library('form_validation');

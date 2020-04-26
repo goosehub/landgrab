@@ -83,7 +83,7 @@
           <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
-          <button class="btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i></button>
+          <button class="open_trade_sent btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i> Open</button>
         </div>
       </div>
       <hr>
@@ -113,7 +113,7 @@
           <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
-          <button class="btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i></button>
+          <button class="open_trade_received btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i> Open</button>
         </div>
       </div>
       <hr>

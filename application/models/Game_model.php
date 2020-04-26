@@ -490,6 +490,26 @@ Class game_model extends CI_Model
 		$result = isset($result[0]) ? $result[0] : false;
 		return $result['tile_count'] * $industry_cash_cost;
 	}
+	function get_trade_request($trade_request_key) {
+		$this->db->select('trade_request.*, request_user.username AS request_username, receive_user.username AS receive_username');
+		$this->db->from('trade_request');
+		$this->db->join('account AS request_account', 'trade_request.request_account_key = request_account.id', 'left');
+		$this->db->join('user AS request_user', 'request_user.id = request_account.user_key', 'left');
+		$this->db->join('account AS receive_account', 'trade_request.receive_account_key = receive_account.id', 'left');
+		$this->db->join('user AS receive_user', 'receive_user.id = receive_account.user_key', 'left');
+		$this->db->where('trade_request.id', $trade_request_key);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return isset($result[0]) ? $result[0] : false;
+	}
+	function get_supply_account_trade_lookup($trade_request_key, $account_key) {
+		$this->db->select('*');
+		$this->db->from('supply_account_trade_lookup');
+		$this->db->where('trade_key', $trade_request_key);
+		$this->db->where('account_key', $account_key);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function sent_trades($account_key) {
 		$this->db->select('trade_request.*, user.username');
 		$this->db->from('trade_request');
@@ -577,8 +597,7 @@ Class game_model extends CI_Model
 		$this->db->where('a_account_key', $account_key);
 		$this->db->or_where('b_account_key', $account_key);
 		$query = $this->db->get();
-		$result = $query->result_array();
-		return $result;
+		return $query->result_array();
 	}
 	// 
 	// 

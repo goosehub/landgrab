@@ -6,6 +6,21 @@
 		handle_input_change();
 		handle_declare_war();
 		handle_send_trade_request();
+		handle_open_trade_sent();
+		handle_open_trade_received();
+	}
+
+	function handle_open_trade_sent() {
+		$('#trade_requests_sent').on('click', '.open_trade_sent', function(){
+			let trade_request_key = $(this).data('id');
+			open_trade_sent(trade_request_key);
+		});
+	}
+	function handle_open_trade_received() {
+		$('#trade_requests_received').on('click', '.open_trade_received', function(){
+			let trade_request_key = $(this).data('id');
+			open_trade_received(trade_request_key);
+		});
 	}
 
 	function handle_new_diplomacy() {
@@ -43,6 +58,20 @@
 		});
 	}
 
+	function open_trade_sent(trade_request_key) {
+		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
+			console.log('open_trade_sent');
+			console.log(response);
+		});
+	}
+
+	function open_trade_received(trade_request_key) {
+		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
+			console.log('open_trade_received');
+			console.log(response);
+		});
+	}
+
 	function send_trade_request() {
 		let data = {
 			world_key: world_key,
@@ -52,8 +81,6 @@
 			message: $('#input_trade_message').html(),
 			treaty: $('#input_treaty').val(),
 		};
-		console.log('send_trade_request');
-		console.log(data);
 		ajax_post('game/send_trade_request', data, function(response) {
 			$('.center_block').hide();
 		});
