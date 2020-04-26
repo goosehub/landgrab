@@ -46,7 +46,7 @@ class Game extends CI_Controller {
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
         if ($data['account']) {
-            $data['account']['agreements'] = $this->game_model->agreements_by_account($data['account']['id']);
+            $data['account']['treaties'] = $this->game_model->treaties_by_account($data['account']['id']);
         }
 
         $data['worlds'] = $this->game_model->get_all('world');
@@ -136,8 +136,9 @@ class Game extends CI_Controller {
     public function get_user_full_account($world_key)
     {
         $account = $this->user_model->this_account($world_key);
-        $account['agreements'] = $this->game_model->agreements_by_account($account['id']);
-        $account['pending_trades'] = $this->game_model->pending_trades($account['id']);
+        $account['treaties'] = $this->game_model->treaties_by_account($account['id']);
+        $account['sent_trades'] = $this->game_model->sent_trades($account['id']);
+        $account['received_trades'] = $this->game_model->received_trades($account['id']);
         $account['supplies'] = array();
         $supplies = $this->game_model->get_account_supplies($account['id']);
         $account['input_projections'] = $this->game_model->get_input_projections($account['id']);
@@ -258,8 +259,8 @@ class Game extends CI_Controller {
             return false;
         }
         if ($tile['account_key']) {
-            $agreement = $this->game_model->find_existing_agreement($account['id'], $tile['account_key']);
-            if (!$agreement || $agreement['agreement_key'] != WAR_KEY) {
+            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
                 api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
             }
         }
@@ -273,8 +274,8 @@ class Game extends CI_Controller {
         }
 
         if ($tile['unit_key']) {
-            $agreement = $this->game_model->find_existing_agreement($account['id'], $tile['account_key']);
-            if (!$agreement || $agreement['agreement_key'] != WAR_KEY) {
+            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
                 api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
             }
         }
@@ -481,15 +482,15 @@ class Game extends CI_Controller {
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
-        $agreement_key = false;
+        $treaty_key = false;
         $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_DECLARE_WAR);
-        $existing_agreement = $this->game_model->find_existing_agreement($account['id'], $trade_partner_key);
-        if ($existing_agreement) {
-            $agreement_key = $existing_agreement['id'];
-            $this->game_model->update_agreement($existing_agreement['id'], WAR_KEY);
+        $existing_treaty = $this->game_model->find_existing_treaty($account['id'], $trade_partner_key);
+        if ($existing_treaty) {
+            $treaty_key = $existing_treaty['id'];
+            $this->game_model->update_treaty($existing_treaty['id'], WAR_KEY);
         }
         else {
-            $this->game_model->create_agreement($account['id'], $trade_partner_key, WAR_KEY);
+            $this->game_model->create_treaty($account['id'], $trade_partner_key, WAR_KEY);
         }
         api_response();
     }
@@ -513,7 +514,7 @@ class Game extends CI_Controller {
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
-        $trade_partner = $this->user_model->this_account($trade_partner_key);
+        $trade_partner = $this->user_model->get_account_by_id($trade_partner_key);
         if (!$account) {
             api_error_response('partner_does_not_exist', 'This trade partner does not exist');
         }

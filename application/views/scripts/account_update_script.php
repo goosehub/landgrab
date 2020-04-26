@@ -30,21 +30,75 @@
         update_ideology_ui()
         update_supply_alerts();
         update_unread_diplomacy();
+        sent_trades();
+        received_trades();
         update_current_treaties();
       }, 'account_update');
     }
 
+    function sent_trades() {
+      $('#trade_requests_sent').html('');
+      for (let key in account.sent_trades) {
+        let row_html = trade_requests_sent_html(account.sent_trades[key]);
+        $('#trade_requests_sent').append(row_html);
+      }
+    }
+
+    function received_trades() {
+      $('#trade_requests_received').html('');
+      for (let key in account.received_trades) {
+        let row_html = trade_requests_received_html(account.received_trades[key]);
+        $('#trade_requests_received').append(row_html);
+      }
+    }
+
     function update_current_treaties() {
       $('#current_treaties').html('');
-      for (let key in account.agreements) {
-        let row_html = current_treaty_html(account.agreements[key]);
+      for (let key in account.treaties) {
+        let row_html = current_treaty_html(account.treaties[key]);
         $('#current_treaties').append(row_html);
       }
     }
 
+    function trade_requests_sent_html(trade) {
+      var date_formatted = new Date(trade.modified).toLocaleDateString();
+      return `
+      <p class="lead">
+        <strong class="text-primary">${trade.username}</strong>
+        <strong class="text-default">${trade.request_message}</strong>
+        <strong class="text-default">${trade.response_message}</strong>
+        <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
+        <strong class="info">${date_formatted}</strong>
+        <strong>${trade.is_accepted ? 'Yes' : 'No'}</strong>
+        <strong>${trade.is_declared ? 'Yes' : 'No'}</strong>
+        <strong>${trade.is_rejected ? 'Yes' : 'No'}</strong>
+        <button class="btn btn-primary" data-id="${trade.id}">Open Request</button>
+      </p>
+      <hr>
+      `
+    }
+
+    function trade_requests_received_html(trade) {
+      var date_formatted = new Date(trade.modified).toLocaleDateString();
+      return `
+      <p class="lead">
+        <strong class="text-primary">${trade.username}</strong>
+        <strong class="text-default">${trade.request_message}</strong>
+        <strong class="text-default">${trade.response_message}</strong>
+        <strong class="${treaty_class(trade.treaty_key)}">${treaties[trade.treaty_key]}</strong>
+        <strong class="info">${date_formatted}</strong>
+        <strong>${parseInt(trade.is_accepted) ? 'Yes' : 'No'}</strong>
+        <strong>${parseInt(trade.is_declared) ? 'Yes' : 'No'}</strong>
+        <strong>${parseInt(trade.is_rejected) ? 'Yes' : 'No'}</strong>
+        <button class="btn btn-primary" data-id="${trade.id}">Open Request</button>
+      </p>
+      <hr>
+      `
+    }
+
     function current_treaty_html(treaty) {
-      if (treaty.agreement_key == peace_key) {
-        // return '';
+      if (treaty.treaty_key == peace_key) {
+        return '';
       }
       var date_formatted = new Date(treaty.modified).toLocaleDateString();
       return `
@@ -53,7 +107,7 @@
         and
         <strong class="text-primary">${treaty.b_username}</strong>
         have a treaty of
-        <strong class="${treaty_class(treaty.agreement_key)}">${treaties[treaty.agreement_key]}</strong>
+        <strong class="${treaty_class(treaty.treaty_key)}">${treaties[treaty.treaty_key]}</strong>
         last ratified on
         <strong class="info">${date_formatted}</strong>
       </p>
@@ -63,8 +117,8 @@
 
     function update_unread_diplomacy() {
       let unread = 0;
-      for (let key in account.pending_trades) {
-        if (!parseInt(account.pending_trades[key].request_seen)) {
+      for (let key in account.received_trades) {
+        if (!parseInt(account.received_trades[key].request_seen)) {
           unread++;
         }
       }

@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h2 class="text-center">Proposed Agreement</h2>
+                <h2 class="text-center">Proposed treaty</h2>
 
                 <p class="lead">
                     Current Treaty:
@@ -46,7 +46,7 @@
                 
                 <hr>
 
-                <p>Offered supplies are held until the agreement is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.</p>
+                <p>Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.</p>
 
                 <div class="row">
                     <div class="col-md-4">

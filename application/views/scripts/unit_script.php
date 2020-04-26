@@ -188,7 +188,7 @@
   function no_friendly_unit_at_square(lat, lng) {
     for (var i in unit_markers) {
       if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
-        return find_agreement_by_account_key(unit_markers[i].unit.unit_owner_key) == war_key;
+        return find_treaty_by_account_key(unit_markers[i].unit.unit_owner_key) == war_key;
       }
     }
     return true;

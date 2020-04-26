@@ -117,7 +117,7 @@
 
 	function update_partner_treaty() {
 		$('#declare_war').show();
-		let treaty_key = find_agreement_by_account_key(trade_partner.id)
+		let treaty_key = find_treaty_by_account_key(trade_partner.id)
 		let treaty = treaties[treaty_key];
 		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
 	}

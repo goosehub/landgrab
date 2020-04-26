@@ -308,10 +308,10 @@
     if (unit_owner_key == account.id) {
       unit_color = 'own';
     }
-    else if (find_agreement_by_account_key(unit_owner_key) == war_key) {
+    else if (find_treaty_by_account_key(unit_owner_key) == war_key) {
       unit_color = 'enemy';
     }
-    else if (find_agreement_by_account_key(unit_owner_key) == passage_key) {
+    else if (find_treaty_by_account_key(unit_owner_key) == passage_key) {
       unit_color = 'ally';
     }
     let path = `${base_url}resources/icons/units/${unit_key}-${unit_color}.png`;

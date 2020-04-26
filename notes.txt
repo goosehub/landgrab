@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    Make it clear that it's paid up front
     Industry not showing required inputs
     Unit not wanting to move
 MEDIUM PRIORITY
@@ -23,6 +22,8 @@ MEDIUM PRIORITY
         world wide message for treaty changes
         expire trade requests after 24 hours
         withdraw trade request
+        show accepted/rejected/expired trades
+        clean up diplomacy tabs UI
 LOW PRIORITY
     limit to active trade requests
     Better handle trying to attack peaceful nation
@@ -36,6 +37,7 @@ LOW PRIORITY
     UI for your current alliances and wars
     war confirm
     refactor into a marker script
+    login is slow on load
 BUGS
     is_capitol remaining when changing industry, refactor columns away?
     supplies projections vs reality
@@ -61,7 +63,6 @@ Next Update
 NO PRIORITY
     fonts
     disable enlist options when not enough cash exists
-    refactor agreement_key to treaty_key
     suffix on industry input selection preview
     tooltip for alliances, rights of passage, etc
     have capitols show laws of that nation, wars and rights of passage

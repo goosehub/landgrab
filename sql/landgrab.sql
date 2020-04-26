@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS tile;
 DROP TABLE IF EXISTS unit_type;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS trade_request;
-DROP TABLE IF EXISTS agreement_lookup;
+DROP TABLE IF EXISTS treaty_lookup;
 DROP TABLE IF EXISTS supply_account_lookup;
 DROP TABLE IF EXISTS supply_account_trade_lookup;
 DROP TABLE IF EXISTS supply_industry_lookup;
@@ -117,24 +117,24 @@ CREATE TABLE IF NOT EXISTS `trade_request` (
   `is_accepted` int(1) UNSIGNED NOT NULL,
   `is_rejected` int(1) UNSIGNED NOT NULL,
   `is_declared` int(1) UNSIGNED NOT NULL,
-  `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
+  `treaty_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
-DROP TABLE IF EXISTS `agreement_lookup`;
-CREATE TABLE IF NOT EXISTS `agreement_lookup` (
+DROP TABLE IF EXISTS `treaty_lookup`;
+CREATE TABLE IF NOT EXISTS `treaty_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
   `a_account_key` int(10) UNSIGNED NOT NULL,
   `b_account_key` int(10) UNSIGNED NOT NULL,
-  `agreement_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
+  `treaty_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ALTER TABLE `agreement_lookup` ADD PRIMARY KEY (`id`);
-ALTER TABLE `agreement_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `treaty_lookup` ADD PRIMARY KEY (`id`);
+ALTER TABLE `treaty_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 DROP TABLE IF EXISTS `supply_industry_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (

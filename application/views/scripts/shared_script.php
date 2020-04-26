@@ -238,14 +238,14 @@
         return 'Any';
     }
 
-    function find_agreement_by_account_key(account_key) {
-        if (!account || !account.agreements || account_key == account.id) {
+    function find_treaty_by_account_key(account_key) {
+        if (!account || !account.treaties || account_key == account.id) {
             return peace_key;
         }
-        for (i = 0; i < account.agreements.length; i++) {
-            let aggrement = account.agreements[i];
+        for (i = 0; i < account.treaties.length; i++) {
+            let aggrement = account.treaties[i];
             if (account_key == aggrement.a_account_key || account_key == aggrement.b_account_key) {
-                return aggrement.agreement_key;
+                return aggrement.treaty_key;
             }
         }
         return peace_key;

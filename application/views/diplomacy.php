@@ -31,15 +31,9 @@
         <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
       </ul>
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane well active" id="trade_requests_received">
-            trade_requests_received
-        </div>
-        <div role="tabpanel" class="tab-pane well" id="trade_requests_sent">
-            trade_requests_sent
-        </div>
-        <div role="tabpanel" class="tab-pane well" id="current_treaties">
-            current_treaties
-        </div>
+        <div role="tabpanel" class="tab-pane well active" id="trade_requests_received"></div>
+        <div role="tabpanel" class="tab-pane well" id="trade_requests_sent"></div>
+        <div role="tabpanel" class="tab-pane well" id="current_treaties"></div>
       </div>
     </div>
 </div>

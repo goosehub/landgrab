@@ -28,13 +28,13 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h2>Proposed Agreement</h2>
+                <h2>Proposed treaty</h2>
                 <p class="lead">
-                    Current Diplomatic Agreement:
-                    <strong id="current_agreement" class="text-danger">War</strong>
+                    Current Diplomatic treaty:
+                    <strong id="current_treaty" class="text-danger">War</strong>
                 </p>
-                <p class="lead">Proposed Diplomatic Agreement</p>
-                <select class="form-control" id="input_agreement" name="input_agreement">
+                <p class="lead">Proposed Diplomatic treaty</p>
+                <select class="form-control" id="input_treaty" name="input_treaty">
                     <option value="2">Peace</option>
                     <option value="3">Passage</option>
                 </select>
