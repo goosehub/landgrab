@@ -60,6 +60,7 @@ Next Update
 NO PRIORITY
     fonts
     withdraw trade request
+    show when trade request will expire
     disable enlist options when not enough cash exists
     suffix on industry input selection preview
     tooltip for alliances, rights of passage, etc

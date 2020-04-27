@@ -106,6 +106,7 @@
     let highlighted_tiles = [];
     let current_tile = false;
     let trade_partner = false;
+    let view_trade = false;
     let preview_settlement_key = null;
     let preview_industry_key = null;
     let resource_markers = [];

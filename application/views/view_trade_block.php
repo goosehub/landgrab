@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-4">
             <h3 class="trade_request_partner_username text-center text-primary"></h3>
-            <div class="view_trade_supplies_parent">
+            <div class="view_trade_supplies_parent view_trade_supplies_of_partner">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-4">
             <h3 class="text-center text-primary">Your Supplies</h3>
-            <div class="view_trade_supplies_parent">
+            <div class="view_trade_supplies_parent view_trade_supplies_of_own">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">

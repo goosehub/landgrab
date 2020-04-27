@@ -60,25 +60,65 @@
 
 	function open_trade_sent(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
-			render_open_trade_sent(response);
+			view_trade = response;
+			render_open_trade_sent();
 		});
 	}
 
 	function open_trade_received(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
-			render_open_trade_received(response);
+			view_trade = response;
+			render_open_trade_received();
 		});
 	}
 
-	function render_open_trade_sent(data) {
+	function render_open_trade_sent() {
 		$('.center_block').hide();
-		$('.view_trade_supply_parent').hide();
+		update_partner_username();
+		update_partner_treaty();
+		update_proposed_treaty();
+		update_request_message();
+		render_trade_buttons();
+		update_partner_supplies_view_trade();
+		update_own_supplies_view_trade();
 		$('#view_trade_block').show();
 	}
-	function render_open_trade_received(data) {
+	function render_open_trade_received() {
 		$('.center_block').hide();
-		$('.view_trade_supply_parent').hide();
+		update_partner_username();
+		update_partner_treaty();
+		update_proposed_treaty();
+		update_request_message();
+		render_trade_buttons();
+		update_partner_supplies_view_trade();
+		update_own_supplies_view_trade();
 		$('#view_trade_block').show();
+	}
+
+	function render_trade_buttons() {
+		$('#view_trade_actions').hide();
+		if (view_trade.trade_request.request_account_key != account.id && !parseInt(view_trade.trade_request.is_accepted) && !parseInt(view_trade.trade_request.is_rejected)) {
+			$('#view_trade_actions').show();
+		}
+	}
+
+	function update_proposed_treaty() {
+		let treaty = treaties[view_trade.trade_request.treaty_key];
+		$('#proposed_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(view_trade.trade_request.treaty_key));
+		$('#proposed_treaty').html(treaty);
+	}
+	function update_request_message() {
+		$('#request_message').html(view_trade.trade_request.request_message);
+	}
+
+	function update_partner_supplies_view_trade() {
+		$('.view_trade_supplies_of_partner .view_trade_supply_parent').hide();
+
+	}
+
+	function update_own_supplies_view_trade() {
+		$('.view_trade_supplies_of_own .view_trade_supply_parent').hide();
+
 	}
 
 	function send_trade_request() {
@@ -129,8 +169,6 @@
 		return supplies_demanded;
 	}
 
-
-
 	function declare_war() {
 		let data = {
 			world_key: world_key,
@@ -144,7 +182,7 @@
 	function render_new_diplomacy() {
 		update_partner_username();
 		update_partner_treaty();
-		update_partner_supplies();
+		update_partner_supplies_new_trade();
 	}
 
 	function update_partner_username() {
@@ -158,7 +196,7 @@
 		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
 	}
 
-    function update_partner_supplies() {
+    function update_partner_supplies_new_trade() {
       Object.keys(trade_partner.supplies).forEach(function(key) {
         let supply = trade_partner.supplies[key];
         $('#partner_trade_supply_current_' + supply['slug']).html(supply['amount']);

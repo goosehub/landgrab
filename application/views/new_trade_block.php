@@ -44,7 +44,9 @@
             
             <hr>
 
-            <p>Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.</p>
+            <p style="display: none;">
+                Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.
+            </p>
 
             <div class="row">
                 <div class="col-md-4">
