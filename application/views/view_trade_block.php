@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-4">
             <h3 class="trade_request_partner_username text-center text-primary"></h3>
-            <div class="view_trade_supplies_parent view_trade_supplies_of_partner">
+            <div class="view_trade_supplies_parent view_trade_supplies_of_partner well">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">
@@ -19,14 +19,14 @@
                         <strong id="view_partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
-                        <p id="view_partner_trade_supply_proposal_<?= $supply['slug']; ?>" class="pull-right"></p>
+                        <p id="view_partner_trade_supply_proposal_<?= $supply['id']; ?>" class="pull-right"></p>
                     </div>
                 </div>
             <?php } ?>
             </div>
         </div>
         <div class="col-md-4">
-            <h2 class="text-center">Proposed treaty</h2>
+            <h2 class="text-center">Proposal</h2>
 
             <p class="lead">
                 Current Treaty:
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-4">
             <h3 class="text-center text-primary">Your Supplies</h3>
-            <div class="view_trade_supplies_parent view_trade_supplies_of_own">
+            <div class="view_trade_supplies_parent view_trade_supplies_of_own well">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">
@@ -74,7 +74,7 @@
                         <strong id="view_our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
-                        <p id="view_our_trade_supply_offer_<?= $supply['slug']; ?>" class="pull-right"></p>
+                        <p id="view_our_trade_supply_offer_<?= $supply['id']; ?>" class="pull-right"></p>
                     </div>
                 </div>
             <?php } ?>

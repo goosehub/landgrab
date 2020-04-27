@@ -61,6 +61,7 @@
 	function open_trade_sent(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
 			view_trade = response;
+			trade_partner = view_trade.trade_partner;
 			render_open_trade_sent();
 		});
 	}
@@ -68,6 +69,7 @@
 	function open_trade_received(trade_request_key) {
 		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
 			view_trade = response;
+			trade_partner = view_trade.trade_partner;
 			render_open_trade_received();
 		});
 	}
@@ -113,12 +115,28 @@
 
 	function update_partner_supplies_view_trade() {
 		$('.view_trade_supplies_of_partner .view_trade_supply_parent').hide();
-
+		let partner_supplies = view_trade.trade_request.receive_account_key == account.id ? view_trade.receive_supplies : view_trade.request_supplies;
+		for (let key in partner_supplies) {
+			let supply = partner_supplies[key];
+			console.log('marco');
+			console.log(supply);
+			console.log(supply.supply_key);
+			$('.view_trade_supplies_of_partner .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
+			$('#view_partner_trade_supply_proposal_' + supply.supply_key).html(supply.amount);
+		}
 	}
 
 	function update_own_supplies_view_trade() {
 		$('.view_trade_supplies_of_own .view_trade_supply_parent').hide();
-
+		let own_supplies = view_trade.trade_request.receive_account_key == account.id ? view_trade.request_supplies : view_trade.receive_supplies;
+		for (let key in own_supplies) {
+			let supply = own_supplies[key];
+			console.log('polo');
+			console.log(supply);
+			console.log(supply.supply_key);
+			$('.view_trade_supplies_of_own .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
+			$('#view_our_trade_supply_offer_' + supply.supply_key).html(supply.amount);
+		}
 	}
 
 	function send_trade_request() {
