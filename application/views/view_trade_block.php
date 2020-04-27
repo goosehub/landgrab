@@ -16,7 +16,7 @@
                         <label><?= $supply['label']; ?></label>
                     </div>
                     <div class="col-md-3">
-                        <strong id="view_partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
+                        <strong class="partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
                         <p id="view_partner_trade_supply_proposal_<?= $supply['id']; ?>" class="pull-right"></p>
@@ -71,7 +71,7 @@
                         <label><?= $supply['label']; ?></label>
                     </div>
                     <div class="col-md-3">
-                        <strong id="view_our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
+                        <strong class="our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
                         <p id="view_our_trade_supply_offer_<?= $supply['id']; ?>" class="pull-right"></p>

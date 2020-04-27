@@ -13,13 +13,15 @@
 	function handle_open_trade_sent() {
 		$('#trade_requests_sent').on('click', '.open_trade_sent', function(){
 			let trade_request_key = $(this).data('id');
-			open_trade_sent(trade_request_key);
+			let trade_partner_key = $(this).data('trade-partner-account-key');
+			open_trade_sent(trade_request_key, trade_partner_key);
 		});
 	}
 	function handle_open_trade_received() {
 		$('#trade_requests_received').on('click', '.open_trade_received', function(){
 			let trade_request_key = $(this).data('id');
-			open_trade_received(trade_request_key);
+			let trade_partner_key = $(this).data('trade-partner-account-key');
+			open_trade_received(trade_request_key, trade_partner_key);
 		});
 	}
 
@@ -58,16 +60,16 @@
 		});
 	}
 
-	function open_trade_sent(trade_request_key) {
-		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
+	function open_trade_sent(trade_request_key, trade_partner_key) {
+		ajax_get(`game/get_trade_request/${trade_request_key}/${trade_partner_key}`, function(response) {
 			view_trade = response;
 			trade_partner = view_trade.trade_partner;
 			render_open_trade_sent();
 		});
 	}
 
-	function open_trade_received(trade_request_key) {
-		ajax_get(`game/get_trade_request/${trade_request_key}`, function(response) {
+	function open_trade_received(trade_request_key, trade_partner_key) {
+		ajax_get(`game/get_trade_request/${trade_request_key}/${trade_partner_key}`, function(response) {
 			view_trade = response;
 			trade_partner = view_trade.trade_partner;
 			render_open_trade_received();
@@ -83,6 +85,7 @@
 		render_trade_buttons();
 		update_partner_supplies_view_trade();
 		update_own_supplies_view_trade();
+		update_partner_supplies_new_trade();
 		$('#view_trade_block').show();
 	}
 	function render_open_trade_received() {
@@ -94,6 +97,7 @@
 		render_trade_buttons();
 		update_partner_supplies_view_trade();
 		update_own_supplies_view_trade();
+		update_partner_supplies_new_trade();
 		$('#view_trade_block').show();
 	}
 
@@ -118,9 +122,6 @@
 		let partner_supplies = view_trade.trade_request.receive_account_key == account.id ? view_trade.receive_supplies : view_trade.request_supplies;
 		for (let key in partner_supplies) {
 			let supply = partner_supplies[key];
-			console.log('marco');
-			console.log(supply);
-			console.log(supply.supply_key);
 			$('.view_trade_supplies_of_partner .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
 			$('#view_partner_trade_supply_proposal_' + supply.supply_key).html(supply.amount);
 		}
@@ -131,9 +132,6 @@
 		let own_supplies = view_trade.trade_request.receive_account_key == account.id ? view_trade.request_supplies : view_trade.receive_supplies;
 		for (let key in own_supplies) {
 			let supply = own_supplies[key];
-			console.log('polo');
-			console.log(supply);
-			console.log(supply.supply_key);
 			$('.view_trade_supplies_of_own .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
 			$('#view_our_trade_supply_offer_' + supply.supply_key).html(supply.amount);
 		}
@@ -165,8 +163,6 @@
 				)
 			}
 		});
-		console.log('supplies_offered');
-		console.log(supplies_offered);
 		return supplies_offered;
 	}
 
@@ -182,8 +178,6 @@
 				)
 			}
 		});
-		console.log('supplies_demanded');
-		console.log(supplies_demanded);
 		return supplies_demanded;
 	}
 
@@ -217,7 +211,7 @@
     function update_partner_supplies_new_trade() {
       Object.keys(trade_partner.supplies).forEach(function(key) {
         let supply = trade_partner.supplies[key];
-        $('#partner_trade_supply_current_' + supply['slug']).html(supply['amount']);
+        $('.partner_trade_supply_current_' + supply['slug']).html(supply['amount']);
         $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
       });
     }

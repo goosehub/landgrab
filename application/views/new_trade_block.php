@@ -16,7 +16,7 @@
                         <label><?= $supply['label']; ?></label>
                     </div>
                     <div class="col-md-3">
-                        <strong id="partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
+                        <strong class="partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
                         <input value="0" min="0" max="10000" data-id="<?= $supply['id']; ?>" id="partner_trade_supply_proposal_<?= $supply['slug']; ?>" class="partner_supply_trade trade_supply_change input form-control pull-right" type="number"/>
@@ -75,7 +75,7 @@
                         <label><?= $supply['label']; ?></label>
                     </div>
                     <div class="col-md-3">
-                        <strong id="our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
+                        <strong class="our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
                     <div class="col-md-3">
                         <input value="0" min="0" max="" data-id="<?= $supply['id']; ?>" id="our_trade_supply_offer_<?= $supply['slug']; ?>" class="own_supply_trade trade_supply_change input form-control pull-right" type="number"/>

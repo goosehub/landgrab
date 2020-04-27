@@ -17,7 +17,7 @@ MEDIUM PRIORITY
         messages
         notices when accepted, war, ect
         expire trade requests after 24 hours
-        only show last 24 hours of trade requests
+        only show last 24 * 2 hours of trade requests
 LOW PRIORITY
     world wide message for treaty changes
     limit to active trade requests

@@ -163,13 +163,16 @@ class Game extends CI_Controller {
         return $account;
     }
 
-    public function get_account_with_supplies($account_key)
+    public function get_account_with_supplies($account_key, $raw = false)
     {
         $account = $this->user_model->get_account_by_id($account_key);
         $account['supplies'] = array();
         $supplies = $this->game_model->get_account_supplies($account['id']);
         foreach ($supplies as $key => $supply) {
             $account['supplies'][$supply['slug']] = $supply;
+        }
+        if ($raw) {
+            return $account;
         }
         $account['budget'] = $this->game_model->get_account_budget($account);
         api_response($account);
@@ -469,7 +472,7 @@ class Game extends CI_Controller {
         api_response();
     }
 
-    public function get_trade_request($trade_request_key)
+    public function get_trade_request($trade_request_key, $trade_partner_key)
     {
         $data['trade_request'] = $this->game_model->get_trade_request($trade_request_key);
         if (!$data['trade_request']) {
@@ -477,6 +480,7 @@ class Game extends CI_Controller {
         }
         $data['request_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['request_account_key']);
         $data['receive_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['receive_account_key']);
+        $data['trade_partner'] = $this->get_account_with_supplies($trade_partner_key, $raw = true);
         api_response($data);
     }
 

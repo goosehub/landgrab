@@ -83,7 +83,7 @@
           <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
-          <button class="open_trade_sent btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i> Open</button>
+          <button class="open_trade_sent btn btn-primary" data-id="${trade.id}" data-trade-partner-account-key="${trade.receive_account_key}"><i class="fas fa-handshake"></i> Open</button>
         </div>
       </div>
       <hr>
@@ -113,7 +113,7 @@
           <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
-          <button class="open_trade_received btn btn-primary" data-id="${trade.id}"><i class="fas fa-handshake"></i> Open</button>
+          <button class="open_trade_received btn btn-primary" data-id="${trade.id}" data-trade-partner-account-key="${trade.request_account_key}"><i class="fas fa-handshake"></i> Open</button>
         </div>
       </div>
       <hr>
@@ -382,7 +382,7 @@
         if (supply['amount'] < 0) {
           $('#government_supply_' + supply['supply_key']).addClass('text-danger');
         }
-        $('#our_trade_supply_current_' + supply['slug']).html(supply['amount']);
+        $('.our_trade_supply_current_' + supply['slug']).html(supply['amount']);
         $('#our_trade_supply_offer_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
         let current_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).val());
         let max_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).prop('max'));
