@@ -128,7 +128,7 @@
         </ul>
     </div>
     <br>
-    <div class="tab-content">
+    <div id="tile_select_extended" class="tab-content">
         <div role="tabpanel" class="tab-pane" id="settle">
             <div id="settlement_extended_info" class="well">
                 <div class="row">

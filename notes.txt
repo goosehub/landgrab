@@ -9,8 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    Industry not showing required inputs
-    Unit not wanting to move
 MEDIUM PRIORITY
     commission icons
     diplomacy
@@ -36,6 +34,7 @@ LOW PRIORITY
     refactor into a marker script
     login is slow on load
 BUGS
+    Unit not wanting to move
     is_capitol remaining when changing industry, refactor columns away?
     supplies projections vs reality
     duplicate treaties

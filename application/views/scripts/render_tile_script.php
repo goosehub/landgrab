@@ -25,11 +25,12 @@
         tile_unit();
         tile_defensive_bonus();
         tile_offensive_bonus();
-        enlist_select();
+        tile_tab_toggle();
         settlement_selection_disable();
         industry_selection_disable();
         settlement_select();
         industry_select();
+        enlist_select();
     }
     function tile_name()
     {
@@ -169,6 +170,13 @@
             $('#tile_offensive_bonus_parent').show();
         }
     }
+    function tile_tab_toggle()
+    {
+        $('#tile_select_select, #tile_select_extended').hide();
+        if (account && current_tile.account_key === account['id']) {
+            $('#tile_select_select, #tile_select_extended').show();
+        }
+    }
     function enlist_select()
     {
         $('#tab_select_enlist, #enlist_select, #enlist_disabled, #enlist_enabled').hide();
@@ -205,9 +213,7 @@
     function settlement_select()
     {
         $('.preview_settlement_button.btn-primary').removeClass('btn-primary').addClass('btn-default');
-        $('#tab_select_settle, #settlement_select').hide();
         if (account && current_tile.account_key === account['id']) {
-            $('#tab_select_settle, #settlement_select').show();
             $('.preview_settlement_button[data-id=' + preview_settlement_key + ']').addClass('btn-default').addClass('btn-primary');
             $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${preview_settlement_key}.png`);
             $('.preview_settlement_button.btn-action').removeClass('btn-action').addClass('btn-default');
