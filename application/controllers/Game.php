@@ -478,8 +478,8 @@ class Game extends CI_Controller {
         if (!$data['trade_request']) {
             api_error_response('trade_request_not_found', 'Trade request not found');
         }
-        $data['request_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['request_account_key']);
-        $data['receive_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['receive_account_key']);
+        $data['request_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['receive_account_key']);
+        $data['receive_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['request_account_key']);
         $data['trade_partner'] = $this->get_account_with_supplies($trade_partner_key, $raw = true);
         api_response($data);
     }
@@ -537,6 +537,50 @@ class Game extends CI_Controller {
             api_error_response('partner_is_in_different_world', 'This trade partner does not exist in the same world');
         }
         $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
+        api_response();
+    }
+
+    public function accept_trade_request($trade_request_key)
+    {
+        $world_key = $this->input->post('world_key');
+        $response_message = $this->input->post('response_message');
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
+        $trade_request = $this->game_model->get_trade_request($trade_request_key);
+        if (!$trade_request) {
+            api_error_response('trade_request_not_found', 'This trade request is not found');
+        }
+        if ($trade_request['receive_account_key'] != $account['id']) {
+            api_error_response('auth', 'Trade request not intended for you');
+        }
+        if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
+            api_error_response('trade_request_already_complete', 'Trade request is already complete');
+        }
+        $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $response_message);
+        api_response();
+    }
+
+    public function reject_trade_request($trade_request_key)
+    {
+        $world_key = $this->input->post('world_key');
+        $response_message = $this->input->post('response_message');
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
+        $trade_request = $this->game_model->get_trade_request($trade_request_key);
+        if (!$trade_request) {
+            api_error_response('trade_request_not_found', 'This trade request is not found');
+        }
+        if ($trade_request['receive_account_key'] != $account['id']) {
+            api_error_response('auth', 'Trade request not intended for you');
+        }
+        if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
+            api_error_response('trade_request_already_complete', 'Trade request is already complete');
+        }
+        $this->game_model->reject_trade_request($trade_request_key, $trade_request['request_account_key'], $response_message);
         api_response();
     }
 

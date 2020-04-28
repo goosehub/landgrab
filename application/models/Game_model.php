@@ -560,6 +560,36 @@ Class game_model extends CI_Model
 		);
 		$this->db->insert('supply_account_trade_lookup', $data);
 	}
+	function accept_trade_request($trade_request_key, $receive_account_key, $response_message) {
+		$data = array(
+			'is_accepted' => true,
+			'response_message' => $response_message,
+		);
+		$this->db->where('id', $trade_request_key);
+		$this->db->update('trade_request', $data);
+		$this->pay_on_accept_trade_request($trade_request_key, $receive_account_key);
+	}
+	function pay_on_accept_trade_request($trade_request_key, $receive_account_key) {
+		$supplies_demanded = $this->get_supply_account_trade_lookup($trade_request_key, $receive_account_key);
+		foreach ($supplies_demanded as $supply) {
+			$this->decrement_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
+		}
+	}
+	function reject_trade_request($trade_request_key, $request_account_key, $response_message) {
+		$data = array(
+			'is_rejected' => true,
+			'response_message' => $response_message,
+		);
+		$this->db->where('id', $trade_request_key);
+		$this->db->update('trade_request', $data);
+		$this->refund_on_reject_trade_request($trade_request_key, $request_account_key);
+	}
+	function refund_on_reject_trade_request($trade_request_key, $request_account_key) {
+		$supplies_offered = $this->get_supply_account_trade_lookup($trade_request_key, $request_account_key);
+		foreach ($supplies_offered as $supply) {
+			$this->increment_account_supply($request_account_key, $supply['supply_key'], (int)$supply['amount']);
+		}
+	}
 	function find_existing_treaty($account_key, $trade_partner_key) {
 		$account_key = (int)$account_key;
 		$trade_partner_key = (int)$trade_partner_key;

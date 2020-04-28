@@ -8,6 +8,42 @@
 		handle_send_trade_request();
 		handle_open_trade_sent();
 		handle_open_trade_received();
+		handle_accept_trade_request();
+		handle_reject_trade_request();
+	}
+
+	function handle_accept_trade_request() {
+		$('#accept_trade_request').click(function(){
+			send_accept_trade_request();
+		});
+	}
+
+	function send_accept_trade_request() {
+		let data = {
+			world_key: world_key,
+			response_message: $('#view_input_trade_message_reply').val(),
+		};
+		ajax_post('game/accept_trade_request/' + view_trade.trade_request.id, data, function(response) {
+			$('.center_block').hide();
+			$('#view_input_trade_message_reply').val('');
+		});
+	}
+
+	function handle_reject_trade_request() {
+		$('#reject_trade_request').click(function(){
+			send_reject_trade_request();
+		});
+	}
+
+	function send_reject_trade_request() {
+		let data = {
+			world_key: world_key,
+			response_message: $('#view_input_trade_message_reply').val(),
+		};
+		ajax_post('game/reject_trade_request/' + view_trade.trade_request.id, data, function(response) {
+			$('.center_block').hide();
+			$('#view_input_trade_message_reply').val('');
+		});
 	}
 
 	function handle_open_trade_sent() {
@@ -143,12 +179,18 @@
 			trade_partner_key: trade_partner.id,
 			supplies_offered: JSON.stringify(supplies_offered()),
 			supplies_demanded: JSON.stringify(supplies_demanded()),
-			message: $('#input_trade_message').html(),
+			message: $('#input_trade_message').val(),
 			treaty: $('#input_treaty').val(),
 		};
 		ajax_post('game/send_trade_request', data, function(response) {
 			$('.center_block').hide();
+			reset_new_trade_form();
 		});
+	}
+
+	function reset_new_trade_form() {
+		$('#input_trade_message').val('');
+		$('.trade_supply_change').val(0);
 	}
 
 	function supplies_offered() {

@@ -46,7 +46,7 @@
 
             <div id="view_trade_actions" class="row">
                 <div class="col-md-4">
-                    <button id="view_send_trade_request" class="btn btn-success form-control" type="button">
+                    <button id="accept_trade_request" class="btn btn-success form-control" type="button">
                         <i class="fas fa-check"></i>
                         Accept Proposal
                     </button>
@@ -54,7 +54,7 @@
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4">
-                    <button id="view_send_trade_request" class="btn btn-danger form-control" type="button">
+                    <button id="reject_trade_request" class="btn btn-danger form-control" type="button">
                         <i class="fas fa-times"></i>
                         Reject Proposal
                     </button>

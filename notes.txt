@@ -12,12 +12,11 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     commission icons
     diplomacy
-        pay and receive supplies on trade request accept
-        refund supplies on trade request reject
-        messages
+        reflect which are accepted/rejected (new tabs?)
         notices when accepted, war, ect
         expire trade requests after 24 hours
         only show last 24 * 2 hours of trade requests
+        accepting when no longer have enough
 LOW PRIORITY
     world wide message for treaty changes
     limit to active trade requests
