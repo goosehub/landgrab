@@ -20,18 +20,12 @@ MEDIUM PRIORITY
 LOW PRIORITY
     world wide message for treaty changes
     limit to active trade requests
-    Better handle trying to attack peaceful nation
-    show diplomacy status on click other players land
-    industry require round of feed to establish
-    hide resources in responses before discovered
-    json leaderboard for every supply
-    troops inside opp. tile at start of war
-    number formatting
     UI for war declared on you
     UI for your current alliances and wars
     war confirm
     refactor into a marker script
     login is slow on load
+    swal alerts
 BUGS
     Unit not wanting to move
     is_capitol remaining when changing industry, refactor columns away?
@@ -44,18 +38,23 @@ EXPLOITS
     test for any duplication exploits
 GOING LIVE
     buy icons8 paid license
-    swal alerts
     DB indexes
-    tutorial based on todo list
     account migration
     reset cron
     reddit update post
     beta
 Next Update
     Passage
+    number formatting
+    show diplomacy status on click other players land
+    json leaderboard for every supply
+    industry require round of feed to establish
+    Better handle trying to attack peaceful nation
+    hide resources in responses before discovered
     Conceal except when own, ally, or navy
     More worlds
     Being attacked UI
+    tutorial based on todo list
 NO PRIORITY
     fonts
     withdraw trade request

@@ -281,7 +281,6 @@
         let treaty_class = '';
         if (treaty_key == war_key) {
             treaty_class = 'text-danger';
-            $('#declare_war').hide();
         }
         else if (treaty_key == peace_key) {
             treaty_class = 'text-success';
