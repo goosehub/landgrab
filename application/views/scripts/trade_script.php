@@ -240,7 +240,7 @@
 	}
 
 	function update_partner_username() {
-		$('.trade_request_partner_username').html(trade_partner.username);
+		$('.trade_request_partner_username').html(trade_partner.username + ' Offer');
 	}
 
 	function update_partner_treaty() {

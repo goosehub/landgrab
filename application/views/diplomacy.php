@@ -33,6 +33,7 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane well active" id="trade_requests_received">
+            <small class="text-info">Showing the last <?= TRADE_SHOW_HOURS ?> hours of requests</small>
             <div class="row">
               <div class="col-md-2"><label>Leader</label></div>
               <div class="col-md-2"><label>Message</label></div>
@@ -46,6 +47,7 @@
             <div id="trade_requests_received_listing"></div>
         </div>
         <div role="tabpanel" class="tab-pane well" id="trade_requests_sent">
+            <small class="text-info">Showing the last <?= TRADE_SHOW_HOURS ?> hours of requests</small>
             <div class="row">
               <div class="col-md-2"><label>Leader</label></div>
               <div class="col-md-2"><label>Message</label></div>

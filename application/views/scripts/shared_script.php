@@ -167,26 +167,26 @@
     }
 
     function trade_status(trade) {
-        if (trade.is_declared) {
+        if (trade.is_declared && parseInt(trade.is_declared)) {
             return 'War';
         }
-        if (trade.is_accepted) {
+        if (trade.is_accepted && parseInt(trade.is_accepted)) {
             return 'Accepted';
         }
-        if (trade.is_rejected) {
+        if (trade.is_rejected && parseInt(trade.is_rejected)) {
             return 'Rejected';
         }
         return 'Pending';
     }
 
     function trade_status_class(trade) {
-        if (trade.is_declared) {
+        if (trade.is_declared && parseInt(trade.is_declared)) {
             return 'text-danger';
         }
-        if (trade.is_accepted) {
+        if (trade.is_accepted && parseInt(trade.is_accepted)) {
             return 'text-success';
         }
-        if (trade.is_rejected) {
+        if (trade.is_rejected && parseInt(trade.is_rejected)) {
             return 'text-warning';
         }
         return 'text-primary';

@@ -9,15 +9,14 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    Bug: hourly cash NaN
+    diplomacy expire trade requests after n hours
+    diplomacy accepting when no longer have enough
+    diplomacy show response message
 MEDIUM PRIORITY
     commission icons
-    diplomacy
-        reflect which are accepted/rejected (new tabs?)
-        notices when accepted, war, ect
-        expire trade requests after 24 hours
-        only show last 24 * 2 hours of trade requests
-        accepting when no longer have enough
 LOW PRIORITY
+    notices when war
     world wide message for treaty changes
     limit to active trade requests
     UI for war declared on you
@@ -28,7 +27,6 @@ LOW PRIORITY
     swal alerts
 BUGS
     Unit not wanting to move
-    is_capitol remaining when changing industry, refactor columns away?
     supplies projections vs reality
     duplicate treaties
     do industries with no inputs produce output, or get false flagged for no supply?
@@ -57,6 +55,7 @@ Next Update
     tutorial based on todo list
 NO PRIORITY
     fonts
+    notices when trade request accepted
     withdraw trade request
     show when trade request will expire
     disable enlist options when not enough cash exists

@@ -502,6 +502,16 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]) ? $result[0] : false;
 	}
+	function mark_trade_request_request_seen($trade_request_key) {
+		$this->db->set('request_seen', true);
+		$this->db->where('id', $trade_request_key);
+		$this->db->update('trade_request');
+	}
+	function mark_trade_request_response_seen($trade_request_key) {
+		$this->db->set('response_seen', true);
+		$this->db->where('id', $trade_request_key);
+		$this->db->update('trade_request');
+	}
 	function get_supply_account_trade_lookup($trade_request_key, $account_key) {
 		$this->db->select('*');
 		$this->db->from('supply_account_trade_lookup');
@@ -516,6 +526,8 @@ Class game_model extends CI_Model
 		$this->db->join('account', 'trade_request.receive_account_key = account.id', 'left');
 		$this->db->join('user', 'user.id = account.user_key', 'left');
 		$this->db->where('request_account_key', $account_key);
+		$this->db->where('trade_request.created >', date('Y-m-d H:i:s', time() - (TRADE_SHOW_HOURS * 60 * 60) ));
+		$this->db->order_by('trade_request.created', 'desc');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -525,6 +537,8 @@ Class game_model extends CI_Model
 		$this->db->join('account', 'trade_request.request_account_key = account.id', 'left');
 		$this->db->join('user', 'user.id = account.user_key', 'left');
 		$this->db->where('receive_account_key', $account_key);
+		$this->db->where('trade_request.created >', date('Y-m-d H:i:s', time() - (TRADE_SHOW_HOURS * 60 * 60) ));
+		$this->db->order_by('trade_request.created', 'desc');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -560,7 +574,7 @@ Class game_model extends CI_Model
 		);
 		$this->db->insert('supply_account_trade_lookup', $data);
 	}
-	function accept_trade_request($trade_request_key, $receive_account_key, $response_message) {
+	function accept_trade_request($trade_request_key, $receive_account_key, $request_account_key, $response_message) {
 		$data = array(
 			'is_accepted' => true,
 			'response_message' => $response_message,
@@ -568,11 +582,18 @@ Class game_model extends CI_Model
 		$this->db->where('id', $trade_request_key);
 		$this->db->update('trade_request', $data);
 		$this->pay_on_accept_trade_request($trade_request_key, $receive_account_key);
+		$this->receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key);
 	}
 	function pay_on_accept_trade_request($trade_request_key, $receive_account_key) {
 		$supplies_demanded = $this->get_supply_account_trade_lookup($trade_request_key, $receive_account_key);
 		foreach ($supplies_demanded as $supply) {
 			$this->decrement_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
+		}
+	}
+	function receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key) {
+		$supplies_offered = $this->get_supply_account_trade_lookup($trade_request_key, $request_account_key);
+		foreach ($supplies_offered as $supply) {
+			$this->increment_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
 		}
 	}
 	function reject_trade_request($trade_request_key, $request_account_key, $response_message) {

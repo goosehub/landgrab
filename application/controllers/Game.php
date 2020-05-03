@@ -475,6 +475,12 @@ class Game extends CI_Controller {
     public function get_trade_request($trade_request_key, $trade_partner_key)
     {
         $data['trade_request'] = $this->game_model->get_trade_request($trade_request_key);
+        if ($trade_partner_key == $data['trade_request']['request_account_key']) {
+            $this->game_model->mark_trade_request_request_seen($trade_request_key);
+        }
+        else {
+            $this->game_model->mark_trade_request_response_seen($trade_request_key);
+        }
         if (!$data['trade_request']) {
             api_error_response('trade_request_not_found', 'Trade request not found');
         }
@@ -558,7 +564,7 @@ class Game extends CI_Controller {
         if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
             api_error_response('trade_request_already_complete', 'Trade request is already complete');
         }
-        $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $response_message);
+        $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $trade_request['request_account_key'], $response_message);
         api_response();
     }
 

@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <h3 class="text-center text-primary">Your Supplies</h3>
+            <h3 class="text-center text-primary">Your Offer</h3>
             <div class="trade_supplies_parent">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>

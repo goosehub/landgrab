@@ -80,7 +80,7 @@
           <strong class="text-info">${date_formatted}</strong>
         </div>
         <div class="col-md-1">
-          <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
+          <strong class="${trade_status_class(trade)}">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
           <button class="open_trade_sent btn btn-primary" data-id="${trade.id}" data-trade-partner-account-key="${trade.receive_account_key}"><i class="fas fa-handshake"></i> Open</button>
@@ -110,7 +110,7 @@
           <strong class="text-info">${date_formatted}</strong>
         </div>
         <div class="col-md-1">
-          <strong class="trade_status_class(trade)">${trade_status(trade)}</strong>
+          <strong class="${trade_status_class(trade)}">${trade_status(trade)}</strong>
         </div>
         <div class="col-md-1">
           <button class="open_trade_received btn btn-primary" data-id="${trade.id}" data-trade-partner-account-key="${trade.request_account_key}"><i class="fas fa-handshake"></i> Open</button>
