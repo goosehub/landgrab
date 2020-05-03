@@ -12,10 +12,10 @@ HIGH PRIORITY
     Bug: hourly cash NaN
     diplomacy expire trade requests after n hours
     diplomacy accepting when no longer have enough
-    diplomacy show response message
 MEDIUM PRIORITY
     commission icons
 LOW PRIORITY
+    diplomacy show offer expires message
     notices when war
     world wide message for treaty changes
     limit to active trade requests

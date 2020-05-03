@@ -122,6 +122,7 @@
 		update_partner_supplies_view_trade();
 		update_own_supplies_view_trade();
 		update_partner_supplies_new_trade();
+		render_messages_for_trade_sent();
 		$('#view_trade_block').show();
 	}
 	function render_open_trade_received() {
@@ -134,7 +135,35 @@
 		update_partner_supplies_view_trade();
 		update_own_supplies_view_trade();
 		update_partner_supplies_new_trade();
+		render_messages_for_trade_received();
 		$('#view_trade_block').show();
+	}
+
+	function render_messages_for_trade_sent() {
+		$('#view_trade_your_reply').hide();
+		$('#view_trade_request_message').hide();
+
+	}
+
+	function render_messages_for_trade_received() {
+		$('#view_trade_your_reply').hide();
+		$('#view_trade_response_message').hide();
+		if (!parseInt(view_trade.trade_request.is_accepted) && !parseInt(view_trade.trade_request.is_rejected)) {
+			$('#view_trade_your_reply').show();
+		}
+		else if (view_trade.trade_request.response_message) {
+			$('#response_message').html(view_trade.trade_request.response_message);
+			$('#view_trade_response_message').show();
+		}
+	}
+	
+	function render_messages_for_trade_sent() {
+		$('#view_trade_your_reply').hide();
+		$('#view_trade_response_message').hide();
+		if (view_trade.trade_request.response_message) {
+			$('#response_message').html(view_trade.trade_request.response_message);
+			$('#view_trade_response_message').show();
+		}
 	}
 
 	function render_trade_buttons() {

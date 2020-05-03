@@ -29,20 +29,33 @@
             <h2 class="text-center">Proposal</h2>
 
             <p class="lead">
-                Current Treaty:
+                <span class="text-primary">Current Treaty:</span>
                 <span class="current_treaty"></span>
             </p>
 
-            <p class="lead">Proposed Treaty: <span id="proposed_treaty" class=""></span></p>
+            <p class="lead">
+                <span class="text-primary">Proposed Treaty:</span>
+                <span id="proposed_treaty" class=""></span>
+            </p>
 
-            <p class="lead">Message:</p>
-            <p id="request_message"></p>
+            <div id="view_trade_request_message">
+                <p class="lead text-primary">Request Message:</p>
+                <p id="request_message"></p>
+            </div>
 
-            <p class="lead">Your reply:</p>
-            <textarea class="form-control" id="view_input_trade_message_reply" name="input_trade_message_reply"></textarea>
+            <div id="view_trade_response_message">
+                <p class="lead text-primary">Response Message:</p>
+                <p id="response_message"></p>
+            </div>
+
+            <div id="view_trade_your_reply">
+                <p class="lead">Your reply:</p>
+                <textarea class="form-control" id="view_input_trade_message_reply" name="input_trade_message_reply"></textarea>
+            </div>
+
             <hr>
 
-            <p>this offer expires in <span id="offer_expire_hours" class="text-primary"></span> hours.</p>
+            <!-- <p>this offer expires in <span id="offer_expire_hours" class="text-primary"></span> hours.</p> -->
 
             <div id="view_trade_actions" class="row">
                 <div class="col-md-4">
