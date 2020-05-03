@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    Bug: hourly cash NaN
     diplomacy expire trade requests after n hours
     diplomacy accepting when no longer have enough
 MEDIUM PRIORITY

@@ -297,7 +297,9 @@
 
     function cash_stats() {
       let earnings = $('#budget_earnings').html();
+      earnings = earnings ? earnings : 0;
       let cash_input = $('#input_projection_' + cash_key).html();
+      cash_input = cash_input ? cash_input : 0;
       let cash_output = parseInt(earnings) + Math.abs(parseInt(cash_input));
       $('#output_projection_' + cash_key).html('+' + cash_output);
 
