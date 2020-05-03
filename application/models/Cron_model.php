@@ -997,5 +997,21 @@ Class cron_model extends CI_Model
 			$this->db->update('market_price', $data);
 		}
 	}
+	function reject_expired_trade_requests()
+	{
+		$expired_trade_requests = $this->get_expired_trade_requests();
+		foreach ($expired_trade_requests as $trade_request) {
+			$this->game_model->reject_trade_request($trade_request['id'], $trade_request['request_account_key'], TRADE_EXPIRED_MESSAGE);
+		}
+	}
+	function get_expired_trade_requests() {
+		$this->db->select('*');
+		$this->db->from('trade_request');
+		$this->db->where('is_accepted', false);
+		$this->db->where('is_rejected', false);
+		$this->db->where('trade_request.created <', date('Y-m-d H:i:s', time() - (TRADE_EXPIRE_HOURS * 60 * 60) ));
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 
 }

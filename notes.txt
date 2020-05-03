@@ -9,11 +9,11 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    diplomacy expire trade requests after n hours
-    diplomacy accepting when no longer have enough
+    diplomacy prevent accepting when no longer have enough supplies to offer
 MEDIUM PRIORITY
     commission icons
 LOW PRIORITY
+    ensure auth permission for get_trade_request
     diplomacy show offer expires message
     notices when war
     world wide message for treaty changes

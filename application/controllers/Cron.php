@@ -56,6 +56,7 @@ class Cron extends CI_Controller {
         $this->cron_model->enforce_max_support(); $this->microtime('enforce_max_support');
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
+        $this->cron_model->reject_expired_trade_requests(); $this->microtime('reject_expired_trade_requests');
 
         // $this->cron_model->system_chat_messages(); $this->microtime('system_chat_messages');
     }
