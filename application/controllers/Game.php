@@ -542,6 +542,9 @@ class Game extends CI_Controller {
         if ($trade_partner['world_key'] != $world_key) {
             api_error_response('partner_is_in_different_world', 'This trade partner does not exist in the same world');
         }
+        if (!$this->game_model->sufficient_supplies_to_send_trade_request($supplies_offered, $account['id'])) {
+            api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
+        }
         $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
         api_response();
     }

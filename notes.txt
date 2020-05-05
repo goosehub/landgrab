@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    verify supplies on send
 MEDIUM PRIORITY
     commission icons
 LOW PRIORITY
