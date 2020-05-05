@@ -9,7 +9,7 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    diplomacy prevent accepting when no longer have enough supplies to offer
+    verify supplies on send
 MEDIUM PRIORITY
     commission icons
 LOW PRIORITY

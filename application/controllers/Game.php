@@ -564,6 +564,9 @@ class Game extends CI_Controller {
         if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
             api_error_response('trade_request_already_complete', 'Trade request is already complete');
         }
+        if (!$this->game_model->sufficient_supplies_to_accept_trade_request($trade_request['id'], $account['id'])) {
+            api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
+        }
         $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $trade_request['request_account_key'], $response_message);
         api_response();
     }
