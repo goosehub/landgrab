@@ -97,7 +97,7 @@
 	}
 
 	function open_trade_sent(trade_request_key, trade_partner_key) {
-		ajax_get(`game/get_trade_request/${trade_request_key}/${trade_partner_key}`, function(response) {
+		ajax_get(`game/get_trade_request/${world_key}/${trade_request_key}/${trade_partner_key}`, function(response) {
 			view_trade = response;
 			trade_partner = view_trade.trade_partner;
 			render_open_trade_sent();
@@ -105,7 +105,7 @@
 	}
 
 	function open_trade_received(trade_request_key, trade_partner_key) {
-		ajax_get(`game/get_trade_request/${trade_request_key}/${trade_partner_key}`, function(response) {
+		ajax_get(`game/get_trade_request/${world_key}/${trade_request_key}/${trade_partner_key}`, function(response) {
 			view_trade = response;
 			trade_partner = view_trade.trade_partner;
 			render_open_trade_received();

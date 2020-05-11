@@ -10,7 +10,6 @@
 
 HIGH PRIORITY
     UI for war declared on you
-    ensure auth permission for get_trade_request
 MEDIUM PRIORITY
 LOW PRIORITY
     diplomacy show offer expires message

@@ -472,9 +472,19 @@ class Game extends CI_Controller {
         api_response();
     }
 
-    public function get_trade_request($trade_request_key, $trade_partner_key)
+    public function get_trade_request($world_key, $trade_request_key, $trade_partner_key)
     {
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
         $data['trade_request'] = $this->game_model->get_trade_request($trade_request_key);
+        if (!$data['trade_request']) {
+            api_error_response('trade_request_does_not_exist', 'This trade request does not exist');
+        }
+        if ($account['id'] != $data['trade_request']['request_account_key'] && $account['id'] != $data['trade_request']['receive_account_key']) {
+            api_error_response('no_access_to_trade_request', 'You do not have access to view this trade request');
+        }
         if ($trade_partner_key == $data['trade_request']['request_account_key']) {
             $this->game_model->mark_trade_request_request_seen($trade_request_key);
         }
