@@ -9,29 +9,24 @@
 ==========================================================================================
 
 HIGH PRIORITY
-MEDIUM PRIORITY
-    commission icons
-LOW PRIORITY
-    ensure auth permission for get_trade_request
-    diplomacy show offer expires message
-    notices when war
-    world wide message for treaty changes
-    limit to active trade requests
     UI for war declared on you
-    UI for your current alliances and wars
+    ensure auth permission for get_trade_request
+MEDIUM PRIORITY
+LOW PRIORITY
+    diplomacy show offer expires message
     war confirm
     refactor into a marker script
     login is slow on load
-    swal alerts
+    commission icons
 BUGS
     Unit not wanting to move
-    supplies projections vs reality
     duplicate treaties
+    supplies projections vs reality
     do industries with no inputs produce output, or get false flagged for no supply?
 EXPLOITS
     Remove base before top of hour
     Moving Capitol
-    test for any duplication exploits
+    Test for any duplication exploits
 GOING LIVE
     buy icons8 paid license
     DB indexes
@@ -40,6 +35,8 @@ GOING LIVE
     reddit update post
     beta
 Next Update
+    world wide message for treaty changes
+    swal alerts
     Passage
     number formatting
     show diplomacy status on click other players land

@@ -574,6 +574,17 @@ Class game_model extends CI_Model
 		);
 		$this->db->insert('supply_account_trade_lookup', $data);
 	}
+	function open_trade_request_between_accounts_exist($account_key, $trade_partner_key) {
+		$this->db->select('*');
+		$this->db->from('trade_request');
+		$this->db->where('request_account_key', $account_key);
+		$this->db->where('receive_account_key', $trade_partner_key);
+		$this->db->where('is_accepted', 0);
+		$this->db->where('is_rejected', 0);
+		$this->db->where('is_declared', 0);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function sufficient_supplies_to_send_trade_request($supplies_offered, $account_key) {
         foreach ($supplies_offered as $supply) {
         	if (!$this->account_has_amount_of_supply($account_key, $supply->supply_key, $supply->amount)) {
