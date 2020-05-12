@@ -12,11 +12,8 @@ HIGH PRIORITY
     UI for war declared on you
 MEDIUM PRIORITY
 LOW PRIORITY
-    diplomacy show offer expires message
     war confirm
     refactor into a marker script
-    login is slow on load
-    commission icons
 BUGS
     Unit not wanting to move
     duplicate treaties
@@ -34,6 +31,7 @@ GOING LIVE
     reddit update post
     beta
 Next Update
+    commission icons
     world wide message for treaty changes
     swal alerts
     Passage

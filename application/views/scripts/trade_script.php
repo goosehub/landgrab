@@ -12,6 +12,25 @@
 		handle_reject_trade_request();
 	}
 
+	function update_offer_expire_hours() {
+		$('#offer_expire_hours_parent').hide();
+		if (parseInt(view_trade.trade_request.is_accepted) || parseInt(view_trade.trade_request.is_rejected)) {
+			return;
+		}
+		let now = moment();
+		let created_date = moment(view_trade.trade_request.created);
+		let expired_date = moment(view_trade.trade_request.created).add(trade_expire_hours, 'hours');
+		let diff_hours = expired_date.diff(now, 'hours');
+		if (diff_hours >= 0) {
+			let offer_expire_hours = diff_hours;
+			if (offer_expire_hours == 0) {
+				offer_expire_hours = 'less than 1';
+			}
+			$('#offer_expire_hours_parent').show();
+			$('#offer_expire_hours').html(offer_expire_hours);
+		}
+	}
+
 	function handle_accept_trade_request() {
 		$('#accept_trade_request').click(function(){
 			send_accept_trade_request();
@@ -123,6 +142,7 @@
 		update_own_supplies_view_trade();
 		update_partner_supplies_new_trade();
 		render_messages_for_trade_sent();
+		update_offer_expire_hours();
 		$('#view_trade_block').show();
 	}
 	function render_open_trade_received() {
@@ -136,6 +156,7 @@
 		update_own_supplies_view_trade();
 		update_partner_supplies_new_trade();
 		render_messages_for_trade_received();
+		update_offer_expire_hours();
 		$('#view_trade_block').show();
 	}
 

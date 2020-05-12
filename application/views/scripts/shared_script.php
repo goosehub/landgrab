@@ -1,5 +1,13 @@
 <script>
     activate_bootstrap_popovers();
+    extend_date();
+
+    function extend_date() {
+        Date.prototype.addHours = function(h) {
+            this.setTime(this.getTime() + (h*60*60*1000));
+            return this;
+        }
+    }
 
     function activate_bootstrap_popovers() {
         $(function () {

@@ -37,6 +37,9 @@
     <!-- JSColor -->
     <script src="<?=base_url()?>resources/jscolor/jscolor.min.js"></script>
 
+    <!-- Moment.js -->
+    <script src="<?=base_url()?>resources/moment/moment.js"></script>
+
     <!-- Custom Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Cookie" rel="stylesheet">

@@ -71,6 +71,7 @@
     const oligarchy_support_regen = <?= OLIGARCHY_SUPPORT_REGEN ?>;
     const autocracy_support_regen = <?= AUTOCRACY_SUPPORT_REGEN ?>;
     const base_support_bonus = <?= BASE_SUPPORT_BONUS ?>;
+    const trade_expire_hours = <?= TRADE_EXPIRE_HOURS ?>;
     const food_key_array = [
       <?= GRAIN_KEY ?>,
       <?= VEGETABLES_KEY ?>,

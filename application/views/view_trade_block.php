@@ -55,7 +55,9 @@
 
             <hr>
 
-            <!-- <p>this offer expires in <span id="offer_expire_hours" class="text-primary"></span> hours.</p> -->
+            <p id="offer_expire_hours_parent">
+                This offer expires in <span id="offer_expire_hours" class="text-primary"></span> hours.
+            </p>
 
             <div id="view_trade_actions" class="row">
                 <div class="col-md-4">
