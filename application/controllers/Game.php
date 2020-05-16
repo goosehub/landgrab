@@ -72,7 +72,6 @@ class Game extends CI_Controller {
         $this->load->view('view_trade_block', $data);
         $this->load->view('scripts/shared_script', $data);
         $this->load->view('scripts/variables', $data);
-        $this->load->view('scripts/map_script', $data);
         $this->load->view('scripts/interface_script', $data);
         $this->load->view('scripts/render_tile_script', $data);
         $this->load->view('scripts/tile_script', $data);
@@ -80,6 +79,7 @@ class Game extends CI_Controller {
         $this->load->view('scripts/unit_script', $data);
         $this->load->view('scripts/marker_script', $data);
         $this->load->view('scripts/tutorial_script', $data);
+        $this->load->view('scripts/map_script', $data);
         $this->load->view('scripts/chat_script', $data);
         $this->load->view('scripts/account_update_script', $data);
         $this->load->view('scripts/market_script', $data);

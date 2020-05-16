@@ -97,6 +97,7 @@
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
         $tile['lng'] . ',' .
+        ($tile['account_key'] ? $tile['account_key'] : 'null') . ',' .
         '"' . $terrain_color . '",' .
         '"' . $border_color . '"'
       ; ?>);<?php // Open and close immediately to avoid whitespace eating bandwidth
@@ -106,7 +107,7 @@
   }
 
   // Declare square called by performance sensitive loop
-  function z(tile_key, tile_lat, tile_lng, terrain_color, border_color) {
+  function z(tile_key, tile_lat, tile_lng, account_key, terrain_color, border_color) {
     let current_fill_color = border_toggle ? border_color : terrain_color;
     let shape = [{
         lat: tile_lat,
@@ -135,6 +136,7 @@
       fillColor: current_fill_color,
       terrain_fillColor: terrain_color,
       borders_fillColor: border_color,
+      account_key: account_key,
     });
     polygon.setMap(map);
     polygon.addListener('click', open_tile);
@@ -167,24 +169,6 @@
     }, 'map_update');
   }
 
-  function pass_new_laws() {
-    $('#laws_passed_confirm_icon').fadeTo(1, 0);
-    $('#pass_new_laws_button').click(function(event) {
-      let data = {
-        world_key: world_key,
-        input_power_structure: $('#input_power_structure').val(),
-        input_tax_rate: $('#input_tax_rate').val(),
-        input_ideology: $('input[name="input_ideology"]:checked').val(),
-      };
-      ajax_post('game/laws_form', data, function(response) {
-        get_map_update();
-        get_account_update();
-        $('#laws_passed_confirm_icon').fadeTo(500, 1);
-        $('#laws_passed_confirm_icon').fadeTo(2000, 0);
-      });
-    });
-  }
-
   function update_tiles(new_tiles) {
     // This loop may rarely run up to 15,000 times, so focus is a performance
     number_of_tiles = new_tiles.length;
@@ -203,6 +187,7 @@
       tiles[new_tile['id']].setOptions({
         fillColor: fill_color,
         borders_fillColor: border_color,
+        account_key: new_tile.account_key,
       });
 
       update_tile_resource_marker(new_tile);
@@ -224,21 +209,6 @@
     ajax_post('game/tile_form', data, function(response) {
       callback(response);
     });
-  }
-
-  function highlight_single_square(tile_id) {
-    tiles[tile_id].setOptions({
-      fillColor: selected_square_color,
-    });;
-  }
-
-  function unhighlight_all_squares() {
-    if (border_toggle) {
-      tiles_to_borders();
-    }
-    else {
-      tiles_to_terrain();
-    }
   }
 
   function open_tile(event) {

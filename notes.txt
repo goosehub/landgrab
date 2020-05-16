@@ -10,8 +10,6 @@
 
 HIGH PRIORITY
     UI for war declared on you
-    handling attack friendly land
-    fix battle
 MEDIUM PRIORITY
 LOW PRIORITY
     update unit colors on treaty change
@@ -21,6 +19,7 @@ LOW PRIORITY
     abstract market table per world
     make get_account_budget() calc settlement & industry separately for accuracy
 BUGS
+    battle doesn't remove enemy unit
     Unit not wanting to move
     Disappearing units
     duplicate treaties

@@ -167,7 +167,10 @@
       alert('You can not stack units');
     }
     else if (!no_friendly_unit_at_square(final_end_lat, final_end_lng)) {
-      alert('You must declare war through diplomacy before you can attack');
+      alert('You must declare war through diplomacy before you can attack this unit');
+    }
+    else if (is_friendly_square(end_lat, end_lng)) {
+      alert('You must declare war through diplomacy before you can attack this land');
     }
     else if (account.supplies.support.amount <= 0) {
       alert('You can not move units without political support');
@@ -218,6 +221,20 @@
       if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
         return find_treaty_by_account_key(unit_markers[i].unit.unit_owner_key) == war_key;
       }
+    }
+    return true;
+  }
+
+  function is_friendly_square(lat, lng) {
+    let tile_account_key = tiles_by_coord[lat + ',' + lng].account_key;
+    if (!tile_account_key) {
+      return false;
+    }
+    if (tile_account_key == account['id']) {
+      return false;
+    }
+    if (find_treaty_by_account_key(tile_account_key) == war_key) {
+      return false;
     }
     return true;
   }

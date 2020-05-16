@@ -360,4 +360,19 @@
   function needs_township_icon(tile) {
     return township_array.includes(tile.settlement_key) || parseInt(tile.is_capitol) || parseInt(tile.is_base);
   }
+
+  function highlight_single_square(tile_id) {
+    tiles[tile_id].setOptions({
+      fillColor: selected_square_color,
+    });;
+  }
+
+  function unhighlight_all_squares() {
+    if (border_toggle) {
+      tiles_to_borders();
+    }
+    else {
+      tiles_to_terrain();
+    }
+  }
 </script>
