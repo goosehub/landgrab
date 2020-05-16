@@ -215,7 +215,7 @@
 </div>
 
 <!-- About Block -->
-<div id="about_block" class="center_block">
+<div id="about_block" class="center_block center_block_small">
     <strong>About LandGrab</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
@@ -226,13 +226,13 @@
     <strong> <a href="http://gooseweb.io/" target="_blank">gooseweb.io</a></strong>
     <br>
     <br>
-    <p>Developed in PHP with CodeIgniter 3 and the Google Maps API. You can view and contribute to this project on GitHub. All Rights Reserved.</p>
+    <p>Developed in PHP with CodeIgniter 3 and the Google Maps API. Icons provided by <a href="https://icons8.com/">Icons8.com</a>. You can view and contribute to this project on GitHub.</p>
     <strong> <a href="http://github.com/goosehub/landgrab/" target="_blank">github.com/goosehub/landgrab</a></strong>
     <br>
     <br>
-    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="http://gleamplay.com/" target="_blank">GleamPlay</a>, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>, <a href="https://www.youtube.com/watch?v=dUnM3lPMb1Q" target="_blank">Yahtzee's Dev Diary Series</a>
-    <a href="http://ithare.com/" target="_blank">itHare</a>, EllisLabs and British Columbia Institute of Technology for providing CodeIgniter, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
-    the rest of the Beta Testers, and all my users. Thank you!</p>
+    <p>Special Thanks goes to Google Maps, The StackExchange Network, <a href="http://gleamplay.com/" target="_blank">GleamPlay</a>, <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a>, <a href="https://www.youtube.com/user/ExtraCreditz" target="_blank">Extra Credits</a>, <a href="https://www.youtube.com/watch?v=dUnM3lPMb1Q" target="_blank">Yahtzee's Dev Diary Series</a>,
+    <a href="http://ithare.com/" target="_blank">ITHare</a>, EllisLabs and British Columbia Institute of Technology for providing CodeIgniter, me on the left, /s4s/, llamaseatsocks, Anonymous, Ricky,
+    the rest of the v1/v2 Beta Testers, and all my users. Thank you!</p>
 </div>
 
 <!-- About Block -->

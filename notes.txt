@@ -28,7 +28,7 @@ GOING LIVE
     account migration
     reset cron
     reddit update post
-    beta
+    update banner
 Next Update
     commission icons
     world wide message for treaty changes

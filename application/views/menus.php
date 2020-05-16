@@ -104,16 +104,17 @@
       <li class="text-center"><strong class="text-danger">Version 5.0.0</strong></li>
       <li role="separator" class="divider"></li>
       <!-- <li><a class="how_to_play_button btn btn-warning">How To Play</a></li> -->
-      <li><a class="about_button btn btn-info">About LandGrab</a></li>
+      <li><a class="about_button btn btn-primary">About LandGrab</a></li>
       <!-- <li><a class="faq_button btn btn-primary">FAQ</a></li> -->
-      <li><a class="btn btn-primary" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
+      <li><a class="btn btn-info" href="https://www.reddit.com/r/Landgrab/" target="_blank">/r/Landgrab</a></li>
       <!-- <li><a class="btn btn-success" href="http://gleamplay.com/" target="_blank">GleamPlay</a></li> -->
-      <li><a class="btn btn-success" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
-      <li><a class="btn btn-success" href="https://gooseweb.io/" target="_blank">GooseWeb</a></li>
+      <li><a class="btn btn-info" href="https://github.com/goosehub/landgrab" target="_blank">GitHub</a></li>
+      <li><a class="btn btn-info" href="https://gooseweb.io/" target="_blank">GooseWeb</a></li>
+      <li><a class="btn btn-info" href="https://icons8.com/" target="_blank">Icons8</a></li>
       <li><a class="report_bugs_button btn btn-warning">Report Bugs</a></li>
-      <li><a class="update_password_button btn btn-danger">Update Password</a></li>
+      <li><a class="update_password_button btn btn-warning">Update Password</a></li>
       <li><a class="logout_button btn btn-danger" href="<?=base_url()?>user/logout">Logout</a></li>
-      <li><small>Get your friends playing</small><div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-="recommend" data-show-faces="false" data-share="true"></div></li>
+      <!-- <li><small>Get your friends playing</small><div class="fb-like" data-href="https://landgrab.xyz/" data-layout="button" data-="recommend" data-show-faces="false" data-share="true"></div></li> -->
     </ul>
   </div>
 
