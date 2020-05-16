@@ -105,7 +105,9 @@
 
 	function handle_declare_war() {
 		$('#declare_war').click(function(){
-			declare_war();
+			if (confirm('Are you sure you wish to confirm war?')) {
+				declare_war();
+			}
 		});
 	}
 

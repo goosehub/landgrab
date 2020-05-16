@@ -12,7 +12,6 @@ HIGH PRIORITY
     UI for war declared on you
 MEDIUM PRIORITY
 LOW PRIORITY
-    war confirm
     refactor into a marker script
 BUGS
     Unit not wanting to move
