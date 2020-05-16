@@ -600,6 +600,14 @@ class Game extends CI_Controller {
             api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
         }
         $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $trade_request['request_account_key'], $response_message);
+        $existing_treaty = $this->game_model->find_existing_treaty($account['id'], $trade_request['request_account_key']);
+        if ($existing_treaty) {
+            $treaty_key = $existing_treaty['id'];
+            $this->game_model->update_treaty($existing_treaty['id'], $trade_request['treaty_key']);
+        }
+        else {
+            $this->game_model->create_treaty($account['id'], $trade_partner_key, $trade_request['treaty_key']);
+        }
         api_response();
     }
 

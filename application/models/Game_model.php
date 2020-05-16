@@ -544,7 +544,6 @@ Class game_model extends CI_Model
 	}
 	function create_trade_main($request_account_key, $receive_account_key, $message, $treaty_key, $supplies_offered, $supplies_demanded) {
 		$trade_key = $this->create_trade_request($request_account_key, $receive_account_key, $message, $treaty_key);
-		$this->create_treaty($request_account_key, $receive_account_key, $treaty_key);
 		foreach ($supplies_offered as $supply) {
 			$this->create_supply_account_trade_lookups($supply->supply_key, $request_account_key, $trade_key, (int)$supply->amount);
 			// We hold the money pal

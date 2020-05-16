@@ -18,7 +18,6 @@ LOW PRIORITY
     make get_account_budget() calc settlement & industry separately for accuracy
 BUGS
     update unit colors on treaty change
-    duplicate treaties
     battle doesn't remove enemy unit
     Unit not wanting to move
     Disappearing units
