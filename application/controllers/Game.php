@@ -276,6 +276,10 @@ class Game extends CI_Controller {
             return true;
         }
 
+        if ((int)$account['supplies']['support']['amount'] <= 0) {
+            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
+        }
+
         if ($tile['unit_key']) {
             $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
             if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
@@ -292,7 +296,7 @@ class Game extends CI_Controller {
         $start_lng = $this->input->post('start_lng');
         $end_lat = $this->input->post('end_lat');
         $end_lng = $this->input->post('end_lng');
-        $account = $this->user_model->this_account($world_key);
+        $account = $this->get_this_full_account($world_key);
         $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
         $previous_tile = $this->game_model->get_tile($start_lat, $start_lng, $world_key);
         if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
@@ -302,7 +306,6 @@ class Game extends CI_Controller {
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
         // Keep remove before add, makes dupe bugs less likely
-        $account = $this->get_this_full_account($tile['world_key']);
         if ($this->can_claim($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
@@ -509,9 +512,12 @@ class Game extends CI_Controller {
         }
         $trade_partner_key = $this->input->post('trade_partner_key');
         $world_key = $this->input->post('world_key');
-        $account = $this->user_model->this_account($world_key);
+        $account = $this->get_this_full_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
+        }
+        if ((int)$account['supplies']['support']['amount'] < SUPPORT_COST_DECLARE_WAR) {
+            api_error_response('not_enough_support_to_move', 'You can not declare war without at least ' . SUPPORT_COST_DECLARE_WAR . ' political support');
         }
         $treaty_key = false;
         $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_DECLARE_WAR);
