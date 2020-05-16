@@ -78,6 +78,7 @@ class Game extends CI_Controller {
         $this->load->view('scripts/tile_script', $data);
         $this->load->view('scripts/trade_script', $data);
         $this->load->view('scripts/unit_script', $data);
+        $this->load->view('scripts/marker_script', $data);
         $this->load->view('scripts/tutorial_script', $data);
         $this->load->view('scripts/chat_script', $data);
         $this->load->view('scripts/account_update_script', $data);
@@ -516,6 +517,9 @@ class Game extends CI_Controller {
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
+        if ((int)$account['supplies']['tiles']['amount'] <= 0) {
+            api_error_response('not_enough_tiles', 'You must have land to engage in diplomacy');
+        }
         if ((int)$account['supplies']['support']['amount'] < SUPPORT_COST_DECLARE_WAR) {
             api_error_response('not_enough_support_to_move', 'You can not declare war without at least ' . SUPPORT_COST_DECLARE_WAR . ' political support');
         }
@@ -547,9 +551,12 @@ class Game extends CI_Controller {
         $supplies_offered = json_decode($this->input->post('supplies_offered'));
         $supplies_demanded = json_decode($this->input->post('supplies_demanded'));
 
-        $account = $this->user_model->this_account($world_key);
+        $account = $this->get_this_full_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
+        }
+        if ((int)$account['supplies']['tiles']['amount'] <= 0) {
+            api_error_response('not_enough_tiles', 'You must have land to engage in diplomacy');
         }
         $trade_partner = $this->user_model->get_account_by_id($trade_partner_key);
         if (!$account) {

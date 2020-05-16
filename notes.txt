@@ -10,11 +10,19 @@
 
 HIGH PRIORITY
     UI for war declared on you
+    handling attack friendly land
+    fix battle
 MEDIUM PRIORITY
 LOW PRIORITY
-    refactor into a marker script
+    update unit colors on treaty change
+    number formatting
+    show diplomacy status on click other players land
+    industry require round of feed to establish
+    abstract market table per world
+    make get_account_budget() calc settlement & industry separately for accuracy
 BUGS
     Unit not wanting to move
+    Disappearing units
     duplicate treaties
     supplies projections vs reality
     do industries with no inputs produce output, or get false flagged for no supply?
@@ -28,51 +36,37 @@ GOING LIVE
     reset cron
     reddit update post
     update banner
-Next Update
-    commission icons
-    world wide message for treaty changes
-    swal alerts
-    Passage
-    number formatting
-    show diplomacy status on click other players land
-    json leaderboard for every supply
-    industry require round of feed to establish
-    Better handle trying to attack peaceful nation
-    hide resources in responses before discovered
-    Conceal except when own, ally, or navy
+Near Updates
     More worlds
-    Being attacked UI
+    commission icons
+    Passage
+    system chat for treaty changes and crons, market prices, ect
+    swal alerts
+    leaderboard
+    Concel resources until discovered
+    Conceal units except when own, ally, or navy
     tutorial based on todo list
-NO PRIORITY
-    fonts
-    notices when trade request accepted
-    withdraw trade request
-    show when trade request will expire
-    disable enlist options when not enough cash exists
-    suffix on industry input selection preview
-    tooltip for alliances, rights of passage, etc
-    have capitols show laws of that nation, wars and rights of passage
-    refactor township input desc to be generated
-    abstract market table per world
-    population projection
-    abstract settlement input string into programatic
-    no population hit for downgrading township
-    capitol and chat shortcut to diplomacy
-    system chat at top of the hour for market prices
-    must have land on world to send trade request
-    make get_account_budget() calc settlement & industry separately for accuracy
-    Township Population Reset/Decrease on capture
-    generate worlds when all worlds have no free non tundra land
-    fix correct_lng for non 2 tile size worlds
-    store default google maps id type
+    world lock/generation
+Far Updates
     pollution mechanic
-    units UI for colorblind
-    score
     wiki
     nuke
     spy
     bombing
     Volcanos
+NO PRIORITY
+    Being attacked UI
+    fonts
+    notices when trade request accepted
+    disable enlist options when not enough cash exists
+    suffix on industry input selection preview
+    capitols show laws of that nation, wars and rights of passage
+    population projection
+    abstract settlement input string into programatic
+    capitol and chat shortcut to diplomacy
+    Township Population Reset/Decrease on capture
+    store default google maps id type
+    units UI for red–green color blindness
 
 ==========================================================================================
     Code

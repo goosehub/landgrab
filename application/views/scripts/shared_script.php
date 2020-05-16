@@ -353,6 +353,7 @@
     }
 
     function correct_lng(lng) {
+        // Hardcoded for tile size 2 worlds
         if (lng === 182) {
             lng = -178;
         }

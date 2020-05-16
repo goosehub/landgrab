@@ -163,8 +163,11 @@
     if (!tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng)) {
       // No alert, probably not intentional
     }
+    else if (!no_own_unit_at_square(final_end_lat, final_end_lng)) {
+      alert('You can not stack units');
+    }
     else if (!no_friendly_unit_at_square(final_end_lat, final_end_lng)) {
-      alert('There is a friendly unit already occupying that square');
+      alert('You must declare war through diplomacy before you can attack');
     }
     else if (account.supplies.support.amount <= 0) {
       alert('You can not move units without political support');
@@ -199,12 +202,20 @@
     }
   }
 
-  function no_friendly_unit_at_square(lat, lng) {
+  function no_own_unit_at_square(lat, lng) {
     for (var i in unit_markers) {
       if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
         if (unit_markers[i].unit.unit_owner_key == account['id']) {
           return false;
         }
+      }
+    }
+    return true;
+  }
+
+  function no_friendly_unit_at_square(lat, lng) {
+    for (var i in unit_markers) {
+      if (unit_markers[i].getPosition().lat() == lat && unit_markers[i].getPosition().lng() == lng) {
         return find_treaty_by_account_key(unit_markers[i].unit.unit_owner_key) == war_key;
       }
     }

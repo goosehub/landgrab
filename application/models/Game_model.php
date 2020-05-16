@@ -793,6 +793,7 @@ Class game_model extends CI_Model
 		return false;
 	}
 	function correct_lng($lng) {
+		// Hardcoded for tile size 2 worlds
 		if ($lng === 182) {
 		  $lng = -178;
 		}
