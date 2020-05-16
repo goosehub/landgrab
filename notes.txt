@@ -25,7 +25,6 @@ EXPLOITS
     Test for any duplication exploits
 GOING LIVE
     buy icons8 paid license
-    DB indexes
     account migration
     reset cron
     reddit update post

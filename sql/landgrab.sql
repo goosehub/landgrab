@@ -53,6 +53,13 @@ CREATE TABLE IF NOT EXISTS `tile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `tile` ADD PRIMARY KEY (`id`);
 ALTER TABLE `tile` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tile` ADD INDEX `world_key` (`world_key`);
+ALTER TABLE `tile` ADD INDEX `account_key` (`account_key`);
+ALTER TABLE `tile` ADD INDEX `terrain_key` (`terrain_key`);
+ALTER TABLE `tile` ADD INDEX `resource_key` (`resource_key`);
+ALTER TABLE `tile` ADD INDEX `settlement_key` (`settlement_key`);
+ALTER TABLE `tile` ADD INDEX `industry_key` (`industry_key`);
+ALTER TABLE `tile` ADD INDEX `unit_key` (`unit_key`);
 
 DROP TABLE IF EXISTS `unit_type`;
 CREATE TABLE IF NOT EXISTS `unit_type` (
@@ -104,12 +111,15 @@ CREATE TABLE IF NOT EXISTS `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `account` ADD PRIMARY KEY (`id`);
 ALTER TABLE `account` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `account` ADD INDEX `user_key` (`user_key`);
+ALTER TABLE `account` ADD INDEX `world_key` (`world_key`);
 
 DROP TABLE IF EXISTS `trade_request`;
 CREATE TABLE IF NOT EXISTS `trade_request` (
   `id` int(10) UNSIGNED NOT NULL,
   `request_account_key` int(10) UNSIGNED NOT NULL,
   `receive_account_key` int(10) UNSIGNED NOT NULL,
+  `treaty_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `request_message` text NOT NULL,
   `response_message` text NOT NULL,
   `request_seen` int(1) UNSIGNED NOT NULL,
@@ -117,12 +127,14 @@ CREATE TABLE IF NOT EXISTS `trade_request` (
   `is_accepted` int(1) UNSIGNED NOT NULL,
   `is_rejected` int(1) UNSIGNED NOT NULL,
   `is_declared` int(1) UNSIGNED NOT NULL,
-  `treaty_key` int(10) UNSIGNED NOT NULL, -- War, Peace, Passage
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `trade_request` ADD PRIMARY KEY (`id`);
 ALTER TABLE `trade_request` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `trade_request` ADD INDEX `request_account_key` (`request_account_key`);
+ALTER TABLE `trade_request` ADD INDEX `receive_account_key` (`receive_account_key`);
+ALTER TABLE `trade_request` ADD INDEX `treaty_key` (`treaty_key`);
 
 DROP TABLE IF EXISTS `treaty_lookup`;
 CREATE TABLE IF NOT EXISTS `treaty_lookup` (
@@ -135,6 +147,9 @@ CREATE TABLE IF NOT EXISTS `treaty_lookup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `treaty_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `treaty_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `treaty_lookup` ADD INDEX `a_account_key` (`a_account_key`);
+ALTER TABLE `treaty_lookup` ADD INDEX `b_account_key` (`b_account_key`);
+ALTER TABLE `treaty_lookup` ADD INDEX `treaty_key` (`treaty_key`);
 
 DROP TABLE IF EXISTS `supply_industry_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
@@ -145,6 +160,8 @@ CREATE TABLE IF NOT EXISTS `supply_industry_lookup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_industry_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_industry_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `supply_industry_lookup` ADD INDEX `industry_key` (`industry_key`);
+ALTER TABLE `supply_industry_lookup` ADD INDEX `supply_key` (`supply_key`);
 
 TRUNCATE TABLE `supply_industry_lookup`;
 INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
@@ -193,12 +210,14 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
   `id` int(10) UNSIGNED NOT NULL,
-  `account_key` int(10) UNSIGNED NOT NULL,
   `supply_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NOT NULL,
   `amount` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_account_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `supply_account_lookup` ADD INDEX `account_key` (`account_key`);
+ALTER TABLE `supply_account_lookup` ADD INDEX `supply_key` (`supply_key`);
 
 DROP TABLE IF EXISTS `supply_account_trade_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
@@ -210,6 +229,9 @@ CREATE TABLE IF NOT EXISTS `supply_account_trade_lookup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply_account_trade_lookup` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply_account_trade_lookup` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `supply_account_trade_lookup` ADD INDEX `account_key` (`account_key`);
+ALTER TABLE `supply_account_trade_lookup` ADD INDEX `supply_key` (`supply_key`);
+ALTER TABLE `supply_account_trade_lookup` ADD INDEX `trade_key` (`trade_key`);
 
 DROP TABLE IF EXISTS `supply`;
 CREATE TABLE IF NOT EXISTS `supply` (
@@ -226,6 +248,8 @@ CREATE TABLE IF NOT EXISTS `supply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `supply` ADD PRIMARY KEY (`id`);
 ALTER TABLE `supply` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `supply` ADD INDEX `category_id` (`category_id`);
+ALTER TABLE `supply` ADD INDEX `market_price_key` (`market_price_key`);
 
 TRUNCATE TABLE `supply`;
 INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade`, `market_price_key`, `gdp_bonus`, `meta`) VALUES
@@ -293,6 +317,7 @@ CREATE TABLE IF NOT EXISTS `market_price` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `market_price` ADD PRIMARY KEY (`id`);
 ALTER TABLE `market_price` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `market_price` ADD INDEX `supply_key` (`supply_key`);
 
 TRUNCATE TABLE `market_price`;
 INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
@@ -359,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `resource` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `resource` ADD PRIMARY KEY (`id`);
 ALTER TABLE `resource` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `resource` ADD INDEX `output_supply_key` (`output_supply_key`);
 
 TRUNCATE TABLE `resource`;
 INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
@@ -460,6 +486,8 @@ CREATE TABLE IF NOT EXISTS `settlement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `settlement` ADD PRIMARY KEY (`id`);
 ALTER TABLE `settlement` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `settlement` ADD INDEX `category_id` (`category_id`);
+ALTER TABLE `settlement` ADD INDEX `output_supply_key` (`output_supply_key`);
 
 TRUNCATE TABLE `settlement`;
 INSERT INTO `settlement` (
@@ -589,6 +617,9 @@ CREATE TABLE IF NOT EXISTS `industry` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `industry` ADD PRIMARY KEY (`id`);
 ALTER TABLE `industry` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `industry` ADD INDEX `category_id` (`category_id`);
+ALTER TABLE `industry` ADD INDEX `output_supply_key` (`output_supply_key`);
+ALTER TABLE `industry` ADD INDEX `required_terrain_key` (`required_terrain_key`);
 
 TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
@@ -708,6 +739,8 @@ CREATE TABLE IF NOT EXISTS `chat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `chat` ADD PRIMARY KEY (`id`);
 ALTER TABLE `chat` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `chat` ADD INDEX `user_key` (`user_key`);
+ALTER TABLE `chat` ADD INDEX `world_key` (`world_key`);
 
 DROP TABLE IF EXISTS `analytics`;
 CREATE TABLE IF NOT EXISTS `analytics` (

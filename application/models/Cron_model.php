@@ -883,7 +883,7 @@ Class cron_model extends CI_Model
 	}
 	function world_resets()
 	{
-			$this->regenerate_resources(1);
+		$this->regenerate_resources(1);
 		$force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
 		$now = date('Y-m-d H:i:s');
 		$worlds = $this->game_model->get_all('world');
