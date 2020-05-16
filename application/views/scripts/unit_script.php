@@ -22,6 +22,8 @@
       render_comat_bonuses(response.combat);
       move_unit_to_new_tile(marker, response.combat, start_lat, start_lng, end_lat, end_lng);
       get_map_update();
+    }, function(response){
+      marker.setMap(null);
     });
   }
 
@@ -136,7 +138,7 @@
     marker.setIcon(this_icon);
   }
 
-  function request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, callback) {
+  function request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, callback, fail_callback) {
     let data = {
       world_key: world_key,
       start_lat: start_lat,
@@ -146,6 +148,8 @@
     };
     ajax_post('game/unit_move_to_land', data, function(tile) {
       callback(tile);
+    }, null, function(fail) {
+      fail_callback();
     });
   }
 

@@ -19,12 +19,8 @@ LOW PRIORITY
 BUGS
     update unit colors on treaty change
     battle doesn't remove enemy unit
-    Unit not wanting to move
     Disappearing units
-    duplicate treaties
     supplies projections vs reality
-    do industries with no inputs produce output, or get false flagged for no supply?
-    trade request sent before war accepted during war
 EXPLOITS
     Remove base before top of hour
     Moving Capitol
@@ -54,6 +50,7 @@ Far Updates
     bombing
     Volcanos
 NO PRIORITY
+    Reject active trade requests when war starts
     Being attacked UI
     fonts
     notices when trade request accepted

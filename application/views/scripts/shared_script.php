@@ -34,7 +34,7 @@
     }
 
     // Abstract simple ajax calls
-    function ajax_post(url, data, callback, request_name = false) {
+    function ajax_post(url, data, callback, request_name = false, fail_callback = null) {
         if (request_name) {
             active_requests[request_name] = true;
         }
@@ -46,6 +46,9 @@
             success: function(data) {
                 if (data['error']) {
                     alert(data['error_message']);
+                    if (fail_callback) {
+                        fail_callback();
+                    }
                     return false;
                 }
 
