@@ -160,6 +160,7 @@ $('.government_dropdown').click(function(){
 });
 $('.diplomacy_dropdown').click(function(){
     unhighlight_all_squares();
+    mark_war_declare_as_seen();
     $('.center_block').hide();
     $('#diplomacy_block').fadeIn();
 });

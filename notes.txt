@@ -9,22 +9,23 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    UI for war declared on you
 MEDIUM PRIORITY
 LOW PRIORITY
-    update unit colors on treaty change
     number formatting
     show diplomacy status on click other players land
     industry require round of feed to establish
     abstract market table per world
     make get_account_budget() calc settlement & industry separately for accuracy
 BUGS
+    update unit colors on treaty change
+    duplicate treaties
     battle doesn't remove enemy unit
     Unit not wanting to move
     Disappearing units
     duplicate treaties
     supplies projections vs reality
     do industries with no inputs produce output, or get false flagged for no supply?
+    trade request sent before war accepted during war
 EXPLOITS
     Remove base before top of hour
     Moving Capitol

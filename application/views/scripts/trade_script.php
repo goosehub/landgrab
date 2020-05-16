@@ -48,6 +48,14 @@
 		});
 	}
 
+    function mark_war_declare_as_seen() {
+		for (let key in account.received_trades) {
+			if (!parseInt(account.received_trades[key].request_seen) && account.received_trades[key].treaty_key == war_key) {
+				mark_trade_received(account.received_trades[key].id, account.received_trades[key].request_account_key);
+			}
+		}
+    }
+
 	function handle_reject_trade_request() {
 		$('#reject_trade_request').click(function(){
 			send_reject_trade_request();
@@ -130,6 +138,11 @@
 			view_trade = response;
 			trade_partner = view_trade.trade_partner;
 			render_open_trade_received();
+		});
+	}
+
+	function mark_trade_received(trade_request_key, trade_partner_key) {
+		ajax_get(`game/get_trade_request/${world_key}/${trade_request_key}/${trade_partner_key}`, function(response) {
 		});
 	}
 
@@ -278,6 +291,7 @@
 	function declare_war() {
 		let data = {
 			world_key: world_key,
+			message: $('#input_trade_message').val(),
 			trade_partner_key: trade_partner.id,
 		};
 		ajax_post('game/declare_war', data, function(response) {
@@ -289,6 +303,7 @@
 		update_partner_username();
 		update_partner_treaty();
 		update_partner_supplies_new_trade();
+		$('#input_trade_message').val('');
 	}
 
 	function update_partner_username() {

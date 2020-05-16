@@ -508,11 +508,13 @@ class Game extends CI_Controller {
     {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('trade_partner_key', 'trade_partner_key', 'required');
+        $this->form_validation->set_rules('message', 'message', 'max_length[1000]');
         if ($this->form_validation->run() == FALSE) {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $trade_partner_key = $this->input->post('trade_partner_key');
         $world_key = $this->input->post('world_key');
+        $message = $this->input->post('message');
         $account = $this->get_this_full_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
@@ -533,6 +535,7 @@ class Game extends CI_Controller {
         else {
             $this->game_model->create_treaty($account['id'], $trade_partner_key, WAR_KEY);
         }
+        $this->game_model->create_trade_request($account['id'], $trade_partner_key, $message, WAR_KEY);
         api_response();
     }
 
