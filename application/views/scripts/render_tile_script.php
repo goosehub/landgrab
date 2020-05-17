@@ -44,6 +44,8 @@
         }
         $('#tile_name').show();
         $('#tile_name_input, #submit_tile_name').hide();
+        // Debug
+        $('#tile_id').html(current_tile.id);
     }
     function tile_desc()
     {

@@ -7,6 +7,7 @@
 
     <div class="tile_name_label">
         <strong id="tile_name"></strong>
+        <?php if (DEBUG_SHOW_TILE_ID) { ?><strong id="tile_id"></strong><?php } ?>
         <input type="tile_name" id="tile_name_input" class="form-control" style="display: none;"/>
         <button id="edit_tile_name" class="btn btn-sm btn-default btn-round">
             <span class="fa fa-edit" title="Edit"></span>

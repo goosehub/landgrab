@@ -9,22 +9,16 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    BUG: update unit colors on treaty change
 MEDIUM PRIORITY
 LOW PRIORITY
     number formatting
     show diplomacy status on click other players land
     industry require round of feed to establish
     abstract market table per world
-    make get_account_budget() calc settlement & industry separately for accuracy
-BUGS
-    update unit colors on treaty change
-    battle doesn't remove enemy unit
-    Disappearing units
-    supplies projections vs reality
-EXPLOITS
-    Remove base before top of hour
-    Moving Capitol
-    Test for any duplication exploits
+    BUG: make get_account_budget() calc settlement & industry separately for accuracy
+    BUG: supplies projections vs reality
+    EXPLOITS: Moving/removing base/capitol before top of hour
 GOING LIVE
     buy icons8 paid license
     account migration

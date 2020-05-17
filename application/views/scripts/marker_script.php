@@ -297,7 +297,7 @@
   function update_tile_resource_marker(tile) {
     if (resource_markers[tile.id]) {
       resource_markers[tile.id].setMap(null);
-      resource_markers.splice(tile.id, 1);
+      delete resource_markers[tile.id];
     }
     if (tile.resource_key) {
       resource_markers[tile.id] = set_resource_icon(tile.resource_key, tile.id, tile.lat, tile.lng);
@@ -307,7 +307,7 @@
   function update_tile_settlement_marker(tile) {
     if (settlement_markers[tile.id]) {
       settlement_markers[tile.id].setMap(null);
-      settlement_markers.splice(tile.id, 1);
+      delete settlement_markers[tile.id];
     }
     if (tile.settlement_key > metro_key) {
       settlement_markers[tile.id] = set_settlement_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
@@ -317,7 +317,7 @@
   function update_tile_industry_marker(tile) {
     if (industry_markers[tile.id]) {
       industry_markers[tile.id].setMap(null);
-      industry_markers.splice(tile.id, 1);
+      delete industry_markers[tile.id];
     }
     if (settlement_is_township(tile.settlement_key)) {
       industry_markers[tile.id] = set_industry_icon(tile.industry_key, tile.id, tile.lat, tile.lng);
@@ -327,7 +327,7 @@
   function update_tile_township_marker(tile) {
     if (township_markers[tile.id]) {
       township_markers[tile.id].setMap(null);
-      township_markers.splice(tile.id, 1);
+      delete township_markers[tile.id];
     }
     if (settlement_is_township(tile.settlement_key)) {
       township_markers[tile.id] = set_township_icon(tile.settlement_key, tile.id, tile.lat, tile.lng);
@@ -340,7 +340,7 @@
     }
     if (unit_markers[tile.id]) {
       unit_markers[tile.id].setMap(null);
-      unit_markers.splice(tile.id, 1);
+      delete unit_markers[tile.id];
     }
     else if (tile.unit_key) {
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, tile.unit_owner_key, tile.unit_owner_color, tile.lat, tile.lng);

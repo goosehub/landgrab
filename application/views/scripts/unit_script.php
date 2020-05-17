@@ -182,7 +182,7 @@
     else {
       lat = final_end_lat;
       lng = final_end_lng;
-      unit_markers.splice(marker.tile_id, 1);
+      delete unit_markers[marker];
       allowed_move_to_new_position = true;
     }
 
@@ -205,7 +205,7 @@
     // If replacing marker, remove marker being replaced
     if (combat && combat.victory && unit_markers[end_tile_id]) {
       unit_markers[end_tile_id].setMap(null);
-      unit_markers.splice(end_tile_id, 1);
+      delete unit_markers[end_tile_id];
     }
   }
 
