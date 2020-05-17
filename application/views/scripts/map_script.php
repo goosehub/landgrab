@@ -1,6 +1,5 @@
 <script>
   use_toggle_cookies();
-  pass_new_laws();
   attack_key_listen();
   map_toggle_listen();
 

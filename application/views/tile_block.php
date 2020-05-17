@@ -95,7 +95,7 @@
     <div id="tile_first_claim">
         <hr>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 well">
                 <p class="text-center">
                     <strong class="text-action">
                         Make this the Capitol of your new nation!
@@ -103,7 +103,8 @@
                 </p>
             </div>
             <div class="col-md-6">
-                <button class="btn btn-action form-control" id="do_first_claim">
+                <!-- For some reason this button didn't want to be styled, so I'm forcing this inline style on it -->
+                <button class="btn btn-action form-control" id="do_first_claim" style="height: 6em !important">
                     Claim
                 </button>
             </div>
@@ -113,17 +114,17 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" id="tab_select_settle">
                 <a id="settle_tab_button" href="#settle" aria-controls="home" role="tab" data-toggle="tab">
-                    <button class="tile_tab_button btn btn-success form-control">Settlement</button>
+                    <button class="tile_tab_button btn btn-success btn-lg">Settlement</button>
                 </a>
             </li>
             <li role="presentation" id="tab_select_industry">
                 <a id="industry_tab_button" href="#industry" aria-controls="home" role="tab" data-toggle="tab">
-                    <button class="tile_tab_button btn btn-primary form-control">Industry</button>
+                    <button class="tile_tab_button btn btn-primary btn-lg">Industry</button>
                 </a>
             </li>
             <li role="presentation" id="tab_select_enlist">
                 <a id="enlist_tab_button" href="#enlist" aria-controls="home" role="tab" data-toggle="tab">
-                    <button class="tile_tab_button btn btn-danger form-control">Enlistment</button>
+                    <button class="tile_tab_button btn btn-danger btn-lg">Enlistment</button>
                 </a>
             </li>
         </ul>

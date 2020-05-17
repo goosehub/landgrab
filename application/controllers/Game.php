@@ -264,45 +264,6 @@ class Game extends CI_Controller {
         return true;
     }
 
-    public function can_claim($account, $tile)
-    {
-        if (!$account) {
-            return false;
-        }
-        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
-            return false;
-        }
-        if ($tile['account_key'] == $account['id']) {
-            return false;
-        }
-        if ($tile['account_key']) {
-            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
-            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
-                api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
-            }
-        }
-        return true;
-    }
-
-    public function can_move_to($account, $tile)
-    {
-        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
-            return true;
-        }
-
-        if ((int)$account['supplies']['support']['amount'] <= 0) {
-            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
-        }
-
-        if ($tile['unit_key']) {
-            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
-            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
-                api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
-            }
-        }
-        return true;
-    }
-
     public function unit_move_to_land()
     {
         $world_key = $this->input->post('world_key');
@@ -320,7 +281,7 @@ class Game extends CI_Controller {
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
         // Keep remove before add, makes dupe bugs less likely
-        if ($this->can_claim($account, $tile)) {
+        if ($this->game_model->can_claim($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
@@ -329,7 +290,7 @@ class Game extends CI_Controller {
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
             }
         }
-        else if ($this->can_move_to($account, $tile)) {
+        else if ($this->game_model->can_move_to($account, $tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {

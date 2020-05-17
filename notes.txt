@@ -3,17 +3,18 @@
 ==========================================================================================
 
 
-
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    Enforce money to buy military
+    Enforce unit township capture logic
 MEDIUM PRIORITY
+    industry require round of feed to establish
 LOW PRIORITY
     number formatting
     show diplomacy status on click other players land
-    industry require round of feed to establish
     abstract market table per world
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality

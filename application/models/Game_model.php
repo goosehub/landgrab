@@ -824,6 +824,45 @@ Class game_model extends CI_Model
 			}
 		}
 	}
+
+    public function can_claim($account, $tile)
+    {
+        if (!$account) {
+            return false;
+        }
+        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
+            return false;
+        }
+        if ($tile['account_key'] == $account['id']) {
+            return false;
+        }
+        if ($tile['account_key']) {
+            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
+                api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
+            }
+        }
+        return true;
+    }
+
+    public function can_move_to($account, $tile)
+    {
+        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
+            return true;
+        }
+
+        if ((int)$account['supplies']['support']['amount'] <= 0) {
+            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
+        }
+
+        if ($tile['unit_key']) {
+            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
+                api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+            }
+        }
+        return true;
+    }
 	function remove_capitol($account_id) {
 		$tile = $this->get_capitol_tile_by_account($account_id);
 		$data = array(

@@ -414,7 +414,11 @@
 
     function update_budget(budget){
       $('#budget_gdp').html(number_format(budget.gdp));
-      $('#budget_gdp_bonus').html(budget.gdp_bonus);
+      $('#budget_gdp_bonus_parent').hide()
+      if (budget.gdp_bonus) {
+        $('#budget_gdp_bonus').html(budget.gdp_bonus);
+        $('#budget_gdp_bonus_parent').show();
+      }
       $('#budget_socialism').html(number_format(budget.gdp));
       $('#budget_tax_income').html(number_format(budget.tax_income));
       $('#budget_power_corruption').html(number_format(budget.power_corruption));

@@ -87,10 +87,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
+                        <hr>
                     </div>
-                    <div class="col-md-1">
-                        <?= generate_popover('Passing Laws', 'Laws can only be passed once an hour.', 'right', 'pull-right'); ?>
+                    <div class="col-md-4">
+                        <p class="text-info">
+                            Laws can only be passed once an hour
+                        </p>
                     </div>
                     <div class="col-md-8">
                         <div id="pass_new_laws_button" class="btn btn-action form-control text-is-bold">
@@ -109,7 +112,7 @@
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
                     GDP:
-                    <small class="text-action">
+                    <small id="budget_gdp_bonus_parent" class="text-action">
                         <span id="budget_gdp_bonus"></span>% Bonus
                     </small>
                     <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus Supplies.', 'right'); ?>
