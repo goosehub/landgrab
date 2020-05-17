@@ -594,20 +594,20 @@ Class game_model extends CI_Model
 		return $query->result_array();
 	}
 	function sufficient_supplies_to_send_trade_request($supplies_offered, $account_key) {
-        foreach ($supplies_offered as $supply) {
-        	if (!$this->account_has_amount_of_supply($account_key, $supply->supply_key, $supply->amount)) {
+		foreach ($supplies_offered as $supply) {
+			if (!$this->account_has_amount_of_supply($account_key, $supply->supply_key, $supply->amount)) {
 				return false;
-        	}
-        }
+			}
+		}
 		return true;
 	}
 	function sufficient_supplies_to_accept_trade_request($trade_request_key, $account_key) {
-        $data['needed_supplies'] = $this->get_supply_account_trade_lookup($trade_request_key, $account_key);
-        foreach ($data['needed_supplies'] as $supply) {
-        	if (!$this->account_has_amount_of_supply($account_key, $supply['supply_key'], $supply['amount'])) {
+		$data['needed_supplies'] = $this->get_supply_account_trade_lookup($trade_request_key, $account_key);
+		foreach ($data['needed_supplies'] as $supply) {
+			if (!$this->account_has_amount_of_supply($account_key, $supply['supply_key'], $supply['amount'])) {
 				return false;
-        	}
-        }
+			}
+		}
 		return true;
 	}
 	function account_has_amount_of_supply($account_key, $supply_key, $amount) {
@@ -787,26 +787,26 @@ Class game_model extends CI_Model
 	function tiles_are_adjacent($start_lat, $start_lng, $end_lat, $end_lng) {
 		// Ignore if ending same place we started
 		if ($start_lat === $end_lat && $start_lng === $end_lng) {
-		  return false;
+			return false;
 		}
 		// Check if one is changed by 1, and other is the same
 		$allowed_lats = [$start_lat, $start_lat + TILE_SIZE, $start_lat - TILE_SIZE];
 		$allowed_lngs = [$start_lng, $this->correct_lng($start_lng + TILE_SIZE), $this->correct_lng($start_lng - TILE_SIZE)];
 		if (
-		  (in_array($end_lat, $allowed_lats) && $start_lng === $end_lng) || 
-		  (in_array($end_lng, $allowed_lngs) && $start_lat === $end_lat)
-		  ) {
-		  return true;
+			(in_array($end_lat, $allowed_lats) && $start_lng === $end_lng) || 
+			(in_array($end_lng, $allowed_lngs) && $start_lat === $end_lat)
+			) {
+			return true;
 		}
 		return false;
 	}
 	function correct_lng($lng) {
 		// Hardcoded for tile size 2 worlds
 		if ($lng === 182) {
-		  $lng = -178;
+			$lng = -178;
 		}
 		if ($lng === -180) {
-		  $lng = 180;
+			$lng = 180;
 		}
 		return $lng;
 	}
@@ -824,45 +824,68 @@ Class game_model extends CI_Model
 			}
 		}
 	}
+	function can_claim($account, $tile, $previous_tile) {
+		if (!$account) {
+			return false;
+		}
+		if ((int)$tile['terrain_key'] === OCEAN_KEY) {
+			return false;
+		}
+		if ($tile['account_key'] == $account['id']) {
+			return false;
+		}
+		if ($tile['account_key']) {
+			$treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+			if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
+				api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
+			}
+		}
+		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
+			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this level of township');
+		}
+		return true;
+	}
+	function can_move_to($account, $tile, $previous_tile) {
+		if ((int)$tile['terrain_key'] === OCEAN_KEY) {
+			return true;
+		}
 
-    public function can_claim($account, $tile)
-    {
-        if (!$account) {
-            return false;
-        }
-        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
-            return false;
-        }
-        if ($tile['account_key'] == $account['id']) {
-            return false;
-        }
-        if ($tile['account_key']) {
-            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
-            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
-                api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
-            }
-        }
-        return true;
-    }
+		if ((int)$account['supplies']['support']['amount'] <= 0) {
+			api_error_response('not_enough_support_to_move', 'You can not move units without political support');
+		}
 
-    public function can_move_to($account, $tile)
-    {
-        if ((int)$tile['terrain_key'] === OCEAN_KEY) {
-            return true;
-        }
-
-        if ((int)$account['supplies']['support']['amount'] <= 0) {
-            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
-        }
-
-        if ($tile['unit_key']) {
-            $treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
-            if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
-                api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
-            }
-        }
-        return true;
-    }
+		if ($tile['unit_key']) {
+			$treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
+			if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
+				api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+			}
+		}
+		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
+			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this level of township');
+		}
+		return true;
+	}
+	function unit_can_take_settlement($settlement_key, $unit_key) {
+		if ($settlement_key == TOWN_KEY) {
+			if ($unit_key == AIRFORCE_KEY) {
+				return false;
+			}
+		}
+		if ($settlement_key == CITY_KEY) {
+			if ($unit_key == AIRFORCE_KEY) {
+				return false;
+			}
+		}
+		if ($settlement_key == METRO_KEY) {
+			if ($unit_key == AIRFORCE_KEY) {
+				return false;
+			}
+			if ($unit_key == INFANTRY_KEY) {
+				return false;
+			}
+		}
+		return true;
+	}
 	function remove_capitol($account_id) {
 		$tile = $this->get_capitol_tile_by_account($account_id);
 		$data = array(

@@ -101,6 +101,7 @@
         $tile['id'] . ',' .
         $tile['lat'] . ',' .
         $tile['lng'] . ',' .
+        ($tile['settlement_key'] ? $tile['settlement_key'] : 'null') . ',' .
         ($tile['account_key'] ? $tile['account_key'] : 'null') . ',' .
         '"' . $terrain_color . '",' .
         '"' . $border_color . '"'
@@ -111,7 +112,7 @@
   }
 
   // Declare square called by performance sensitive loop
-  function z(tile_key, tile_lat, tile_lng, account_key, terrain_color, border_color) {
+  function z(tile_key, tile_lat, tile_lng, settlement_key, account_key, terrain_color, border_color) {
     let current_fill_color = border_toggle ? border_color : terrain_color;
     let shape = [{
         lat: tile_lat,
@@ -134,6 +135,7 @@
       map: map,
       paths: shape,
       tile_key: tile_key,
+      settlement_key: settlement_key,
       fillOpacity: <?= TILE_OPACITY; ?>,
       strokeWeight: <?= STROKE_WEIGHT; ?>,
       strokeColor: '<?= STROKE_COLOR; ?>',
@@ -192,6 +194,7 @@
         fillColor: fill_color,
         borders_fillColor: border_color,
         account_key: new_tile.account_key,
+        settlement_key: new_tile.settlement_key,
       });
 
       update_tile_resource_marker(new_tile);

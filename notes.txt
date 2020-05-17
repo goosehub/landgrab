@@ -8,7 +8,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    Enforce unit township capture logic
 MEDIUM PRIORITY
     industry require round of feed to establish
 LOW PRIORITY

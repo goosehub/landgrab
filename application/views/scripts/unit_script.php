@@ -162,10 +162,14 @@
     let allowed_move_to_new_position = false;
     let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
+    let settlement_key = tiles_by_coord[end_lat + ',' + end_lng].settlement_key;
 
     // Check conditions
     if (!tiles_are_adjacent(start_lat, start_lng, end_lat, end_lng)) {
       // No alert, probably not intentional
+    }
+    else if (account.supplies.support.amount <= 0) {
+      alert('You can not move units without political support');
     }
     else if (!no_own_unit_at_square(final_end_lat, final_end_lng)) {
       alert('You can not stack units');
@@ -176,8 +180,8 @@
     else if (is_friendly_square(end_lat, end_lng)) {
       alert('You must declare war through diplomacy before you can attack this land');
     }
-    else if (account.supplies.support.amount <= 0) {
-      alert('You can not move units without political support');
+    else if (!unit_can_take_settlement(settlement_key, marker.unit.unit_key)) {
+      alert('This unit is not able to take this level of township');
     }
     else {
       lat = final_end_lat;
@@ -207,6 +211,28 @@
       unit_markers[end_tile_id].setMap(null);
       delete unit_markers[end_tile_id];
     }
+  }
+
+  function unit_can_take_settlement(settlement_key, unit_key) {
+    if (settlement_key == town_key) {
+      if (unit_key == airforce_key) {
+        return false;
+      }
+    }
+    if (settlement_key == city_key) {
+      if (unit_key == airforce_key) {
+        return false;
+      }
+    }
+    if (settlement_key == metro_key) {
+      if (unit_key == airforce_key) {
+        return false;
+      }
+      if (unit_key == infantry_key) {
+        return false;
+      }
+    }
+    return true;
   }
 
   function no_own_unit_at_square(lat, lng) {

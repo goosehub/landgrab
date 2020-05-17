@@ -281,7 +281,7 @@ class Game extends CI_Controller {
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
         // Keep remove before add, makes dupe bugs less likely
-        if ($this->game_model->can_claim($account, $tile)) {
+        if ($this->game_model->can_claim($account, $tile, $previous_tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
@@ -290,7 +290,7 @@ class Game extends CI_Controller {
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
             }
         }
-        else if ($this->game_model->can_move_to($account, $tile)) {
+        else if ($this->game_model->can_move_to($account, $tile, $previous_tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
