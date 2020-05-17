@@ -162,8 +162,11 @@
         $supplies = $this->get_all_supply();
         foreach ($supplies as $supply) {
             $default = 0;
+            if ($supply['slug'] === 'cash') {
+                $default = CASH_DEFAULT;
+            }
             if ($supply['slug'] === 'support') {
-                $default = 100;
+                $default = SUPPORT_DEFAULT;
             }
             $data = array(
                 'account_key' => $account_id,

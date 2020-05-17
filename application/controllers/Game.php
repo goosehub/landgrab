@@ -431,10 +431,10 @@ class Game extends CI_Controller {
             api_error_response('tile_is_not_allowed_to_spawn', 'This tile must be a capitol or base');
         }
         $account = $this->get_this_full_account($tile['world_key']);
-        if ($account['ideology'] == FREE_MARKET_KEY && $account['supplies']['cash'] < $this->unit_types[$unit_id - 1]['cash_cost']) {
+        if ($account['ideology'] == FREE_MARKET_KEY && $account['supplies']['cash']['amount'] < $this->unit_types[$unit_id - 1]['cash_cost']) {
             api_error_response('insufficient_cash', 'You do not have enough cash to complete this action');
         }
-        if ($account['ideology'] == SOCIALISM_KEY && $account['supplies']['support'] < $this->unit_types[$unit_id - 1]['support_cost']) {
+        if ($account['ideology'] == SOCIALISM_KEY && $account['supplies']['support']['amount'] < $this->unit_types[$unit_id - 1]['support_cost']) {
             api_error_response('insufficient_cash', 'You do not have enough cash to complete this action');
         }
         if ($account['ideology'] == FREE_MARKET_KEY) {

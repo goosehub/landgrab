@@ -8,7 +8,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    Enforce money to buy military
     Enforce unit township capture logic
 MEDIUM PRIORITY
     industry require round of feed to establish
