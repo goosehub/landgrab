@@ -8,6 +8,11 @@
     get_map_update();
   }, map_update_interval_ms);
 
+  // Update units once in a while incase of sent treaty signed
+  setInterval(function() {
+    get_map_update('update_units');
+  }, map_units_update_interval_ms);
+
   function initMap() {
     set_map();
     remove_overlay();
@@ -144,11 +149,11 @@
     tiles_by_coord[tile_lat + ',' + tile_lng] = tiles[tile_key];
   }
 
-  function get_map_update() {
+  function get_map_update(update_type = 'update_world') {
     if (active_requests['map_update']) {
       return;
     }
-    ajax_get('game/update_world/' + world_key, function(response) {
+    ajax_get('game/' + update_type + '/' + world_key, function(response) {
       // Check for refresh signal from server 
       if (response['refresh']) {
         alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
@@ -172,7 +177,7 @@
   function update_tiles(new_tiles) {
     // This loop may rarely run up to 15,000 times, so focus is a performance
     number_of_tiles = new_tiles.length;
-    for (i = 0; i < number_of_tiles; i++) {
+    for (let i = 0; i < number_of_tiles; i++) {
       let new_tile = new_tiles[i];
       new_tile.lat = parseInt(new_tile.lat);
       new_tile.lng = parseInt(new_tile.lng);

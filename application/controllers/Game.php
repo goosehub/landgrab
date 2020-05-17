@@ -105,6 +105,19 @@ class Game extends CI_Controller {
         api_response($data);
     }
 
+    public function update_units($world_key)
+    {
+        $data['world'] = $this->game_model->get_world_by_id($world_key);
+        if (!$data['world']) {
+            api_error_response('world_not_found', 'World Not Found');
+        }
+
+        $data['account'] = $this->user_model->this_account($data['world']['id']);
+
+        $data['tiles'] = $this->game_model->get_all_tiles_in_world_with_units($data['world']['id']);
+        api_response($data);
+    }
+
     // Get infomation on single land
     public function get_tile()
     {

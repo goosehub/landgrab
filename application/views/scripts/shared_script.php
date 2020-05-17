@@ -140,6 +140,21 @@
         });
     }
 
+    function find_unit_color(unit_owner_key)
+    {
+        if (unit_owner_key == account.id) {
+          return 'own';
+        }
+        let treaty_key = find_treaty_by_account_key(unit_owner_key);
+        if (treaty_key == war_key) {
+          return 'enemy';
+        }
+        if (treaty_key == passage_key) {
+          return 'ally';
+        }
+        return 'neutral';
+    }
+
     function settlement_is_township(settlement_key)
     {
         return settlement_key == <?= TOWN_KEY; ?> || settlement_key == <?= CITY_KEY; ?> || settlement_key == <?= METRO_KEY; ?>
@@ -297,7 +312,7 @@
         if (!account || !account.treaties || account_key == account.id) {
             return peace_key;
         }
-        for (i = 0; i < account.treaties.length; i++) {
+        for (let i = 0; i < account.treaties.length; i++) {
             let aggrement = account.treaties[i];
             if (account_key == aggrement.a_account_key || account_key == aggrement.b_account_key) {
                 return aggrement.treaty_key;
@@ -406,6 +421,14 @@
             fill_color = tile['color'];
         }
         return fill_color;
+    }
+
+    function update_all_units() {
+        // Look away, this is an ugly ugly work around to re-render units after treaty update
+        get_account_update();
+        setTimeout(function(){
+            get_map_update('update_units');
+        }, 3 * 1000);
     }
 
     function get_tile_terrain_color(terrain_key) {

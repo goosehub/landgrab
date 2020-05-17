@@ -45,6 +45,7 @@
 		ajax_post('game/accept_trade_request/' + view_trade.trade_request.id, data, function(response) {
 			$('.center_block').hide();
 			$('#view_input_trade_message_reply').val('');
+			update_all_units();
 		});
 	}
 
@@ -296,6 +297,7 @@
 		};
 		ajax_post('game/declare_war', data, function(response) {
 			$('.center_block').hide();
+			update_all_units();
 		});
 	}
 

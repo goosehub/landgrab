@@ -79,6 +79,15 @@ Class game_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	function get_all_tiles_in_world_with_units($world_key)
+	{
+		$this->db->select('*');
+		$this->db->from('tile');
+		$this->db->where('world_key', $world_key);
+		$this->db->where('unit_key IS NOT NULL', NULL, FALSE);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function get_tile($lat, $lng, $world_key)
 	{
 		$this->db->select('*');

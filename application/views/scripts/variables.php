@@ -116,6 +116,7 @@
     let township_markers = [];
     let industry_markers = [];
     let map_update_interval_ms = <?= MAP_UPDATE_INTERVAL_MS; ?>;
+    let map_units_update_interval_ms = <?= MAP_UNITS_UPDATE_INTERVAL_MS; ?>;
     let account_update_interval_ms = <?= ACCOUNT_UPDATE_INTERVAL_MS; ?>;
     let combat_animate_ms = <?= COMBAT_ANIMATE_MS; ?>;
     let unit_linger_ms = <?= UNIT_LINGER_MS; ?>;

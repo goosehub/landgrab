@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: update unit colors on treaty change
 MEDIUM PRIORITY
 LOW PRIORITY
     number formatting

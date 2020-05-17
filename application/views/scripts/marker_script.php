@@ -233,16 +233,7 @@
     if (parseInt(terrain_key) === ocean_key) {
       unit_key = navy_key;
     }
-    let unit_color = 'neutral';
-    if (unit_owner_key == account.id) {
-      unit_color = 'own';
-    }
-    else if (find_treaty_by_account_key(unit_owner_key) == war_key) {
-      unit_color = 'enemy';
-    }
-    else if (find_treaty_by_account_key(unit_owner_key) == passage_key) {
-      unit_color = 'ally';
-    }
+    let unit_color = find_unit_color(unit_owner_key);
     let path = `${base_url}resources/icons/units/${unit_key}-${unit_color}.png`;
     unit = {
       unit_key: unit_id,
@@ -342,7 +333,7 @@
       unit_markers[tile.id].setMap(null);
       delete unit_markers[tile.id];
     }
-    else if (tile.unit_key) {
+    if (tile.unit_key) {
       unit_markers[tile.id] = set_unit_icon(tile.unit_key, tile.id, tile.terrain_key, tile.unit_owner_key, tile.unit_owner_color, tile.lat, tile.lng);
     }
   }
@@ -352,6 +343,9 @@
       return false;
     }
     if (tile.unit_owner_key != marker.unit.unit_owner_key) {
+      return false;
+    }
+    if (marker.unit.unit_color != find_unit_color(tile.unit_owner_key)) {
       return false;
     }
     return true;
