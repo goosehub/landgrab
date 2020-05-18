@@ -5,7 +5,7 @@ if ($_SERVER['HTTP_HOST'] === 'localhost') {
     $base_url = 'http://localhost/landgrab/';
 }
 else {
-    $base_url = 'https://landgrab.xyz/';
+    $base_url = 'https://landgrab.xyz/alpha/';
 }
 
 chdir(__DIR__);

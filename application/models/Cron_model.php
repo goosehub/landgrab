@@ -260,9 +260,9 @@ Class cron_model extends CI_Model
 	}
 	function shrink_population()
 	{
-		$town_population_increment = TOWN_POPULATION_INCREMENT;
-		$city_population_increment = CITY_POPULATION_INCREMENT;
-		$metro_population_increment = METRO_POPULATION_INCREMENT;
+		$town_population_increment = TOWN_POPULATION_INCREMENT * 60;
+		$city_population_increment = CITY_POPULATION_INCREMENT * 60;
+		$metro_population_increment = METRO_POPULATION_INCREMENT * 60;
 		$town_key = TOWN_KEY;
 		$city_key = CITY_KEY;
 		$metro_key = METRO_KEY;

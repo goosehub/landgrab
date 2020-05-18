@@ -8,10 +8,14 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    make pace faster (default food for one?)
+    make trade screen more clear on existing for offer
+    default to terrain view
     reset cron
 MEDIUM PRIORITY
     settlement/industry require round of feed to establish
     account migration
+    show food and cash crop production summary
 LOW PRIORITY
     number formatting
     show diplomacy status on click other players land
@@ -27,9 +31,11 @@ Near Updates
     World wide chat messages for treaty changes and market prices
     Leaderboard
     Improved UI/New Icons
+    Mobile
     Interactive Tutorial
     New Treaty Ally/Right of Passage
 NO PRIORITY
+    BUG: On landgrab.sql run, supply_industry_lookup didn't seed
     MECHANIC: pollution
     MECHANIC: nuke
     MECHANIC: spy

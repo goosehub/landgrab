@@ -168,6 +168,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             if ($supply['slug'] === 'support') {
                 $default = SUPPORT_DEFAULT;
             }
+            if ($supply['slug'] === 'grain') {
+                $default = GRAIN_DEFAULT;
+            }
             $data = array(
                 'account_key' => $account_id,
                 'supply_key' => $supply['id'],
