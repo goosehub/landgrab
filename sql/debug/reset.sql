@@ -24,9 +24,8 @@ UPDATE `supply_account_lookup` SET
 WHERE 1;
 
 UPDATE `account` SET
-`ideology` = 2,
-`tax_rate` = 10,
 `ideology` = 1,
+`tax_rate` = 25,
 `last_law_change` = NULL
 WHERE 1;
 
