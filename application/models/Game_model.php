@@ -841,7 +841,7 @@ Class game_model extends CI_Model
 			}
 		}
 		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
-			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this level of township');
+			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this size of township');
 		}
 		return true;
 	}
@@ -861,7 +861,7 @@ Class game_model extends CI_Model
 			}
 		}
 		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
-			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this level of township');
+			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this size of township');
 		}
 		return true;
 	}

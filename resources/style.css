@@ -182,6 +182,7 @@ html, body {
   }
   #info_tag {
     display: none;
+    font-size: 1.2em;
   }
   #leaderboard_table thead tr th:nth-child(1),
   #leaderboard_table thead tr th:nth-child(3),
@@ -196,7 +197,7 @@ html, body {
   #leaderboard_table tbody tr td:nth-child(7),
   #leaderboard_table tbody tr td:nth-child(8)
   {
-      display: none;
+    display: none;
   }
   #leaderboard_table thead tr th:nth-child(0) {
     width: 10vw;

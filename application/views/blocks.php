@@ -1,12 +1,13 @@
 <!-- Info tag -->
 <div id="info_tag">
     <strong>
-    <!-- <a href="https://www.reddit.com/r/LandGrab/comments/9oicbv/the_embassy_limiting_update/?" target="_blank">The Embassy Limit Update</a> -->
-    Industry Update - ALPHA
+        <a href="https://www.reddit.com/r/LandGrab/comments/glqdi0/landgrab_v5_alpha_release/" target="_blank">
+            ALPHA - HOW TO PLAY
+        </a>
     </strong>
 </div>
 
-<!--  -->
+<!-- Combat -->
 <div id="combat_block" class="center_block center_block_small">
     <div class="combat_pending_message">
         <h3 class="text-center text-primary">

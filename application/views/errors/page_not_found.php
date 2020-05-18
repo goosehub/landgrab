@@ -30,7 +30,7 @@
         </div>
         <div class="col-md-4">
           <br>
-          <h1 class="text-center">404 Page Not Found</h1>
+          <h1 class="text-center">404 - Page Not Found</h1>
           <br>
           <h3>We're sorry, but we couldn't find the page you were looking for, or an unknown error occured.</h3>
           <br>

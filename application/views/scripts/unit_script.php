@@ -181,7 +181,7 @@
       alert('You must declare war through diplomacy before you can attack this land');
     }
     else if (!unit_can_take_settlement(settlement_key, marker.unit.unit_key)) {
-      alert('This unit is not able to take this level of township');
+      alert('This unit is not able to take this size of township');
     }
     else {
       lat = final_end_lat;

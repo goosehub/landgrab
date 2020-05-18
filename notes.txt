@@ -8,8 +8,10 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    reset cron
 MEDIUM PRIORITY
-    industry require round of feed to establish
+    settlement/industry require round of feed to establish
+    account migration
 LOW PRIORITY
     number formatting
     show diplomacy status on click other players land
@@ -17,31 +19,20 @@ LOW PRIORITY
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     EXPLOITS: Moving/removing base/capitol before top of hour
-GOING LIVE
-    buy icons8 paid license
-    account migration
-    reset cron
-    reddit update post
-    update banner
 Near Updates
-    More worlds
-    commission icons
-    Passage
-    system chat for treaty changes and crons, market prices, ect
-    swal alerts
-    leaderboard
-    Concel resources until discovered
-    Conceal units except when own, ally, or navy
-    tutorial based on todo list
-    world lock/generation
-Far Updates
-    pollution mechanic
-    wiki
-    nuke
-    spy
-    bombing
-    Volcanos
+    Multi World generation
+    World lock
+    Conceal resources until discovered
+    Conceal units except for allies and naval
+    World wide chat messages for treaty changes and market prices
+    Leaderboard
+    Improved UI/New Icons
+    Interactive Tutorial
+    New Treaty Ally/Right of Passage
 NO PRIORITY
+    MECHANIC: pollution
+    MECHANIC: nuke
+    MECHANIC: spy
     Reject active trade requests when war starts
     Being attacked UI
     fonts
