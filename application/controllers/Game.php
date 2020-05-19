@@ -207,7 +207,7 @@ class Game extends CI_Controller {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
 
-        if (strtotime($account['last_law_change']) > time() - (60 * 60)) {
+        if ($account['last_law_change'] && strtotime($account['last_law_change']) > time() - (60 * 60)) {
             api_error_response('law_change_too_soon', 'You must wait an hour between passing laws.');
         }
 
