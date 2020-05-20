@@ -840,7 +840,7 @@ Class game_model extends CI_Model
 				api_error_response('attack_requires_war', 'You must declare war before attacking this nation');
 			}
 		}
-		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
+		if ($tile['account_key'] != $account['id'] && !$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
 			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this size of township');
 		}
 		return true;
@@ -860,7 +860,7 @@ Class game_model extends CI_Model
 				api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
 			}
 		}
-		if (!$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
+		if ($tile['account_key'] != $account['id'] && !$this->unit_can_take_settlement($tile['settlement_key'], $previous_tile['unit_key'])) {
 			api_error_response('unit_not_able_to_take_square', 'This unit is not able to take this size of township');
 		}
 		return true;

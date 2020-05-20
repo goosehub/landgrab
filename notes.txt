@@ -14,6 +14,7 @@ HIGH PRIORITY
     make trade screen more clear on existing for offer
     reset cron
 MEDIUM PRIORITY
+    Show current supplies of relevant settlement or industry card 
     shortages more clear
     default to terrain view
     settlement/industry require round of feed to establish

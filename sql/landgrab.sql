@@ -547,7 +547,7 @@ INSERT INTO `settlement` (
 ),
 (11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
-  TRUE, TRUE, FALSE, FALSE, FALSE,
+  TRUE, TRUE, FALSE, TRUE, FALSE,
   10, '', 5, 10, 1
 ),
 (12, 'Fiber', 'fiber', 3,

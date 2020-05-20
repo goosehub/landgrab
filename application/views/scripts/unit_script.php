@@ -162,6 +162,7 @@
     let allowed_move_to_new_position = false;
     let start_tile_id = tiles_by_coord[start_lat + ',' + start_lng].tile_key;
     let end_tile_id = tiles_by_coord[end_lat + ',' + end_lng].tile_key;
+    let end_tile_account_key = tiles_by_coord[end_lat + ',' + end_lng].account_key;
     let settlement_key = tiles_by_coord[end_lat + ',' + end_lng].settlement_key;
 
     // Check conditions
@@ -180,7 +181,7 @@
     else if (is_friendly_square(end_lat, end_lng)) {
       alert('You must declare war through diplomacy before you can attack this land');
     }
-    else if (!unit_can_take_settlement(settlement_key, marker.unit.unit_key)) {
+    else if (!unit_can_take_settlement(end_tile_account_key, settlement_key, marker.unit.unit_key)) {
       alert('This unit is not able to take this size of township');
     }
     else {
@@ -213,7 +214,10 @@
     }
   }
 
-  function unit_can_take_settlement(settlement_key, unit_key) {
+  function unit_can_take_settlement(end_tile_account_key, settlement_key, unit_key) {
+    if (end_tile_account_key == account.id) {
+      return true;
+    }
     if (settlement_key == town_key) {
       if (unit_key == airforce_key) {
         return false;
