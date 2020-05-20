@@ -8,11 +8,14 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    BUG: disappearing units
+    BUG: tiles not updating
     make pace faster (default food for one?)
     make trade screen more clear on existing for offer
-    default to terrain view
     reset cron
 MEDIUM PRIORITY
+    shortages more clear
+    default to terrain view
     settlement/industry require round of feed to establish
     account migration
     show food and cash crop production summary
@@ -49,7 +52,7 @@ NO PRIORITY
     population projection
     abstract settlement input string into programatic
     capitol and chat shortcut to diplomacy
-    Township Population Reset/Decrease on capture
+    Township Population Reset/Decrease on capture and downgrade
     store default google maps id type
     units UI for red–green color blindness
 

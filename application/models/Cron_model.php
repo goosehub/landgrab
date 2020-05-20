@@ -219,7 +219,7 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE settlement_key = $town_key
+			WHERE population <= (SELECT base_population FROM settlement WHERE id = $city_key)
 		");
 		$this->db->query("
 			UPDATE tile
@@ -237,7 +237,8 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE settlement_key = $city_key
+			WHERE population >= (SELECT base_population FROM settlement WHERE id = $city_key)
+			AND population <= (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");
 		$this->db->query("
 			UPDATE tile
@@ -255,14 +256,14 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE settlement_key = $metro_key
+			WHERE population >= (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");
 	}
 	function shrink_population()
 	{
-		$town_population_increment = TOWN_POPULATION_INCREMENT * 60;
-		$city_population_increment = CITY_POPULATION_INCREMENT * 60;
-		$metro_population_increment = METRO_POPULATION_INCREMENT * 60;
+		$town_population_increment = TOWN_POPULATION_INCREMENT;
+		$city_population_increment = CITY_POPULATION_INCREMENT;
+		$metro_population_increment = METRO_POPULATION_INCREMENT;
 		$town_key = TOWN_KEY;
 		$city_key = CITY_KEY;
 		$metro_key = METRO_KEY;
@@ -1009,7 +1010,7 @@ Class cron_model extends CI_Model
 		$this->db->from('trade_request');
 		$this->db->where('is_accepted', false);
 		$this->db->where('is_rejected', false);
-		$this->db->where('trade_request.created <', date('Y-m-d H:i:s', time() - (TRADE_EXPIRE_HOURS * 60 * 60) ));
+		$this->db->where('trade_request.created <', date('Y-m-d H:i:s', time() - (TRADE_EXPIRE_HOURS) ));
 		$query = $this->db->get();
 		return $query->result_array();
 	}
