@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `power_structure` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy
   `tax_rate` int(10) UNSIGNED NOT NULL,
   `ideology` int(10) UNSIGNED NULL, -- Socialism, Free Market
-  `last_law_change` timestamp NOT NULL,
+  `last_law_change` timestamp NULL,
   -- meta
   `last_load` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
