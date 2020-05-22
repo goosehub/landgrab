@@ -12,7 +12,7 @@
 		<div class="col-md-2">
 			<select id="leaderboard_supply_select" class="form-control">
 				<?php foreach ($supplies as $supply) { ?>
-					<option value="<?= $supply['id']; ?>" <?php $supply['id'] == DEFAULT_LEADERBOARD_SUPPLY_KEY ? ' selected="selected"' : ''; ?> >
+					<option value="<?= $supply['id']; ?>" <?php echo $supply['id'] == DEFAULT_LEADERBOARD_SUPPLY_KEY ? ' selected="selected"' : ''; ?> >
 						<?= $supply['label']; ?>
 					</option>
 				<?php } ?>
