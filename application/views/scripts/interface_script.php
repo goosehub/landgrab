@@ -202,10 +202,6 @@ $('.login_button').click(function(){
 $('.register_button').click(function(){
     $('#register_input_username').focus();
 });
-$('#leaderboard_dropdown').click(function(){
-    $('.center_block').hide();
-    $('#leaderboard_block').show();
-});
 $('#worlds_dropdown').click(function(){
     $('.center_block').hide();
 });

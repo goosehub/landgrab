@@ -2,6 +2,22 @@
     activate_bootstrap_popovers();
     extend_date();
     handle_pass_new_laws();
+    handle_open_leaderboard();
+
+    function handle_open_leaderboard() {
+        $('#leaderboard_dropdown').click(function(){
+            $('.center_block').hide();
+            $('#leaderboard_block').show();
+            render_leaderboard();
+        });
+    }
+
+    function render_leaderboard() {
+        ajax_get('game/leaderboard/' + world_key + '/' + current_leaderboard_supply, function(response) {
+            console.log('marco');
+            console.log(response);
+        });
+    }
 
     function handle_pass_new_laws() {
         $('#laws_passed_confirm_icon').fadeTo(1, 0);

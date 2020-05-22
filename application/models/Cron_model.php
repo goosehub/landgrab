@@ -876,12 +876,6 @@ Class cron_model extends CI_Model
 			AND supply.gdp_bonus IS NOT NULL
 		");
 	}
-	function update_cache_leaderboards()
-	{
-		// foreach supply
-		// get top 100 accounts by that supply
-		// generate datetime plus world id identified json
-	}
 	function world_resets()
 	{
 		$this->regenerate_resources(1);

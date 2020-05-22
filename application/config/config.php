@@ -23,7 +23,8 @@ $config['sess_save_path'] = sys_get_temp_dir();
 |
 */
 
-$default_domain = 'landgrab.xyz/alpha';
+$default_domain = 'localhost/landgrab.xyz';
+// $default_domain = 'landgrab.xyz/alpha';
 
 $allowed_domains = array(
     'localhost/landgrab',

@@ -86,6 +86,12 @@ class Game extends CI_Controller {
         $this->load->view('footer', $data);
     }
 
+    public function leaderboard($world_key, $supply_key)
+    {
+        $leaders = $this->leaderboard_model->get_leaders_of_supply($world_key, $supply_key);
+        api_response($leaders);
+    }
+
     public function update_world($world_key)
     {
         if (MAINTENANCE) {

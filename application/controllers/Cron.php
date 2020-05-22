@@ -22,7 +22,6 @@ class Cron extends CI_Controller {
         echo 'every_minute CRON - ' . PHP_EOL;
         $this->microtime('start_crons');
         $this->cron_model->increase_support(); $this->microtime('increase_support');
-        // $this->cron_model->update_cache_leaderboards(); $this->microtime('update_cache_leaderboards');
     }
 
     public function every_hour($token = false)
