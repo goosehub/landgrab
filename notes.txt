@@ -27,13 +27,13 @@ LOW PRIORITY
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     EXPLOITS: Moving/removing base/capitol before top of hour
+    Leaderboard always show main stats
 Near Updates
     Multi World generation
     World lock
     Conceal resources until discovered
     Conceal units except for allies and naval
     World wide chat messages for treaty changes and market prices
-    Leaderboard
     Improved UI/New Icons
     Mobile
     Interactive Tutorial

@@ -1,15 +1,23 @@
 <script>
     handle_open_leaderboard();
+    handle_leaderboard_supply_select();
+
+    function handle_leaderboard_supply_select() {
+        $('#leaderboard_supply_select').change(function(){
+            current_leaderboard_supply = $('#leaderboard_supply_select').val();
+            update_leaderboard();
+        });
+    }
 
     function handle_open_leaderboard() {
         $('#leaderboard_dropdown').click(function(){
             $('.center_block').hide();
             $('#leaderboard_block').show();
-            get_leaderboard();
+            update_leaderboard();
         });
     }
 
-    function get_leaderboard() {
+    function update_leaderboard() {
         ajax_get('game/leaderboard/' + world_key + '/' + current_leaderboard_supply, function(response) {
             render_leaderboard(response);
         });
@@ -34,6 +42,9 @@
         $('#leaderboard').html(html);
     }
     function render_leaderboard_header_row(leaders) {
+        console.log('marco');
+        console.log(leaders);
+        console.log(leaders[0]);
         let html = `
             <th>Rank</th>
             <th colspan="2">Leader</th>

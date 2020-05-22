@@ -131,7 +131,7 @@
     let power_structure = null;
     let tax_rate = null;
     let ideology = null;
-    let current_leaderboard_supply = <?= TILES_KEY; ?>;
+    let current_leaderboard_supply = <?= DEFAULT_LEADERBOARD_SUPPLY_KEY; ?>;
 
     // Toggles
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;

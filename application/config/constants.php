@@ -207,6 +207,8 @@ DEFINE('TANKS_KEY', 2);
 DEFINE('AIRFORCE_KEY', 3);
 DEFINE('NAVY_KEY', 4);
 DEFINE('MILITIA_KEY', 5);
+// Leaderboard
+DEFINE('DEFAULT_LEADERBOARD_SUPPLY_KEY', 4);
 
 /*
 |--------------------------------------------------------------------------

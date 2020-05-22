@@ -50,6 +50,7 @@ class Game extends CI_Controller {
         }
 
         $data['worlds'] = $this->game_model->get_all('world');
+        $data['supplies'] = $this->supplies;
         $data['leaderboards'] = $this->leaderboards($data['world']['id']);
         $data['active_accounts'] = $this->user_model->get_active_accounts_in_world($data['world']['id']);
         $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);

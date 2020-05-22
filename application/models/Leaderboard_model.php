@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class leaderboard_model extends CI_Model
 {
-	function get_leaders_of_supply($supply_key, $world_key)
+	function get_leaders_of_supply($world_key, $supply_key)
 	{
 		$this->db->select('
 			supply_account_lookup.amount,
