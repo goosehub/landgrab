@@ -8,6 +8,7 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    abstract default_domain
     BUG: disappearing units
     BUG: tiles not updating
     make pace faster (default food for one?)
