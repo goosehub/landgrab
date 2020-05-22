@@ -83,6 +83,7 @@ class Game extends CI_Controller {
         $this->load->view('scripts/chat_script', $data);
         $this->load->view('scripts/account_update_script', $data);
         $this->load->view('scripts/market_script', $data);
+        $this->load->view('scripts/leaderboard_script', $data);
         $this->load->view('footer', $data);
     }
 

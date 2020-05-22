@@ -6,5 +6,6 @@
     </button>
     <hr>
 
-    WIP
+    <section id="leaderboard">
+    </section>
 </div>
