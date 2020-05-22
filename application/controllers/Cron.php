@@ -11,6 +11,7 @@ class Cron extends CI_Controller {
         $this->load->model('cron_model', '', TRUE);
         $this->load->model('game_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
+        $this->load->model('chat_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
         $this->logged_microtime = microtime(true);
     }
@@ -57,7 +58,7 @@ class Cron extends CI_Controller {
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
         $this->cron_model->reject_expired_trade_requests(); $this->microtime('reject_expired_trade_requests');
 
-        // $this->cron_model->system_chat_messages(); $this->microtime('system_chat_messages');
+        // $this->cron_model->hourly_system_message(); $this->microtime('hourly_system_message');
     }
 
     public function every_day($token = false)

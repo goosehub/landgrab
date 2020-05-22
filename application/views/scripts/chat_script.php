@@ -73,7 +73,9 @@
             }
             // Update latest message id
             last_message_id = message.id;
-            html += '<div class="chat_message" title="' + message.timestamp + ' ET"><span class="glyphicon glyphicon-user" style="color: ' + message.color + '""></span>' ;
+            let glyphicon_type = message.username ? 'glyphicon-user' : 'glyphicon-exclamation-sign';
+            html += '<div class="chat_message" title="' + message.timestamp + ' ET"><span class="glyphicon ' + glyphicon_type + '" style="color: ' + message.color + '""></span>' ;
+            // let username = message.username ? message.username + ': ' : ' - ';
             html += message.username + ': ' + message.message + '</div>';
           });
         // Append to div

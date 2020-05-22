@@ -8,8 +8,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    abstract default_domain
-    World wide chat messages for treaty changes and market prices
     make pace faster (default food for one?)
     reset cron
 MEDIUM PRIORITY

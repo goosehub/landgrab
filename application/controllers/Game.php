@@ -10,6 +10,7 @@ class Game extends CI_Controller {
         $this->load->model('combat_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
+        $this->load->model('chat_model', '', TRUE);
 
         $this->resources = $this->game_model->get_all('resource');
         $this->terrains = $this->game_model->get_all('terrain');
@@ -518,6 +519,12 @@ class Game extends CI_Controller {
             $this->game_model->create_treaty($account['id'], $trade_partner_key, WAR_KEY);
         }
         $this->game_model->create_trade_request($account['id'], $trade_partner_key, $message, WAR_KEY);
+
+        // Insert system message
+        $trade_partner = $this->user_model->get_account_by_id($trade_partner_key);
+        $declare_war_message = $account['username'] . ' has declared war on ' . $trade_partner['username'] . '!';
+        $this->chat_model->new_chat(0, '', WAR_COLOR, $declare_war_message, $world_key);
+
         api_response();
     }
 
@@ -589,6 +596,11 @@ class Game extends CI_Controller {
         }
         else {
             $this->game_model->create_treaty($account['id'], $trade_partner_key, $trade_request['treaty_key']);
+        }
+        if ($existing_treaty['treaty_key'] == WAR_KEY) {
+            $trade_partner = $this->user_model->get_account_by_id($trade_request['request_account_key']);
+            $make_peace_message = $account['username'] . ' has accepted peace with ' . $trade_partner['username'] . '!';
+            $this->chat_model->new_chat(0, '', PEACE_COLOR, $make_peace_message, $world_key);
         }
         api_response();
     }

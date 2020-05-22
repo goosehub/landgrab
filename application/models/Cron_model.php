@@ -4,6 +4,15 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
+	function hourly_system_message()
+	{
+		$worlds = $this->game_model->get_all('world');
+		foreach ($worlds as $world) {
+			$world_key = $world['id'];
+	        $declare_war_message = 'Hourly Update';
+	        $this->chat_model->new_chat(0, '', ALERT_COLOR, $declare_war_message, $world_key);
+	    }
+	}
 	function mark_active_accounts_as_active()
 	{
 		$support_key = SUPPORT_KEY;
