@@ -62,9 +62,34 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]) ? $result[0] : false;
 	}
+	function tile_select()
+	{
+		return "
+		id,
+		lat,
+		lng,
+		world_key,
+		account_key,
+		terrain_key,
+		IF(account_key, resource_key, NULL) AS resource_key,
+		settlement_key,
+		industry_key,
+		unit_key,
+		unit_owner_key,
+		unit_owner_color,
+		is_capitol,
+		is_base,
+		population,
+		tile_name,
+		tile_desc,
+		color,
+		modified
+		";
+	}
 	function get_all_tiles_in_world($world_key)
 	{
-		$this->db->select('*');
+		// 
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);
 		$query = $this->db->get();
@@ -72,7 +97,8 @@ Class game_model extends CI_Model
 	}
 	function get_all_tiles_in_world_recently_updated($world_key, $update_timespan)
 	{
-		$this->db->select('*');
+		// 
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);
 		$this->db->where('modified >', date('Y-m-d H:i:s', time() - $update_timespan));
@@ -81,7 +107,8 @@ Class game_model extends CI_Model
 	}
 	function get_all_tiles_in_world_with_units($world_key)
 	{
-		$this->db->select('*');
+		// 
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);
 		$this->db->where('unit_key IS NOT NULL', NULL, FALSE);
@@ -90,7 +117,7 @@ Class game_model extends CI_Model
 	}
 	function get_tile($lat, $lng, $world_key)
 	{
-		$this->db->select('*');
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('lat', $lat);
 		$this->db->where('lng', $lng);
@@ -101,7 +128,7 @@ Class game_model extends CI_Model
 	}
 	function get_tile_by_id($tile_id)
 	{
-		$this->db->select('*');
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('id', $tile_id);
 		$query = $this->db->get();
@@ -110,7 +137,7 @@ Class game_model extends CI_Model
 	}
 	function get_capitol_tile_by_account($account_key)
 	{
-		$this->db->select('*');
+		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('account_key', $account_key);
 		$this->db->where('is_capitol', 1);

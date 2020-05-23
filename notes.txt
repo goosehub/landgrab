@@ -2,21 +2,32 @@
     Notes
 ==========================================================================================
 
-Rebalance
+Update Notes
+
+Assorted bug fixes
+Conceal resources until discovered
 
 support buff
     cash crop support buff per minute
-    generates even quicker for autocracies and oligarchy
-unit nerf
-    Fallback for no units early on
-metals nerf
-energy resource buff
+    cash crop support buff amounts is 1 for each cash crop
+    oligarchy support 4 per minute
+    autocracy support 5 per minute
+    cost of capturing land back to 5
+    cost of war back to 50
+
+cash crops nerf
+    1-1-2-2-3
+unit cost nerf
+metals resource nerf
+energy resource nerf
 steel nerf
 software nerf
 market price nerf
     market prices to hundreds place
 capitol, base tweak
     pay 50m upfront, then free
+Chemcials nerf
+    Requires more energy
 Solar nerf
     1
 fiber nerf
@@ -26,8 +37,6 @@ timber nerf
     remove mountain
 engineers nerf
     5
-cash crop nerf
-    1-1-2-2-3
 
 
 ==========================================================================================
@@ -35,11 +44,12 @@ cash crop nerf
 ==========================================================================================
 
 HIGH PRIORITY
-    rebalance update
+    rebalance
+    cash crop bonus per minute
     bug: riches can't be traded
-    show time until next law pass
     bug: tile supply too high
-    Conceal resources until discovered
+    show time until next law pass
+    Fallback for no units early on
 MEDIUM PRIORITY
     reset cron
     bug: units disappear client side
