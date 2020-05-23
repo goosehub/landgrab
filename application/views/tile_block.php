@@ -284,7 +284,7 @@
                         <div class="col-md-4">
                             <span class="text-primary">Support Costs</span>
                             <?= generate_popover('Support Costs', '
-                                Moving Unit: ' . SUPPORT_COST_MOVE_UNIT . ' Support <br>
+                                Moving On Ocean: ' . SUPPORT_COST_MOVE_UNIT . ' Support <br>
                                 Capture Land: ' . SUPPORT_COST_CAPTURE_LAND . ' Support <br>
                                 Declare War: ' . SUPPORT_COST_DECLARE_WAR . ' Support
                             ', 'top', 'pull-right'); ?>

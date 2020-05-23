@@ -214,7 +214,9 @@
       let food = 0;
       for (let key in food_key_array) {
         let this_food = $('#output_projection_' + food_key_array[key]).html();
-        food += parseInt(this_food);
+        if (this_food) {
+          food += parseInt(this_food);
+        }
       }
       $('#output_projection_' + food_key).html(food);
     }

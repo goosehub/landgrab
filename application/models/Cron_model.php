@@ -1005,7 +1005,9 @@ Class cron_model extends CI_Model
 	{
 		$expired_trade_requests = $this->get_expired_trade_requests();
 		foreach ($expired_trade_requests as $trade_request) {
-			$this->game_model->reject_trade_request($trade_request['id'], $trade_request['request_account_key'], TRADE_EXPIRED_MESSAGE);
+			if ($trade_request['treaty_key'] != WAR_KEY) {
+				$this->game_model->reject_trade_request($trade_request['id'], $trade_request['request_account_key'], TRADE_EXPIRED_MESSAGE);
+			}
 		}
 	}
 	function get_expired_trade_requests() {

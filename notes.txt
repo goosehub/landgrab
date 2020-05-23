@@ -2,41 +2,68 @@
     Notes
 ==========================================================================================
 
+Rebalance
+
+support buff
+    cash crop support buff per minute
+    generates even quicker for autocracies and oligarchy
+unit nerf
+    Fallback for no units early on
+metals nerf
+energy resource buff
+steel nerf
+software nerf
+market price nerf
+    market prices to hundreds place
+capitol, base tweak
+    pay 50m upfront, then free
+Solar nerf
+    1
+fiber nerf
+    2
+timber nerf
+    3
+    remove mountain
+engineers nerf
+    5
+cash crop nerf
+    1-1-2-2-3
+
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    make pace faster (default food for one?)
-    reset cron
+    rebalance update
+    bug: riches can't be traded
+    show time until next law pass
+    bug: tile supply too high
+    Conceal resources until discovered
 MEDIUM PRIORITY
-    BUG: disappearing units
-    BUG: tiles not updating
-    Show current supplies of relevant settlement or industry card 
-    shortages more clear
-    default to terrain view
+    reset cron
+    bug: units disappear client side
+    Multi World generation
     settlement/industry require round of feed to establish
-    account migration
-    show food and cash crop production summary
+    Show current supplies of relevant settlement or industry card
 LOW PRIORITY
+    account migration
     number formatting
     show diplomacy status on click other players land
     abstract market table per world
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
-    EXPLOITS: Moving/removing base/capitol before top of hour
     Leaderboard always show main stats
+    Leaderboard show world stats
 Near Updates
-    Multi World generation
     World lock
-    Conceal resources until discovered
-    Conceal units except for allies and naval
     Improved UI/New Icons
     Mobile
     Interactive Tutorial
     New Treaty Ally/Right of Passage
 NO PRIORITY
+    Conceal units except for allies and naval
+    shortages more clear
     BUG: On landgrab.sql run, supply_industry_lookup didn't seed
     MECHANIC: pollution
     MECHANIC: nuke
@@ -54,6 +81,7 @@ NO PRIORITY
     Township Population Reset/Decrease on capture and downgrade
     store default google maps id type
     units UI for red–green color blindness
+    Market graph
 
 ==========================================================================================
     Code

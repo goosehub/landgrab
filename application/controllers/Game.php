@@ -303,7 +303,9 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
-                $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
+                if ($tile['account_key'] != $account['id']) {
+                    $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
+                }
                 $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
             }
         }

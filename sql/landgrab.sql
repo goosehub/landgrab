@@ -79,11 +79,11 @@ ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `unit_type`;
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cash_cost`, `support_cost`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
-(1, 'Infantry', 3, 10, 10,
+(1, 'Infantry', 3, 10, 5,
   TRUE, TRUE, TRUE, FALSE),
-(2, 'Tanks', 1, 15, 30,
+(2, 'Tanks', 1, 15, 15,
   TRUE, TRUE, TRUE, TRUE),
-(3, 'Airforce', 2, 20, 50,
+(3, 'Airforce', 2, 20, 25,
   TRUE, FALSE, FALSE, FALSE);
 
 DROP TABLE IF EXISTS `account`;

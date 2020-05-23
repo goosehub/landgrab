@@ -645,6 +645,7 @@ Class game_model extends CI_Model
 	function reject_trade_request($trade_request_key, $request_account_key, $response_message) {
 		$data = array(
 			'is_rejected' => true,
+			'request_seen' => true,
 			'response_message' => $response_message,
 		);
 		$this->db->where('id', $trade_request_key);

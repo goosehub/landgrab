@@ -46,6 +46,7 @@
         });
         $('#edit_tile_desc').click(function(event) {
             $('#edit_tile_desc, #tile_desc').hide();
+            $('#tile_desc_input').val('');
             $('#tile_desc_input, #submit_tile_desc').show();
             $('#tile_desc_input').focus();
         });
