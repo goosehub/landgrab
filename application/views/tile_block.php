@@ -159,17 +159,17 @@
                             <label class="select_settlement_defensive_label">Defensive Bonus:</label>
                             <span id="select_settlement_defensive_bonus" class="text-action"></span>
                         </div>
+                        <div id="select_settlement_input_parent">
+                            <label class="select_settlement_label">Requires Hourly:</label>
+                            <span id="select_settlement_input" class="text-danger"></span>
+                        </div>
                         <div>
                             <label class="select_settlement_label">GDP:</label>
                             <span id="select_settlement_gdp" class="text-success"></span>
                         </div>
-                        <div id="select_settlement_input_parent">
-                            <label class="select_settlement_label">Requires:</label>
-                            <span id="select_settlement_input" class="text-danger"></span>
-                        </div>
                         <div id="select_settlement_output_parent">
-                            <label class="select_settlement_label">Produces:</label>
-                            <span id="select_settlement_output" class="text-action"></span>
+                            <label class="select_settlement_label">Produces Hourly:</label>
+                            <span id="select_settlement_output" class="text-success"></span>
                         </div>
                     </div>
                 </div>
@@ -224,21 +224,25 @@
                             <label class="select_industry_label">Terrain:</label>
                             <span id="select_industry_terrain" class=""></span>
                         </div>
+                        <div id="select_industry_input_parent">
+                            <label class="select_industry_label">Requires Hourly:</label>
+                            <span id="select_industry_input" class="text-danger"></span>
+                        </div>
+                        <div id="select_industry_upfront_parent">
+                            <label class="select_industry_label">Upfront Cost:</label>
+                            <span id="select_industry_upfront" class="text-danger"></span>
+                        </div>
                         <div id="select_industry_gdp_parent">
                             <label class="select_industry_label">GDP:</label>
                             <span id="select_industry_gdp" class="text-success"></span>
                         </div>
-                        <div id="select_industry_input_parent">
-                            <label class="select_industry_label">Requires:</label>
-                            <span id="select_industry_input" class="text-danger"></span>
-                        </div>
                         <div id="select_industry_output_parent">
-                            <label class="select_industry_label">Produces:</label>
-                            <span id="select_industry_output" class="text-action"></span>
+                            <label class="select_industry_label">Produces Hourly:</label>
+                            <span id="select_industry_output" class="text-success"></span>
                         </div>
                         <div id="select_industry_special_parent">
                             <label class="select_industry_label">Special Effect:</label>
-                            <span id="select_industry_special" class="text-action"></span>
+                            <span id="select_industry_special" class="text-success"></span>
                         </div>
                     </div>
                 </div>

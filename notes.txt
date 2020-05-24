@@ -16,6 +16,8 @@ support buff
     cost of capturing land back to 5
     cost of war back to 50
 
+various settlement/industry gdp adjustments
+upfront cost for government industires
 cash crops settlement nerf
     In order, 1-1-2-2-3
 unit enlist nerf
@@ -56,6 +58,7 @@ capitol, base tweak
 
 HIGH PRIORITY
     food rebalance
+    no gdp for industry with no input
     base pay upfront
     market prices to hundreds place
     bug: riches can't be traded

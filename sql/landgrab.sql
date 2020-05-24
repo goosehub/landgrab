@@ -202,7 +202,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (16, 34, 1), -- Aerospace
 (16, 36, 1), -- Aerospace
 (16, 17, 1), -- Aerospace
-(19, 2, 10), -- Gambling
+(19, 2, 50), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
 (22, 1, 10); -- Pharmaceuticals
@@ -609,6 +609,7 @@ CREATE TABLE IF NOT EXISTS `industry` (
   `slug` varchar(256) NOT NULL,
   `output_supply_key` int(10) UNSIGNED NULL,
   `output_supply_amount` int(10) NULL,
+  `upfront_cost` int(10) NULL,
   `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
   `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,
@@ -624,88 +625,88 @@ ALTER TABLE `industry` ADD INDEX `required_terrain_key` (`required_terrain_key`)
 TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
   `id`, `category_id`, `label`, `slug`, `minimum_settlement_size`, `required_terrain_key`,
-  `output_supply_key`, `output_supply_amount`, `gdp`, `meta`) VALUES
+  `output_supply_key`, `output_supply_amount`, `upfront_cost`, `gdp`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  null, 10, 10, 'Spawns units'
+  null, 1, 10, 10, 'Spawns units'
 ),
 (2, 1, 'Federal', 'federal', 4, NULL,
-  2, 10, 5, ''
+  2, 10, 10, 5, 'Support is per hour'
 ),
 (3, 1, 'Base', 'base', NULL, NULL,
-  null, 1, 3, 'Spawns units'
+  null, 1, 10, 3, 'Spawns units'
 ),
 -- energy
 (4, 2, 'Biofuel', 'biofuel', NULL, NULL,
-  13, 10, 1, ''
+  13, 10, NULL, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
-  13, 10, 1, ''
+  13, 10, NULL, 2, ''
 ),
 (6, 2, 'Gas', 'gas', NULL, NULL,
-  13, 15, 2, ''
+  13, 15, NULL, 3, ''
 ),
 (7, 2, 'Petroleum', 'petroleum', NULL, NULL,
-  13, 20, 5, ''
+  13, 20, NULL, 10, ''
 ),
 (8, 2, 'Nuclear', 'nuclear', NULL, NULL,
-  13, 25, 5, ''
+  13, 25, NULL, 10, ''
 ),
 -- light industry
 (9, 5, 'Manufacturing', 'manufacturing', NULL, NULL,
-  37, 10, 5, ''
+  37, 10, NULL, 5, ''
 ),
 (10, 5, 'Chemicals', 'chemicals', NULL, NULL,
-  38, 3, 5, ''
+  38, 3, NULL, 5, ''
 ),
 (11, 5, 'Steel', 'steel', NULL, NULL,
-  39, 5, 3, ''
+  39, 5, NULL, 5, ''
 ),
 (12, 5, 'Electronics', 'electronics', 4, NULL,
-  40, 10, 10, ''
+  40, 10, NULL, 10, ''
 ),
 -- hevvy industry
 (13, 6, 'Shipping Port', 'port', 4, 5,
-  41, 1, 50, 'Increases National GDP by 10%'
+  41, 1, NULL, 50, 'Increases National GDP by 10%'
 ),
 (14, 6, 'Machinery', 'machinery', 4, NULL,
-  42, 10, 30, 'Increases National GDP by 10%'
+  42, 10, NULL, 30, 'Increases National GDP by 10%'
 ),
 (15, 6, 'Automotive', 'automotive', 4, NULL,
-  43, 20, 40, 'Increases National GDP by 10%'
+  43, 20, NULL, 40, 'Increases National GDP by 10%'
 ),
 (16, 6, 'Aerospace', 'aerospace', 4, NULL,
-  44, 5, 50, 'Increases National GDP by 10%'
+  44, 5, NULL, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
 (17, 3, 'Leisure', 'leisure', NULL, 5,
-  null, 1, 10, ''
+  null, 1, NULL, 20, ''
 ),
 (18, 3, 'Resort', 'resort', NULL, 3,
-  null, 1, 5, ''
+  null, 1, NULL, 10, ''
 ),
 (19, 3, 'Gambling', 'gambling', NULL, NULL,
-  null, 1, 10, ''
+  null, 1, NULL, 15, ''
 ),
 -- knowledge/quaternary
 (20, 4, 'University', 'university', NULL, NULL,
-  33, 1, 3, ''
+  33, 1, NULL, 3, ''
 ),
 (21, 4, 'Software', 'software', 4, NULL,
-  34, 5, 8, ''
+  34, 5, NULL, 8, ''
 ),
 (22, 4, 'Healthcare', 'healthcare', 4, NULL,
-  35, 3, 6, ''
+  35, 3, NULL, 6, ''
 ),
 -- metro
 (23, 7, 'Financial & Banking', 'financial_banking', 5, NULL,
-  46, 1, 200, 'Increases National GDP by 30%'
+  46, 1, NULL, 200, 'Increases National GDP by 30%'
 ),
 (24, 7, 'Entertainment & Media', 'entertainment_media', 5, NULL,
-  45, 3, 50, 'Increases National GDP by 30%'
+  45, 3, NULL, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 5, NULL,
-  36, 5, 100, ''
+  36, 5, NULL, 100, ''
 );
 
 -- 

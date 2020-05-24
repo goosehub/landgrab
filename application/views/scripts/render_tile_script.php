@@ -121,7 +121,7 @@
     function tile_population()
     {
         $('#tile_population_parent').hide();
-        population = current_tile.population ? current_tile.population : '0';
+        population = current_tile.population ? current_tile.population.toLocaleString() : '0';
         $('#tile_population').html(population + 'K');
         if (population > 0) {
             $('#tile_population_parent').show();
@@ -382,7 +382,7 @@
             $('#select_industry_terrain_parent').show();
             $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
         }
-        $('#select_industry_gdp').html('$' + industry.gdp + 'B');
+        $('#select_industry_gdp').html('$' + industry.gdp + ' Billion');
         $('#select_industry_input_parent').hide();
         if (industry_input_string(industry)) {
             $('#select_industry_input_parent').show();
@@ -392,6 +392,11 @@
         if (industry_output_string(industry)) {
             $('#select_industry_output_parent').show();
             $('#select_industry_output').html(industry_output_string(industry));
+        }
+        $('#select_industry_upfront_parent').hide();
+        if (industry.upfront_cost) {
+            $('#select_industry_upfront_parent').show();
+            $('#select_industry_upfront').html('$' + industry.upfront_cost + ' Billion');
         }
         $('#select_industry_special_parent').hide();
         if (industry.meta) {

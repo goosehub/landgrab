@@ -415,8 +415,11 @@ class Game extends CI_Controller {
         if ($industry['minimum_settlement_size'] && $industry['minimum_settlement_size'] > $tile['settlement_key']) {
             api_error_response('township_too_small', 'Township must be larger');
         }
-        if ((int)$industry_key === CAPITOL_INDUSTRY_KEY) {
+        if ($industry_key == CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);
+        }
+        if ($industry_key == CAPITOL_INDUSTRY_KEY || $industry_key == BASE_INDUSTRY_KEY) {
+            $this->game_model->decrement_account_supply($account['id'], CASH_KEY, 10);
         }
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $this->game_model->update_tile_industry($tile_id, $industry_key);
