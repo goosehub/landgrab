@@ -47,6 +47,7 @@ metals resource nerf
 energy resource buff
     3 per hour
 
+other more minor tweaks
 
 ==========================================================================================
     Goals
@@ -65,6 +66,7 @@ MEDIUM PRIORITY
     settlement/industry require round of feed to establish
     Show current supplies of relevant settlement or industry card
 LOW PRIORITY
+    PERFORMANCE: on init, don't get water squares with no units to save thousands of rows
     Fallback for no units early on
     account migration
     number formatting

@@ -29,7 +29,7 @@
                 <span id="tile_resource" class="text-success pull-right"></span>
                 <!-- <img id="tile_resource_icon" src=""/> -->
             </p>
-            <p class="tile_block_info_line">
+            <p id="tile_settlement_label_parent" class="tile_block_info_line">
                 <labe>Settlement:</labe>
                 <span id="tile_settlement_label" class="text-primary pull-right"></span>
             </p>
@@ -51,7 +51,7 @@
             </p>
             <p id="tile_population_parent" class="tile_block_info_line">
                 <labe>Population:</labe>
-                <strong id="tile_population" class="text-purple pull-right"></strong>
+                <strong id="tile_population" class="text-success pull-right"></strong>
             </p>
             <p id="tile_gdp_parent" class="tile_block_info_line">
                 <labe>GDP:</labe>

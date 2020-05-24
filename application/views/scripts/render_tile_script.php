@@ -103,11 +103,10 @@
     function tile_settlement_label()
     {
         current_tile.settlement_key;
+        $('#tile_settlement_label_parent').hide();
         if (current_tile.settlement_key) {
+            $('#tile_settlement_label_parent').show();
             $('#tile_settlement_label').html(settlements[current_tile.settlement_key  - 1]['label']);
-        }
-        else {
-            $('#tile_settlement_label').html('--');
         }
     }
     function tile_industry_label()
@@ -121,11 +120,21 @@
     function tile_population()
     {
         $('#tile_population_parent').hide();
-        population = current_tile.population ? current_tile.population.toLocaleString() : '0';
-        $('#tile_population').html(population + 'K');
-        if (population > 0) {
+        let population = format_population(current_tile.population);
+        $('#tile_population').html(population);
+        if (current_tile.population > 0) {
             $('#tile_population_parent').show();
         }
+    }
+    function format_population(population)
+    {
+        return population ? parseInt(population).toLocaleString() + 'K' : '0';
+        // Alternative millions formatting
+        // 'de-DE' uses period instead of comma
+        let locale_type = population >= 1000 ? 'de-DE' : 'en-US';
+        let suffix = population >= 1000 ? 'M' : 'K';
+        let formatted_population = population ? parseInt(population).toLocaleString(locale_type) : '0';
+        return formatted_population + suffix
     }
     function tile_gdp()
     {
@@ -345,7 +354,7 @@
         $('#select_settlement_header').html(settlement.label);
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
         $('#select_settlement_gdp').html('$' + settlement.gdp + 'B');
-        $('#select_settlement_pop').html(settlement.base_population + 'K');
+        $('#select_settlement_pop').html(format_population(settlement.base_population));
         $('#select_settlement_terrain').html(get_settlement_terrain_string_with_color(settlement));
         $('#select_settlement_defensive_parent').hide();
         if (get_defensive_bonus_of_settlement_string(settlement.id)) {
