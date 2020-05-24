@@ -53,14 +53,19 @@ Show time until you can pass laws again
 other minor bug fixes
 other minor UI improvements
 
+--------
+world gen
+
+world win and reset when player has 50% of the land (including arctic)
+world locked when no non-arctic squares are unclaimed
+world gen when all worlds are locked
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    bug: tile supply too high
 MEDIUM PRIORITY
-    reset cron
     bug: units disappear client side
     Multi World generation
     settlement/industry require round of feed to establish
@@ -82,6 +87,7 @@ Near Updates
     Interactive Tutorial
     New Treaty Ally/Right of Passage
 NO PRIORITY
+    world backup
     abstract market table per world
     Conceal units except for allies and naval
     shortages more clear

@@ -900,30 +900,145 @@ Class cron_model extends CI_Model
 	}
 	function world_resets()
 	{
-		$this->regenerate_resources(1);
 		$force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
 		$now = date('Y-m-d H:i:s');
 		$worlds = $this->game_model->get_all('world');
 		foreach ($worlds as $world) {
 			// Check if it's time to run
-			$time_to_reset = parse_crontab($now, $world['crontab']);
-			if (!$time_to_reset && !$force_reset_world_id) {
-				continue;
-			}
 			if ($force_reset_world_id) {
 				if ($force_reset_world_id != $world['id']) {
 					continue;
 				}
 			}
 			echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
-			// $this->backup();
-			// $this->reset_tiles();
-			// $this->reset_trades();
-			// $this->reset_accounts();
-			$this->regenerate_resources($world['id']);
+			$this->world_reset_row_deletes($world['id']);
+			$this->world_reset_row_updates($world['id']);
+			$this->world_reset_regenerate_resources($world['id']);
 		}
 	}
-	function regenerate_resources($world_key)
+	function world_reset_row_deletes($world_key)
+	{
+		$this->db->query("
+			DELETE trade_request
+			FROM trade_request
+			LEFT JOIN account
+				ON trade_request.request_account_key = account.id
+			WHERE world_key = account.world_key
+		");
+
+		$this->db->query("
+			DELETE trade_request
+			FROM trade_request
+			LEFT JOIN account
+				ON trade_request.receive_account_key = account.id
+			WHERE world_key = account.world_key
+		");
+
+		$this->db->query("
+			DELETE treaty_lookup
+			FROM treaty_lookup
+			LEFT JOIN account
+				ON treaty_lookup.a_account_key = account.id
+			WHERE world_key = account.world_key
+		");
+
+		$this->db->query("
+			DELETE treaty_lookup
+			FROM treaty_lookup
+			LEFT JOIN account
+				ON treaty_lookup.b_account_key = account.id
+			WHERE world_key = account.world_key
+		");
+
+		$this->db->query("
+			DELETE supply_account_trade_lookup
+			FROM supply_account_trade_lookup
+			LEFT JOIN account
+				ON supply_account_trade_lookup.account_key = account.id
+			WHERE world_key = account.world_key
+		");
+	}
+	function world_reset_row_updates($world_key)
+	{
+		$cash_key = CASH_KEY;
+		$support_key = SUPPORT_KEY;
+		$grain_key = GRAIN_KEY;
+		$cash_default = CASH_DEFAULT;
+		$support_default = SUPPORT_DEFAULT;
+		$grain_default = GRAIN_DEFAULT;
+		$default_power_structure = DEFAULT_POWER_STRUCTURE;
+		$default_tax_rate = DEFAULT_TAX_RATE;
+		$default_ideology = DEFAULT_IDEOLOGY;
+
+		$this->db->query("
+			UPDATE `tile`
+			SET
+			`account_key` = NULL, 
+			`resource_key` = NULL, 
+			`settlement_key` = NULL, 
+			`industry_key` = NULL, 
+			`unit_key` = NULL, 
+			`unit_owner_key` = NULL, 
+			`unit_owner_color` = NULL, 
+			`is_capitol` = 0, 
+			`is_base` = 0, 
+			`population` = NULL, 
+			`tile_name` = NULL, 
+			`tile_desc` = NULL, 
+			`color` = NULL
+			WHERE world_key = $world_key;
+		");
+
+		$this->db->query("
+			UPDATE `account`
+			SET
+			`power_structure` = $default_power_structure,
+			`tax_rate` = $default_tax_rate,
+			`ideology` = $default_ideology,
+			`last_law_change` = NULL
+			WHERE world_key = $world_key;
+		");
+
+		$this->db->query("
+			UPDATE `supply_account_lookup`
+			LEFT JOIN `account`
+				ON `account`.id = `supply_account_lookup`.account_key
+			SET
+			`amount` = 0
+			WHERE world_key = $world_key;
+		");
+
+		$this->db->query("
+			UPDATE `supply_account_lookup`
+			LEFT JOIN `account`
+				ON `account`.id = `supply_account_lookup`.account_key
+			SET
+			`amount` = $cash_default
+			WHERE world_key = $world_key
+			AND supply_key = $cash_key;
+		");
+
+		$this->db->query("
+			UPDATE `supply_account_lookup`
+			LEFT JOIN `account`
+				ON `account`.id = `supply_account_lookup`.account_key
+			SET
+			`amount` = $support_default
+			WHERE world_key = $world_key
+			AND supply_key = $support_key;
+		");
+
+		$this->db->query("
+			UPDATE `supply_account_lookup`
+			LEFT JOIN `account`
+				ON `account`.id = `supply_account_lookup`.account_key
+			SET
+			`amount` = $grain_default
+			WHERE world_key = $world_key
+			AND supply_key = $grain_key;
+		");
+	}
+	function world_reset_regenerate_resources($world_key)
 	{
 		$this->reset_resources($world_key);
 		$resources = $this->game_model->get_all('resource');
@@ -931,6 +1046,7 @@ Class cron_model extends CI_Model
 			$this->resource_distribute($resource);
 			$this->db->where('lat > ', LOWEST_LAT_RESOURCE_GEN);
 			$this->db->where('resource_key', NULL);
+			$this->db->where('world_key', $world_key);
 			$this->db->order_by('RAND()');
 			$this->db->limit($resource['frequency_per_world']);
 			$data = array(
