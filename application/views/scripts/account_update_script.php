@@ -8,6 +8,30 @@
       }, account_update_interval_ms);
     }
 
+    handle_pass_new_laws();
+
+    function handle_pass_new_laws() {
+        $('#laws_passed_confirm_icon').fadeTo(1, 0);
+        $('#pass_new_laws_button').click(function(event) {
+            let confirmed = confirm('Laws can only be passed once an hour. Are you sure you want to pass new laws?');
+            if (!confirmed) {
+                return;
+            }
+            let data = {
+                world_key: world_key,
+                input_power_structure: $('#input_power_structure').val(),
+                input_tax_rate: $('#input_tax_rate').val(),
+                input_ideology: $('input[name="input_ideology"]:checked').val(),
+            };
+            ajax_post('game/laws_form', data, function(response) {
+                get_map_update();
+                get_account_update();
+                $('#laws_passed_confirm_icon').fadeTo(500, 1);
+                $('#laws_passed_confirm_icon').fadeTo(2000, 0);
+            });
+        });
+    }
+
     function get_account_update() {
       ajax_get('game/get_user_full_account/' + world_key, function(response) {
         account = response;
@@ -263,7 +287,7 @@
       let current_date = new Date();
       let milliseconds = Math.abs(current_date - last_date);
       let minutes = milliseconds / 1000 / 60;
-      if (minutes > 60 || isNaN(NaN)) {
+      if (minutes > 60 || isNaN(minutes)) {
         $('#pass_new_laws_button_text').html('Pass New Laws');
         $('#pass_new_laws_button').removeClass('disabled');
       }

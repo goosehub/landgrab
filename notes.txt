@@ -47,9 +47,10 @@ metals resource nerf
 energy resource buff
     3 per hour
 
-very minor UI improvements
 Fixed bug with trading
-Assorted bug fixes
+Show time until you can pass laws again
+other minor bug fixes
+other minor UI improvements
 
 ==========================================================================================
     Goals
@@ -57,7 +58,6 @@ Assorted bug fixes
 
 HIGH PRIORITY
     bug: tile supply too high
-    show time until next law pass
 MEDIUM PRIORITY
     reset cron
     bug: units disappear client side

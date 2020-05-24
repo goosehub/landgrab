@@ -1,29 +1,6 @@
 <script>
     activate_bootstrap_popovers();
     extend_date();
-    handle_pass_new_laws();
-
-    function handle_pass_new_laws() {
-        $('#laws_passed_confirm_icon').fadeTo(1, 0);
-        $('#pass_new_laws_button').click(function(event) {
-            let confirmed = confirm('Laws can only be passed once an hour. Are you sure you want to pass new laws?');
-            if (!confirmed) {
-                return;
-            }
-            let data = {
-                world_key: world_key,
-                input_power_structure: $('#input_power_structure').val(),
-                input_tax_rate: $('#input_tax_rate').val(),
-                input_ideology: $('input[name="input_ideology"]:checked').val(),
-            };
-            ajax_post('game/laws_form', data, function(response) {
-                get_map_update();
-                get_account_update();
-                $('#laws_passed_confirm_icon').fadeTo(500, 1);
-                $('#laws_passed_confirm_icon').fadeTo(2000, 0);
-            });
-        });
-    }
 
     function extend_date() {
         Date.prototype.addHours = function(h) {
