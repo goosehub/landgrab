@@ -25,6 +25,12 @@ AND last_load >= ( CURDATE() - INTERVAL 3 DAY )
 GROUP BY `tax_rate`
 ORDER BY count DESC 
 
+-- Most common industry
+SELECT `industry_key` , COUNT(*) AS count
+FROM  `tile`
+GROUP BY `industry_key`
+ORDER BY count DESC 
+
 -- ab test
 SELECT COUNT(*), `ab_test`
 FROM `user`

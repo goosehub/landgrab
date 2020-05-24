@@ -79,11 +79,11 @@ ALTER TABLE `unit_type` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 TRUNCATE TABLE `unit_type`;
 INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cash_cost`, `support_cost`,
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
-(1, 'Infantry', 3, 10, 5,
+(1, 'Infantry', 3, 20, 10,
   TRUE, TRUE, TRUE, FALSE),
-(2, 'Tanks', 1, 15, 15,
+(2, 'Tanks', 1, 25, 20,
   TRUE, TRUE, TRUE, TRUE),
-(3, 'Airforce', 2, 20, 25,
+(3, 'Airforce', 2, 30, 30,
   TRUE, FALSE, FALSE, FALSE);
 
 DROP TABLE IF EXISTS `account`;
@@ -167,7 +167,7 @@ TRUNCATE TABLE `supply_industry_lookup`;
 INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VALUES
 (2, 1, 10), -- Federal
 (3, 1, 10), -- Base
-(4, 14, 1), -- Biofuel
+(4, 14, 3), -- Biofuel
 (5, 15, 1), -- Coal
 (6, 16, 1), -- Gas
 (7, 17, 1), -- Petroleum
@@ -176,7 +176,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (9, 6, 1), -- Manufacturing
 (9, 7, 2), -- Manufacturing
 (9, 13, 1), -- Manufacturing
-(10, 13, 1), -- Chemicals
+(10, 13, 3), -- Chemicals
 (11, 28, 1), -- Steel
 (11, 13, 1), -- Steel
 (12, 29, 1), -- Electronics
@@ -415,48 +415,48 @@ INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
 -- Energy
 (
   5, 'Coal', 'coal', 15,
-  FALSE, TRUE, FALSE, 2,
+  FALSE, TRUE, FALSE, 3,
   15, TRUE, TRUE, TRUE, FALSE
 ),
 (
   6, 'Gas', 'gas', 16,
-  FALSE, TRUE, FALSE, 2,
+  FALSE, TRUE, FALSE, 3,
   7, TRUE, TRUE, TRUE, FALSE
 ),
 (
   7, 'Oil', 'oil', 17,
-  FALSE, TRUE, FALSE, 2,
+  FALSE, TRUE, FALSE, 3,
   15, TRUE, FALSE, TRUE, TRUE
 ),
 (
   8, 'Uranium', 'uranium', 18,
-  FALSE, TRUE, FALSE, 2,
+  FALSE, TRUE, FALSE, 3,
   3, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
   9, 'Iron', 'iron', 28,
-  FALSE, FALSE, TRUE, 3,
+  FALSE, FALSE, TRUE, 2,
   20, TRUE, TRUE, TRUE, FALSE
 ),
 (
   10, 'Copper', 'copper', 29,
-  FALSE, FALSE, TRUE, 3,
+  FALSE, FALSE, TRUE, 2,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   11, 'Zinc', 'zinc', 30,
-  FALSE, FALSE, TRUE, 3,
+  FALSE, FALSE, TRUE, 2,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   12, 'Aluminum', 'aluminum', 31,
-  FALSE, FALSE, TRUE, 3,
+  FALSE, FALSE, TRUE, 2,
   5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   13, 'Nickle', 'nickle', 32,
-  FALSE, FALSE, TRUE, 3,
+  FALSE, FALSE, TRUE, 2,
   5, TRUE, TRUE, TRUE, FALSE
 );
 
@@ -547,13 +547,13 @@ INSERT INTO `settlement` (
 ),
 (11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
-  TRUE, TRUE, FALSE, TRUE, FALSE,
-  10, '', 5, 10, 1
+  TRUE, TRUE, FALSE, FALSE, FALSE,
+  10, '', 5, 3, 1
 ),
 (12, 'Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 6, 10, 3
+  10, '', 6, 2, 3
 ),
 (13, 'Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
@@ -583,22 +583,22 @@ INSERT INTO `settlement` (
 (18, 'Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 24, 2, 3
+  10, '', 24, 1, 3
 ),
 (19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 3, 3
+  10, '', 25, 2, 3
 ),
 (20, 'Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 4, 3
+  10, '', 26, 2, 3
 ),
 (21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 5, 3
+  10, '', 27, 3, 3
 );
 
 DROP TABLE IF EXISTS `industry`;
@@ -627,7 +627,7 @@ INSERT INTO `industry` (
   `output_supply_key`, `output_supply_amount`, `gdp`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  null, 10, 10, 'Spawns units, creates corruption'
+  null, 10, 10, 'Spawns units'
 ),
 (2, 1, 'Federal', 'federal', 4, NULL,
   2, 10, 5, ''
@@ -637,7 +637,7 @@ INSERT INTO `industry` (
 ),
 -- energy
 (4, 2, 'Biofuel', 'biofuel', NULL, NULL,
-  13, 5, 1, ''
+  13, 10, 1, ''
 ),
 (5, 2, 'Coal', 'coal', NULL, NULL,
   13, 10, 1, ''
@@ -659,10 +659,10 @@ INSERT INTO `industry` (
   38, 3, 5, ''
 ),
 (11, 5, 'Steel', 'steel', NULL, NULL,
-  39, 10, 3, ''
+  39, 5, 3, ''
 ),
 (12, 5, 'Electronics', 'electronics', 4, NULL,
-  40, 20, 10, ''
+  40, 10, 10, ''
 ),
 -- hevvy industry
 (13, 6, 'Shipping Port', 'port', 4, 5,
@@ -692,7 +692,7 @@ INSERT INTO `industry` (
   33, 1, 3, ''
 ),
 (21, 4, 'Software', 'software', 4, NULL,
-  34, 10, 8, ''
+  34, 5, 8, ''
 ),
 (22, 4, 'Healthcare', 'healthcare', 4, NULL,
   35, 3, 6, ''
@@ -705,7 +705,7 @@ INSERT INTO `industry` (
   45, 3, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 5, NULL,
-  36, 10, 100, ''
+  36, 5, 100, ''
 );
 
 -- 

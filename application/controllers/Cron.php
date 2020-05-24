@@ -23,6 +23,7 @@ class Cron extends CI_Controller {
         echo 'every_minute CRON - ' . PHP_EOL;
         $this->microtime('start_crons');
         $this->cron_model->increase_support(); $this->microtime('increase_support');
+        $this->cron_model->luxury_bonus(); $this->microtime('luxury_bonus');
     }
 
     public function every_hour($token = false)
@@ -41,7 +42,6 @@ class Cron extends CI_Controller {
         $this->cron_model->zero_negative_account_supply(); $this->microtime('zero_negative_account_supply');
         $this->cron_model->update_market_prices(); $this->microtime('update_market_prices');
         $this->cron_model->grow_population(); $this->microtime('grow_population');
-        $this->cron_model->diverse_imports_bonus(); $this->microtime('diverse_imports_bonus');
         $this->cron_model->census_population(); $this->microtime('census_population');
         $this->cron_model->consume_gdp_bonus_supplies(); $this->microtime('consume_gdp_bonus_supplies');
         $this->cron_model->resource_output(); $this->microtime('resource_output');

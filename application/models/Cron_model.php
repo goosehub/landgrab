@@ -407,7 +407,7 @@ Class cron_model extends CI_Model
 			AND population < settlement.base_population
 		");
 	}
-	function diverse_imports_bonus()
+	function luxury_bonus()
 	{
 		$base_support_bonus = BASE_SUPPORT_BONUS;
 		$support_key = SUPPORT_KEY;
@@ -423,14 +423,13 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS cannabis ON osal.account_key = cannabis.account_key AND cannabis.amount > 0 AND cannabis.supply_key = $cannabis_key
 			LEFT JOIN supply_account_lookup AS alcohol ON osal.account_key = alcohol.account_key AND alcohol.amount > 0 AND alcohol.supply_key = $alcohol_key
 			LEFT JOIN supply_account_lookup AS tobacco ON osal.account_key = tobacco.account_key AND tobacco.amount > 0 AND tobacco.supply_key = $tobacco_key
-			SET osal.amount = osal.amount + POWER($base_support_bonus, 
-				(
-					IF(coffee.id, 1, 0) +
-					IF(tea.id, 1, 0) +
-					IF(cannabis.id, 1, 0) +
-					IF(alcohol.id, 1, 0) +
-					IF(tobacco.id, 1, 0)
-				)
+			SET osal.amount = osal.amount +
+			(
+				IF(coffee.id, 1, 0) +
+				IF(tea.id, 1, 0) +
+				IF(cannabis.id, 1, 0) +
+				IF(alcohol.id, 1, 0) +
+				IF(tobacco.id, 1, 0)
 			)
 			WHERE osal.supply_key = $support_key
 		");

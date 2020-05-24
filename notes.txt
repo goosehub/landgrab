@@ -6,6 +6,7 @@ Update Notes
 
 Assorted bug fixes
 Conceal resources until discovered
+food rebalance
 
 support buff
     cash crop support buff per minute
@@ -15,19 +16,10 @@ support buff
     cost of capturing land back to 5
     cost of war back to 50
 
-cash crops nerf
-    1-1-2-2-3
-unit cost nerf
-metals resource nerf
-energy resource nerf
-steel nerf
-software nerf
-market price nerf
-    market prices to hundreds place
-capitol, base tweak
-    pay 50m upfront, then free
-Chemcials nerf
-    Requires more energy
+cash crops settlement nerf
+    In order, 1-1-2-2-3
+unit enlist nerf
+    prices tweaked for free market and socialism
 Solar nerf
     1
 fiber nerf
@@ -35,8 +27,27 @@ fiber nerf
 timber nerf
     3
     remove mountain
-engineers nerf
+engineering industry nerf
     5
+software industry nerf
+    5
+steel industry nerf
+    5
+Electronics industry nerf
+    10
+Biofuel buff/tweak
+    Most cost, more output, better at scale 
+Chemcials nerf
+    Requires more energy
+metals resource nerf
+    2 per hour
+energy resource buff
+    3 per hour
+
+market price nerf
+    market prices to hundreds place
+capitol, base tweak
+    pay 50m upfront, then free
 
 
 ==========================================================================================
@@ -44,8 +55,9 @@ engineers nerf
 ==========================================================================================
 
 HIGH PRIORITY
-    rebalance
-    cash crop bonus per minute
+    food rebalance
+    base pay upfront
+    market prices to hundreds place
     bug: riches can't be traded
     bug: tile supply too high
     show time until next law pass
