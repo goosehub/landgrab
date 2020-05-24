@@ -4,7 +4,6 @@
 
 Update Notes
 
-Assorted bug fixes
 Conceal resources until discovered
 punish insufficient supplies for a township by shrink population
 when populations fall below amount needed for township, township will downgrade until uninhabited
@@ -49,13 +48,14 @@ energy resource buff
     3 per hour
 
 very minor UI improvements
+Fixed bug with trading
+Assorted bug fixes
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    bug: riches can't be traded
     bug: tile supply too high
     show time until next law pass
 MEDIUM PRIORITY
@@ -70,7 +70,6 @@ LOW PRIORITY
     account migration
     number formatting
     show diplomacy status on click other players land
-    abstract market table per world
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     Leaderboard always show main stats
@@ -82,6 +81,7 @@ Near Updates
     Interactive Tutorial
     New Treaty Ally/Right of Passage
 NO PRIORITY
+    abstract market table per world
     Conceal units except for allies and naval
     shortages more clear
     BUG: On landgrab.sql run, supply_industry_lookup didn't seed

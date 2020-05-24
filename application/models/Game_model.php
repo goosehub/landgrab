@@ -655,7 +655,8 @@ Class game_model extends CI_Model
 		$this->db->where('id', $trade_request_key);
 		$this->db->update('trade_request', $data);
 		$this->pay_on_accept_trade_request($trade_request_key, $receive_account_key);
-		$this->receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key);
+		$this->receiver_receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key);
+		$this->requester_receive_on_accept_trade_request($trade_request_key, $request_account_key, $receive_account_key);
 	}
 	function pay_on_accept_trade_request($trade_request_key, $receive_account_key) {
 		$supplies_demanded = $this->get_supply_account_trade_lookup($trade_request_key, $receive_account_key);
@@ -663,7 +664,13 @@ Class game_model extends CI_Model
 			$this->decrement_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
 		}
 	}
-	function receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key) {
+	function receiver_receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key) {
+		$supplies_offered = $this->get_supply_account_trade_lookup($trade_request_key, $request_account_key);
+		foreach ($supplies_offered as $supply) {
+			$this->increment_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
+		}
+	}
+	function requester_receive_on_accept_trade_request($trade_request_key, $receive_account_key, $request_account_key) {
 		$supplies_offered = $this->get_supply_account_trade_lookup($trade_request_key, $request_account_key);
 		foreach ($supplies_offered as $supply) {
 			$this->increment_account_supply($receive_account_key, $supply['supply_key'], (int)$supply['amount']);
