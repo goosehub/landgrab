@@ -273,6 +273,8 @@ Class cron_model extends CI_Model
 		$town_population_increment = TOWN_POPULATION_INCREMENT;
 		$city_population_increment = CITY_POPULATION_INCREMENT;
 		$metro_population_increment = METRO_POPULATION_INCREMENT;
+		$shrink_population_multiplier = SHRINK_POPULATION_MULTIPLIER;
+		$uninhabited_key = UNINHABITED_KEY;
 		$town_key = TOWN_KEY;
 		$city_key = CITY_KEY;
 		$metro_key = METRO_KEY;
@@ -299,17 +301,15 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.supply_key = $livestock_key AND livestock.amount < 0
 			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.supply_key = $fish_key AND fish.amount < 0
 			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
-			SET population = population - $town_population_increment - ($town_population_increment * 5)
+			SET population = population - If(population > ($town_population_increment * $shrink_population_multiplier), ($town_population_increment * $shrink_population_multiplier), population)
 			WHERE settlement_key = $town_key
-			AND population IS NOT NULL
-			AND population > $town_population_increment + ($town_population_increment * 5)
 			AND (
-				grain.amount IS NOT NULL
+				energy.amount IS NOT NULL
+				OR grain.amount IS NOT NULL
 				OR fruit.amount IS NOT NULL
 				OR vegetables.amount IS NOT NULL
 				OR livestock.amount IS NOT NULL
 				OR fish.amount IS NOT NULL
-				OR energy.amount IS NOT NULL
 			)
 		");
 		$this->db->query("
@@ -326,12 +326,11 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS tobacco ON tile.account_key = tobacco.account_key AND tobacco.supply_key = $tobacco_key AND tobacco.amount < 0
 			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
 			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
-			SET population = population - $city_population_increment - ($city_population_increment * 5)
+			SET population = population - $city_population_increment - ($city_population_increment * $shrink_population_multiplier)
 			WHERE settlement_key = $city_key
-			AND population IS NOT NULL
-			AND population > $city_population_increment + ($city_population_increment * 5)
 			AND (
-				grain.amount IS NOT NULL
+				energy.amount IS NOT NULL
+				OR grain.amount IS NOT NULL
 				OR fruit.amount IS NOT NULL
 				OR vegetables.amount IS NOT NULL
 				OR livestock.amount IS NOT NULL
@@ -341,7 +340,6 @@ Class cron_model extends CI_Model
 				OR cannabis.amount IS NOT NULL
 				OR alcohols.amount IS NOT NULL
 				OR tobacco.amount IS NOT NULL
-				OR energy.amount IS NOT NULL
 				OR merchandise.amount IS NOT NULL
 			)
 		");
@@ -361,12 +359,11 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
 			LEFT JOIN supply_account_lookup AS steel ON tile.account_key = steel.account_key AND steel.supply_key = $steel_key AND steel.amount < 0
 			LEFT JOIN supply_account_lookup AS pharmaceuticals ON tile.account_key = pharmaceuticals.account_key AND pharmaceuticals.supply_key = $pharmaceuticals_key AND pharmaceuticals.amount < 0
-			SET population = population - $metro_population_increment - ($metro_population_increment * 6)
+			SET population = population - $metro_population_increment - ($metro_population_increment * $shrink_population_multiplier)
 			WHERE settlement_key = $metro_key
-			AND population IS NOT NULL
-			AND population > $metro_population_increment + ($metro_population_increment * 6)
 			AND (
-				grain.amount IS NOT NULL
+				energy.amount IS NOT NULL
+				OR grain.amount IS NOT NULL
 				OR fruit.amount IS NOT NULL
 				OR vegetables.amount IS NOT NULL
 				OR livestock.amount IS NOT NULL
@@ -376,11 +373,28 @@ Class cron_model extends CI_Model
 				OR cannabis.amount IS NOT NULL
 				OR alcohols.amount IS NOT NULL
 				OR tobacco.amount IS NOT NULL
-				OR energy.amount IS NOT NULL
 				OR merchandise.amount IS NOT NULL
 				OR steel.amount IS NOT NULL
 				OR pharmaceuticals.amount IS NOT NULL
 			)
+		");
+		$this->db->query("
+			UPDATE tile
+			SET settlement_key = $uninhabited_key, industry_key = NULL, is_base = 0, is_capitol = 0
+			WHERE settlement_key = $town_key
+			AND population < (SELECT base_population FROM settlement WHERE id = $town_key)
+		");
+		$this->db->query("
+			UPDATE tile
+			SET settlement_key = $uninhabited_key, industry_key = NULL
+			WHERE settlement_key = $city_key
+			AND population < (SELECT base_population FROM settlement WHERE id = $city_key)
+		");
+		$this->db->query("
+			UPDATE tile
+			SET settlement_key = $uninhabited_key, industry_key = NULL
+			WHERE settlement_key = $metro_key
+			AND population < (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");
 	}
 	function downgrade_townships()
@@ -508,19 +522,19 @@ Class cron_model extends CI_Model
 			$steel = ($account['town_count'] * TOWN_STEEL_COST) + ($account['city_count'] * CITY_STEEL_COST) + ($account['metro_count'] * METRO_STEEL_COST);
 			$pharmaceuticals = ($account['town_count'] * TOWN_PHARMACEUTICALS_COST) + ($account['city_count'] * CITY_PHARMACEUTICALS_COST) + ($account['metro_count'] * METRO_PHARMACEUTICALS_COST);
 			// Apply new values
-			$data = $this->township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $pharmaceuticals);
+			$data = $this->township_input_update_array($account, $food_randomized, $food_needed, $cash_crops_randomized, $cash_crops_needed, $energy, $merchandise, $steel, $pharmaceuticals);
 			// Run update
 			$this->db->where('account_key', $account['id']);
 			$this->db->update_batch('supply_account_lookup', $data, 'supply_key');
 		}
 	}
-	function township_input_update_array($account, $food_randomized, $cash_crops_randomized, $energy, $merchandise, $steel, $pharmaceuticals)
+	function township_input_update_array($account, $food_randomized, $food_needed, $cash_crops_randomized, $cash_crops_needed, $energy, $merchandise, $steel, $pharmaceuticals)
 	{
 		return [
 			[
 				'account_key' => $account['id'],
 				'supply_key' => GRAIN_KEY,
-				'amount' => $account['grain'] - $food_randomized['grain'],
+				'amount' => $account['grain'] - $food_randomized['grain'] - $food_needed,
 			],
 			[
 				'account_key' => $account['id'],
@@ -545,7 +559,7 @@ Class cron_model extends CI_Model
 			[
 				'account_key' => $account['id'],
 				'supply_key' => COFFEE_KEY,
-				'amount' => $account['coffee'] - $cash_crops_randomized['coffee'],
+				'amount' => $account['coffee'] - $cash_crops_randomized['coffee'] - $cash_crops_needed,
 			],
 			[
 				'account_key' => $account['id'],

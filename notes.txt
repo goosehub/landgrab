@@ -6,7 +6,8 @@ Update Notes
 
 Assorted bug fixes
 Conceal resources until discovered
-food rebalance
+punish insufficient supplies for a township by shrink population
+when populations fall below amount needed for township, township will downgrade until uninhabited
 
 support buff
     cash crop support buff per minute
@@ -47,15 +48,13 @@ metals resource nerf
 energy resource buff
     3 per hour
 
-other more minor tweaks
+very minor UI improvements
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    food rebalance
-    no gdp for industry with no settlement inputs
     bug: riches can't be traded
     bug: tile supply too high
     show time until next law pass
