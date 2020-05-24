@@ -16,6 +16,7 @@ support buff
     cost of capturing land back to 5
     cost of war back to 50
 
+market prices nerf
 various settlement/industry gdp adjustments
 upfront cost for government industires
 cash crops settlement nerf
@@ -46,11 +47,6 @@ metals resource nerf
 energy resource buff
     3 per hour
 
-market price nerf
-    market prices to hundreds place
-capitol, base tweak
-    pay 50m upfront, then free
-
 
 ==========================================================================================
     Goals
@@ -58,13 +54,10 @@ capitol, base tweak
 
 HIGH PRIORITY
     food rebalance
-    no gdp for industry with no input
-    base pay upfront
-    market prices to hundreds place
+    no gdp for industry with no settlement inputs
     bug: riches can't be traded
     bug: tile supply too high
     show time until next law pass
-    Fallback for no units early on
 MEDIUM PRIORITY
     reset cron
     bug: units disappear client side
@@ -72,6 +65,7 @@ MEDIUM PRIORITY
     settlement/industry require round of feed to establish
     Show current supplies of relevant settlement or industry card
 LOW PRIORITY
+    Fallback for no units early on
     account migration
     number formatting
     show diplomacy status on click other players land

@@ -271,10 +271,10 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (16, 4, 'Gas', 'gas', 'Mcf', TRUE, NULL, NULL, ''),
 (17, 4, 'Oil', 'oil', 'MMbbl', TRUE, NULL, NULL, ''),
 (18, 4, 'Uranium', 'uranium', 'Ton', TRUE, NULL, NULL, ''),
-(19, 10, 'Silver', 'silver', 'kg', TRUE, 1, NULL, 'Silver Prices tend to push downward, with occasional volatility pushing it upwards'),
-(20, 10, 'Gold', 'gold', 'kg', TRUE, 2, NULL, 'Gold Prices tend to slowly but steadily push upwards'),
-(21, 10, 'Platinum', 'platinum', 'kg', TRUE, 3, NULL, 'Platinum Prices tend to push up and down with extremely volatile'),
-(22, 10, 'Gemstones', 'gemstones', 'Mct', TRUE, 4, NULL, 'Gemstones Prices tend to push higher but with occasional volatility pushing it downwards'),
+(19, 10, 'Silver', 'silver', 'kg', TRUE, 1, NULL, 'Silver Prices tend to move downward with occasional volatility'),
+(20, 10, 'Gold', 'gold', 'kg', TRUE, 2, NULL, 'Gold Prices tend to move slowly with rare volatility'),
+(21, 10, 'Platinum', 'platinum', 'kg', TRUE, 3, NULL, 'Platinum Prices tend to move quickly with extreme volatility'),
+(22, 10, 'Gemstones', 'gemstones', 'Mct', TRUE, 4, NULL, 'Gemstones Prices tend to move up and down with strong volatility'),
 (23, 3, 'Coffee', 'coffee', 'Mt', TRUE, NULL, NULL, ''),
 (24, 3, 'Tea', 'tea', 'Mt', TRUE, NULL, NULL, ''),
 (25, 3, 'Cannabis', 'cannabis', 'Mt', TRUE, NULL, NULL, ''),
@@ -325,22 +325,22 @@ INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
   `min_increase`, `min_decrease`, `min_price`, `max_price`) VALUES
 -- Silver
 (1, 19, 1, 1, 
-  40, 4, 5,
+  40, 3, 5,
   1, 1, 1, 1000
 ),
 -- Gold
 (2, 20, 1, 1, 
-  55, 3, 2,
+  45, 2, 2,
   1, 1, 1, 1000
 ),
 -- Platinum
 (3, 21, 1, 1, 
-  50, 14, 15,
+  45, 10, 25,
   1, 1, 1, 1000
 ),
 -- Gemstones
 (4, 22, 1, 1, 
-  66, 5, 5,
+  45, 4, 5,
   1, 1, 1, 1000
 );
 
