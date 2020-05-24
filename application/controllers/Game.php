@@ -297,6 +297,7 @@ class Game extends CI_Controller {
                 $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
                 $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
+                $this->game_model->decrement_account_supply($previous_tile['account_key'], TILES_KEY);
             }
         }
         else if ($this->game_model->can_move_to($account, $tile, $previous_tile)) {

@@ -48,6 +48,7 @@ energy resource buff
     3 per hour
 
 Fixed bug with trading
+Fix tile count
 Show time until you can pass laws again
 other minor bug fixes
 other minor UI improvements
