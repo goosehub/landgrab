@@ -21,6 +21,7 @@ Class leaderboard_model extends CI_Model
 		$this->db->join('account', ' account.id = supply_account_lookup.account_key', 'left');
 		$this->db->join('user', ' user.id = account.user_key', 'left');
 		$this->db->where('account.world_key', $world_key);
+		$this->db->where('supply_account_lookup.amount >', 0);
 		$this->db->where('supply_account_lookup.supply_key', $supply_key);
 		$this->db->order_by('supply_account_lookup.amount', 'desc');
 		$query = $this->db->get();

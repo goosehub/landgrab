@@ -37,20 +37,24 @@ world gen
 
 HIGH PRIORITY
     BUG: Disappearing units when server side validation or error hit
+    BUG: White nations are invisible
 MEDIUM PRIORITY
+    TWEAK: Limit leaderboard to active
+    BUG: Default toggle active states on first visit
+    BUG: Active functionality
+    FEATURE: Multi World generation
+    FEATURE: Show settlement/industry current supplies next to required settlement
+LOW PRIORITY
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow
-    Multi World generation
-    Show settlement/industry current supplies next to required settlement
-LOW PRIORITY
     PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
-    account migration
-    number formatting
-    show diplomacy status on click other players land
+    MISC: account migration
+    TWEAK: number formatting
+    FEATURE: show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
-    Leaderboard always show main stats
-    Leaderboard show sum world stats
+    FEATURE: Leaderboard always show main stats
+    FEATURE: Leaderboard show sum world stats
 Near Updates
     World lock
     Improved UI/New Icons
