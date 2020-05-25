@@ -628,7 +628,7 @@ INSERT INTO `industry` (
   `output_supply_key`, `output_supply_amount`, `upfront_cost`, `gdp`, `meta`) VALUES
 -- government
 (1, 1, 'Capitol', 'capitol', NULL, NULL,
-  null, 1, 10, 10, 'Spawns units'
+  null, 1, 10, 50, 'Spawns units'
 ),
 (2, 1, 'Federal', 'federal', 4, NULL,
   2, 10, 10, 5, 'Support is per hour'
@@ -706,7 +706,7 @@ INSERT INTO `industry` (
   45, 3, NULL, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering & Design', 'engineering_design', 5, NULL,
-  36, 5, NULL, 100, ''
+  36, 10, NULL, 100, ''
 );
 
 -- 

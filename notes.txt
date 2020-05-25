@@ -56,9 +56,37 @@ other minor UI improvements
 --------
 world gen
 
+world win conditions
+    most territories
+world end condition
+    space
+    nuclear
+    pollution
+
 world win and reset when player has 50% of the land (including arctic)
+
 world locked when no non-arctic squares are unclaimed
 world gen when all worlds are locked
+
+space win condition
+    Win when you have produce 1 Mars Colony
+    Metro
+    10000 Cash Up Front
+    1000 Energy
+    100 Steel
+
+    10 Uranium
+    10 Copper
+    10 Zinc
+    10 Aluminum
+    10 Nickle
+    10 Gold
+
+    100 Chemicals
+    100 Electronics
+    100 Machines
+    100 Programmers
+    100 Engineers
 
 ==========================================================================================
     Goals
@@ -66,20 +94,20 @@ world gen when all worlds are locked
 
 HIGH PRIORITY
 MEDIUM PRIORITY
-    bug: units disappear client side
+    MECHANIC: space win condition, custom industry
+    PERFORMANCE: grow_population is slow
+    BUG: units disappear client side
     Multi World generation
-    settlement/industry require round of feed to establish
-    Show current supplies of relevant settlement or industry card
+    Show settlement/industry current supplies next to required settlement
 LOW PRIORITY
-    PERFORMANCE: on init, don't get water squares with no units to save thousands of rows
-    Fallback for no units early on
+    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
     account migration
     number formatting
     show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     Leaderboard always show main stats
-    Leaderboard show world stats
+    Leaderboard show sum world stats
 Near Updates
     World lock
     Improved UI/New Icons
@@ -87,14 +115,18 @@ Near Updates
     Interactive Tutorial
     New Treaty Ally/Right of Passage
 NO PRIORITY
+    SETTLEMENT: national park
+    min tax rates
     world backup
     abstract market table per world
     Conceal units except for allies and naval
     shortages more clear
     BUG: On landgrab.sql run, supply_industry_lookup didn't seed
-    MECHANIC: pollution
+    MECHANIC: pollution win condition
+    MECHANIC: nuclear win condition
     MECHANIC: nuke
     MECHANIC: spy
+    MECHANIC: pandemic
     Reject active trade requests when war starts
     Being attacked UI
     fonts
@@ -164,6 +196,10 @@ Tutorial Todo List
         Use all 5 Toggles, explain terrain
     The Start Of A Nation
         Select a tile to start your nation. If available, select somewhere unclaimed.
+    Start your people
+        Establish a town
+    Start your nation
+        Establish a capitol industry
     Establishing a Charter
         Update your nation
     Change The Law

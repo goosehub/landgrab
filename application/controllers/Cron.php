@@ -24,6 +24,7 @@ class Cron extends CI_Controller {
         $this->microtime('start_crons');
         $this->cron_model->increase_support(); $this->microtime('increase_support');
         $this->cron_model->luxury_bonus(); $this->microtime('luxury_bonus');
+        $this->cron_model->enforce_max_support(); $this->microtime('enforce_max_support');
     }
 
     public function every_hour($token = false)
@@ -53,7 +54,6 @@ class Cron extends CI_Controller {
         $this->cron_model->downgrade_townships(); $this->microtime('downgrade_townships');
         $this->cron_model->settlement_income_collect(); $this->microtime('settlement_income_collect');
         $this->cron_model->industry_income_collect(); $this->microtime('industry_income_collect');
-        $this->cron_model->enforce_max_support(); $this->microtime('enforce_max_support');
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
         $this->cron_model->reject_expired_trade_requests(); $this->microtime('reject_expired_trade_requests');
