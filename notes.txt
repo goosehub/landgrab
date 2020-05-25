@@ -2,97 +2,41 @@
     Notes
 ==========================================================================================
 
-Update Notes
-
-Conceal resources until discovered
-punish insufficient supplies for a township by shrink population
-when populations fall below amount needed for township, township will downgrade until uninhabited
-
-support buff
-    cash crop support buff per minute
-    cash crop support buff amounts is 1 for each cash crop
-    oligarchy support 4 per minute
-    autocracy support 5 per minute
-    cost of capturing land back to 5
-    cost of war back to 50
-
-market prices nerf
-various settlement/industry gdp adjustments
-upfront cost for government industires
-cash crops settlement nerf
-    In order, 1-1-2-2-3
-unit enlist nerf
-    prices tweaked for free market and socialism
-Solar nerf
-    1
-fiber nerf
-    2
-timber nerf
-    3
-    remove mountain
-engineering industry nerf
-    5
-software industry nerf
-    5
-steel industry nerf
-    5
-Electronics industry nerf
-    10
-Biofuel buff/tweak
-    Most cost, more output, better at scale 
-Chemcials nerf
-    Requires more energy
-metals resource nerf
-    2 per hour
-energy resource buff
-    3 per hour
-
-Fixed bug with trading
-Fix tile count
-Show time until you can pass laws again
-other minor bug fixes
-other minor UI improvements
-
---------
 world gen
-
-world win conditions
-    most territories
-world end condition
-    space
-    nuclear
-    pollution
-
-world win and reset when player has 50% of the land (including arctic)
-
-world locked when no non-arctic squares are unclaimed
-world gen when all worlds are locked
-
-space win condition
-    Win when you have produce 1 Mars Colony
-    Metro
-    10000 Cash Up Front
-    1000 Energy
-    100 Steel
-
-    10 Uranium
-    10 Copper
-    10 Zinc
-    10 Aluminum
-    10 Nickle
-    10 Gold
-
-    100 Chemicals
-    100 Electronics
-    100 Machines
-    100 Programmers
-    100 Engineers
+    world win conditions
+        most territories
+        space
+    world end condition
+        space
+        nuclear
+        pollution
+    world win and reset when player has 50% of the land (including arctic)
+    world locked when no non-arctic squares are unclaimed
+    world gen when all worlds are locked
+    space win condition
+        Win when you have produce 1 Mars Colony
+        Metro
+        10000 Cash Up Front
+        1000 Energy
+        100 Steel
+        10 Uranium
+        10 Copper
+        10 Zinc
+        10 Aluminum
+        10 Nickle
+        10 Gold
+        100 Chemicals
+        100 Electronics
+        100 Machines
+        100 Programmers
+        100 Engineers
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    BUG: Disappearing units
 MEDIUM PRIORITY
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow

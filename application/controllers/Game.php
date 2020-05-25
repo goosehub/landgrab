@@ -31,6 +31,18 @@ class Game extends CI_Controller {
         }
     }
 
+    public function debug($world_slug = 1)
+    {
+        if (!MAINTENANCE) {
+            return;
+        }
+        // Replenish supplies if something goes goofy
+        $accounts = $this->game_model->get_all('account');
+        foreach ($accounts as $account) {
+            $this->user_model->create_supply_lookup($account['id']);
+        }
+    }
+
     // Game view
     public function index($world_slug = 1, $marketing_slug = false)
     {
@@ -291,7 +303,8 @@ class Game extends CI_Controller {
         }
 
         if ((int)$account['supplies']['support']['amount'] <= 0) {
-            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
+            // TODO: Fix client side disappear ASAP
+            // api_error_response('not_enough_support_to_move', 'You can not move units without political support');
         }
         // Keep remove before add, makes dupe bugs less likely
         if ($this->game_model->can_claim($account, $tile, $previous_tile)) {
@@ -301,7 +314,7 @@ class Game extends CI_Controller {
                 $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
                 $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
-                $this->game_model->decrement_account_supply($previous_tile['account_key'], TILES_KEY);
+                $this->game_model->decrement_account_supply($tile['account_key'], TILES_KEY);
             }
         }
         else if ($this->game_model->can_move_to($account, $tile, $previous_tile)) {
