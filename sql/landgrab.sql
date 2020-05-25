@@ -205,7 +205,8 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (19, 2, 50), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
-(22, 1, 10); -- Pharmaceuticals
+(22, 1, 10), -- Pharmaceuticals
+(22, 33, 1); -- Pharmaceuticals
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
@@ -416,28 +417,28 @@ INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
 (
   5, 'Coal', 'coal', 15,
   FALSE, TRUE, FALSE, 3,
-  15, TRUE, TRUE, TRUE, FALSE
+  10, TRUE, TRUE, TRUE, FALSE
 ),
 (
   6, 'Gas', 'gas', 16,
   FALSE, TRUE, FALSE, 3,
-  7, TRUE, TRUE, TRUE, FALSE
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 (
   7, 'Oil', 'oil', 17,
   FALSE, TRUE, FALSE, 3,
-  15, TRUE, FALSE, TRUE, TRUE
+  10, TRUE, FALSE, TRUE, TRUE
 ),
 (
   8, 'Uranium', 'uranium', 18,
   FALSE, TRUE, FALSE, 3,
-  3, TRUE, TRUE, TRUE, FALSE
+  5, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
   9, 'Iron', 'iron', 28,
   FALSE, FALSE, TRUE, 2,
-  20, TRUE, TRUE, TRUE, FALSE
+  30, TRUE, TRUE, TRUE, FALSE
 ),
 (
   10, 'Copper', 'copper', 29,

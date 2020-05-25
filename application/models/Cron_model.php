@@ -19,10 +19,9 @@ Class cron_model extends CI_Model
 		$cash_key = CASH_KEY;
 		$this->db->query("
 			UPDATE account
-			INNER JOIN tile ON tile.account_key = account.id
-			INNER JOIN supply_account_lookup AS support ON tile.account_key = support.account_key AND support.supply_key = $support_key
+			LEFT JOIN tile ON tile.account_key = account.id
+			LEFT JOIN supply_account_lookup AS support ON tile.account_key = support.account_key AND support.supply_key = $support_key
 			SET is_active = IF (tile.id IS NOT NULL, 1, 0)
-			WHERE tile.id IS NOT NULL;
 		");
 	}
 	function punish_negative_money()

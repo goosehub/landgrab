@@ -1,54 +1,64 @@
 ==========================================================================================
+    Next Release Notes
+==========================================================================================
+
+Resource frequency tweaks, still 100 total per map
+Pharmaceuticals requires professors
+Numerous minor fixes and tweaks
+
+==========================================================================================
     Notes
 ==========================================================================================
 
 world gen
     world win conditions
-        most territories
-        space
-    world end condition
-        space
-        nuclear
-        pollution
-    world win and reset when player has 50% of the land (including arctic)
+        Mars Colony
+            Metro
+            1000 Energy
+            100 Steel
+            100 Uranium
+            10 Copper
+            10 Zinc
+            10 Aluminum
+            10 Nickle
+            10 Gold
+            100 Chemicals
+            100 Electronics
+            100 Machines
+            100 Programmers
+            100 Engineers
+        Cultural
+            Metro
+            10,000 Cash Up Front
+            Influence
+            Culture
+        World Government
+            Metro
+            100,000K Population
+            2,000 tiles (100% size corruption)
+
     world locked when no non-arctic squares are unclaimed
     world gen when all worlds are locked
-    space win condition
-        Win when you have produce 1 Mars Colony
-        Metro
-        10000 Cash Up Front
-        1000 Energy
-        100 Steel
-        10 Uranium
-        10 Copper
-        10 Zinc
-        10 Aluminum
-        10 Nickle
-        10 Gold
-        100 Chemicals
-        100 Electronics
-        100 Machines
-        100 Programmers
-        100 Engineers
+    world reset when world is won, display last winner
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Disappearing units when server side validation or error hit
-    BUG: White nations are invisible
-    TWEAK: Limit diplomacy list to with land
+    FEATURE: Each nation only gets 1 type of cash crop
+    FEATURE: Win condition
 MEDIUM PRIORITY
-    UI: Limit leaderboard to with land
+    BUG: White nations are invisible
+    BUG: Disappearing units when server side validation or error hit
     UI: After submit trade, open view trade
     BUG: Default toggle active states on first visit
-    BUG: Active functionality
     TWEAK: Allow town to fail one time somehow
     FEATURE: National cash crop, to encourage trading
     FEATURE: Multi World generation
     FEATURE: Show settlement/industry current supplies next to required settlement
 LOW PRIORITY
+    FEATURE: Record and display last winner
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow
     PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows

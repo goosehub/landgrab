@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Debug
 define('ALLOW_TERRAIN_UPDATE', false);
 define('DEBUG_SHOW_TILE_ID', false);
+define('DEBUG_SHOW_RESOURCES', true);
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);

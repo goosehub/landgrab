@@ -12,6 +12,7 @@
 		<div class="col-md-2">
 			<select id="leaderboard_supply_select" class="form-control">
 				<?php foreach ($supplies as $supply) { ?>
+					<?php if ($supply['id'] == SUPPORT_KEY) { continue; } ?>
 					<option value="<?= $supply['id']; ?>" <?php echo $supply['id'] == DEFAULT_LEADERBOARD_SUPPLY_KEY ? ' selected="selected"' : ''; ?> >
 						<?= $supply['label']; ?>
 					</option>

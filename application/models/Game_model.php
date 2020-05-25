@@ -64,6 +64,10 @@ Class game_model extends CI_Model
 	}
 	function tile_select()
 	{
+		$resource_string = "IF(account_key, resource_key, NULL) AS resource_key,";
+		if (DEBUG_SHOW_RESOURCES) {
+			$resource_string = "resource_key,";
+		}
 		return "
 		id,
 		lat,
@@ -71,7 +75,7 @@ Class game_model extends CI_Model
 		world_key,
 		account_key,
 		terrain_key,
-		IF(account_key, resource_key, NULL) AS resource_key,
+		$resource_string
 		settlement_key,
 		industry_key,
 		unit_key,
