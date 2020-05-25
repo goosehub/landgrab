@@ -568,7 +568,7 @@ INSERT INTO `settlement` (
 (15, 'Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, FALSE, FALSE,
-  10, '', 13, 2, 1
+  10, '', 13, 1, 1
 ),
 (16, 'Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,

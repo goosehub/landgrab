@@ -289,6 +289,10 @@ class Game extends CI_Controller {
         if ($previous_tile['unit_owner_key'] != $account['id']) {
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
+
+        if ((int)$account['supplies']['support']['amount'] <= 0) {
+            api_error_response('not_enough_support_to_move', 'You can not move units without political support');
+        }
         // Keep remove before add, makes dupe bugs less likely
         if ($this->game_model->can_claim($account, $tile, $previous_tile)) {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);

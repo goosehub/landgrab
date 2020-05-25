@@ -885,10 +885,6 @@ Class game_model extends CI_Model
 			return true;
 		}
 
-		if ((int)$account['supplies']['support']['amount'] <= 0) {
-			api_error_response('not_enough_support_to_move', 'You can not move units without political support');
-		}
-
 		if ($tile['unit_key']) {
 			$treaty = $this->game_model->find_existing_treaty($account['id'], $tile['account_key']);
 			if (!$treaty || $treaty['treaty_key'] != WAR_KEY) {
