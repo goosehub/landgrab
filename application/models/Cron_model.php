@@ -423,7 +423,6 @@ Class cron_model extends CI_Model
 	}
 	function luxury_bonus()
 	{
-		$base_support_bonus = BASE_SUPPORT_BONUS;
 		$support_key = SUPPORT_KEY;
 		$coffee_key = COFFEE_KEY;
 		$tea_key = TEA_KEY;

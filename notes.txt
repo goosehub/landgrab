@@ -36,11 +36,10 @@ world gen
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Disappearing units
+    BUG: Disappearing units when server side validation or error hit
 MEDIUM PRIORITY
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow
-    BUG: units disappear client side
     Multi World generation
     Show settlement/industry current supplies next to required settlement
 LOW PRIORITY
@@ -62,6 +61,7 @@ NO PRIORITY
     SETTLEMENT: national park
     min tax rates
     world backup
+    ask for name of tile on create township
     abstract market table per world
     Conceal units except for allies and naval
     shortages more clear

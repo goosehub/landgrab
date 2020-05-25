@@ -231,8 +231,7 @@
     }
     function update_cash_crops_support_bonus() {
       let variety = !!parseInt(account.supplies.coffee.amount) + !!parseInt(account.supplies.tea.amount) + !!parseInt(account.supplies.alcohol.amount) + !!parseInt(account.supplies.cannabis.amount) + !!parseInt(account.supplies.tobacco.amount);
-      let bonus = Math.pow(base_support_bonus, variety);
-      $('#cash_crops_support_bonus').html(bonus);
+      $('#cash_crops_support_bonus').html(variety);
     }
     function update_grouped_food_output() {
       let food = 0;
