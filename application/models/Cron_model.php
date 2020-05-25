@@ -386,13 +386,13 @@ Class cron_model extends CI_Model
 		");
 		$this->db->query("
 			UPDATE tile
-			SET settlement_key = $uninhabited_key, industry_key = NULL
+			SET settlement_key = $town_key, industry_key = NULL
 			WHERE settlement_key = $city_key
 			AND population < (SELECT base_population FROM settlement WHERE id = $city_key)
 		");
 		$this->db->query("
 			UPDATE tile
-			SET settlement_key = $uninhabited_key, industry_key = NULL
+			SET settlement_key = $city_key, industry_key = NULL
 			WHERE settlement_key = $metro_key
 			AND population < (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");

@@ -38,10 +38,14 @@ world gen
 HIGH PRIORITY
     BUG: Disappearing units when server side validation or error hit
     BUG: White nations are invisible
+    TWEAK: Limit diplomacy list to with land
 MEDIUM PRIORITY
-    TWEAK: Limit leaderboard to active
+    UI: Limit leaderboard to with land
+    UI: After submit trade, open view trade
     BUG: Default toggle active states on first visit
     BUG: Active functionality
+    TWEAK: Allow town to fail one time somehow
+    FEATURE: National cash crop, to encourage trading
     FEATURE: Multi World generation
     FEATURE: Show settlement/industry current supplies next to required settlement
 LOW PRIORITY
