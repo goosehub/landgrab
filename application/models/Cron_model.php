@@ -285,7 +285,7 @@ Class cron_model extends CI_Model
 		$coffee_key = COFFEE_KEY;
 		$tea_key = TEA_KEY;
 		$cannabis_key = CANNABIS_KEY;
-		$alcohols_key = ALCOHOLS_KEY;
+		$wine_key = WINE_KEY;
 		$tobacco_key = TOBACCO_KEY;
 		$energy_key = ENERGY_KEY;
 		$merchandise_key = MERCHANDISE_KEY;
@@ -321,7 +321,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS coffee ON tile.account_key = coffee.account_key AND coffee.supply_key = $coffee_key AND coffee.amount < 0
 			LEFT JOIN supply_account_lookup AS tea ON tile.account_key = tea.account_key AND tea.supply_key = $tea_key AND tea.amount < 0
 			LEFT JOIN supply_account_lookup AS cannabis ON tile.account_key = cannabis.account_key AND cannabis.supply_key = $cannabis_key AND cannabis.amount < 0
-			LEFT JOIN supply_account_lookup AS alcohols ON tile.account_key = alcohols.account_key AND alcohols.supply_key = $alcohols_key AND alcohols.amount < 0
+			LEFT JOIN supply_account_lookup AS wine ON tile.account_key = wine.account_key AND wine.supply_key = $wine_key AND wine.amount < 0
 			LEFT JOIN supply_account_lookup AS tobacco ON tile.account_key = tobacco.account_key AND tobacco.supply_key = $tobacco_key AND tobacco.amount < 0
 			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
 			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
@@ -337,7 +337,7 @@ Class cron_model extends CI_Model
 				OR coffee.amount IS NOT NULL
 				OR tea.amount IS NOT NULL
 				OR cannabis.amount IS NOT NULL
-				OR alcohols.amount IS NOT NULL
+				OR wine.amount IS NOT NULL
 				OR tobacco.amount IS NOT NULL
 				OR merchandise.amount IS NOT NULL
 			)
@@ -352,7 +352,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS coffee ON tile.account_key = coffee.account_key AND coffee.supply_key = $coffee_key AND coffee.amount < 0
 			LEFT JOIN supply_account_lookup AS tea ON tile.account_key = tea.account_key AND tea.supply_key = $tea_key AND tea.amount < 0
 			LEFT JOIN supply_account_lookup AS cannabis ON tile.account_key = cannabis.account_key AND cannabis.supply_key = $cannabis_key AND cannabis.amount < 0
-			LEFT JOIN supply_account_lookup AS alcohols ON tile.account_key = alcohols.account_key AND alcohols.supply_key = $alcohols_key AND alcohols.amount < 0
+			LEFT JOIN supply_account_lookup AS wine ON tile.account_key = wine.account_key AND wine.supply_key = $wine_key AND wine.amount < 0
 			LEFT JOIN supply_account_lookup AS tobacco ON tile.account_key = tobacco.account_key AND tobacco.supply_key = $tobacco_key AND tobacco.amount < 0
 			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
 			LEFT JOIN supply_account_lookup AS merchandise ON tile.account_key = merchandise.account_key AND merchandise.supply_key = $merchandise_key AND merchandise.amount < 0
@@ -370,7 +370,7 @@ Class cron_model extends CI_Model
 				OR coffee.amount IS NOT NULL
 				OR tea.amount IS NOT NULL
 				OR cannabis.amount IS NOT NULL
-				OR alcohols.amount IS NOT NULL
+				OR wine.amount IS NOT NULL
 				OR tobacco.amount IS NOT NULL
 				OR merchandise.amount IS NOT NULL
 				OR steel.amount IS NOT NULL
@@ -426,21 +426,21 @@ Class cron_model extends CI_Model
 		$coffee_key = COFFEE_KEY;
 		$tea_key = TEA_KEY;
 		$cannabis_key = CANNABIS_KEY;
-		$alcohol_key = ALCOHOLS_KEY;
+		$wine_key = WINE_KEY;
 		$tobacco_key = TOBACCO_KEY;
 		$this->db->query("
 			UPDATE supply_account_lookup AS osal
 			LEFT JOIN supply_account_lookup AS coffee ON osal.account_key = coffee.account_key AND coffee.amount > 0 AND coffee.supply_key = $coffee_key
 			LEFT JOIN supply_account_lookup AS tea ON osal.account_key = tea.account_key AND tea.amount > 0 AND tea.supply_key = $tea_key
 			LEFT JOIN supply_account_lookup AS cannabis ON osal.account_key = cannabis.account_key AND cannabis.amount > 0 AND cannabis.supply_key = $cannabis_key
-			LEFT JOIN supply_account_lookup AS alcohol ON osal.account_key = alcohol.account_key AND alcohol.amount > 0 AND alcohol.supply_key = $alcohol_key
+			LEFT JOIN supply_account_lookup AS wine ON osal.account_key = wine.account_key AND wine.amount > 0 AND wine.supply_key = $wine_key
 			LEFT JOIN supply_account_lookup AS tobacco ON osal.account_key = tobacco.account_key AND tobacco.amount > 0 AND tobacco.supply_key = $tobacco_key
 			SET osal.amount = osal.amount +
 			(
 				IF(coffee.id, 1, 0) +
 				IF(tea.id, 1, 0) +
 				IF(cannabis.id, 1, 0) +
-				IF(alcohol.id, 1, 0) +
+				IF(wine.id, 1, 0) +
 				IF(tobacco.id, 1, 0)
 			)
 			WHERE osal.supply_key = $support_key
@@ -504,7 +504,7 @@ Class cron_model extends CI_Model
 				'coffee' => 0,
 				'tea' => 0,
 				'tobacco' => 0,
-				'alcohol' => 0,
+				'wine' => 0,
 				'cannabis' => 0,
 			];
 			// Shuffle with perserved keys
@@ -571,8 +571,8 @@ Class cron_model extends CI_Model
 			],
 			[
 				'account_key' => $account['id'],
-				'supply_key' => ALCOHOLS_KEY,
-				'amount' => $account['alcohol'] - $cash_crops_randomized['alcohol'],
+				'supply_key' => WINE_KEY,
+				'amount' => $account['wine'] - $cash_crops_randomized['wine'],
 			],
 			[
 				'account_key' => $account['id'],
@@ -645,7 +645,7 @@ Class cron_model extends CI_Model
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . COFFEE_KEY . ") coffee,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TEA_KEY . ") AS tea,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . CANNABIS_KEY . ") AS cannabis,
-			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ALCOHOLS_KEY . ") AS alcohol,
+			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . WINE_KEY . ") AS wine,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . TOBACCO_KEY . ") AS tobacco,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . ENERGY_KEY . ") AS energy,
 			(SELECT amount FROM supply_account_lookup WHERE account_key = account.id AND supply_key = " . MERCHANDISE_KEY . ") AS merchandise,

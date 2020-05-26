@@ -82,7 +82,7 @@
       <?= COFFEE_KEY ?>,
       <?= TEA_KEY ?>,
       <?= CANNABIS_KEY ?>,
-      <?= ALCOHOLS_KEY ?>,
+      <?= WINE_KEY ?>,
       <?= TOBACCO_KEY ?>,
     ];
     const food_slug_array = [
@@ -96,7 +96,7 @@
       'coffee',
       'tea',
       'cannabis',
-      'alcohol',
+      'wine',
       'tobacco',
     ];
     let map = null;

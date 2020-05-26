@@ -280,7 +280,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (23, 3, 'Coffee', 'coffee', 'Mt', TRUE, NULL, NULL, ''),
 (24, 3, 'Tea', 'tea', 'Mt', TRUE, NULL, NULL, ''),
 (25, 3, 'Cannabis', 'cannabis', 'Mt', TRUE, NULL, NULL, ''),
-(26, 3, 'Alcohol', 'alcohol', 'Mt', TRUE, NULL, NULL, ''),
+(26, 3, 'Wine', 'wine', 'Mt', TRUE, NULL, NULL, ''),
 (27, 3, 'Tobacco', 'tobacco', 'Mt', TRUE, NULL, NULL, ''),
 (28, 5, 'Iron', 'iron', 'Gt', TRUE, NULL, NULL, ''),
 (29, 5, 'Copper', 'copper', 'Mt', TRUE, NULL, NULL, ''),
@@ -592,7 +592,7 @@ INSERT INTO `settlement` (
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 25, 1, 3
 ),
-(20, 'Alcohol', 'alcohol', 5,
+(20, 'Wine', 'wine', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
   10, '', 26, 1, 3

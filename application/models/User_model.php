@@ -164,7 +164,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             COFFEE_KEY,
             TEA_KEY,
             CANNABIS_KEY,
-            ALCOHOLS_KEY,
+            WINE_KEY,
             TOBACCO_KEY,
         ];
         return $items[array_rand($items)];

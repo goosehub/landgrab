@@ -167,8 +167,8 @@
                         <option value="<?= CANNABIS_KEY; ?>" <?php if ($account['cash_crop_key'] == CANNABIS_KEY) { echo 'selected'; } ?>>
                             Cannabis
                         </option>
-                        <option value="<?= ALCOHOLS_KEY; ?>" <?php if ($account['cash_crop_key'] == ALCOHOLS_KEY) { echo 'selected'; } ?>>
-                            Alcohols
+                        <option value="<?= WINE_KEY; ?>" <?php if ($account['cash_crop_key'] == WINE_KEY) { echo 'selected'; } ?>>
+                            Wine
                         </option>
                         <option value="<?= TOBACCO_KEY; ?>" <?php if ($account['cash_crop_key'] == TOBACCO_KEY) { echo 'selected'; } ?>>
                             Tobacco

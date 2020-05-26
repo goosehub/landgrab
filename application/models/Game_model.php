@@ -68,7 +68,7 @@ Class game_model extends CI_Model
 			COFFEE_KEY,
 			TEA_KEY,
 			CANNABIS_KEY,
-			ALCOHOLS_KEY,
+			WINE_KEY,
 			TOBACCO_KEY,
 		];
 		return in_array($supply_key, $cash_crops);

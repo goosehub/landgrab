@@ -47,8 +47,6 @@ world gen
 ==========================================================================================
 
 HIGH PRIORITY
-    FEATURE: Each nation only gets 1 type of cash crop
-    TWEAK: Cannabis renamed to drugs
     FEATURE: ask for name of tile on create township
 MEDIUM PRIORITY
     FEATURE: Win condition
