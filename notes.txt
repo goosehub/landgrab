@@ -2,6 +2,7 @@
     Next Release Notes
 ==========================================================================================
 
+New Mechanic: Each nation is only allowed 1 type of cash crop
 Resource frequency tweaks, still 100 total per map
 Pharmaceuticals requires professors
 Numerous minor fixes and tweaks

@@ -388,6 +388,9 @@ class Game extends CI_Controller {
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');
         }
+        if ($this->game_model->supply_is_cash_crop($settlement['output_supply_key']) && $settlement['output_supply_key'] != $account['cash_crop_key']) {
+            api_error_response('invalid_cash_crop', 'You are not allowed to grow this type of cash crop');
+        }
         if ($tile['terrain_key'] == OCEAN_KEY) {
             api_error_response('ocean_terrain_not_allowed', 'Not the correct terrain type');
         }

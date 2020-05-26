@@ -206,6 +206,11 @@
         $('.preview_settlement_button.btn-soft-disabled').removeClass('btn-soft-disabled').addClass('btn-default');
         $('.preview_settlement_button').each(function(){
             let settlement_key = $(this).data('id');
+            let output_supply_key = $(this).data('output');
+            $(this).show();
+            if (cash_crops_key_array.includes(output_supply_key) && output_supply_key != account.cash_crop_key) {
+                $(this).hide();
+            }
             if (!settlement_allowed_on_this_tile(settlement_key)) {
                 $(this).removeClass('btn-default').addClass('btn-soft-disabled');
             }

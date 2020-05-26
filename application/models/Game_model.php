@@ -62,6 +62,17 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]) ? $result[0] : false;
 	}
+	function supply_is_cash_crop($supply_key)
+	{
+		$cash_crops = [
+			COFFEE_KEY,
+			TEA_KEY,
+			CANNABIS_KEY,
+			ALCOHOLS_KEY,
+			TOBACCO_KEY,
+		];
+		return in_array($supply_key, $cash_crops);
+	}
 	function tile_select()
 	{
 		$resource_string = "IF(account_key, resource_key, NULL) AS resource_key,";

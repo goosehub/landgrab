@@ -190,7 +190,7 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
-                        <button id="preview_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" class="preview_settlement_button btn btn-default">
+                        <button id="preview_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" data-output="<?php echo $settlement['output_supply_key']; ?>" class="preview_settlement_button btn btn-default">
                             <?php echo $settlement['label']; ?>
                             <img class="settlement_selection_icon" src="<?=base_url()?>resources/icons/settlements/<?php echo $settlement['id'] ?>.png"/>
                         </button>
