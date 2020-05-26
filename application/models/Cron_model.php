@@ -302,6 +302,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS energy ON tile.account_key = energy.account_key AND energy.supply_key = $energy_key AND energy.amount < 0
 			SET population = population - If(population > ($town_population_increment * $shrink_population_multiplier), ($town_population_increment * $shrink_population_multiplier), population)
 			WHERE settlement_key = $town_key
+			AND is_capitol = 0
 			AND (
 				energy.amount IS NOT NULL
 				OR grain.amount IS NOT NULL

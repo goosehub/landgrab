@@ -12,13 +12,13 @@ HIGH PRIORITY
     FEATURE: Win condition
 MEDIUM PRIORITY
     BUG: Disappearing units when server side validation or error hit
-    TWEAK: Allow town to fail one time somehow
     FEATURE: World Generation
     FEATURE: World Lock
     FEATURE: Show settlement/industry current supplies next to required settlement
     UI: New Icons
     UI: Mobile
 LOW PRIORITY
+    BALANCE: Slow down players in early game
     BUG: White nations are invisible
     FEATURE: Record and display last winner of world
     MISC: account migration
