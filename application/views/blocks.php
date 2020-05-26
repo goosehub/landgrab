@@ -110,16 +110,26 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_flag">National Flag:</label>
+                    <label for="input_nation_color">National Cash Crop <small class="text-danger">[Permanent]</small>:</label>
                 </div>
-                <div class="col-md-2">
-                    <a href="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>" target="_blank">
-                        <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <input type="hidden" name="existing_nation_flag" value="<?php echo $account['nation_flag']; ?>">
-                    <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
+                <div class="col-md-8">
+                    <select class="form-control" id="cash_crop_key" name="cash_crop_key" value="<?= $account['cash_crop_key']; ?>">
+                        <option value="<?= COFFEE_KEY; ?>" <?php if ($account['cash_crop_key'] == COFFEE_KEY) { echo 'selected'; } ?>>
+                            Coffee
+                        </option>
+                        <option value="<?= TEA_KEY; ?>" <?php if ($account['cash_crop_key'] == TEA_KEY) { echo 'selected'; } ?>>
+                            Tea
+                        </option>
+                        <option value="<?= CANNABIS_KEY; ?>" <?php if ($account['cash_crop_key'] == CANNABIS_KEY) { echo 'selected'; } ?>>
+                            Cannabis
+                        </option>
+                        <option value="<?= ALCOHOLS_KEY; ?>" <?php if ($account['cash_crop_key'] == ALCOHOLS_KEY) { echo 'selected'; } ?>>
+                            Alcohols
+                        </option>
+                        <option value="<?= TOBACCO_KEY; ?>" <?php if ($account['cash_crop_key'] == TOBACCO_KEY) { echo 'selected'; } ?>>
+                            Tobacco
+                        </option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -130,6 +140,22 @@
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="jscolor color_input form-control" id="nation_color" name="nation_color" value="<?php echo $account['color']; ?>">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_nation_flag">National Flag:</label>
+                </div>
+                <div class="col-md-2">
+                    <a href="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>" target="_blank">
+                        <img id="account_nation_flag_image" src="<?=base_url()?>uploads/<?php echo $account['nation_flag']; ?>"/>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <input type="hidden" name="existing_nation_flag" value="<?php echo $account['nation_flag']; ?>">
+                    <input type="file" class="form-control" id="nation_flag" name="nation_flag" value="<?php echo $account['nation_flag']; ?>">
                 </div>
             </div>
         </div>
@@ -150,9 +176,15 @@
             </div>
         </div>
         <hr>
-        <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update National Charter</button>
-        <br> <br>
-        <a class="logout_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-8">
+                <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update National Charter</button>
+                <br> <br>
+                <a class="logout_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
+            </div>
+        </div>
     </form>
 </div>
 <?php } ?>

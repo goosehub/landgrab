@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `leader_portrait` varchar(256) NOT NULL,
   `color` varchar(8) NOT NULL,
   -- Government Settings
+  `cash_crop_key` int(10) UNSIGNED NULL,
   `power_structure` int(10) UNSIGNED NULL, -- Democracy, Oligarchy, Autocracy, Anarchy
   `tax_rate` int(10) UNSIGNED NOT NULL,
   `ideology` int(10) UNSIGNED NULL, -- Socialism, Free Market
@@ -589,17 +590,17 @@ INSERT INTO `settlement` (
 (19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 2, 3
+  10, '', 25, 1, 3
 ),
 (20, 'Alcohol', 'alcohol', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 2, 3
+  10, '', 26, 1, 3
 ),
 (21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 3, 3
+  10, '', 27, 1, 3
 );
 
 DROP TABLE IF EXISTS `industry`;

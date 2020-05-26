@@ -138,6 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             'nation_name' => $nation_name,
             'nation_flag' => $nation_flag,
             'leader_portrait' => $leader_portrait,
+            'cash_crop_key' => $this->random_cash_crop_key(),
             'power_structure' => DEFAULT_POWER_STRUCTURE,
             'tax_rate' => DEFAULT_TAX_RATE,
             'ideology' => DEFAULT_IDEOLOGY,
@@ -157,6 +158,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->create_supply_lookup($account_id);
 
         return $account_id;
+    }
+    function random_cash_crop_key() {
+        $items = [
+            COFFEE_KEY,
+            TEA_KEY,
+            CANNABIS_KEY,
+            ALCOHOLS_KEY,
+            TOBACCO_KEY,
+        ];
+        return $items[array_rand($items)];
     }
     function create_supply_lookup($account_id) {
         $supplies = $this->get_all_supply();
@@ -195,20 +206,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->update('user', $data);
         return true;
     }
-    function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
+    function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key)
     {
-        $this->update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait);
+        $this->update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key);
         $this->update_account_tile_colors($account_id, $color);
         $this->update_account_unit_colors($account_id, $color);
         return true;
     }
-    function update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
+    function update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key)
     {
         $data = array(
             'color' => $color,
             'nation_name' => $nation_name,
             'nation_flag' => $nation_flag,
-            'leader_portrait' => $leader_portrait
+            'leader_portrait' => $leader_portrait,
+            'cash_crop_key' => $cash_crop_key,
         );
         $this->db->where('id', $account_id);
         $this->db->update('account', $data);

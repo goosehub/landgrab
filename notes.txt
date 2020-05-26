@@ -47,8 +47,10 @@ world gen
 
 HIGH PRIORITY
     FEATURE: Each nation only gets 1 type of cash crop
-    FEATURE: Win condition
+    TWEAK: Cannabis renamed to drugs
 MEDIUM PRIORITY
+    FEATURE: ask for name of tile on create township
+    FEATURE: Win condition
     BUG: White nations are invisible
     BUG: Disappearing units when server side validation or error hit
     UI: After submit trade, open view trade
@@ -57,13 +59,13 @@ MEDIUM PRIORITY
     FEATURE: National cash crop, to encourage trading
     FEATURE: Multi World generation
     FEATURE: Show settlement/industry current supplies next to required settlement
+    TWEAK: number formatting in supplies
 LOW PRIORITY
     FEATURE: Record and display last winner
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow
     PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
     MISC: account migration
-    TWEAK: number formatting
     FEATURE: show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
@@ -79,7 +81,6 @@ NO PRIORITY
     SETTLEMENT: national park
     min tax rates
     world backup
-    ask for name of tile on create township
     abstract market table per world
     Conceal units except for allies and naval
     shortages more clear

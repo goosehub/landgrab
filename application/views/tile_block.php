@@ -98,7 +98,7 @@
             <div class="col-md-6 well">
                 <p class="text-center">
                     <strong class="text-action">
-                        Make this the Capitol of your new nation!
+                        Start your new nation here!
                     </strong>
                 </p>
             </div>

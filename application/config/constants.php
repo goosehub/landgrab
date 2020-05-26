@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // Debug
 define('ALLOW_TERRAIN_UPDATE', false);
 define('DEBUG_SHOW_TILE_ID', false);
-define('DEBUG_SHOW_RESOURCES', true);
+define('DEBUG_SHOW_RESOURCES', false);
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
@@ -58,7 +58,7 @@ DEFINE('AEROSPACE_BONUS', 10);
 DEFINE('ENTERTAINMENT_BONUS', 30);
 DEFINE('FINANCIAL_BONUS', 30);
 // Laws
-define('DEMOCRACY_SUPPORT_REGEN', 1);
+define('DEMOCRACY_SUPPORT_REGEN', 2);
 define('OLIGARCHY_SUPPORT_REGEN', 4);
 define('AUTOCRACY_SUPPORT_REGEN', 5);
 define('MAX_TAX_RATE', 50);
