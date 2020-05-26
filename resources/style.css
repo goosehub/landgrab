@@ -461,6 +461,12 @@ img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
 .terrain_value {
   font-weight: bold;
 }
+.selection_parent {
+  width: 50%;
+}
+.establish_parent {
+  width: 50%;
+}
 
 /* Chat */
 #chat_parent {

@@ -135,14 +135,19 @@
             <div id="settlement_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-primary">
+                        <div class="selection_parent text-primary pull-left">
                             <img id="settlement_selection_icon_preview" src=""/>
                             <strong id="select_settlement_header"></strong>
-                            <button id="set_settlement_button" class="btn btn-lg btn-action pull-right">
+                        </div>
+                        <div id="settlement_establish_parent" class="establish_parent pull-right">
+                            <input type="tile_name" id="town_tile_name_input" placeholder="Town Name" class="form-control" style="display: none;"/>
+                            <br>
+                            <button id="set_settlement_button" class="btn btn-action form-control">
                                 Establish
                                 <span class="fa fa-industry"></span>
                             </button>
                         </div>
+                        <div class="clearfix"></div>
                         <div style="display: none;">
                             <label class="select_settlement_label">Classification:</label>
                             <span id="select_settlement_type" class="text-primary"></span>
@@ -208,10 +213,12 @@
             <div id="industry_extended_info" class="well">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-primary">
+                        <div class="selection_parent text-primary pull-left">
                             <img id="industry_selection_icon_preview" src=""/>
                             <strong id="select_industry_header"></strong>
-                            <button id="set_industry_button" class="btn btn-lg btn-action pull-right">
+                        </div>
+                        <div class="establish_parent pull-right">
+                            <button id="set_industry_button" class="btn btn-action">
                                 Establish
                                 <span class="fa fa-city"></span>
                             </button>

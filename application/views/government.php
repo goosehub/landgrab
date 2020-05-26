@@ -283,13 +283,13 @@
                         </div>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                         <div class="col-md-12">
-                            <span id="diverse_diet_population_bonus" class="text-success"></span>X Diverse Diet Population Bonus
+                            <span id="diverse_diet_population_bonus" class="text-success"></span>X Diverse Diet Bonus
                             <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth<br>2 Types: 2X Population Growth<br>3 Types: 3X Population Growth<br>4 Types: 4X Population Growth<br>5 Types: 5X Population Growth', 'bottom', ''); ?>
                         </div>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
                         <div class="col-md-12">
-                            <span id="cash_crops_support_bonus" class="text-danger"></span> Luxury Support Bonus
+                            <span id="cash_crops_support_bonus" class="text-danger"></span> Luxury Bonus
                             <?= generate_popover('Luxury Support Bonus', '
                                 1 Types: +1 Support/Minute<br>
                                 2 Types: +2 Support/Minute<br>

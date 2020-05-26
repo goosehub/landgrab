@@ -437,12 +437,12 @@
     function update_supplies(supplies) {
       Object.keys(supplies).forEach(function(key) {
         let supply = supplies[key];
-        $('#menu_supply_' + supply['slug']).html(supply['amount']);
-        $('#government_supply_' + supply['supply_key']).html(supply['amount']).removeClass('text-danger');
+        $('#menu_supply_' + supply['slug']).html(format_number(supply['amount']));
+        $('#government_supply_' + supply['supply_key']).html(format_number(supply['amount'])).removeClass('text-danger');
         if (supply['amount'] < 0) {
           $('#government_supply_' + supply['supply_key']).addClass('text-danger');
         }
-        $('.our_trade_supply_current_' + supply['slug']).html(supply['amount']);
+        $('.our_trade_supply_current_' + supply['slug']).html(format_number(supply['amount']));
         $('#our_trade_supply_offer_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
         let current_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).val());
         let max_value = parseInt($('#our_trade_supply_offer_' + supply['slug']).prop('max'));

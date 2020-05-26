@@ -382,6 +382,7 @@ class Game extends CI_Controller {
         }
         $settlement_key = $this->input->post('settlement_key');
         $tile_id = $this->input->post('tile_id');
+        $tile_name = $this->input->post('tile_name');
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $account = $this->user_model->this_account($tile['world_key']);
         $settlement = $this->game_model->get_settlement_from_state($settlement_key);
@@ -406,7 +407,7 @@ class Game extends CI_Controller {
         if ($this->game_model->tile_is_township($tile['settlement_key']) && $settlement_key < $tile['settlement_key']) {
             $this->game_model->update_tile_industry($tile_id, null);
         }
-        $this->game_model->update_tile_settlement($tile_id, $settlement_key);
+        $this->game_model->update_tile_settlement($tile_id, $settlement_key, $tile_name);
         $tile = $this->game_model->get_tile_by_id($tile_id);
         api_response($tile);
     }

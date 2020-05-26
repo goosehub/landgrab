@@ -31,6 +31,7 @@
         settlement_select();
         industry_select();
         enlist_select();
+        tile_town_name(current_tile.settlement_key);
     }
     function tile_name()
     {
@@ -234,10 +235,10 @@
             $('#settlement_selection_icon_preview').prop('src', `${base_url}resources/icons/settlements/${preview_settlement_key}.png`);
             $('.preview_settlement_button.btn-action').removeClass('btn-action').addClass('btn-default');
             $('.preview_settlement_button[data-id=' + current_tile.settlement_key + ']').removeClass('btn-default').addClass('btn-action');
-            $('#set_settlement_button').hide();
+            $('#settlement_establish_parent').hide();
             $('#set_settlement_button').removeClass('disabled');
             if (current_tile.settlement_key != preview_settlement_key) {
-                $('#set_settlement_button').show();
+                $('#settlement_establish_parent').show();
             }
             if (!settlement_allowed_on_this_tile(preview_settlement_key)) {
                 $('#set_settlement_button').addClass('disabled');
@@ -254,7 +255,7 @@
             $('#industry_selection_icon_preview').prop('src', `${base_url}resources/icons/industries/${preview_industry_key}.png`);
             $('.preview_industry_button.btn-action').removeClass('btn-action').addClass('btn-default');
             $('.preview_industry_button[data-id=' + current_tile.industry_key + ']').removeClass('btn-default').addClass('btn-action');
-            $('#set_industry_button').hide();
+            $('#set_industry_button').hide().val('');
             $('#set_industry_button').removeClass('disabled');
             if (current_tile.industry_key != preview_industry_key) {
                 $('#set_industry_button').show();
@@ -383,7 +384,15 @@
         if (settlement.output_supply_amount > 1) {
             output = settlement.output_supply_amount + ' ' + output;
         }
+        tile_town_name(settlement_key);
         $('#select_settlement_output').html(output);
+    }
+    function tile_town_name(settlement_key) {
+        $('#town_tile_name_input').val(current_tile.tile_name);
+        $('#town_tile_name_input').hide();
+        if (settlement_key == town_key) {
+            $('#town_tile_name_input').show();
+        }
     }
     function render_industry_extended(industry_key) {
         $('#industry_extended_info').hide();

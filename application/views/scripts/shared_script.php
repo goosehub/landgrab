@@ -2,6 +2,10 @@
     activate_bootstrap_popovers();
     extend_date();
 
+    function format_number(number) {
+        return parseInt(number).toLocaleString('en-US');
+    }
+
     function extend_date() {
         Date.prototype.addHours = function(h) {
             this.setTime(this.getTime() + (h*60*60*1000));

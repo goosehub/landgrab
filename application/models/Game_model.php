@@ -195,10 +195,12 @@ Class game_model extends CI_Model
 		$this->db->where('id', $tile_id);
 		$this->db->update('tile', $data);
 	}
-	function update_tile_settlement($tile_id, $settlement_key)
+	function update_tile_settlement($tile_id, $settlement_key, $tile_name)
 	{
+		// dd($tile_name);
 		$data = array(
 			'settlement_key' => $settlement_key,
+			'tile_name' => $tile_name,
 		);
 		if ($settlement_key == TOWN_KEY) {
 			$data['population'] = $this->settlements[$settlement_key - 1]['base_population'];

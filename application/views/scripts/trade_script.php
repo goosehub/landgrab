@@ -225,7 +225,7 @@
 		for (let key in partner_supplies) {
 			let supply = partner_supplies[key];
 			$('.view_trade_supplies_of_partner .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
-			$('#view_partner_trade_supply_proposal_' + supply.supply_key).html(supply.amount);
+			$('#view_partner_trade_supply_proposal_' + supply.supply_key).html(format_number(supply.amount));
 		}
 	}
 
@@ -235,7 +235,7 @@
 		for (let key in own_supplies) {
 			let supply = own_supplies[key];
 			$('.view_trade_supplies_of_own .view_trade_supply_parent[data-id="' + supply.supply_key + '"').show();
-			$('#view_our_trade_supply_offer_' + supply.supply_key).html(supply.amount);
+			$('#view_our_trade_supply_offer_' + supply.supply_key).html(format_number(supply.amount));
 		}
 	}
 
@@ -325,7 +325,7 @@
     function update_partner_supplies_new_trade() {
       Object.keys(trade_partner.supplies).forEach(function(key) {
         let supply = trade_partner.supplies[key];
-        $('.partner_trade_supply_current_' + supply['slug']).html(supply['amount']);
+        $('.partner_trade_supply_current_' + supply['slug']).html(format_number(supply['amount']));
         $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
       });
     }

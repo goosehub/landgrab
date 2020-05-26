@@ -4,7 +4,9 @@
 
 New Mechanic: Each nation is only allowed 1 type of cash crop
 Resource frequency tweaks, still 100 total per map
+Rename Alcohol to Wine
 Pharmaceuticals requires professors
+Option to provide a name when creating a town
 Numerous minor fixes and tweaks
 
 ==========================================================================================
@@ -47,10 +49,8 @@ world gen
 ==========================================================================================
 
 HIGH PRIORITY
-    FEATURE: ask for name of tile on create township
 MEDIUM PRIORITY
     FEATURE: Win condition
-    BUG: White nations are invisible
     BUG: Disappearing units when server side validation or error hit
     UI: After submit trade, open view trade
     BUG: Default toggle active states on first visit
@@ -58,8 +58,9 @@ MEDIUM PRIORITY
     FEATURE: National cash crop, to encourage trading
     FEATURE: Multi World generation
     FEATURE: Show settlement/industry current supplies next to required settlement
-    TWEAK: number formatting in supplies
+    UI: Mobile
 LOW PRIORITY
+    BUG: White nations are invisible
     FEATURE: Record and display last winner
     MECHANIC: space win condition, custom industry
     PERFORMANCE: grow_population is slow
