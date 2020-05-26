@@ -24,6 +24,9 @@ loading();
   // Show register block rest of the time
   // $('#register_block').show();
 <?php } ?>
+<?php if (isset($_GET['after_first_claim'])) { ?>
+    open_government_block();
+<?php } ?>
 
 // AB testing
 coin = (Math.floor(Math.random() * 2) == 0);
@@ -137,15 +140,7 @@ function set_corruption() {
     }
 }
 
-
-// 
-// Center block hide and show logic
-// 
-
-$('.exit_center_block').click(function(){
-  $('.center_block').hide();
-});
-$('.government_dropdown').click(function(){
+function open_government_block() {
     $('#input_power_structure').val(account.power_structure).trigger('change');
     $('#input_tax_rate').val(account.tax_rate).trigger('change');
     if (account.ideology == 1) {
@@ -157,6 +152,17 @@ $('.government_dropdown').click(function(){
     unhighlight_all_squares();
     $('.center_block').hide();
     $('#government_block').fadeIn();
+}
+
+// 
+// Center block hide and show logic
+// 
+
+$('.exit_center_block').click(function(){
+  $('.center_block').hide();
+});
+$('.government_dropdown').click(function(){
+    open_government_block();
 });
 $('.diplomacy_dropdown').click(function(){
     unhighlight_all_squares();

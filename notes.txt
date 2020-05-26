@@ -136,45 +136,31 @@ World Generation and Victory
     world gen when all worlds are locked
     world reset when world is won, display last winner
 
-Tutorial Todo List
-    Explore the worlld
-        Use all 5 Toggles, explain terrain
-    The Start Of A Nation
-        Select a tile to start your nation. If available, select somewhere unclaimed.
-    Start your people
-        Establish a town
+Tutorial
+    Become A Leader
+        Create an account
+    Explore The World
+        Use all 5 Toggles, explain terrain, what to look for, basic mechanics
     Start your nation
-        Establish a capitol industry
-    Establishing a Charter
-        Update your nation
-    Change The Law
-        Click on the Government menu. Set a Government, Tax Rate, and Ideology. Autocracy is great for early quick expansion. Keep your tax rates low so your support will regenerate quicker. Free Markets are a safer bet for new players.
+        Claim first land
+    Form Your government
+        Set a Government, Tax Rate, and Ideology. Autocracy is great for early quick expansion. Keep your tax rates low so your support will regenerate quicker. Free Markets are a safer bet for new players.
+    Manifest Destiny
+        Explain units, moving, capturing land, enlisting
     Feed the Masses
         Start a farm
     Power The People
         Have a source of energy
-    Seize the Mean of Production
-        Gather Timber, Fiber, and Ore, and create a manufacturing industry
-    Manifest Destiny
-        Capture new land. Toggle the unit display. Drag the unit on your Capitol unto an adjacent land square to capture it. This, and other unit actions, use up your political support, which replenishes every hour.
-    Honest Work
-        Assign a territory to farm.
-    Sister Cities
+    Grow Your Empire
         Create a new town.
-    Industry
+    Industrialize
         Have your second city assigned an Industry. Obtaining and producing the right supplies is key to success.
-    Enlist
-        Enlist additional units. You may spawn them on your Capitol, or on any Military Industry settlement. Each has a Rock Paper Scissors style advantage on each other.
-    Diplomacy
+    Meet Great Leaders
+        Click on the leaders tab
+    Conduct Diplomacy
         Send a diplomatic request. Trade supplies for mutual benefit.
-    Urban Life
-        Establish a city
-    Metropolitan
-        Establish a metro
-    My First Billion
-        Become a billionaire
-    It's Lonley at the Top
-        Reach #1 on the leaderboard for territories
+    The World Is Yours
+        Explain the win condition, final tips
 
 Attacks
     Spy (Cash) = reveals all units of other player

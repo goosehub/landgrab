@@ -281,8 +281,8 @@ class User extends CI_Controller {
         }
 
         // Redirect to game
-        $redirect_string = $redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
-        redirect('world/' . $world_key . $redirect_string, 'refresh');
+        $redirect_string = $redirect_lng ? '&lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
+        redirect('world/' . $world_key . '?after_first_claim=true' . $redirect_string, 'refresh');
     }
 
     public function update_password()
