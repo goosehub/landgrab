@@ -206,22 +206,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->update('user', $data);
         return true;
     }
-    function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key)
+    function update_account_info($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
     {
-        $this->update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key);
+        $this->update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait);
         $this->update_account_tile_colors($account_id, $color);
         $this->update_account_unit_colors($account_id, $color);
         return true;
     }
-    function update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key)
+    function update_account($account_id, $color, $nation_name, $nation_flag, $leader_portrait)
     {
         $data = array(
             'color' => $color,
             'nation_name' => $nation_name,
             'nation_flag' => $nation_flag,
             'leader_portrait' => $leader_portrait,
-            'cash_crop_key' => $cash_crop_key,
         );
+        $this->db->where('id', $account_id);
+        $this->db->update('account', $data);
+    }
+    function update_account_cash_crop_key($account_id, $cash_crop_key)
+    {
+        // Redundant but careful
+        $account_has_tiles = $this->game_model->get_supply_by_account($account_id, TILES_KEY);
+        if ($account_has_tiles['amount'] > 0) {
+            return;
+        }
+        $data['cash_crop_key'] = $cash_crop_key;
         $this->db->where('id', $account_id);
         $this->db->update('account', $data);
     }

@@ -160,7 +160,7 @@ class User extends CI_Controller {
             $color = random_hex_color();
 
             // Default these values
-            $nation_name = $username . ' Nation';
+            $nation_name = $username . ' nation';
             $nation_flag = 'default_nation_flag.png';
             $leader_portrait = 'default_leader_portrait.png';
 
@@ -256,6 +256,8 @@ class User extends CI_Controller {
         $nation_color = $this->input->post('nation_color');
         $cash_crop_key = $this->input->post('cash_crop_key');
         $nation_name = $this->input->post('nation_name');
+        $redirect_lng = $this->input->post('redirect_lng');
+        $redirect_lat = $this->input->post('redirect_lat');
 
         // Add hash to color if needed
         if (0 !== strpos($nation_color, '#')) {
@@ -279,7 +281,8 @@ class User extends CI_Controller {
         }
 
         // Redirect to game
-        redirect('world/' . $world_key, 'refresh');
+        $redirect_string = $redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
+        redirect('world/' . $world_key . $redirect_string, 'refresh');
     }
 
     public function update_password()

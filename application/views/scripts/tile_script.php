@@ -1,7 +1,6 @@
 <script>
 
     handle_edit_tile_meta();
-    handle_first_claim();
     handle_set_settlement();
     handle_set_industry();
     handle_exit_tile_block()
@@ -93,22 +92,6 @@
             $('#edit_tile_desc, #tile_desc').show();
             $('#tile_desc_input, #submit_tile_desc').hide();
         });        
-    }
-
-    function handle_first_claim() {
-        $('#do_first_claim').click(function(){
-            let data = {
-                world_key: current_tile.world_key,
-                lat: current_tile.lat,
-                lng: current_tile.lng,
-            };
-            ajax_post('game/do_first_claim', data, function(response) {
-                get_map_update();
-                account['supplies']['tiles']['amount'] = 1;
-                render_tile(current_tile.lat, current_tile.lng);
-                place_first_unit();
-            });
-        });
     }
 
     function place_first_unit() {

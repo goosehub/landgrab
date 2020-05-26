@@ -257,11 +257,13 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
+        $cash_crop_key = $this->input->post('cash_crop_key');
         $tile = $this->game_model->get_tile($lat, $lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key']);
         if (!$this->first_claim_validation($account, $tile)) {
             api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
         }
+        $this->user_model->update_account_cash_crop_key($account['id'], $cash_crop_key);
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);

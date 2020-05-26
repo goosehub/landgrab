@@ -320,7 +320,12 @@
             $('#tile_first_claim_invalid_township').show();
         }
         else if (account && account['supplies']['tiles']['amount'] < 1) {
-            $('#tile_first_claim').show();
+            // $('#tile_first_claim').show();
+            $('.center_block').hide();
+            $('#account_update_block').fadeIn();
+            $('#update_nation_button').html('Start your nation here');
+            $('#cash_crop_key_parent').show();
+            $('#account_update_form').data('first-claim', true);
         }
     }
     function handle_select_settlement() {

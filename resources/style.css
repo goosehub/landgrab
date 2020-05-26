@@ -295,6 +295,10 @@ html, body {
   left: 25%;
   width: 50%;
 }
+.center_block_extra_small_right {
+  left: 60%;
+  width: 30%;
+}
 .center_block.center_block_extra_small {
   left: 33%;
   width: 33%;

@@ -9,6 +9,39 @@
     }
 
     handle_pass_new_laws();
+    handle_update_nation();
+
+    function handle_update_nation() {
+      $('#update_nation_button').click(function(){
+        if ($('#account_update_form').data('first-claim')) {
+          do_first_claim();
+        }
+        else {
+          $('#redirect_lng').val(false);
+          $('#redirect_lat').val(false);
+          $('#account_update_form').submit();
+        }
+      });
+    }
+    function do_first_claim() {
+      $('#confirm_creating_nation').show();
+      let data = {
+        world_key: current_tile.world_key,
+        lat: current_tile.lat,
+        lng: current_tile.lng,
+        cash_crop_key: $('#cash_crop_key').val(),
+      };
+      ajax_post('game/do_first_claim', data, function(response) {
+        $('#redirect_lng').val(current_tile.lng);
+        $('#redirect_lat').val(current_tile.lat);
+        $('#account_update_form').submit();
+        return;
+        // get_map_update();
+        // account['supplies']['tiles']['amount'] = 1;
+        // render_tile(current_tile.lat, current_tile.lng);
+        // place_first_unit();
+      });
+    }
 
     function handle_pass_new_laws() {
         $('#laws_passed_confirm_icon').fadeTo(1, 0);

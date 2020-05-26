@@ -171,6 +171,9 @@ $('.open_terms_block').click(function(){
 $('.user_button').click(function(){
     $('.center_block').hide();
     $('#account_update_block').fadeIn();
+    $('#account_update_form').data('first-claim', false);
+    $('#update_nation_button').html('Update National Charter');
+    $('#cash_crop_key_parent').hide();
 });
 $('.login_button').click(function(){
     $('.center_block').hide();

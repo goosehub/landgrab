@@ -86,7 +86,7 @@
 
 <!-- Account Update -->
 <?php if ($account) { ?>
-<div id="account_update_block" class="center_block center_block_small">
+<div id="account_update_block" class="center_block center_block_extra_small_right">
     <strong>National Charter</strong>
 
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
@@ -95,41 +95,17 @@
     <hr>
 
     <!-- Form -->
-    <?php echo form_open_multipart('user/update_account_info'); ?>
+    <form action="<?=base_url()?>user/update_account_info" enctype="multipart/form-data" method="post" accept-charset="utf-8" id="account_update_form" data-first-claim="false">
         <input type="hidden" name="world_key" value="<?php echo $world['id']; ?>">
+        <input type="hidden" name="redirect_lng" id="redirect_lng" value="">
+        <input type="hidden" name="redirect_lat" id="redirect_lat" value="">
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_name">Nation Name:</label>
+                    <label for="input_nation_name">Nation Name: <small class="text-danger">*</small></label>
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="nation_name" name="nation_name" value="<?php echo $account['nation_name']; ?>">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="input_nation_color">National Cash Crop <small class="text-danger">[Permanent]</small>:</label>
-                </div>
-                <div class="col-md-8">
-                    <select class="form-control" id="cash_crop_key" name="cash_crop_key" value="<?= $account['cash_crop_key']; ?>">
-                        <option value="<?= COFFEE_KEY; ?>" <?php if ($account['cash_crop_key'] == COFFEE_KEY) { echo 'selected'; } ?>>
-                            Coffee
-                        </option>
-                        <option value="<?= TEA_KEY; ?>" <?php if ($account['cash_crop_key'] == TEA_KEY) { echo 'selected'; } ?>>
-                            Tea
-                        </option>
-                        <option value="<?= CANNABIS_KEY; ?>" <?php if ($account['cash_crop_key'] == CANNABIS_KEY) { echo 'selected'; } ?>>
-                            Cannabis
-                        </option>
-                        <option value="<?= ALCOHOLS_KEY; ?>" <?php if ($account['cash_crop_key'] == ALCOHOLS_KEY) { echo 'selected'; } ?>>
-                            Alcohols
-                        </option>
-                        <option value="<?= TOBACCO_KEY; ?>" <?php if ($account['cash_crop_key'] == TOBACCO_KEY) { echo 'selected'; } ?>>
-                            Tobacco
-                        </option>
-                    </select>
                 </div>
             </div>
         </div>
@@ -175,14 +151,43 @@
                 </div>
             </div>
         </div>
+        <div class="form-group" id="cash_crop_key_parent">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="input_nation_color">Cash Crop: <small class="text-danger">[Permanent]</small></label>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control" id="cash_crop_key" name="cash_crop_key" value="<?= $account['cash_crop_key']; ?>">
+                        <option value="<?= COFFEE_KEY; ?>" <?php if ($account['cash_crop_key'] == COFFEE_KEY) { echo 'selected'; } ?>>
+                            Coffee
+                        </option>
+                        <option value="<?= TEA_KEY; ?>" <?php if ($account['cash_crop_key'] == TEA_KEY) { echo 'selected'; } ?>>
+                            Tea
+                        </option>
+                        <option value="<?= CANNABIS_KEY; ?>" <?php if ($account['cash_crop_key'] == CANNABIS_KEY) { echo 'selected'; } ?>>
+                            Cannabis
+                        </option>
+                        <option value="<?= ALCOHOLS_KEY; ?>" <?php if ($account['cash_crop_key'] == ALCOHOLS_KEY) { echo 'selected'; } ?>>
+                            Alcohols
+                        </option>
+                        <option value="<?= TOBACCO_KEY; ?>" <?php if ($account['cash_crop_key'] == TOBACCO_KEY) { echo 'selected'; } ?>>
+                            Tobacco
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <hr>
         <div class="row">
             <div class="col-md-4">
             </div>
             <div class="col-md-8">
-                <button id="update_nation_button" type="submit" class="btn btn-success form-control">Update National Charter</button>
+                <button id="update_nation_button" type="button" class="btn btn-action form-control"></button>
+                <span id="confirm_creating_nation" class="text-success" style="display: none;">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Creating your nation now!
+                </span>
                 <br> <br>
-                <a class="logout_button btn btn-sm btn-danger pull-right" href="<?=base_url()?>user/logout">Logout</a>
             </div>
         </div>
     </form>

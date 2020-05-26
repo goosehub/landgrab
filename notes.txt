@@ -48,8 +48,8 @@ world gen
 HIGH PRIORITY
     FEATURE: Each nation only gets 1 type of cash crop
     TWEAK: Cannabis renamed to drugs
-MEDIUM PRIORITY
     FEATURE: ask for name of tile on create township
+MEDIUM PRIORITY
     FEATURE: Win condition
     BUG: White nations are invisible
     BUG: Disappearing units when server side validation or error hit
@@ -71,6 +71,7 @@ LOW PRIORITY
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
+    TWEAK: fonts (Especially buttons)
 Near Updates
     World lock
     Improved UI/New Icons
@@ -92,7 +93,6 @@ NO PRIORITY
     MECHANIC: pandemic
     Reject active trade requests when war starts
     Being attacked UI
-    fonts
     notices when trade request accepted
     disable enlist options when not enough cash exists
     suffix on industry input selection preview
