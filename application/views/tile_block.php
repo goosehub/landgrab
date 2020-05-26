@@ -182,11 +182,14 @@
             <div id="settlement_select">
                 <div class="row">
                     <?php $current_category_id = 0;
+                    $item_in_cat_count = 0;
                     foreach ($this->settlements as $key => $settlement) {
                         if ($settlement['id'] == UNCLAIMED_KEY) {
                             continue;
                         }
+                        $item_in_cat_count++;
                         if ($current_category_id !== $settlement['category_id']) {
+                            $item_in_cat_count = 1;
                             $current_category_id = $settlement['category_id'];
                             ?>
                             <div class="col-md-3">
@@ -195,6 +198,9 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
+                        <?php if ($item_in_cat_count == 4 && $current_category_id != 1) { ?>
+                            <br>
+                        <?php } ?>
                         <button id="preview_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" data-output="<?php echo $settlement['output_supply_key']; ?>" class="preview_settlement_button btn btn-default">
                             <?php echo $settlement['label']; ?>
                             <img class="settlement_selection_icon" src="<?=base_url()?>resources/icons/settlements/<?php echo $settlement['id'] ?>.png"/>
@@ -223,6 +229,7 @@
                                 <span class="fa fa-city"></span>
                             </button>
                         </div>
+                        <div class="clearfix"></div>
                         <div id="select_industry_settlement_parent">
                             <label class="select_industry_label">Settlement:</label>
                             <span id="select_industry_settlement" class="text-primary"></span>
@@ -257,8 +264,11 @@
             <div id="industry_select">
                 <div class="row">
                     <?php $current_category_id = 0;
+                    $item_in_cat_count = 0;
                     foreach ($this->industries as $key => $industry) {
+                        $item_in_cat_count++;
                         if ($current_category_id !== $industry['category_id']) {
+                            $item_in_cat_count = 1;
                             $current_category_id = $industry['category_id'];
                             ?>
                             <div class="col-md-3">
@@ -267,6 +277,9 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
+                        <?php if ($item_in_cat_count == 4 && $current_category_id != 1) { ?>
+                            <br>
+                        <?php } ?>
                         <button id="preview_industry_as_<?php echo $industry['slug']; ?>" data-id="<?php echo $industry['id']; ?>" class="preview_industry_button btn btn-default">
                             <?php echo $industry['label']; ?>
                             <img class="industry_selection_icon" src="<?=base_url()?>resources/icons/industries/<?php echo $industry['id'] ?>.png"/>

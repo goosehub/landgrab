@@ -75,6 +75,10 @@ html, body {
 }
 .btn {
   border-radius: 0;
+  font-family: 'Itim';
+}
+.badge {
+  font-family: 'Roboto Mono';
 }
 .btn-round {
   border-radius: 10em;

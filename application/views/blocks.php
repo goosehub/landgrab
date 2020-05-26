@@ -102,7 +102,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_name">Nation Name: <small class="text-danger">*</small></label>
+                    <label for="input_nation_name">Nation Name:</label>
                 </div>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="nation_name" name="nation_name" value="<?php echo $account['nation_name']; ?>">
@@ -154,7 +154,8 @@
         <div class="form-group" id="cash_crop_key_parent">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="input_nation_color">Cash Crop: <small class="text-danger">[Permanent]</small></label>
+                    <?= generate_popover('National Cash Crop', 'Each nation can only produce one cash crop during the game and must trade for the rest', 'right', 'pull-right'); ?>
+                    <label for="input_nation_color">National Cash Crop:</label>
                 </div>
                 <div class="col-md-8">
                     <select class="form-control" id="cash_crop_key" name="cash_crop_key" value="<?= $account['cash_crop_key']; ?>">

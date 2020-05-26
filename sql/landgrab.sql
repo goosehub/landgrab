@@ -327,7 +327,7 @@ INSERT INTO `market_price` (`id`, `supply_key`, `amount`, `starting_price`,
   `min_increase`, `min_decrease`, `min_price`, `max_price`) VALUES
 -- Silver
 (1, 19, 1, 1, 
-  40, 3, 5,
+  45, 3, 5,
   1, 1, 1, 1000
 ),
 -- Gold

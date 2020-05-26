@@ -185,7 +185,7 @@
 	function render_messages_for_trade_received() {
 		$('#view_trade_your_reply').hide();
 		$('#view_trade_response_message').hide();
-		if (!parseInt(view_trade.trade_request.is_accepted) && !parseInt(view_trade.trade_request.is_rejected)) {
+		if (view_trade.trade_request.request_account_key != account.id && !parseInt(view_trade.trade_request.is_accepted) && !parseInt(view_trade.trade_request.is_rejected)) {
 			$('#view_trade_your_reply').show();
 		}
 		else if (view_trade.trade_request.response_message) {
@@ -251,6 +251,7 @@
 		ajax_post('game/send_trade_request', data, function(response) {
 			$('.center_block').hide();
 			reset_new_trade_form();
+			open_trade_received(response.trade_request_key, trade_partner.id);
 		});
 	}
 

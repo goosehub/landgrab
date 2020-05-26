@@ -160,7 +160,7 @@ class User extends CI_Controller {
             $color = random_hex_color();
 
             // Default these values
-            $nation_name = $username . ' nation';
+            $nation_name = 'The ' . $username . ' Nation';
             $nation_flag = 'default_nation_flag.png';
             $leader_portrait = 'default_leader_portrait.png';
 

@@ -33,13 +33,16 @@
                 <span class="current_treaty"></span>
             </p>
 
-            <p class="lead">Proposed Treaty</p>
-            <select class="form-control" id="input_treaty" name="input_treaty">
+            <p class="lead">
+                Proposed Treaty:
+                <span class="text-success">Peace</span>
+            </p>
+            <!-- <select class="form-control" id="input_treaty" name="input_treaty">
                 <option value="2">Peace</option>
-                <!-- <option value="3">Passage</option> -->
-            </select>
+                <option value="3">Passage</option>
+            </select> -->
 
-            <p class="lead">Message</p>
+            <p class="lead">Proposal Message</p>
             <textarea class="form-control" id="input_trade_message" name="input_trade_message"></textarea>
             
             <hr>

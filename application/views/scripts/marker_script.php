@@ -72,68 +72,61 @@
   }
 
   function use_toggle_cookies() {
-    if (getCookie('border_toggle') != null) {
-      border_toggle = getCookie('border_toggle') === 'true' ? true : false;
-      if (border_toggle) {
-        $('#border_toggle').removeClass('btn-warning').addClass('btn-success');
-      }
-      else {
-        $('#border_toggle').removeClass('btn-success').addClass('btn-warning');
-      }
+    border_toggle = getCookie('border_toggle') == null ? border_toggle : (getCookie('border_toggle') === 'true' ? true : false);
+    if (border_toggle) {
+      $('#border_toggle').removeClass('btn-warning').addClass('btn-success');
     }
-    if (getCookie('resource_toggle') != null) {
-      resource_toggle = getCookie('resource_toggle') === 'true' ? true : false;
-      if (resource_toggle) {
-        $('#resource_toggle').removeClass('btn-primary').addClass('btn-success');
-      }
-      else {
-        $('#resource_toggle').removeClass('btn-success').addClass('btn-primary');
-      }
+    else {
+      $('#border_toggle').removeClass('btn-success').addClass('btn-warning');
     }
-    if (getCookie('settlement_toggle') != null) {
-      settlement_toggle = getCookie('settlement_toggle') === 'true' ? true : false;
-      if (settlement_toggle) {
-        $('#settlement_toggle').removeClass('btn-primary').addClass('btn-success');
-      }
-      else {
-        $('#settlement_toggle').removeClass('btn-success').addClass('btn-primary');
-      }
+
+    resource_toggle = getCookie('resource_toggle') == null ? resource_toggle : (getCookie('resource_toggle') === 'true' ? true : false);
+    if (resource_toggle) {
+      $('#resource_toggle').removeClass('btn-primary').addClass('btn-success');
     }
-    if (getCookie('township_and_industry_toggle') != null) {
-      township_and_industry_toggle = getCookie('township_and_industry_toggle');
-      if (township_and_industry_toggle) {
-        township_and_industry_toggle = parseInt(township_and_industry_toggle);
-      }
-      else {
-        township_and_industry_toggle = 0;
-      }
-      if (township_and_industry_toggle == 0) {
-        $('#township_industry_toggle').removeClass('btn-warning').removeClass('btn-success').addClass('btn-primary');
-      }
-      if (township_and_industry_toggle == 1) {
-        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-warning').addClass('btn-success');
-      }
-      if (township_and_industry_toggle == 2) {
-        $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-success').addClass('btn-warning');
-      }
+    else {
+      $('#resource_toggle').removeClass('btn-success').addClass('btn-primary');
     }
-    if (getCookie('unit_toggle') != null) {
-      unit_toggle = getCookie('unit_toggle') === 'true' ? true : false;
-      if (unit_toggle) {
-        $('#unit_toggle').removeClass('btn-primary').addClass('btn-success');
-      }
-      else {
-        $('#unit_toggle').removeClass('btn-success').addClass('btn-primary');
-      }
+
+    settlement_toggle = getCookie('settlement_toggle') == null ? settlement_toggle : (getCookie('settlement_toggle') === 'true' ? true : false);
+    if (settlement_toggle) {
+      $('#settlement_toggle').removeClass('btn-primary').addClass('btn-success');
     }
-    if (getCookie('grid_toggle') != null) {
-      grid_toggle = getCookie('grid_toggle') === 'true' ? true : false;
-      if (grid_toggle) {
-        $('#grid_toggle').removeClass('btn-primary').addClass('btn-success');
-      }
-      else {
-        $('#grid_toggle').removeClass('btn-success').addClass('btn-primary');
-      }
+    else {
+      $('#settlement_toggle').removeClass('btn-success').addClass('btn-primary');
+    }
+
+    township_and_industry_toggle = getCookie('township_and_industry_toggle') == null ? township_and_industry_toggle : getCookie('township_and_industry_toggle');
+    if (township_and_industry_toggle) {
+      township_and_industry_toggle = parseInt(township_and_industry_toggle);
+    }
+    else {
+      township_and_industry_toggle = 0;
+    }
+    if (township_and_industry_toggle == 0) {
+      $('#township_industry_toggle').removeClass('btn-warning').removeClass('btn-success').addClass('btn-primary');
+    }
+    if (township_and_industry_toggle == 1) {
+      $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-warning').addClass('btn-success');
+    }
+    if (township_and_industry_toggle == 2) {
+      $('#township_industry_toggle').removeClass('btn-primary').removeClass('btn-success').addClass('btn-warning');
+    }
+
+    unit_toggle = getCookie('unit_toggle') == null ? unit_toggle : (getCookie('unit_toggle') === 'true' ? true : false);
+    if (unit_toggle) {
+      $('#unit_toggle').removeClass('btn-primary').addClass('btn-success');
+    }
+    else {
+      $('#unit_toggle').removeClass('btn-success').addClass('btn-primary');
+    }
+
+    grid_toggle = getCookie('grid_toggle') == null ? grid_toggle : (getCookie('grid_toggle') === 'true' ? true : false);
+    if (grid_toggle) {
+      $('#grid_toggle').removeClass('btn-primary').addClass('btn-success');
+    }
+    else {
+      $('#grid_toggle').removeClass('btn-success').addClass('btn-primary');
     }
   }
 

@@ -339,10 +339,10 @@
                         <div class="col-md-12">
                         </div>
                         <div class="col-md-6">
-                            <a class="sell_button btn btn-action form-control" data-id="<?= $supply['id'] ?>">
+                            <a class="sell_button btn btn-success form-control" data-id="<?= $supply['id'] ?>">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 Sell
-                                <span class="sell_button_confirm_icon text-success" data-id="<?= $supply['id'] ?>">
+                                <span class="sell_button_confirm_icon text-action" data-id="<?= $supply['id'] ?>">
                                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                 </span>
                             </a>

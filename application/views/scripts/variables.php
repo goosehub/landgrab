@@ -136,10 +136,9 @@
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
     let resource_toggle = <?= DEFAULT_RESOURCE_TOGGLE ? 'true' : 'false'; ?>;
     let settlement_toggle = <?= DEFAULT_SETTLEMENT_TOGGLE ? 'true' : 'false'; ?>;
-    let township_and_industry_toggle = <?= DEFAULT_TOWNSHIP_AND_INDUSTRY_TOGGLE ? 'true' : 'false'; ?>;
+    let township_and_industry_toggle = <?= DEFAULT_TOWNSHIP_AND_INDUSTRY_TOGGLE; ?>;
     let unit_toggle = <?= DEFAULT_UNIT_TOGGLE ? 'true' : 'false'; ?>;
     let grid_toggle = <?= DEFAULT_GRID_TOGGLE ? 'true' : 'false'; ?>;
-
 
     // Keys
     let keys = new Array();

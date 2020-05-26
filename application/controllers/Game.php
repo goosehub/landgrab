@@ -569,7 +569,7 @@ class Game extends CI_Controller {
         $trade_partner_key = $this->input->post('trade_partner_key');
         $world_key = $this->input->post('world_key');
         $message = $this->input->post('message');
-        $treaty_key = $this->input->post('treaty');
+        $treaty_key = $this->input->post('treaty') ? $this->input->post('treaty') : PEACE_KEY;
         $supplies_offered = json_decode($this->input->post('supplies_offered'));
         $supplies_demanded = json_decode($this->input->post('supplies_demanded'));
 
@@ -593,8 +593,8 @@ class Game extends CI_Controller {
         if (!$this->game_model->sufficient_supplies_to_send_trade_request($supplies_offered, $account['id'])) {
             api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
         }
-        $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
-        api_response();
+        $data['trade_request_key'] = $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
+        api_response($data);
     }
 
     public function accept_trade_request($trade_request_key)

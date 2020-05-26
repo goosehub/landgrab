@@ -39,12 +39,12 @@
             </p>
 
             <div id="view_trade_request_message">
-                <p class="lead text-primary">Request Message:</p>
+                <p class="lead text-primary">Proposal Message:</p>
                 <p id="request_message"></p>
             </div>
 
             <div id="view_trade_response_message">
-                <p class="lead text-primary">Response Message:</p>
+                <p class="lead text-primary">Reply Message:</p>
                 <p id="response_message"></p>
             </div>
 

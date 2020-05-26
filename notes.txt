@@ -1,84 +1,37 @@
 ==========================================================================================
-    Next Release Notes
-==========================================================================================
-
-New Mechanic: Each nation is only allowed 1 type of cash crop
-Resource frequency tweaks, still 100 total per map
-Rename Alcohol to Wine
-Pharmaceuticals requires professors
-Option to provide a name when creating a town
-Numerous minor fixes and tweaks
-
-==========================================================================================
     Notes
 ==========================================================================================
 
-world gen
-    world win conditions
-        Mars Colony
-            Metro
-            1000 Energy
-            100 Steel
-            100 Uranium
-            10 Copper
-            10 Zinc
-            10 Aluminum
-            10 Nickle
-            10 Gold
-            100 Chemicals
-            100 Electronics
-            100 Machines
-            100 Programmers
-            100 Engineers
-        Cultural
-            Metro
-            10,000 Cash Up Front
-            Influence
-            Culture
-        World Government
-            Metro
-            100,000K Population
-            2,000 tiles (100% size corruption)
-
-    world locked when no non-arctic squares are unclaimed
-    world gen when all worlds are locked
-    world reset when world is won, display last winner
+...
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-MEDIUM PRIORITY
     FEATURE: Win condition
+MEDIUM PRIORITY
     BUG: Disappearing units when server side validation or error hit
-    UI: After submit trade, open view trade
-    BUG: Default toggle active states on first visit
     TWEAK: Allow town to fail one time somehow
-    FEATURE: National cash crop, to encourage trading
-    FEATURE: Multi World generation
+    FEATURE: World Generation
+    FEATURE: World Lock
     FEATURE: Show settlement/industry current supplies next to required settlement
+    UI: New Icons
     UI: Mobile
 LOW PRIORITY
     BUG: White nations are invisible
-    FEATURE: Record and display last winner
-    MECHANIC: space win condition, custom industry
-    PERFORMANCE: grow_population is slow
-    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
+    FEATURE: Record and display last winner of world
     MISC: account migration
     FEATURE: show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
-    TWEAK: fonts (Especially buttons)
-Near Updates
-    World lock
-    Improved UI/New Icons
-    Mobile
-    Interactive Tutorial
-    New Treaty Ally/Right of Passage
+    UI: Interactive Tutorial
 NO PRIORITY
+    MECHANIC: New Treaty Ally/Right of Passage
+    PERFORMANCE: grow_population is slow
+    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
     SETTLEMENT: national park
     min tax rates
     world backup
@@ -106,22 +59,23 @@ NO PRIORITY
     Market graph
 
 ==========================================================================================
+    Next Release Notes
+==========================================================================================
+
+New Mechanic: Each nation is only allowed 1 type of cash crop
+Resource frequency tweaks, still 100 total per map
+Rename Alcohol to Wine
+Pharmaceuticals requires professors
+Option to provide a name when creating a town
+Font changes
+Number formatting
+Numerous minor fixes and tweaks
+
+==========================================================================================
     Code
 ==========================================================================================
 
 ...
-
-==========================================================================================
-    Mechanics
-==========================================================================================
-
-Unit Battle Logic
-    Infantry have 3/4 chance of victory against Airforce
-    Airforce have 3/4 chance of victory against Tanks
-    Tanks have 3/4 chance of victory against Infantry
-    All have 3/4 chance of victory against Navy
-    All have 3/4 chance of victory against Militia
-    Undefended tiles have 1/4 chance of spawning militia
 
 ==========================================================================================
     Icons Needed
@@ -153,6 +107,34 @@ Ore Mine
 ==========================================================================================
     Closet
 ==========================================================================================
+
+World Generation and Victory
+    world win conditions
+        Mars Colony
+            Metro
+            10,000 Cash
+            1,000 Energy
+            300 Steel
+            200 Chemicals
+            100 Engineers
+            10 Copper
+            10 Zinc
+            10 Aluminum
+            10 Nickle
+        Doomsday
+            Metro
+            10,000 Cash
+            1,000 Uranium
+            10 Engineers
+        World Government
+            Metro
+            10,000 Cash
+            2,000 tiles
+            100 influence
+            100 culture
+    world locked when no non-arctic squares are unclaimed
+    world gen when all worlds are locked
+    world reset when world is won, display last winner
 
 Tutorial Todo List
     Explore the worlld
@@ -193,10 +175,6 @@ Tutorial Todo List
         Become a billionaire
     It's Lonley at the Top
         Reach #1 on the leaderboard for territories
-
-Tagline
-    Economy, Diplomacy, Warfare
-    Harvest, Trade, and War
 
 Attacks
     Spy (Cash) = reveals all units of other player

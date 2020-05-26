@@ -605,6 +605,7 @@ Class game_model extends CI_Model
 		foreach ($supplies_demanded as $supply) {
 			$this->create_supply_account_trade_lookups($supply->supply_key, $receive_account_key, $trade_key, (int)$supply->amount);
 		}
+		return $trade_key;
 	}
 	function create_trade_request($request_account_key, $receive_account_key, $message, $treaty_key) {
 		$data = array(
