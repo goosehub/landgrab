@@ -1147,7 +1147,7 @@ Class cron_model extends CI_Model
 		$this->db->from('trade_request');
 		$this->db->where('is_accepted', false);
 		$this->db->where('is_rejected', false);
-		$this->db->where('trade_request.created <', date('Y-m-d H:i:s', time() - (TRADE_EXPIRE_HOURS) ));
+		$this->db->where('trade_request.created <', date('Y-m-d H:i:s', time() - (TRADE_EXPIRE_HOURS * 60 * 60) ));
 		$query = $this->db->get();
 		return $query->result_array();
 	}

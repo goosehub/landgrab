@@ -12,7 +12,7 @@ HIGH PRIORITY
 MEDIUM PRIORITY
     FEATURE: Show when settlement, terrain is insufficient
     FEATURE: Win condition
-    BUG: trades expire too soon
+    
     BUG: Disappearing units when server side validation or error hit
     FEATURE: World Generation
     FEATURE: World Lock
