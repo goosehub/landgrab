@@ -21,7 +21,6 @@ LOW PRIORITY
     BALANCE: Slow down players in early game
     BUG: White nations are invisible
     FEATURE: Record and display last winner of world
-    MISC: account migration
     FEATURE: show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
@@ -29,6 +28,7 @@ LOW PRIORITY
     FEATURE: Leaderboard show sum world stats
     UI: Interactive Tutorial
 NO PRIORITY
+    MISC: account migration
     MECHANIC: New Treaty Ally/Right of Passage
     PERFORMANCE: grow_population is slow
     PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
@@ -70,6 +70,7 @@ Option to provide a name when creating a town
 Font changes
 Number formatting
 Numerous minor fixes and tweaks
+Townships only continue growing when upgraded
 
 ==========================================================================================
     Code
@@ -108,33 +109,36 @@ Ore Mine
     Closet
 ==========================================================================================
 
-World Generation and Victory
-    world win conditions
-        Mars Colony
-            Metro
-            10,000 Cash
-            1,000 Energy
-            300 Steel
-            200 Chemicals
-            100 Engineers
-            10 Copper
-            10 Zinc
-            10 Aluminum
-            10 Nickle
-        Doomsday
-            Metro
-            10,000 Cash
-            1,000 Uranium
-            10 Engineers
-        World Government
-            Metro
-            10,000 Cash
-            2,000 tiles
-            100 influence
-            100 culture
-    world locked when no non-arctic squares are unclaimed
-    world gen when all worlds are locked
-    world reset when world is won, display last winner
+Victory Industry
+    Mars Colony
+        Metro
+        10,000 Cash
+        1,000 Energy
+        300 Steel
+        200 Chemicals
+        100 Engineers
+        10 Copper
+        10 Zinc
+        10 Aluminum
+        10 Nickle
+    Doomsday
+        Metro
+        1,000 Uranium
+        10 Engineers
+    Economic
+        100 influence
+        100 culture
+    World Government
+        Metro
+        2,000 tiles
+        100,000 population
+
+World States
+    one world in win state unlocked in daily cron
+    world generated if no unlocked worlds
+    world locked state when no non-arctic squares unclaimed
+    world win state when victory industry created
+    world destroy when?
 
 Tutorial
     Become A Leader

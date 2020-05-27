@@ -227,7 +227,8 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE population <= (SELECT base_population FROM settlement WHERE id = $city_key)
+			WHERE settlement_key = $town_key
+			AND population <= (SELECT base_population FROM settlement WHERE id = $city_key)
 		");
 		$this->db->query("
 			UPDATE tile
@@ -245,7 +246,8 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE population >= (SELECT base_population FROM settlement WHERE id = $city_key)
+			WHERE settlement_key = $city_key
+			AND population >= (SELECT base_population FROM settlement WHERE id = $city_key)
 			AND population <= (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");
 		$this->db->query("
@@ -264,7 +266,8 @@ Class cron_model extends CI_Model
 					IF(fish.id, 1, 0)
 				)
 			)
-			WHERE population >= (SELECT base_population FROM settlement WHERE id = $metro_key)
+			WHERE settlement_key = $metro_key
+			AND population >= (SELECT base_population FROM settlement WHERE id = $metro_key)
 		");
 	}
 	function shrink_population()
@@ -383,6 +386,7 @@ Class cron_model extends CI_Model
 			SET settlement_key = $uninhabited_key, industry_key = NULL, is_base = 0, is_capitol = 0
 			WHERE settlement_key = $town_key
 			AND population < (SELECT base_population FROM settlement WHERE id = $town_key)
+			AND is_capitol = 0
 		");
 		$this->db->query("
 			UPDATE tile
