@@ -47,10 +47,6 @@
             
             <hr>
 
-            <p style="display: none;">
-                Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.
-            </p>
-
             <div class="row">
                 <div class="col-md-4">
                     <button id="send_trade_request" class="btn btn-success form-control" type="button">
@@ -67,6 +63,10 @@
                     </button>
                 </div>
             </div>
+            <hr>
+            <small>
+                Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.
+            </small>
         </div>
         <div class="col-md-4">
             <h3 class="text-center text-primary">Your Offer</h3>

@@ -374,7 +374,7 @@
         }
         $('#select_settlement_input_parent').hide();
         if (settlement.input_desc) {
-            $('#select_settlement_input').html(settlement.input_desc);
+            $('#select_settlement_input').html(settlement_input_string(settlement));
             $('#select_settlement_input_parent').show();
         }
         let output = settlement.output ? settlement.output.label : 'Nothing';
@@ -474,14 +474,72 @@
         }
         return 'Any';
     }
+    function settlement_input_string(settlement) {
+        let settlement_input_string = settlement.input_desc;
+        settlement_input_string += insufficient_township_supplies(settlement);
+        return settlement_input_string;
+    }
+    function insufficient_township_supplies(settlement) {
+        let insufficient_message = ' <span class="text-danger">[Insufficient Supplies]</span>';
+        let sup = account.supplies;
+        if (settlement.id == town_key) {
+            if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < town_food_cost) {
+                return insufficient_message;
+            }
+            if (sup['energy'].amount < town_energy_cost) {
+                return insufficient_message;
+            }
+        }
+        if (settlement.id == city_key) {
+            if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < city_food_cost) {
+                return insufficient_message;
+            }
+            if (sup['coffee'].amount + sup['tea'].amount + sup['cannabis'].amount + sup['wine'].amount + sup['tobacco'].amount < city_cash_crops_cost) {
+                return insufficient_message;
+            }
+            if (sup['energy'].amount < city_energy_cost) {
+                return insufficient_message;
+            }
+            if (sup['merchandise'].amount < city_merchandise_cost) {
+                return insufficient_message;
+            }
+        }
+        if (settlement.id == metro_key) {
+            if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < metro_food_cost) {
+                return insufficient_message;
+            }
+            if (sup['coffee'].amount + sup['tea'].amount + sup['cannabis'].amount + sup['wine'].amount + sup['tobacco'].amount < metro_cash_crops_cost) {
+                return insufficient_message;
+            }
+            if (sup['energy'].amount < metro_energy_cost) {
+                return insufficient_message;
+            }
+            if (sup['merchandise'].amount < metro_merchandise_cost) {
+                return insufficient_message;
+            }
+            if (sup['pharmaceuticals'].amount < metro_pharmaceuticals_cost) {
+                return insufficient_message;
+            }
+        }
+        return '';
+    }
     function industry_input_string(industry) {
         let input_string = '';
+        let insufficient = false;
         for (let i = 0; i < industry.inputs.length; i++) {
             input = industry.inputs[i];
-            input_string += input.amount + ' ' + input.label + ', ';
+            input_string += input.amount + ' ' + input.label;
+            if (account.supplies[input.slug].amount < input.amount) {
+                insufficient = true;
+                input_string += '<span class="text-danger">*</span>';
+            }
+            input_string += ', ';
         }
         if (input_string) {
             input_string = input_string.substring(0, input_string.length - 2);
+        }
+        if (insufficient) {
+            input_string += ' <span class="text-danger">[Insufficient Supplies]</span>';
         }
         return input_string;
     }

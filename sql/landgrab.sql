@@ -203,7 +203,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (16, 34, 1), -- Aerospace
 (16, 36, 1), -- Aerospace
 (16, 17, 1), -- Aerospace
-(19, 2, 50), -- Gambling
+(19, 2, 20), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
 (22, 1, 10), -- Pharmaceuticals

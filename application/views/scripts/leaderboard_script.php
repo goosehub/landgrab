@@ -90,7 +90,7 @@
             </a>
         </td>
         <td>
-            <strong class="text-default">${leader.amount} ${leader.suffix}</strong>
+            <strong class="text-default">${format_number(leader.amount)} ${leader.suffix}</strong>
         </td>
         `;
         return html;

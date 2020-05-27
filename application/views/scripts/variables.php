@@ -71,6 +71,24 @@
     const oligarchy_support_regen = <?= OLIGARCHY_SUPPORT_REGEN ?>;
     const autocracy_support_regen = <?= AUTOCRACY_SUPPORT_REGEN ?>;
     const trade_expire_hours = <?= TRADE_EXPIRE_HOURS ?>;
+    const town_food_cost = <?= TOWN_FOOD_COST ?>;
+    const city_food_cost = <?= CITY_FOOD_COST ?>;
+    const metro_food_cost = <?= METRO_FOOD_COST ?>;
+    const town_cash_crops_cost = <?= TOWN_CASH_CROPS_COST ?>;
+    const city_cash_crops_cost = <?= CITY_CASH_CROPS_COST ?>;
+    const metro_cash_crops_cost = <?= METRO_CASH_CROPS_COST ?>;
+    const town_energy_cost = <?= TOWN_ENERGY_COST ?>;
+    const city_energy_cost = <?= CITY_ENERGY_COST ?>;
+    const metro_energy_cost = <?= METRO_ENERGY_COST ?>;
+    const town_merchandise_cost = <?= TOWN_MERCHANDISE_COST ?>;
+    const city_merchandise_cost = <?= CITY_MERCHANDISE_COST ?>;
+    const metro_merchandise_cost = <?= METRO_MERCHANDISE_COST ?>;
+    const town_steel_cost = <?= TOWN_STEEL_COST ?>;
+    const city_steel_cost = <?= CITY_STEEL_COST ?>;
+    const metro_steel_cost = <?= METRO_STEEL_COST ?>;
+    const town_pharmaceuticals_cost = <?= TOWN_PHARMACEUTICALS_COST ?>;
+    const city_pharmaceuticals_cost = <?= CITY_PHARMACEUTICALS_COST ?>;
+    const metro_pharmaceuticals_cost = <?= METRO_PHARMACEUTICALS_COST ?>;
     const food_key_array = [
       <?= GRAIN_KEY ?>,
       <?= VEGETABLES_KEY ?>,

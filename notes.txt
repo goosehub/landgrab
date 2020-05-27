@@ -9,25 +9,26 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    FEATURE: Win condition
 MEDIUM PRIORITY
+    FEATURE: Show when settlement, terrain is insufficient
+    FEATURE: Win condition
+    BUG: trades expire too soon
     BUG: Disappearing units when server side validation or error hit
     FEATURE: World Generation
     FEATURE: World Lock
-    FEATURE: Show settlement/industry current supplies next to required settlement
     UI: New Icons
     UI: Mobile
+    UI: Interactive Tutorial
 LOW PRIORITY
     BALANCE: Slow down players in early game
-    BUG: White nations are invisible
     FEATURE: Record and display last winner of world
     FEATURE: show diplomacy status on click other players land
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
-    UI: Interactive Tutorial
 NO PRIORITY
+    BUG: White nations are invisible
     MISC: account migration
     MECHANIC: New Treaty Ally/Right of Passage
     PERFORMANCE: grow_population is slow
