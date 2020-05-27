@@ -307,6 +307,20 @@
         return peace_key;
     }
 
+    function get_treaty_name(treaty_key) {
+        let treaty_name = '';
+        if (treaty_key == war_key) {
+            treaty_name = 'War';
+        }
+        else if (treaty_key == peace_key) {
+            treaty_name = 'Peace';
+        }
+        else if (treaty_key == passage_key) {
+            treaty_name = 'Passage';
+        }
+        return treaty_name;
+    }
+
     function treaty_class(treaty_key) {
         let treaty_class = '';
         if (treaty_key == war_key) {

@@ -30,10 +30,11 @@ Class chat_model extends CI_Model
       return $result;
   }
   // Insert new chat
-  function new_chat($user_key, $username, $color, $message, $world_key)
+  function new_chat($user_key, $account_key, $username, $color, $message, $world_key)
   {
     $data = array(
     'user_key' => $user_key,
+    'account_key' => $account_key,
     'username' => $username,
     'color' => $color,
     'message' => $message,

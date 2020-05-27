@@ -49,13 +49,13 @@
 		});
 	}
 
-    function mark_war_declare_as_seen() {
+	function mark_war_declare_as_seen() {
 		for (let key in account.received_trades) {
 			if (!parseInt(account.received_trades[key].request_seen) && account.received_trades[key].treaty_key == war_key) {
 				mark_trade_received(account.received_trades[key].id, account.received_trades[key].request_account_key);
 			}
 		}
-    }
+	}
 
 	function handle_reject_trade_request() {
 		$('#reject_trade_request').click(function(){
@@ -91,13 +91,20 @@
 
 	function handle_new_diplomacy() {
 		$('#start_new_diplomacy').click(function(){
-		    $('.center_block').hide();
-		    let account_id = $('#select_account_for_diplomacy').val();
-			ajax_get('game/get_account_with_supplies/' + account_id, function(response) {
-				trade_partner = response;
-			    render_new_diplomacy();
-			    $('#new_trade_block').show();
-			});
+			$('.center_block').hide();
+			let account_id = $('#select_account_for_diplomacy').val();
+			new_diplomacy(account_id);
+		});
+	}
+
+	function new_diplomacy(account_id) {
+		if (!account || account_id == account['id']) {
+			return;
+		}
+		ajax_get('game/get_account_with_supplies/' + account_id, function(response) {
+			trade_partner = response;
+			render_new_diplomacy();
+			$('#new_trade_block').show();
 		});
 	}
 
@@ -323,11 +330,11 @@
 		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
 	}
 
-    function update_partner_supplies_new_trade() {
-      Object.keys(trade_partner.supplies).forEach(function(key) {
-        let supply = trade_partner.supplies[key];
-        $('.partner_trade_supply_current_' + supply['slug']).html(format_number(supply['amount']));
-        $('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
-      });
-    }
+	function update_partner_supplies_new_trade() {
+	  Object.keys(trade_partner.supplies).forEach(function(key) {
+		let supply = trade_partner.supplies[key];
+		$('.partner_trade_supply_current_' + supply['slug']).html(format_number(supply['amount']));
+		$('#partner_trade_supply_proposal_' + supply['slug']).prop('max', supply['amount'] > 0 ? supply['amount'] : 0);
+	  });
+	}
 </script>

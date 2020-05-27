@@ -58,7 +58,7 @@ class Chat extends CI_Controller {
         $message = htmlspecialchars($_POST['chat_input']);
 
         // Insert chat
-        $this->chat_model->new_chat($account['user_id'], $username, $color, $message, $world_key);
+        $this->chat_model->new_chat($account['user_id'], $account['id'], $username, $color, $message, $world_key);
     }
 
     // New Chat Callback

@@ -9,25 +9,22 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    FEATURE: Win Condition
+    UI: Interactive Tutorial
 MEDIUM PRIORITY
-    FEATURE: Show when settlement, terrain is insufficient
-    FEATURE: Win condition
-    
     BUG: Disappearing units when server side validation or error hit
-    FEATURE: World Generation
-    FEATURE: World Lock
+    FEATURE: Multi World
     UI: New Icons
     UI: Mobile
-    UI: Interactive Tutorial
 LOW PRIORITY
-    BALANCE: Slow down players in early game
-    FEATURE: Record and display last winner of world
-    FEATURE: show diplomacy status on click other players land
+    FEATURE: World Lock
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
 NO PRIORITY
+    FEATURE: Record and display last winner of world
+    FEATURE: Show when settlement, terrain, upfront, is insufficient
     BUG: White nations are invisible
     MISC: account migration
     MECHANIC: New Treaty Ally/Right of Passage
@@ -53,7 +50,6 @@ NO PRIORITY
     capitols show laws of that nation, wars and rights of passage
     population projection
     abstract settlement input string into programatic
-    capitol and chat shortcut to diplomacy
     Township Population Reset/Decrease on capture and downgrade
     store default google maps id type
     units UI for red–green color blindness
@@ -68,6 +64,8 @@ Resource frequency tweaks, still 100 total per map
 Rename Alcohol to Wine
 Pharmaceuticals requires professors
 Option to provide a name when creating a town
+Clicking on tile of another player shows treaty and quick link to diplomacy
+Clicking on chat icon of another player is a quick link to diplomacy
 Font changes
 Number formatting
 Numerous minor fixes and tweaks

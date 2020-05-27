@@ -74,7 +74,13 @@
             // Update latest message id
             last_message_id = message.id;
             let glyphicon_type = message.username ? 'glyphicon-user' : 'glyphicon-exclamation-sign';
-            html += '<div class="chat_message" title="' + message.timestamp + ' ET"><span class="glyphicon ' + glyphicon_type + '" style="color: ' + message.color + '""></span>' ;
+            let diplomacy_script = '';
+            let href = '';
+            if (account['id'] && message.account_key != account['id']) {
+              diplomacy_script = 'onclick="new_diplomacy(' + message.account_key + ');"';
+              href = 'href="#"';
+            }
+            html += `<div class="chat_message" title="${message.timestamp} ET"><a ${href} ${diplomacy_script}><span class="glyphicon ${glyphicon_type}" style="color: ${message.color}"></span></a>`;
             // let username = message.username ? message.username + ': ' : ' - ';
             html += message.username + ': ' + message.message + '</div>';
           });

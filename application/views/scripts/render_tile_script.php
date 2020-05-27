@@ -13,6 +13,7 @@
         tile_owner_info();
         tile_owner_username();
         tile_owner_country_name();
+        tile_treaty();
         tile_terrain();
         tile_resource_icon();
         tile_resource();
@@ -80,6 +81,18 @@
     function tile_owner_country_name()
     {
         $('#tile_owner_country_name').html(current_tile.account['nation_name'] || '');
+    }
+    function tile_treaty()
+    {
+        $('#tile_treaty_parent').hide();
+        if (current_tile.account_key && current_tile.account_key != account['id']) {
+            $('#tile_treaty_parent').show();
+            let treaty_key = find_treaty_by_account_key(current_tile.account_key);
+            let treaty_name = get_treaty_name(treaty_key);
+            $('#tile_treaty').removeClass();
+            $('#tile_treaty').addClass(treaty_class(treaty_key));
+            $('#tile_treaty').html(treaty_name);
+        }
     }
     function tile_terrain()
     {
@@ -480,6 +493,9 @@
         return settlement_input_string;
     }
     function insufficient_township_supplies(settlement) {
+        if (!account) {
+            return '';
+        }
         let insufficient_message = ' <span class="text-danger">[Insufficient Supplies]</span>';
         let sup = account.supplies;
         if (settlement.id == town_key) {
@@ -529,7 +545,7 @@
         for (let i = 0; i < industry.inputs.length; i++) {
             input = industry.inputs[i];
             input_string += input.amount + ' ' + input.label;
-            if (account.supplies[input.slug].amount < input.amount) {
+            if (account && account.supplies[input.slug].amount < input.amount) {
                 insufficient = true;
                 input_string += '<span class="text-danger">*</span>';
             }

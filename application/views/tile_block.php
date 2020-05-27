@@ -20,41 +20,49 @@
     <div class="row">
         <div class="col-md-6">
             <p id="tile_owner_info" class="tile_block_info_line">
-                <labe>Led by:</labe>
-                <span class="text-info pull-right"><span id="tile_owner_username"></span> of <span id="tile_owner_country_name"></span></span>
+                <label>Led by:</label>
+                <a href="#" id="tile_open_diplomacy" class="pull-right">
+                    <span id="tile_owner_username"></span> of <span id="tile_owner_country_name"></span>
+                </a>
+            </p>
+            <p id="tile_treaty_parent" class="tile_block_info_line">
+                <label>Treaty:</label>
+                <span class="pull-right">
+                    <span id="tile_treaty"></span>
+                </span>
             </p>
             <p class="tile_block_info_line">
-                <labe>Terrain:</labe>
+                <label>Terrain:</label>
                 <span id="tile_terrain" class="text-warning pull-right"></span>
                 <span id="tile_resource" class="text-success pull-right"></span>
                 <!-- <img id="tile_resource_icon" src=""/> -->
             </p>
             <p id="tile_settlement_label_parent" class="tile_block_info_line">
-                <labe>Settlement:</labe>
+                <label>Settlement:</label>
                 <span id="tile_settlement_label" class="text-primary pull-right"></span>
             </p>
             <p id="tile_industry_parent" class="tile_block_info_line">
-                <labe>Industry:</labe>
+                <label>Industry:</label>
                 <span id="tile_industry_label" class="text-primary pull-right"></span>
             </p>
             <p id="tile_unit_parent" class="tile_block_info_line">
-                <labe>Army:</labe>
+                <label>Army:</label>
                 <span id="tile_unit" class="text-primary pull-right"></span>
             </p>
             <p id="tile_defensive_bonus_parent" class="tile_block_info_line">
-                <labe>Defensive Bonus:</labe>
+                <label>Defensive Bonus:</label>
                 <strong id="tile_defensive_bonus" class="text-success pull-right"></strong>
             </p>
             <p id="tile_offensive_bonus_parent" class="tile_block_info_line">
-                <labe>Offensive Bonus:</labe>
+                <label>Offensive Bonus:</label>
                 <strong id="tile_offensive_bonus" class="text-danger pull-right"></strong>
             </p>
             <p id="tile_population_parent" class="tile_block_info_line">
-                <labe>Population:</labe>
+                <label>Population:</label>
                 <strong id="tile_population" class="text-success pull-right"></strong>
             </p>
             <p id="tile_gdp_parent" class="tile_block_info_line">
-                <labe>GDP:</labe>
+                <label>GDP:</label>
                 <strong id="tile_gdp" class="text-success pull-right"></strong>
             </p>
         </div>
@@ -231,7 +239,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <div id="select_industry_settlement_parent">
-                            <label class="select_industry_label">Settlement:</label>
+                            <label class="select_industry_label">Township:</label>
                             <span id="select_industry_settlement" class="text-primary"></span>
                         </div>
                         <div id="select_industry_terrain_parent">

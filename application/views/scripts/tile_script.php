@@ -5,6 +5,13 @@
     handle_set_industry();
     handle_exit_tile_block()
     handle_enlist_unit();
+    handle_tile_open_diplomacy();
+
+    function handle_tile_open_diplomacy() {
+        $('#tile_open_diplomacy').click(function(event) {
+            new_diplomacy(current_tile.account_key);
+        });
+    }
 
     function handle_set_settlement() {
         $('#set_settlement_button').click(function(event) {

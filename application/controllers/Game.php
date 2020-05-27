@@ -532,6 +532,9 @@ class Game extends CI_Controller {
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
+        if ($trade_partner_key == $account['id']) {
+            api_error_response('same_account', 'You can not declare war on yourself');
+        }
         if ((int)$account['supplies']['tiles']['amount'] <= 0) {
             api_error_response('not_enough_tiles', 'You must have land to engage in diplomacy');
         }
@@ -576,6 +579,9 @@ class Game extends CI_Controller {
         $account = $this->get_this_full_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
+        }
+        if ($trade_partner_key == $account['id']) {
+            api_error_response('same_account', 'You can not trade with yourself');
         }
         if ((int)$account['supplies']['tiles']['amount'] <= 0) {
             api_error_response('not_enough_tiles', 'You must have land to engage in diplomacy');

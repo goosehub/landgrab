@@ -734,6 +734,7 @@ DROP TABLE IF EXISTS `chat`;
 CREATE TABLE IF NOT EXISTS `chat` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_key` int(10) UNSIGNED NOT NULL,
+  `account_key` int(10) UNSIGNED NOT NULL,
   `username` varchar(64) NOT NULL,
   `color` varchar(8) NOT NULL,
   `message` text NOT NULL,
@@ -743,6 +744,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
 ALTER TABLE `chat` ADD PRIMARY KEY (`id`);
 ALTER TABLE `chat` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `chat` ADD INDEX `user_key` (`user_key`);
+ALTER TABLE `chat` ADD INDEX `account_key` (`account_key`);
 ALTER TABLE `chat` ADD INDEX `world_key` (`world_key`);
 
 DROP TABLE IF EXISTS `analytics`;
