@@ -207,6 +207,7 @@ Class game_model extends CI_Model
 		}
 		if (!$this->tile_is_township($settlement_key)) {
 			$data['industry_key'] = NULL;
+			$data['population'] = $this->settlements[$settlement_key - 1]['base_population'];
 		}
 		$this->db->where('id', $tile_id);
 		$this->db->update('tile', $data);

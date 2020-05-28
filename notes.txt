@@ -12,6 +12,9 @@ HIGH PRIORITY
     FEATURE: Win Condition
     UI: Interactive Tutorial
 MEDIUM PRIORITY
+    BALANCE: Town Defense, Bases
+    BALANCE: require upfront payment
+    BALANCE: towns disappearing is bad
     BUG: Disappearing units when server side validation or error hit
     FEATURE: Multi World
     UI: New Icons

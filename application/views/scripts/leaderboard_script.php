@@ -42,9 +42,6 @@
         $('#leaderboard').html(html);
     }
     function render_leaderboard_header_row(leaders) {
-        console.log('marco');
-        console.log(leaders);
-        console.log(leaders[0]);
         let html = `
             <th>Rank</th>
             <th colspan="2">Leader</th>
