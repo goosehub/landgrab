@@ -115,7 +115,7 @@
                     <small id="budget_gdp_bonus_parent" class="text-action">
                         <span id="budget_gdp_bonus"></span>% Bonus
                     </small>
-                    <?= generate_popover('GDP', 'The sum of the GDP from from every settlement and every industry, plus a bonus for having GDP Bonus Supplies.', 'right'); ?>
+                    <?= generate_popover('GDP', 'The sum of the GDP from every settlement and every industry, plus any GDP Bonus Supplies.', 'right'); ?>
                 </strong>
                 <strong class="budget_info_value text-action">
                     $<span id="budget_gdp"></span> Billion

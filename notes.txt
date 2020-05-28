@@ -12,9 +12,11 @@ HIGH PRIORITY
     FEATURE: Win Condition
     UI: Interactive Tutorial
 MEDIUM PRIORITY
-    BALANCE: Town Defense, Bases
-    BALANCE: require upfront payment
-    BALANCE: towns disappearing is bad
+    BALANCE: Be less greedy with tundra against ocean
+    BALANCE: Socialism way more max support
+    BALANCE: Town Defense
+    UI: Base shortcut on settlements
+    BALANCE: Require upfront payment
     BUG: Disappearing units when server side validation or error hit
     FEATURE: Multi World
     UI: New Icons
@@ -112,28 +114,18 @@ Ore Mine
 ==========================================================================================
 
 Victory Industry
-    Mars Colony
-        Metro
-        10,000 Cash
-        1,000 Energy
-        300 Steel
-        200 Chemicals
+    Mars Colonization
+        1,000 Chemicals
+        100 Aircraft
         100 Engineers
-        10 Copper
-        10 Zinc
-        10 Aluminum
-        10 Nickle
-    Doomsday
-        Metro
-        1,000 Uranium
-        10 Engineers
-    Economic
-        100 influence
-        100 culture
     World Government
-        Metro
-        2,000 tiles
-        100,000 population
+        1,000,000K national population
+        1,000 tiles
+        100 Culture
+    Financial Superpower
+        $10,000 Billion
+        100 Influence
+        10 Shipping Ports
 
 World States
     one world in win state unlocked in daily cron
@@ -141,6 +133,8 @@ World States
     world locked state when no non-arctic squares unclaimed
     world win state when victory industry created
     world destroy when?
+
+Tutorial character or images
 
 Tutorial
     Become A Leader

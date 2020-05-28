@@ -485,7 +485,7 @@ Class game_model extends CI_Model
 		if ($account['supplies']['automotive']['amount'] > 0) {
 			$gdp_bonus += AUTOMOTIVE_BONUS;
 		}
-		if ($account['supplies']['airplanes']['amount'] > 0) {
+		if ($account['supplies']['aircraft']['amount'] > 0) {
 			$gdp_bonus += AEROSPACE_BONUS;
 		}
 		if ($account['supplies']['culture']['amount'] > 0) {

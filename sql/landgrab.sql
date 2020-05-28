@@ -298,7 +298,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (42, 9, 'Machines', 'machinery', 'K', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (43, 9, 'Automobiles', 'automotive', 'M', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
-(44, 9, 'Airplanes', 'airplanes', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(44, 9, 'Aircraft', 'aircraft', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (45, 9, 'Culture', 'culture', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
 (46, 9, 'Influence', 'influence', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');
 
@@ -525,82 +525,82 @@ INSERT INTO `settlement` (
 (6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 8, 2, 1
+  100, '', 8, 2, 1
 ),
 (7, 'Fruit', 'fruit', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 9, 1, 2
+  100, '', 9, 1, 2
 ),
 (8, 'Vegetables', 'vegetables', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 10, 1, 1
+  100, '', 10, 1, 1
 ),
 (9, 'Livestock', 'livestock', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 11, 1, 3
+  100, '', 11, 1, 3
 ),
 (10, 'Fish', 'fish', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
   FALSE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 12, 1, 5
+  100, '', 12, 1, 5
 ),
 (11, 'Timber', 'timber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 5, 3, 1
+  100, '', 5, 3, 1
 ),
 (12, 'Fiber', 'fiber', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 6, 2, 3
+  100, '', 6, 2, 3
 ),
 (13, 'Ore', 'ore', 3,
   FALSE, FALSE, TRUE, FALSE, FALSE,
   FALSE, FALSE, TRUE, TRUE, FALSE,
-  10, '', 7, 1, 2
+  100, '', 7, 1, 2
 ),
 (14, 'Biofuel', 'biofuel', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 14, 1, 2
+  100, '', 14, 1, 2
 ),
 (15, 'Solar', 'solar', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, TRUE, FALSE, FALSE,
-  10, '', 13, 1, 1
+  100, '', 13, 1, 1
 ),
 (16, 'Wind', 'wind', 4,
   FALSE, FALSE, FALSE, TRUE, FALSE,
   TRUE, TRUE, FALSE, TRUE, FALSE,
-  10, '', 13, 1, 1
+  100, '', 13, 1, 1
 ),
 (17, 'Coffee', 'coffee', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 23, 1, 3
+  100, '', 23, 1, 3
 ),
 (18, 'Tea', 'tea', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 24, 1, 3
+  100, '', 24, 1, 3
 ),
 (19, 'Cannabis', 'cannabis', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 25, 1, 3
+  100, '', 25, 1, 3
 ),
 (20, 'Wine', 'wine', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 26, 1, 3
+  100, '', 26, 1, 3
 ),
 (21, 'Tobacco', 'tobacco', 5,
   FALSE, FALSE, FALSE, FALSE, TRUE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10, '', 27, 1, 3
+  100, '', 27, 1, 3
 );
 
 DROP TABLE IF EXISTS `industry`;

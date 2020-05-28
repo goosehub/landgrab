@@ -8,7 +8,7 @@
 </div>
 
 <!-- Combat -->
-<div id="combat_block" class="center_block center_block_small">
+<div id="combat_block" class="center_block center_block_extra_small">
     <div class="combat_pending_message">
         <h3 class="text-center text-primary">
             <span id="chance_of_victory_text"></span>% chance of victory
