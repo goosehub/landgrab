@@ -19,10 +19,16 @@
 
     function update_leaderboard() {
         ajax_get('game/leaderboard/' + world_key + '/' + current_leaderboard_supply, function(response) {
-            render_leaderboard(response);
+            render_leaderboard(response.leaders);
         });
     }
     function render_leaderboard(leaders) {
+        let html = '';
+        if (!leaders.length) {
+            html = `<p class="text-center">No nations have this supply</p>`;
+            $('#leaderboard').html(html);
+            return;
+        }
         let header_row = render_leaderboard_header_row(leaders)
         let data_rows = render_leaderboard_data_rows(leaders)
         html = `

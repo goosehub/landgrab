@@ -64,7 +64,6 @@ class Game extends CI_Controller {
 
         $data['worlds'] = $this->game_model->get_all('world');
         $data['supplies'] = $this->supplies;
-        $data['leaderboards'] = $this->leaderboards($data['world']['id']);
         $data['active_accounts'] = $this->user_model->get_active_accounts_in_world($data['world']['id']);
         $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);
         $data['validation_errors'] = $this->session->flashdata('validation_errors');
@@ -103,8 +102,8 @@ class Game extends CI_Controller {
 
     public function leaderboard($world_key, $supply_key)
     {
-        $leaders = $this->leaderboard_model->get_leaders_of_supply($world_key, $supply_key);
-        api_response($leaders);
+        $data['leaders'] = $this->leaderboard_model->get_leaders_of_supply($world_key, $supply_key);
+        api_response($data);
     }
 
     public function update_world($world_key)

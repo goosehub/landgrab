@@ -12,7 +12,6 @@ HIGH PRIORITY
     FEATURE: Win Condition
     UI: Interactive Tutorial
 MEDIUM PRIORITY
-    BUG: Leaderboard doesn't work when no results
     BALANCE: Town Defense meta is strange
     UI: Show win condition in leaders modal
     UI: Base shortcut on settlements
