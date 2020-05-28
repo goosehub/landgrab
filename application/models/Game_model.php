@@ -403,10 +403,8 @@ Class game_model extends CI_Model
 		$this->db->update('tile', $data);
 	}
 	function claim($tile, $account, $unit_key) {
-		$settlement_key = $this->tile_is_township($tile['settlement_key']) ? $tile['settlement_key'] : UNINHABITED_KEY;
 		$data = array(
 			'account_key' => $account['id'],
-			'settlement_key' => $settlement_key,
 			'industry_key' => NULL,
 			'unit_key' => $unit_key,
 			'unit_owner_key' => $account['id'],

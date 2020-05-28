@@ -177,12 +177,12 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (9, 6, 1), -- Manufacturing
 (9, 7, 2), -- Manufacturing
 (9, 13, 1), -- Manufacturing
-(10, 13, 3), -- Chemicals
+(10, 13, 10), -- Chemicals
 (11, 28, 1), -- Steel
 (11, 13, 1), -- Steel
 (12, 29, 1), -- Electronics
 (12, 7, 1), -- Electronics
-(13, 39, 2), -- Port
+(13, 39, 3), -- Port
 (14, 30, 1), -- Machinery
 (14, 39, 1), -- Machinery
 (14, 40, 1), -- Machinery
@@ -659,7 +659,7 @@ INSERT INTO `industry` (
   37, 10, NULL, 5, ''
 ),
 (10, 5, 'Chemicals', 'chemicals', NULL, NULL,
-  38, 3, NULL, 5, ''
+  38, 5, NULL, 5, ''
 ),
 (11, 5, 'Steel', 'steel', NULL, NULL,
   39, 5, NULL, 5, ''
