@@ -26,6 +26,7 @@ LOW PRIORITY
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
+    TWEAK: abstract settlement input string into programatic
 NO PRIORITY
     FEATURE: Record and display last winner of world
     FEATURE: Show when settlement, terrain, upfront, is insufficient
@@ -50,13 +51,12 @@ NO PRIORITY
     Being attacked UI
     notices when trade request accepted
     disable enlist options when not enough cash exists
-    suffix on industry input selection preview
     capitols show laws of that nation, wars and rights of passage
     population projection
-    abstract settlement input string into programatic
     Township Population Reset/Decrease on capture and downgrade
     store default google maps id type
     units UI for red–green color blindness
+    Defeating nation gives you their supplies
     Market graph
 
 ==========================================================================================
@@ -69,7 +69,7 @@ Socialism have massive buffs to max support
 Rename Alcohol to Wine
 Pharmaceuticals requires professors
 All settlements now persist on capture
-Several Settlement and Industry tweaks
+Several Settlement, Industry and Unit tweaks to cost, output, and GDP
 Population buffs
 Fewer tundra tiles
 Option to provide a name when creating a town
@@ -77,6 +77,7 @@ Clicking on tile of another player shows treaty and quick link to diplomacy
 Clicking on chat icon of another player is a quick link to diplomacy
 Font changes
 Number formatting
+Improved industry select
 Numerous minor fixes and tweaks
 Townships only continue growing when upgraded
 

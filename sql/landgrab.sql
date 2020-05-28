@@ -81,9 +81,9 @@ INSERT INTO `unit_type` (`id`, `slug`, `strength_against_key`, `cash_cost`, `sup
   `can_take_tiles`, `can_take_towns`, `can_take_cities`, `can_take_metros`) VALUES
 (1, 'Infantry', 3, 20, 10,
   TRUE, TRUE, TRUE, FALSE),
-(2, 'Tanks', 1, 25, 20,
+(2, 'Tanks', 1, 30, 20,
   TRUE, TRUE, TRUE, TRUE),
-(3, 'Airforce', 2, 30, 30,
+(3, 'Airforce', 2, 40, 40,
   TRUE, FALSE, FALSE, FALSE);
 
 DROP TABLE IF EXISTS `account`;
@@ -176,7 +176,6 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (9, 5, 1), -- Manufacturing
 (9, 6, 1), -- Manufacturing
 (9, 7, 2), -- Manufacturing
-(9, 13, 1), -- Manufacturing
 (10, 13, 10), -- Chemicals
 (11, 28, 1), -- Steel
 (11, 13, 1), -- Steel
@@ -207,7 +206,16 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
 (22, 1, 10), -- Pharmaceuticals
-(22, 33, 1); -- Pharmaceuticals
+(22, 33, 1), -- Pharmaceuticals
+(26, 3, 1000000), -- World_Government
+(26, 4, 1000), -- World_Government
+(26, 45, 100), -- World_Government
+(27, 1, 10000), -- World_Currency
+(27, 46, 100), -- World_Currency
+(27, 41, 10), -- World_Currency
+(28, 13, 10000), -- Space_Colonization
+(28, 44, 1000), -- Space_Colonization
+(28, 36, 100); -- Space_Colonization
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
@@ -515,12 +523,12 @@ INSERT INTO `settlement` (
 (4, 'City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '1,000K Population, 5 Food, 5 Energy, 2 Cash Crops, 2 Merchandise', NULL, NULL, 10
+  1000, '1,000K Population, 5 Food, 5 Energy, 2 Cash Crops, 2 Merchandise', NULL, NULL, 20
 ),
 (5, 'Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '10,000K Population, 20 Food, 20 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 20
+  10000, '10,000K Population, 20 Food, 20 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 50
 ),
 (6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -615,6 +623,7 @@ CREATE TABLE IF NOT EXISTS `industry` (
   `minimum_settlement_size` int(10) UNSIGNED NULL, -- town, city, metro
   `required_terrain_key` int(10) UNSIGNED NULL,
   `gdp` int(10) UNSIGNED NULL,
+  `is_victory` int(10) UNSIGNED NULL,
   `meta` varchar(256) NOT NULL,
   `sort_order` int(10) UNSIGNED NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -626,89 +635,99 @@ ALTER TABLE `industry` ADD INDEX `required_terrain_key` (`required_terrain_key`)
 
 TRUNCATE TABLE `industry`;
 INSERT INTO `industry` (
-  `id`, `category_id`, `label`, `slug`, `minimum_settlement_size`, `required_terrain_key`,
+  `id`, `category_id`, `label`, `slug`, `minimum_settlement_size`, `required_terrain_key`, `is_victory`,
   `output_supply_key`, `output_supply_amount`, `upfront_cost`, `gdp`, `meta`) VALUES
 -- government
-(1, 1, 'Capitol', 'capitol', NULL, NULL,
+(1, 1, 'Capitol', 'capitol', NULL, NULL, FALSE,
   null, 1, 10, 50, 'Spawns units'
 ),
-(2, 1, 'Federal', 'federal', 4, NULL,
+(2, 1, 'Federal', 'federal', 4, NULL, FALSE,
   2, 10, 10, 5, 'Support is per hour'
 ),
-(3, 1, 'Base', 'base', NULL, NULL,
+(3, 1, 'Base', 'base', NULL, NULL, FALSE,
   null, 1, 10, 3, 'Spawns units'
 ),
 -- energy
-(4, 2, 'Biofuel', 'biofuel', NULL, NULL,
+(4, 2, 'Biofuel', 'biofuel', NULL, NULL, FALSE,
   13, 10, NULL, 1, ''
 ),
-(5, 2, 'Coal', 'coal', NULL, NULL,
+(5, 2, 'Coal', 'coal', NULL, NULL, FALSE,
   13, 10, NULL, 2, ''
 ),
-(6, 2, 'Gas', 'gas', NULL, NULL,
+(6, 2, 'Gas', 'gas', NULL, NULL, FALSE,
   13, 15, NULL, 3, ''
 ),
-(7, 2, 'Petroleum', 'petroleum', NULL, NULL,
+(7, 2, 'Petroleum', 'petroleum', NULL, NULL, FALSE,
   13, 20, NULL, 10, ''
 ),
-(8, 2, 'Nuclear', 'nuclear', NULL, NULL,
+(8, 2, 'Nuclear', 'nuclear', NULL, NULL, FALSE,
   13, 25, NULL, 10, ''
 ),
 -- light industry
-(9, 5, 'Manufacturing', 'manufacturing', NULL, NULL,
+(9, 5, 'Manufacturing', 'manufacturing', NULL, NULL, FALSE,
   37, 10, NULL, 5, ''
 ),
-(10, 5, 'Chemicals', 'chemicals', NULL, NULL,
+(10, 5, 'Chemicals', 'chemicals', NULL, NULL, FALSE,
   38, 5, NULL, 5, ''
 ),
-(11, 5, 'Steel', 'steel', NULL, NULL,
+(11, 5, 'Steel', 'steel', NULL, NULL, FALSE,
   39, 5, NULL, 5, ''
 ),
-(12, 5, 'Electronics', 'electronics', 4, NULL,
+(12, 5, 'Electronics', 'electronics', 4, NULL, FALSE,
   40, 10, NULL, 10, ''
 ),
 -- hevvy industry
-(13, 6, 'Shipping Port', 'port', 4, 5,
+(13, 6, 'Shipping Port', 'port', 4, 5, FALSE,
   41, 1, NULL, 50, 'Increases National GDP by 10%'
 ),
-(14, 6, 'Machinery', 'machinery', 4, NULL,
+(14, 6, 'Machinery', 'machinery', 4, NULL, FALSE,
   42, 10, NULL, 30, 'Increases National GDP by 10%'
 ),
-(15, 6, 'Automotive', 'automotive', 4, NULL,
+(15, 6, 'Automotive', 'automotive', 4, NULL, FALSE,
   43, 20, NULL, 40, 'Increases National GDP by 10%'
 ),
-(16, 6, 'Aerospace', 'aerospace', 4, NULL,
+(16, 6, 'Aerospace', 'aerospace', 4, NULL, FALSE,
   44, 5, NULL, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
-(17, 3, 'Leisure', 'leisure', NULL, 5,
+(17, 3, 'Leisure', 'leisure', NULL, 5, FALSE,
   null, 1, NULL, 20, ''
 ),
-(18, 3, 'Resort', 'resort', NULL, 3,
+(18, 3, 'Resort', 'resort', NULL, 3, FALSE,
   null, 1, NULL, 10, ''
 ),
-(19, 3, 'Gambling', 'gambling', NULL, NULL,
+(19, 3, 'Gambling', 'gambling', NULL, NULL, FALSE,
   null, 1, NULL, 15, ''
 ),
 -- knowledge/quaternary
-(20, 4, 'University', 'university', NULL, NULL,
+(20, 4, 'University', 'university', NULL, NULL, FALSE,
   33, 1, NULL, 3, ''
 ),
-(21, 4, 'Software', 'software', 4, NULL,
+(21, 4, 'Software', 'software', 4, NULL, FALSE,
   34, 5, NULL, 8, ''
 ),
-(22, 4, 'Healthcare', 'healthcare', 4, NULL,
+(22, 4, 'Healthcare', 'healthcare', 4, NULL, FALSE,
   35, 3, NULL, 6, ''
 ),
 -- metro
-(23, 7, 'Financial & Banking', 'financial_banking', 5, NULL,
+(23, 7, 'Financial', 'financial_banking', 5, NULL, FALSE,
   46, 1, NULL, 200, 'Increases National GDP by 30%'
 ),
-(24, 7, 'Entertainment & Media', 'entertainment_media', 5, NULL,
+(24, 7, 'Entertainment', 'entertainment_media', 5, NULL, FALSE,
   45, 3, NULL, 50, 'Increases National GDP by 30%'
 ),
-(25, 7, 'Engineering & Design', 'engineering_design', 5, NULL,
+(25, 7, 'Engineering', 'engineering_design', 5, NULL, FALSE,
   36, 10, NULL, 100, ''
+),
+-- victory
+(26, 8, 'World Government', 'world_government', 5, NULL, TRUE,
+  NULL, 1, NULL, 1000, 'Wins the game'
+),
+(27, 8, 'World Currency', 'World_currency', 5, NULL, TRUE,
+  NULL, 1, NULL, 1000, 'Wins the game'
+),
+(28, 8, 'Space Colonization', 'space_colonization', 5, NULL, TRUE,
+  NULL, 1, NULL, 1000, 'Wins the game'
 );
 
 -- 

@@ -248,7 +248,7 @@
                         </div>
                         <div id="select_industry_input_parent">
                             <label class="select_industry_label">Requires Hourly:</label>
-                            <span id="select_industry_input" class="text-warning"></span>
+                            <span id="select_industry_input" class="text-default"></span>
                         </div>
                         <div id="select_industry_upfront_parent">
                             <label class="select_industry_label">Upfront Cost:</label>

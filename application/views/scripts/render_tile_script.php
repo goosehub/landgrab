@@ -280,6 +280,9 @@
     }
     function settlement_allowed_on_this_tile(settlement_key)
     {
+        if (!settlement_key) {
+            return true;
+        }
         let settlement = get_settlement_from_state(settlement_key);
         if (!settlement_is_township(current_tile.settlement_key) && (settlement_key == city_key || settlement_key == metro_key)) {
             return false;
@@ -377,7 +380,7 @@
         });
         $('#select_settlement_header').html(settlement.label);
         $('#select_settlement_type').html(get_settlement_type_string(settlement));
-        $('#select_settlement_gdp').html('$' + settlement.gdp + 'B');
+        $('#select_settlement_gdp').html('$' + number_format(settlement.gdp) + 'B');
         $('#select_settlement_pop').html(format_population(settlement.base_population));
         $('#select_settlement_terrain').html(get_settlement_terrain_string_with_color(settlement));
         $('#select_settlement_defensive_parent').hide();
@@ -395,7 +398,7 @@
             output = 'Industry';
         }
         if (settlement.output_supply_amount > 1) {
-            output = settlement.output_supply_amount + ' ' + output;
+            output = number_format(settlement.output_supply_amount) + ' ' + output;
         }
         tile_town_name(settlement_key);
         $('#select_settlement_output').html(output);
@@ -423,9 +426,9 @@
             $('#select_industry_terrain_parent').show();
             $('#select_industry_terrain').html(get_industry_terrain_string(industry.required_terrain_key));
         }
-        $('#select_industry_gdp').html('$' + industry.gdp + ' Billion');
+        $('#select_industry_gdp').html('$' + number_format(industry.gdp) + ' Billion');
         $('#select_industry_input_parent').hide();
-        if (industry_input_string(industry)) {
+        if (industry.inputs.length) {
             $('#select_industry_input_parent').show();
             $('#select_industry_input').html(industry_input_string(industry));
         }
@@ -437,7 +440,7 @@
         $('#select_industry_upfront_parent').hide();
         if (industry.upfront_cost) {
             $('#select_industry_upfront_parent').show();
-            $('#select_industry_upfront').html('$' + industry.upfront_cost + ' Billion');
+            $('#select_industry_upfront').html('$' + number_format(industry.upfront_cost) + ' Billion');
         }
         $('#select_industry_special_parent').hide();
         if (industry.meta) {
@@ -541,28 +544,20 @@
     }
     function industry_input_string(industry) {
         let input_string = '';
-        let insufficient = false;
         for (let i = 0; i < industry.inputs.length; i++) {
             input = industry.inputs[i];
-            input_string += input.amount + ' ' + input.label;
-            if (account && account.supplies[input.slug].amount < input.amount) {
-                insufficient = true;
-                input_string += '<span class="text-danger">*</span>';
-            }
-            input_string += ', ';
-        }
-        if (input_string) {
-            input_string = input_string.substring(0, input_string.length - 2);
-        }
-        if (insufficient) {
-            input_string += ' <span class="text-danger">[Insufficient Supplies]</span>';
+            input_string += `<br>`;
+            input_string += `<span class="text-primary">${input.label}</span>: `;
+            let input_class = parseInt(account.supplies[input.slug].amount) < parseInt(input.amount) ? 'text-danger' : 'text-success';
+            input_string += `<span class="${input_class}">${number_format(account.supplies[input.slug].amount)}</span>/`;
+            input_string += `<span class="text-default">${number_format(input.amount)}</span>`;
         }
         return input_string;
     }
     function industry_output_string(industry) {
         let output_string = '';
         if (industry.output) {
-            output_string = industry.output.amount + ' ' + industry.output.label;
+            output_string = number_format(industry.output.amount) + ' ' + industry.output.label;
         }
         return output_string;
     }

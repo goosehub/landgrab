@@ -21,7 +21,7 @@ class Game extends CI_Controller {
         $this->settlements = $this->game_model->get_all('settlement');
         $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];
         $this->industries = $this->game_model->get_all('industry', 'category_id');
-        $this->industry_category_labels = [0, 'Government', 'Energy', 'Tourism', 'Knowledge', 'Light', 'Heavy', 'Metro'];
+        $this->industry_category_labels = [0, 'Government', 'Energy', 'Tourism', 'Knowledge', 'Light', 'Heavy', 'Metro', 'Victory'];
         $this->unit_labels = [0, 'Infantry', 'Tanks', 'Airforce'];
         $this->treaties = [0, 'War', 'Peace', 'Passage'];
 
@@ -438,6 +438,9 @@ class Game extends CI_Controller {
         }
         if ($industry['minimum_settlement_size'] && $industry['minimum_settlement_size'] > $tile['settlement_key']) {
             api_error_response('township_too_small', 'Township must be larger');
+        }
+        if ($industry['is_victory']) {
+            dd('gg');
         }
         if ($industry_key == CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);

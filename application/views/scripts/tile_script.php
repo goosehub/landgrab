@@ -70,6 +70,12 @@
                 event.preventDefault();
             }
         });
+        $('#town_tile_name_input').keypress(function(event) {
+            if (event.which == keys['enter']) {
+                $('#set_settlement_button').trigger('click');
+                event.preventDefault();
+            }
+        });
         $('#tile_desc_input').keypress(function(event) {
             if (event.which == keys['enter'] && !event.shiftKey) {
                 submit_tile_desc();
