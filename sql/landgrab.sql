@@ -208,14 +208,14 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (22, 1, 10), -- Pharmaceuticals
 (22, 33, 1), -- Pharmaceuticals
 (26, 3, 1000000), -- World_Government
-(26, 4, 1000), -- World_Government
-(26, 45, 100), -- World_Government
+(26, 4, 3000), -- World_Government
+(26, 45, 500), -- World_Government
 (27, 1, 10000), -- World_Currency
 (27, 46, 100), -- World_Currency
 (27, 41, 10), -- World_Currency
 (28, 13, 10000), -- Space_Colonization
-(28, 44, 1000), -- Space_Colonization
-(28, 36, 100); -- Space_Colonization
+(28, 44, 500), -- Space_Colonization
+(28, 36, 300); -- Space_Colonization
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (
@@ -307,7 +307,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (42, 9, 'Machines', 'machinery', 'K', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (43, 9, 'Automobiles', 'automotive', 'M', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (44, 9, 'Aircraft', 'aircraft', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
-(45, 9, 'Culture', 'culture', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
+(45, 9, 'Culture', 'culture', '', TRUE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.'),
 (46, 9, 'Influence', 'influence', '', FALSE, NULL, 30, 'Increases National GDP by 30% and is reduced by 1 each hour.');
 
 DROP TABLE IF EXISTS `market_price`;
@@ -714,7 +714,7 @@ INSERT INTO `industry` (
   46, 1, NULL, 200, 'Increases National GDP by 30%'
 ),
 (24, 7, 'Entertainment', 'entertainment_media', 5, NULL, FALSE,
-  45, 3, NULL, 50, 'Increases National GDP by 30%'
+  45, 10, NULL, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering', 'engineering_design', 5, NULL, FALSE,
   36, 10, NULL, 100, ''

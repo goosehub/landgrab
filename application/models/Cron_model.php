@@ -381,24 +381,13 @@ Class cron_model extends CI_Model
 				OR pharmaceuticals.amount IS NOT NULL
 			)
 		");
+		// Keep towns at their base
 		$this->db->query("
 			UPDATE tile
-			SET settlement_key = $uninhabited_key, industry_key = NULL, is_base = 0, is_capitol = 0
+			INNER JOIN settlement ON settlement.id = settlement_key
+			SET population = settlement.base_population
 			WHERE settlement_key = $town_key
-			AND population < (SELECT base_population FROM settlement WHERE id = $town_key)
-			AND is_capitol = 0
-		");
-		$this->db->query("
-			UPDATE tile
-			SET settlement_key = $town_key, industry_key = NULL
-			WHERE settlement_key = $city_key
-			AND population < (SELECT base_population FROM settlement WHERE id = $city_key)
-		");
-		$this->db->query("
-			UPDATE tile
-			SET settlement_key = $city_key, industry_key = NULL
-			WHERE settlement_key = $metro_key
-			AND population < (SELECT base_population FROM settlement WHERE id = $metro_key)
+			AND population < settlement.base_population
 		");
 	}
 	function downgrade_townships()

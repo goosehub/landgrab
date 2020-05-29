@@ -19,44 +19,42 @@ MEDIUM PRIORITY
     UI: New Icons
     UI: Mobile
 LOW PRIORITY
-    UI: Base shortcut on settlements
-    BUG: make get_account_budget() calc settlement & industry separately for accuracy
-    BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
     TWEAK: abstract settlement input string into programatic
+    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
 NO PRIORITY
+    BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Record and display last winner of world
     FEATURE: Show when settlement, terrain, upfront, is insufficient
     BALANCE: Require upfront payment
+    UI: Base shortcut on settlements
     BUG: White nations are invisible
-    MISC: account migration
+    SYS: account migration
     MECHANIC: New Treaty Ally/Right of Passage
-    PERFORMANCE: grow_population is slow
-    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
     SETTLEMENT: national park
-    min tax rates
-    world backup
-    abstract market table per world
-    Conceal units except for allies and naval
-    shortages more clear
+    TWEAK: min tax rates
+    MECHANIC: Units requiring their industry
+    SYS: world backup
+    TWEAK: abstract market table per world
+    MECHANIC: Conceal units except for allies and naval
+    UI: shortages more clear
     BUG: On landgrab.sql run, supply_industry_lookup didn't seed
     MECHANIC: pollution win condition
     MECHANIC: nuclear win condition
     MECHANIC: nuke
     MECHANIC: spy
     MECHANIC: pandemic
-    Reject active trade requests when war starts
-    Being attacked UI
-    notices when trade request accepted
-    disable enlist options when not enough cash exists
-    capitols show laws of that nation, wars and rights of passage
-    population projection
-    Township Population Reset/Decrease on capture and downgrade
-    store default google maps id type
-    units UI for red–green color blindness
-    Defeating nation gives you their supplies
-    Market graph
+    TWEAK: Reject active trade requests when war starts
+    UI: Being attacked UI
+    UI: notices when trade request accepted
+    UI: disable enlist options when not enough cash exists
+    UI: capitols show laws of that nation, wars and rights of passage
+    UI: population projection
+    UI: store default google maps id type
+    UI: units UI for red–green color blindness
+    MECHANIC: Defeating nation gives you their supplies
+    UI: Market graph
 
 ==========================================================================================
     Next Release Notes
@@ -71,8 +69,9 @@ Rename Alcohol to Wine
 Pharmaceuticals requires professors
 All settlements now persist on capture
 Several Settlement, Industry and Unit tweaks to cost, output, and GDP
-Population buffs
-Fewer tundra tiles
+Population growth buffs
+Townships don't downgrade past town
+Fewer tundra tiles, current land tile count is exactly 6000
 Option to provide a name when creating a town
 Clicking on tile of another player shows treaty and quick link to diplomacy
 Clicking on chat icon of another player is a quick link to diplomacy
