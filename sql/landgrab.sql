@@ -181,7 +181,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (11, 13, 1), -- Steel
 (12, 29, 1), -- Electronics
 (12, 7, 1), -- Electronics
-(13, 39, 3), -- Port
+(13, 39, 5), -- Port
 (14, 30, 1), -- Machinery
 (14, 39, 1), -- Machinery
 (14, 40, 1), -- Machinery
@@ -192,16 +192,16 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (15, 39, 1), -- Automotive
 (15, 40, 1), -- Automotive
 (15, 38, 1), -- Automotive
-(15, 36, 1), -- Automotive
-(15, 17, 1), -- Automotive
+(15, 36, 2), -- Automotive
+(15, 17, 2), -- Automotive
 (16, 31, 1), -- Aerospace
 (16, 32, 1), -- Aerospace
 (16, 39, 1), -- Aerospace
 (16, 40, 1), -- Aerospace
-(16, 38, 1), -- Aerospace
-(16, 34, 1), -- Aerospace
-(16, 36, 1), -- Aerospace
-(16, 17, 1), -- Aerospace
+(16, 38, 2), -- Aerospace
+(16, 34, 2), -- Aerospace
+(16, 36, 3), -- Aerospace
+(16, 17, 3), -- Aerospace
 (19, 2, 20), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
@@ -303,7 +303,7 @@ INSERT INTO `supply` (`id`, `category_id`, `label`, `slug`, `suffix`, `can_trade
 (38, 8, 'Chemicals', 'chemicals', 'M gal', TRUE, NULL, NULL, ''),
 (39, 8, 'Steel', 'steel', 'Gt', TRUE, NULL, NULL, ''),
 (40, 8, 'Electronics', 'electronics', 'M', TRUE, NULL, NULL, ''),
-(41, 9, 'Shipping Ports', 'port', '', FALSE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
+(41, 9, 'Cargo Ships', 'port', 'K', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (42, 9, 'Machines', 'machinery', 'K', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (43, 9, 'Automobiles', 'automotive', 'M', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
 (44, 9, 'Aircraft', 'aircraft', '', TRUE, NULL, 10, 'Increases National GDP by 10% and is reduced by 1 each hour.'),
@@ -681,13 +681,13 @@ INSERT INTO `industry` (
   41, 1, NULL, 50, 'Increases National GDP by 10%'
 ),
 (14, 6, 'Machinery', 'machinery', 4, NULL, FALSE,
-  42, 10, NULL, 30, 'Increases National GDP by 10%'
+  42, 15, NULL, 30, 'Increases National GDP by 10%'
 ),
 (15, 6, 'Automotive', 'automotive', 4, NULL, FALSE,
   43, 20, NULL, 40, 'Increases National GDP by 10%'
 ),
 (16, 6, 'Aerospace', 'aerospace', 4, NULL, FALSE,
-  44, 5, NULL, 50, 'Increases National GDP by 10%'
+  44, 10, NULL, 50, 'Increases National GDP by 10%'
 ),
 -- tourism
 (17, 3, 'Leisure', 'leisure', NULL, 5, FALSE,

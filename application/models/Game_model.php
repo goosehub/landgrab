@@ -748,6 +748,20 @@ Class game_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	function player_has_supplies_for_industry($account, $industry, $supplies) {
+		$supply_industry_lookup = $this->get_all('supply_industry_lookup');
+		$industry = $this->merge_single_industry_and_supplies($industry, $supplies, $supply_industry_lookup);
+		foreach ($industry['inputs'] as $input) {
+			if ($account['supplies'][$input['slug']]['amount'] < $input['amount']) {
+				api_error_response('not_enough_to_win', 'This victory requires ' . $input['amount'] . ' ' . $input['label']);
+				return false;
+			}
+		}
+		return true;
+	}
+	function win_the_game($account) {
+		api_error_response('you_win', 'You win');
+	}
 	// 
 	// 
 	// 
@@ -766,26 +780,30 @@ Class game_model extends CI_Model
 	function merge_industry_and_supply($industries, $supplies) {
 		$supply_industry_lookup = $this->get_all('supply_industry_lookup');
 		foreach ($industries as $key => $industry) {
-			$industries[$key]['inputs'] = [];
-			$industries[$key]['output'] = '';
-			foreach ($supplies as $supply) {
-				if ($industry['output_supply_key'] === $supply['id']) {
-					$supply['amount'] = $industry['output_supply_amount'];
-					$industries[$key]['output'] = $supply;
-				}
+			$industries[$key] = $this->merge_single_industry_and_supplies($industries[$key], $supplies, $supply_industry_lookup);
+		}
+		return $industries;
+	}
+	function merge_single_industry_and_supplies($industry, $supplies, $supply_industry_lookup) {
+		$industry['inputs'] = [];
+		$industry['output'] = '';
+		foreach ($supplies as $supply) {
+			if ($industry['output_supply_key'] === $supply['id']) {
+				$supply['amount'] = $industry['output_supply_amount'];
+				$industry['output'] = $supply;
 			}
-			foreach ($supply_industry_lookup as $lookup) {
-				if ($industry['id'] === $lookup['industry_key']) {
-					foreach ($supplies as $supply) {
-						if ($supply['id'] === $lookup['supply_key']) {
-							$supply['amount'] = $lookup['amount'];
-							$industries[$key]['inputs'][] = $supply;
-						}
+		}
+		foreach ($supply_industry_lookup as $lookup) {
+			if ($industry['id'] === $lookup['industry_key']) {
+				foreach ($supplies as $supply) {
+					if ($supply['id'] === $lookup['supply_key']) {
+						$supply['amount'] = $lookup['amount'];
+						$industry['inputs'][] = $supply;
 					}
 				}
 			}
 		}
-		return $industries;
+		return $industry;
 	}
 	function settlement_allowed_on_terrain($terrain_key, $settlement) {
 		if ($terrain_key == FERTILE_KEY && $settlement['is_allowed_on_fertile']) {

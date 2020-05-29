@@ -9,19 +9,17 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    FEATURE: Win Condition
     UI: Interactive Tutorial
 MEDIUM PRIORITY
     BALANCE: Town Defense meta is strange
-    UI: Show win condition in leaders modal
-    UI: Base shortcut on settlements
-    BALANCE: Require upfront payment
     BUG: Disappearing units when server side validation or error hit
     FEATURE: Multi World
+    FEATURE: World Win State
+    FEATURE: World Lock State
     UI: New Icons
     UI: Mobile
 LOW PRIORITY
-    FEATURE: World Lock
+    UI: Base shortcut on settlements
     BUG: make get_account_budget() calc settlement & industry separately for accuracy
     BUG: supplies projections vs reality
     FEATURE: Leaderboard always show main stats
@@ -30,6 +28,7 @@ LOW PRIORITY
 NO PRIORITY
     FEATURE: Record and display last winner of world
     FEATURE: Show when settlement, terrain, upfront, is insufficient
+    BALANCE: Require upfront payment
     BUG: White nations are invisible
     MISC: account migration
     MECHANIC: New Treaty Ally/Right of Passage
@@ -63,7 +62,9 @@ NO PRIORITY
     Next Release Notes
 ==========================================================================================
 
+Victory Conditions: World Government, World Currency, Space Colonization. Available in the industry tab
 New Mechanic: Each nation is only allowed 1 type of cash crop
+Supplies are needed before starting an industry
 Resource frequency tweaks, still 100 total per map
 Socialism have massive buffs to max support
 Rename Alcohol to Wine

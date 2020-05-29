@@ -422,7 +422,7 @@ class Game extends CI_Controller {
         $industry_key = $this->input->post('industry_key');
         $tile_id = $this->input->post('tile_id');
         $tile = $this->game_model->get_tile_by_id($tile_id);
-        $account = $this->user_model->this_account($tile['world_key']);
+        $account = $this->get_this_full_account($tile['world_key']);
         $industry = $this->game_model->get_industry_from_state($industry_key);
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');
@@ -440,7 +440,10 @@ class Game extends CI_Controller {
             api_error_response('township_too_small', 'Township must be larger');
         }
         if ($industry['is_victory']) {
-            dd('gg');
+            if (!$this->game_model->player_has_supplies_for_industry($account, $industry, $this->supplies)) {
+                api_error_response('not_enough_supplies', 'You need more supplies for this industry');
+            }
+            $this->game_model->win_the_game($account);
         }
         if ($industry_key == CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);
