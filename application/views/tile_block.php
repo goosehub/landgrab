@@ -174,7 +174,7 @@
                         </div>
                         <div id="select_settlement_input_parent">
                             <label class="select_settlement_label">Requires Hourly:</label>
-                            <span id="select_settlement_input" class="text-warning"></span>
+                            <span id="select_settlement_input" class="text-default"></span>
                         </div>
                         <div>
                             <label class="select_settlement_label">GDP:</label>

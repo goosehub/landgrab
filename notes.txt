@@ -21,8 +21,6 @@ MEDIUM PRIORITY
 LOW PRIORITY
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
-    TWEAK: abstract settlement input string into programatic
-    PERFORMANCE: on init map, don't get water squares with no units to save thousands of rows
 NO PRIORITY
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Record and display last winner of world
@@ -45,6 +43,7 @@ NO PRIORITY
     MECHANIC: nuke
     MECHANIC: spy
     MECHANIC: pandemic
+    PERFORMANCE: don't get empty ocean tiles on map init to save bandwidth
     TWEAK: Reject active trade requests when war starts
     UI: Being attacked UI
     UI: notices when trade request accepted
@@ -77,7 +76,7 @@ Clicking on tile of another player shows treaty and quick link to diplomacy
 Clicking on chat icon of another player is a quick link to diplomacy
 Font changes
 Number formatting
-Improved industry select
+Improved settlement and industry select
 Numerous minor fixes and tweaks
 Townships only continue growing when upgraded
 

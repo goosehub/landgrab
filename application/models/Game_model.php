@@ -103,7 +103,6 @@ Class game_model extends CI_Model
 	}
 	function get_all_tiles_in_world($world_key)
 	{
-		// 
 		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);
@@ -112,7 +111,6 @@ Class game_model extends CI_Model
 	}
 	function get_all_tiles_in_world_recently_updated($world_key, $update_timespan)
 	{
-		// 
 		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);
@@ -122,7 +120,6 @@ Class game_model extends CI_Model
 	}
 	function get_all_tiles_in_world_with_units($world_key)
 	{
-		// 
 		$this->db->select($this->tile_select(), FALSE);
 		$this->db->from('tile');
 		$this->db->where('world_key', $world_key);

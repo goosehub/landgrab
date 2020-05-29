@@ -210,9 +210,9 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (26, 3, 1000000), -- World_Government
 (26, 4, 3000), -- World_Government
 (26, 45, 500), -- World_Government
-(27, 1, 10000), -- World_Currency
+(27, 1, 50000), -- World_Currency
 (27, 46, 100), -- World_Currency
-(27, 41, 10), -- World_Currency
+(27, 41, 50), -- World_Currency
 (28, 13, 10000), -- Space_Colonization
 (28, 44, 500), -- Space_Colonization
 (28, 36, 300); -- Space_Colonization
@@ -518,17 +518,17 @@ INSERT INTO `settlement` (
 (3, 'Town', 'town', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, TRUE,
-  100, '100K Population, 2 Food, 2 Energy', NULL, NULL, 5
+  100, '', NULL, NULL, 5
 ),
 (4, 'City', 'city', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, TRUE, TRUE, FALSE,
-  1000, '1,000K Population, 5 Food, 5 Energy, 2 Cash Crops, 2 Merchandise', NULL, NULL, 20
+  1000, '', NULL, NULL, 20
 ),
 (5, 'Metro', 'metro', 1,
   TRUE, FALSE, FALSE, FALSE, FALSE,
   TRUE, TRUE, FALSE, FALSE, FALSE,
-  10000, '10,000K Population, 20 Food, 20 Energy, 5 Cash Crops, 5 Merchandise, 2 Steel, 2 Pharmaceuticals', NULL, NULL, 50
+  10000, '', NULL, NULL, 50
 ),
 (6, 'Grain', 'grain', 2,
   FALSE, TRUE, FALSE, FALSE, FALSE,
@@ -678,7 +678,7 @@ INSERT INTO `industry` (
 ),
 -- hevvy industry
 (13, 6, 'Shipping Port', 'port', 4, 5, FALSE,
-  41, 1, NULL, 50, 'Increases National GDP by 10%'
+  41, 3, NULL, 50, 'Increases National GDP by 10%'
 ),
 (14, 6, 'Machinery', 'machinery', 4, NULL, FALSE,
   42, 15, NULL, 30, 'Increases National GDP by 10%'
@@ -717,7 +717,7 @@ INSERT INTO `industry` (
   45, 10, NULL, 50, 'Increases National GDP by 30%'
 ),
 (25, 7, 'Engineering', 'engineering_design', 5, NULL, FALSE,
-  36, 10, NULL, 100, ''
+  36, 5, NULL, 100, ''
 ),
 -- victory
 (26, 8, 'World Government', 'world_government', 5, NULL, TRUE,

@@ -389,7 +389,7 @@
             $('#select_settlement_defensive_parent').show();
         }
         $('#select_settlement_input_parent').hide();
-        if (settlement.input_desc) {
+        if (settlement_is_township(settlement.id)) {
             $('#select_settlement_input').html(settlement_input_string(settlement));
             $('#select_settlement_input_parent').show();
         }
@@ -491,63 +491,147 @@
         return 'Any';
     }
     function settlement_input_string(settlement) {
-        let settlement_input_string = settlement.input_desc;
-        settlement_input_string += insufficient_township_supplies(settlement);
-        return settlement_input_string;
+        // Yep, it's one of those functions
+        // Grouping of food and cash crops make this cleaner, or at least far easier to write and read
+        // Dynamic variables names could be used to make this moore DRY
+        // Also, we can have a straight string, but I want constants to control it
+        // return settlement.input_desc;
+        let html = '';
+        let sup = account.supplies;
+        let food_amount = 0 + parseInt(sup['grain'].amount) + parseInt(sup['fruit'].amount) + parseInt(sup['vegetables'].amount) + parseInt(sup['livestock'].amount) + parseInt(sup['fish'].amount);
+        let cash_crops_amount = 0 + parseInt(sup['coffee'].amount) + parseInt(sup['tea'].amount) + parseInt(sup['cannabis'].amount) + parseInt(sup['wine'].amount) + parseInt(sup['tobacco'].amount);
+        if (settlement.id == town_key) {
+            if (town_food_cost) {
+                amount_class = food_amount < town_food_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Food</span>: <span class="${amount_class}">${number_format(food_amount)}</span>/${town_food_cost}`;
+            }
+            if (town_energy_cost) {
+                amount_class = sup['energy'].amount < town_energy_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Energy</span>: <span class="${amount_class}">${number_format(sup['energy'].amount)}</span>/${town_energy_cost}`;
+            }
+            if (town_cash_crops_cost) {
+                amount_class = cash_crops_amount < town_cash_crops_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${town_cash_crops_cost}`;
+            }
+            if (town_merchandise_cost) {
+                amount_class = sup['merchandise'].amount < town_merchandise_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Merchandise</span>: <span class="${amount_class}">${number_format(sup['merchandise'].amount)}</span>/${town_merchandise_cost}`;
+            }
+            if (town_pharmaceuticals_cost) {
+                amount_class = sup['pharmaceuticals'].amount < town_pharmaceuticals_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Pharmaceuticals</span>: <span class="${amount_class}">${number_format(sup['pharmaceuticals'].amount)}</span>/${town_pharmaceuticals_cost}`;
+            }
+            if (town_steel_cost) {
+                amount_class = sup['steel'].amount < town_steel_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Steel</span>: <span class="${amount_class}">${number_format(sup['steel'].amount)}</span>/${town_steel_cost}`;
+            }
+        }
+        if (settlement.id == city_key) {
+            if (city_food_cost) {
+                amount_class = food_amount < city_food_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Food</span>: <span class="${amount_class}">${number_format(food_amount)}</span>/${city_food_cost}`;
+            }
+            if (city_energy_cost) {
+                amount_class = sup['energy'].amount < city_energy_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Energy</span>: <span class="${amount_class}">${number_format(sup['energy'].amount)}</span>/${city_energy_cost}`;
+            }
+            if (city_cash_crops_cost) {
+                amount_class = cash_crops_amount < city_cash_crops_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${city_cash_crops_cost}`;
+            }
+            if (city_merchandise_cost) {
+                amount_class = sup['merchandise'].amount < city_merchandise_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Merchandise</span>: <span class="${amount_class}">${number_format(sup['merchandise'].amount)}</span>/${city_merchandise_cost}`;
+            }
+            if (city_pharmaceuticals_cost) {
+                amount_class = sup['pharmaceuticals'].amount < city_pharmaceuticals_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Pharmaceuticals</span>: <span class="${amount_class}">${number_format(sup['pharmaceuticals'].amount)}</span>/${city_pharmaceuticals_cost}`;
+            }
+            if (city_steel_cost) {
+                amount_class = sup['steel'].amount < city_steel_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Steel</span>: <span class="${amount_class}">${number_format(sup['steel'].amount)}</span>/${city_steel_cost}`;
+            }
+        }
+        if (settlement.id == metro_key) {
+            if (metro_food_cost) {
+                amount_class = food_amount < metro_food_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Food</span>: <span class="${amount_class}">${number_format(food_amount)}</span>/${metro_food_cost}`;
+            }
+            if (metro_energy_cost) {
+                amount_class = sup['energy'].amount < metro_energy_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Energy</span>: <span class="${amount_class}">${number_format(sup['energy'].amount)}</span>/${metro_energy_cost}`;
+            }
+            if (metro_cash_crops_cost) {
+                amount_class = cash_crops_amount < metro_cash_crops_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${metro_cash_crops_cost}`;
+            }
+            if (metro_merchandise_cost) {
+                amount_class = sup['merchandise'].amount < metro_merchandise_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Merchandise</span>: <span class="${amount_class}">${number_format(sup['merchandise'].amount)}</span>/${metro_merchandise_cost}`;
+            }
+            if (metro_pharmaceuticals_cost) {
+                amount_class = sup['pharmaceuticals'].amount < metro_pharmaceuticals_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Pharmaceuticals</span>: <span class="${amount_class}">${number_format(sup['pharmaceuticals'].amount)}</span>/${metro_pharmaceuticals_cost}`;
+            }
+            if (metro_steel_cost) {
+                amount_class = sup['steel'].amount < metro_steel_cost ? 'text-danger' : 'text-success';
+                html += `<br>${force_tab}<span class="text-danger">Steel</span>: <span class="${amount_class}">${number_format(sup['steel'].amount)}</span>/${metro_steel_cost}`;
+            }
+        }
+        return html;
     }
     function insufficient_township_supplies(settlement) {
         if (!account) {
-            return '';
+            return false;
         }
-        let insufficient_message = ' <span class="text-danger">[Insufficient Supplies]</span>';
         let sup = account.supplies;
         if (settlement.id == town_key) {
             if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < town_food_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['energy'].amount < town_energy_cost) {
-                return insufficient_message;
+                return true;
             }
         }
         if (settlement.id == city_key) {
             if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < city_food_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['coffee'].amount + sup['tea'].amount + sup['cannabis'].amount + sup['wine'].amount + sup['tobacco'].amount < city_cash_crops_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['energy'].amount < city_energy_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['merchandise'].amount < city_merchandise_cost) {
-                return insufficient_message;
+                return true;
             }
         }
         if (settlement.id == metro_key) {
             if (sup['grain'].amount + sup['fruit'].amount + sup['vegetables'].amount + sup['livestock'].amount + sup['fish'].amount < metro_food_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['coffee'].amount + sup['tea'].amount + sup['cannabis'].amount + sup['wine'].amount + sup['tobacco'].amount < metro_cash_crops_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['energy'].amount < metro_energy_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['merchandise'].amount < metro_merchandise_cost) {
-                return insufficient_message;
+                return true;
             }
             if (sup['pharmaceuticals'].amount < metro_pharmaceuticals_cost) {
-                return insufficient_message;
+                return true;
             }
         }
-        return '';
+        return false;
     }
     function industry_input_string(industry) {
         let input_string = '';
         for (let i = 0; i < industry.inputs.length; i++) {
             input = industry.inputs[i];
-            input_string += `<br>`;
-            input_string += `<span class="text-primary">${input.label}</span>: `;
+            input_string += `<br>${force_tab}`;
+            input_string += `<span class="text-danger">${input.label}</span>: `;
             let input_class = parseInt(account.supplies[input.slug].amount) < parseInt(input.amount) ? 'text-danger' : 'text-success';
             input_string += `<span class="${input_class}">${number_format(account.supplies[input.slug].amount)}</span>/`;
             input_string += `<span class="text-default">${number_format(input.amount)}</span>`;

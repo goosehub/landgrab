@@ -117,6 +117,7 @@
       'wine',
       'tobacco',
     ];
+    const force_tab = '&nbsp;'.repeat(4);
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];
