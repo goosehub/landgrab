@@ -176,6 +176,14 @@ Class game_model extends CI_Model
 		$this->db->where('lng', $lng);
 		$this->db->update('tile', $data);
 	}
+	function update_tile_timestamp($previous_tile)
+	{
+		$data = array(
+			'modified' => date('Y-m-d H:i:s'),
+		);
+		$this->db->where('id', $previous_tile['id']);
+		$this->db->update('tile', $data);
+	}
 	function update_tile_name($tile_id, $tile_name)
 	{
 		$data = array(

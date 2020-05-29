@@ -297,15 +297,16 @@ class Game extends CI_Controller {
         $tile = $this->game_model->get_tile($end_lat, $end_lng, $world_key);
         $previous_tile = $this->game_model->get_tile($start_lat, $start_lng, $world_key);
         if (!$this->game_model->tiles_are_adjacent($tile['lat'], $tile['lng'], $previous_tile['lat'], $previous_tile['lng'])) {
+            $this->game_model->update_tile_timestamp($previous_tile);
             api_error_response('tiles_not_adjacent', 'Tiles Are Not Adjacent');
         }
         if ($previous_tile['unit_owner_key'] != $account['id']) {
+            $this->game_model->update_tile_timestamp($previous_tile);
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
-        // TODO: Fix client side disappear ASAP
-        // Workaround, limit low enough so user will be notified client side before server side
-        // if ((int)$account['supplies']['support']['amount'] <= 0) {
-        if ((int)$account['supplies']['support']['amount'] <= -25) {
+        // Allow user to go a bit negative so they can see the support shortage and stop before hitting an error
+        if ((int)$account['supplies']['support']['amount'] <= NEGATIVE_SUPPORT_LEEWAY) {
+            $this->game_model->update_tile_timestamp($previous_tile);
             api_error_response('not_enough_support_to_move', 'You can not move units without political support');
         }
         // Keep remove before add, makes dupe bugs less likely

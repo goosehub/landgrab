@@ -24,6 +24,7 @@
       get_map_update();
     }, function(response){
       marker.setMap(null);
+      delete unit_markers[marker.tile_id];
     });
   }
 
@@ -187,7 +188,7 @@
     else {
       lat = final_end_lat;
       lng = final_end_lng;
-      delete unit_markers[marker];
+      delete unit_markers[marker.tile_id];
       allowed_move_to_new_position = true;
     }
 

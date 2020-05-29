@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Disappearing units when server side validation or error hit
 MEDIUM PRIORITY
     FEATURE: World Win State
     UI: New Icons
@@ -78,6 +77,7 @@ Clicking on chat icon of another player is a quick link to diplomacy
 Font changes
 Number formatting
 Improved settlement and industry select
+Fixed units disappearing client side in certain situations (Contact me if you experience this issue)
 Numerous minor fixes and tweaks
 Townships only continue growing when upgraded
 
