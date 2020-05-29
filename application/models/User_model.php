@@ -174,13 +174,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         foreach ($supplies as $supply) {
             $default = 0;
             if ($supply['slug'] === 'cash') {
-                $default = CASH_DEFAULT;
+                $default = DEFAULT_CASH;
             }
             if ($supply['slug'] === 'support') {
-                $default = SUPPORT_DEFAULT;
+                $default = DEFAULT_SUPPORT;
             }
             if ($supply['slug'] === 'grain') {
-                $default = GRAIN_DEFAULT;
+                $default = DEFAULT_GRAIN;
             }
             $data = array(
                 'account_key' => $account_id,

@@ -7,7 +7,12 @@
 	<hr>
 
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-9">
+		</div>
+		<div class="col-md-1">
+			<p class="text-info pull-right">
+				Supply Select:
+			</p>
 		</div>
 		<div class="col-md-2">
 			<select id="leaderboard_supply_select" class="form-control">

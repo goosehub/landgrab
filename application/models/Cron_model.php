@@ -955,9 +955,9 @@ Class cron_model extends CI_Model
 		$cash_key = CASH_KEY;
 		$support_key = SUPPORT_KEY;
 		$grain_key = GRAIN_KEY;
-		$cash_default = CASH_DEFAULT;
-		$support_default = SUPPORT_DEFAULT;
-		$grain_default = GRAIN_DEFAULT;
+		$default_cash = DEFAULT_CASH;
+		$default_support = DEFAULT_SUPPORT;
+		$default_grain = DEFAULT_GRAIN;
 		$default_power_structure = DEFAULT_POWER_STRUCTURE;
 		$default_tax_rate = DEFAULT_TAX_RATE;
 		$default_ideology = DEFAULT_IDEOLOGY;
@@ -1005,7 +1005,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN `account`
 				ON `account`.id = `supply_account_lookup`.account_key
 			SET
-			`amount` = $cash_default
+			`amount` = $default_cash
 			WHERE world_key = $world_key
 			AND supply_key = $cash_key;
 		");
@@ -1015,7 +1015,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN `account`
 				ON `account`.id = `supply_account_lookup`.account_key
 			SET
-			`amount` = $support_default
+			`amount` = $default_support
 			WHERE world_key = $world_key
 			AND supply_key = $support_key;
 		");
@@ -1025,7 +1025,7 @@ Class cron_model extends CI_Model
 			LEFT JOIN `account`
 				ON `account`.id = `supply_account_lookup`.account_key
 			SET
-			`amount` = $grain_default
+			`amount` = $default_grain
 			WHERE world_key = $world_key
 			AND supply_key = $grain_key;
 		");

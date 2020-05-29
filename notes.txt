@@ -9,18 +9,19 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    UI: Interactive Tutorial
-MEDIUM PRIORITY
     BUG: Disappearing units when server side validation or error hit
-    FEATURE: Multi World
+MEDIUM PRIORITY
     FEATURE: World Win State
-    FEATURE: World Lock State
     UI: New Icons
-    UI: Mobile
 LOW PRIORITY
+    UI: Interactive Tutorial
+    FEATURE: Multi World
+    FEATURE: World Generate
+    FEATURE: World Lock State
+    UI: Mobile
+NO PRIORITY
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
-NO PRIORITY
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Record and display last winner of world
     FEATURE: Show when settlement, terrain, upfront, is insufficient
