@@ -383,7 +383,7 @@ class Game extends CI_Controller {
         $tile_id = $this->input->post('tile_id');
         $tile_name = $this->input->post('tile_name');
         $tile = $this->game_model->get_tile_by_id($tile_id);
-        $account = $this->user_model->this_account($tile['world_key']);
+        $account = $this->get_this_full_account($tile['world_key']);
         $settlement = $this->game_model->get_settlement_from_state($settlement_key);
         if ($account['id'] != $tile['account_key']) {
             api_error_response('auth', 'Tile is not yours');
@@ -402,6 +402,9 @@ class Game extends CI_Controller {
         }
         if ($this->game_model->tile_is_township($tile['settlement_key']) && $tile['population'] < $settlement['base_population']) {
             api_error_response('popuation_insufficient', 'Popuation insufficient to upgrade township');
+        }
+        if ($this->game_model->tile_is_township($settlement_key)) {
+            $this->game_model->pay_upfront_food_cost($account, $settlement_key);
         }
         if ($this->game_model->tile_is_township($tile['settlement_key']) && $settlement_key < $tile['settlement_key']) {
             $this->game_model->update_tile_industry($tile_id, null);
@@ -448,8 +451,8 @@ class Game extends CI_Controller {
         if ($industry_key == CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);
         }
-        if ($industry_key == CAPITOL_INDUSTRY_KEY || $industry_key == BASE_INDUSTRY_KEY) {
-            $this->game_model->decrement_account_supply($account['id'], CASH_KEY, 10);
+        if ($industry['upfront_cost']) {
+            $this->game_model->decrement_account_supply($account['id'], CASH_KEY, $industry['upfront_cost']);
         }
         $tile = $this->game_model->get_tile_by_id($tile_id);
         $this->game_model->update_tile_industry($tile_id, $industry_key);

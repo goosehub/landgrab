@@ -149,7 +149,6 @@
                         </div>
                         <div id="settlement_establish_parent" class="establish_parent pull-right">
                             <input type="tile_name" id="town_tile_name_input" placeholder="Town Name" class="form-control" style="display: none;"/>
-                            <br>
                             <button id="set_settlement_button" class="btn btn-action form-control">
                                 Establish
                                 <span class="fa fa-industry"></span>
@@ -168,9 +167,13 @@
                             <label class="select_settlement_label">Terrain:</label>
                             <span id="select_settlement_terrain" class=""></span>
                         </div>
-                        <div id="select_settlement_defensive_parent">
-                            <label class="select_settlement_defensive_label">Defensive Bonus:</label>
-                            <span id="select_settlement_defensive_bonus" class="text-action"></span>
+                        <div id="select_settlement_required_population_parent">
+                            <label class="select_settlement_label">Minimum Population:</label>
+                            <span id="select_settlement_required_population" class="text-danger"></span>
+                        </div>
+                        <div id="select_settlement_upfront_cost_parent">
+                            <label class="select_settlement_label">Upfront Cost:</label>
+                            <span id="select_settlement_upfront_cost" class="text-danger"></span>
                         </div>
                         <div id="select_settlement_input_parent">
                             <label class="select_settlement_label">Requires Hourly:</label>
@@ -183,6 +186,10 @@
                         <div id="select_settlement_output_parent">
                             <label class="select_settlement_label">Produces Hourly:</label>
                             <span id="select_settlement_output" class="text-success"></span>
+                        </div>
+                        <div id="select_settlement_defensive_parent">
+                            <label class="select_settlement_defensive_label">Defensive Bonus:</label>
+                            <span id="select_settlement_defensive_bonus" class="text-success"></span>
                         </div>
                     </div>
                 </div>

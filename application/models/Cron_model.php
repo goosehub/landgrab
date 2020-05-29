@@ -520,6 +520,19 @@ Class cron_model extends CI_Model
 			$this->db->update_batch('supply_account_lookup', $data, 'supply_key');
 		}
 	}
+	function update_grouped_supply($account_supplies, &$new_supplies, &$supply_needed)
+	{
+		foreach ($new_supplies as $key => $value) {
+			if ($account_supplies[$key] >= $supply_needed) {
+				$new_supplies[$key] = $supply_needed;
+				$supply_needed = 0;
+			}
+			else {
+				$new_supplies[$key] = $account_supplies[$key];
+				$supply_needed = $supply_needed - $account_supplies[$key];
+			}
+		}
+	}
 	function township_input_update_array($account, $food_randomized, $food_needed, $cash_crops_randomized, $cash_crops_needed, $energy, $merchandise, $steel, $pharmaceuticals)
 	{
 		return [
@@ -610,19 +623,6 @@ Class cron_model extends CI_Model
 		$cash_crops_needed += $account['city_count'] * CITY_CASH_CROPS_COST;
 		$cash_crops_needed += $account['metro_count'] * METRO_CASH_CROPS_COST;
 		return $cash_crops_needed;
-	}
-	function update_grouped_supply($account, &$new_supplies, &$supply_needed)
-	{
-		foreach ($new_supplies as $key => $value) {
-			if ($account[$key] >= $supply_needed) {
-				$new_supplies[$key] = $supply_needed;
-				$supply_needed = 0;
-			}
-			else {
-				$new_supplies[$key] = $account[$key];
-				$supply_needed = $supply_needed - $account[$key];
-			}
-		}
 	}
 	function get_all_accounts_for_townships()
 	{

@@ -651,6 +651,74 @@ Class game_model extends CI_Model
 		}
 		return true;
 	}
+	function pay_upfront_food_cost($account, $settlement_key) {
+		$food_needed = 0;
+		if ($settlement_key == TOWN_KEY) {
+			$food_needed = TOWN_FOOD_COST;
+		}
+		if ($settlement_key == CITY_KEY) {
+			$food_needed = CITY_FOOD_COST;
+		}
+		if ($settlement_key == METRO_KEY) {
+			$food_needed = METRO_FOOD_COST;
+		}
+		$food_randomized = [
+			'fish' => 0,
+			'livestock' => 0,
+			'fruit' => 0,
+			'vegetables' => 0,
+			'grain' => 0,
+		];
+		shuffle_assoc($food_randomized);
+		$this->update_grouped_supply_for_account($account['supplies'], $food_randomized, $food_needed);
+		$data = $this->township_upfront_food_update_array($account, $food_randomized, $food_needed);
+		// Run update
+		$this->db->where('account_key', $account['id']);
+		$this->db->update_batch('supply_account_lookup', $data, 'supply_key');
+	}
+	function township_upfront_food_update_array($account, $food_randomized, $food_needed)
+	{
+		return [
+			[
+				'account_key' => $account['id'],
+				'supply_key' => GRAIN_KEY,
+				'amount' => $account['supplies']['grain']['amount'] - $food_randomized['grain'] - $food_needed,
+			],
+			[
+				'account_key' => $account['id'],
+				'supply_key' => FRUIT_KEY,
+				'amount' => $account['supplies']['fruit']['amount'] - $food_randomized['fruit'],
+			],
+			[
+				'account_key' => $account['id'],
+				'supply_key' => VEGETABLES_KEY,
+				'amount' => $account['supplies']['vegetables']['amount'] - $food_randomized['vegetables'],
+			],
+			[
+				'account_key' => $account['id'],
+				'supply_key' => LIVESTOCK_KEY,
+				'amount' => $account['supplies']['livestock']['amount'] - $food_randomized['livestock'],
+			],
+			[
+				'account_key' => $account['id'],
+				'supply_key' => FISH_KEY,
+				'amount' => $account['supplies']['fish']['amount'] - $food_randomized['fish'],
+			],
+		];
+	}
+	function update_grouped_supply_for_account($account_supplies, &$new_supplies, &$supply_needed)
+	{
+		foreach ($new_supplies as $key => $value) {
+			if ((int)$account_supplies[$key]['amount'] >= $supply_needed) {
+				$new_supplies[$key] = $supply_needed;
+				$supply_needed = 0;
+			}
+			else {
+				$new_supplies[$key] = (int)$account_supplies[$key]['amount'];
+				$supply_needed = $supply_needed - (int)$account_supplies[$key]['amount'];
+			}
+		}
+	}
 	function account_has_amount_of_supply($account_key, $supply_key, $amount) {
 		$this->db->select('*');
 		$this->db->from('supply_account_lookup');

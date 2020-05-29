@@ -11,7 +11,6 @@
 HIGH PRIORITY
     UI: Interactive Tutorial
 MEDIUM PRIORITY
-    BALANCE: Town Defense meta is strange
     BUG: Disappearing units when server side validation or error hit
     FEATURE: Multi World
     FEATURE: World Win State
@@ -61,6 +60,7 @@ NO PRIORITY
 
 Victory Conditions: World Government, World Currency, Space Colonization. Available in the industry tab
 New Mechanic: Each nation is only allowed 1 type of cash crop
+Townships now cost food up front
 Supplies are needed before starting an industry
 Resource frequency tweaks, still 100 total per map
 Socialism have massive buffs to max support
