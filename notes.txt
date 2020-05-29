@@ -18,6 +18,9 @@ LOW PRIORITY
     FEATURE: World Generate
     FEATURE: World Lock State
     UI: Mobile
+    TWEAK: after_first_claim load is not good experience
+    TWEAK: Updating diplomacy account list
+    BUG: Active accounts not reset on world reset, start nation
 NO PRIORITY
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
@@ -58,28 +61,7 @@ NO PRIORITY
     Next Release Notes
 ==========================================================================================
 
-Victory Conditions: World Government, World Currency, Space Colonization. Available in the industry tab
-New Mechanic: Each nation is only allowed 1 type of cash crop
-Townships now cost food up front
-Supplies are needed before starting an industry
-Resource frequency tweaks, still 100 total per map
-Socialism have massive buffs to max support
-Rename Alcohol to Wine
-Pharmaceuticals requires professors
-All settlements now persist on capture
-Several Settlement, Industry and Unit tweaks to cost, output, and GDP
-Population growth buffs
-Townships don't downgrade past town
-Fewer tundra tiles, current land tile count is exactly 6000
-Option to provide a name when creating a town
-Clicking on tile of another player shows treaty and quick link to diplomacy
-Clicking on chat icon of another player is a quick link to diplomacy
-Font changes
-Number formatting
-Improved settlement and industry select
-Fixed units disappearing client side in certain situations (Contact me if you experience this issue)
-Numerous minor fixes and tweaks
-Townships only continue growing when upgraded
+
 
 ==========================================================================================
     Code

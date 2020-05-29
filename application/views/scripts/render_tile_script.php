@@ -390,14 +390,14 @@
         }
         $('#select_settlement_required_population_parent').hide();
         $('#select_settlement_upfront_cost_parent').hide();
-        $('#select_settlement_input_parent_parent').hide();
+        $('#select_settlement_input_parent').hide();
         if (settlement_is_township(settlement.id)) {
             $('#select_settlement_required_population').html(format_population(settlement.base_population));
             $('#select_settlement_upfront_cost').html(settlement_upfront_cost_string(settlement));
             $('#select_settlement_input').html(settlement_input_string(settlement));
             $('#select_settlement_required_population_parent').show();
             $('#select_settlement_upfront_cost_parent').show();
-            $('#select_settlement_input_parent_parent').show();
+            $('#select_settlement_input_parent').show();
         }
         let output = settlement.output ? settlement.output.label : 'Nothing';
         if (settlement_is_township(settlement.id)) {
