@@ -10,7 +10,6 @@
 
 HIGH PRIORITY
 MEDIUM PRIORITY
-    FEATURE: World Win State
     UI: New Icons
 LOW PRIORITY
     UI: Interactive Tutorial

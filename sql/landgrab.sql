@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `world` (
   `slug` varchar(256) NOT NULL,
   `tile_size` int(4) NOT NULL,
   `winner_account_key` int(10) UNSIGNED NULL,
-  `winner_industry_key` varchar(256) NOT NULL,
+  `winner_industry_key` int(10) UNSIGNED NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);
