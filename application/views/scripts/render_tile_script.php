@@ -514,6 +514,9 @@
         // Dynamic variables names could be used to make this moore DRY
         // Also, we can have a straight string, but I want constants to control it
         // return settlement.input_desc;
+        if (!account || current_tile.account_key != account['id']) {
+            return;
+        }
         let html = '';
         let sup = account.supplies;
         let food_amount = 0 + parseInt(sup['grain'].amount) + parseInt(sup['fruit'].amount) + parseInt(sup['vegetables'].amount) + parseInt(sup['livestock'].amount) + parseInt(sup['fish'].amount);
@@ -599,8 +602,8 @@
         return html;
     }
     function insufficient_township_supplies(settlement) {
-        if (!account) {
-            return false;
+        if (!account || current_tile.account_key != account['id']) {
+            return;
         }
         let sup = account.supplies;
         if (settlement.id == town_key) {
@@ -645,6 +648,9 @@
         return false;
     }
     function industry_input_string(industry) {
+        if (!account || current_tile.account_key != account['id']) {
+            return;
+        }
         let input_string = '';
         for (let i = 0; i < industry.inputs.length; i++) {
             input = industry.inputs[i];
