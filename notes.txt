@@ -11,7 +11,6 @@
 HIGH PRIORITY
     FEATURE: World Create with name
     FEATURE: World Listing with tiles free/total/locked/won
-    BUG: Logged out can't open township
 MEDIUM PRIORITY
     UI: New Icons
     UI: Interactive Tutorial

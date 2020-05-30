@@ -645,7 +645,7 @@ class Game extends CI_Controller {
             $this->game_model->update_treaty($existing_treaty['id'], $trade_request['treaty_key']);
         }
         else {
-            $this->game_model->create_treaty($account['id'], $trade_partner_key, $trade_request['treaty_key']);
+            $this->game_model->create_treaty($account['id'], $trade_request['request_account_key'], $trade_request['treaty_key']);
         }
         if ($existing_treaty['treaty_key'] == WAR_KEY) {
             $trade_partner = $this->user_model->get_account_by_id($trade_request['request_account_key']);
