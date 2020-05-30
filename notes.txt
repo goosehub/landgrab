@@ -18,9 +18,10 @@ LOW PRIORITY
     FEATURE: World Generate
     FEATURE: World Lock State
     UI: Mobile
-    TWEAK: after_first_claim load is not good experience
+    TWEAK: show_government load is not good experience
     TWEAK: Updating diplomacy account list
     BUG: Active accounts not reset on world reset, start nation
+    FEATURE: Winner List
 NO PRIORITY
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats

@@ -905,6 +905,7 @@ Class cron_model extends CI_Model
 			echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
 			$this->world_reset_row_deletes($world['id']);
 			$this->world_reset_row_updates($world['id']);
+			$this->world_reset_world_state($world['id']);
 			$this->world_reset_regenerate_resources($world['id']);
 		}
 	}
@@ -1029,6 +1030,15 @@ Class cron_model extends CI_Model
 			WHERE world_key = $world_key
 			AND supply_key = $grain_key;
 		");
+	}
+	function world_reset_world_state($world_key)
+	{
+		$data = array(
+			'winner_account_key' => null,
+			'winner_industry_key' => null,
+		);
+		$this->db->where('id', $account['world_key']);
+		$this->db->update('world', $data);	
 	}
 	function world_reset_regenerate_resources($world_key)
 	{

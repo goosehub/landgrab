@@ -24,7 +24,7 @@ loading();
   // Show register block rest of the time
   // $('#register_block').show();
 <?php } ?>
-<?php if (isset($_GET['after_first_claim'])) { ?>
+<?php if (isset($_GET['show_government'])) { ?>
     open_government_block();
 <?php } ?>
 

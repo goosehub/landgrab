@@ -27,9 +27,9 @@ SET time_zone = "+00:00";
 --
 
 TRUNCATE TABLE `world`;
-INSERT INTO `world` (`id`, `slug`, `tile_size`, `crontab`) 
+INSERT INTO `world` (`id`, `slug`, `tile_size`) 
 VALUES
-(1, 'Main', 2, '0 * * * *');
+(1, 'Main', 2);
 
 --
 -- Dumping data for table `tile`

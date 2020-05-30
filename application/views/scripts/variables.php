@@ -150,6 +150,7 @@
     let tax_rate = null;
     let ideology = null;
     let current_leaderboard_supply = <?= DEFAULT_LEADERBOARD_SUPPLY_KEY; ?>;
+    let game_won_acknowledge = false;
 
     // Toggles
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;

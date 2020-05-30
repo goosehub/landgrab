@@ -476,6 +476,15 @@ img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
   width: 50%;
 }
 
+/* Winner */
+
+#victory_header {
+  font-family: 'Roboto Mono';
+}
+.winner_info_row {
+  font-family: 'Itim';
+}
+
 /* Chat */
 #chat_parent {
   position: fixed;

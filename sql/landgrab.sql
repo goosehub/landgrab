@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(256) NOT NULL,
   `tile_size` int(4) NOT NULL,
-  `crontab` varchar(256) NOT NULL,
+  `winner_account_key` int(10) UNSIGNED NULL,
+  `winner_industry_key` varchar(256) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);
@@ -208,14 +209,14 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (22, 1, 10), -- Pharmaceuticals
 (22, 33, 1), -- Pharmaceuticals
 (26, 3, 1000000), -- World_Government
-(26, 4, 3000), -- World_Government
-(26, 45, 500), -- World_Government
+(26, 4, 2000), -- World_Government
+(26, 45, 300), -- World_Government
 (27, 1, 50000), -- World_Currency
+(27, 41, 300), -- World_Currency
 (27, 46, 100), -- World_Currency
-(27, 41, 50), -- World_Currency
 (28, 13, 10000), -- Space_Colonization
 (28, 44, 500), -- Space_Colonization
-(28, 36, 300); -- Space_Colonization
+(28, 36, 200); -- Space_Colonization
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (

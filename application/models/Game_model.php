@@ -20,7 +20,8 @@ Class game_model extends CI_Model
 		$this->db->from($table);
 		$this->db->where('id', $id);
 		$query = $this->db->get();
-		return $query->result_array();
+		$result = $query->result_array();
+		return isset($result[0]) ? $result[0] : false;
 	}
 	function get_supply_by_account($account_key, $supply_key)
 	{
@@ -832,8 +833,13 @@ Class game_model extends CI_Model
 		}
 		return true;
 	}
-	function win_the_game($account) {
-		api_error_response('you_win', 'You win');
+	function win_the_game($account, $industry_key) {
+		$data = array(
+			'winner_account_key' => $account['id'],
+			'winner_industry_key' => $industry_key,
+		);
+		$this->db->where('id', $account['world_key']);
+		$this->db->update('world', $data);
 	}
 	// 
 	// 

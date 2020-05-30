@@ -114,6 +114,11 @@ class Game extends CI_Controller {
         }
 
         $data['world'] = $this->game_model->get_world_by_id($world_key);
+        $data['winner_winner_chicken_dinner'] = false;
+        if ($data['world']['winner_account_key']) {
+            $data['winner_winner_chicken_dinner'] = $this->user_model->get_account_by_id($data['world']['winner_account_key']);
+            $data['winner_winner_chicken_dinner']['industry'] = $this->game_model->get_single('industry', $data['world']['winner_industry_key']);
+        }
         if (!$data['world']) {
             api_error_response('world_not_found', 'World Not Found');
         }
@@ -447,7 +452,7 @@ class Game extends CI_Controller {
             if (!$this->game_model->player_has_supplies_for_industry($account, $industry, $this->supplies)) {
                 api_error_response('not_enough_supplies', 'You need more supplies for this industry');
             }
-            $this->game_model->win_the_game($account);
+            $this->game_model->win_the_game($account, $industry['id']);
         }
         if ($industry_key == CAPITOL_INDUSTRY_KEY) {
             $this->game_model->remove_capitol($account['id']);

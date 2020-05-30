@@ -213,7 +213,7 @@
                             <div class="col-md-9">
                             <?php 
                         } ?>
-                        <?php if ($item_in_cat_count == 4 && $current_category_id != 1) { ?>
+                        <?php if ($item_in_cat_count == 4 && $current_category_id != 1 && $current_category_id != 5) { ?>
                             <br>
                         <?php } ?>
                         <button id="preview_settlement_as_<?php echo $settlement['slug']; ?>" data-id="<?php echo $settlement['id']; ?>" data-output="<?php echo $settlement['output_supply_key']; ?>" class="preview_settlement_button btn btn-default">

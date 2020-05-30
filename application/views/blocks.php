@@ -84,6 +84,43 @@
     <span id="tutorial_text"></span>
 </div>
 
+<!-- Winner Winner Chicken Dinner -->
+<div id="winner_winner_chicken_dinner_parent" class="center_block">
+    <h2 id="victory_header" class="text-center text-action">Victory</h2>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
+      <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <div class="row winner_info_row">
+        <div class="col-md-3 text-center">
+            <img id="winner_leader_portrait" class="img-responsive img-thumbnail" src=""/>
+        </div>
+        <div class="col-md-6">
+            <h3 class="winner_text_shadow text-center">
+                <strong class="text-danger" id="winner_username"></strong>
+                <br>
+                of
+                <br>
+                <strong class="text-primary" id="winner_nation_name"></strong>
+                <br>
+                has Established
+                <br>
+                <strong class="text-purple" id="winner_victory_industry"></strong>
+            </h3>
+            <br> <br>
+            <hr>
+            <br> <br>
+            <p class="text-center">
+                This world will regenerate at <?= RESET_TIME_STRING; ?>
+            </p>
+        </div>
+        <div class="col-md-3 text-center">
+            <img id="winner_nation_flag" class="img-responsive img-thumbnail" src=""/>
+        </div>
+    </div>
+</div>
+
 <!-- Account Update -->
 <?php if ($account) { ?>
 <div id="account_update_block" class="center_block center_block_extra_small_right">

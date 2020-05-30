@@ -161,6 +161,8 @@
         window.location.reload();
       }
 
+      winner_winner_chicken_dinner(response['winner_winner_chicken_dinner']);
+
       if (account && !response['account']) {
         alert('You were away too long and you\'re session has expired, please log back in.');
         window.location.href = '<?= base_url(); ?>world/' + world_key + '?login';
@@ -173,6 +175,24 @@
         highlight_single_square(current_tile.id);
       }
     }, 'map_update');
+  }
+
+  function winner_winner_chicken_dinner(winner) {
+    if (!winner) {
+      $('#winner_winner_chicken_dinner_parent').hide();
+    }
+    if (winner && !game_won_acknowledge) {
+      $('#winner_victory_industry').html(winner['industry']['label']);
+      $('#winner_username').html(winner['username']);
+      $('#winner_nation_name').html(winner['nation_name']);
+      $('#winner_nation_flag').prop('src', `${base_url}uploads/${winner['nation_flag']}`);
+      $('#winner_leader_portrait').prop('src', `${base_url}uploads/${winner['leader_portrait']}`);
+      $('.winner_text_shadow').css('text-shadow', '0px 2px 2px ' + winner['color']);
+      $('.winner_text_color').css('background-color', winner['color']);
+      $('.winner_background_color').css('background-color', winner['color']);
+      $('#winner_winner_chicken_dinner_parent').show();
+      game_won_acknowledge = true;
+    }
   }
 
   function update_tiles(new_tiles) {
