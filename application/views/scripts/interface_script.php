@@ -1,81 +1,89 @@
 <!-- Interface Script -->
 <script>
+loading();
+render_law_preview();
+ab_coin_toss();
+handle_trade_tab_switch();
+handle_law_ui();
+handle_center_block_show_and_hide();
+
 // Removed in mapInit callback in map_script
-loading = function() {
+function loading() {
     var over = '<div id="overlay"><p>Loading...</p></div>';
     $(over).appendTo('body');
 };
-loading();
 
-// Error reporting
-<?php if ($failed_form === 'error_block') { ?>
-    $('#error_block').show();
-<?php } ?>
-<?php if ($failed_form === 'register') { ?>
-    $('#register_block').show();
-<?php } ?>
-<?php if ($failed_form === 'login' && $account) { ?>
-  // Show login form if not logged in and not failed to log in
-  $('#login_block').show();
-<?php } else if (isset($_GET['login'])) { ?>
-  // Show login form if URL calls for it
-  $('#login_block').show();
-<?php } else if (!$account) { ?>
-  // Show register block rest of the time
-  // $('#register_block').show();
-<?php } ?>
-<?php if (isset($_GET['show_government'])) { ?>
-    open_government_block();
-<?php } ?>
-
-// AB testing
-coin = (Math.floor(Math.random() * 2) == 0);
-if (coin) {
-    // $('#ab_test').val('default_register_block');
-} else {
-    // $('#ab_test').val('default_no_register_block');
+function ab_coin_toss() {
+    coin = (Math.floor(Math.random() * 2) == 0);
+    if (coin) {
+        // $('#ab_test').val('default_register_block');
+    } else {
+        // $('#ab_test').val('default_no_register_block');
+    }
 }
 
-// Validation errors shown on page load if exist
-<?php if ($failed_form === 'login') { ?>
-$('#login_block').show();
-<?php } else if ($failed_form === 'register') { ?> 
-$('#register_block').show();
-<?php } ?>
-
-// Tabs
-$('#trade_requests_received a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-});
-$('#trade_requests_sent a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-});
-$('#current_treaties a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-});
-
-// 
-// Laws
-// 
-
-render_law_preview();
-$(document).ready(function(){
-    $('#input_tax_rate').change(function() {
-        render_law_preview();
+function handle_trade_tab_switch() {
+    // Tabs
+    $('#trade_requests_received a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
     });
-    $('#input_power_structure').change(function() {
-        render_law_preview();
+    $('#trade_requests_sent a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
     });
-    $('input[name=input_ideology]').click(function() {
-        render_law_preview();
+    $('#current_treaties a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
     });
-});
-$('input[type=range]').on('input', function () {
-    $(this).trigger('change');
-});
+}
+
+function handle_law_ui() {
+    $(document).ready(function(){
+        $('#input_tax_rate').change(function() {
+            render_law_preview();
+        });
+        $('#input_power_structure').change(function() {
+            render_law_preview();
+        });
+        $('input[name=input_ideology]').click(function() {
+            render_law_preview();
+        });
+    });
+    $('input[type=range]').on('input', function () {
+        $(this).trigger('change');
+    });
+}
+
+function default_open_block() {
+    <?php if (isset($_GET['show_government'])) { ?>
+        open_government_block();
+    <?php } ?>
+    // Validation errors shown on page load if exist
+    <?php if ($failed_form === 'login') { ?>
+        $('#login_block').show();
+    <?php } else if ($failed_form === 'register') { ?> 
+        $('#register_block').show();
+    <?php } ?>
+
+    // Error reporting
+    <?php if ($failed_form === 'error_block') { ?>
+        $('#error_block').show();
+    <?php } ?>
+    <?php if ($failed_form === 'register') { ?>
+        $('#register_block').show();
+    <?php } ?>
+    <?php if ($failed_form === 'login' && $account) { ?>
+      // Show login form if not logged in and not failed to log in
+      $('#login_block').show();
+    <?php } else if (isset($_GET['login'])) { ?>
+      // Show login form if URL calls for it
+      $('#login_block').show();
+    <?php } else if (!$account) { ?>
+      // Show register block rest of the time
+      // $('#register_block').show();
+    <?php } ?>
+}
 
 function render_law_preview() {
     power_structure = $('#input_power_structure').val();
@@ -154,106 +162,70 @@ function open_government_block() {
     $('#government_block').fadeIn();
 }
 
-// 
-// Center block hide and show logic
-// 
-
-$('.exit_center_block').click(function(){
-  $('.center_block').hide();
-});
-$('.government_dropdown').click(function(){
-    open_government_block();
-});
-$('.diplomacy_dropdown').click(function(){
-    unhighlight_all_squares();
-    mark_war_declare_as_seen();
-    $('.center_block').hide();
-    $('#diplomacy_block').fadeIn();
-});
-$('.open_terms_block').click(function(){
-    $('.center_block').hide();
-    $('#terms_block').fadeIn();
-});
-$('.user_button').click(function(){
-    $('.center_block').hide();
-    $('#account_update_block').fadeIn();
-    $('#account_update_form').data('first-claim', false);
-    $('#update_nation_button').html('Update National Charter');
-    $('#cash_crop_key_parent').hide();
-});
-$('.login_button').click(function(){
-    $('.center_block').hide();
-    $('#login_block').show();
-});
-$('.register_button').click(function(){
-    $('.center_block').hide();
-    $('#register_block').show();
-});
-$('.update_info_button').click(function(){
-    $('.center_block').hide();
-    $('#update_info_block').show();
-});
-$('.about_button').click(function(){
-    $('.center_block').hide();
-    $('#about_block').show();
-});
-$('.faq_button').click(function(){
-    $('.center_block').hide();
-    $('#faq_block').show();
-});
-$('.report_bugs_button').click(function(){
-    $('.center_block').hide();
-    $('#report_bugs_block').show();
-});
-$('.login_button').click(function(){
-    $('#login_input_username').focus();
-});
-$('.register_button').click(function(){
-    $('#register_input_username').focus();
-});
-$('#worlds_dropdown').click(function(){
-    $('.center_block').hide();
-});
-$('#site_dropdown').click(function(){
-    $('.center_block').hide();
-});
-$('.update_password_button').click(function(){
-    $('.center_block').hide();
-    $('#update_password_block').show();
-});
-
-// jQuery DataTables
-$('.jquery-datatable').dataTable({
-    // No paging of data
-    paging: false,
-    "order": [],
-    // Hide Search
-    bFilter: false,
-    bInfo: false,
-    // Sort by desc on click by default
-    "aoColumns": [
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-        { "asSorting": [ "desc", "asc" ] },
-    ],
-    responsive: true,
-    // Do not interpret numeric commas as decimals for sorting
-    // "aoColumnDefs": [
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    //     { "sType": "numeric-comma", "aTargets": [2,3] },
-    // ]
-    // columnDefs: [
-        // { type: 'numeric-comma', targets: 0 }
-    // ]
-});
+function handle_center_block_show_and_hide() {
+    $('.exit_center_block').click(function(){
+      $('.center_block').hide();
+    });
+    $('.government_dropdown').click(function(){
+        open_government_block();
+    });
+    $('.diplomacy_dropdown').click(function(){
+        unhighlight_all_squares();
+        mark_war_declare_as_seen();
+        $('.center_block').hide();
+        $('#diplomacy_block').fadeIn();
+    });
+    $('.open_terms_block').click(function(){
+        $('.center_block').hide();
+        $('#terms_block').fadeIn();
+    });
+    $('.user_button').click(function(){
+        $('.center_block').hide();
+        $('#account_update_block').fadeIn();
+        $('#account_update_form').data('first-claim', false);
+        $('#update_nation_button').html('Update National Charter');
+        $('#cash_crop_key_parent').hide();
+    });
+    $('.login_button').click(function(){
+        $('.center_block').hide();
+        $('#login_block').show();
+    });
+    $('.register_button').click(function(){
+        $('.center_block').hide();
+        $('#register_block').show();
+    });
+    $('.update_info_button').click(function(){
+        $('.center_block').hide();
+        $('#update_info_block').show();
+    });
+    $('.about_button').click(function(){
+        $('.center_block').hide();
+        $('#about_block').show();
+    });
+    $('.faq_button').click(function(){
+        $('.center_block').hide();
+        $('#faq_block').show();
+    });
+    $('.report_bugs_button').click(function(){
+        $('.center_block').hide();
+        $('#report_bugs_block').show();
+    });
+    $('.login_button').click(function(){
+        $('#login_input_username').focus();
+    });
+    $('.register_button').click(function(){
+        $('#register_input_username').focus();
+    });
+    $('#worlds_dropdown').click(function(){
+        $('.center_block').hide();
+    });
+    $('#site_dropdown').click(function(){
+        $('.center_block').hide();
+    });
+    $('.update_password_button').click(function(){
+        $('.center_block').hide();
+        $('#update_password_block').show();
+    });
+}
 
 </script>

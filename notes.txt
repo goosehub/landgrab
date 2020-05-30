@@ -9,26 +9,23 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    FEATURE: World Create with name
+    FEATURE: World Listing with tiles free/total/locked/won
 MEDIUM PRIORITY
     UI: New Icons
-LOW PRIORITY
     UI: Interactive Tutorial
-    FEATURE: Multi World
-    FEATURE: World Generate
-    FEATURE: World Lock State
+LOW PRIORITY
     UI: Mobile
-    TWEAK: show_government load is not good experience
     TWEAK: Updating diplomacy account list
     BUG: Active accounts not reset on world reset, start nation
-    FEATURE: Winner List
 NO PRIORITY
+    UI: Make settlements less quick to assign somehow
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
+    FEATURE: Winner List
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
-    FEATURE: Record and display last winner of world
     FEATURE: Show when settlement, terrain, upfront, is insufficient
-    BALANCE: Require upfront payment
-    UI: Base shortcut on settlements
+    FEATURE: Base settlement
     BUG: White nations are invisible
     SYS: account migration
     MECHANIC: New Treaty Ally/Right of Passage

@@ -16,6 +16,7 @@
     set_map();
     remove_overlay();
     generate_tiles();
+    default_open_block();
   }
 
   function attack_key_listen() {

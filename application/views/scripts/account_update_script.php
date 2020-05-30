@@ -71,6 +71,8 @@
         update_supplies(account.supplies);
         update_input_projections(account.input_projections);
         update_output_projections(account.output_projections);
+        sum_food_output();
+        sum_cash_crops_output();
         update_budget(account.budget);
         update_market_prices(account.market_prices);
         update_gdp_bonus_consume_supplies();
@@ -79,8 +81,6 @@
         update_law_wait();
         update_grouped_food_supply();
         update_grouped_cash_crops_supply();
-        update_grouped_food_output();
-        update_grouped_cash_crops_output();
         update_diverse_diet_population_bonus();
         update_cash_crops_support_bonus();
         update_stats_projections();
@@ -262,28 +262,10 @@
       let bonus = !!parseInt(account.supplies.grain.amount) + !!parseInt(account.supplies.vegetables.amount) + !!parseInt(account.supplies.fruit.amount) + !!parseInt(account.supplies.livestock.amount) + !!parseInt(account.supplies.fish.amount);
       $('#diverse_diet_population_bonus').html(bonus);
     }
+
     function update_cash_crops_support_bonus() {
       let variety = !!parseInt(account.supplies.coffee.amount) + !!parseInt(account.supplies.tea.amount) + !!parseInt(account.supplies.wine.amount) + !!parseInt(account.supplies.cannabis.amount) + !!parseInt(account.supplies.tobacco.amount);
       $('#cash_crops_support_bonus').html(variety);
-    }
-    function update_grouped_food_output() {
-      let food = 0;
-      for (let key in food_key_array) {
-        let this_food = $('#output_projection_' + food_key_array[key]).html();
-        if (this_food) {
-          food += parseInt(this_food);
-        }
-      }
-      $('#output_projection_' + food_key).html(food);
-    }
-
-    function update_grouped_cash_crops_output() {
-      let cash_crops = 0;
-      for (let key in cash_crops_key_array) {
-        let this_cash_crop = $('#output_projection_' + cash_crops_key_array[key]).html();
-        cash_crops += parseInt(this_cash_crop);
-      }
-      $('#output_projection_' + cash_crops_key).html(cash_crops);
     }
 
     function update_grouped_food_supply() {
@@ -345,8 +327,6 @@
           $('#output_projection_' + key).html('+' + output_projections[key]);
         }
       }
-      sum_food_output();
-      sum_cash_crops_output();
     }
 
     function update_stats_projections() {
@@ -374,29 +354,29 @@
 
     function sum_food_output() {
       $('#output_projection_' + food_key).html('');
-      let sum_food_output = 0;
+      let running_sum_food_output = 0;
       $(".output_projection[data-category-id='" + food_category_id + "']").each(function(){
         this_value = $(this).html();
         if (this_value) {
-          sum_food_output += parseInt(this_value);
+          running_sum_food_output += parseInt(this_value);
         }
       });
-      if (sum_food_output) {
-        $('#output_projection_' + food_key).html('+' + sum_food_output);
+      if (running_sum_food_output) {
+        $('#output_projection_' + food_key).html('+' + running_sum_food_output);
       }
     }
 
     function sum_cash_crops_output() {
       $('#output_projection_' + cash_crops_key).html('');
-      let sum_cash_crops_output = 0;
+      running_sum_cash_crops_output = 0;
       $(".output_projection[data-category-id='" + cash_crops_category_id + "']").each(function(){
         this_value = $(this).html();
         if (this_value) {
-          sum_cash_crops_output += parseInt(this_value);
+          running_sum_cash_crops_output += parseInt(this_value);
         }
       });
-      if (sum_cash_crops_output) {
-        $('#output_projection_' + cash_crops_key).html('+' + sum_cash_crops_output);
+      if (running_sum_cash_crops_output) {
+        $('#output_projection_' + cash_crops_key).html('+' + running_sum_cash_crops_output);
       }
     }
 
