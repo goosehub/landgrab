@@ -11,10 +11,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $user_id = $this->session->userdata('user')['id'];
         $account = $this->get_account_by_user($user_id, $world_id);
         if (!$account) {
-            return false;
+            $user = $this->get_user_by_id($user_id);
+            if (!$user) {
+                return false;
+            }
+            $nation_name = 'The ' . $user['username'] . ' Nation';
+            $account_key = $this->create_player_account($user_id, $world_id, false, $nation_name, false, false);
+            $account = $this->get_account_by_user($user_id, $world_id);
+            if (!$account) {
+                return false;
+            }
+            $this->create_login_session($user_id, $user['username']);
         }
         $this->account_loaded($account['id']);
         return $account;
+    }
+    function create_login_session($user_id, $username)
+    {
+        $sess_array = array(
+            'id' => $user_id,
+            'username' => $username
+        );
+        $this->session->set_userdata('user', $sess_array);
     }
     function get_account_by_user($user_key, $world_key)
     {

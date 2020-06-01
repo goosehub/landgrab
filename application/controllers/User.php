@@ -68,28 +68,21 @@ class User extends CI_Controller {
         $username = $this->input->post('username');
 
         // Compare to database
-        $result = $this->user_model->login($username, $password);
+        $user = $this->user_model->login($username, $password);
 
         // Username not found
-        if (!$result) {
+        if (!$user) {
             $this->form_validation->set_message('login_validation', 'Invalid username or password');
             return false;
         }
         // Password does not match
-        else if (!$this->password_override && !password_verify($password, $result['password'])) {
+        else if (!$this->password_override && !password_verify($password, $user['password'])) {
             $this->form_validation->set_message('login_validation', 'Invalid username or password');
             return false;
         }
 		// Success
-        else {
-			// Login
-            $sess_array = array(
-                'id' => $result['id'],
-                'username' => $result['username']
-            );
-            $this->session->set_userdata('user', $sess_array);
-            return TRUE;
-        }
+        $this->user_model->create_login_session($user['id'], $user['username']);
+        return true;
 	}
 
 	// Register
@@ -149,24 +142,9 @@ class User extends CI_Controller {
             $this->form_validation->set_message('register_validation', 'Username already exists');
             return false;
         }
-        // Success
-        // Set variables
-        $worlds = $this->game_model->get_all('world');
-        
-        // Create account for each world
-        foreach ($worlds as $world)
-        {
-            $nation_name = 'The ' . $username . ' Nation';
-            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, '', '');
-        }
 
-		// Login
-        $sess_array = array();
-        $sess_array = array(
-            'id' => $user_id,
-            'username' => $username
-        );
-        $this->session->set_userdata('user', $sess_array);
+        $this->user_model->create_login_session($user_id, $username);
+
         return true;
     }
 
