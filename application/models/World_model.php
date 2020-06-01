@@ -13,6 +13,8 @@ Class world_model extends CI_Model
 		if (!$create_tiles_sql) {
 			api_error_response('cant_get_tiles_file', 'Can not get tiles file.');
 		}
+		$create_world_sql = mb_convert_encoding($create_world_sql, "UTF-8");
+		$create_tiles_sql = mb_convert_encoding($create_tiles_sql, "UTF-8");
 		$next_world_key = $this->next_world_key();
 		$create_world_sql = str_replace('world_name', $slug, $create_world_sql);
 		$create_world_sql = str_replace(DEFAULT_WORLD_KEY, $next_world_key, $create_world_sql);

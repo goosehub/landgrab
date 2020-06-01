@@ -9,7 +9,7 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Fix syntax to use near 'INSERT INTO `tile
+    BUG: Fix syntax to use near 'INSERT INTO `tile, use json?
 MEDIUM PRIORITY
     FEATURE: Create account when opening new world
     FEATURE: Create tiles for new world

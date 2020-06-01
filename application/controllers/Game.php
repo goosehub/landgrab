@@ -110,7 +110,7 @@ class Game extends CI_Controller {
     public function create_world()
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('world_name', 'World Name', 'trim|required|max_length[15]|min_length[3]');
+        $this->form_validation->set_rules('world_name', 'World Name', 'trim|required|max_length[20]|min_length[3]');
         $this->form_validation->set_rules('input_world_is_private', 'Is Private', 'trim|integer|greater_than_equal_to[1]|less_than_equal_to[2]');
         if ($this->form_validation->run() == FALSE) {
             api_error_response('validation', trim(strip_tags(validation_errors())));

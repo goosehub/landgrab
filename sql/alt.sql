@@ -15168,4 +15168,4 @@ INSERT INTO `tile` (`lat`, `lng`, `world_key`, `terrain_key`, `is_capitol`, `is_
 (78, 180, 99999, 6, 0, 0),
 (80, 180, 99999, 6, 0, 0),
 (82, 180, 99999, 6, 0, 0);
--- COMMIT;
+COMMIT;

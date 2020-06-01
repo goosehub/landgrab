@@ -4,8 +4,6 @@
 -- default world key of 99999
 -- default modified
 
--- btw, this file could (should) probably be vastly simplified
-
 --
 -- Table data for world
 --
