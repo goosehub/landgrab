@@ -15,7 +15,6 @@ MEDIUM PRIORITY
 LOW PRIORITY
     UI: Mobile
     TWEAK: Updating diplomacy account list
-    BUG: is_active not reset on world reset, start nation
 NO PRIORITY
     FEATURE: World auto delete if goes unused
     FEATURE: World config for some constants (support gen?)
