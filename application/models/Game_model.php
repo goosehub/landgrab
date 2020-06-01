@@ -63,6 +63,14 @@ Class game_model extends CI_Model
 		$result = $query->result_array();
 		return isset($result[0]) ? $result[0] : false;
 	}
+	function get_all_public_worlds()
+	{
+		$this->db->select('*');
+		$this->db->from('world');
+		$this->db->where('is_private', 0);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function supply_is_cash_crop($supply_key)
 	{
 		$cash_crops = [

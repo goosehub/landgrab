@@ -63,7 +63,7 @@ class Game extends CI_Controller {
             $data['account']['treaties'] = $this->game_model->treaties_by_account($data['account']['id']);
         }
 
-        $data['worlds'] = $this->game_model->get_all('world');
+        $data['worlds'] = $this->game_model->get_all_public_worlds();
         $data['supplies'] = $this->supplies;
         $data['active_accounts'] = $this->user_model->get_active_accounts_in_world($data['world']['id']);
         $data['tiles'] = $this->game_model->get_all_tiles_in_world($data['world']['id']);

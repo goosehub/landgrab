@@ -9,20 +9,16 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Fix syntax to use near 'INSERT INTO `tile, use json?
 MEDIUM PRIORITY
-    FEATURE: Create account when opening new world
-    FEATURE: Create tiles for new world
-    FEATURE: World Listing with tiles free/total/locked/won
     UI: New Icons
     UI: Interactive Tutorial
 LOW PRIORITY
     UI: Mobile
     TWEAK: Updating diplomacy account list
-    BUG: Active accounts not reset on world reset, start nation
-    FEATURE: World delete if goes unused
-    FEATURE: World config for some constants (support gen?)
+    BUG: is_active not reset on world reset, start nation
 NO PRIORITY
+    FEATURE: World auto delete if goes unused
+    FEATURE: World config for some constants (support gen?)
     UI: Make settlements less quick to assign somehow
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
