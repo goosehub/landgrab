@@ -48,7 +48,6 @@ NO PRIORITY
     UI: disable enlist options when not enough cash exists
     UI: capitols show laws of that nation, wars and rights of passage
     UI: population projection
-    UI: store default google maps id type
     UI: units UI for red–green color blindness
     MECHANIC: Defeating nation gives you their supplies
     UI: Market graph

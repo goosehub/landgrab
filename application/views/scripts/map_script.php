@@ -17,6 +17,7 @@
     remove_overlay();
     generate_tiles();
     default_open_block();
+    listen_for_map_type()
   }
 
   function attack_key_listen() {
@@ -68,15 +69,19 @@
     styled_map_map_panther = new google.maps.StyledMapType(map_panther, {name: 'Panther'});
     map.mapTypes.set('panther_map', styled_map_map_panther);
 
-    map.setMapTypeId('paper_map');
+    map.setMapTypeId(styled_map_toggle());
   }
 
   function styled_map_toggle() {
-    styled_map_toggle = getCookie('styled_map_toggle') == null ? default_map : (getCookie('styled_map_toggle') === 'true' ? true : false);
-    google.maps.event.addListener(map, 'maptypeid_changed', function() { 
-      console.log('marco');
-      console.log(map.getMapTypeId());
-      setCookie('styled_map_toggle', map.getMapTypeId());
+    return getCookie('styled_map_toggle') == null ? default_map : getCookie('styled_map_toggle');
+  }
+
+  function listen_for_map_type() {
+    google.maps.event.addListener(map, 'maptypeid_changed', function() {
+      let map_type_id = map.getMapTypeId();
+      if (map_type_id) {
+        setCookie('styled_map_toggle', map.getMapTypeId());
+      }
     });
   }
 
