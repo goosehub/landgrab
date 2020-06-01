@@ -79,6 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->from('account');
         $this->db->join('user', 'user.id = account.user_key', 'left');
         $this->db->where('is_active', true);
+        $this->db->where('world_key', $world_id);
         $query = $this->db->get();
         return $query->result_array();
     }

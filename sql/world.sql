@@ -6,9 +6,9 @@
 -- Table data for world
 --
 
-INSERT INTO `world` (`id`, `slug`, `tile_size`) 
+INSERT INTO `world` (`id`, `name`, `slug`, `creator_account_key`, `tile_size`) 
 VALUES
-(1, 'Main', 2);
+(1, 'Main', 'main', 1, 2);
 
 --
 -- Dumping data for table `tile`

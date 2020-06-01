@@ -59,14 +59,25 @@
       // Prevent excesssive zoom
       // maxZoom: 10,
       mapTypeControlOptions: {
-        mapTypeIds: ['satellite', 'hybrid', 'terrain', 'paper_map']
+        mapTypeIds: ['satellite', 'hybrid', 'terrain', 'paper_map', 'panther_map']
       }
     });
 
-    styled_map_type = new google.maps.StyledMapType(map_pirate, {name: 'Paper'});
-    map.mapTypes.set('paper_map', styled_map_type);
+    styled_map_map_paper = new google.maps.StyledMapType(map_paper, {name: 'Paper'});
+    map.mapTypes.set('paper_map', styled_map_map_paper);
+    styled_map_map_panther = new google.maps.StyledMapType(map_panther, {name: 'Panther'});
+    map.mapTypes.set('panther_map', styled_map_map_panther);
 
-    map.setMapTypeId('<?= DEFAULT_MAP; ?>');
+    map.setMapTypeId('paper_map');
+  }
+
+  function styled_map_toggle() {
+    styled_map_toggle = getCookie('styled_map_toggle') == null ? default_map : (getCookie('styled_map_toggle') === 'true' ? true : false);
+    google.maps.event.addListener(map, 'maptypeid_changed', function() { 
+      console.log('marco');
+      console.log(map.getMapTypeId());
+      setCookie('styled_map_toggle', map.getMapTypeId());
+    });
   }
 
   function remove_overlay() {
