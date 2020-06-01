@@ -128,8 +128,10 @@ DEFINE('DEFAULT_GRAIN', 25);
 DEFINE('DEFAULT_CASH', 50);
 DEFINE('DEFAULT_SUPPORT', 75);
 
-// World Generation
+// Paths
 DEFINE('TILES_JSON_PATH', 'json/tiles.json');
+DEFINE('DEFAULT_NATION_FLAG', 'default_nation_flag.png');
+DEFINE('DEFAULT_LEADER_PORTRAIT', 'default_leader_portrait.png');
 
 // Marketing
 define('ENABLE_FACEBOOK', false);

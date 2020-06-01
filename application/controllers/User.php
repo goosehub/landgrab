@@ -156,15 +156,8 @@ class User extends CI_Controller {
         // Create account for each world
         foreach ($worlds as $world)
         {
-            // Random color for each account
-            $color = random_hex_color();
-
-            // Default these values
             $nation_name = 'The ' . $username . ' Nation';
-            $nation_flag = 'default_nation_flag.png';
-            $leader_portrait = 'default_leader_portrait.png';
-
-            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, $nation_flag, $leader_portrait);
+            $account_id = $this->user_model->create_player_account($user_id, $world['id'], $color, $nation_name, '', '');
         }
 
 		// Login

@@ -131,6 +131,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function create_player_account($user_key, $world_key, $color, $nation_name, $nation_flag, $leader_portrait)
     {
+        $color = $color ? $color : random_hex_color();
+        $nation_flag = $nation_flag ? $nation_flag : DEFAULT_NATION_FLAG;
+        $leader_portrait = $leader_portrait ? $leader_portrait : DEFAULT_LEADER_PORTRAIT;
         $data = array(
             'world_key' => $world_key,
             'user_key' => $user_key,
