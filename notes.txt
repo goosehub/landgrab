@@ -9,10 +9,11 @@
 ==========================================================================================
 
 HIGH PRIORITY
+    BUG: Fix syntax to use near 'INSERT INTO `tile
+MEDIUM PRIORITY
     FEATURE: Create account when opening new world
     FEATURE: Create tiles for new world
     FEATURE: World Listing with tiles free/total/locked/won
-MEDIUM PRIORITY
     UI: New Icons
     UI: Interactive Tutorial
 LOW PRIORITY

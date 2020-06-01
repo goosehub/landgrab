@@ -128,11 +128,17 @@ DEFINE('DEFAULT_GRAIN', 25);
 DEFINE('DEFAULT_CASH', 50);
 DEFINE('DEFAULT_SUPPORT', 75);
 
+// World Generation
+DEFINE('WORLD_SQL_PATH', 'sql/world.sql');
+DEFINE('TILES_SQL_PATH', 'sql/tiles.sql');
+DEFINE('DEFAULT_WORLD_KEY', 99999);
+
 // Marketing
 define('ENABLE_FACEBOOK', false);
 
 // Use for emergencies
 define('MAINTENANCE', false);
+
 
 /*
 |--------------------------------------------------------------------------

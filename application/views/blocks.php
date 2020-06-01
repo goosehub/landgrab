@@ -34,13 +34,13 @@
                     <label for="input_world_is_private" class="pull-right text-success">Public</label>
                 </div>
                 <div class="col-md-3">
-                    <input type="radio" class="form-control" id="world_is_public" value="1" name="input_world_is_private" checked>
+                    <input type="radio" class="form-control" id="world_is_public" value="0" name="input_world_is_private" checked>
                 </div>
                 <div class="col-md-3">
                     <label for="input_world_is_private" class="pull-right text-danger">Private</label>
                 </div>
                 <div class="col-md-3">
-                    <input type="radio" class="form-control" id="world_is_private" value="0" name="input_world_is_private">
+                    <input type="radio" class="form-control" id="world_is_private" value="1" name="input_world_is_private">
                 </div>
             </div>
         </div>

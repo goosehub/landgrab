@@ -128,7 +128,9 @@ class Game extends CI_Controller {
 
         $world_is_private = $this->input->post('input_world_is_private');
 
-        $data['world_key'] = $this->world_model->create_new_world($account['id'], $world_name, $world_is_private);
+        $new_world_key = $this->world_model->create_new_world($account['id'], $world_name, $world_is_private);
+        $data['world_key'] = $new_world_key;
+        $this->user_model->create_player_account($account['user_key'], $new_world_key, '#000000', '', '', '');
         api_response($data);
     }
 
