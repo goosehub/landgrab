@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `world`;
 CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(256) NOT NULL,
+  `name` varchar(256) NOT NULL,
   `tile_size` int(4) NOT NULL,
   `winner_account_key` int(10) UNSIGNED NULL,
   `winner_industry_key` int(10) UNSIGNED NULL,

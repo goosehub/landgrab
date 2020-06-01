@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 Class world_model extends CI_Model
 {
-	function create_new_world($account_key, $slug, $is_private)
+	function create_new_world($account_key, $world_name, $slug, $is_private)
 	{
-		$world_key = $this->insert_world($account_key, $slug, $is_private);
+		$world_key = $this->insert_world($account_key, $world_name, $slug, $is_private);
 		$tiles_json = file_get_contents(TILES_JSON_PATH);
 		if (!$tiles_json) {
 			api_error_response('cant_get_world_file', 'Can not get world file.');
@@ -30,9 +30,10 @@ Class world_model extends CI_Model
 		}
 		return $structured_data;
 	}
-	function insert_world($account_key, $slug, $is_private)
+	function insert_world($account_key, $world_name, $slug, $is_private)
 	{
 		$data = array(
+			'name' => $world_name,
 			'slug' => $slug,
 			'is_private' => $is_private,
 			'creator_account_key' => $account_key,

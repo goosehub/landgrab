@@ -37,6 +37,10 @@ function is_dev() {
     return false;
 }
 
+function slugify($str){
+    return strtolower(str_replace(' ', '_', $str));
+}
+
 // Get JSON POST
 function get_json_post($required) {
     $raw_post = file_get_contents('php://input');

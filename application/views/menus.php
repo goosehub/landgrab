@@ -75,7 +75,7 @@
       </button>
       <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
         <?php foreach ($worlds as $world) { ?>
-        <li class="text-center"><a href="<?=base_url();?>world/<?php echo $world['id']; ?>"><strong class="text-default"><?php echo ucfirst($world['slug']); ?></strong></a></li>
+        <li class="text-center"><a href="<?=base_url();?>world/<?php echo $world['id']; ?>"><strong class="text-default"><?php echo $world['name']; ?></strong></a></li>
         <?php } ?>
         <?php if ($account) { ?>
         <li class="text-center">

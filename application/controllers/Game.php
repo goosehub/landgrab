@@ -118,16 +118,16 @@ class Game extends CI_Controller {
         $world_key = $this->input->post('world_key');
         $is_private = $this->input->post('is_private');
         $world_name = $this->input->post('world_name');
-        $world_name = strtolower(str_replace(' ', '_', $world_name));
         $account = $this->user_model->this_account($world_key);
+        $slug = slugify($world_name);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
-        if ($this->game_model->get_world_by_slug($world_name)) {
+        if ($this->game_model->get_world_by_slug($slug)) {
             api_error_response('world_already_exists', 'A world with this name already exists');
         }
 
-        $new_world_key = $this->world_model->create_new_world($account['id'], $world_name, $is_private);
+        $new_world_key = $this->world_model->create_new_world($account['id'], $world_name, $slug, $is_private);
         $data['world_key'] = $new_world_key;
         $nation_name = 'The ' . $account['username'] . ' Nation';
         $this->user_model->create_player_account($account['user_key'], $new_world_key, false, $nation_name, false, false);
