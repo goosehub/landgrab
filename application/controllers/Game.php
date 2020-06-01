@@ -111,24 +111,23 @@ class Game extends CI_Controller {
     {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_name', 'World Name', 'trim|required|max_length[20]|min_length[3]');
-        $this->form_validation->set_rules('input_world_is_private', 'Is Private', 'trim|integer|greater_than_equal_to[1]|less_than_equal_to[2]');
+        $this->form_validation->set_rules('is_private', 'Is Private', 'trim|integer|greater_than_equal_to[0]|less_than_equal_to[1]');
         if ($this->form_validation->run() == FALSE) {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $world_key = $this->input->post('world_key');
+        $is_private = $this->input->post('is_private');
+        $world_name = $this->input->post('world_name');
+        $world_name = strtolower(str_replace(' ', '_', $world_name));
         $account = $this->user_model->this_account($world_key);
         if (!$account) {
             api_error_response('auth', 'You must be logged in');
         }
-        $world_name = $this->input->post('world_name');
-        $world_name = strtolower(str_replace(' ', '_', $world_name));
         if ($this->game_model->get_world_by_slug($world_name)) {
             api_error_response('world_already_exists', 'A world with this name already exists');
         }
 
-        $world_is_private = $this->input->post('input_world_is_private');
-
-        $new_world_key = $this->world_model->create_new_world($account['id'], $world_name, $world_is_private);
+        $new_world_key = $this->world_model->create_new_world($account['id'], $world_name, $is_private);
         $data['world_key'] = $new_world_key;
         $this->user_model->create_player_account($account['user_key'], $new_world_key, '#000000', '', '', '');
         api_response($data);
