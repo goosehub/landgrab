@@ -2,9 +2,62 @@
 <div id="info_tag">
     <strong>
         <a href="https://www.reddit.com/r/LandGrab/comments/glqdi0/landgrab_v5_alpha_release/" target="_blank">
-            ALPHA - HOW TO PLAY
+            BETA - HOW TO PLAY
         </a>
     </strong>
+</div>
+
+<!-- Create World -->
+<div id="create_world_block" class="center_block center_block_extra_small">
+    <strong>Create Your Own World</strong>
+
+    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
+        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </button>
+    <hr>
+    <p>
+        Share with your friends or online community.
+    </p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input_password">
+                    World Name
+                </label>
+                <input type="text" class="form-control" id="world_name" name="world_name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="input_world_is_private" class="pull-right text-success">Public</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="radio" class="form-control" id="world_is_public" value="1" name="input_world_is_private" checked>
+                </div>
+                <div class="col-md-3">
+                    <label for="input_world_is_private" class="pull-right text-danger">Private</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="radio" class="form-control" id="world_is_private" value="0" name="input_world_is_private">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button id="create_new_world_button" type="submit" class="btn btn-action form-control">Create New World</button>
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+
+    <hr>
+    <small>
+        World may be deleted if unused.
+    </small>
+    <hr>
 </div>
 
 <!-- Combat -->

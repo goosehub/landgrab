@@ -10,6 +10,7 @@ class Game extends CI_Controller {
         $this->load->model('combat_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
+        $this->load->model('world_model', '', TRUE);
         $this->load->model('chat_model', '', TRUE);
 
         $this->resources = $this->game_model->get_all('resource');
@@ -103,6 +104,31 @@ class Game extends CI_Controller {
     public function leaderboard($world_key, $supply_key)
     {
         $data['leaders'] = $this->leaderboard_model->get_leaders_of_supply($world_key, $supply_key);
+        api_response($data);
+    }
+
+    public function create_world()
+    {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('world_name', 'World Name', 'trim|required|max_length[15]|min_length[3]');
+        $this->form_validation->set_rules('input_world_is_private', 'Is Private', 'trim|integer|greater_than_equal_to[1]|less_than_equal_to[2]');
+        if ($this->form_validation->run() == FALSE) {
+            api_error_response('validation', trim(strip_tags(validation_errors())));
+        }
+        $world_key = $this->input->post('world_key');
+        $account = $this->user_model->this_account($world_key);
+        if (!$account) {
+            api_error_response('auth', 'You must be logged in');
+        }
+        $world_name = $this->input->post('world_name');
+        $world_name = strtolower(str_replace(' ', '_', $world_name));
+        if ($this->game_model->get_world_by_slug($world_name)) {
+            api_error_response('world_already_exists', 'A world with this name already exists');
+        }
+
+        $world_is_private = $this->input->post('input_world_is_private');
+
+        $data['world_key'] = $this->world_model->create_new_world($account['id'], $world_name, $world_is_private);
         api_response($data);
     }
 

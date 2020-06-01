@@ -6,6 +6,8 @@ ab_coin_toss();
 handle_trade_tab_switch();
 handle_law_ui();
 handle_center_block_show_and_hide();
+handle_open_create_world();
+handle_create_new_world_button();
 
 // Removed in mapInit callback in map_script
 function loading() {
@@ -20,6 +22,32 @@ function ab_coin_toss() {
     } else {
         // $('#ab_test').val('default_no_register_block');
     }
+}
+
+function handle_create_new_world_button() {
+    $('#create_new_world_button').click(function(){
+        create_new_world();
+    });
+}
+
+function create_new_world() {
+    let is_private = $('input[name="input_world_is_private"]:checked').val();
+    let world_name = $('#world_name').val();
+    let data = {
+      world_key: world_key,
+      world_name: world_name,
+      is_private: is_private,
+    };
+    ajax_post('game/create_world', data, function(response) {
+        window.location.replace(base_url + 'world/' + response.world_key);
+    });
+}
+
+function handle_open_create_world() {
+    $('#open_create_world').click(function(){
+        $('.center_block').hide();
+        $('#create_world_block').show();
+    });
 }
 
 function handle_trade_tab_switch() {

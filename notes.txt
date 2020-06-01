@@ -9,7 +9,8 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    FEATURE: World Create with name
+    FEATURE: Create account when opening new world
+    FEATURE: Create tiles for new world
     FEATURE: World Listing with tiles free/total/locked/won
 MEDIUM PRIORITY
     UI: New Icons

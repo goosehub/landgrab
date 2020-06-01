@@ -25,10 +25,16 @@ CREATE TABLE IF NOT EXISTS `world` (
   `tile_size` int(4) NOT NULL,
   `winner_account_key` int(10) UNSIGNED NULL,
   `winner_industry_key` int(10) UNSIGNED NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `creator_account_key` int(10) UNSIGNED NULL,
+  `is_private` int(1) UNSIGNED NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `world` ADD PRIMARY KEY (`id`);
 ALTER TABLE `world` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `world` ADD INDEX `winner_account_key` (`winner_account_key`);
+ALTER TABLE `world` ADD INDEX `winner_industry_key` (`winner_industry_key`);
+ALTER TABLE `world` ADD INDEX `creator_account_key` (`creator_account_key`);
 
 DROP TABLE IF EXISTS `tile`;
 CREATE TABLE IF NOT EXISTS `tile` (

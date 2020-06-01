@@ -57,7 +57,7 @@ Class game_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('world');
-		$this->db->or_where('id', $world_id);
+		$this->db->where('id', $world_id);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		$result = $query->result_array();

@@ -68,8 +68,8 @@
     </div>
 
     <!-- worldss dropdown -->
-    <div class="worlds_parent menu_element btn-group" style="display: none;">
-      <button class="info_button btn btn-info dropdown-toggle" type="button" id="worlds_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div class="worlds_parent menu_element btn-group">
+      <button class="info_button btn btn-primary dropdown-toggle" type="button" id="worlds_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Worlds
         <span class="caret"></span>
       </button>
@@ -77,7 +77,13 @@
         <?php foreach ($worlds as $world) { ?>
         <li class="text-center"><a href="<?=base_url();?>world/<?php echo $world['id']; ?>"><strong class="text-default"><?php echo ucfirst($world['slug']); ?></strong></a></li>
         <?php } ?>
-      </ul>
+        <?php if ($account) { ?>
+        <li class="text-center">
+          <a href="#">
+            <strong id="open_create_world" class="btn btn-primary">Create New World</strong>
+          </a>
+        </li>
+        <?php } ?>
       </ul>
     </div>
 
