@@ -218,12 +218,12 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (26, 3, 1000000), -- World_Government
 (26, 4, 2000), -- World_Government
 (26, 45, 300), -- World_Government
-(27, 1, 50000), -- World_Currency
-(27, 41, 300), -- World_Currency
-(27, 46, 100), -- World_Currency
+(27, 1, 100000), -- World_Currency
+(27, 41, 500), -- World_Currency
+(27, 46, 300), -- World_Currency
 (28, 13, 10000), -- Space_Colonization
 (28, 44, 500), -- Space_Colonization
-(28, 36, 200); -- Space_Colonization
+(28, 36, 300); -- Space_Colonization
 
 DROP TABLE IF EXISTS `supply_account_lookup`;
 CREATE TABLE IF NOT EXISTS `supply_account_lookup` (

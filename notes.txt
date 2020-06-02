@@ -9,13 +9,13 @@
 ==========================================================================================
 
 HIGH PRIORITY
-MEDIUM PRIORITY
     UI: New Icons
+MEDIUM PRIORITY
     UI: Interactive Tutorial
 LOW PRIORITY
     UI: Mobile
-    REFACTOR: Rename crons to be less time specific
     TWEAK: Change language of hourly to n minutes
+    REFACTOR: Rename cron files to be less time specific
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
@@ -43,6 +43,7 @@ NO PRIORITY
     MECHANIC: nuke
     MECHANIC: spy
     MECHANIC: pandemic
+    MECHANIC: energy resets to 0
     PERFORMANCE: don't get empty ocean tiles on map init to save bandwidth
     TWEAK: Reject active trade requests when war starts
     UI: Being attacked UI
@@ -73,52 +74,20 @@ NO PRIORITY
     potential artists
 https://www.fiverr.com/fernlee/create-a-set-of-10-vector-icons?context_referrer=search_gigs&source=main_banner&ref_ctx_id=97c3d709-7a7a-42ff-b9c9-81ace81390aa&pckg_id=1&pos=1&context_type=auto&funnel=a784619f-d082-461e-a3fd-cf24745cbcb6
 
-    riches resources
-silver - unique shaped bars in dull gray
-gold - unique shaped bars in gold
-platinum - unique shaped bars in shiny silver
-gemstones - bluish white diamond
-    energy resources
-coal - unique shaped rock in black
-gas - gas icon in blue
-oil - pumpjack in white, red, and yellow
-uranium - unique shaped rock in glowing green
-    metals resources
-iron - unique shaped rock in gray
-copper - unique shaped rock in rusty yellow
-zinc - unique shaped rock in dull blue
-aluminum - unique shaped rock in shiny silver
-nickle - unique shaped rock in rusty green
-    Units (each in 4 colors for own, ally, neutral, enemy)
-    Other
-Ore Mine
+    new art
+uranium
+silver
+gold
+platinum
+gemstones
+copper
+aluminum
+zinc
+nickle
 
 ==========================================================================================
     Closet
 ==========================================================================================
-
-Victory Industry
-    World Government
-        1,000,000K national population
-        1,000 tiles
-        100 Culture
-    Financial Superpower
-        $10,000 Billion
-        100 Influence
-        10 Shipping Ports
-    Mars Colonization
-        10,000 Energy
-        1,000 Aircraft
-        100 Engineers
-
-World States
-    one world in win state unlocked in daily cron
-    world generated if no unlocked worlds
-    world locked state when no non-arctic squares unclaimed
-    world win state when victory industry created
-    world destroy when?
-
-Tutorial character or images
 
 Tutorial
     Become A Leader
@@ -146,11 +115,6 @@ Tutorial
     The World Is Yours
         Explain the win condition, final tips
 
-Attacks
-    Spy (Cash) = reveals all units of other player
-    Bombing (Cash,Base,Aerospace) = removes unit
-    Nuclear (Cash,Base,Aerospace,Uranium) = removes settlment
-
 ==========================================================================================
     Documentation
 ==========================================================================================
@@ -172,8 +136,7 @@ Live Server Instance
     Change encryption_key in config/config.php
     Change CRON token in config/constants.php and cron.php
     Modified column needs to be varchar during sql dumps because it is actually using MariaDB as stand-in, and has one timestamp column limitation
-    Set a cron for 
-        0 * * * * php -f /home/interpla/public_html/landgrab.xyz/application/cron.php
+    Set crons for crons folder
 
 coord_slug
     coord_slug is top right corner of box
@@ -192,19 +155,5 @@ Map Size
 Google Maps Polygons
     https://developers.google.com/maps/documentation/javascript/examples/polygon-simple
 
-Ore maps
-    https://en.wikipedia.org/wiki/Ore#/media/File:Simplified_world_mining_map_1.png
-    https://upload.wikimedia.org/wikipedia/commons/5/53/Simplified_world_mining_map_2.png
-
-Population maps
-    https://en.wikipedia.org/wiki/Population_density#/media/File:World_population_density_1994_-_with_equator.png
-
-Industry breakdown
-    https://en.wikipedia.org/wiki/Outline_of_industry
-
-Common Metals
-    https://www.quora.com/What-are-five-of-the-most-commonly-used-metals
-    https://www.visualcapitalist.com/all-the-worlds-metals-and-minerals-in-one-visualization/
-
-Farming Map
-    https://www.fastcompany.com/3042106/the-most-detailed-map-ever-of-the-worlds-cropland-so-we-can-decide-where-to-grow-more-food
+Custom Map Landscapes
+    https://developers.google.com/maps/documentation/javascript/examples/maptype-image
