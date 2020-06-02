@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `world` (
   `id` int(10) UNSIGNED NOT NULL,
   `slug` varchar(256) NOT NULL,
   `name` varchar(256) NOT NULL,
+  `is_private` int(1) UNSIGNED NULL,
   `tile_size` int(4) NOT NULL,
   `winner_account_key` int(10) UNSIGNED NULL,
   `winner_industry_key` int(10) UNSIGNED NULL,
   `creator_account_key` int(10) UNSIGNED NULL,
-  `is_private` int(1) UNSIGNED NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -210,7 +210,7 @@ INSERT INTO `supply_industry_lookup` (`industry_key`, `supply_key`, `amount`) VA
 (16, 34, 2), -- Aerospace
 (16, 36, 3), -- Aerospace
 (16, 17, 3), -- Aerospace
-(19, 2, 20), -- Gambling
+(19, 2, 10), -- Gambling
 (20, 1, 10), -- University
 (21, 33, 1), -- Software
 (22, 1, 10), -- Pharmaceuticals
@@ -650,7 +650,7 @@ INSERT INTO `industry` (
   null, 1, 10, 50, 'Spawns units'
 ),
 (2, 1, 'Federal', 'federal', 4, NULL, FALSE,
-  2, 10, 10, 5, 'Support is per hour'
+  2, 1, 10, 5, 'Support is per hour'
 ),
 (3, 1, 'Base', 'base', NULL, NULL, FALSE,
   null, 1, 10, 3, 'Spawns units'

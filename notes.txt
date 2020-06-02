@@ -14,6 +14,8 @@ MEDIUM PRIORITY
     UI: Interactive Tutorial
 LOW PRIORITY
     UI: Mobile
+    REFACTOR: Rename crons to be less time specific
+    TWEAK: Change language of hourly to n minutes
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
