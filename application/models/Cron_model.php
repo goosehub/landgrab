@@ -1062,6 +1062,7 @@ Class cron_model extends CI_Model
 		$data = array(
 			'resource_key' => null,
 		);
+		$this->db->where('world_key', $world_key);
 		$this->db->update('tile', $data);
 	}
 	function resource_distribute($resource)
