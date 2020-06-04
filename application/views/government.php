@@ -198,13 +198,16 @@
                 </span>
                 <span class="budget_info_item_parent">
                     <strong class="budget_info_item_label">
-                        Estimated Hourly Earnings:
-                        <?= generate_popover('Hourly Earnings', 'Estimate for the Income remaining after accounting for all fixed costs. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
+                        Estimated Earnings:
+                        <?= generate_popover('Earnings', 'Estimate for the Income remaining after accounting for all fixed costs, per cycle. This does not account for supply shortages which can affect your actual GDP vs the projected GDP.', 'right'); ?>
                     </strong>
                     <strong class="budget_info_value text-success">
                         $<span id="budget_earnings"></span> Billion
                     </strong><br>
                 </span>
+                <p class="text-center text-info lead">
+                    Production cycle runs every <?= CYCLE_MINUTES ?> minutes
+                </p>
             </span>
         </div>
         <div class="col-md-4 government_card">
@@ -223,20 +226,20 @@
                             <h4 class="text-purple">
                                 <?= $this->supplies_category_labels[$supply['category_id']]; ?>
                                 <?php if ($supply['category_id'] == ENERGY_CATEGORY_ID) { ?>
-                                    <?= generate_popover('Energy', 'Coal, Gas, Oil, and Uranium are high energy supplies that are scattered across the map. Each produces 2 per hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                    <?= generate_popover('Energy', 'Coal, Gas, Oil, and Uranium are high energy supplies that are scattered across the map. Each produces 2 per cycle. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
                                 <?php } ?>
                                 <?php if ($supply['category_id'] == METALS_CATEGORY_ID) { ?>
-                                    <?= generate_popover('Metals', 'Metal Alloys are scattered across the map. Each produces 3 per hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                    <?= generate_popover('Metals', 'Metal Alloys are scattered across the map. Each produces 3 per cycle. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
                                 <?php } ?>
                                 <?php if ($supply['category_id'] == RICHES_CATEGORY_ID) { ?>
-                                    <?= generate_popover('Riches', 'Riches are scattered across the map. Each produces 1 per hour. They can be sold at market prices that fluctuate every hour. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
+                                    <?= generate_popover('Riches', 'Riches are scattered across the map. Each produces 1 per cycle. They can be sold at market prices that fluctuate every cycle. Trade or expand your borders to get access to these valuables resources', 'bottom', ''); ?>
                                 <?php } ?>
                             </h4>
                         </div>
                         <div class="col-md-3">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Supply
-                            <?= generate_popover('Supplies', 'Each hour settlements & industries produce and consume supplies. Industries consume first, and produce second, so ensure you have supplies on hand before starting new industries.', 'bottom', ''); ?>
+                            <?= generate_popover('Supplies', 'Each cycle settlements & industries produce and consume supplies. Industries consume first, and produce second, so ensure you have supplies on hand before starting new industries.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="category_government_supply government_supply lead" id="government_supply_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -247,8 +250,8 @@
                         </div>
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
-                            Hourly Production
-                            <?= generate_popover('Supplies', 'Each hour your settlements and industries will produce and consume supplies.', 'bottom', ''); ?>
+                            Production
+                            <?= generate_popover('Supplies', 'Each cycle your settlements and industries will produce and consume supplies.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="category_output_projection output_projection text-success lead" id="output_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -259,8 +262,8 @@
                         </div>
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
-                            Hourly Consumption
-                            <?= generate_popover('Supplies', 'If you have a supply shortage, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each hour, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
+                            Consumption
+                            <?= generate_popover('Supplies', 'If you have a supply shortage, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each cycle, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
                             <p class="category_input_projection input_projection text-danger lead" id="input_projection_<?= FOOD_KEY; ?>" data-id="<?= FOOD_KEY; ?>"></p>
@@ -271,7 +274,7 @@
                         </div>
                         <div class="col-md-2">
                         <?php if ($supply['category_id'] == 1) { ?>
-                            Hourly Surplus
+                            Surplus
                             <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of each consumed supply to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>

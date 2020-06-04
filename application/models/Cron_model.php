@@ -4,12 +4,12 @@ defined('BASEPATH')
 
 Class cron_model extends CI_Model
 {
-	function hourly_system_message()
+	function cycle_system_message()
 	{
 		$worlds = $this->game_model->get_all('world');
 		foreach ($worlds as $world) {
 			$world_key = $world['id'];
-	        $declare_war_message = 'Hourly Update';
+	        $declare_war_message = 'Cycle Update';
 	        $this->chat_model->new_chat(0, '', ALERT_COLOR, $declare_war_message, $world_key);
 	    }
 	}
@@ -218,12 +218,12 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
 			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
 			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
-			SET population = population + ($town_population_increment * 
+			SET population = population + ($town_population_increment *
 				(
-					IF(grain.id, 1, 0) + 
-					IF(fruit.id, 1, 0) + 
-					IF(vegetables.id, 1, 0) + 
-					IF(livestock.id, 1, 0) + 
+					IF(grain.id, 1, 0) +
+					IF(fruit.id, 1, 0) +
+					IF(vegetables.id, 1, 0) +
+					IF(livestock.id, 1, 0) +
 					IF(fish.id, 1, 0)
 				)
 			)
@@ -237,12 +237,12 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
 			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
 			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
-			SET population = population + ($city_population_increment * 
+			SET population = population + ($city_population_increment *
 				(
-					IF(grain.id, 1, 0) + 
-					IF(fruit.id, 1, 0) + 
-					IF(vegetables.id, 1, 0) + 
-					IF(livestock.id, 1, 0) + 
+					IF(grain.id, 1, 0) +
+					IF(fruit.id, 1, 0) +
+					IF(vegetables.id, 1, 0) +
+					IF(livestock.id, 1, 0) +
 					IF(fish.id, 1, 0)
 				)
 			)
@@ -257,12 +257,12 @@ Class cron_model extends CI_Model
 			LEFT JOIN supply_account_lookup AS vegetables ON tile.account_key = vegetables.account_key AND vegetables.amount > 0 AND vegetables.supply_key = $vegetables_key
 			LEFT JOIN supply_account_lookup AS livestock ON tile.account_key = livestock.account_key AND livestock.amount > 0 AND livestock.supply_key = $livestock_key
 			LEFT JOIN supply_account_lookup AS fish ON tile.account_key = fish.account_key AND fish.amount > 0 AND fish.supply_key = $fish_key
-			SET population = population + ($metro_population_increment * 
+			SET population = population + ($metro_population_increment *
 				(
-					IF(grain.id, 1, 0) + 
-					IF(fruit.id, 1, 0) + 
-					IF(vegetables.id, 1, 0) + 
-					IF(livestock.id, 1, 0) + 
+					IF(grain.id, 1, 0) +
+					IF(fruit.id, 1, 0) +
+					IF(vegetables.id, 1, 0) +
+					IF(livestock.id, 1, 0) +
 					IF(fish.id, 1, 0)
 				)
 			)
@@ -398,7 +398,7 @@ Class cron_model extends CI_Model
 		$this->db->query("
 			UPDATE tile
 			INNER JOIN settlement ON settlement.id = settlement_key
-			SET 
+			SET
 				settlement_key = $town_key,
 				industry_key = NULL
 			WHERE settlement_key = $city_key
@@ -407,7 +407,7 @@ Class cron_model extends CI_Model
 		$this->db->query("
 			UPDATE tile
 			INNER JOIN settlement ON settlement.id = settlement_key
-			SET 
+			SET
 				settlement_key = $city_key,
 				industry_key = NULL
 			WHERE settlement_key = $metro_key
@@ -749,11 +749,11 @@ Class cron_model extends CI_Model
 					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
 					(
 						1 +
-						(IF(port.amount, $port_bonus, 0) / 100) + 
-						(IF(machinery.amount, $machinery_bonus, 0) / 100) + 
-						(IF(automotive.amount, $automotive_bonus, 0) / 100) + 
-						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) + 
-						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) + 
+						(IF(port.amount, $port_bonus, 0) / 100) +
+						(IF(machinery.amount, $machinery_bonus, 0) / 100) +
+						(IF(automotive.amount, $automotive_bonus, 0) / 100) +
+						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) +
+						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) +
 						(IF(financial.amount, $financial_bonus, 0) / 100)
 					) AS sum_gdp_bonus
 					FROM supply_account_lookup
@@ -784,7 +784,7 @@ Class cron_model extends CI_Model
 			-- Tile corruption is every N tiles another 1 percent of corruption
 			SET sal.amount = sal.amount + (
 				sum_settlement_gdp *
-				( account.tax_rate / 100 ) * 
+				( account.tax_rate / 100 ) *
 				( ( 100 - ( account.power_structure * 10 ) ) / 100 ) *
 				( ( 100 - ( FLOOR(all_tile.tile_count / $tiles_per_corruption_percent) ) ) / 100 )
 			)
@@ -821,11 +821,11 @@ Class cron_model extends CI_Model
 					SELECT supply_account_lookup.id, supply_account_lookup.account_key,
 					(
 						1 +
-						(IF(port.amount, $port_bonus, 0) / 100) + 
-						(IF(machinery.amount, $machinery_bonus, 0) / 100) + 
-						(IF(automotive.amount, $automotive_bonus, 0) / 100) + 
-						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) + 
-						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) + 
+						(IF(port.amount, $port_bonus, 0) / 100) +
+						(IF(machinery.amount, $machinery_bonus, 0) / 100) +
+						(IF(automotive.amount, $automotive_bonus, 0) / 100) +
+						(IF(aerospace.amount, $aerospace_bonus, 0) / 100) +
+						(IF(entertainment.amount, $entertainment_bonus, 0) / 100) +
 						(IF(financial.amount, $financial_bonus, 0) / 100)
 					) AS sum_gdp_bonus
 					FROM supply_account_lookup
@@ -894,7 +894,7 @@ Class cron_model extends CI_Model
 	{
 		$force_reset_world_id = isset($_GET['world_id']) ? $_GET['world_id'] : false;
 		$now = date('Y-m-d H:i:s');
-		$worlds = $this->game_model->get_all('world');
+		$worlds = $this->game_model->get_all_won_worlds();
 		foreach ($worlds as $world) {
 			// Check if it's time to run
 			if ($force_reset_world_id) {
@@ -964,20 +964,28 @@ Class cron_model extends CI_Model
 		$default_ideology = DEFAULT_IDEOLOGY;
 
 		$this->db->query("
+			UPDATE `world`
+			SET
+			`winner_account_key` = NULL,
+			`winner_industry_key` = NULL
+			WHERE id = $world_key;
+		");
+
+		$this->db->query("
 			UPDATE `tile`
 			SET
-			`account_key` = NULL, 
-			`resource_key` = NULL, 
-			`settlement_key` = NULL, 
-			`industry_key` = NULL, 
-			`unit_key` = NULL, 
-			`unit_owner_key` = NULL, 
-			`unit_owner_color` = NULL, 
-			`is_capitol` = 0, 
-			`is_base` = 0, 
-			`population` = NULL, 
-			`tile_name` = NULL, 
-			`tile_desc` = NULL, 
+			`account_key` = NULL,
+			`resource_key` = NULL,
+			`settlement_key` = NULL,
+			`industry_key` = NULL,
+			`unit_key` = NULL,
+			`unit_owner_key` = NULL,
+			`unit_owner_color` = NULL,
+			`is_capitol` = 0,
+			`is_base` = 0,
+			`population` = NULL,
+			`tile_name` = NULL,
+			`tile_desc` = NULL,
 			`color` = NULL
 			WHERE world_key = $world_key;
 		");
@@ -1037,7 +1045,7 @@ Class cron_model extends CI_Model
 			'winner_account_key' => null,
 			'winner_industry_key' => null,
 		);
-		$this->db->where('id', $account['world_key']);
+		$this->db->where('id', $world_key);
 		$this->db->update('world', $data);	
 	}
 	function world_reset_regenerate_resources($world_key)

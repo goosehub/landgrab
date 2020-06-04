@@ -14,8 +14,6 @@ MEDIUM PRIORITY
     UI: Interactive Tutorial
 LOW PRIORITY
     UI: Mobile
-    TWEAK: Change language of hourly to n minutes
-    FEATURE: Finish reset cron logic
     UI: Replace panther with dark mode
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
@@ -25,6 +23,7 @@ NO PRIORITY
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
     FEATURE: Winner List
+    FEATURE: Make cycle customizable per world
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Show when settlement, terrain, upfront, is insufficient
     FEATURE: Base settlement

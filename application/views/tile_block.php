@@ -176,7 +176,7 @@
                             <span id="select_settlement_upfront_cost" class="text-danger"></span>
                         </div>
                         <div id="select_settlement_input_parent">
-                            <label class="select_settlement_label">Requires Hourly:</label>
+                            <label class="select_settlement_label">Requires:</label>
                             <span id="select_settlement_input" class="text-default"></span>
                         </div>
                         <div>
@@ -184,7 +184,7 @@
                             <span id="select_settlement_gdp" class="text-success"></span>
                         </div>
                         <div id="select_settlement_output_parent">
-                            <label class="select_settlement_label">Produces Hourly:</label>
+                            <label class="select_settlement_label">Produces:</label>
                             <span id="select_settlement_output" class="text-success"></span>
                         </div>
                         <div id="select_settlement_defensive_parent">
@@ -254,7 +254,7 @@
                             <span id="select_industry_terrain" class=""></span>
                         </div>
                         <div id="select_industry_input_parent">
-                            <label class="select_industry_label">Requires Hourly:</label>
+                            <label class="select_industry_label">Requires:</label>
                             <span id="select_industry_input" class="text-default"></span>
                         </div>
                         <div id="select_industry_upfront_parent">
@@ -266,7 +266,7 @@
                             <span id="select_industry_gdp" class="text-success"></span>
                         </div>
                         <div id="select_industry_output_parent">
-                            <label class="select_industry_label">Produces Hourly:</label>
+                            <label class="select_industry_label">Produces:</label>
                             <span id="select_industry_output" class="text-success"></span>
                         </div>
                         <div id="select_industry_special_parent">

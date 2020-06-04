@@ -71,6 +71,14 @@ Class game_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	function get_all_won_worlds()
+	{
+		$this->db->select('*');
+		$this->db->from('world');
+		$this->db->where('winner_account_key is NOT NULL', NULL, FALSE);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 	function supply_is_cash_crop($supply_key)
 	{
 		$cash_crops = [

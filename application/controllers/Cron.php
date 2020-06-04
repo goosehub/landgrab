@@ -58,7 +58,7 @@ class Cron extends CI_Controller {
         $this->cron_model->punish_negative_money(); $this->microtime('punish_negative_money');
         $this->cron_model->reject_expired_trade_requests(); $this->microtime('reject_expired_trade_requests');
 
-        // $this->cron_model->hourly_system_message(); $this->microtime('hourly_system_message');
+        // $this->cron_model->cycle_system_message(); $this->microtime('cycle_system_message');
     }
 
     public function every_reset($token = false)
