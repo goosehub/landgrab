@@ -11,7 +11,7 @@ else {
 chdir(__DIR__);
 $auth = json_decode(file_get_contents('../auth.php'));
 
-$route = 'cron/every_day/';
+$route = 'cron/every_cycle/';
 $cron_url = $base_url . $route . $auth->token;
 echo $cron_url . '<br>';
 

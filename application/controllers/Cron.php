@@ -28,11 +28,11 @@ class Cron extends CI_Controller {
         $this->cron_model->mark_active_accounts_as_active(); $this->microtime('mark_active_accounts_as_active');
     }
 
-    public function every_hour($token = false)
+    public function every_cycle($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }
-        echo 'every_hour CRON - ' . PHP_EOL;
+        echo 'every_cycle CRON - ' . PHP_EOL;
         echo '<br>';
         $this->microtime('start_crons');
 
@@ -61,7 +61,7 @@ class Cron extends CI_Controller {
         // $this->cron_model->hourly_system_message(); $this->microtime('hourly_system_message');
     }
 
-    public function every_day($token = false)
+    public function every_reset($token = false)
     {
         $valid = $this->verify_token($token);
         if (!$valid) { return; }

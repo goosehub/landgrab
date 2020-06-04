@@ -15,7 +15,8 @@ MEDIUM PRIORITY
 LOW PRIORITY
     UI: Mobile
     TWEAK: Change language of hourly to n minutes
-    REFACTOR: Rename cron files to be less time specific
+    FEATURE: Finish reset cron logic
+    UI: Replace panther with dark mode
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
