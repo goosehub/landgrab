@@ -103,7 +103,7 @@
         $('#tile_resource_icon').hide();
         if (current_tile.resource_key) {
           $('#tile_resource_icon').show();
-          $('#tile_resource_icon').attr('src', `../resources/icons/natural_resources/${current_tile.resource_key}.png`);
+          $('#tile_resource_icon').attr('src', base_url + `resources/icons/natural_resources/${current_tile.resource_key}.png`);
         }
     }
     function tile_resource()

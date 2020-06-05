@@ -35,7 +35,7 @@
                 <label>Terrain:</label>
                 <span id="tile_terrain" class="text-warning pull-right"></span>
                 <span id="tile_resource" class="text-success pull-right"></span>
-                <!-- <img id="tile_resource_icon" src=""/> -->
+                <img id="tile_resource_icon" class="pull-right" src=""/>
             </p>
             <p id="tile_settlement_label_parent" class="tile_block_info_line">
                 <label>Settlement:</label>

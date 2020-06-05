@@ -205,6 +205,7 @@
                         $<span id="budget_earnings"></span> Billion
                     </strong><br>
                 </span>
+                <hr>
                 <p class="text-center text-info lead">
                     Production cycle runs every <?= CYCLE_MINUTES ?> minutes
                 </p>
