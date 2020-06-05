@@ -153,7 +153,7 @@ class Game extends CI_Controller {
 
         $data['account'] = $this->user_model->this_account($data['world']['id']);
 
-        $server_map_update_interval_s = (MAP_UPDATE_INTERVAL_MS / 1000) * 3;
+        $server_map_update_interval_s = (MAP_UPDATE_INTERVAL_MS / 1000) * 2;
         $data['tiles'] = $this->game_model->get_all_tiles_in_world_recently_updated($data['world']['id'], $server_map_update_interval_s);
         api_response($data);
     }

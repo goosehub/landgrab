@@ -434,7 +434,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
 (
   5, 'Coal', 'coal', 15,
   FALSE, TRUE, FALSE, 3,
-  10, TRUE, TRUE, TRUE, FALSE
+  12, TRUE, TRUE, TRUE, FALSE
 ),
 (
   6, 'Gas', 'gas', 16,
@@ -449,7 +449,7 @@ INSERT INTO `resource` (`id`, `label`, `slug`, `output_supply_key`,
 (
   8, 'Uranium', 'uranium', 18,
   FALSE, TRUE, FALSE, 3,
-  5, TRUE, TRUE, TRUE, FALSE
+  3, TRUE, TRUE, TRUE, FALSE
 ),
 -- Metals
 (
