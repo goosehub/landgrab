@@ -336,6 +336,9 @@
     function cash_stats() {
       let earnings = $('#budget_earnings').html();
       earnings = earnings ? earnings : 0;
+      if (account['ideology'] == socialism_key) {
+        earnings = 0 - $('#budget_losses').html();
+      }
       let cash_input = $('#input_projection_' + cash_key).html();
       cash_input = cash_input ? cash_input : 0;
       let cash_output = parseInt(earnings) + Math.abs(parseInt(cash_input));
@@ -466,5 +469,7 @@
       $('#budget_education').html(number_format(budget.education));
       $('#budget_pharmaceuticals').html(number_format(budget.pharmaceuticals));
       $('#budget_earnings').html(number_format(budget.earnings));
+      let losses = 0 + budget.federal + budget.bases + budget.education + budget.pharmaceuticals;
+      $('#budget_losses').html(number_format(losses));
     }
 </script>

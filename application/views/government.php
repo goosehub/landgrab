@@ -131,6 +131,50 @@
                         -$<span id="budget_socialism"></span> Billion
                     </strong><br>
                 </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Federal Administrative:
+                        <?= generate_popover('Federal Administrative', 'Costs for Federal Industry', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_federal"></span> Billion
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Military Bases:
+                        <?= generate_popover('Military Bases', 'Costs for Military Bases', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_bases"></span> Billion
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        University Education:
+                        <?= generate_popover('University Education', 'Costs for Universities', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_education"></span> Billion
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Subsidized Healthcare:
+                        <?= generate_popover('University Education', 'Costs for Pharmaceuticals Industry', 'right'); ?>
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_pharmaceuticals"></span> Billion
+                    </strong><br>
+                </span>
+                <span class="budget_info_item_parent">
+                    <strong class="budget_info_item_label">
+                        Estimated Losses:
+                    </strong>
+                    <strong class="budget_info_value text-red">
+                        -$<span id="budget_losses"></span> Billion
+                    </strong><br>
+                </span>
             </span>
             <span id="free_market_budget" class="show_if_free_market">
                 <span class="budget_info_item_parent">

@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// Use for downtime
+define('MAINTENANCE', false);
+
 // Debug
 define('ALLOW_TERRAIN_UPDATE', false);
 define('DEBUG_SHOW_TILE_ID', false);
@@ -138,9 +141,6 @@ DEFINE('DEFAULT_LEADER_PORTRAIT', 'default_leader_portrait.png');
 
 // Marketing
 define('ENABLE_FACEBOOK', false);
-
-// Use for emergencies
-define('MAINTENANCE', false);
 
 
 /*
