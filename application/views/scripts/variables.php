@@ -119,6 +119,7 @@
     ];
     const force_tab = '&nbsp;'.repeat(4);
     const default_map = '<?= DEFAULT_MAP ?>';
+    const cycle_minutes = <?= CYCLE_MINUTES ?>;
     let map = null;
     let account = <?= json_encode($account); ?>;
     let tiles = [];

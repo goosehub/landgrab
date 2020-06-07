@@ -246,14 +246,19 @@ class User extends CI_Controller {
         $account_key = $account['id'];
         $this->user_model->update_account_info($account_key, $nation_color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key);
 
-        // Progress Tutorial
-        if ($account['tutorial'] < 1) {
-            $this->user_model->update_account_tutorial($account_key, 1);
-        }
-
         // Redirect to game
-        $redirect_string = $redirect_lng ? '&lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
-        redirect('world/' . $world_key . '?show_government=true' . $redirect_string, 'refresh');
+        $redirect_string = $redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
+        redirect('world/' . $world_key . $redirect_string, 'refresh');
+    }
+
+    public function update_tutorial($world_key, $tutorial)
+    {
+        $account = $this->user_model->this_account($world_key);
+        if ($account['tutorial'] > 8) {
+            return;
+        }
+        $this->user_model->update_user_tutorial($account['user_key'], $tutorial);
+        api_response();
     }
 
     public function update_password()

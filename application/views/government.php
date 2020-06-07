@@ -1,7 +1,7 @@
 <?php if ($account) { ?>
 <div id="government_block" class="center_block">
     <strong>Government Overview</strong>
-    <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
+    <button type="button" id="exit_government" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
     <hr>

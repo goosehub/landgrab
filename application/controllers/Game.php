@@ -299,6 +299,7 @@ class Game extends CI_Controller {
         $this->game_model->first_claim($tile, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);
+        $this->user_model->update_user_tutorial($account['user_key'], 2);
         api_response();
     }
 

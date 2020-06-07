@@ -9,21 +9,26 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    UI: New Icons
-MEDIUM PRIORITY
     UI: Interactive Tutorial
-LOW PRIORITY
+MEDIUM PRIORITY
     UI: Mobile
     UI: Replace panther with dark mode
+LOW PRIORITY
+    UI: Require nation name
+    UI: Require select cash crop
+    UI: Prevent start nation on tundra
+    UI: Better alerts
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
     FEATURE: World config for some constants (support gen?)
     UI: Make settlements less quick to assign somehow
+    UI: Handle new user on map with no free land
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
     FEATURE: Winner List
     FEATURE: Make cycle customizable per world
+    FEATURE: Skip tutorial
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Show when settlement, terrain, upfront, is insufficient
     FEATURE: Base settlement
@@ -71,31 +76,7 @@ NO PRIORITY
     Closet
 ==========================================================================================
 
-Tutorial
-    Become A Leader
-        Create an account
-    Explore The World
-        Use all 5 Toggles, explain terrain, what to look for, basic mechanics
-    Start your nation
-        Claim first land
-    Form Your government
-        Set a Government, Tax Rate, and Ideology. Autocracy is great for early quick expansion. Keep your tax rates low so your support will regenerate quicker. Free Markets are a safer bet for new players.
-    Manifest Destiny
-        Explain units, moving, capturing land, enlisting
-    Feed the Masses
-        Start a farm
-    Power The People
-        Have a source of energy
-    Grow Your Empire
-        Create a new town.
-    Industrialize
-        Have your second city assigned an Industry. Obtaining and producing the right supplies is key to success.
-    Meet Great Leaders
-        Click on the leaders tab
-    Conduct Diplomacy
-        Send a diplomatic request. Trade supplies for mutual benefit.
-    The World Is Yours
-        Explain the win condition, final tips
+
 
 ==========================================================================================
     Documentation

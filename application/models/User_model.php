@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function get_account_by_user($user_key, $world_key)
     {
-        $this->db->select('account.*, user.username, user.id as user_id');
+        $this->db->select('account.*, user.username, user.tutorial, user.id as user_id');
         $this->db->from('account');
         $this->db->join('user', 'user.id = account.user_key', 'left');
         $this->db->where('account.user_key', $user_key);
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function get_all_users()
     {
-        $this->db->select('id, username, created');
+        $this->db->select('id, username, tutorial, created');
         $this->db->from('user');
         $query = $this->db->get();
         return $query->result_array();
@@ -85,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     function get_user_by_id($user_id)
     {
-        $this->db->select('id, username, created');
+        $this->db->select('id, username, tutorial, created');
         $this->db->from('user');
         $this->db->where('id', $user_id);
         $this->db->limit(1);
@@ -134,6 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'email' => $email,
                 'facebook_id' => $facebook_id,
+                'tutorial' => 1,
                 'ip' => $ip,
                 'ab_test' => $ab_test,
                 'modified' => date('Y-m-d H:i:s', time()),
@@ -166,7 +167,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             'ideology' => DEFAULT_IDEOLOGY,
             'last_load' => date('Y-m-d H:i:s'),
             'is_active' => 1,
-            'tutorial' => 0,
             'modified' => date('Y-m-d H:i:s', time()),
         );
         $this->db->insert('account', $data);
@@ -275,13 +275,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->where('unit_owner_key', $account_id);
         $this->db->update('tile', $data);
     }
-    function update_account_tutorial($account_id, $tutorial)
+    function update_user_tutorial($user_id, $tutorial)
     {
         $data = array(
             'tutorial' => $tutorial
         );
-        $this->db->where('id', $account_id);
-        $this->db->update('account', $data);
+        $this->db->where('id', $user_id);
+        $this->db->update('user', $data);
         return true;
     }
     function account_loaded($account_id)

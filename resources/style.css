@@ -255,7 +255,7 @@ html, body {
   display: none;
   position: absolute;
   max-width: 25vw;
-  top: 1.5em;
+  top: 3.5em;
   left: 1em;
   padding: 0.2em;
   background: #FFD87C;
@@ -268,7 +268,7 @@ html, body {
 }
 #tutorial_text {
   font-size: 1.2em;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Itim';
 }
 .exit_tutorial {
   font-size: 1.2em;

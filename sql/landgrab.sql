@@ -100,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `account` (
   `user_key` int(10) UNSIGNED NOT NULL,
   `world_key` int(10) UNSIGNED NOT NULL,
   `is_active` int(1) UNSIGNED NOT NULL,
-  `tutorial` int(10) UNSIGNED NOT NULL,
   -- Custom Info
   `nation_name` varchar(256) NOT NULL,
   `nation_flag` varchar(256) NOT NULL,
@@ -746,6 +745,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(128) NOT NULL,
+  `tutorial` int(10) UNSIGNED NOT NULL,
   `password` varchar(256) NOT NULL,
   `facebook_id` int(16) NOT NULL,
   `email` varchar(256) NOT NULL,

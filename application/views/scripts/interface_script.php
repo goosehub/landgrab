@@ -218,9 +218,10 @@ function handle_center_block_show_and_hide() {
         $('.center_block').hide();
         $('#login_block').show();
     });
-    $('.register_button').click(function(){
+    $('body').on('click', '.register_button', function(){
         $('.center_block').hide();
         $('#register_block').show();
+        $('#register_input_username').focus();
     });
     $('.update_info_button').click(function(){
         $('.center_block').hide();
@@ -240,9 +241,6 @@ function handle_center_block_show_and_hide() {
     });
     $('.login_button').click(function(){
         $('#login_input_username').focus();
-    });
-    $('.register_button').click(function(){
-        $('#register_input_username').focus();
     });
     $('#worlds_dropdown').click(function(){
         $('.center_block').hide();
