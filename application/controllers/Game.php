@@ -314,7 +314,7 @@ class Game extends CI_Controller {
         if ($account['supplies']['tiles']['amount'] > 0) {
             return false;
         }
-        if ($this->game_model->tile_is_township($tile['settlement_key'])) {
+        if ($tile['settlement_key']) {
             return false;
         }
         return true;
