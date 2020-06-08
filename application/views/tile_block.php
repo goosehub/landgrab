@@ -92,11 +92,11 @@
             </strong>
         </p>
     </div>
-    <div id="tile_first_claim_invalid_township">
+    <div id="tile_first_claim_invalid_taken">
         <hr>
         <p>
             <strong class="text-danger">
-                You can not claim towns, cities, or metros.
+                You can not claim land that is already claimed.
             </strong>
         </p>
     </div>

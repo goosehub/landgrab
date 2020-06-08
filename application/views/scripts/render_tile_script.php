@@ -323,23 +323,23 @@
         }
         return false;
     }
-    function tile_first_claim_invalid_township()
+    function tile_first_claim_invalid_taken()
     {
-        if (account && account['supplies']['tiles']['amount'] < 1 && settlement_is_township(current_tile.settlement_key)) {
+        if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.settlement_key) {
             return true;
         }
         return false;
     }
     function tile_first_claim()
     {
-        $('#tile_first_claim_invalid_township').hide();
+        $('#tile_first_claim_invalid_taken').hide();
         $('#tile_first_claim_invalid_ocean').hide();
         $('#tile_first_claim').hide();
         if (tile_first_claim_invalid_ocean()) {
             $('#tile_first_claim_invalid_ocean').show();
         }
-        else if (tile_first_claim_invalid_township()) {
-            $('#tile_first_claim_invalid_township').show();
+        else if (tile_first_claim_invalid_taken()) {
+            $('#tile_first_claim_invalid_taken').show();
         }
         else if (account && account['supplies']['tiles']['amount'] < 1) {
             // $('#tile_first_claim').show();
