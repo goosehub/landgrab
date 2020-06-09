@@ -361,7 +361,7 @@ class Game extends CI_Controller {
                 if ($tile['account_key'] != $account['id']) {
                     $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
                 }
-                $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
+                $this->game_model->put_unit_on_tile($world_key, $tile, $account, $previous_tile['unit_key']);
             }
         }
         $data['tile'] = $tile;

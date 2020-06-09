@@ -406,7 +406,7 @@ Class game_model extends CI_Model
 		$settlement_key = (int)$settlement_key;
 		return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
 	}
-	function first_claim($tile, $account) {
+	function first_claim($tile, $world_key, $account) {
 		$data = array(
 			'account_key' => $account['id'],
 			'settlement_key' => TOWN_KEY,
@@ -422,9 +422,10 @@ Class game_model extends CI_Model
 		);
 		$this->db->where('lat', $tile['lat']);
 		$this->db->where('lng', $tile['lng']);
+		$this->db->where('world_key', $tile['world_key']);
 		$this->db->update('tile', $data);
 	}
-	function claim($tile, $account, $unit_key) {
+	function claim($tile, $world_key, $account, $unit_key) {
 		$data = array(
 			'account_key' => $account['id'],
 			'industry_key' => NULL,
@@ -436,9 +437,10 @@ Class game_model extends CI_Model
 		);
 		$this->db->where('lat', $tile['lat']);
 		$this->db->where('lng', $tile['lng']);
+		$this->db->where('world_key', $tile['world_key']);
 		$this->db->update('tile', $data);
 	}
-	function put_unit_on_tile($tile, $account, $unit_key) {
+	function put_unit_on_tile($tile, $world_key, $account, $unit_key) {
 		$data = array(
 			'unit_key' => $unit_key,
 			'unit_owner_key' => $account['id'],
@@ -446,6 +448,7 @@ Class game_model extends CI_Model
 		);
 		$this->db->where('lat', $tile['lat']);
 		$this->db->where('lng', $tile['lng']);
+		$this->db->where('world_key', $tile['world_key']);
 		$this->db->update('tile', $data);
 	}
 	function remove_unit_from_previous_tile($world_key, $lat, $lng) {
@@ -456,6 +459,7 @@ Class game_model extends CI_Model
 		);
 		$this->db->where('lat', $lat);
 		$this->db->where('lng', $lng);
+		$this->db->where('world_key', $world_key);
 		$this->db->update('tile', $data);
 	}
 	function increment_account_supply($account_key, $supply_key, $amount = 1) {
