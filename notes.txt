@@ -17,7 +17,6 @@ MEDIUM PRIORITY
 LOW PRIORITY
     UI: Require nation name
     UI: Require select cash crop
-    UI: Prevent start nation on tundra
     UI: Better alerts
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI

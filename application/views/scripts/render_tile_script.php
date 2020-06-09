@@ -323,6 +323,13 @@
         }
         return false;
     }
+    function tile_first_claim_invalid_tundra()
+    {
+        if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.terrain_key == <?= TUNDRA_KEY ?>) {
+            return true;
+        }
+        return false;
+    }
     function tile_first_claim_invalid_taken()
     {
         if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.settlement_key) {
@@ -334,9 +341,13 @@
     {
         $('#tile_first_claim_invalid_taken').hide();
         $('#tile_first_claim_invalid_ocean').hide();
+        $('#tile_first_claim_invalid_tundra').hide();
         $('#tile_first_claim').hide();
         if (tile_first_claim_invalid_ocean()) {
             $('#tile_first_claim_invalid_ocean').show();
+        }
+        else if (tile_first_claim_invalid_tundra()) {
+            $('#tile_first_claim_invalid_tundra').show();
         }
         else if (tile_first_claim_invalid_taken()) {
             $('#tile_first_claim_invalid_taken').show();

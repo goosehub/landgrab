@@ -88,7 +88,15 @@
         <hr>
         <p>
             <strong class="text-danger">
-                You can not claim ocean tiles.
+                You can not claim ocean.
+            </strong>
+        </p>
+    </div>
+    <div id="tile_first_claim_invalid_tundra">
+        <hr>
+        <p>
+            <strong class="text-danger">
+                You can not start a nation on tundra.
             </strong>
         </p>
     </div>
