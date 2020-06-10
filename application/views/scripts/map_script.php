@@ -111,7 +111,7 @@
       if (in_array($tile['settlement_key'], [TOWN_KEY, CITY_KEY, METRO_KEY])) { ?>
         industry_markers[<?= $tile['id']; ?>] = set_industry_icon(<?= (int)$tile['industry_key']; ?>, <?= $tile['id']; ?>, <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
-      if ($tile['unit_key']) { ?>
+      if ($tile['unit_key'] && $tile['unit_owner_key']) { ?>
         unit_markers[<?= $tile['id']; ?>] = set_unit_icon(<?= $tile['unit_key']; ?>, <?= $tile['id']; ?>, <?= $tile['terrain_key']; ?>, <?= $tile['unit_owner_key']; ?>, '<?= $tile['unit_owner_color']; ?>', <?= $tile['lat']; ?>, <?= $tile['lng']; ?>);
       <?php }
       ?>z(<?=

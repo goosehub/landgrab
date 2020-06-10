@@ -296,7 +296,7 @@ class Game extends CI_Controller {
             api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
         }
         $this->user_model->update_account_cash_crop_key($account['id'], $cash_crop_key);
-        $this->game_model->first_claim($tile, $account);
+        $this->game_model->first_claim($tile, $world_key, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);
         $this->user_model->update_user_tutorial($account['user_key'], 2);
@@ -349,7 +349,7 @@ class Game extends CI_Controller {
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
                 $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
-                $this->game_model->claim($tile, $account, $previous_tile['unit_key']);
+                $this->game_model->claim($tile, $world_key, $account, $previous_tile['unit_key']);
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
                 $this->game_model->decrement_account_supply($tile['account_key'], TILES_KEY);
             }
@@ -361,7 +361,7 @@ class Game extends CI_Controller {
                 if ($tile['account_key'] != $account['id']) {
                     $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
                 }
-                $this->game_model->put_unit_on_tile($world_key, $tile, $account, $previous_tile['unit_key']);
+                $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
             }
         }
         $data['tile'] = $tile;

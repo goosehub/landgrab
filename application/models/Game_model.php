@@ -440,7 +440,7 @@ Class game_model extends CI_Model
 		$this->db->where('world_key', $tile['world_key']);
 		$this->db->update('tile', $data);
 	}
-	function put_unit_on_tile($tile, $world_key, $account, $unit_key) {
+	function put_unit_on_tile($tile, $account, $unit_key) {
 		$data = array(
 			'unit_key' => $unit_key,
 			'unit_owner_key' => $account['id'],
