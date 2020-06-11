@@ -46,6 +46,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|required|max_length[64]|callback_login_validation');
         
         $world_key = $this->input->post('world_key');
+        $world = $this->game_model->get_world_by_id($world_key);
 		// Fail
         if ($this->form_validation->run() == FALSE) {
             // Record failed request
@@ -54,10 +55,10 @@ class User extends CI_Controller {
             // Set fail message and redirect to map
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect(base_url() . 'world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
 		// Success
         } else {
-            redirect(base_url() . 'world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
         }
 	}
 
@@ -105,15 +106,16 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('confirm', 'Confirm', 'trim|required');
 
         $world_key = $this->input->post('world_key');
+        $world = $this->game_model->get_world_by_id($world_key);
         // Fail
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect(base_url() . 'world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
         // Success
         } else {
             $this->session->set_flashdata('just_registered', true);
-            redirect(base_url() . 'world/' . $world_key, 'refresh');
+            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
         }
 	}
 
@@ -170,6 +172,7 @@ class User extends CI_Controller {
         }
 
         $world_key = $this->input->post('world_key');
+        $world = $this->game_model->get_world_by_id($world_key);
         $account = $this->user_model->this_account($world_key);
         
         // Validation
@@ -187,7 +190,7 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world_key, 'refresh');
+            redirect('world/' . $world['slug'], 'refresh');
             return false;
         }
 
