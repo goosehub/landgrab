@@ -15,8 +15,6 @@ MEDIUM PRIORITY
     UI: Mobile
     UI: Replace panther with dark mode
 LOW PRIORITY
-    UI: Require nation name
-    UI: Require select cash crop
     UI: Better alerts
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI

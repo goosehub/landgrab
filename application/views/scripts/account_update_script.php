@@ -13,6 +13,16 @@
 
     function handle_update_nation() {
       $('#update_nation_button').click(function(){
+        if (!$('#nation_name').val()) {
+          $('#nation_name').css('border', '3px solid red');
+          alert('You must enter the name of your new nation');
+          return false;
+        }
+        if (!$('#cash_crop_key').val()) {
+          $('#cash_crop_key').css('border', '3px solid red');
+          alert('You must select a cash crop');
+          return false;
+        }
         if ($('#account_update_form').data('first-claim')) {
           do_first_claim();
         }

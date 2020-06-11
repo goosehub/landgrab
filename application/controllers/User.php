@@ -233,6 +233,8 @@ class User extends CI_Controller {
         $redirect_lng = $this->input->post('redirect_lng');
         $redirect_lat = $this->input->post('redirect_lat');
 
+        $cash_crop_key = $this->enforce_cash_crop_key($account, $cash_crop_key);
+
         // Add hash to color if needed
         if (0 !== strpos($nation_color, '#')) {
             $nation_color = '#' . $nation_color;
@@ -252,6 +254,18 @@ class User extends CI_Controller {
         // Redirect to game
         $redirect_string = $redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
         redirect('world/' . $world_key . $redirect_string, 'refresh');
+    }
+
+    public function enforce_cash_crop_key($account, $cash_crop_key)
+    {
+        $supplies = $this->game_model->get_account_supplies($account['id']);
+        foreach ($supplies as $key => $supply) {
+            $account['supplies'][$supply['slug']] = $supply;
+        }
+        if ($account['supplies']['tiles'] > 0) {
+            $cash_crop_key = $account['cash_crop_key'];
+        }
+        return $cash_crop_key;
     }
 
     public function update_tutorial($world_key, $tutorial)
