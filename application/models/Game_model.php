@@ -433,6 +433,7 @@ Class game_model extends CI_Model
 			'unit_owner_key' => $account['id'],
 			'unit_owner_color' => $account['color'],
 			'is_capitol' => 0,
+			'is_base' => 0,
 			'color' => $account['color'],
 		);
 		$this->db->where('lat', $tile['lat']);

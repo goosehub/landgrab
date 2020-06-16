@@ -32,7 +32,7 @@
         let header_row = render_leaderboard_header_row(leaders)
         let data_rows = render_leaderboard_data_rows(leaders)
         html = `
-        <table class="table table-bordered table-hover table-condensed">
+        <table id="leaderboard_table" class="table table-bordered table-hover table-condensed">
             <thead>
                 <tr>
                     ${header_row}
