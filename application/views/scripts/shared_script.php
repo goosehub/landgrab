@@ -31,7 +31,10 @@
             dataType: 'json',
             success: function(data) {
                 if (data['error']) {
-                    alert(data['error_message']);
+                    swal.close();
+                    setTimeout(function(){
+                        swal('', data['error_message'], 'warning');
+                    }, 100);
                     if (fail_callback) {
                         fail_callback();
                     }
@@ -63,7 +66,10 @@
             dataType: 'json',
             success: function(data) {
                 if (data['error']) {
-                    alert(data['error_message']);
+                    swal.close();
+                    setTimeout(function(){
+                        swal('', data['error_message'], 'warning');
+                    }, 100);
                     return false;
                 }
 

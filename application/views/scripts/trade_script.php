@@ -121,9 +121,19 @@
 
 	function handle_declare_war() {
 		$('#declare_war').click(function(){
-			if (confirm('Are you sure you wish to confirm war?')) {
+			swal({
+				title: "",
+				text: "Are you sure you wish to confirm war?",
+				type: "error",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				confirmButtonText: "Declare War",
+				closeOnConfirm: false,
+			},
+			function(){
+				swal.close();
 				declare_war();
-			}
+			});
 		});
 	}
 

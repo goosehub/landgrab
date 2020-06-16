@@ -582,7 +582,7 @@ class Game extends CI_Controller {
             api_error_response('not_enough_tiles', 'You must have land to engage in diplomacy');
         }
         if ((int)$account['supplies']['support']['amount'] < SUPPORT_COST_DECLARE_WAR) {
-            api_error_response('not_enough_support_to_move', 'You can not declare war without at least ' . SUPPORT_COST_DECLARE_WAR . ' political support');
+            api_error_response('not_enough_support_for_war', 'You can not declare war without at least ' . SUPPORT_COST_DECLARE_WAR . ' political support');
         }
         $treaty_key = false;
         $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_DECLARE_WAR);
@@ -599,7 +599,7 @@ class Game extends CI_Controller {
         // Insert system message
         $trade_partner = $this->user_model->get_account_by_id($trade_partner_key);
         $declare_war_message = $account['username'] . ' has declared war on ' . $trade_partner['username'] . '!';
-        $this->chat_model->new_chat(0, '', WAR_COLOR, $declare_war_message, $world_key);
+        $this->chat_model->new_chat(0, 0, '', WAR_COLOR, $declare_war_message, $world_key);
 
         api_response();
     }
@@ -679,7 +679,7 @@ class Game extends CI_Controller {
         if ($existing_treaty['treaty_key'] == WAR_KEY) {
             $trade_partner = $this->user_model->get_account_by_id($trade_request['request_account_key']);
             $make_peace_message = $account['username'] . ' has accepted peace with ' . $trade_partner['username'] . '!';
-            $this->chat_model->new_chat(0, '', PEACE_COLOR, $make_peace_message, $world_key);
+            $this->chat_model->new_chat(0, 0, '', PEACE_COLOR, $make_peace_message, $world_key);
         }
         api_response();
     }

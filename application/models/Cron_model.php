@@ -10,7 +10,7 @@ Class cron_model extends CI_Model
 		foreach ($worlds as $world) {
 			$world_key = $world['id'];
 	        $declare_war_message = 'Cycle Update';
-	        $this->chat_model->new_chat(0, '', ALERT_COLOR, $declare_war_message, $world_key);
+	        $this->chat_model->new_chat(0, 0, '', ALERT_COLOR, $declare_war_message, $world_key);
 	    }
 	}
 	function mark_active_accounts_as_active()

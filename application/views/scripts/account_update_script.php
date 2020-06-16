@@ -15,12 +15,12 @@
       $('#update_nation_button').click(function(){
         if (!$('#nation_name').val()) {
           $('#nation_name').css('border', '3px solid red');
-          alert('You must enter the name of your new nation');
+          swal('', 'You must enter the name of your new nation', 'warning');
           return false;
         }
         if (!$('#cash_crop_key').val()) {
           $('#cash_crop_key').css('border', '3px solid red');
-          alert('You must select a cash crop');
+          swal('', 'You must select a cash crop', 'warning');
           return false;
         }
         if ($('#account_update_form').data('first-claim')) {
@@ -56,22 +56,30 @@
     function handle_pass_new_laws() {
         $('#laws_passed_confirm_icon').fadeTo(1, 0);
         $('#pass_new_laws_button').click(function(event) {
-            let confirmed = confirm('Laws can only be passed once an hour. Are you sure you want to pass new laws?');
-            if (!confirmed) {
-                return;
-            }
+          swal({
+            title: "",
+            text: "Laws can only be passed once an hour. Are you sure you want to pass new laws?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Enact New Laws",
+            closeOnConfirm: false,
+          },
+          function(){
+            swal.close();
             let data = {
-                world_key: world_key,
-                input_power_structure: $('#input_power_structure').val(),
-                input_tax_rate: $('#input_tax_rate').val(),
-                input_ideology: $('input[name="input_ideology"]:checked').val(),
+              world_key: world_key,
+              input_power_structure: $('#input_power_structure').val(),
+              input_tax_rate: $('#input_tax_rate').val(),
+              input_ideology: $('input[name="input_ideology"]:checked').val(),
             };
             ajax_post('game/laws_form', data, function(response) {
-                get_map_update();
-                get_account_update();
-                $('#laws_passed_confirm_icon').fadeTo(500, 1);
-                $('#laws_passed_confirm_icon').fadeTo(2000, 0);
+              get_map_update();
+              get_account_update();
+              $('#laws_passed_confirm_icon').fadeTo(500, 1);
+              $('#laws_passed_confirm_icon').fadeTo(2000, 0);
             });
+          });
         });
     }
 

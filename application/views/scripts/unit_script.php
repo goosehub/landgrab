@@ -171,19 +171,19 @@
       // No alert, probably not intentional
     }
     else if (account.supplies.support.amount <= 0) {
-      alert('You can not move units without political support');
+      swal('', 'You can not move units without political support', 'warning');
     }
     else if (!no_own_unit_at_square(final_end_lat, final_end_lng)) {
-      alert('You can not stack units');
+      swal('', 'You can not stack units', 'warning');
     }
     else if (!no_friendly_unit_at_square(final_end_lat, final_end_lng)) {
-      alert('You must declare war through diplomacy before you can attack this unit');
+      swal('', 'You must declare war through diplomacy before you can attack this unit', 'warning');
     }
     else if (is_friendly_square(end_lat, end_lng)) {
-      alert('You must declare war through diplomacy before you can attack this land');
+      swal('', 'You must declare war through diplomacy before you can attack this land', 'warning');
     }
     else if (!unit_can_take_settlement(end_tile_account_key, settlement_key, marker.unit.unit_key)) {
-      alert('This unit is not able to take this size of township');
+      swal('', 'This unit is not able to take this size of township', 'warning');
     }
     else {
       lat = final_end_lat;

@@ -15,7 +15,6 @@ MEDIUM PRIORITY
     UI: Mobile
     UI: Replace panther with dark mode
 LOW PRIORITY
-    UI: Better alerts
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused

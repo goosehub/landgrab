@@ -174,14 +174,14 @@
     ajax_get('game/' + update_type + '/' + world_key, function(response) {
       // Check for refresh signal from server 
       if (response['refresh']) {
-        alert('The game is being updated, and we need to refresh your screen. This page will refresh after you press ok');
+        swal('', 'The game is being updated, and we need to refresh your screen. This page will refresh after you press ok', 'warning');
         window.location.reload();
       }
 
       winner_winner_chicken_dinner(response['winner_winner_chicken_dinner']);
 
       if (account && !response['account']) {
-        alert('You were away too long and you\'re session has expired, please log back in.');
+        swal('', 'You were away too long and you\'re session has expired, please log back in.', 'warning');
         window.location.href = '<?= base_url(); ?>world/' + world_key + '?login';
         return false;
       }

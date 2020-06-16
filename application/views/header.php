@@ -40,6 +40,10 @@
     <!-- Moment.js -->
     <script src="<?=base_url()?>resources/moment/moment.js"></script>
 
+    <!-- Sweet Alerts -->
+    <script src="<?=base_url()?>resources/sweetalert/sweetalert.min.js"></script>
+    <link href="<?=base_url()?>resources/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+
     <!-- Custom Fonts -->
     <link href="//fonts.googleapis.com/css?family=Lato|Itim|Roboto+Mono:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
@@ -54,8 +58,8 @@
     <!-- Thumbnail -->
     <meta property="og:image" content="<?=base_url()?>resources/img/original_small.jpg" />
 
-  <!-- Local Style -->
-  <link href="<?=base_url()?>resources/style.css?<?php echo time(); ?>" rel="stylesheet" type="text/css">
+    <!-- Local Style -->
+    <link href="<?=base_url()?>resources/style.css?<?php echo time(); ?>" rel="stylesheet" type="text/css">
 
   </head>
   <body>

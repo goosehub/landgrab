@@ -123,7 +123,7 @@
         success: function(html)
         {
           if (html.trim()) {
-            alert(html);
+            swal('', html, 'warning');
           }
         }
     });
