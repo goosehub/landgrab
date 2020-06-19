@@ -71,13 +71,17 @@
         return html;
     }
     function render_leaderboard_row(leader, rank) {
+        console.log('marco');
+        console.log(leader);
         let html = `
         <td>
             <strong class="text-default">${rank}</strong>
         </td>
         <td>
-            <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ${leader.color}"></span>
-            <strong class="text-default">${leader.username}</strong>
+            <a href="#" onclick="new_diplomacy(${leader.account_key});">
+                <span class="glyphicon glyphicon-user" aria-hidden="true" style="color: ${leader.color}"></span>
+                <strong class="text-default">${leader.username}</strong>
+            </a>
         </td>
         <td>
             <a href="${base_url}/uploads/${leader.leader_portrait}" target="_blank">

@@ -12,7 +12,6 @@
 		tut_5();
 		tut_6();
 		tut_7();
-		tut_8();
 	}, 6 * 1000);
 
 	function update_tutorial_block(title, text) {
@@ -112,27 +111,22 @@
 	function tut_6() {
 		if (account['tutorial'] == 6) {
 			console.log('tutorial 6');
-			let html = ``;
-			update_tutorial_block('???', html);
+			let html = `Send a diplomatic request. Trade supplies for mutual benefit.`;
+			update_tutorial_block('Conduct Diplomacy', html);
 		}
 	}
 	function tut_7() {
 		if (account['tutorial'] == 7) {
 			console.log('tutorial 7');
-			let html = ``;
-			update_tutorial_block('Conduct Diplomacy', html);
-		}
-	}
-	function tut_8() {
-		if (account['tutorial'] == 8) {
-			console.log('tutorial 8');
-			let html = ``;
+			let html = `Explain the win condition, leaderboard, final tips`;
 			update_tutorial_block('The World Is Yours', html);
+			update_tutorial_after_last_tutorial_seen();
 		}
 	}
-
-
-	// update_tutorial_block('Meet Great Leaders', 'Click on the leaders tab');
-	// update_tutorial_block('Conduct Diplomacy', 'Send a diplomatic request. Trade supplies for mutual benefit.');
-	// update_tutorial_block('The World Is Yours', 'Explain the win condition, final tips');
+	function update_tutorial_after_last_tutorial_seen() {
+		// Finish after this is seen
+		ajax_post(`user/update_tutorial/${world_key}/99`, {}, function(response) {
+			account['tutorial'] = 99;
+		});
+	}
 </script>

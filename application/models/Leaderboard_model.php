@@ -11,6 +11,7 @@ Class leaderboard_model extends CI_Model
 		$this->db->select('
 			supply_account_lookup.amount,
 			user.username,
+			account.id AS account_key,
 			supply.label,
 			supply.suffix,
 			nation_name,
