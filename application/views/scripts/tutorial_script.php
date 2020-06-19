@@ -13,7 +13,7 @@
 		tut_6();
 		tut_7();
 		tut_8();
-	}, 6 * 1000);
+	}, 3 * 1000);
 
 	function update_tutorial_block(title, text) {
 		$('#tutorial_block').fadeIn();
@@ -31,7 +31,7 @@
 			setTimeout(function(){
 				let html = `<p class="text-center"><a href="#" class="register_button btn btn-primary btn-lg">Start your nation!</a></p>`;
 				update_tutorial_block('Become A Leader', html);
-			}, 6 * 1000);
+			}, 10 * 1000);
 		}
 	}
 	function tut_1() {
