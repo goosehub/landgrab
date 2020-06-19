@@ -17,6 +17,7 @@
     }
     highlighted_tiles = [];
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
+      update_tutorial_after_move_unit();
       update_unit_icon(marker, response.tile);
       animate_combat(response.combat);
       render_comat_bonuses(response.combat);

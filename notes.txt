@@ -9,7 +9,6 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    BUG: Tile count
     UI: Interactive Tutorial
 MEDIUM PRIORITY
     UI: Mobile

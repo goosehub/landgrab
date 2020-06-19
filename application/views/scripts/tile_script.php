@@ -21,6 +21,7 @@
                 tile_name: $('#town_tile_name_input').val() ? $('#town_tile_name_input').val() : null,
             };
             ajax_post('game/update_settlement', data, function(response) {
+                update_tutorial_after_set_settlement();
                 get_tile(current_tile.lat, current_tile.lng, current_tile.world_key, function(response) {
                     current_tile = response;
                     get_map_update();
@@ -37,6 +38,7 @@
                 tile_id: current_tile.id,
             };
             ajax_post('game/update_industry', data, function(response) {
+                update_tutorial_after_set_industry();
                 get_tile(current_tile.lat, current_tile.lng, current_tile.world_key, function(response) {
                     current_tile = response;
                     get_map_update();
