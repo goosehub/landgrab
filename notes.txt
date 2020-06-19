@@ -9,10 +9,11 @@
 ==========================================================================================
 
 HIGH PRIORITY
-    UI: Interactive Tutorial
+    UI: Better Tutorial, fonts, colors, images
 MEDIUM PRIORITY
     UI: Mobile
     UI: Replace panther with dark mode
+    UI: Better victory screen
 LOW PRIORITY
 NO PRIORITY
     TWEAK: Constantly updating diplomacy account list UI

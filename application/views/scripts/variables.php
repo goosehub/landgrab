@@ -89,7 +89,9 @@
     const town_pharmaceuticals_cost = <?= TOWN_PHARMACEUTICALS_COST ?>;
     const city_pharmaceuticals_cost = <?= CITY_PHARMACEUTICALS_COST ?>;
     const metro_pharmaceuticals_cost = <?= METRO_PHARMACEUTICALS_COST ?>;
+    const support_cost_move_unit = <?= SUPPORT_COST_MOVE_UNIT ?>;
     const support_cost_capture_land = <?= SUPPORT_COST_CAPTURE_LAND ?>;
+    const support_cost_declare_war = <?= SUPPORT_COST_DECLARE_WAR ?>;
     const food_key_array = [
       <?= GRAIN_KEY ?>,
       <?= VEGETABLES_KEY ?>,

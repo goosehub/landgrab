@@ -22,6 +22,9 @@
             };
             ajax_post('game/update_settlement', data, function(response) {
                 update_tutorial_after_set_settlement();
+                if (preview_settlement_key == town_key) {
+                    update_tutorial_after_set_township();
+                }
                 get_tile(current_tile.lat, current_tile.lng, current_tile.world_key, function(response) {
                     current_tile = response;
                     get_map_update();
