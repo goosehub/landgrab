@@ -60,14 +60,14 @@
       // Prevent excesssive zoom
       // maxZoom: 10,
       mapTypeControlOptions: {
-        mapTypeIds: ['satellite', 'hybrid', 'terrain', 'paper_map', 'panther_map']
+        mapTypeIds: ['satellite', 'hybrid', 'terrain', 'paper_map', 'dark_map']
       }
     });
 
     styled_map_map_paper = new google.maps.StyledMapType(map_paper, {name: 'Paper'});
     map.mapTypes.set('paper_map', styled_map_map_paper);
-    styled_map_map_panther = new google.maps.StyledMapType(map_panther, {name: 'Panther'});
-    map.mapTypes.set('panther_map', styled_map_map_panther);
+    styled_map_map_dark = new google.maps.StyledMapType(map_dark, {name: 'Dark'});
+    map.mapTypes.set('dark_map', styled_map_map_dark);
 
     map.setMapTypeId(styled_map_toggle());
   }
