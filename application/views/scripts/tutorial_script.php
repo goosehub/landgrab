@@ -3,6 +3,7 @@
 	This code is procedural to be practical
 	*/
 
+	handle_close_tutorial();
 	setTimeout(function(){
 		tut_0();
 		tut_1();
