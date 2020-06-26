@@ -109,6 +109,11 @@ html, body {
   box-shadow: 1px 1px 1px #666;
   transition: all 0.3s ease-in-out;
 }
+@media only screen and (max-device-width: 600px) {
+  .btn-lg {
+    font-size: 12px;
+  }
+}
 
 /* Popover Tip */
 .popover_tip {
@@ -191,6 +196,22 @@ html, body {
   #info_tag {
     display: none;
     font-size: 1.2em;
+  }
+  body #tutorial_block {
+    max-width: 50vw;
+  }
+  #top_right_block {
+    margin-top: 50px;
+  }
+  .flex_columns {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile_menu_top {
+    order: 1;
+  }
+  .mobile_menu_bottom {
+    order: 2;
   }
 }
 .stats_listing li {
@@ -297,6 +318,17 @@ html, body {
   left: 33%;
   width: 33%;
 }
+.center_block strong {
+  font-size: 1.4em;
+}
+@media only screen and (max-device-width: 600px) {
+  body .center_block.center_block_extra_small {
+    top: 10vh;
+    max-height: 85vh;
+    left: 2.5%;
+    width: 95%;
+  }
+}
 .budget_info_value {
   float: right;
   clear: both;
@@ -311,9 +343,6 @@ html, body {
 }
 .leaderboard_username, .leaderboard_nation_name {
   word-break: break-all;
-}
-.center_block strong {
-  font-size: 1.4em;
 }
 .register_to_play {
   color: #444488;

@@ -132,7 +132,7 @@
 	}
 	function tut_8() {
 		if (account['tutorial'] == 8) {
-			let html = `You are now ready to take on the world. To win, you must construct one of the three a victory industries. World Government, World Currency, or Space Colonization. Be good, good luck, and have fun!`;
+			let html = `You are now ready to take on the world. To win, you must construct one of the three a victory industries. World Government, World Currency, or Space Colonization. Good luck, have fun, and be excellent to each other!`;
 			update_tutorial_block('The World Is Yours', html);
 			update_tutorial_after_last_tutorial_seen();
 		}

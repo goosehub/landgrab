@@ -8,13 +8,6 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-8">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#trade_requests_received" aria-controls="home" role="tab" data-toggle="tab">Received Proposals</a></li>
-                <li role="presentation"><a href="#trade_requests_sent" aria-controls="profile" role="tab" data-toggle="tab">Sent Proposals</a></li>
-                <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
-            </ul>
-        </div>
         <div class="col-md-2">
             <select class="form-control" id="select_account_for_diplomacy">
                 <?php foreach ($active_accounts as $an_account) { ?>
@@ -29,12 +22,19 @@
                 Start Diplomacy
             </button>
         </div>
+        <div class="col-md-8">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#trade_requests_received" aria-controls="home" role="tab" data-toggle="tab">Received Proposals</a></li>
+                <li role="presentation"><a href="#trade_requests_sent" aria-controls="profile" role="tab" data-toggle="tab">Sent Proposals</a></li>
+                <li role="presentation"><a href="#current_treaties" aria-controls="messages" role="tab" data-toggle="tab">Current Treaties</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane well active" id="trade_requests_received">
             <small class="text-info">Showing the last <?= TRADE_SHOW_HOURS ?> hours of requests</small>
-            <div class="row">
+            <div class="row hidden-sm hidden-xs">
               <div class="col-md-2"><label>Leader</label></div>
               <div class="col-md-2"><label>Message</label></div>
               <div class="col-md-2"><label>Reply</label></div>
@@ -48,7 +48,7 @@
         </div>
         <div role="tabpanel" class="tab-pane well" id="trade_requests_sent">
             <small class="text-info">Showing the last <?= TRADE_SHOW_HOURS ?> hours of requests</small>
-            <div class="row">
+            <div class="row hidden-sm hidden-xs">
               <div class="col-md-2"><label>Leader</label></div>
               <div class="col-md-2"><label>Message</label></div>
               <div class="col-md-2"><label>Reply</label></div>
