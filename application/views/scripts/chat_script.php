@@ -1,6 +1,7 @@
 <!-- Chat HTML -->
 <div id="chat_parent">
   <div id="chat_expand_button" class="btn btn-sm btn-default">Expand</div>
+  <div id="chat_hide_button" class="btn btn-sm btn-default">Hide</div>
   <div id="chat_messages_parent">
     <div id="chat_messages_box">
       Loading...
@@ -35,12 +36,30 @@
   // Chat expand
   $('#chat_expand_button').click(function(){
     if ($('#chat_messages_box').hasClass('expanded')) {
+      $('#chat_expand_button').html('Expand');
       $('#chat_messages_box').removeClass('expanded');
       $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
     }
     else {
       $('#chat_messages_box').addClass('expanded');
+      $('#chat_expand_button').html('Shrink');
+    }
+  });
 
+  // Chat hide
+  $('#chat_hide_button').click(function(){
+    if ($('#chat_messages_box').hasClass('hiding')) {
+      $('#chat_messages_box').removeClass('hiding');
+      $("#chat_messages_box").scrollTop($("#chat_messages_box")[0].scrollHeight);
+      $('#chat_hide_button').html('Hide');
+      $('#chat_messages_box').show();
+      $('#chat_expand_button').show();
+    }
+    else {
+      $('#chat_messages_box').addClass('hiding');
+      $('#chat_hide_button').html('Show chat');
+      $('#chat_messages_box').hide();
+      $('#chat_expand_button').hide();
     }
   });
 
