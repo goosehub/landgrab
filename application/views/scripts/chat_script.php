@@ -1,7 +1,7 @@
 <!-- Chat HTML -->
 <div id="chat_parent">
-  <div id="chat_expand_button" class="btn btn-sm btn-default">Expand</div>
-  <div id="chat_hide_button" class="btn btn-sm btn-default">Hide</div>
+  <span id="chat_expand_button" class="btn btn-sm btn-default">Expand</span>
+  <span id="chat_hide_button" class="btn btn-sm btn-default">Hide</span>
   <div id="chat_messages_parent">
     <div id="chat_messages_box">
       Loading...

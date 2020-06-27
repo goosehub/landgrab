@@ -518,12 +518,7 @@ img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
 #chat_messages_box.expanded {
   height: 80vh;
 }
-@media only screen and (max-device-width: 600px) {
-  #chat_messages_box.expanded {
-    height: 60vh;
-  }
-}
-#chat_expand_button {
+#chat_expand_button, #chat_hide_button {
   opacity: 0.5;
 }
 /* Custom Chat Scroll Bar */
@@ -544,8 +539,13 @@ img#industry_selection_icon_preview, img#settlement_selection_icon_preview {
 a.message_link {
   color: #C1C10C;
 }
-@media only screen 
-  and (max-device-width: 600px) {
+@media only screen and (max-device-width: 600px) {
+  #chat_parent {
+    width: 30vw;
+  }
+  #chat_messages_box.expanded {
+    height: 60vh;
+  }
   .chat_message:nth-child(-n+9) {
     display: none; 
   }
