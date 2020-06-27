@@ -7,17 +7,17 @@
     <hr>
     <div class="row">
         <div class="col-md-4 government_card">
-            <h3 class="text-center text-primary">Laws</h3>
+            <h3 class="text-center text-primary hidden-sm hidden-xs">Laws</h3>
             <hr>
             <!-- Form -->
             <?= form_open('laws_form', array('id' => 'laws_form', 'method' => 'post')); ?>
                 <input type="hidden" name="world_key" value="<?= $world['id']; ?>">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <?= generate_popover('Power Structure', 'Democracy provides low support per turn and moderate corruption.<br><br>Autocracy provides high support per turn and severe corruption.<br><br>Oligarchy is a balance of the two.<br><br>Play with the inputs to see the projections', 'right', 'pull-right'); ?>
-                        <label for="input_power_structure" class="pull-right">Power Structure: </label>
+                        <label for="input_power_structure" class="pull-right mobile-pull-left">Power Structure: </label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-8">
                         <select class="form-control" id="input_power_structure" name="input_power_structure" value="<?= $account['power_structure']; ?>">
                             <option value="1" title="Difficult Support, Moderate Corruption" <?php if ((int)$account['power_structure'] === DEMOCRACY_KEY) { echo 'selected'; } ?>>Democracy</option>
                             <!-- Great for economic growth -->
@@ -30,24 +30,24 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-4">
                         <?= generate_popover('Taxes', 'Each 1% of taxes reduces your maximum support by 1', 'right', 'pull-right'); ?>
-                        <label for="input_tax_rate" class="pull-right">Tax Rate: (%)</label>
+                        <label for="input_tax_rate" class="pull-right mobile-pull-left">Tax Rate:</label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-6">
                         <input type="range" min="0" max="50" required class="form-control" id="input_tax_rate" name="input_tax_rate" value="<?= $account['tax_rate']; ?>">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-2">
                         <strong id="display_input_tax_rate"></strong> %
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <?= generate_popover('Economic Ideology', 'Marxist Socialism removes all income, but allows you to increase your max support and use support to create troops. Democracy will provide the highest maximum support and Autocracy the least', 'right', 'pull-right'); ?>
-                        <label for="input_power_structure" class="pull-right">Economic Ideology: </label>
+                        <label for="input_power_structure" class="pull-right mobile-pull-left">Economic Ideology: </label>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-xs-8">
                         <div class="col-md-3">
                             <label for="input_ideology" class="pull-right text-success">Free Market</label>
                         </div>
@@ -107,7 +107,7 @@
             </form>
         </div>
         <div class="col-md-4 government_card">
-            <h3 class="text-center text-primary">Budget</h3>
+            <h3 class="text-center text-primary hidden-sm hidden-xs">Budget</h3>
             <hr>
             <span class="budget_info_item_parent">
                 <strong class="budget_info_item_label">
@@ -267,7 +267,7 @@
                     ?>
                 <div class="col-md-12">
                     <div class="government_supply_header_parent row">
-                        <div class="col-md-3">
+                        <div class="col-xs-3">
                             <h4 class="text-purple">
                                 <?= $this->supplies_category_labels[$supply['category_id']]; ?>
                                 <?php if ($supply['category_id'] == ENERGY_CATEGORY_ID) { ?>
@@ -281,7 +281,7 @@
                                 <?php } ?>
                             </h4>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-xs-3">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Supply
                             <?= generate_popover('Supplies', 'Each cycle settlements & industries produce and consume supplies. Industries consume first, and produce second, so ensure you have supplies on hand before starting new industries.', 'bottom', ''); ?>
@@ -293,9 +293,9 @@
                             <p class="category_government_supply government_supply lead" id="government_supply_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                         <?php if ($supply['category_id'] == 1) { ?>
-                            Production
+                            Produce
                             <?= generate_popover('Supplies', 'Each cycle your settlements and industries will produce and consume supplies.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
@@ -305,9 +305,9 @@
                             <p class="category_output_projection output_projection text-success lead" id="output_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                         <?php if ($supply['category_id'] == 1) { ?>
-                            Consumption
+                            Consume
                             <?= generate_popover('Supplies', 'If you have a supply shortage, industries depending on that supply will not produce, and townships depending on that supply will lose population. Negative supplies reset to zero each cycle, so deficits won\'t run wild while you are away. Ensure a healthy buffer of supplies to keep your economy running smoothly.', 'bottom', ''); ?>
                         <?php } ?>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
@@ -317,7 +317,7 @@
                             <p class="category_input_projection input_projection text-danger lead" id="input_projection_<?= CASH_CROPS_KEY; ?>" data-id="<?= CASH_CROPS_KEY; ?>"></p>
                         <?php } ?>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                         <?php if ($supply['category_id'] == 1) { ?>
                             Surplus
                             <?= generate_popover('Supplies', 'Ensure you have a either a healthy surplus or a healthy buffer of each consumed supply to keep your economy running smoothly.', 'bottom', ''); ?>
@@ -330,13 +330,13 @@
                         <?php } ?>
                         </div>
                         <?php if ($supply['category_id'] == FOOD_CATEGORY_ID) { ?>
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                             <span id="diverse_diet_population_bonus" class="text-success"></span>X Diverse Diet Bonus
                             <?= generate_popover('Diverse Diet Population Bonus', '1 Types: 1X Population Growth<br>2 Types: 2X Population Growth<br>3 Types: 3X Population Growth<br>4 Types: 4X Population Growth<br>5 Types: 5X Population Growth', 'bottom', ''); ?>
                         </div>
                         <?php } ?>
                         <?php if ($supply['category_id'] == CASH_CROPS_CATEGORY_ID) { ?>
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                             <span id="cash_crops_support_bonus" class="text-danger"></span> Luxury Bonus
                             <?= generate_popover('Luxury Support Bonus', '
                                 1 Types: +1 Support/Minute<br>
@@ -352,7 +352,7 @@
                 <?php } ?>
 
                     <div class="government_supply_parent row <?= $odd ? 'odd_row' : 'even_row' ?>">
-                        <div class="col-md-3">
+                        <div class="col-xs-3">
                             <span class="text-left">
                                 <label class="text-primary" title="<?= $supply['meta']; ?>">
                                     <?= $supply['label']; ?>
@@ -362,31 +362,31 @@
                                 </label>
                             </span>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-xs-3">
                             <span class="government_supply_and_suffix">
                                 <span class="government_supply" id="government_supply_<?= $supply['id']; ?>"></span>
                                 <small class="government_supply_suffix"><?= $supply['suffix']; ?></small>
                             </span>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                             <span class="text-right text-success">
                                 <span class="output_projection" id="output_projection_<?= $supply['id']; ?>" data-id="<?= $supply['id']; ?>" data-category-id="<?= $supply['category_id']; ?>"></span>
                             </span>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                             <span class="text-right text-danger">
                                 <span class="input_projection" id="input_projection_<?= $supply['id']; ?>" data-id="<?= $supply['id']; ?>" data-category-id="<?= $supply['category_id']; ?>"></span>
                             </span>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                             <span class="text-right">
                                 <span class="sum_projection" id="sum_projection_<?= $supply['id']; ?>" data-id="<?= $supply['id']; ?>" data-category-id="<?= $supply['category_id']; ?>"></span>
                             </span>
                         </div>
                         <?php if ($supply['market_price_key']) { ?>
-                        <div class="col-md-12">
+                        <div class="col-xs-12">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <a class="sell_button btn btn-success form-control" data-id="<?= $supply['id'] ?>">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 Sell
@@ -395,7 +395,7 @@
                                 </span>
                             </a>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <p class="lead">
                                 Current Price:
                                 <strong class="text-success">

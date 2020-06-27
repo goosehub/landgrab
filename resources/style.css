@@ -113,6 +113,12 @@ html, body {
   .btn-lg {
     font-size: 12px;
   }
+  .mobile-pull-left {
+    float: left !important;
+  }
+  .mobile-pull-right {
+    float: right !important;
+  }
 }
 
 /* Popover Tip */
@@ -143,9 +149,6 @@ html, body {
 #top_right_block ul li:first-child {
   margin-top: -0.5em !important;
 }
-#mobile_government_dropdown {
-  display: none;
-}
 .menu_element {
   box-shadow: 2px 2px 2px #666;
 }
@@ -173,12 +176,6 @@ html, body {
   margin-right: 0.5em;
 }
 @media only screen and (max-device-width: 600px) {
-  body #government_dropdown, body .main_menu_parent {
-    display: none;
-  }
-  body #mobile_government_dropdown {
-    display: inline;
-  }
   #top_right_block {
     right: 0.5em;
   }
