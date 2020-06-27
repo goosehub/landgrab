@@ -210,6 +210,9 @@ html, body {
   .mobile_menu_bottom {
     order: 2;
   }
+  .tile_block_info_line {
+    margin-bottom: 3px;
+  }
 }
 .stats_listing li {
   margin-right: 1em;

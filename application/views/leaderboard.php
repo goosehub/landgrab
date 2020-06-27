@@ -26,6 +26,6 @@
 		</div>
 	</div>
 
-	<section id="leaderboard">
+	<section id="leaderboard" class="table-responsive">
 	</section>
 </div>
