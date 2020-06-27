@@ -17,7 +17,8 @@
     remove_overlay();
     generate_tiles();
     default_open_block();
-    listen_for_map_type()
+    listen_for_map_type();
+    rename_sat_label();
   }
 
   function attack_key_listen() {
@@ -83,6 +84,19 @@
         setCookie('styled_map_toggle', map.getMapTypeId());
       }
     });
+  }
+
+  function rename_sat_label() {
+    // No idea why map.mapTypes.satellite needs time to not be set
+    // This may not work for all users all the time, but is non essential
+    if ($(window).width() < 600) {
+      setTimeout(function(){
+        if (map.mapTypes.satellite) {
+          map.mapTypes.satellite.name = 'Sat';
+          map.setOptions({'mapTypeControl':true});
+        }
+      }, 1000);
+    }
   }
 
   function remove_overlay() {
