@@ -110,8 +110,8 @@
           LandGrab
         <span class="caret"></span>
       </button>
-      <ul class="landgrab_menu dropdown-menu" aria-labelledby="site_dropdown">
-        <li class="text-center"><strong class="text-danger">Version 5.0.0</strong></li>
+      <ul class="landgrab_menu dropdown-menu pull-right" aria-labelledby="site_dropdown">
+        <li class="text-center"><strong class="text-danger"><br>Version 5.0.0</strong></li>
         <li role="separator" class="divider"></li>
         <!-- <li><a class="how_to_play_button btn btn-warning">How To Play</a></li> -->
         <li><a class="about_button btn btn-primary">About LandGrab</a></li>

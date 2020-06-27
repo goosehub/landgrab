@@ -24,6 +24,16 @@ function ab_coin_toss() {
     }
 }
 
+// Not reliable across browsers and situations, not used
+function toggle_fullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    }
+    else if (document.exitFullscreen) {
+        document.exitFullscreen(); 
+    }
+}
+
 function handle_create_new_world_button() {
     $('#create_new_world_button').click(function(){
         create_new_world();
