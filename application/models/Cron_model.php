@@ -905,8 +905,8 @@ Class cron_model extends CI_Model
 			echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
 			$this->world_reset_row_deletes($world['id']);
 			$this->world_reset_row_updates($world['id']);
-			$this->world_reset_world_state($world['id']);
 			$this->world_reset_regenerate_resources($world['id']);
+			$this->world_reset_world_state($world['id']);
 		}
 	}
 	function world_reset_row_deletes($world_key)
