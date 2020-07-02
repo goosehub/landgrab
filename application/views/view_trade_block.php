@@ -5,27 +5,27 @@
     </button>
     <hr>
 
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row flex_columns">
+        <div class="col-md-4 mobile_trade_middle">
             <h3 class="trade_request_partner_username text-center text-primary"></h3>
             <div class="view_trade_supplies_parent view_trade_supplies_of_partner well">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">
-                    <div class="col-md-5 col-md-push-1">
+                    <div class="col-xs-5 col-xs-push-1">
                         <label><?= $supply['label']; ?></label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <!-- <p class="partner_trade_supply_current_<?= $supply['slug']; ?>"></p> -->
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <strong id="view_partner_trade_supply_proposal_<?= $supply['id']; ?>" class="pull-right"></strong>
                     </div>
                 </div>
             <?php } ?>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mobile_trade_top">
             <h2 class="text-center">Proposal</h2>
 
             <p class="lead">
@@ -60,15 +60,15 @@
             </p>
 
             <div id="view_trade_actions" class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-5">
                     <button id="accept_trade_request" class="btn btn-success form-control" type="button">
                         <i class="fas fa-check"></i>
                         Accept Proposal
                     </button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-2">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-5">
                     <button id="reject_trade_request" class="btn btn-danger form-control" type="button">
                         <i class="fas fa-times"></i>
                         Reject Proposal
@@ -76,19 +76,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mobile_trade_bottom">
             <h3 class="text-center text-primary">Your Offer</h3>
             <div class="view_trade_supplies_parent view_trade_supplies_of_own well">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="view_trade_supply_parent row" data-id="<?= $supply['id']; ?>">
-                    <div class="col-md-5 col-md-push-1">
+                    <div class="col-xs-5 col-xs-push-1">
                         <label><?= $supply['label']; ?></label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <p class="our_trade_supply_current_<?= $supply['slug']; ?>"></p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <strong id="view_our_trade_supply_offer_<?= $supply['id']; ?>" class="pull-right"></strong>
                     </div>
                 </div>

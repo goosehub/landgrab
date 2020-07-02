@@ -110,6 +110,10 @@ html, body {
   transition: all 0.3s ease-in-out;
 }
 @media only screen and (max-device-width: 600px) {
+  .flex_columns {
+    display: flex;
+    flex-direction: column;
+  }
   .btn-lg {
     font-size: 12px;
   }
@@ -118,6 +122,10 @@ html, body {
   }
   .mobile-pull-right {
     float: right !important;
+  }
+  hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 }
 
@@ -199,10 +207,6 @@ html, body {
   }
   #top_right_block {
     margin-top: 50px;
-  }
-  .flex_columns {
-    display: flex;
-    flex-direction: column;
   }
   .mobile_menu_top {
     order: 1;
@@ -380,6 +384,17 @@ a.sell_resource {
   overflow-x: hidden;
   height: 60vh;
   font-weight: bold;
+}
+@media only screen and (max-device-width: 600px) {
+  .mobile_trade_top {
+    order: 1;
+  }
+  .mobile_trade_middle {
+    order: 2;
+  }
+  .mobile_trade_bottom {
+    order: 3;
+  }
 }
 
 /* Beta */

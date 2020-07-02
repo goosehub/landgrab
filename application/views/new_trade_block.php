@@ -5,27 +5,27 @@
     </button>
     <hr>
 
-    <div class="row">
-        <div class="col-md-4">
+    <div class="row flex_columns">
+        <div class="col-md-4 mobile_trade_middle">
             <h3 class="trade_request_partner_username text-center text-primary"></h3>
             <div class="trade_supplies_parent">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="trade_supply_parent row">
-                    <div class="col-md-5 col-md-push-1">
+                    <div class="col-xs-5 col-xs-push-1">
                         <label><?= $supply['label']; ?></label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <strong class="partner_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <input value="0" min="0" max="10000" data-id="<?= $supply['id']; ?>" id="partner_trade_supply_proposal_<?= $supply['slug']; ?>" class="partner_supply_trade trade_supply_change input form-control pull-right" type="number"/>
                     </div>
                 </div>
             <?php } ?>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mobile_trade_top">
             <h2 class="text-center">Proposed treaty</h2>
 
             <p class="lead">
@@ -48,15 +48,15 @@
             <hr>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-5">
                     <button id="send_trade_request" class="btn btn-success form-control" type="button">
                         <i class="fas fa-envelope-square"></i>
                         Send Proposal
                     </button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-2">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-xs-5">
                     <button id="declare_war" class="btn btn-danger form-control" type="button">
                         <i class="fas fa-skull"></i>
                         Declare War
@@ -68,19 +68,19 @@
                 Offered supplies are held until the treaty is rejected or expires in <?= TRADE_EXPIRE_HOURS; ?> hours.
             </small>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mobile_trade_bottom">
             <h3 class="text-center text-primary">Your Offer</h3>
             <div class="trade_supplies_parent">
             <?php foreach ($this->supplies as $supply) { ?>
                 <?php if (!$supply['can_trade']) { continue; } ?>
                 <div class="trade_supply_parent row">
-                    <div class="col-md-5 col-md-push-1">
+                    <div class="col-xs-5 col-xs-push-1">
                         <label><?= $supply['label']; ?></label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <strong class="our_trade_supply_current_<?= $supply['slug']; ?>"></strong>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-xs-3">
                         <input value="0" min="0" max="" data-id="<?= $supply['id']; ?>" id="our_trade_supply_offer_<?= $supply['slug']; ?>" class="own_supply_trade trade_supply_change input form-control pull-right" type="number"/>
                     </div>
                 </div>

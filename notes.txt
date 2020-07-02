@@ -2,17 +2,14 @@
     Notes
 ==========================================================================================
 
-Mobile
-    Trade
-    Full screen
-        https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+Full screen
+    https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    UI: Mobile
 MEDIUM PRIORITY
     UI: Sexier tutorial 
 LOW PRIORITY
