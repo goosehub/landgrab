@@ -45,8 +45,7 @@
     <link href="<?=base_url()?>resources/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
-    <link href="//fonts.googleapis.com/css?family=Lato|Itim|Roboto+Mono:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Playball|Lato|Itim|Roboto+Mono:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- Font awesome -->
     <script src="https://kit.fontawesome.com/e749aaf82c.js" crossorigin="anonymous" SameSite="none Secure"></script>

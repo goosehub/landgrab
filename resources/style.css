@@ -202,9 +202,6 @@ html, body {
     display: none;
     font-size: 1.2em;
   }
-  body #tutorial_block {
-    max-width: 50vw;
-  }
   #top_right_block {
     margin-top: 50px;
   }
@@ -269,20 +266,30 @@ html, body {
   top: 4em;
   left: 1em;
   padding: 0.2em;
-  background: #FFD87C;
-  border-radius: 0.2em;
+  background: #7EBABD;
+  border-radius: 0.8em;
+  border: 2px solid #888;
   z-index: 100;
 }
 #tutorial_title {
   font-size: 3em;
-  font-family: 'Cookie', cursive;
+  font-family: 'Playball', cursive;
 }
 #tutorial_text {
   font-size: 1.2em;
+  line-height: 1.8em;
   font-family: 'Itim';
 }
 .exit_tutorial {
   font-size: 1.2em;
+}
+img.tutorial_image {
+  max-width: 30px;
+}
+@media only screen and (max-device-width: 600px) {
+  body #tutorial_block {
+    max-width: 50vw;
+  }
 }
 
 /* Images */

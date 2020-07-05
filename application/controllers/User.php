@@ -277,6 +277,9 @@ class User extends CI_Controller {
         if ($account['tutorial'] > 8) {
             return;
         }
+        if ($account['tutorial'] > $tutorial) {
+            return;
+        }
         $this->user_model->update_user_tutorial($account['user_key'], $tutorial);
         api_response();
     }

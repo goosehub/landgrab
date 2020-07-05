@@ -1,8 +1,8 @@
 <!-- Info tag -->
-<div id="info_tag">
+<div id="info_tag" style="display: none;">
     <strong>
-        <a href="https://www.reddit.com/r/LandGrab/comments/glqdi0/landgrab_v5_alpha_release/" target="_blank">
-            BETA - HOW TO PLAY
+        <a href="" target="_blank">
+            Update Foobar
         </a>
     </strong>
 </div>
@@ -131,7 +131,9 @@
 
 <!-- Tutorial Block -->
 <div id="tutorial_block">
-    <span class="exit_tutorial glyphicon glyphicon-remove-sign pull-right" aria-hidden="true"></span>
+    <span class="btn pull-right">
+        <span class="exit_tutorial glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+    </span>
     <span id="tutorial_title"></span>
     <br>
     <span id="tutorial_text"></span>
@@ -488,7 +490,7 @@
       </div>
       <div class="row">
            <div class="col-md-3">
-                <button class="open_terms_block btn btn-info btn-sm" type="button">
+                <button class="open_terms_block btn btn-info btn-sm" type="button" style="display: none;">
                     Terms
                 </button>
             </div>

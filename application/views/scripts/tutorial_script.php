@@ -14,16 +14,27 @@
 		tut_6();
 		tut_7();
 		tut_8();
-	}, 3 * 1000);
+	}, 1 * 1000);
 
 	function update_tutorial_block(title, text) {
-		$('#tutorial_block').fadeIn();
-		$('#tutorial_title').html(title);
-		$('#tutorial_text').html(text);
+		if ($('#tutorial_block').is(':visible')) {
+			$('#tutorial_block').fadeOut(300);
+			setTimeout(function(){
+				$('#tutorial_title').html(title);
+				$('#tutorial_text').html(text);
+				$('#tutorial_block').fadeIn(600);
+			}, 1 * 1000);
+		}
+		else {
+			$('#tutorial_title').html(title);
+			$('#tutorial_text').html(text);
+			$('#tutorial_block').fadeIn(600);
+		}
 	}
 	function handle_close_tutorial() {
 		$('.exit_tutorial').click(function(){
-			$('#tutorial_block').hide();
+			$('#tutorial_block').fadeOut(300);
+			// update_tutorial_after_last_tutorial_seen();
 		});
 	}
 
@@ -43,26 +54,22 @@
 	}
 	function tut_2() {
 		if (account['tutorial'] == 2) {
-			$('#government_block').show();
-			let html = `Manage your laws, finances, and supplies here. Use laws to balance income, corruption, and support. The production cycle runs every ${cycle_minutes} minutes, bringing in tax income, and producing and consuming supplies. Keep your cash and other supplies in the green to grow your nation.`;
+			$('#government_block').fadeIn(600);
+			let html = `Manage your laws, finances, and supplies here. The production cycle runs every ${cycle_minutes} minutes, bringing in tax income, and producing and consuming supplies. Keep your cash and other supplies in the green to grow your nation. Use laws to balance income, corruption, and support.`;
 			update_tutorial_block('Form Your Government', html);
 		}
 		$('#exit_government').click(function(){
-			ajax_post(`user/update_tutorial/${world_key}/3`, {}, function(response) {
-				account['tutorial'] = 3;
-				tut_3();
-			});
-		});
-		$('#pass_new_laws_button').click(function(){
-			ajax_post(`user/update_tutorial/${world_key}/3`, {}, function(response) {
-				account['tutorial'] = 3;
-				tut_3();
-			});
+			if (account['tutorial'] == 2) {
+				ajax_post(`user/update_tutorial/${world_key}/3`, {}, function(response) {
+					account['tutorial'] = 3;
+					tut_3();
+				});
+			}
 		});
 	}
 	function tut_3() {
 		if (account['tutorial'] == 3) {
-			let html = `It's time to expand your nation. Use <span class="btn btn-success btn-sm disabled"><span class="fa fa-fist-raised" aria-hidden="true"></span></span> to toggle unit visibility. Drag your unit to an adjacent tile to capture that land at a cost of ${support_cost_capture_land} support. Your Capitol and bases are able to enlist new units. Infantry, Tanks, and Airforce have a Rock Paper Scissors battle dyanmic. Units become Navy on the Ocean. Townships will form militias if left undefended. Use Terrain and Townships to improve your odds of winning a battle.`;
+			let html = `It's time to expand your nation. Use <span class="btn btn-success btn-sm disabled"><span class="fa fa-fist-raised" aria-hidden="true"></span></span> to toggle unit visibility. Drag your unit to an adjacent tile to capture land at a cost of ${support_cost_capture_land} support. Capitols and Bases can enlist new units. Infantry, Tanks, and Airforce have a Rock Paper Scissors battle dyanmic and when placed on ocean become Navy. Townships form militias if left undefended. Use Terrain to improve your odds of winning a battle.`;
 			update_tutorial_block('Manifest Destiny', html);
 		}
 	}
@@ -90,7 +97,7 @@
 	}
 	function tut_5() {
 		if (account['tutorial'] == 5) {
-			let html = `When you have enough Agriculture and Energy, create a new town. Townships provide large amounts of GDP, and the ability to convert basic supplies into complex supplies. Upgrading townships require certain supplies and a larger population. Having diverse food will grow your population quicker.`;
+			let html = `When you have enough Agriculture and Energy, create a new town <img class="tutorial_image" src="${base_url}/resources/icons/settlements/3.png">. Townships provide large amounts of GDP, and the ability to convert basic supplies into complex supplies. Upgrading townships require certain supplies and a larger population. Having diverse food will grow your population quicker.`;
 			update_tutorial_block('Grow your Empire', html);
 		}
 	}
@@ -104,7 +111,7 @@
 	}
 	function tut_6() {
 		if (account['tutorial'] == 6) {
-			let html = `Click on Industry to assign an industry to your new town. Some industries require certain supplies in order to produce. For instance, Manufacturing requires Timber, Fiber, and Ore to create Merchandise. Have a healthy buffer to avoid running into shortages. Industries may also require certain terrain or a minimum township size. Trade the surplus with other players.`;
+			let html = `Click a township and click <span class="btn btn-primary btn-sm disabled">Industry</span>. Industries may also require certain terrain or a minimum township size. Most industries require supplies in order to produce. For instance, Manufacturing requires Timber, Fiber, and Ore to create Merchandise. Have a healthy buffer to avoid running into shortages. Trade the surplus with other players.`;
 			update_tutorial_block('Industrialize', html);
 		}
 	}
@@ -118,11 +125,17 @@
 	}
 	function tut_7() {
 		if (account['tutorial'] == 7) {
-			let html = `Click on Diplomacy to send a diplomatic request. Trade is essential for quick growth and making allies. You can also declare war at a cost of ${support_cost_declare_war} support. Click on Leaders to view who has the most of a supply. Chat is great for discussing potential trades and forming alliances.`;
+			let html = `Click on <span class="btn btn-default btn-sm disabled">Diplomacy</span> to send a diplomatic request. Trade is essential for quick growth and making allies. You can also declare war at a cost of ${support_cost_declare_war} support. Click on <span class="btn btn-primary btn-sm disabled">Leaders</span> to view who has the most of a supply. Chat is great for discussing potential trades and forming alliances.`;
 			update_tutorial_block('Conduct Diplomacy', html);
 		}
+		$('.diplomacy_dropdown').click(function(){
+			update_tutorial_after_diplomacy_or_leaders();
+		});
+		$('#leaderboard_dropdown').click(function(){
+			update_tutorial_after_diplomacy_or_leaders();
+		});
 	}
-	function update_tutorial_after_send_trade_request() {
+	function update_tutorial_after_diplomacy_or_leaders() {
 		if (account['tutorial'] == 7) {
 			ajax_post(`user/update_tutorial/${world_key}/8`, {}, function(response) {
 				account['tutorial'] = 8;
@@ -135,6 +148,9 @@
 			let html = `You are now ready to take on the world. To win, you must construct one of the three a victory industries. World Government, World Currency, or Space Colonization. Good luck, have fun, and be excellent to each other!`;
 			update_tutorial_block('The World Is Yours', html);
 			update_tutorial_after_last_tutorial_seen();
+			setTimeout(function(){
+				$('#tutorial_block').fadeOut(300);
+			}, 30 * 1000);
 		}
 	}
 	function update_tutorial_after_last_tutorial_seen() {

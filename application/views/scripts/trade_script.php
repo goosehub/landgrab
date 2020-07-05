@@ -139,7 +139,6 @@
 
 	function handle_send_trade_request() {
 		$('#send_trade_request').click(function(){
-			update_tutorial_after_send_trade_request();
 			send_trade_request();
 		});
 	}
