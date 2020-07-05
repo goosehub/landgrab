@@ -11,10 +11,11 @@ Full screen
 
 HIGH PRIORITY
 MEDIUM PRIORITY
-    UI: Sexier tutorial 
 LOW PRIORITY
-    UI: Sexier victory screen
 NO PRIORITY
+    UI: Sexier tutorial 
+    UI: Sexier victory screen
+    UI: Better user validation
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
     FEATURE: World config for some constants (support gen?)

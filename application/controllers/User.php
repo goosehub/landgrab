@@ -55,7 +55,8 @@ class User extends CI_Controller {
             // Set fail message and redirect to map
         	$this->session->set_flashdata('failed_form', 'login');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
+            $this->fail_screen(validation_errors());
+            // redirect(base_url() . 'world/' . $world['slug'], 'refresh');
 		// Success
         } else {
             redirect(base_url() . 'world/' . $world['slug'], 'refresh');
@@ -111,7 +112,8 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
         	$this->session->set_flashdata('failed_form', 'register');
         	$this->session->set_flashdata('validation_errors', validation_errors());
-            redirect(base_url() . 'world/' . $world['slug'], 'refresh');
+            $this->fail_screen(validation_errors());
+            // redirect(base_url() . 'world/' . $world['slug'], 'refresh');
         // Success
         } else {
             $this->session->set_flashdata('just_registered', true);
@@ -190,8 +192,9 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'error_block');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            redirect('world/' . $world['slug'], 'refresh');
-            return false;
+            $this->fail_screen(validation_errors());
+            // redirect('world/' . $world['slug'], 'refresh');
+            // return false;
         }
 
         // Image upload Config
@@ -295,10 +298,8 @@ class User extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('failed_form', 'update_password');
             $this->session->set_flashdata('validation_errors', validation_errors());
-            // Just echo for now
-            echo validation_errors();
-            return false;
-            redirect(base_url(), 'refresh');
+            $this->fail_screen(validation_errors());
+            // redirect(base_url(), 'refresh');
         }
         // Success
         else {
@@ -308,6 +309,26 @@ class User extends CI_Controller {
             $this->user_model->update_password($user_id, $new_password);
             redirect(base_url(), 'refresh');
         }
+    }
 
+    public function fail_screen($message)
+    {
+        echo '
+        <style>
+        body {
+            background: #5555ee;
+            text-align: center;
+        }
+        h2, a {
+            padding-top: 20vh;
+            color: #fff;
+        }
+        </style>
+        <h2>
+        ' . $message . '
+        </h2>
+        <a href="' . base_url() . '">Back</a>
+        ';
+        die();
     }
 }
