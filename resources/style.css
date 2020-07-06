@@ -349,8 +349,8 @@ img.tutorial_image {
   color: #31708f;
 }
 .leaderboard_leader_portrait, .leaderboard_nation_flag {
-  max-width: 75px;
-  max-height: 75px;
+  max-width: 150px;
+  max-height: 150px;
 }
 .leaderboard_username, .leaderboard_nation_name {
   word-break: break-all;

@@ -210,7 +210,7 @@ class User extends CI_Controller {
         $nation_flag = $this->input->post('existing_nation_flag');
         if ( $_FILES['nation_flag']['name'] && !$this->upload->do_upload('nation_flag') ) {
             $this->session->set_flashdata('validation_errors', $this->upload->display_errors());
-            echo $this->upload->display_errors();
+            $this->fail_screen($this->upload->display_errors());
             return false;
         }
         else if ($_FILES['nation_flag']['name']) {
@@ -221,7 +221,7 @@ class User extends CI_Controller {
         // Leader Portriat
         $leader_portrait = $this->input->post('existing_leader_portrait');
         if ( $_FILES['leader_portrait']['name'] && !$this->upload->do_upload('leader_portrait') ) {
-            echo $this->upload->display_errors();
+            $this->fail_screen($this->upload->display_errors());
             return false;
         }
         else if ($_FILES['leader_portrait']['name']) {

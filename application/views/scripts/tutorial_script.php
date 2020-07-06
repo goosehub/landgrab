@@ -36,9 +36,7 @@
 			$('#tutorial_block').fadeOut(300);
 			// update_tutorial_after_last_tutorial_seen();
 		});
-		console.log('marco');
 		$('#tutorial_block').on('click', '.register_button', function(){
-			console.log('polo');
 			$('#tutorial_block').fadeOut(300);
 		});
 	}
@@ -46,8 +44,10 @@
 	function tut_0() {
 		if (!account) {
 			setTimeout(function(){
-				let html = `<p class="text-center"><a href="#" class="register_button btn btn-primary btn-lg">Start your nation!</a></p>`;
-				update_tutorial_block('Become A Leader', html);
+				if (!$('#register_block').is(':visible') && !$('#login_block').is(':visible')) {
+					let html = `<p class="text-center"><a href="#" class="register_button btn btn-primary btn-lg">Start your nation!</a></p>`;
+					update_tutorial_block('Become A Leader', html);
+				}
 			}, 10 * 1000);
 		}
 	}
