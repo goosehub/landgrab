@@ -416,7 +416,7 @@ Class game_model extends CI_Model
 			'unit_owner_key' => $account['id'],
 			'unit_owner_color' => $account['color'],
 			'is_capitol' => 1,
-			'tile_name' => 'Capitol of ' . $account['nation_name'],
+			'tile_name' => 'Capitol of ' . $account['username'],
 			'tile_desc' => 'Founded on ' . date('l jS \of F Y h:i A T'),
 			'color' => $account['color'],
 		);

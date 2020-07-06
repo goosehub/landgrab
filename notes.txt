@@ -38,6 +38,7 @@ NO PRIORITY
     SYS: world backup
     TWEAK: abstract market table per world
     MECHANIC: Conceal units except for allies and naval
+    UI: Default capitol name
     UI: shortages more clear
     BUG: On landgrab.sql run, supply_industry_lookup didn't seed
     MECHANIC: pollution win condition
