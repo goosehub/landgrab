@@ -2,14 +2,12 @@
     Notes
 ==========================================================================================
 
-Full screen
-    https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
-
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    Cycle clock
 MEDIUM PRIORITY
 LOW PRIORITY
 NO PRIORITY
@@ -79,6 +77,9 @@ NO PRIORITY
 ==========================================================================================
     Documentation
 ==========================================================================================
+
+Full screen
+    https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 
 Tile considerations
     How it looks in street views (Avoiding incorrect labeling)

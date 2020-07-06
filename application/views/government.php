@@ -251,7 +251,9 @@
                 </span>
                 <hr>
                 <p class="text-center text-info lead">
-                    Production cycle runs every <?= CYCLE_MINUTES ?> minutes
+                    Production cycle runs every <span class="text-success"><?= CYCLE_MINUTES ?></span> minutes
+                    <br>
+                    Next cycle in <span class="text-danger cycle_countdown"></span> minutes
                 </p>
             </span>
         </div>

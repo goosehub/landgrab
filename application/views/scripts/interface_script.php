@@ -8,6 +8,7 @@ handle_law_ui();
 handle_center_block_show_and_hide();
 handle_open_create_world();
 handle_create_new_world_button();
+update_cycle_countdown();
 
 // Removed in mapInit callback in map_script
 function loading() {
@@ -32,6 +33,36 @@ function toggle_fullscreen() {
     else if (document.exitFullscreen) {
         document.exitFullscreen(); 
     }
+}
+
+function update_cycle_countdown() {
+    $('.cycle_countdown').html(minutes_til_next_cycle())
+    setInterval(function(){
+        $('.cycle_countdown').html(minutes_til_next_cycle())
+    }, 10 * 1000);
+}
+
+function minutes_til_next_cycle() {
+    let d = new Date();
+    let current_minute = d.getMinutes();
+    if (current_minute < cycle_minutes * 1) {
+        return (cycle_minutes * 1) - current_minute;
+    }
+    if (current_minute < cycle_minutes * 2) {
+        return (cycle_minutes * 2) - current_minute;
+    }
+    if (current_minute < cycle_minutes * 3) {
+        return (cycle_minutes * 3) - current_minute;
+    }
+}
+
+function next_cycle_time() {
+    let next = new Date();
+    next.setTime(next.getTime() + cycle_minutes * 60 * 1000);
+    next.setMinutes(cycle_minutes * Math.floor(next.getMinutes() / cycle_minutes));
+    next.setSeconds(0);
+    next = moment(next).format('h:mm A')
+    return next;
 }
 
 function handle_create_new_world_button() {

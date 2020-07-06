@@ -956,9 +956,11 @@ Class cron_model extends CI_Model
 		$cash_key = CASH_KEY;
 		$support_key = SUPPORT_KEY;
 		$grain_key = GRAIN_KEY;
+		$energy_key = ENERGY_KEY;
 		$default_cash = DEFAULT_CASH;
 		$default_support = DEFAULT_SUPPORT;
 		$default_grain = DEFAULT_GRAIN;
+		$default_energy = DEFAULT_ENERGY;
 		$default_power_structure = DEFAULT_POWER_STRUCTURE;
 		$default_tax_rate = DEFAULT_TAX_RATE;
 		$default_ideology = DEFAULT_IDEOLOGY;
@@ -1037,6 +1039,16 @@ Class cron_model extends CI_Model
 			`amount` = $default_grain
 			WHERE world_key = $world_key
 			AND supply_key = $grain_key;
+		");
+
+		$this->db->query("
+			UPDATE `supply_account_lookup`
+			LEFT JOIN `account`
+				ON `account`.id = `supply_account_lookup`.account_key
+			SET
+			`amount` = $default_energy
+			WHERE world_key = $world_key
+			AND supply_key = $energy_key;
 		");
 	}
 	function world_reset_world_state($world_key)

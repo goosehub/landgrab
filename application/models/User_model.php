@@ -204,6 +204,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             if ($supply['slug'] === 'grain') {
                 $default = DEFAULT_GRAIN;
             }
+            if ($supply['slug'] === 'energy') {
+                $default = DEFAULT_ENERGY;
+            }
             $data = array(
                 'account_key' => $account_id,
                 'supply_key' => $supply['id'],
