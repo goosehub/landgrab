@@ -13,6 +13,7 @@ HIGH PRIORITY
 MEDIUM PRIORITY
 LOW PRIORITY
 NO PRIORITY
+    BALANCE: Airforce have double matchup bonus
     UI: Sexier victory screen
     UI: Better user validation
     TWEAK: Constantly updating diplomacy account list UI

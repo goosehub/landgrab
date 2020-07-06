@@ -131,7 +131,7 @@
 
 <!-- Tutorial Block -->
 <div id="tutorial_block">
-    <span class="btn pull-right">
+    <span class="btn btn-lg pull-right">
         <span class="exit_tutorial glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </span>
     <span id="tutorial_title"></span>
