@@ -51,7 +51,7 @@ class Game extends CI_Controller {
             return $this->maintenance();
         }
 
-        if (!$world_slug) {
+        if (!$world_slug && !is_dev()) {
             $world_slug = DEFAULT_WORLD_KEY;
         }
 

@@ -10,9 +10,11 @@ Survey
     Diplomacy
     Laws
     Strategy
+    What should the tutorial add
 
 Balance
     Buff Federal
+    Airforce have double matchup bonus
 
 Bug
     Dustin Iron Shortage issue
@@ -22,24 +24,22 @@ Bug
 ==========================================================================================
 
 HIGH PRIORITY
+    Units disappearing
 MEDIUM PRIORITY
 LOW PRIORITY
-    Survey
+    MISC: Survey
+    UI: Carry images across accounts, default
 NO PRIORITY
-    BALANCE: Airforce have double matchup bonus
     UI: Sexier victory screen
     UI: Name of Capitol
-    UI: Carry images across accounts, default
     UI: Better user validation
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
-    FEATURE: World config for some constants (support gen?)
-    UI: Make settlements less quick to assign somehow
+    FEATURE: World config for some constants
     UI: Handle new user on map with no free land
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
     FEATURE: Winner List
-    FEATURE: Make cycle customizable per world
     FEATURE: Skip tutorial
     BUG: projections need get_account_budget() calc settlement & industry separately for accuracy
     FEATURE: Show when settlement, terrain, upfront, is insufficient

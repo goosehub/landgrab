@@ -9,6 +9,9 @@ define('ALLOW_TERRAIN_UPDATE', false);
 define('DEBUG_SHOW_TILE_ID', false);
 define('DEBUG_SHOW_RESOURCES', false);
 
+// Current world shown on homepage
+define('DEFAULT_WORLD_KEY', 11);
+
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);
 define('MAP_UNITS_UPDATE_INTERVAL_MS', 2 * 60 * 1000);
@@ -126,7 +129,6 @@ DEFINE('DEFAULT_ZOOM', 3);
 DEFINE('MAX_ZOOM', 2);
 
 // Account Defaults
-define('DEFAULT_WORLD_KEY', 11);
 define('DEFAULT_POWER_STRUCTURE', 2);
 define('DEFAULT_TAX_RATE', 25);
 define('DEFAULT_IDEOLOGY', 1);
