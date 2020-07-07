@@ -16,7 +16,18 @@
       return;
     }
     highlighted_tiles = [];
+
+    // Wait for last unit move request to finish if needed
+    if (unit_move_request_in_progress) {
+      setTimeout(function(){
+        end_drag_unit(event, marker)
+      }, 500);
+      return;
+    }
+
+    unit_move_request_in_progress = true;
     request_unit_attack(marker, start_lat, start_lng, end_lat, end_lng, function(response){
+      unit_move_request_in_progress = false;
       update_tutorial_after_move_unit();
       update_unit_icon(marker, response.tile);
       animate_combat(response.combat);
@@ -24,6 +35,7 @@
       move_unit_to_new_tile(marker, response.combat, start_lat, start_lng, end_lat, end_lng);
       get_map_update();
     }, function(response){
+      unit_move_request_in_progress = false;
       marker.setMap(null);
       delete unit_markers[marker.tile_id];
     });

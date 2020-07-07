@@ -24,7 +24,6 @@ Bug
 ==========================================================================================
 
 HIGH PRIORITY
-    Units disappearing
 MEDIUM PRIORITY
 LOW PRIORITY
     MISC: Survey

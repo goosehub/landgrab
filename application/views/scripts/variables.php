@@ -156,6 +156,7 @@
     let ideology = null;
     let current_leaderboard_supply = <?= DEFAULT_LEADERBOARD_SUPPLY_KEY; ?>;
     let game_won_acknowledge = false;
+    let unit_move_request_in_progress = false;
 
     // Toggles
     let border_toggle = <?= DEFAULT_BORDER_TOGGLE ? 'true' : 'false'; ?>;
