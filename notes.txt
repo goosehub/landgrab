@@ -2,17 +2,34 @@
     Notes
 ==========================================================================================
 
+Survey
+    Map types
+    Toggles
+    Worlds
+    Leaders
+    Diplomacy
+    Laws
+    Strategy
+
+Balance
+    Buff Federal
+
+Bug
+    Dustin Iron Shortage issue
+
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
-    Cycle clock
 MEDIUM PRIORITY
 LOW PRIORITY
+    Survey
 NO PRIORITY
     BALANCE: Airforce have double matchup bonus
     UI: Sexier victory screen
+    UI: Name of Capitol
+    UI: Carry images across accounts, default
     UI: Better user validation
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused

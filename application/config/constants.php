@@ -126,6 +126,7 @@ DEFINE('DEFAULT_ZOOM', 3);
 DEFINE('MAX_ZOOM', 2);
 
 // Account Defaults
+define('DEFAULT_WORLD_KEY', 11);
 define('DEFAULT_POWER_STRUCTURE', 2);
 define('DEFAULT_TAX_RATE', 25);
 define('DEFAULT_IDEOLOGY', 1);

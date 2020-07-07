@@ -45,10 +45,14 @@ class Game extends CI_Controller {
     }
 
     // Game view
-    public function index($world_slug = 1, $marketing_slug = false)
+    public function index($world_slug = false, $marketing_slug = false)
     {
         if (MAINTENANCE) {
             return $this->maintenance();
+        }
+
+        if (!$world_slug) {
+            $world_slug = DEFAULT_WORLD_KEY;
         }
 
         $this->user_model->record_slug_hit($marketing_slug);
@@ -299,7 +303,9 @@ class Game extends CI_Controller {
         $this->game_model->first_claim($tile, $world_key, $account);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);
-        $this->user_model->update_user_tutorial($account['user_key'], 2);
+        if ($account['tutorial'] < 2) {
+            $this->user_model->update_user_tutorial($account['user_key'], 2);
+        }
         api_response();
     }
 

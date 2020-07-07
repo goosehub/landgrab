@@ -25,11 +25,21 @@ AND last_load >= ( CURDATE() - INTERVAL 3 DAY )
 GROUP BY `tax_rate`
 ORDER BY count DESC 
 
--- Most common industry
-SELECT `industry_key` , COUNT(*) AS count
+-- Most common settlement
+SELECT  COUNT(*) AS count, settlement.label
 FROM  `tile`
-GROUP BY `industry_key`
+LEFT JOIN `settlement`
+	ON settlement.id = settlement_key
+GROUP BY `settlement_key`
 ORDER BY count DESC 
+
+-- Most common industry
+SELECT  COUNT(*) AS count, industry.label
+FROM  `tile`
+LEFT JOIN `industry`
+	ON industry.id = industry_key
+GROUP BY `industry_key`
+ORDER BY count DESC
 
 -- ab test
 SELECT COUNT(*), `ab_test`
