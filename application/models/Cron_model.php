@@ -905,7 +905,7 @@ Class cron_model extends CI_Model
 			echo 'Resetting world ' . $world['id'] . ' - ' . $world['slug'] . ' - ';
 			$this->world_reset_row_deletes($world['id']);
 			$this->world_reset_row_updates($world['id']);
-			$this->world_reset_regenerate_resources($world['id']);
+			$this->world_model->world_reset_regenerate_resources($world['id']);
 			$this->world_reset_world_state($world['id']);
 		}
 	}
@@ -1059,23 +1059,6 @@ Class cron_model extends CI_Model
 		);
 		$this->db->where('id', $world_key);
 		$this->db->update('world', $data);	
-	}
-	function world_reset_regenerate_resources($world_key)
-	{
-		$this->reset_resources($world_key);
-		$resources = $this->game_model->get_all('resource');
-		foreach ($resources as $resource) {
-			$this->resource_distribute($resource);
-			$this->db->where('lat > ', LOWEST_LAT_RESOURCE_GEN);
-			$this->db->where('resource_key', NULL);
-			$this->db->where('world_key', $world_key);
-			$this->db->order_by('RAND()');
-			$this->db->limit($resource['frequency_per_world']);
-			$data = array(
-				'resource_key' => $resource['id'],
-			);
-			$this->db->update('tile', $data);
-		}
 	}
 	function reset_resources($world_key)
 	{

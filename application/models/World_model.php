@@ -42,5 +42,22 @@ Class world_model extends CI_Model
 		$this->db->insert('world', $data);
 		return $this->db->insert_id();
 	}
+	function world_reset_regenerate_resources($world_key)
+	{
+		$this->reset_resources($world_key);
+		$resources = $this->game_model->get_all('resource');
+		foreach ($resources as $resource) {
+			$this->resource_distribute($resource);
+			$this->db->where('lat > ', LOWEST_LAT_RESOURCE_GEN);
+			$this->db->where('resource_key', NULL);
+			$this->db->where('world_key', $world_key);
+			$this->db->order_by('RAND()');
+			$this->db->limit($resource['frequency_per_world']);
+			$data = array(
+				'resource_key' => $resource['id'],
+			);
+			$this->db->update('tile', $data);
+		}
+	}
 }
 ?>

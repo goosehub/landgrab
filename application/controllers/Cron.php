@@ -10,10 +10,15 @@ class Cron extends CI_Controller {
         parent::__construct();
         $this->load->model('cron_model', '', TRUE);
         $this->load->model('game_model', '', TRUE);
+        $this->load->model('world_model', '', TRUE);
         $this->load->model('user_model', '', TRUE);
         $this->load->model('chat_model', '', TRUE);
         $this->load->model('leaderboard_model', '', TRUE);
         $this->logged_microtime = microtime(true);
+    }
+
+    public function debug()
+    {
     }
 
     public function every_minute($token = false)
