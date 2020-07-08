@@ -346,6 +346,7 @@ class Game extends CI_Controller {
         }
         // Allow user to go a bit negative so they can see the support shortage and stop before hitting an error
         if ((int)$account['supplies']['support']['amount'] <= NEGATIVE_SUPPORT_LEEWAY) {
+            // Update timestamp so units reload for player correctly
             $this->game_model->update_tile_timestamp($previous_tile);
             api_error_response('not_enough_support_to_move', 'You can not move units without political support');
         }
@@ -354,8 +355,8 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
-                $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
                 $this->game_model->claim($tile, $world_key, $account, $previous_tile['unit_key']);
+                $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_CAPTURE_LAND);
                 $this->game_model->increment_account_supply($account['id'], TILES_KEY);
                 $this->game_model->decrement_account_supply($tile['account_key'], TILES_KEY);
             }
@@ -364,10 +365,10 @@ class Game extends CI_Controller {
             $this->game_model->remove_unit_from_previous_tile($world_key, $previous_tile['lat'], $previous_tile['lng']);
             $data['combat'] = $this->combat_model->combat($account, $tile, $previous_tile);
             if (!$data['combat'] || $data['combat']['victory']) {
+                $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
                 if ($tile['account_key'] != $account['id']) {
                     $this->game_model->decrement_account_supply($account['id'], SUPPORT_KEY, SUPPORT_COST_MOVE_UNIT);
                 }
-                $this->game_model->put_unit_on_tile($tile, $account, $previous_tile['unit_key']);
             }
         }
         $data['tile'] = $tile;

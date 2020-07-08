@@ -17,7 +17,7 @@ class Cron extends CI_Controller {
         $this->logged_microtime = microtime(true);
     }
 
-    public function debug()
+    public function debug($value = false)
     {
     }
 

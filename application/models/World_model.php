@@ -13,6 +13,7 @@ Class world_model extends CI_Model
 		$tiles = json_decode($tiles_json);
 		$tile_data = $this->structure_tile_data($tiles, $world_key);
 		$this->db->insert_batch('tile', $tile_data);
+		$this->world_reset_regenerate_resources($world_key);
 		return $world_key;
 	}
 	function structure_tile_data($tiles, $world_key)
@@ -58,6 +59,33 @@ Class world_model extends CI_Model
 			);
 			$this->db->update('tile', $data);
 		}
+	}
+	function reset_resources($world_key)
+	{
+		$data = array(
+			'resource_key' => null,
+		);
+		$this->db->where('world_key', $world_key);
+		$this->db->update('tile', $data);
+	}
+	function resource_distribute($resource)
+	{
+		$this->db->group_start();
+		// Light bias against barren
+		if ($resource['spawns_in_barren'] && mt_rand(0,10) > BARREN_BIAS) {
+			$this->db->where('terrain_key', BARREN_KEY);
+		}
+		if ($resource['spawns_in_mountain']) {
+			$this->db->or_where('terrain_key', MOUNTAIN_KEY);
+		}
+		// Strong bias against tundra
+		if ($resource['spawns_in_tundra'] && mt_rand(0,10) > TUNDRA_BIAS) {
+			$this->db->or_where('terrain_key', TUNDRA_KEY);
+		}
+		if ($resource['spawns_in_coastal']) {
+			$this->db->or_where('terrain_key', COASTAL_KEY);
+		}
+		$this->db->group_end();
 	}
 }
 ?>

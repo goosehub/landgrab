@@ -3,39 +3,38 @@
 ==========================================================================================
 
 Survey
-    Map types
-    Toggles
-    Worlds
-    Leaders
-    Diplomacy
-    Laws
-    Strategy
-    What should the tutorial add
+    https://docs.google.com/forms/d/e/1FAIpQLSdXvGHVmz15-xqjlFPncOjln7YV_1xY9TKSnsqj92Ijjz3fTw/viewform?usp=sf_link
 
 Balance
     Buff Federal
-    Airforce have double matchup bonus
-
-Bug
-    Dustin Iron Shortage issue
+    Buff Socialism
+    Buff Airforce [have double matchup bonus]
+    Buff Growth Of Cities
+    Nerf World Government Population Requirement
 
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    BUG: Deadlock found when trying to get lock; try restarting transaction
+    MISC: Survey Results
 MEDIUM PRIORITY
+    MISC: Suggest worlds to new users
 LOW PRIORITY
-    MISC: Survey
     UI: Carry images across accounts, default
-NO PRIORITY
+    UI: Ask for Name of Capitol
+    UI: Improve first claim modal
     UI: Sexier victory screen
-    UI: Name of Capitol
+    UI: Change proposal trade language
+    UI: Handle new user on map with no free land
+    UI: Admin icon in chat
+    TWEAK: Change reset times
+NO PRIORITY
     UI: Better user validation
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World auto delete if goes unused
     FEATURE: World config for some constants
-    UI: Handle new user on map with no free land
     FEATURE: Leaderboard always show main stats
     FEATURE: Leaderboard show sum world stats
     FEATURE: Winner List
