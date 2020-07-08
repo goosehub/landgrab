@@ -79,6 +79,20 @@ Class game_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+	function get_guest_default_world()
+	{
+		$this->db->select('world.*');
+		$this->db->from('world');
+		$this->db->join('tile', 'world.id = tile.world_key', 'left');
+		$this->db->where('is_private', 0);
+		$this->db->group_by('world_key');
+		$this->db->having('SUM(if(tile.terrain_key = ' . FERTILE_KEY . ' AND account_key IS NULL, 1, 0)) > ' . MINIMUM_FERTILE_FOR_FRONT_PAGE, NULL, false);
+		$this->db->order_by('SUM(if(tile.terrain_key = ' . FERTILE_KEY . ' AND account_key IS NULL, 1, 0))', 'asc', false);
+		$this->db->limit(1);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return isset($result[0]) ? $result[0] : false;
+	}
 	function supply_is_cash_crop($supply_key)
 	{
 		$cash_crops = [

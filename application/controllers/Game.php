@@ -51,13 +51,17 @@ class Game extends CI_Controller {
             return $this->maintenance();
         }
 
+        $this->user_model->record_slug_hit($marketing_slug);
+
         if (!$world_slug && !is_dev()) {
             $world_slug = DEFAULT_WORLD_KEY;
         }
-
-        $this->user_model->record_slug_hit($marketing_slug);
-
-        $data['world'] = $this->game_model->get_world_by_slug($world_slug);
+        if ($world_slug) {
+            $data['world'] = $this->game_model->get_world_by_slug($world_slug);
+        }
+        else {
+            $data['world'] = $this->game_model->get_guest_default_world();
+        }
         if (!$data['world']) {
             return $this->load->view('errors/page_not_found', $data);
         }

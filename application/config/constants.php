@@ -10,7 +10,8 @@ define('DEBUG_SHOW_TILE_ID', false);
 define('DEBUG_SHOW_RESOURCES', false);
 
 // Current world shown on homepage
-define('DEFAULT_WORLD_KEY', 11);
+define('DEFAULT_WORLD_KEY', false);
+define('MINIMUM_FERTILE_FOR_FRONT_PAGE', 100);
 
 // Polling
 define('MAP_UPDATE_INTERVAL_MS', 5 * 1000);

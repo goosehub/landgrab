@@ -53,7 +53,7 @@
 	}
 	function tut_1() {
 		if (account['tutorial'] == 1) {
-			let html = `Use the <span class="btn btn-success btn-sm disabled"><span class="fa fa-map" aria-hidden="true"></span></span> toggle in the menu to switch between borders and terrain. <span style="text-shadow: 1px 1px 0 #000; color:${fertile_color}">Fertile</span> and <span style="text-shadow: 1px 1px 0 #000; color:${coastal_color}">coastal</span> land are needed for food. <span style="text-shadow: 1px 1px 0 #000; color:${mountain_color}">Mountains</span> and <span style="text-shadow: 1px 1px 0 #000; color:${barren_color}">barren</span> sometimes contain useful rare resources. Click on any unclaimed land to start your nation.`;
+			let html = `Use the <span class="btn btn-success btn-sm disabled"><span class="fa fa-map" aria-hidden="true"></span></span> toggle in the menu to switch between borders and terrain. <span style="text-shadow: 1px 1px 0 #000; color:${fertile_color}">Fertile</span> and <span style="text-shadow: 1px 1px 0 #000; color:${coastal_color}">coastal</span> land are needed for food. <span style="text-shadow: 1px 1px 0 #000; color:${mountain_color}">Mountains</span> and <span style="text-shadow: 1px 1px 0 #000; color:${barren_color}">barren</span> sometimes contain useful rare resources. <span class="btn btn-default btn-sm disabled">Worlds</span> will allow you to explore other worlds. Click on any unclaimed land to start your nation.`;
 			update_tutorial_block('Explore The World', html);
 		}
 	}
