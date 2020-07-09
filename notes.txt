@@ -9,8 +9,10 @@ Balance
     Buff Federal
     Buff Socialism
     Buff Airforce [have double matchup bonus]
-    Buff Growth Of Cities
+    Buff Cycle Speed
+    Buff Growth Of Cities (if no cycle speed increase)
     Nerf World Government Population Requirement
+    Buff Army Prices (Or refactor)
 
 World show logic
     If not signed in
@@ -24,6 +26,7 @@ World show logic
 ==========================================================================================
 
 HIGH PRIORITY
+    TWEAK: industry output before input plus require input to start industry
 MEDIUM PRIORITY
     BUG: "Deadlock found when trying to get lock; try restarting transaction"
     PERFORMANCE: settlement_income_collect
@@ -34,11 +37,11 @@ LOW PRIORITY
     UI: Carry images across accounts, default
     UI: Ask for Name of Capitol
     UI: Improve first claim modal
-    UI: Sexier victory screen
     UI: Change proposal trade language
     UI: Admin icon in chat
     TWEAK: Change reset times
     FEATURE: World auto delete if goes unused
+    FEATURE: Fort
 
 NO PRIORITY
     BUG: Naming world same as key of another world

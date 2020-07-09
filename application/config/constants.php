@@ -10,7 +10,7 @@ define('DEBUG_SHOW_TILE_ID', false);
 define('DEBUG_SHOW_RESOURCES', false);
 
 // Current world shown on homepage
-define('DEFAULT_WORLD_KEY', false);
+define('DEFAULT_WORLD_KEY', 1);
 define('MINIMUM_FERTILE_FOR_FRONT_PAGE', 100);
 
 // Polling
