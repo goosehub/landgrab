@@ -332,7 +332,7 @@
     }
     function tile_first_claim_invalid_taken()
     {
-        if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.settlement_key) {
+        if (account && account['supplies']['tiles']['amount'] < 1 && current_tile.account_key) {
             return true;
         }
         return false;
