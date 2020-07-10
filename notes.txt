@@ -23,12 +23,12 @@ HIGH PRIORITY
     UI: Cycle Timer
     TWEAK: Buffs and nerfs
     TWEAK: industry output before input plus require input to start industry
+    UI: Show update bar
 MEDIUM PRIORITY
     BUG: "Deadlock found when trying to get lock; try restarting transaction"
     UI: Rename cash crops to luxuries (Replace Cash Crops /w Luxuries)
     UI: Change proposal trade language
     UI: Ask for Name of Capitol
-    UI: Loading
     TWEAK: Private worlds only?
     UI: Clarify resource generation
     UI: Admin icon in chat

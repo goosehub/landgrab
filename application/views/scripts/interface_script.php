@@ -12,7 +12,9 @@ update_cycle_countdown();
 
 // Removed in mapInit callback in map_script
 function loading() {
-    var over = '<div id="overlay"><p>Loading...</p></div>';
+    var over = `<div id="overlay"><p>
+        <span class="glyphicon glyphicon-refresh spinning"></span>
+    </p></div>`;
     $(over).appendTo('body');
 };
 
