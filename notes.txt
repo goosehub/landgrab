@@ -28,7 +28,6 @@ MEDIUM PRIORITY
     UI: Rename cash crops to luxuries (Replace Cash Crops /w Luxuries)
     UI: Change proposal trade language
     UI: Ask for Name of Capitol
-    BUG: Null lat and lng on update account
     UI: Loading
     TWEAK: Private worlds only?
     UI: Clarify resource generation

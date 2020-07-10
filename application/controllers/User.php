@@ -255,7 +255,7 @@ class User extends CI_Controller {
         $this->user_model->update_account_info($account_key, $nation_color, $nation_name, $nation_flag, $leader_portrait, $cash_crop_key);
 
         // Redirect to game
-        $redirect_string = $redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
+        $redirect_string = (int)$redirect_lng ? '?lng=' . $redirect_lng . '&lat=' . $redirect_lat : '';
         redirect('world/' . $world_key . $redirect_string, 'refresh');
     }
 
