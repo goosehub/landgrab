@@ -26,26 +26,23 @@ HIGH PRIORITY
     UI: Show update bar
 MEDIUM PRIORITY
     BUG: "Deadlock found when trying to get lock; try restarting transaction"
-    UI: Rename cash crops to luxuries (Replace Cash Crops /w Luxuries)
-    UI: Change proposal trade language
-    UI: Ask for Name of Capitol
-    TWEAK: Private worlds only?
-    UI: Clarify resource generation
-    UI: Admin icon in chat
 LOW PRIORITY
+    UI: Admin icon in chat
     PERFORMANCE: polling
     PERFORMANCE: settlement_income_collect
     PERFORMANCE: industry_income_collect
     PERFORMANCE: thousands of markers
     UI: Carry images across accounts, default
     UI: Improve first claim modal
+    UI: Declare war vs offer/accept
     TWEAK: Change reset times
     FEATURE: World auto delete if goes unused
+    MECHANIC: New Treaty Ally/Right of Passage
 
 NO PRIORITY
     BUG: Naming world same as key of another world
     UI: Better user validation
-    FEATURE: Fort
+    FEATURE: Fort (always has militia)
     FEATURE: Global messages
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World config for some constants
@@ -57,7 +54,6 @@ NO PRIORITY
     FEATURE: Base settlement
     BUG: White nations are invisible
     SYS: account migration
-    MECHANIC: New Treaty Ally/Right of Passage
     SETTLEMENT: national park
     TWEAK: min tax rates
     MECHANIC: Tansk and Airforce requiring industry
@@ -88,7 +84,18 @@ NO PRIORITY
     Next Release Notes
 ==========================================================================================
 
+Fixed "Cannot Stack Units" false alert
+You're first claim now must be unowned
+Other tweaks to first claim
+Renamed cash crops to luxuries (It was confusing many users who expected them to generate cash)
+Tweaked some trade language
+Only private worlds allowed due to spam and nonsense, please contact goosepostbox@gmail.com if you believe your world will be active and would like it public.
+Several other minor UI tweaks and minor bug fixes
 
+Soon todo
+Performance, scaling
+
+For more info please see the official github
 
 ==========================================================================================
     Code

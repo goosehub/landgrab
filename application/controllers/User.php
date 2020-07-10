@@ -181,7 +181,7 @@ class User extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('world_key', 'World Key Input', 'trim|required|integer|max_length[10]');
         $this->form_validation->set_rules('nation_color', 'Nation Color', 'trim|required|max_length[7]');
-        $this->form_validation->set_rules('cash_crop_key', 'Cash Crop', 'trim|required|max_length[10]');
+        $this->form_validation->set_rules('cash_crop_key', 'Luxury', 'trim|required|max_length[10]');
         $this->form_validation->set_rules('nation_name', 'Nation Name', 'trim|max_length[50]');
         $this->form_validation->set_rules('nation_flag', 'Nation Flag', 'trim|max_length[500]');
         $this->form_validation->set_rules('leader_portrait', 'Leader Portrait', 'trim|max_length[500]');

@@ -53,7 +53,7 @@
 	}
 	function tut_1() {
 		if (account['tutorial'] == 1) {
-			let html = `Use the <span class="btn btn-success btn-sm disabled"><span class="fa fa-map" aria-hidden="true"></span></span> toggle in the menu to switch between borders and terrain. <span style="text-shadow: 1px 1px 0 #000; color:${fertile_color}">Fertile</span> and <span style="text-shadow: 1px 1px 0 #000; color:${coastal_color}">coastal</span> land are needed for food. <span style="text-shadow: 1px 1px 0 #000; color:${mountain_color}">Mountains</span> and sometimes <span style="text-shadow: 1px 1px 0 #000; color:${barren_color}">barren</span> and <span style="text-shadow: 1px 1px 0 #000; color:${tundra_color}">tundra</span> can contain useful rare resources. You may also want to check out other <span class="btn btn-primary btn-sm disabled">Worlds</span>. Click on any unclaimed land to start your nation.`;
+			let html = `Use the <span class="btn btn-success btn-sm disabled"><span class="fa fa-map" aria-hidden="true"></span></span> toggle in the menu to switch between borders and terrain. <span style="text-shadow: 1px 1px 0 #000; color:${fertile_color}">Fertile</span> and <span style="text-shadow: 1px 1px 0 #000; color:${coastal_color}">coastal</span> land are needed for food. <span style="text-shadow: 1px 1px 0 #000; color:${mountain_color}">Mountains</span> and sometimes <span style="text-shadow: 1px 1px 0 #000; color:${barren_color}">barren</span> and <span style="text-shadow: 1px 1px 0 #000; color:${tundra_color}">tundra</span> can contain useful rare resources. You may also want to check out other <span class="btn btn-primary btn-sm disabled">Worlds</span> in the menu. When ready, click on any unclaimed land to start your nation.`;
 			update_tutorial_block('Explore The World', html);
 		}
 	}
@@ -88,7 +88,7 @@
 	}
 	function tut_4() {
 		if (account['tutorial'] == 4) {
-			let html = `Click on your new land to create a settlement. Grain <img class="tutorial_image" src="${base_url}/resources/icons/settlements/6.png"/> is a good choice early on. Agriculture and Energy are important for supplying your townships. Materials are used for Manufacturing industries. Diverse Cash Crops grow your support quicker, but you must trade with other players for more variety.`;
+			let html = `Click on your new land to create a settlement. Grain <img class="tutorial_image" src="${base_url}/resources/icons/settlements/6.png"/> is a good choice early on. Agriculture and Energy are important for supplying your townships. Materials are used for Manufacturing industries. Diverse Luxuries grow your support quicker, but you must trade with other players for more variety.`;
 			update_tutorial_block('Feed the people', html);
 		}
 	}

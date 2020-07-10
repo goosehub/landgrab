@@ -1,5 +1,5 @@
 <div id="view_trade_block" class="center_block">
-    <strong>Create a Trade Proposal</strong>
+    <strong>Create a Diplomatic Offer</strong>
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-md-4 mobile_trade_top">
-            <h2 class="text-center">Proposal</h2>
+            <h2 class="text-center">Diplomacy</h2>
 
             <p class="lead">
                 <span class="text-primary">Current Treaty:</span>
@@ -39,12 +39,12 @@
             </p>
 
             <div id="view_trade_request_message">
-                <p class="lead text-primary">Proposal Message:</p>
+                <p class="lead text-primary">Diplomatic Message:</p>
                 <p id="request_message"></p>
             </div>
 
             <div id="view_trade_response_message">
-                <p class="lead text-primary">Reply Message:</p>
+                <p class="lead text-primary">Diplomatic Reply:</p>
                 <p id="response_message"></p>
             </div>
 
@@ -63,7 +63,7 @@
                 <div class="col-md-4 col-xs-5">
                     <button id="accept_trade_request" class="btn btn-success form-control" type="button">
                         <i class="fas fa-check"></i>
-                        Accept Proposal
+                        Accept Offer
                     </button>
                 </div>
                 <div class="col-md-4 col-xs-2">
@@ -71,7 +71,7 @@
                 <div class="col-md-4 col-xs-5">
                     <button id="reject_trade_request" class="btn btn-danger form-control" type="button">
                         <i class="fas fa-times"></i>
-                        Reject Proposal
+                        Reject Offer
                     </button>
                 </div>
             </div>

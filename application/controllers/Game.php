@@ -18,9 +18,9 @@ class Game extends CI_Controller {
         $this->unit_types = $this->game_model->get_all('unit_type');
         $this->supplies = $this->game_model->get_all('supply', 'category_id');
         $this->market_prices = $this->game_model->get_all('market_price');
-        $this->supplies_category_labels = [0,'Stats','Food','Cash Crops','Energy','Metals','Materials','Services','Goods','GDP Bonuses','Riches'];
+        $this->supplies_category_labels = [0,'Stats','Food','Luxuries','Energy','Metals','Materials','Services','Goods','GDP Bonuses','Riches'];
         $this->settlements = $this->game_model->get_all('settlement');
-        $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Cash Crops'];
+        $this->settlement_category_labels = [0, 'Township', 'Agriculture', 'Materials', 'Energy', 'Luxuries'];
         $this->industries = $this->game_model->get_all('industry', 'category_id');
         $this->industry_category_labels = [0, 'Government', 'Energy', 'Tourism', 'Knowledge', 'Light', 'Heavy', 'Metro', 'Victory'];
         $this->unit_labels = [0, 'Infantry', 'Tanks', 'Airforce'];
@@ -124,7 +124,8 @@ class Game extends CI_Controller {
             api_error_response('validation', trim(strip_tags(validation_errors())));
         }
         $world_key = $this->input->post('world_key');
-        $is_private = $this->input->post('is_private');
+        // $is_private = $this->input->post('is_private');
+        $is_private = true;
         $world_name = $this->input->post('world_name');
         $account = $this->user_model->this_account($world_key);
         $slug = slugify($world_name);
@@ -298,13 +299,17 @@ class Game extends CI_Controller {
         $lat = $this->input->post('lat');
         $lng = $this->input->post('lng');
         $cash_crop_key = $this->input->post('cash_crop_key');
+        $capitol_name = $this->input->post('capitol_name');
+        if (!$capitol_name) {
+            $capitol_name = 'Capitol of ' . $account['username'];
+        }
         $tile = $this->game_model->get_tile($lat, $lng, $world_key);
         $account = $this->get_this_full_account($tile['world_key']);
         if (!$this->first_claim_validation($account, $tile)) {
             api_error_response('first_claim_validation', 'You can no longer claim this land. Please try a different tile.');
         }
         $this->user_model->update_account_cash_crop_key($account['id'], $cash_crop_key);
-        $this->game_model->first_claim($tile, $world_key, $account);
+        $this->game_model->first_claim($tile, $world_key, $account, $capitol_name);
         $this->game_model->increment_account_supply($account['id'], TILES_KEY);
         $this->game_model->increment_account_supply($account['id'], POPULATION_KEY, $this->settlements[TOWN_KEY]['base_population']);
         if ($account['tutorial'] < 2) {
@@ -563,7 +568,7 @@ class Game extends CI_Controller {
             $this->game_model->mark_trade_request_response_seen($trade_request_key);
         }
         if (!$data['trade_request']) {
-            api_error_response('trade_request_not_found', 'Trade request not found');
+            api_error_response('trade_request_not_found', 'Diplomatic request not found');
         }
         $data['request_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['receive_account_key']);
         $data['receive_supplies'] = $this->game_model->get_supply_account_trade_lookup($trade_request_key, $data['trade_request']['request_account_key']);
@@ -651,7 +656,7 @@ class Game extends CI_Controller {
             api_error_response('active_trade_request_exists', 'You already have sent an active trade request to this player');
         }
         if (!$this->game_model->sufficient_supplies_to_send_trade_request($supplies_offered, $account['id'])) {
-            api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
+            api_error_response('trade_request_requires_more_supplies', 'Diplomatic request requires more supplies');
         }
         $data['trade_request_key'] = $this->game_model->create_trade_main($account['id'], $trade_partner_key, $message, $treaty_key, $supplies_offered, $supplies_demanded);
         api_response($data);
@@ -670,13 +675,13 @@ class Game extends CI_Controller {
             api_error_response('trade_request_not_found', 'This trade request is not found');
         }
         if ($trade_request['receive_account_key'] != $account['id']) {
-            api_error_response('auth', 'Trade request not intended for you');
+            api_error_response('auth', 'Diplomatic request not intended for you');
         }
         if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
-            api_error_response('trade_request_already_complete', 'Trade request is already complete');
+            api_error_response('trade_request_already_complete', 'Diplomatic request is already complete');
         }
         if (!$this->game_model->sufficient_supplies_to_accept_trade_request($trade_request['id'], $account['id'])) {
-            api_error_response('trade_request_requires_more_supplies', 'Trade request requires more supplies');
+            api_error_response('trade_request_requires_more_supplies', 'Diplomatic request requires more supplies');
         }
         $this->game_model->accept_trade_request($trade_request_key, $trade_request['receive_account_key'], $trade_request['request_account_key'], $response_message);
         $existing_treaty = $this->game_model->find_existing_treaty($account['id'], $trade_request['request_account_key']);
@@ -708,10 +713,10 @@ class Game extends CI_Controller {
             api_error_response('trade_request_not_found', 'This trade request is not found');
         }
         if ($trade_request['receive_account_key'] != $account['id']) {
-            api_error_response('auth', 'Trade request not intended for you');
+            api_error_response('auth', 'Diplomatic request not intended for you');
         }
         if ($trade_request['is_accepted'] || $trade_request['is_rejected'] || $trade_request['is_declared']) {
-            api_error_response('trade_request_already_complete', 'Trade request is already complete');
+            api_error_response('trade_request_already_complete', 'Diplomatic request is already complete');
         }
         $this->game_model->reject_trade_request($trade_request_key, $trade_request['request_account_key'], $response_message);
         api_response();

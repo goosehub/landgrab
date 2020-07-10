@@ -281,7 +281,7 @@
             return 'Energy';
         }
         if (settlement.is_cash_crop == 1) {
-            return 'Cash Crops';
+            return 'Luxuries';
         }
         return 'Other';
     }

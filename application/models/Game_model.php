@@ -420,7 +420,7 @@ Class game_model extends CI_Model
 		$settlement_key = (int)$settlement_key;
 		return $settlement_key === TOWN_KEY || $settlement_key === CITY_KEY || $settlement_key === METRO_KEY;
 	}
-	function first_claim($tile, $world_key, $account) {
+	function first_claim($tile, $world_key, $account, $capitol_name) {
 		$data = array(
 			'account_key' => $account['id'],
 			'settlement_key' => TOWN_KEY,
@@ -430,7 +430,7 @@ Class game_model extends CI_Model
 			'unit_owner_key' => $account['id'],
 			'unit_owner_color' => $account['color'],
 			'is_capitol' => 1,
-			'tile_name' => 'Capitol of ' . $account['username'],
+			'tile_name' => $capitol_name,
 			'tile_desc' => 'Founded on ' . date('l jS \of F Y h:i A T'),
 			'color' => $account['color'],
 		);

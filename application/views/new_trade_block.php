@@ -1,5 +1,5 @@
 <div id="new_trade_block" class="center_block">
-    <strong>Create a Trade Proposal</strong>
+    <strong>Create a Diplomatic Offer</strong>
     <button type="button" class="exit_center_block btn btn-default btn-sm pull-right">
       <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
     </button>
@@ -42,7 +42,7 @@
                 <option value="3">Passage</option>
             </select> -->
 
-            <p class="lead">Proposal Message</p>
+            <p class="lead">Diplomatic Message</p>
             <textarea class="form-control" id="input_trade_message" name="input_trade_message"></textarea>
             
             <hr>
@@ -51,7 +51,7 @@
                 <div class="col-md-4 col-xs-5">
                     <button id="send_trade_request" class="btn btn-success form-control" type="button">
                         <i class="fas fa-envelope-square"></i>
-                        Send Proposal
+                        Send Offer
                     </button>
                 </div>
                 <div class="col-md-4 col-xs-2">

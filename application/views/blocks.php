@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="row">
+<!--             <div class="row">
                 <div class="col-md-3">
                     <label for="input_world_is_private" class="pull-right text-success">Public</label>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="col-md-3">
                     <input type="radio" class="form-control" id="world_is_private" value="1" name="input_world_is_private">
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row">
@@ -55,7 +55,7 @@
 
     <hr>
     <small>
-        World may be deleted if unused.
+        World may be deleted if unused for more than a week.
     </small>
     <hr>
 </div>
@@ -204,6 +204,16 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
+                    <label for="input_capitol_name">Capitol Name:</label>
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="capitol_name" name="capitol_name" value="">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
                     <label for="input_nation_color">National Color:</label>
                 </div>
                 <div class="col-md-8">
@@ -246,8 +256,8 @@
         <div class="form-group" id="cash_crop_key_parent">
             <div class="row">
                 <div class="col-md-4">
-                    <?= generate_popover('National Cash Crop', 'Each nation can only produce one cash crop during the game and must trade for the rest', 'right', 'pull-right'); ?>
-                    <label for="input_nation_color">National Cash Crop: <span class="text-danger">*</span></label>
+                    <?= generate_popover('National Luxury', 'Each nation can only produce one luxury during the game and must trade or conquer for the rest', 'right', 'pull-right'); ?>
+                    <label for="input_nation_color">National Luxury: <span class="text-danger">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <select class="form-control" id="cash_crop_key" name="cash_crop_key" value="<?= $account['cash_crop_key']; ?>">

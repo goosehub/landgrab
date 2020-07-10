@@ -40,6 +40,7 @@
         lat: current_tile.lat,
         lng: current_tile.lng,
         cash_crop_key: $('#cash_crop_key').val(),
+        capitol_name: $('#capitol_name').val(),
       };
       ajax_post('game/do_first_claim', data, function(response) {
         $('#redirect_lng').val(current_tile.lng);

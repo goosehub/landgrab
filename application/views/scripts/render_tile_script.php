@@ -543,7 +543,7 @@
             }
             if (town_cash_crops_cost) {
                 amount_class = cash_crops_amount < town_cash_crops_cost ? 'text-danger' : 'text-success';
-                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${town_cash_crops_cost}`;
+                html += `<br>${force_tab}<span class="text-danger">Luxuries</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${town_cash_crops_cost}`;
             }
             if (town_merchandise_cost) {
                 amount_class = sup['merchandise'].amount < town_merchandise_cost ? 'text-danger' : 'text-success';
@@ -569,7 +569,7 @@
             }
             if (city_cash_crops_cost) {
                 amount_class = cash_crops_amount < city_cash_crops_cost ? 'text-danger' : 'text-success';
-                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${city_cash_crops_cost}`;
+                html += `<br>${force_tab}<span class="text-danger">Luxuries</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${city_cash_crops_cost}`;
             }
             if (city_merchandise_cost) {
                 amount_class = sup['merchandise'].amount < city_merchandise_cost ? 'text-danger' : 'text-success';
@@ -595,7 +595,7 @@
             }
             if (metro_cash_crops_cost) {
                 amount_class = cash_crops_amount < metro_cash_crops_cost ? 'text-danger' : 'text-success';
-                html += `<br>${force_tab}<span class="text-danger">Cash Crops</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${metro_cash_crops_cost}`;
+                html += `<br>${force_tab}<span class="text-danger">Luxuries</span>: <span class="${amount_class}">${number_format(cash_crops_amount)}</span>/${metro_cash_crops_cost}`;
             }
             if (metro_merchandise_cost) {
                 amount_class = sup['merchandise'].amount < metro_merchandise_cost ? 'text-danger' : 'text-success';
