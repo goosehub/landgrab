@@ -14,42 +14,39 @@ Balance
     Nerf World Government Population Requirement
     Buff Army Prices (Or refactor)
 
-World show logic
-    If not signed in
-        Show public world with least amount of unclaimed fertile land
-        Where unclaimed fertile land is more than 50
-    If signed in
-        Show any world where user has most tiles
-
 ==========================================================================================
     Goals
 ==========================================================================================
 
 HIGH PRIORITY
+    TWEAK: Cycles quicker
+    UI: Cycle Timer
+    TWEAK: Buffs and nerfs
     TWEAK: industry output before input plus require input to start industry
 MEDIUM PRIORITY
     BUG: "Deadlock found when trying to get lock; try restarting transaction"
+    UI: Rename cash crops to luxuries (Replace Cash Crops /w Luxuries)
+    UI: Change proposal trade language
+    UI: Ask for Name of Capitol
+    BUG: Null lat and lng on update account
+    UI: Loading
+    TWEAK: Private worlds only?
+    UI: Clarify resource generation
+    UI: Admin icon in chat
+LOW PRIORITY
+    PERFORMANCE: polling
     PERFORMANCE: settlement_income_collect
     PERFORMANCE: industry_income_collect
-    UI: Rename cash crops to luxuries
-LOW PRIORITY
     PERFORMANCE: thousands of markers
     UI: Carry images across accounts, default
-    UI: Ask for Name of Capitol
     UI: Improve first claim modal
-    UI: Change proposal trade language
-    UI: Admin icon in chat
     TWEAK: Change reset times
     FEATURE: World auto delete if goes unused
-    FEATURE: Fort
-    BUG: Null lat and lng on update account
-    UI: Clarify resource generation
-    TWEAK: Private worlds only?
-    UI: Loading
 
 NO PRIORITY
     BUG: Naming world same as key of another world
     UI: Better user validation
+    FEATURE: Fort
     FEATURE: Global messages
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World config for some constants
