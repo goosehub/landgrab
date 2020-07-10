@@ -42,6 +42,10 @@ LOW PRIORITY
     TWEAK: Change reset times
     FEATURE: World auto delete if goes unused
     FEATURE: Fort
+    BUG: Null lat and lng on update account
+    UI: Clarify resource generation
+    TWEAK: Private worlds only?
+    UI: Loading
 
 NO PRIORITY
     BUG: Naming world same as key of another world

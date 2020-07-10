@@ -187,7 +187,11 @@
       swal('', 'You can not move units without political support', 'warning');
     }
     else if (!no_own_unit_at_square(final_end_lat, final_end_lng)) {
-      swal('', 'You can not stack units', 'warning');
+      // swal('', 'You can not stack units', 'warning');
+      // Workaround, will allow users to attempt to stack units client side
+      lat = final_end_lat;
+      lng = final_end_lng;
+      allowed_move_to_new_position = true;
     }
     else if (!no_friendly_unit_at_square(final_end_lat, final_end_lng)) {
       swal('', 'You must declare war through diplomacy before you can attack this unit', 'warning');
