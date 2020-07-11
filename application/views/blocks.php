@@ -1,7 +1,7 @@
 <!-- Info tag -->
 <div id="info_tag">
     <strong>
-        <a href="https://www.reddit.com/r/LandGrab/" target="_blank">
+        <a href="https://www.reddit.com/r/LandGrab/comments/hpcoao/pace_of_play_update/?" target="_blank">
             Pace Of Play Update
         </a>
     </strong>
