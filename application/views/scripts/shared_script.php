@@ -34,7 +34,7 @@
                     swal.close();
                     setTimeout(function(){
                         swal('', data['error_message'], 'warning');
-                    }, 100);
+                    }, 300);
                     if (fail_callback) {
                         fail_callback();
                     }

@@ -79,8 +79,9 @@ Industries now require you have the supplies needed to establish
 Fixed "Cannot Stack Units" false alert
 You're first claim now must be unowned
 Other tweaks to first claim
-Renamed cash crops to luxuries (It was confusing many users who expected them to generate cash)
-Tweaked some trade language
+Minor Tutorial Tweaks
+Tweaked some diplomacy UI
+Renamed cash crops to luxuries (It confused multiple users who expected them to generate cash)
 Only private worlds allowed due to spam and nonsense, please contact goosepostbox@gmail.com if you believe your world will be active and would like it public.
 Several other minor UI tweaks and minor bug fixes
 

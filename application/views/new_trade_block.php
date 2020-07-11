@@ -26,14 +26,12 @@
             </div>
         </div>
         <div class="col-md-4 mobile_trade_top">
-            <h2 class="text-center">Proposed treaty</h2>
-
-            <p class="lead">
+            <p class="current_treaty_parent lead">
                 Current Treaty:
                 <span class="current_treaty"></span>
             </p>
 
-            <p class="lead">
+            <p class="proposed_treaty_parent lead">
                 Proposed Treaty:
                 <span class="text-success">Peace</span>
             </p>

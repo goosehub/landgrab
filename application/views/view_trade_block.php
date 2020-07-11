@@ -28,12 +28,12 @@
         <div class="col-md-4 mobile_trade_top">
             <h2 class="text-center">Diplomacy</h2>
 
-            <p class="lead">
+            <p class="current_treaty_parent lead">
                 <span class="text-primary">Current Treaty:</span>
                 <span class="current_treaty"></span>
             </p>
 
-            <p class="lead">
+            <p class="proposed_treaty_parent lead">
                 <span class="text-primary">Proposed Treaty:</span>
                 <span id="proposed_treaty" class=""></span>
             </p>

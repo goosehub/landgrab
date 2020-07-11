@@ -167,8 +167,7 @@
 	function render_open_trade_sent() {
 		$('.center_block').hide();
 		update_partner_username();
-		update_partner_treaty();
-		update_proposed_treaty();
+		update_treaty_display();
 		update_request_message();
 		render_trade_buttons();
 		update_partner_supplies_view_trade();
@@ -181,8 +180,7 @@
 	function render_open_trade_received() {
 		$('.center_block').hide();
 		update_partner_username();
-		update_partner_treaty();
-		update_proposed_treaty();
+		update_treaty_display();
 		update_request_message();
 		render_trade_buttons();
 		update_partner_supplies_view_trade();
@@ -227,11 +225,6 @@
 		}
 	}
 
-	function update_proposed_treaty() {
-		let treaty = treaties[view_trade.trade_request.treaty_key];
-		$('#proposed_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(view_trade.trade_request.treaty_key));
-		$('#proposed_treaty').html(treaty);
-	}
 	function update_request_message() {
 		$('#request_message').html(view_trade.trade_request.request_message);
 	}
@@ -321,7 +314,7 @@
 
 	function render_new_diplomacy() {
 		update_partner_username();
-		update_partner_treaty();
+		update_treaty_display();
 		update_partner_supplies_new_trade();
 		$('#input_trade_message').val('');
 	}
@@ -330,14 +323,28 @@
 		$('.trade_request_partner_username').html(trade_partner.username + ' Offer');
 	}
 
-	function update_partner_treaty() {
+	function update_treaty_display() {
+		$('.current_treaty_parent').hide();
+		$('.proposed_treaty_parent').hide();
+
 		$('#declare_war').show();
 		let treaty_key = find_treaty_by_account_key(trade_partner.id)
 		if (treaty_key == war_key) {
 			$('#declare_war').hide();
 		}
-		let treaty = treaties[treaty_key];
-		$('.current_treaty').html(treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
+
+		let current_treaty = treaties[treaty_key];
+		$('.current_treaty').html(current_treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(treaty_key));
+
+		if (view_trade) {
+			let proposed_treaty = treaties[view_trade.trade_request.treaty_key];
+			$('#proposed_treaty').html(proposed_treaty).removeClass('text-danger', 'text-success', 'text-info').addClass(treaty_class(view_trade.trade_request.treaty_key));
+		}
+
+		if (view_trade && view_trade.trade_request.treaty_key != treaty_key) {
+			$('.current_treaty_parent').show();
+			$('.proposed_treaty_parent').show();
+		}
 	}
 
 	function update_partner_supplies_new_trade() {
