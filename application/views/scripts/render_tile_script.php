@@ -307,6 +307,21 @@
         if (industry.minimum_settlement_size && industry.minimum_settlement_size > current_tile.settlement_key) {
             return false;
         }
+        if (!has_supplies_for_industry(industry)) {
+            return false;
+        }
+        return true;
+    }
+    function has_supplies_for_industry(industry)
+    {
+        for (let i = 0; i < industry.inputs.length; i++) {
+            let input = industry.inputs[i];
+            let amount_in_account = account['supplies'][input['slug']]['amount'];
+            let amount_needed = input['amount'];
+            if (amount_in_account < amount_needed) {
+                return false;
+            }
+        }
         return true;
     }
     function tile_register_plea()

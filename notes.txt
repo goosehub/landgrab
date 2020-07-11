@@ -2,16 +2,8 @@
     Notes
 ==========================================================================================
 
-Survey
-    https://docs.google.com/forms/d/e/1FAIpQLSdXvGHVmz15-xqjlFPncOjln7YV_1xY9TKSnsqj92Ijjz3fTw/viewform?usp=sf_link
-
 Balance
-    Buff Federal
     Buff Socialism
-    Buff Airforce [have double matchup bonus]
-    Buff Cycle Speed
-    Buff Growth Of Cities (if no cycle speed increase)
-    Nerf World Government Population Requirement
     Buff Army Prices (Or refactor)
 
 ==========================================================================================
@@ -19,11 +11,6 @@ Balance
 ==========================================================================================
 
 HIGH PRIORITY
-    TWEAK: Cycles quicker
-    UI: Cycle Timer
-    TWEAK: Buffs and nerfs
-    TWEAK: industry output before input plus require input to start industry
-    UI: Show update bar
 MEDIUM PRIORITY
     BUG: "Deadlock found when trying to get lock; try restarting transaction"
 LOW PRIORITY
@@ -35,7 +22,7 @@ LOW PRIORITY
     UI: Carry images across accounts, default
     UI: Improve first claim modal
     UI: Declare war vs offer/accept
-    TWEAK: Change reset times
+    UI: Make clear no money means no support
     FEATURE: World auto delete if goes unused
     MECHANIC: New Treaty Ally/Right of Passage
 
@@ -56,7 +43,8 @@ NO PRIORITY
     SYS: account migration
     SETTLEMENT: national park
     TWEAK: min tax rates
-    MECHANIC: Tansk and Airforce requiring industry
+    BALANCE: Airforce get double bonus
+    MECHANIC: Tanks and Airforce requiring industry
     SYS: world backup
     TWEAK: abstract market table per world
     MECHANIC: Conceal units except for allies and naval
@@ -83,6 +71,10 @@ NO PRIORITY
 ==========================================================================================
     Next Release Notes
 ==========================================================================================
+
+Cycle frequency increased from every 20 minutes to every 10 minutes
+Industry produces before they consume, which fixes a situation where energy would run out before energy industries can run
+Industries now require you have the supplies needed to establish
 
 Fixed "Cannot Stack Units" false alert
 You're first claim now must be unowned

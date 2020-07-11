@@ -1,8 +1,8 @@
 <!-- Info tag -->
-<div id="info_tag" style="display: none;">
+<div id="info_tag">
     <strong>
-        <a href="" target="_blank">
-            Update Foobar
+        <a href="https://www.reddit.com/r/LandGrab/" target="_blank">
+            Pace Of Play Update
         </a>
     </strong>
 </div>
