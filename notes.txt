@@ -2,9 +2,7 @@
     Notes
 ==========================================================================================
 
-Balance
-    Buff Socialism
-    Buff Army Prices (Or refactor)
+
 
 ==========================================================================================
     Goals
@@ -12,24 +10,24 @@ Balance
 
 HIGH PRIORITY
 MEDIUM PRIORITY
-    BUG: "Deadlock found when trying to get lock; try restarting transaction"
 LOW PRIORITY
-    UI: Admin icon in chat
-    PERFORMANCE: polling
-    PERFORMANCE: settlement_income_collect
-    PERFORMANCE: industry_income_collect
-    PERFORMANCE: thousands of markers
+    Balance: Buff Socialism
+    BALANCE: Army Prices Or Overhaul
     UI: Carry images across accounts, default
-    UI: Improve first claim modal
-    UI: Declare war vs offer/accept
     UI: Make clear no money means no support
     FEATURE: World auto delete if goes unused
     MECHANIC: New Treaty Ally/Right of Passage
+    PERFORMANCE: thousands of markers
+    BUG: Hide capitol on normal account update
+    FEATURE: Fort (always has militia)
 
 NO PRIORITY
+    PERFORMANCE: polling
+    PERFORMANCE: settlement_income_collect
+    PERFORMANCE: industry_income_collect
     BUG: Naming world same as key of another world
+    UI: Admin icon in chat
     UI: Better user validation
-    FEATURE: Fort (always has militia)
     FEATURE: Global messages
     TWEAK: Constantly updating diplomacy account list UI
     FEATURE: World config for some constants
@@ -57,6 +55,7 @@ NO PRIORITY
     MECHANIC: spy
     MECHANIC: pandemic
     MECHANIC: energy resets to 0
+    MECHANIC: trade every cycle
     PERFORMANCE: don't get empty ocean tiles on map init to save bandwidth
     TWEAK: Reject active trade requests when war starts
     UI: Being attacked UI
@@ -72,23 +71,7 @@ NO PRIORITY
     Next Release Notes
 ==========================================================================================
 
-Cycle frequency increased from every 20 minutes to every 10 minutes
-Industry produces before they consume, which fixes a situation where energy would run out before energy industries can run
-Industries now require you have the supplies needed to establish
 
-Fixed "Cannot Stack Units" false alert
-You're first claim now must be unowned
-Other tweaks to first claim
-Minor Tutorial Tweaks
-Tweaked some diplomacy UI
-Renamed cash crops to luxuries (It confused multiple users who expected them to generate cash)
-Only private worlds allowed due to spam and nonsense, please contact goosepostbox@gmail.com if you believe your world will be active and would like it public.
-Several other minor UI tweaks and minor bug fixes
-
-Soon todo
-Performance, scaling
-
-For more info please see the official github
 
 ==========================================================================================
     Code
