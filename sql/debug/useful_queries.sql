@@ -54,3 +54,19 @@ WHERE `username` = 'foobar';
 
 -- Set cash and support
 UPDATE `landgrab_new`.`supply_account_lookup` SET `amount` = '200' WHERE supply_key IN (1, 2);
+
+-- Worlds by activity
+SELECT 
+world.id,
+COUNT(tile.account_key), 
+tile.modified 
+FROM `world` 
+LEFT JOIN `tile` 
+    on world.id = tile.world_key 
+GROUP BY world.id
+ORDER BY COUNT(tile.account_key) DESC
+
+-- Hard Delete World, does not include chat
+DELETE FROM world WHERE id NOT IN (1);
+DELETE FROM tile WHERE world_key NOT IN (1);
+DELETE FROM account WHERE world_key NOT IN (1);

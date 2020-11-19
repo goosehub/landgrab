@@ -774,6 +774,7 @@ Class cron_model extends CI_Model
 				GROUP BY sal.account_key
 			) as gdp ON sal.account_key = gdp.account_key
 			INNER JOIN account ON sal.account_key = account.id
+			INNER JOIN world ON account.world_key = world.id
 			INNER JOIN (
 				SELECT account_key, COUNT(tile.id) AS tile_count
 				FROM tile
@@ -790,6 +791,7 @@ Class cron_model extends CI_Model
 			)
 
 			WHERE account.is_active = 1
+			AND world.deleted = 0
 			AND account.ideology = $free_market_key
 			AND sal.supply_key = $cash_key
 		");
