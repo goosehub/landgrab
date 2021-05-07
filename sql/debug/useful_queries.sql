@@ -55,6 +55,10 @@ WHERE `username` = 'foobar';
 -- Set cash and support
 UPDATE `landgrab_new`.`supply_account_lookup` SET `amount` = '200' WHERE supply_key IN (1, 2);
 
+-- 
+-- Below is used to clear dead data, helps prevent deadlocks
+-- 
+
 -- Worlds by activity
 SELECT 
 world.id,
@@ -66,7 +70,14 @@ LEFT JOIN `tile`
 GROUP BY world.id
 ORDER BY COUNT(tile.account_key) DESC
 
--- Hard Delete World, does not include chat
-DELETE FROM world WHERE id NOT IN (1);
-DELETE FROM tile WHERE world_key NOT IN (1);
-DELETE FROM account WHERE world_key NOT IN (1);
+-- Hard Delete All Worlds except for provided, does not include chat, use ids from above query
+--DELETE FROM world WHERE id NOT IN (1);
+--DELETE FROM tile WHERE world_key NOT IN (1);
+--DELETE FROM account WHERE world_key NOT IN (1);
+
+-- Clear dead supply account lookups
+DELETE supply_account_lookup
+FROM supply_account_lookup
+LEFT JOIN `account`
+on account_key = account.id
+WHERE account.id IS NULL

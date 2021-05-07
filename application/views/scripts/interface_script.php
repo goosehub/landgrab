@@ -56,6 +56,15 @@ function minutes_til_next_cycle() {
     if (current_minute < cycle_minutes * 3) {
         return (cycle_minutes * 3) - current_minute;
     }
+    if (current_minute < cycle_minutes * 4) {
+        return (cycle_minutes * 4) - current_minute;
+    }
+    if (current_minute < cycle_minutes * 5) {
+        return (cycle_minutes * 5) - current_minute;
+    }
+    if (current_minute < cycle_minutes * 6) {
+        return (cycle_minutes * 6) - current_minute;
+    }
 }
 
 function next_cycle_time() {

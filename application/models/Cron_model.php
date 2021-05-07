@@ -1060,7 +1060,7 @@ Class cron_model extends CI_Model
 			'winner_industry_key' => null,
 		);
 		$this->db->where('id', $world_key);
-		$this->db->update('world', $data);	
+		$this->db->update('world', $data);
 	}
 	function market_prices_debug()
 	{
