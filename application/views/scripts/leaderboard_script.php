@@ -71,8 +71,6 @@
         return html;
     }
     function render_leaderboard_row(leader, rank) {
-        console.log('marco');
-        console.log(leader);
         let html = `
         <td>
             <strong class="text-default">${rank}</strong>
