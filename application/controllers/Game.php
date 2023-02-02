@@ -353,6 +353,10 @@ class Game extends CI_Controller {
             $this->game_model->update_tile_timestamp($previous_tile);
             api_error_response('unit_does_not_belong_to_account', 'Unit Does Not Belong To Account');
         }
+        if ($tile['unit_owner_key'] === $account['id']) {
+            $this->game_model->update_tile_timestamp($previous_tile);
+            api_error_response('tile_is_occupied', 'There is already a friendly unit on this tile');
+        }
         // Allow user to go a bit negative so they can see the support shortage and stop before hitting an error
         if ((int)$account['supplies']['support']['amount'] <= NEGATIVE_SUPPORT_LEEWAY) {
             // Update timestamp so units reload for player correctly
